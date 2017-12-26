@@ -1,108 +1,151 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="icon" href="/favicon.ico">
-    <title>Home Raspberry</title>
-    
-    <!-- Bootstrap core CSS -->
-    <link href="dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Custom styles for this template -->
-    <link href="jumbotron.css" rel="stylesheet">
-    <!-- Icons -->
-    <link href="open-iconic/font/css/open-iconic-bootstrap.css" rel="stylesheet">
-    <link href="css/raspihome.css" rel="stylesheet">
-    
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<meta name="description" content="">
+		<meta name="author" content="">
+		<link rel="icon" href="/favicon.ico">
+		<title>Home Raspberry</title>
+		
+		<!-- Bootstrap core CSS -->
+		<link href="dist/css/bootstrap.min.css" rel="stylesheet">
+		<!-- Custom styles for this template -->
+		<link href="jumbotron.css" rel="stylesheet">
+		<!-- Icons -->
+		<link href="open-iconic/font/css/open-iconic-bootstrap.css" rel="stylesheet">
+		
+		<link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,500,600,700,900" rel="stylesheet">
+		<link href="css/raspihome.css" rel="stylesheet">
+	</head>
+	<body>
+		<nav class="navbar fixed-top navbar-expand-md navbar-dark fixed-top bg-dark justify-content-center">
+			<img src="http://tongatron.it/img/Tongatron_white.png" alt="Tongatron" class=".img-responsive" width="30" vspace="10px">
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+			</button>
+		</nav>
+		<main role="main">
+			<!-- Main jumbotron for a primary marketing message or call to action -->
+			<div class="container">
+				<br>
+				<br>
+				<br>
+				
+				<div class="row">
+					<div class="col-md-4">
+						<h3 class="titolone">Luci</h3>
+						
+						<div class="row">
+							<div class=" col-md-4">
+								<p>Cucina</p>
+								<!-- https://proto.io/freebies/onoff -->
+								<div class="onoffswitch">
+									<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" checked>
+									<label class="onoffswitch-label" for="myonoffswitch">
+										<span class="onoffswitch-inner"></span>
+										<span class="onoffswitch-switch"></span>
+									</label>
+								</div>
+							</div>
+							<div class=" col-md-4">
+								<p>Stanza</p>
+								<!-- https://proto.io/freebies/onoff -->
+								<div class="onoffswitch">
+									<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch2" checked>
+									<label class="onoffswitch-label" for="myonoffswitch2">
+										<span class="onoffswitch-inner"></span>
+										<span class="onoffswitch-switch"></span>
+									</label>
+								</div>
+							</div>
+							<div class=" col-md-4">
+								<p>Soppalco</p>
+								<!-- https://proto.io/freebies/onoff -->
+								<div class="onoffswitch">
+									<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch3" checked>
+									<label class="onoffswitch-label" for="myonoffswitch3">
+										<span class="onoffswitch-inner"></span>
+										<span class="onoffswitch-switch"></span>
+									</label>
+								</div>
+							</div>
+						</div>
+					<hr>
+					</div>
 
+					<div class="col-md-4">
+						<h3 class="titolone">Sicurezza</h3>
+						<p>Livecam (demo)</p>
+						<img src="https://i.ytimg.com/vi/UBJ57Q5AhQY/hqdefault.jpg" class="img-fluid" alt="Responsive image">
+					<hr>
+					</div>
+					<div class="col-md-4">
+						<h3 class="titolone">Temperatura</h3>
+						<p>Riscaldamento</p>
+						<!-- https://proto.io/freebies/onoff -->
+						<div class="onoffswitch">
+							<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" checked>
+							<label class="onoffswitch-label" for="myonoffswitch">
+								<span class="onoffswitch-inner"></span>
+								<span class="onoffswitch-switch"></span>
+							</label>
+						</div>
+						
+						<iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/391778/charts/1?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&type=line&update=15"></iframe>
+					<hr>
+					</div>
+				</div>
 
-
-
-
-  </head>
-  <body>
-    <nav class="navbar fixed-top navbar-expand-md navbar-dark fixed-top bg-dark justify-content-center">
-      <img src="http://tongatron.it/img/Tongatron_white.png" alt="Tongatron" class=".img-responsive" width="30" vspace="10px">
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
-      </button>
-    </nav>
-    <main role="main">
-      <!-- Main jumbotron for a primary marketing message or call to action -->
-      <div class="container">
-        <br><br>
-        <h1>Casa</h1>
-        <br>
-        
-        <div class="row">
-          <div class="col-md-4">
-            <p><a class="btn btn-warning btn-lg btn-block" href="#" role="button">Luci</a></p>
-            
-            <!-- https://proto.io/freebies/onoff -->
-            <div class="onoffswitch">
-                <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" checked>
-                <label class="onoffswitch-label" for="myonoffswitch">
-                    <span class="onoffswitch-inner"></span>
-                    <span class="onoffswitch-switch"></span>
-                </label>
-            </div>
-            
-          </div>
-          <div class="col-md-4">
-            <p><a class="btn btn-warning btn-lg btn-block" href="#" role="button">Sicurezza</a></p>
-          </div>
-          <div class="col-md-4">
-            <p><a class="btn btn-warning btn-lg btn-block disabled" href="#" role="button">Riscaldamento</a></p>
-          </div>
-        </div>
-        <hr>
-        <div class="row">
-
-          <div class="col-md-4">
-            <p>
-              <a class="btn btn-outline-secondary" data-toggle="collapse" href="#multiCollapseExample1" aria-expanded="false" aria-controls="multiCollapseExample1">Eventi</a>
-            </p>
-            <div class="row">
-              <div class="col">
-                <div class="collapse multi-collapse" id="multiCollapseExample1">
-                  <div>
-                    <p class="terminale">[26/12/2018 11:59:45]<br>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                    <p class="terminale">[26/12/2018 11:59:45]<br>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                    <p class="terminale">[26/12/2018 11:59:45]<br>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                    <p class="terminale">[26/12/2018 11:59:45]<br>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                    <a href="#" class="card-link">...vedi tutti</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-              <h3>Calendario</h1>
-                  <p class="card-text">
-                    <iframe src="https://calendar.google.com/calendar/embed?showTitle=0&amp;showNav=0&amp;showDate=0&amp;showPrint=0&amp;showTabs=0&amp;showCalendars=0&amp;showTz=0&amp;mode=AGENDA&amp;height=300&amp;wkst=2&amp;bgcolor=%23FFFFFF&amp;src=tot8ita8nd4s0p33el5f4fv9i5ff3ipk%40import.calendar.google.com&amp;color=%23B1365F&amp;ctz=Europe%2FRome" style="border-width:0" width="300" height="300" frameborder="0" scrolling="no"></iframe>
-                  </p> 
-          </div>
-          <div class="col-md-4">
-            <iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/391778/charts/1?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&type=line&update=15"></iframe>
-
-          </div>
-          <hr>
-        </div>
-        
-      </div>
-    </main>
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script>window.jQuery || document.write('<script src="assets/js/vendor/jquery.min.js"><\/script>')</script>
-    <script src="assets/js/vendor/popper.min.js"></script>
-    <script src="dist/js/bootstrap.min.js"></script>
-    
-  </body>
+				<div class="row">
+					<div class="col-md-4">
+						<h3 class="titolone">Eventi a Torino</h3>
+						<p class="card-text">
+							<iframe src="https://calendar.google.com/calendar/embed?showTitle=0&amp;showNav=0&amp;showDate=0&amp;showPrint=0&amp;showTabs=0&amp;showCalendars=0&amp;showTz=0&amp;mode=AGENDA&amp;height=300&amp;wkst=2&amp;bgcolor=%23FFFFFF&amp;src=tot8ita8nd4s0p33el5f4fv9i5ff3ipk%40import.calendar.google.com&amp;color=%23B1365F&amp;ctz=Europe%2FRome" style="border-width:0" width="300" height="300" frameborder="0" scrolling="no"></iframe>
+						</p>
+						
+					<hr>
+					</div>
+					<div class="col-md-4">
+						<h3 class="titolone">Cazzo ne so</h3>
+						
+					<hr>
+					</div>
+					<div class="col-md-4">
+						<h3 class="titolone">Sistema</h3>
+						<p>
+							<a class="btn btn-outline-secondary" data-toggle="collapse" href="#multiCollapseExample1" aria-expanded="false" aria-controls="multiCollapseExample1">Events log</a>
+						</p>
+						<div class="row">
+							<div class="col">
+								<div class="collapse multi-collapse" id="multiCollapseExample1">
+									<div>
+										<p class="terminale">[26/12/2018 11:59:45]<br>
+										Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+										<p class="terminale">[26/12/2018 11:59:45]<br>
+										Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+										<p class="terminale">[26/12/2018 11:59:45]<br>
+										Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+										<p class="terminale">[26/12/2018 11:59:45]<br>
+										Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+										<a href="#" class="card-link">...vedi tutti</a>
+									</div>
+								</div>
+							</div>
+						</div>						
+					<hr>
+					</div>
+				</div>
+			<hr>
+			<p>26 dicembre 2018</p>
+			</div>
+		</main>
+		<!-- Bootstrap core JavaScript
+		================================================== -->
+		<!-- Placed at the end of the document so the pages load faster -->
+		<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+		<script>window.jQuery || document.write('<script src="assets/js/vendor/jquery.min.js"><\/script>')</script>
+		<script src="assets/js/vendor/popper.min.js"></script>
+		<script src="dist/js/bootstrap.min.js"></script>
+		
+	</body>
 </html>

@@ -1,10 +1,19 @@
+body{
+	font-family: 'Source Code Pro', monospace;
+}
+
 p.terminale {
-    font-family: "Courier New", Courier, monospace;
+	font-family: "Courier New", Courier, monospace;
     font-size: smaller;
 }
 
 .bg-dark {
     background-color: #553D7C!important;
+}
+
+h3.titolone{
+	color: #f0ad4e;
+	font-weight: 800;
 }
 
 
