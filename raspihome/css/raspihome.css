@@ -2,3 +2,7 @@ p.terminale {
     font-family: "Courier New", Courier, monospace;
     font-size: smaller;
 }
+
+.bg-dark {
+    background-color: #553D7C!important;
+}
