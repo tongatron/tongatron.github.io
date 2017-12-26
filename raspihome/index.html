@@ -10,11 +10,17 @@
 
     <title>Home Raspberry</title>
 
+    <link href="css/raspihome.css" rel="stylesheet">
+
     <!-- Bootstrap core CSS -->
     <link href="dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="jumbotron.css" rel="stylesheet">
+
+    <!-- Icons -->
+    <link href="open-iconic/font/css/open-iconic-bootstrap.css" rel="stylesheet">
+
   </head>
 
   <body>
@@ -30,46 +36,63 @@
     <main role="main">
 
       <!-- Main jumbotron for a primary marketing message or call to action -->
-      <div class="jumbotron">
+
         <div class="container">
           <h1 class="display-3">Scemo chi legge</h1>
           <hr>
-          
-          <p>
-            <a class="btn btn-primary btn-lg" href="#" role="button">Luci</a>
-          </p>
-          <p>
-            <a class="btn btn-primary btn-lg" href="#" role="button">Riscaldamento</a>
-          </p>
-          <p>
-            <a class="btn btn-primary btn-lg" href="#" role="button">Sicurezza</a>
-          </p>          
+        	<div class="row">
+          		<div class="col-md-4">  
+          			<p><a class="btn btn-outline-primary btn-lg btn-block" href="#" role="button">Luci</a></p>        
+          		</div>
+          		<div class="col-md-4"> 
+          			<p><a class="btn btn-outline-primary btn-lg btn-block" href="#" role="button">Sicurezza</a></p>         
+          		</div>
+          		<div class="col-md-4">          
+          			<p><a class="btn btn-outline-primary btn-lg btn-block disabled" href="#" role="button">Riscaldamento</a></p>        
+          		</div>          		          		
+          	</div>   
+          	<hr>       
+        	<div class="row">
+          		<div class="col-md-4">  
+          			<div class="card" style="width: 20rem;">
+					  <div class="card-body">
+					    <h4 class="card-title">Calendario</h4>
+					    <p class="card-text"><iframe src="https://calendar.google.com/calendar/embed?showTitle=0&amp;showNav=0&amp;showDate=0&amp;showPrint=0&amp;showTabs=0&amp;showCalendars=0&amp;showTz=0&amp;mode=AGENDA&amp;height=600&amp;wkst=2&amp;bgcolor=%23ffffff&amp;src=giovanni.bindi%40gmail.com&amp;color=%232952A3&amp;ctz=Europe%2FRome" style="border-width:0" width="250" height="300" frameborder="0" scrolling="no"></iframe></p> 
+					  </div>
+					</div>        
+          		</div>
+          		<div class="col-md-4">  
+          			<div class="card" style="width: 20rem;">
+					  <div class="card-body">
+					    <h4 class="card-title">Eventi</h4>
+
+					    <p class="terminale">[26/12/2018 11:59:45]<br>
+					    Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+
+					    <p class="terminale">[26/12/2018 11:59:45]<br>
+					    Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+
+					    <p class="terminale">[26/12/2018 11:59:45]<br>
+					    Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+
+					    <p class="terminale">[26/12/2018 11:59:45]<br>
+					    Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+						<hr>	
+					    <a href="#" class="card-link">...more</a>				    					    					    
+
+					  </div>
+					</div>        
+          		</div>
+          		<div class="col-md-4">          
+          		</div>          		          		
+          	</div>
+ 
         </div>
-      </div>
 
-      <div class="container">
-        <!-- Example row of columns -->
-        <div class="row">
-          <div class="col-md-4">
-            <p>Donec id elit non mi porta. Fusce dapibus.</p>
-            <p><a class="btn btn-secondary" href="#" role="button">View details</a></p>
-          </div>
-          <div class="col-md-4">
-            <p>Donec id elit non mi porta. Fusce dapibus.</p>
-            <p><a class="btn btn-secondary" href="#" role="button">View details</a></p>
-          </div>
-          <div class="col-md-4">
-            <p>Donec id elit non mi porta. Fusce dapibus.</p>
-            <p><a class="btn btn-secondary" href="#" role="button">View details</a></p>
-          </div>
-        </div>
 
-        <hr>
-
-      </div> <!-- /container -->
 
     </main>
-
+    <hr>
     <footer class="container">
       <p>&copy; Tongatron 2018</p>
     </footer>
