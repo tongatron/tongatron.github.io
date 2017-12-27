@@ -42,7 +42,7 @@
 
 
 <nav class="navbar navbar-dark bg-dark fixed-top">
-  <h3 style="color: white">Tongatron</h3>
+  <h3 style="color: white">RaspiHome</h3>
 </nav>
 
 		<main role="main">
@@ -54,10 +54,18 @@
 				
 				<div class="row">
 					<div class="col-md-4">
-						<h3 class="titolone">Luci</h3>
-							
-								<p>Cucina</p>
+						<h1 class="titolone">Illuminazione</h1><br>
+								
+								<h4>GRUPPO</h4>
+								<p>Tutte le luci<br>
 								<input type="checkbox" checked data-toggle="toggle" data-onstyle="success" data-offstyle="danger" data-size="large">
+								</p>
+								<br>
+								<h4>LUCI</h4>
+							
+								<p>Cucina</br>
+								<input type="checkbox" checked data-toggle="toggle" data-onstyle="success" data-offstyle="danger" data-size="large">
+								</p>
 								<!-- https://proto.io/freebies/onoff 
 								<div class="onoffswitch">
 									
@@ -68,38 +76,42 @@
 									</label>
 								</div>
 								-->
-							
-								<p>Stanza</p>
+						
+								<p>Camera<br>
 								<input type="checkbox" checked data-toggle="toggle" data-onstyle="success" data-offstyle="danger" data-size="large">
-							
-								<p>Soppalco</p>
+								</p>
+
+								<p>Soppalco<br>
 								<input type="checkbox" checked data-toggle="toggle" data-onstyle="success" data-offstyle="danger" data-size="large">
+								</p>
 							
 						
 					<hr>
 					</div>
 
 					<div class="col-md-4">
-						<h3 class="titolone">Sicurezza</h3>
-						<p>Livecam (demo)</p>
+						<h1 class="titolone">Sicurezza</h1>
+						<h4>MOTION DETECTION: On</h4>
 						<img src="https://i.ytimg.com/vi/UBJ57Q5AhQY/hqdefault.jpg" class="img-fluid" alt="Responsive image">
 					<hr>
 					</div>
 					<div class="col-md-4">
-						<h3 class="titolone">Temperatura</h3>
-						<p>Riscaldamento</p>
+						<h1 class="titolone">Temperatura</h1>
+						
+<iframe width="400" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/391778/charts/1?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&type=line&update=15"></iframe>						
 						<p>
+						<h4>RISCALDAMENTO</h4>
 						<input type="checkbox" checked data-toggle="toggle" data-onstyle="success" data-offstyle="danger" data-size="large" data-on="Acceso" data-off="Spento"> 
 						</p>
 						
-						<iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/391778/charts/1?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&type=line&update=15"></iframe>
+						
 					<hr>
 					</div>
 				</div>
 
 				<div class="row">
 					<div class="col-md-4">
-						<h3 class="titolone">Diagnostica</h3>
+						<h1 class="titolone">Diagnostica</h1>
 						<p>
 							<a class="btn btn-secondary" data-toggle="collapse" href="#multiCollapseExample1" aria-expanded="false" aria-controls="multiCollapseExample1">Log degli eventi</a>
 						</p>
@@ -120,7 +132,7 @@
 								</div>
 							</div>
 						</div>	
-						<h3 class="titolone">Risorse</h3>
+						<h1 class="titolone">Risorse</h1>
 						<p>
 							<a href="https://docs.google.com/document/d/1l8itCbaLgO5Ymn74LWIaV5GuKOoB9F85rU6Su0jvJ64/edit?usp=sharing">RaspiHome Documentazione</a><br>
 							<a href="https://aws.amazon.com/it">Amazon AWC console</a><br>
