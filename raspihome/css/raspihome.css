@@ -2,6 +2,10 @@ body{
 	font-family: 'Source Code Pro', monospace;
 }
 
+.navbar{
+	position: absolute;
+}
+
 p.terminale {
 	font-family: "Courier New", Courier, monospace;
     font-size: smaller;
@@ -21,6 +25,8 @@ h3.titolone{
 
 
 /* https://proto.io/freebies/onoff/ */
+
+/*
 
 .onoffswitch {
     position: relative; width: 90px;
@@ -67,3 +73,4 @@ h3.titolone{
 .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
     right: 0px; 
 }
+*/
