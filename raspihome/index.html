@@ -99,22 +99,9 @@
 
 				<div class="row">
 					<div class="col-md-4">
-						<h3 class="titolone">Eventi a Torino</h3>
-						<p class="card-text">
-							<iframe src="https://calendar.google.com/calendar/embed?showTitle=0&amp;showNav=0&amp;showDate=0&amp;showPrint=0&amp;showTabs=0&amp;showCalendars=0&amp;showTz=0&amp;mode=AGENDA&amp;height=300&amp;wkst=2&amp;bgcolor=%23FFFFFF&amp;src=tot8ita8nd4s0p33el5f4fv9i5ff3ipk%40import.calendar.google.com&amp;color=%23B1365F&amp;ctz=Europe%2FRome" style="border-width:0" width="300" height="300" frameborder="0" scrolling="no"></iframe>
-						</p>
-						
-					<hr>
-					</div>
-					<div class="col-md-4">
-						<h3 class="titolone">Cazzo ne so</h3>
-						
-					<hr>
-					</div>
-					<div class="col-md-4">
-						<h3 class="titolone">Sistema</h3>
+						<h3 class="titolone">Diagnostica</h3>
 						<p>
-							<a class="btn btn-outline-secondary" data-toggle="collapse" href="#multiCollapseExample1" aria-expanded="false" aria-controls="multiCollapseExample1">Events log</a>
+							<a class="btn btn-secondary" data-toggle="collapse" href="#multiCollapseExample1" aria-expanded="false" aria-controls="multiCollapseExample1">Log degli eventi</a>
 						</p>
 						<div class="row">
 							<div class="col">
@@ -132,14 +119,39 @@
 									</div>
 								</div>
 							</div>
-						</div>						
-					<hr>
+						</div>	
+						<h3 class="titolone">Risorse</h3>
+						<p>
+							<a href="https://docs.google.com/document/d/1l8itCbaLgO5Ymn74LWIaV5GuKOoB9F85rU6Su0jvJ64/edit?usp=sharing">RaspiHome Documentazione</a><br>
+							<a href="https://aws.amazon.com/it">Amazon AWC console</a><br>
+							<a href="https://console.particle.io">Particle console</a><br>
+							<a href="https://nodered.org">Node Red</a><br>
+							<a href="#">Link XXX</a><br>
+							
+						</p>									
+					</div>
+					<div class="col-md-4">
+					</div>
+					<div class="col-md-4">
+						<!--			
+						<h3 class="titolone">Eventi a Torino</h3>
+						<p class="card-text">
+							<iframe src="https://calendar.google.com/calendar/embed?showTitle=0&amp;showNav=0&amp;showDate=0&amp;showPrint=0&amp;showTabs=0&amp;showCalendars=0&amp;showTz=0&amp;mode=AGENDA&amp;height=300&amp;wkst=2&amp;bgcolor=%23FFFFFF&amp;src=tot8ita8nd4s0p33el5f4fv9i5ff3ipk%40import.calendar.google.com&amp;color=%23B1365F&amp;ctz=Europe%2FRome" style="border-width:0" width="300" height="300" frameborder="0" scrolling="no"></iframe>
+						</p>
+						-->						
 					</div>
 				</div>
 			<hr>
-			<p>26 dicembre 2018</p>
+			<p>TONGATRON 2018
+			</p>
+			<p id="dataora">
+			
 			</div>
 		</main>
+
+		<script>
+		document.getElementById("dataora").innerHTML = Date();
+		</script>		
 
 
 		<!--bootstrap-toggle -->
