@@ -8,8 +8,9 @@ COLORI
 body {
 	font-family: 'Open Sans', sans-serif;
 	padding-bottom: 20px;
-	color: #5a5a5a;  
+	
 }
+
 
 .card-body{
 	background-color: #EFEFEF;
@@ -25,6 +26,9 @@ body {
 	color: #00808D;
 }
 
+.team p{
+	font-size: smaller;
+}
 
 .navbar {
   margin-bottom: 0px;
@@ -37,7 +41,7 @@ body {
 }
 
 .bg-light {
-    background-color: #00808D!important;
+    background-color: #2F454C!important;
 }
 
 h4{
@@ -50,7 +54,7 @@ h4{
 }
 
 .bg-dark {
-    background-color: #00808D!important;
+    background-color: #2F454C!important;
 }
 
 
