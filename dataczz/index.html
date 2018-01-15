@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<meta name="description" content="">
+		<meta name="author" content="">
+		<link rel="icon" href="/favicon.ico">
+		<title>Dataczz</title>
+		
+		<!-- Bootstrap core CSS -->
+		<link href="dist/css/bootstrap.min.css" rel="stylesheet">
+		<!-- Custom styles for this template -->
+		<link href="jumbotron.css" rel="stylesheet">
+		<!-- Icons -->
+		<link href="open-iconic/font/css/open-iconic-bootstrap.css" rel="stylesheet">
+
+
+		<!--bootstrap-toggle -->
+		<link rel="canonical" href="http://www.bootstraptoggle.com">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.3/styles/github.min.css" rel="stylesheet" >
+		<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+		<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+		<link href="bootstrap-toggle/css/bootstrap-toggle.css" rel="stylesheet">
+		<link href="bootstrap-toggle/doc/stylesheet.css" rel="stylesheet">
+		<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>		
+
+		
+		<link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,500,600,700,900" rel="stylesheet">
+		<link href="css/raspihome.css" rel="stylesheet">
+
+
+	</head>
+	<body>
+		<!--
+		<nav class="navbar fixed-top navbar-expand-md navbar-dark fixed-top bg-dark justify-content-center">
+			<img src="http://tongatron.it/img/Tongatron_white.png" alt="Tongatron" class=".img-responsive" width="30" vspace="10px">
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+			</button>
+		</nav>
+	-->
+
+
+
+
+<nav class="navbar navbar-dark bg-dark fixed-top">
+  <h3 style="color: white">DATAATATAT</h3>
+</nav>
+
+		<main role="main">
+			<!-- Main jumbotron for a primary marketing message or call to action -->
+			<div class="container">
+				<h1>dati ne abbiamo?</h1>
+			</div>
+
+			<hr>
+			<p>TONGATRON 2018
+			</p>
+			<p id="dataora">
+			
+			</div>
+		</main>
+
+		<script>
+		document.getElementById("dataora").innerHTML = Date();
+		</script>		
+
+
+
+
+
+
+
+
+
+
+
+		<!--bootstrap-toggle -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.3/highlight.min.js"></script>
+		<script src="bootstrap-toggle/doc/script.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+		<script src="bootstrap-toggle/js/bootstrap-toggle.js"></script>
+		<script>
+		    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+		    ga('create', 'UA-55669452-1', 'auto');
+		    ga('send', 'pageview');
+		</script>
+
+		<!-- Bootstrap core JavaScript
+		================================================== -->
+		<!-- Placed at the end of the document so the pages load faster -->
+		<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+		<script>window.jQuery || document.write('<script src="assets/js/vendor/jquery.min.js"><\/script>')</script>
+		<script src="assets/js/vendor/popper.min.js"></script>
+		<script src="dist/js/bootstrap.min.js"></script>
+
+
+
+
+
+		<!--https://github.com/jsoma/tabletop-->
+		<script src="myscripts.js"></script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.5.1/tabletop.min.js'></script>
+		<script type='text/javascript'>    
+		  var publicSpreadsheetUrl = 'https://docs.google.com/spreadsheets/d/1WlpeYiEkoFc4DrCiLz51bqj4Vl8sOP0_B0qL0yvcOE0/edit?usp=sharing';
+
+		  function init() {
+		    Tabletop.init( { key: publicSpreadsheetUrl,
+		                     callback: showInfo,
+		                     simpleSheet: true } )
+		  }
+
+		  function showInfo(data, tabletop) {
+		    alert('Successfully processed!')
+		    console.log(data);
+		  }
+
+		  window.addEventListener('DOMContentLoaded', init)
+		</script>			
+		
+	</body>
+</html>
