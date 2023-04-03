@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gioco a Quiz</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- Aggiungi questo codice all'interno del tag <body> -->
+<div id="quiz">
+    <h1>Gioco a Quiz</h1>
+    <form id="quizForm">
+        <div class="question">
+            <h3>Qual è il codice fiscale e p.iva della Frassati?</h3>
+            <input type="radio" name="q1" value="incorrect">VIVALAFRASSATI<br>
+            <input type="radio" name="q1" value="correct">02165980018<br>
+            <input type="radio" name="q1" value="incorrect">FRASSA203<br>
+        </div>
+        
+
+        <div class="question">
+            <h3>Cosa è consentito fare nel bagno del primo priano?</h3>
+            <input type="radio" name="q1" value="incorrect">pisciare e non sanificare adeguatamente i sanitari<br>
+            <input type="radio" name="q1" value="correct">bere l'acqua del rubinetto<br>
+            <input type="radio" name="q1" value="incorrect"> fare la numero due<br>
+        </div>
+
+        <div class="question">
+            <h3>Hai un problema col computer o con Zucchetti, è necessario rompere i maroni a quelli dell'ICT?</h3>
+            <input type="radio" name="q1" value="incorrect"> Sì, gli devo subito telefonare<br>
+            <input type="radio" name="q1" value="correct">No, posso fare uno sforzo per cavarmela e se propri non ce la faccio li contatto<br>
+            <input type="radio" name="q1" value="incorrect"> Sì, sono loro che devo risolvere le mie deficenze con un computer<br>
+        </div>
+
+
+        <div class="question">
+            <h3>un problema con Timesheet, Scheduling e simili. A cni posso rompere i maroni?</h3>
+            <input type="radio" name="q1" value="incorrect">a Giovanni Bindi<br>
+            <input type="radio" name="q1" value="correct"> a PaheA<br>
+            <input type="radio" name="q1" value="incorrect">al signor Nino Zucchetti in persona<br>
+        </div>
+
+        <div class="question">
+            <h3>Sono un dipendete a scavalco, cosa mi aspetta</h3>
+            <input type="radio" name="q1" value="incorrect"> Stai tranquillo/a<br>
+            <input type="radio" name="q1" value="correct"> Accetta il mistero<br>
+            <input type="radio" name="q1" value="incorrect">scrivi a Bertone<br>
+        </div>                                
+        <!-- Aggiungi le altre domande seguendo lo stesso schema -->
+        
+    </form>
+    <button onclick="submitQuiz()">Invia</button>
+</div>
+
+
+    <!-- Il tuo codice HTML andrà qui -->
+    <script src="script.js"></script>
+</body>
+</html>
