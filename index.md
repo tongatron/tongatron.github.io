@@ -4,12 +4,6 @@
 
 Progetti presenti, passati e futuri
 
-
-
-da capire come funziona Typora e come usare git+markdown
-
-
-
 - [Tongatron.org](https://www.tongatron.org/)
 - [Midjourney personal showcase](https://www.tongatron.org/ai-showcase)
 - [Mattia Martinengio e gli Psiconauti](https://sites.google.com/view/mm-e-gli-psiconauti/home-page)
