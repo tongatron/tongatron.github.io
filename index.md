@@ -1,8 +1,14 @@
-# Tongatron
+ 
 
 ## Pagina in decostruzione
 
-Elenco di progetti presenti, passati e futuri:
+Progetti presenti, passati e futuri
+
+
+
+da capire come funziona Typora e come usare git+markdown
+
+
 
 - [Tongatron.org](https://www.tongatron.org/)
 - [Midjourney personal showcase](https://www.tongatron.org/ai-showcase)
