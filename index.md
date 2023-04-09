@@ -14,4 +14,5 @@ Progetti presenti, passati e futuri
 - [Linkedin](https://www.discogs.com/artist/4340085-Giovanni-Bindi)
 - [Profilo Discogs](https://www.discogs.com/artist/4340085-Giovanni-Bindi)
 - [GitBook](https://tongatron.gitbook.io/tongatron/)
+- [MagazzinoSereno90](https://github.com/tongatron/MagazzinoSereno90)
 - [🔒 Pagina privata](test/gateway.html)
