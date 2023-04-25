@@ -27,11 +27,11 @@ Gira su Discord.
 
 Esempi: 
 
-https://www.midjourney.com/app/ 
+[https://www.midjourney.com/app/](https://www.midjourney.com/app/ ) 
 
-https://www.midjourney.com/app/feed/
+[https://www.midjourney.com/app/feed/](https://www.midjourney.com/app/feed/)
 
-https://www.facebook.com/groups/395755276049376 
+https://www.facebook.com/groups/395755276049376 [](https://tongatron.github.io/gtw/frassa/draft2)
 
 <img src="https://uploads-ssl.webflow.com/5de2db6d3719a1e2f3e4454c/63e474ea612cdd77de92b742_midjourney-logo-design-prompt-example_ee7977583396680886dd0d4cc13b05ad_800.png" alt="How To Write a Promt For Logo Design in Midjourney?" style="zoom:50%;" />
 
@@ -53,7 +53,7 @@ https://www.facebook.com/groups/395755276049376
 
 
 
-Guida: https://docs.midjourney.com/docs/quick-start
+Guida: [https://docs.midjourney.com/docs/quick-start](https://docs.midjourney.com/docs/quick-start)
 
 Altri link su tema prompt:
 
