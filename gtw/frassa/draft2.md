@@ -130,7 +130,7 @@ https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4375283
 ### Possibilità di utilizzo:
 
 - Bozze per comunicazione
-- ...
+- xx
 
 
 
