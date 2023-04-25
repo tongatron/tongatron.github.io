@@ -98,6 +98,8 @@ Esempi personali di utilizzo:
 
 
 
+NOTE:
+
 La chat GPT (Generative Pre-trained Transformer) è una delle chat più avanzate basate sull'intelligenza artificiale. Utilizza algoritmi di deep learning per imparare continuamente e migliorare le risposte fornite agli utenti. Inoltre, la chat GPT è in grado di generare risposte in modo autonomo, senza la necessità di essere programmata per rispondere a una specifica domanda.
 
 
