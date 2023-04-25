@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pagina Test Protetta</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+        }
+        .container {
+            max-width: 900px;
+        }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+    </style>
+
+    <script>
+        function checkPassword() {
+            const inputPassword = document.getElementById('password').value;
+            const hiddenPassword = 'frassa';
+
+            if (inputPassword === hiddenPassword) {
+                window.location.href = 'https://tongatron.gitbook.io/unodomo-conisa/'; // Modifica 'test.html' con il link della tua pagina
+            } else {
+                alert('La password inserita non è corretta. Riprova.');
+            }
+        }
+    </script>
+
+
+</head>
+<body>
+    <div class="container">
+        <div id="passwordSection" class="form-group">
+            <hr>
+            <hr>
+            <h1 class="text-center">🔒 Pagina Protetta</h1>
+            <label for="password">inserisci la password</label>
+            <input type="password" id="password" class="form-control w-50 mx-auto">
+            <button onclick="checkPassword()" class="btn btn-primary mt-3">Accedi</button>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

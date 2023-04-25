@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emoji Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f0f0f0;
+        }
+
+        h1 {
+            font-size: 3rem;
+        }
+
+        #quiz-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 1rem;
+            background-color: #fff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        #question {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .option {
+            display: inline-block;
+            padding: 1rem;
+            background-color: #f1f1f1;
+            margin: 0.5rem;
+            cursor: pointer;
+            user-select: none;
+            border-radius: 5px;
+        }
+
+        .option:hover {
+            background-color: #ddd;
+        }
+    </style>
+</head>
+<body>
+    <h1>Emoji Quiz</h1>
+    <div id="quiz-container">
+        <div id="question"></div>
+        <div id="options"></div>
+    </div>
+    <script>
+        const emojiMap = {
+            "Felice": "😀",
+            "Triste": "😢",
+            "Arrabbiato": "😠",
+            "Sorpreso": "😮",
+            "Confuso": "😕"
+        };
+
+        const questionEl = document.getElementById("question");
+        const optionsEl = document.getElementById("options");
+
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        function createQuestion() {
+            const emotions = Object.keys(emojiMap);
+            shuffle(emotions);
+            const correctEmotion = emotions[0];
+            const correctEmoji = emojiMap[correctEmotion];
+            questionEl.textContent = `Quale emoji corrisponde all'emozione "${correctEmotion}"?`;
+
+            const options = emotions.slice(0, 4).map(emotion => emojiMap[emotion]);
+            shuffle(options);
+
+            options.forEach(option => {
+                const optionEl = document.createElement("div");
+                optionEl.classList.add("option");
+                optionEl.textContent = option;
+                optionsEl.appendChild(optionEl);
+            });
+
+            return correctEmoji;
+        }
+
+        const correctEmoji = createQuestion();
+
+        optionsEl.addEventListener("click", (e) => {
+            if (e.target.classList.contains("option")) {
+                if (e.target.textContent === correctEmoji) {
+                    alert("Hai indovinato!");
+                } else {
+                    alert("Sbagliato! Riprova.");
+                }
+            }
+        });
+    </script>
+</body>
+</html>

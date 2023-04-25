@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timesheet Attività Lavorative</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1 class="my-4">Timesheet Attività Lavorative</h1>
+        
+        <form id="timesheet-form">
+            <div class="mb-3">
+                <label for="date" class="form-label">Data:</label>
+                <input type="date" id="date" name="date" class="form-control" required>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="start-time" class="form-label">Dalle ore:</label>
+                    <input type="time" id="start-time" name="start-time" class="form-control" step="900" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="end-time" class="form-label">Alle ore:</label>
+                    <input type="time" id="end-time" name="end-time" class="form-control" step="900" required>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="activity" class="form-label">Attività:</label>
+                <select id="activity" name="activity" class="form-select" required>
+                    <option value="" disabled selected>Scegli un'attività</option>
+                    <option value="attivita1">Attività 1</option>
+                    <option value="attivita2">Attività 2</option>
+                    <option value="attivita3">Attività 3</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Aggiungi</button>
+        </form>
+
+        <h2 class="my-4">Registro</h2>
+        <table id="timesheet-table" class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Data</th>
+                    <th>Ore</th>
+                    <th>Attività</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Le righe verranno aggiunte dinamicamente con JavaScript -->
+            </tbody>
+        </table>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
