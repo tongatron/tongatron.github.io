@@ -33,13 +33,23 @@ https://www.midjourney.com/app/feed/
 
 https://www.facebook.com/groups/395755276049376 
 
-![How To Write a Promt For Logo Design in Midjourney?](https://uploads-ssl.webflow.com/5de2db6d3719a1e2f3e4454c/63e474ea612cdd77de92b742_midjourney-logo-design-prompt-example_ee7977583396680886dd0d4cc13b05ad_800.png)
+<img src="https://uploads-ssl.webflow.com/5de2db6d3719a1e2f3e4454c/63e474ea612cdd77de92b742_midjourney-logo-design-prompt-example_ee7977583396680886dd0d4cc13b05ad_800.png" alt="How To Write a Promt For Logo Design in Midjourney?" style="zoom:50%;" />
 
 
 
 `a modern logo for an heatlhcare, two people hugging. Colours blue and yellow`
 
 **<img src="https://cdn.discordapp.com/attachments/1039201129612972092/1100487782809469099/tongatron_a_modern_logo_for_an_heatlhcare_two_people_hugging._C_cfb3646d-4ed8-4db9-b378-64f9de69c4b4.png" alt="img" style="zoom: 25%;" />**
+
+
+
+`Logo per una casa di riposo per anziani. Colori: blu e giallo`
+
+<img src="https://cdn.midjourney.com/23936c02-88ea-4acc-b6dc-a03347b62324/0_0.png" alt="Logo per una casa di riposo per anziani. Colori: blu e giallo" style="zoom: 25%;" />
+
+<img src="https://cdn.midjourney.com/7fac0472-6f60-4110-a3ba-28fec0e7edcc/grid_0.png" alt="beautiful-cute house icon, vivid colors, clean art style, casual mobile game art, HDR, cartoon, coin masters style, white solid background," style="zoom:33%;" />
+
+
 
 
 
@@ -62,6 +72,10 @@ https://bootcamp.uxdesign.cc/20-incredible-midjourney-prompts-that-will-blow-you
 > OpenAI is an AI research and deployment company. Our mission is to ensure that artificial general intelligence benefits all of humanity.
 
 ChatGPT è un chatbot con intelligenza artificiale che comunica con gli utenti in lingue naturali (in italiano, per esempio) e può generare testi di qualsiasi complessità e argomento. A differenza di molti altri chatbot, ChatGPT ricorda la storia della conversazione e ne comprende il contesto.
+
+La chat GPT (Generative Pre-trained Transformer) è una delle chat più avanzate basate sull'intelligenza artificiale. Utilizza algoritmi di deep learning per imparare continuamente e migliorare le risposte fornite agli utenti. Inoltre, la chat GPT è in grado di generare risposte in modo autonomo, senza la necessità di essere programmata per rispondere a una specifica domanda.
+
+
 
 <img src="https://media.beehiiv.com/cdn-cgi/image/fit=scale-down,format=auto,onerror=redirect,quality=80/uploads/asset/file/216320e2-5892-461e-be2a-3b641de4dd54/image.png" alt="img" style="zoom: 50%;" />
 
@@ -98,11 +112,7 @@ Esempi personali di utilizzo:
 
 
 
-NOTE:
 
-La chat GPT (Generative Pre-trained Transformer) è una delle chat più avanzate basate sull'intelligenza artificiale. Utilizza algoritmi di deep learning per imparare continuamente e migliorare le risposte fornite agli utenti. Inoltre, la chat GPT è in grado di generare risposte in modo autonomo, senza la necessità di essere programmata per rispondere a una specifica domanda.
-
-Xxx 
 
 
 
