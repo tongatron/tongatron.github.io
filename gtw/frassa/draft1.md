@@ -45,7 +45,7 @@ https://www.facebook.com/groups/395755276049376
 
 Guida: https://docs.midjourney.com/docs/quick-start
 
-Altri link su tema promo:
+Altri link su tema prompt:
 
 https://docs.midjourney.com/docs/explore-prompting 
 
@@ -94,9 +94,7 @@ Esempi personali di utilizzo:
   [Gioco dei dadi](https://tongatron.github.io/giochi/dado)
   [Gioco delle Emoji](https://tongatron.github.io/giochi/emoji)
   [Gioco della piemontesità di Gino ](https://tongatron.github.io/giochi/gino)
-- 
-
-
+  [Timesheet](https://tongatron.github.io/giochi/timesheet)
 
 
 
