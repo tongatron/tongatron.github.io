@@ -8,7 +8,7 @@
 
 Midjourney è una tecnologia basata sull’intelligenza artificiale in grado di creare immagini inedite a partire da descrizioni testuali. Così come altri programmi AI, sono stati addestrati ad elaborare miliardi di immagini e testi per restituire un risultato artistico.
 
-Possibilibilità di utilizzo:
+Possibilità di utilizzo:
 
 - loghi e immagini per nuovi servizi
 - grafiche per comunicazione
@@ -17,7 +17,7 @@ Possibilibilità di utilizzo:
 
 Come usarlo:
 
-- Promt
+- Prompt
 - Versione 5
 - Randomizzazione
 
@@ -79,7 +79,16 @@ La chat GPT (Generative Pre-trained Transformer) è una delle chat più avanzate
 
 <img src="https://media.beehiiv.com/cdn-cgi/image/fit=scale-down,format=auto,onerror=redirect,quality=80/uploads/asset/file/216320e2-5892-461e-be2a-3b641de4dd54/image.png" alt="img" style="zoom: 50%;" />
 
-Sito ufficiale:
+
+
+
+
+
+
+
+
+### Sito ufficiale:
+
 https://chat.openai.com/ 
 
 Versioni gratuite:
@@ -101,14 +110,35 @@ Versione a pagamento:
 Esempi personali di utilizzo:
 
 - soluzione di problemi in Excel, richiesta di formule complesse
-- ricerda delle migliori piattaforme di documentazione
-  https://tongatron.github.io/test/gateway.html
+- ricerca delle migliori piattaforme di documentazione
+  https://tongatron.github.io/gtw/doctest
   (Password: frassa)
 - creazione di pagine test con codice HTML, CSS, Bootstrap, e Javascript:
   [Gioco dei dadi](https://tongatron.github.io/giochi/dado)
   [Gioco delle Emoji](https://tongatron.github.io/giochi/emoji)
   [Gioco della piemontesità di Gino ](https://tongatron.github.io/giochi/gino)
   [Timesheet](https://tongatron.github.io/giochi/timesheet)
+
+
+
+### Papers
+
+Experimental Evidence on the Productivity Effects of Generative Artificial Intelligence
+
+https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4375283 
+
+### Possibilità di utilizzo:
+
+- Bozze per comunicazione
+- ...
+
+
+
+
+
+
+
+
 
 
 
