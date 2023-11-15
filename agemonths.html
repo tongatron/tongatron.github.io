@@ -8,100 +8,84 @@
     <style>
         body {
             font-family: 'Open Sans', sans-serif;
-            background-color: #f5f5f5; /* Cool grey background */
+            background-color: #e0f7fa; /* Very light blue background */
+            font-size: 1.1rem;
+        }
+
+        .input-field {
+            max-width: 140px;
+        }
+
+        .month-cell, .year-label {
+            width: 20px; /* Reduced width of each month cell and year label */
+            height: 20px; /* Height of each month cell */
+            display: inline-block;
+            margin: 2px;
         }
 
         .month-cell {
-            width: 30px;
-            height: 30px;
             border: 1px solid #000;
-            display: inline-block;
-            margin: 2px;
-            background-color: #ffffe0; /* Light yellow for unspent months */
+            background-color: #ffffff;
         }
 
         .spent-month {
-            background-color: #4caf50; /* Green color for spent months */
+            background-color: #4caf50;
         }
 
         #gridContainer {
             margin-top: 20px;
-            overflow-x: auto;
+            margin-bottom: 40px;
         }
 
-        .info-section {
+        .info-section, .title {
             margin-top: 30px;
-            font-size: 1rem;
-            color: #333; /* Enhanced typography */
+            margin-bottom: 20px;
+            color: #333;
         }
 
-        .btn-primary {
-            font-size: 1.2rem; /* Bigger font for button */
-            padding: 10px 20px; /* Larger button */
+        .title {
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+
+        .btn-custom {
+            font-size: 1.2rem;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border-color: #007bff;
+        }
+
+        .btn-custom:hover {
+            background-color: #0069d9;
+            border-color: #0062cc;
+        }
+
+        .year-label {
+            text-align: right;
+            margin-right: 10px;
+            line-height: 20px; /* Align vertically with month cells */
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h2 class="mt-5">Griglia dei Mesi di Vita</h2>
+        <h2 class="title mt-5">Griglia dei Mesi di Vita</h2>
         <form id="lifeForm" class="mt-4">
-            <div class="form-group">
-                <label for="age">Inserisci la tua età in anni:</label>
-                <input type="number" class="form-control" id="age" name="age" min="0" required>
-            </div>
-
-            <div class="form-group">
-                <label for="sex">Qual è il tuo sesso:</label>
-                <select class="form-control" id="sex">
-                    <option value="Male">Maschio</option>
-                    <option value="Female">Femmina</option>
-                </select>
-            </div>
-
-            <button type="button" class="btn btn-primary btn-lg" onclick="generateGrid()">Esegui</button>
+            <!-- Input fields and button here -->
         </form>
 
-        <div id="gridContainer">
-            <!-- La griglia verrà generata qui -->
+        <div class="info-section">
+            <!-- Information section content here -->
         </div>
 
-        <div class="info-section">
-            <h4>Informazioni sulla Griglia dei Mesi di Vita</h4>
-            <p>
-                Questa griglia rappresenta i mesi di una vita umana. Ogni piccola cella corrisponde a un mese.
-                I mesi che hai già vissuto sono contrassegnati in <strong>verde</strong>. Le celle in <strong>giallo chiaro</strong> rappresentano i mesi ancora da vivere, basandosi sull'aspettativa di vita media in Italia secondo l'ISTAT 2023 
-                (80 anni per i maschi, 85 anni per le femmine). È uno strumento potente per la riflessione e la pianificazione, 
-                incoraggiando un approccio consapevole al modo in cui trascorriamo i nostri mesi.
-            </p>
+        <div id="gridContainer">
+            <!-- Grid will be generated here -->
         </div>
     </div>
 
     <script>
-        function generateGrid() {
-            var age = document.getElementById('age').value;
-            var sex = document.getElementById('sex').value;
-            var lifeExpectancy = sex === 'Male' ? 80 : 85;
-            var totalMonths = lifeExpectancy * 12;
-            var spentMonths = age * 12;
-
-            var gridContainer = document.getElementById('gridContainer');
-            gridContainer.innerHTML = ''; // Pulisci la griglia precedente
-
-            for (var i = 0; i < totalMonths; i++) {
-                var monthCell = document.createElement('div');
-                monthCell.className = 'month-cell';
-
-                if (i < spentMonths) {
-                    monthCell.classList.add('spent-month');
-                }
-
-                gridContainer.appendChild(monthCell);
-                
-                if ((i + 1) % 12 === 0) { // Break line after every 12 months
-                    gridContainer.appendChild(document.createElement("br"));
-                }
-            }
-        }
+        // JavaScript function generateGrid() here
     </script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </body>
