@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Griglia delle Settimane di Vita</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .week-cell {
+            width: 10px;
+            height: 10px;
+            border: 1px solid #000;
+            display: inline-block;
+            margin: 1px;
+        }
+
+        .spent-week {
+            background-color: black;
+        }
+
+        #gridContainer {
+            margin-top: 20px;
+            overflow-x: auto;
+        }
+
+        .info-section {
+            margin-top: 30px;
+            font-size: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 class="mt-5">Griglia delle Settimane di Vita</h2>
+        <form id="lifeForm" class="mt-4">
+            <div class="form-group">
+                <label for="age">Inserisci la tua età in anni:</label>
+                <input type="number" class="form-control" id="age" name="age" min="0" required>
+            </div>
+
+            <div class="form-group">
+                <label for="sex">Qual è il tuo sesso:</label>
+                <select class="form-control" id="sex">
+                    <option value="Male">Maschio</option>
+                    <option value="Female">Femmina</option>
+                </select>
+            </div>
+
+            <button type="button" class="btn btn-primary" onclick="generateGrid()">Esegui</button>
+        </form>
+
+        <div id="gridContainer">
+            <!-- La griglia verrà generata qui -->
+        </div>
+
+        <div class="info-section">
+            <h4>Informazioni sulla Griglia delle Settimane di Vita</h4>
+            <p>
+                Questa griglia rappresenta le settimane di una vita umana. Ogni piccola cella corrisponde a una settimana.
+                Le settimane che hai già vissuto sono contrassegnate in <strong>nero</strong>. Questa rappresentazione visiva
+                serve come promemoria del tempo trascorso e del tempo stimato rimanente, basato sulle aspettative di vita medie 
+                (80 anni per i maschi, 85 anni per le femmine). È uno strumento potente per la riflessione e la pianificazione, 
+                incoraggiando un approccio consapevole al modo in cui trascorriamo le nostre settimane.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        function generateGrid() {
+            var age = document.getElementById('age').value;
+            var sex = document.getElementById('sex').value;
+            var lifeExpectancy = sex === 'Male' ? 80 : 85;
+            var totalWeeks = lifeExpectancy * 52;
+            var spentWeeks = age * 52;
+
+            var gridContainer = document.getElementById('gridContainer');
+            gridContainer.innerHTML = ''; // Pulisci la griglia precedente
+
+            for (var i = 0; i < totalWeeks; i++) {
+                var weekCell = document.createElement('div');
+                weekCell.className = 'week-cell';
+
+                if (i < spentWeeks) {
+                    weekCell.classList.add('spent-week');
+                }
+
+                gridContainer.appendChild(weekCell);
+            }
+        }
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>
