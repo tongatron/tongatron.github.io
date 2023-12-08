@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Birthday Weekday Finder</title>
+<script>
+function findBirthdays() {
+    var input = document.getElementById("birthdate").value;
+    var birthday = new Date(input);
+    if (isNaN(birthday.getTime())) {
+        alert("Please enter a valid date in the format YYYY-MM-DD.");
+        return;
+    }
+
+    var birthDay = birthday.toLocaleString('en-us', { weekday: 'long' });
+    var matchingYears = [];
+    var currentYear = new Date().getFullYear();
+
+    for (var year = birthday.getFullYear(); year <= currentYear; year++) {
+        var sameDayBirthday = new Date(year, birthday.getMonth(), birthday.getDate());
+        if (sameDayBirthday.toLocaleString('en-us', { weekday: 'long' }) === birthDay) {
+            matchingYears.push(year);
+        }
+    }
+
+    var result = "You were born on a " + birthDay + ".\nYour birthday fell on a " + birthDay + " in these years: " + matchingYears.join(", ");
+    document.getElementById("result").innerText = result;
+}
+</script>
+</head>
+<body>
+    <h2>Birthday Weekday Finder</h2>
+    <p>Enter your birth date (YYYY-MM-DD):</p>
+    <input type="date" id="birthdate">
+    <button onclick="findBirthdays()">Run</button>
+    <p id="result"></p>
+</body>
+</html>
