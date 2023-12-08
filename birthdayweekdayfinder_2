@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birthday Weekday Finder</title>
+    <link href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.10.1/main.min.css' rel='stylesheet' />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        #birthdate {
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #calendar {
+            max-width: 900px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Birthday Weekday Finder</h2>
+    <input type="date" id="birthdate">
+    <button onclick="findBirthdays()">Find</button>
+    <div id='calendar'></div>
+
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.10.1/main.min.js'></script>
+    <script>
+        function findBirthdays() {
+            var input = document.getElementById("birthdate").value;
+            var birthday = new Date(input);
+            if (isNaN(birthday.getTime())) {
+                alert("Please enter a valid date.");
+                return;
+            }
+
+            var events = [];
+            var currentYear = new Date().getFullYear();
+
+            for (var year = birthday.getFullYear(); year <= currentYear; year++) {
+                var sameDayBirthday = new Date(year, birthday.getMonth(), birthday.getDate());
+                if (sameDayBirthday.getDay() === birthday.getDay()) {
+                    events.push({
+                        title: 'Birthday',
+                        start: sameDayBirthday.toISOString().split('T')[0]
+                    });
+                }
+            }
+
+            var calendarEl = document.getElementById('calendar');
+            calendarEl.innerHTML = ''; // Clear previous calendar instances
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                events: events
+            });
+            calendar.render();
+        }
+    </script>
+</body>
+</html>
