@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Errore Stile Windows 98</title>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            overflow: hidden;
+            background-color: #0000AA; /* Sfondo blu tipico di Windows 98 BSOD */
+            color: white;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        .glitch {
+            position: absolute;
+            font-size: 18px;
+            display: inline-block;
+            white-space: nowrap;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <script>
+        function randomString(length) {
+            var chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ_';
+            var result = '';
+            for (var i = 0; i < length; i++) {
+                var rnum = Math.floor(Math.random() * chars.length);
+                result += chars.substring(rnum, rnum + 1);
+            }
+            return result;
+        }
+
+        function createGlitch() {
+            var glitch = document.createElement('div');
+            glitch.className = 'glitch';
+            glitch.textContent = randomString(50); // Testo più lungo per emulare i messaggi di errore
+            glitch.style.left = Math.random() * window.innerWidth + 'px';
+            glitch.style.top = Math.random() * window.innerHeight + 'px';
+            document.body.appendChild(glitch);
+
+            setTimeout(function() {
+                document.body.removeChild(glitch);
+            }, 500); // Durata del singolo glitch
+        }
+
+        setInterval(createGlitch, 200); // Frequenza di generazione dei glitch
+    </script>
+</body>
+</html>
