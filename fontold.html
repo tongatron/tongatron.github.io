@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arte Digitale Dinamica</title>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            background: black;
+            display: flex;
+            flex-direction: column;
+            justify-content: start;
+            align-items: center;
+            font-family: 'Courier New', Courier, monospace;
+            overflow: hidden;
+        }
+
+        .typewriter-text {
+            white-space: pre-wrap;
+            font-size: 20px;
+            margin: 0;
+            width: 100%;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const numLines = Math.floor(window.innerHeight / 24); // Aprox. number of lines to fill the screen, assuming 24px line height
+            for(let i = 0; i < numLines; i++) {
+                const line = document.createElement('div');
+                line.classList.add('typewriter-text');
+                line.setAttribute('id', 'line' + i);
+                document.body.appendChild(line);
+            }
+
+            function generateRandomText() {
+                const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+                let result = '';
+                const charactersLength = characters.length;
+                for (let i = 0; i < 50; i++ ) { // Adjust for desired line length
+                    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+                }
+                return result;
+            }
+
+            function getRandomColor() {
+                const letters = '0123456789ABCDEF';
+                let color = '#';
+                for (let i = 0; i < 6; i++) {
+                    color += letters[Math.floor(Math.random() * 16)];
+                }
+                return color;
+            }
+
+            function updateTextAndColor() {
+                for(let i = 0; i < numLines; i++) {
+                    const line = document.getElementById('line' + i);
+                    line.textContent = generateRandomText();
+                    line.style.color = getRandomColor();
+                }
+            }
+
+            setInterval(updateTextAndColor, 3000);
+            updateTextAndColor();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Countdown Timer</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #343a40; /* grigio scuro */
+      color: #fff; /* testo bianco */
+    }
+    .container {
+      text-align: center;
+    }
+    .btn-custom {
+      background-color: #007bff; /* blu */
+      border-color: #007bff;
+      color: #fff; /* testo bianco */
+      font-size: 36px;
+      padding: 20px 40px;
+    }
+    .btn-custom:disabled {
+      background-color: #6c757d; /* grigio medio */
+      border-color: #6c757d;
+      cursor: not-allowed; /* cursore non cliccabile */
+    }
+    .countdown-text {
+      display: none;
+      font-family: 'Courier New', Courier, monospace; /* carattere courier */
+      font-size: 24px;
+      margin-top: 20px;
+      color: #fff; /* testo bianco */
+    }
+    #confetti {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      pointer-events: none; /* rende l'elemento non cliccabile */
+      z-index: 9999; /* assicura che i coriandoli siano sopra gli altri elementi */
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Countdown Timer</h1>
+    <button id="start-btn" class="btn btn-primary btn-custom">Esegui</button>
+    <div id="countdown-text" class="mt-3 countdown-text">
+      <!-- Testo visualizzato al termine del countdown -->
+      <pre id="countdown-text-content"></pre>
+    </div>
+  </div>
+  <canvas id="confetti"></canvas>
+
+  <!-- Bootstrap JS and jQuery -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+  <!-- Confetti.js -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.0.0"></script>
+
+  <script>
+    var countdownInterval;
+    var secondsLeft;
+
+    function startCountdown() {
+      var btn = document.getElementById('start-btn');
+      var countdownText = document.getElementById('countdown-text');
+      btn.disabled = true; // Disabilita il pulsante
+      btn.classList.remove('btn-primary');
+      btn.classList.add('btn-custom');
+      countdownText.style.display = 'block'; // Mostra il testo del countdown
+
+      var initialTime = new Date().getTime();
+      countdownInterval = setInterval(function() {
+        var currentTime = new Date().getTime();
+        var elapsedTime = Math.floor((currentTime - initialTime) / 1000);
+        secondsLeft = 60 - elapsedTime;
+
+        if (secondsLeft <= 0) {
+          clearInterval(countdownInterval);
+          countdownText.innerHTML = "<pre id='countdown-text-content'> ____      _   _____                       _                   <br>|  _ \\    | | |_   _|__  _ __   __ _  __ _| |_ _ __ ___  _ __  <br>| | | |_  | |   | |/ _ \\| '_ \\ / _` |/ _` | __| '__/ _ \\| '_ \\ <br>| |_| | |_| |   | | (_) | | | | (_| | (_| | |_| | | (_) | | | |<br>|____/ \\___/    |_|\\___/|_| |_|\\__, |_|\\__,_|\\__|_|  \\___/|_| |_|<br>                               |___/                           </pre>";
+          document.body.style.backgroundColor = getRandomColor(); // Cambia il colore di sfondo
+          startConfetti(); // Avvia l'effetto coriandoli
+        } else {
+          countdownText.innerHTML = "Respira per 1 minuto!<br>Tempo rimanente: " + secondsLeft + " secondi"; // Visualizza il testo aggiuntivo
+        }
+      }, 1000); // Intervallo di aggiornamento del countdown (1000ms = 1 secondo)
+    }
+
+    document.getElementById('start-btn').addEventListener('click', startCountdown);
+
+    // Gestione del cambio tab del browser
+    document.addEventListener('visibilitychange', function() {
+      if (document.visibilityState === 'hidden') {
+        clearInterval(countdownInterval);
+      } else {
+        startCountdown();
+      }
+    });
+
+    // Funzione per generare un colore casuale
+    function getRandomColor() {
+      var letters = '0123456789ABCDEF';
+      var color = '#';
+      for (var i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+      }
+      return color;
+    }
+
+    // Funzione per avviare l'effetto coriandoli
+    function startConfetti() {
+      var confettiSettings = {
+        particleCount: 200,
+        spread: 200,
+        startVelocity: 40,
+        decay: 0.9,
+        gravity: 1,
+        colors: ['#ff0000', '#00ff00', '#0000ff']
+      };
+      confetti(confettiSettings);
+    }
+  </script>
+</body>
+</html>
