@@ -1,0 +1,317 @@
+/*.clearfix:before,
+.clearfix:after {
+  display: table;
+  content: " ";
+}
+.clearfix:after, .clear {
+  clear: both;
+}*/
+
+/*.appearance_page_options-framework #adminmenuwrap {	z-index: 2;	}*/
+.popover-title { display: none; }
+.popover img { max-width: 100%; }
+
+/* GENERAL FIXES */
+#eo_outer-wrap #optionsframework .section .heading {
+  margin-bottom: 0.4em;
+    padding-bottom: 0.2em;
+}
+#eo_outer-wrap #optionsframework .section {
+	padding: 0.2em 1em;
+	margin-bottom: 0;
+}
+
+.opt-group .panel-collapse .panel-body {
+	padding: 0 1em;	
+}
+.chosen-container { min-width: 10em;}
+.panel-group > h3 {display: none;}
+.optionsframework-submit.panel.panel-default {	margin-bottom: 0.4em;}
+.hidtype, .hidv {display: none;}
+/*
+.empty, .not-met {
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=60)";
+  filter: alpha(opacity=60);
+  -moz-opacity: 0.6;
+  -khtml-opacity: 0.6;
+  opacity: 0.6;
+}
+.empty:hover, .not-met:hover {
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=90)";
+  filter: alpha(opacity=90);
+  -moz-opacity: 0.9;
+  -khtml-opacity: 0.9;
+  opacity: 0.9;
+}
+.empty a.innerwrap,  .not-met a.innerwrap {
+  background: none repeat scroll 0 0 #FFFFFF;
+    border-right: 3px solid #ccc;
+    box-shadow: -1em 1em 1em 1em #FFFFFF;
+    display: block;
+    height: 100%;
+    overflow: hidden;
+    padding-left: 1em;
+    position: absolute;
+    right: 0;
+    width: 40%;
+    z-index: 2;
+	cursor: default;
+}
+.empty:hover a.innerwrap , .not-met:hover a.innerwrap {
+	display:none;
+}
+.empty a.innerwrap:hover, .empty a.innerwrap:active, .empty a.innerwrap:focus, .not-met a.innerwrap:hover, .not-met a.innerwrap:active, .not-met a.innerwrap:focus {
+ 	background: none;
+    border-right: none;
+    box-shadow: none;
+    display: none;
+   overflow: hidden;
+    padding-left: 1em;
+    z-index: 0;
+}
+*/
+#eo_outer-wrap #optionsframework .controls .of-typography-face { width: 10em;}
+#eo_outer-wrap #optionsframework .controls .of-typography-face.face-gwf { width: 12em;}
+
+.bootstrap-ultimate .panel-group > h3 {
+	display: none;}
+	
+.bootstrap-ultimate .bs-callout-warning {
+	background-color: #faf8f0;
+	border-color: #faebcc;
+}
+.bootstrap-ultimate .bs-callout {
+	margin: 20px 0;
+	padding: 20px;
+	border-left: 3px solid #eee;
+}	
+.bootstrap-ultimate .bs-callout-warning h4 {
+color: #c09853;
+}
+.bootstrap-ultimate .bs-callout h4 {
+margin-top: 0;
+margin-bottom: 5px;
+}
+
+.bootstrap-ultimate #optionsframework .section .explain {
+    font-size: 12px;
+    line-height: 1em;
+    max-width: none;
+	margin-top: 0.4em;
+}
+.bootstrap-ultimate #optionsframework .section .explain.onoffswitch-label {    margin-top: 0;}
+
+.bootstrap-ultimate .chosen-container {
+    float: left;
+}
+.bootstrap-ultimate .eo_abs .wp-color-result {
+	height: auto;	
+}
+.bootstrap-ultimate .eo_abs #optionsframework .section .controls {	padding-right: 0}
+.bootstrap-ultimate .eo_abs .explain {	padding-left: 0.8em}
+.bootstrap-ultimate .eo_abs .explain.onoffswitch-label {
+    padding-left: 0;
+}
+.linvalidl input { border-color: #F00;}
+
+
+
+/* TINY ADMIN BSW THEME FIXES */
+.bootstrap-ultimate .cyborg {
+	background-color: #060606;
+}
+.bootstrap-ultimate .slate h1, .bootstrap-ultimate .slate h2,.bootstrap-ultimate .slate h3,.bootstrap-ultimate .slate h4 {
+	color: #eee;
+	text-shadow: -1px 1px #000;
+}
+
+
+#eo_outer-wrap {
+/*margin-left: 1px;
+padding-left: 165px;*/
+}
+.glyphicon {
+    left: -1px;
+    top: 3px;
+}
+#topnavwrap .glyphicon {
+    left: -3px;
+    top: 3px;
+}
+#eo_outer-wrap #eo_bs_side_menu .panel {
+	margin-bottom:0;	
+}
+a.nav-tab {
+	text-shadow: none;
+}
+#eo_outer-wrap #eo_bs_side_menu ul.bs-sidenav li.root {
+	margin-bottom:0.4em;	
+}
+.optionsframework-submit {
+padding: 7px 10px;
+border-top: 1px solid #ECECEC;
+background-color: #F1F1F1;
+background: #f6f8f9; /* Old browsers */
+/* IE9 SVG, needs conditional override of 'filter' to 'none' */
+background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2Y2ZjhmOSIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iI2U1ZWJlZSIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjUyJSIgc3RvcC1jb2xvcj0iI2UzZTdlZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNmNWY3ZjkiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+background: -moz-linear-gradient(top,  #f6f8f9 0%, #e5ebee 50%, #e3e7ef 52%, #f5f7f9 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f6f8f9), color-stop(50%,#e5ebee), color-stop(52%,#e3e7ef), color-stop(100%,#f5f7f9)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top,  #f6f8f9 0%,#e5ebee 50%,#e3e7ef 52%,#f5f7f9 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top,  #f6f8f9 0%,#e5ebee 50%,#e3e7ef 52%,#f5f7f9 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top,  #f6f8f9 0%,#e5ebee 50%,#e3e7ef 52%,#f5f7f9 100%); /* IE10+ */
+background: linear-gradient(to bottom,  #f6f8f9 0%,#e5ebee 50%,#e3e7ef 52%,#f5f7f9 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f6f8f9', endColorstr='#f5f7f9',GradientType=0 ); /* IE6-8 */
+}
+.optionsframework-submit .btn.save {
+	float: right;
+}
+#eo_outer-wrap .panel > .panel-heading a {
+	display: block;
+}
+
+box-shadow: 0 -1px 6px #EEEEEE inset;
+
+.opt-group .panel-collapse {
+	background-color: #fff; /* Needed for IEs */
+
+	-moz-box-shadow: 0 -1px 6px #EEEEEE inset;
+	-webkit-box-shadow: 0 -1px 6px #EEEEEE inset;
+	box-shadow: 0 -1px 6px #EEEEEE inset;
+
+	filter: progid:DXImageTransform.Microsoft.Blur(PixelRadius=3,MakeShadow=true,ShadowOpacity=0.20);
+	-ms-filter: "progid:DXImageTransform.Microsoft.Blur(PixelRadius=3,MakeShadow=true,ShadowOpacity=0.20)";
+	zoom: 1;
+}
+.opt-group .panel-collapse .panel-body {
+	position: relative; /* This protects the inner element from being blurred */
+}
+
+
+#eo_outer-wrap #eo_bs_side_menu .panel > .panel-heading a {
+	font-weight: bold;	
+}
+#eo_outer-wrap #eo_bs_side_menu .panel-heading {
+	padding: 0.4em 1em;
+}
+#eo_outer-wrap #eo_bs_side_menu .list-group-item-li {
+	margin-bottom: 1px;
+}
+#eo_outer-wrap #eo_bs_side_menu .list-group-item {
+	padding: 0.2em 0.4em;
+}
+#eo_outer-wrap h2 .nav-tab {
+    font-size: 12px;
+    font-weight: normal;
+/*    line-height: 1em;*/
+    padding: 0.6em 0.8em 0.8em;
+}
+#eo_outer-wrap .nav-tab-wrapper {
+	border-bottom: 0;
+}
+#eo_outer-wrap #eo_bs_side_menu {
+	padding-top: 1em;
+}
+
+
+/* Additional Options Framework Admin Styles */
+a.accordion-toggle {display: block;	}
+
+.hidden {    visibility: visible !important;} /*_eo fix clash with bootstrap */
+.updated.fade.settings-error {
+	opacity: 1;
+}
+#optionsframework .section .controls {
+    min-width: 160px;
+}
+#optionsframework .controls .of-radio-img-img { display: inline} /*for radio imgs no-js*/
+#optionsframework .controls .of-radio-img-img { opacity: 0.9;}
+#optionsframework .controls:hover img { opacity: 0.6;}
+#optionsframework .controls:hover .of-radio-img-img:hover { opacity: 1; background: #222;}
+.bootstrap-ultimate .eo_abs #optionsframework {    max-width: none !important;}
+.bootstrap-ultimate .eo_abs a.preq  { margin-left: 0.2em;}
+.bootstrap-ultimate .eo_abs h4 div.popover  { font-size: 80%; color:#222; padding: 0.4em;}
+
+.eo_fleft {
+	float: left !important;
+}
+
+#optionsframework .button-primary#check-bootswatch {
+	float:left;
+}
+#optionsframework .section .option .controls {
+	width: 100%;
+}
+#optionsframework .controls .of-radio-img-img.img-thumbnail {
+    margin: 0 ;
+}
+
+.eo_abs #optionsframework .section .option .controls {
+    width: auto;
+	min-width: 160px;
+}
+.accordion-toggle .glyphicon-collapse-down { display: none;}
+.accordion-toggle.collapsed .glyphicon-collapse-up { display: none;}
+.accordion-toggle.collapsed .glyphicon-collapse-down { display: inline;}
+
+body {
+    height: auto;
+    min-height: 100%;
+}
+#eo_outer-wrap.container.xl {width: 1600px;}
+#eo_outer-wrap.container.fluid {width: 100%;}
+.panel-body.row {
+	margin: 0;
+}
+h4.heading abbr {
+border: none;	
+}
+.eo_abs .panel-group .panel {
+    overflow: visible;
+}
+/* _eo-review: chosen getting clipped quick fix, look into it 
+Cool- the above was the problem :D both fixed.
+.chosen-with-drop .chosen-drop{position: relative !important;}*/
+
+#eo_outer-wrap #optionsframework .section-checkbox .explain {
+	max-width: 90%;
+	}
+#eo_outer-wrap #optionsframework input.checkbox, #optionsframework input.of-radio {
+width: auto;
+margin-right: 0.4em;
+max-width: 90%;
+}
+#eo_outer-wrap img {
+    display: block;
+    height: auto;
+    max-width: 100%;
+}
+/*
+@media (max-width: 1169px) {  Clear only lg screens 
+
+.clearrow.clearfix {display: none;}
+} 
+*/
+/*
+.panel-heading {
+    border-bottom: 1px solid rgba(0, 0, 0, 0);
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    padding: 10px 15px;
+}*/
+.alert.dismsg h4 {margin-bottom: 0.1em;}
+.alert.dismsg {
+  padding: 0.4em 1em;
+  margin-bottom: 0.2em;
+  line-height: 1em;
+}
+#optionsframework .controls .of-radio-img-img.of-radio-img-selected {
+background: none repeat scroll 0 0 #EFAA46;
+    border: 1px solid #000000;
+	opacity: 1;
+}
+.sing_dmsg {	display: none;}
+.eo_bgthumb { max-height: 7em; width: auto;}
+#section-main_bg_img {
+   height: 600px;
+   overflow-y: scroll;
+}

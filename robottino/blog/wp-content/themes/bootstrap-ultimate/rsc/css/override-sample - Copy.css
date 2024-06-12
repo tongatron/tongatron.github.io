@@ -1,0 +1,6 @@
+/* One css file to rule them all 
+Put your css code here that you want tı override everything else, ie. bootstrap, default theme, additional theme, extensions whatever
+*/
+a {
+	color: red;	
+}

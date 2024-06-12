@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="testa robotica rotante, attacca Robottino su una scheda Arduino e programma i suoi comportamenti">
+    <meta name="author" content="Giovanni Bindi">
+    <meta name="keywords" content="robottino, robot, head, arduino, shield, yun, leonardo, sensors, actuators, ultrasonic, distance, sensor,
+    piezo, buzzer, display, oled, led, rgb, photoresistor, servomotor, servomotore, giocattolo, toy">
+    	      <title>Make a Robottino</title>
+
+
+
+    <link href='http://fonts.googleapis.com/css?family=Exo+2:400,100,200,300,500,600,700,800,900,400italic' rel='stylesheet' type='text/css'>
+    
+
+	<!--Facebook Open Graph tags-->
+    <meta property="og:site_name" content=“Robottino”/>
+    <meta property="og:title" content="testa rotante interattiva" />
+    <meta property="og:type" content="website" />
+	<meta property="og:description" content="Robottino è un prototipo di robot programmabile.
+	Aggancia una scheda Arduino sulla sua schiena e programmalo combinandone i componenti: un piccolo display, sensori ambientali, suoni, luci colorate, e la 	micidiale testa rotante. Connettilo ad internet per farlo interagire con tutto il mondo web." />
+	<meta property="fb:app_id" content="271016663109135" />
+	<meta property="og:url" content="http://www.robottino.cc" />
+	<meta property="og:image" content="http://www.robottino.cc/img/robottino_fb_share.jpg" />
+
+    <!-- Bootstrap core CSS -->
+    <link href="../dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="../js/ie-emulation-modes-warning.js"></script>
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../js/ie10-viewport-bug-workaround.js"></script>
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="../https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="../https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Custom styles for this template -->
+    <link href="../carousel.css" rel="stylesheet">
+    <link href="../dist/css/bootstrap-theme.css" rel="stylesheet">
+    
+    
+    <style type="text/css">    
+      * {
+      font-family: 'Exo 2', sans-serif;
+      color: #3c3c3c;
+      <div></div>border: gray dotted 1px;
+      }
+
+    body {
+      /*background-color: white;*/
+	  background:#eaeaea;
+	  margin 0;
+	  padding 0;
+	  	  background-image:url('http://www.robottino.cc/img/background_pattern/stardust/stardust_neg.png');
+	  background-repeat: repeat;
+    }
+    
+    p{
+	    font-size: large;
+    }
+    
+    li{
+	    font-size: large;
+    }
+    
+  
+     a:hover{
+       color: #3c3c3c;
+       text-decoration: none;
+     }
+
+     a{
+       font-weight: 500;
+       color:#d9534f;
+     }
+     
+     .wide a{
+		color: white;
+		font-size: 70px;
+		font-weight: 900;     	     
+     }
+
+     .wide a:hover{
+       color: #3c3c3c;
+       text-decoration: none;   	     
+     }
+
+     
+     .wide {
+	  width:100%;
+	  background-color:#d9534f;
+
+	  margin-bottom: 0px;
+	  }
+	  
+	  .wide p{
+		  color: white;
+		  font-size: 18px;
+		  font-weight: 500;
+	  }
+	  
+	  .wide h1{
+		color: white;
+		font-size: 70px;
+		font-weight: 900;
+	  }
+	  
+	  .wide h2{
+		color: white;
+		font-size: 25px;
+		font-weight: 800;
+	  }
+	  
+	  
+	  h1{
+		  font-weight: 900;
+	  }
+
+	  h2{
+		  font-weight: 900;
+	  }
+
+	  h4{
+		  font-weight: 800;
+	  }
+	  
+
+
+
+	
+	.background_star{
+	  background-image: url("http://www.robottino.cc/img/background_pattern/stardust/stardust.png");
+	  background-repeat: repeat;
+	  margin 0;
+	  padding 0;
+	}
+
+		.distance{
+		margin-top: 30px;
+		margin-bottom: 30px;
+		padding-top: 30px;
+		padding-bottom: 30px;
+	}
+	
+	hr {
+       border : 0;
+       height : 15px;
+       background : url(hr.gif) 50% 0 no-repeat;
+       margin : 1em 0;
+       }
+       
+		  .bordi_smooth{
+		  border-radius: 14px 14px 14px 14px;
+		  -moz-border-radius: 14px 14px 14px 14px;
+		  -webkit-border-radius: 14px 14px 14px 14px;
+	  }
+	  
+	  #mc_embed_signup{ clear:left; }      
+  
+    </style>
+    
+  </head>
+
+  <body>
+  
+  <script>  /* Google Analytics */
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-55300441-1', 'auto');
+  ga('send', 'pageview');
+  </script>
+    
+  <script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '271016663109135',
+      xfbml      : true,
+      version    : 'v2.1'
+    });
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+</script>
+
+  
+  <div class="jumbotron wide" align="left">
+  	<div class="container">
+  		<div class="col-md-12" align="center">
+  			<img class="img-circle" src="http://www.robottino.cc/img/making_small.jpg" style="width: 140px; height: 140px;"><br><br>
+  			<h1><a href="http://www.robottino.cc/eng.html">robottino.cc</a><span style="color:yellow">/make</span></h1>  			
+  		</div>
+
+  	</div>
+  </div>
+  
+
+  <div style="padding-top:30px;padding-bottom:30px;">
+	  <div class="container"> <!--container-->
+	  
+
+	  	
+		  <div class="col-md-12">
+		  <h2>THINGS YOU NEED</h2>
+		  	<div class="row">
+		  	<br>
+		  	<div class="col-md-12">
+		  		<p><strong>ARDUINO BOARD</strong></p>
+		  		<p>
+		  		Robottino is compatible with <a href="http://arduino.cc/en/Main/Products">Arduino boards</a>: Uno, Leonardo, Yùn (web connection).
+		  		</p>
+		  		<br>
+		  	</div>
+
+		  	
+		  	<div class="col-md-6">
+		  	<p><strong>COMPONENTS</strong></p>
+		  	 	<p>
+				cost: 30-35 $
+				</p>
+				<p>
+				<ul>
+				<li>OLED Display 128 x 64 (<a target="_blank" href="http://www.seeedstudio.com/depot/Grove-OLED-Display-112-p-781.html">view</a>)</li>
+				<li>Ultrasonic Ranging Module<br>HC-SR04 (<a target="_blank" href="http://www.robot-italy.com/it/itead-ultrasonic-ranging-module-hc-sr04.html">view</a>)</li>
+				<li>Analog 180° Micro Servo module (<a target="_blank" href="http://store.arduino.cc/product/T010050">view</a>)</li>
+				<li>Diffuse LED rgb 10 mm (<a target="_blank" href="http://www.robot-italy.com/it/diffused-led-rgb-10mm.html">view</a>)</li>
+				<li>Small Buzzer 5V (<a target="_blank" href="http://it.rs-online.com/web/p/buzzer-piezoelettrici/2959516/">view</a>)</li>
+				<li>2 x Small photoresistors (<a target="_blank" href="http://store.arduino.cc/product/C000025">view</a>)</li>
+				<li>Pin Female Header, with extra long legs (<a href="http://www.robot-italy.com/it/arduino-stackable-header-8-pin.html">view</a>)<br>
+				(2 x 8 ways, 1 x 6 ways, 1 x 10 ways)</li>
+				<li>Resistors: 3 x 200 Ohm resistors, 2 x 1K Ohm</li>
+				<li>1 Capacitor 100 uf</li>
+				</ul>
+				</p>	
+				<br>
+		  	</div>
+		  	<div class="col-md-6">
+				<p><strong>TOOLS</strong></p>
+				<ul>
+				<li>Soldering iron and flux</li>
+				<li>Wires</li>
+				<li>Heat-shrink tubing</li>
+				<li>Hot-glue gun</li>
+				</ul>
+				<br>
+			</div>
+		  	</div>
+		  
+			<h2>SCHEMATICS AND DESIGN</h2>
+			<p>
+			The breadboard file and the circuit scheme will guide you through the wiring of electronics components.<br>
+			Use the design file (.eps) to make the case, you need an MDF panel with 4mm thickness and access to a lasercut machine.
+			</p>
+			<p>
+			<a href="http://www.robottino.cc/make/files/ROBOTTINO%205%2C%20design%20files.zip" class="btn btn-default btn-lg" role="button" target="target _blank"><span class="glyphicon glyphicon-download-alt"></span>  Download files</a>
+			</p>
+		  	<br>
+		  	
+		  	<h2>CODES</h2>
+			<p>
+			Arduino programs and libraries are free and public, you can download the software or contribute to its development:
+			</p>
+			<p>
+			<img src="http://www.robottino.cc/img/icons/github_red.png" width="60">
+			<a target="_blank" href="https://github.com/tongatron/Robottino" style="font-weight:800;font-size:20px;">Robottino on GitHub</a>
+			<br>
+			</p>
+
+			<br>
+		  
+
+		  	
+		  </div>
+		  
+		  <hr>
+		  <div class="col-md-12 distance">		  
+  			<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a>
+  			<br>
+  			<p>
+  			Attribution-NonCommercial-ShareAlike 4.0 International License
+		    </p>
+		  </div>
+		  
+		
+
+	  </div> <!--container-->
+	  
+
+		  
+	  </div
+
+  <hr>
+  
+
+  
+  <!--
+  <div class="row">
+  <div class="col-md-12">
+	  <h3>cos'è Arduino</h3>
+	  <p>Arduino è una scheda di prototipazione elettronica open-source.<br>
+	  <a href="http://arduino.cc">arduino.cc</a>
+	  </p>
+	  <h3>il progetto Robottino</h3>
+	  <p>Robottino è sviluppato presso il FabLab Torino, un laboratorio di fabbricazione digitale.<br>
+		  <a href="http://fablabtorino.org">fablabtorino.org</a>
+	  </p>
+  </div>
+  </div>
+  -->
+  
+  
+
+	  
+	  <!--
+	  <div class="col-md-6">
+	  		<h1>iscriviti alla mailing list</h1>
+			<link href="//cdn-images.mailchimp.com/embedcode/classic-081711.css" rel="stylesheet" type="text/css">
+			<style type="text/css">
+				#mc_embed_signup{background:#fff; clear:left; font:14px Helvetica,Arial,sans-serif;  width:350px;}
+				/* Add your own MailChimp form style overrides in your site stylesheet or in this style block.
+				   We recommend moving this block and the preceding CSS link to the HEAD of your HTML file. */
+			</style>
+			<div id="mc_embed_signup">
+			<form action="//franti.us8.list-manage.com/subscribe/post?u=99ed606557037cf1c4c77acb1&amp;id=2d47b37623" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+			    <div id="mc_embed_signup_scroll">
+				<p>ti informeremo quando Robottino sarà pronto</p>
+			<div class="mc-field-group">
+				<label for="mce-EMAIL">Email Address </label>
+				<input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL">
+			</div>
+				<div id="mce-responses" class="clear">
+					<div class="response" id="mce-error-response" style="display:none"></div>
+					<div class="response" id="mce-success-response" style="display:none"></div>
+				</div>  
+			    <div style="position: absolute; left: -5000px;"><input type="text" name="b_99ed606557037cf1c4c77acb1_2d47b37623" tabindex="-1" value=""></div>
+			    <div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+			    </div>
+			</form>
+			</div>			
+	  </div>
+	  -->
+	  	    
+      
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="dist/js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="assets/js/ie10-viewport-bug-workaround.js"></script>
+  </body>
+</html>

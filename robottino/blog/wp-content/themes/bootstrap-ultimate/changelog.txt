@@ -1,0 +1,159 @@
+v.1.4.9
+*Bugfix: Many carousel bugfixes
+*Modified: Whole Carousel layout.
+*Added: More Carousel options (bg, interval, autoplay, pause, continousity)
+*Removed: Redundant image sizes. (X eo-highlight-> now uses thumbnail. X eo-carousel-> removed due to new carousel layout)
+*Bugfix: Mobile menu logo overlap, logo adjustments.
+*Added: New Theme: Darkly.
+
+v.1.4.8
+*Changed hardcoded custom comment form in favor of default comment_form() to allow customization.
+*Bugfix: Bootswatch theme not being applied if style superority is selected.
+*Bugfix: Logo not being saved while using child theme.
+*Bugfix: Missing sub menus after level 2.
+*Bugfix: Override.css
+
+v.1.4.7.1
+*Validation fixes.
+
+v.1.4.7
+*Fixed: Issues that doesnt comply with theme guidelines mentioned in #16817
+*Bugfix: Google Fonts Update.
+
+v.1.4.6
+*Update: Bootstrap update to 3.1.1
+*Removed: Redirect on theme activation to comply with new theme guidelines.
+*Bugfix: Main bg image wrong default option & minor fixes.
+
+v.1.4.5
+*Added: Custom Background patterns, removed Custom Background support in customizer.
+*Bugfix: Missing mobile menu on extra small-xs- screens due to a bug (IMO) in bootstrap 3.1.0
+*Bugfix: Markup Valdition (Mobile menu extra </li>).
+*Bugfix: Post meta options not applying to single mode.
+
+v.1.4.4
+*Added: 3 new sub Bootswatch themes; Superhero, Lumen & valentine special; Cupid.
+*Update: Bootstrap lib update.
+*Bugfix: php 5.4 strict warnings.
+*Various other minor fixes
+
+v.1.4.3.3
+*Added: Style superiority option for bootswatch themes to choose whether should Bootswatch sub-theme override the theme styles , or the other way around.
+
+v.1.4.3.2
+*Bugfix: For child themes option panel (option framework) not loading properly.
+
+v.1.4.3.1
+*Rolled back bootstrap 3.0.3 library update, as it seems buggy. Will wait for v3.1 release at the end of the month.
+
+v.1.4.3
+* Added: Post footer meta options (date,tags etc.)
+* Update: Bootstrap 3.0.3 lib update.
+* Bugfix: Custom css/js textarea sanitization.
+* Bugfix: Home excludes
+* Various other minor fixes.
+
+v.1.4.2.1
+*typo
+
+v.1.4.2
+* Added: Different size option for featIMGs. Hybrid featIMG display option.
+* Bugfix: Block featIMG not working in single mode.
+
+v.1.4.1
+* Bugfix: Double column loop fix.
+* Bugfix: Module block excludes
+
+v.1.4.0
+* Added: Featured IMG, Excerpt & more loop options.
+* Added: Option to set Includes & Excludes for modules & also on home
+* Added: Option to display modules also on other pages
+* Added: Woocommerce plugin support.
+* Bugfix: Google font variants not being saved properly.
+* Bugfix: Homepage pagination.
+* Bugfix: Some sidebar / layout preferences fixes.
+* Bugfix: Homepage double col display with custom post count.
+
+v.1.3.9.1-99
+* Bugfix: missing $paged var for home query.
+* Added: Option to disabled p.lead class and optional Dropcaps.
+* Added: Improved grouped gallery
+* Bugfix: Multiple-word Google font variant not being retrieved (ex: Averia Serif Libre). Google font variants transient not being updated.
+* Bugfix: Google font-family css property definition.
+* Minor pre-release fixes.
+
+v.1.3.9
+* Added: Adjustable -columns- layout feature.
+* Added: Backup & Restore options feature.
+* Added: New bootswatch theme: Yeti
+* Added: Custom post type support for modules¿
+* Added: Loop options (single|double column, include custom post types).
+* Removed: Reduced number of page templates (author,search,page) for easier development(most of the content falls back to index.php with conditional titles).
+* Added: Homepage options (home sidebar,recent posts on home etc).
+* Modified: Tidied up general markup across page templates and simplified.
+* Modified: Custom Image in post screen is displayed if a featured image is not present.
+* Added: New page template for Home
+* Added: New Carousel effect -fade-
+* Added: .Chosen -selects- in frontend extensions
+* Modified: Nicer post display (aligned inline featured image + content instead of huge featured image)
+* Bugfix: Last clicked tab in admin panel not being remembered.
+* Bugfix: custom_layout Custom option For old posts that dont have "custom_layout" option.
+* Bugfix: top search adding double ?s qs.
+* Bugfix: missing author name in comments.php
+* Bugfix: Display a page setting in Jumbotron
+* Modified: Highlights equalized.
+* Modified: Footer adjustments
+* Colorbox adjustments
+* Versioned alert & info messages for less intrusion.
+* Bugfix: Possible bugfix in info messages.
+* Various other fixes such as post article <footer> date, extra closing </div> in header etc.
+* Revised template tags - in accordance with core.trac#2142
+* Revised template description slightly to reflect the recent changes
+* Revised readme.txt
+¿modules: carousel-highlights-featurettes etc..
+
+
+v.1.3.0
+* Added: mobile-friendly <select> menu-nav feature.
+* Major header redesign (Logo, nav, search adjustments)
+* Added: Fontawesome support in nav menus (add fa_icon class to your menuitem class ex: fa_home)
+* Removed: Google Analytics feature -plugin territory-
+* Restructured & stabilized theme options - $eo_options
+* Bugfix: Top nav bg & gradient color not taking effect.
+* Bugfix: "Post Custom Options" is not visible for pages.
+* Bugfix: Missing less.min.js
+* Added: Dismissable informative messages.
+* Several other minor bugfixes
+
+v.1.2.3
+* Bugfix: Google Font variants not loading into select input on change (when .chosen is enabled).
+
+v.1.2.2
+* Bugfix: Stored Googlefont variant not being displayed properly.
+* Bugfix: Googlefont variants not being applied properly (font-weight, font-style).
+* Bugfix: "Full width" post/pages not displaying full.
+* Added: "Review theme" suggestion link in about section.
+* Added: "Google Analytics Notice" informing users that the setting will be removed in next release due to "plugin territory"
+
+v.1.2.1
+* Removed default favicon to comply with guidelines.
+* Removed "custom-functions-sample" file to comply with guidelines.
+* Removed "review theme" recommendation to comply with guidelines.
+
+v.1.2.0
+* Added post specific JS / CSS
+* Added an option to display ALL posts in modules¿
+* Added order & orderby options to modules.
+* Added infinite-scroll¿
+* Fixed typography size setting not taking effect
+* Added top navigation to typography options.
+* Added custom-functions-sample.php to add custom functions.
+* Automatically add .cboxElement to image gallery links (that links to file only) when lightbox is enabled.
+* Added more tips-help-.
+* Added a one-time only support message to suggest user to review theme on themes dir - can be opted-out.
+* Revised theme description.
+* Changed theme screenshot.
+* Minor CSS adjustments..
+
+¿modules: carousel-highlights-featurettes etc..
+¿infinite scroll: load posts via ajax.

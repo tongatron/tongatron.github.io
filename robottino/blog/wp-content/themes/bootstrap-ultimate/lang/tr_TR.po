@@ -1,0 +1,1270 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Bootstrap Ultimate v1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2013-11-07 00:23:36+0000\n"
+"Last-Translator: admin <eminozlem7777@gmail.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: CSL v1.x\n"
+"X-Poedit-Language: Turkish\n"
+"X-Poedit-Country: TURKEY\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;\n"
+"X-Poedit-Basepath: ../\n"
+"X-Poedit-Bookmarks: \n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Textdomain-Support: yes"
+
+#: 404.php:13
+#@ bonestheme
+msgid "Epic 404 - Article Not Found"
+msgstr ""
+
+#: 404.php:14
+#@ bonestheme
+msgid "This is embarassing. We can't find what you were looking for."
+msgstr ""
+
+#: 404.php:22
+#@ bonestheme
+msgid "Whatever you were looking for was not found, but maybe try looking again or search using the form below."
+msgstr ""
+
+#: archive.php:10
+#@ bonestheme
+msgid "Posts Categorized:"
+msgstr ""
+
+#: archive.php:14
+#@ bonestheme
+msgid "Posts Tagged:"
+msgstr ""
+
+#: archive.php:18
+#: author.php:8
+#@ bonestheme
+msgid "Posts By:"
+msgstr ""
+
+#: archive.php:22
+#@ bonestheme
+msgid "Daily Archives:"
+msgstr ""
+
+#: archive.php:26
+#@ bonestheme
+msgid "Monthly Archives:"
+msgstr ""
+
+#: archive.php:30
+#@ bonestheme
+msgid "Yearly Archives:"
+msgstr ""
+
+#: archive.php:43
+#: attachment.php:15
+#: author.php:31
+#: content.php:9
+#: image.php:23
+#: search.php:17
+#: single.php:17
+#@ bonestheme
+msgid "Posted"
+msgstr ""
+
+#: archive.php:43
+#: attachment.php:15
+#: author.php:31
+#: content.php:9
+#: image.php:23
+#: search.php:17
+#: single.php:17
+#@ bonestheme
+msgid "by"
+msgstr ""
+
+#: archive.php:43
+#: attachment.php:15
+#: author.php:31
+#: content.php:9
+#: search.php:17
+#: single.php:17
+#@ bonestheme
+msgid "filed under"
+msgstr ""
+
+#: archive.php:68
+#: author.php:56
+#: index.php:45
+#: search.php:42
+#@ bonestheme
+msgid "&laquo; Older Entries"
+msgstr ""
+
+#: archive.php:69
+#: author.php:57
+#: index.php:46
+#: search.php:43
+#@ bonestheme
+msgid "Newer Entries &raquo;"
+msgstr ""
+
+#: archive.php:79
+#: author.php:67
+#@ bonestheme
+msgid "No Posts Yet"
+msgstr ""
+
+#: archive.php:82
+#: author.php:70
+#@ bonestheme
+msgid "Sorry, What you were looking for is not here."
+msgstr ""
+
+#: attachment.php:27
+#: content.php:19
+#: image.php:53
+#: page-full-width.php:30
+#: page-homepage.php:106
+#: page-left-sidebar.php:32
+#: page.php:24
+#: single.php:30
+#@ bonestheme
+msgid "Tags"
+msgstr ""
+
+#: attachment.php:41
+#: image.php:67
+#: index.php:55
+#: page-full-width.php:44
+#: page-homepage.php:123
+#: page-left-sidebar.php:46
+#: page.php:38
+#: search.php:54
+#: single.php:51
+#@ bonestheme
+msgid "Not Found"
+msgstr ""
+
+#: attachment.php:44
+#: image.php:70
+#: index.php:58
+#: page-full-width.php:47
+#: page-homepage.php:126
+#: page-left-sidebar.php:49
+#: page.php:41
+#: search.php:57
+#: single.php:54
+#@ bonestheme
+msgid "Sorry, but the requested resource was not found on this site."
+msgstr ""
+
+#: comments.php:11
+#@ bonestheme
+msgid "This post is password protected. Enter the password to view comments."
+msgstr ""
+
+#: comments.php:21
+#@ bonestheme
+msgid "No"
+msgstr ""
+
+#: comments.php:21
+#@ bonestheme
+msgid "Responses"
+msgstr ""
+
+#: comments.php:21
+#@ bonestheme
+msgid "One"
+msgstr ""
+
+#: comments.php:21
+#@ bonestheme
+msgid "Response"
+msgstr ""
+
+#: comments.php:21
+#@ bonestheme
+msgid "to"
+msgstr ""
+
+#: comments.php:25
+#: comments.php:46
+#@ bonestheme
+msgid "Older comments"
+msgstr ""
+
+#: comments.php:26
+#: comments.php:47
+#@ bonestheme
+msgid "Newer comments"
+msgstr ""
+
+#: comments.php:68
+#@ bonestheme
+msgid "Comments are closed"
+msgstr ""
+
+#: comments.php:81
+#@ bonestheme
+msgid "Leave a Reply"
+msgstr ""
+
+#: comments.php:81
+#@ bonestheme
+msgid "Leave a Reply to"
+msgstr ""
+
+#: comments.php:84
+#@ bonestheme
+msgid "Cancel"
+msgstr ""
+
+#: comments.php:89
+#@ bonestheme
+msgid "You must be"
+msgstr ""
+
+#: comments.php:89
+#@ bonestheme
+msgid "logged in"
+msgstr ""
+
+#: comments.php:89
+#@ bonestheme
+msgid "to post a comment"
+msgstr ""
+
+#: comments.php:97
+#@ bonestheme
+msgid "Logged in as"
+msgstr ""
+
+#: comments.php:97
+#@ bonestheme
+msgid "Log out of this account"
+msgstr ""
+
+#: comments.php:97
+#@ bonestheme
+msgid "Log out"
+msgstr ""
+
+#: comments.php:105
+#@ bonestheme
+msgid "Name"
+msgstr ""
+
+#: comments.php:107
+#@ bonestheme
+msgid "Your Name"
+msgstr ""
+
+#: comments.php:114
+#@ bonestheme
+msgid "Mail"
+msgstr ""
+
+#: comments.php:116
+#@ bonestheme
+msgid "Your Email"
+msgstr ""
+
+#: comments.php:118
+#@ bonestheme
+msgid "will not be published"
+msgstr ""
+
+#: comments.php:124
+#@ bonestheme
+msgid "Website"
+msgstr ""
+
+#: comments.php:126
+#@ bonestheme
+msgid "Your Website"
+msgstr ""
+
+#: comments.php:136
+#@ bonestheme
+msgid "Your Comment Here…"
+msgstr ""
+
+#: comments.php:138
+#@ bonestheme
+msgid "Submit Comment"
+msgstr ""
+
+#: content-aside.php:3
+#: content-aside.php:10
+#: content-image.php:7
+#: content-link.php:8
+#: content-quote.php:7
+#: content-status.php:5
+#, php-format
+#@ bonestheme
+msgid "Permalink to %s"
+msgstr ""
+
+#: content-aside.php:5
+#: content-image.php:3
+#: content-link.php:4
+#: content-quote.php:3
+#: content-status.php:11
+#@ bonestheme
+msgid "Continue reading <span class=\"meta-nav\">&rarr;</span>"
+msgstr ""
+
+#: content-aside.php:13
+#: content-image.php:13
+#: content-link.php:11
+#: content-quote.php:10
+#: content-status.php:17
+#@ bonestheme
+msgid "Leave a reply"
+msgstr ""
+
+#: content-aside.php:13
+#: content-image.php:13
+#: content-link.php:11
+#: content-quote.php:10
+#: content-status.php:17
+#@ bonestheme
+msgid "1 Reply"
+msgstr ""
+
+#: content-aside.php:13
+#: content-image.php:13
+#: content-link.php:11
+#: content-quote.php:10
+#: content-status.php:17
+#@ bonestheme
+msgid "% Replies"
+msgstr ""
+
+#: content-aside.php:16
+#: content-image.php:16
+#: content-link.php:14
+#: content-quote.php:13
+#: content-status.php:20
+#: functions.php:237
+#: library/custom-post-type.php:36
+#@ bonestheme
+msgid "Edit"
+msgstr ""
+
+#: content-link.php:2
+#@ bonestheme
+msgid "Link"
+msgstr ""
+
+#: content.php:14
+#: library/bones.php:350
+#@ bonestheme
+msgid "Read more &raquo;"
+msgstr ""
+
+#: functions.php:121
+#, php-format
+#@ bonestheme
+msgid "Page %s"
+msgstr ""
+
+#: functions.php:241
+#@ bonestheme
+msgid "Your comment is awaiting moderation."
+msgstr ""
+
+#: functions.php:284
+#@ bonestheme
+msgid "Search for:"
+msgstr ""
+
+#: functions.php:288
+#: header.php:74
+#: searchform.php:5
+#@ bonestheme
+msgid "Search"
+msgstr ""
+
+#: functions.php:302
+#@ bonestheme
+msgid "This post is password protected. To view it please enter your password below:"
+msgstr ""
+
+#: functions.php:303
+#@ bonestheme
+msgid "Password:"
+msgstr ""
+
+#: functions.php:303
+#@ bonestheme
+msgid "Submit"
+msgstr ""
+
+#: functions.php:1366
+#: library/bones.php:213
+#: library/bones.php:230
+#@ bonestheme
+msgid "The Main Menu"
+msgstr ""
+
+#: functions.php:1414
+#: options.php:391
+#@ default
+#@ eo_theme
+msgid "Home"
+msgstr "Anasayfa"
+
+#: image.php:89
+#@ bonestheme
+msgid "Image metadata"
+msgstr ""
+
+#: image.php:113
+#@ bonestheme
+msgid "Date Taken"
+msgstr ""
+
+#: image.php:115
+#@ bonestheme
+msgid "Copyright"
+msgstr ""
+
+#: image.php:117
+#@ bonestheme
+msgid "Credit"
+msgstr ""
+
+#: image.php:119
+#@ bonestheme
+msgid "Title"
+msgstr ""
+
+#: image.php:121
+#@ bonestheme
+msgid "Caption"
+msgstr ""
+
+#: image.php:123
+#@ bonestheme
+msgid "Camera"
+msgstr ""
+
+#: image.php:125
+#@ bonestheme
+msgid "Focal Length"
+msgstr ""
+
+#: image.php:127
+#@ bonestheme
+msgid "Aperture"
+msgstr ""
+
+#: image.php:129
+#@ bonestheme
+msgid "ISO"
+msgstr ""
+
+#: image.php:131
+#@ bonestheme
+msgid "Shutter Speed"
+msgstr ""
+
+#: inc/menu_page_walker.php:94
+#, php-format
+#@ default
+msgid "#%d (no title)"
+msgstr ""
+
+#: library/admin.php:66
+#@ bonestheme
+msgid "j F Y @ g:i a"
+msgstr ""
+
+#: library/admin.php:78
+#@ bonestheme
+msgid "Recently on Themble (Customize on admin.php)"
+msgstr ""
+
+#: library/admin.php:125
+#@ bonestheme
+msgid "<span id=\"footer-thankyou\">Developed by <a href=\"http://yoursite.com\" target=\"_blank\">Your Site Name</a></span>. Built using <a href=\"http://themble.com/bones\" target=\"_blank\">Bones</a>."
+msgstr ""
+
+#: library/bones.php:214
+#: library/bones.php:248
+#@ bonestheme
+msgid "Footer Links"
+msgstr ""
+
+#: library/bones.php:302
+#@ bonestheme
+msgid "No Related Posts Yet!"
+msgstr ""
+
+#: library/bones.php:350
+#@ bonestheme
+msgid "Read"
+msgstr ""
+
+#: library/bones.php:365
+#, php-format
+#@ default
+msgid "Posts by %s"
+msgstr ""
+
+#: library/custom-post-type.php:31
+#@ bonestheme
+msgid "Custom Types"
+msgstr ""
+
+#: library/custom-post-type.php:32
+#@ bonestheme
+msgid "Custom Post"
+msgstr ""
+
+#: library/custom-post-type.php:33
+#@ bonestheme
+msgid "All Custom Posts"
+msgstr ""
+
+#: library/custom-post-type.php:34
+#@ bonestheme
+msgid "Add New"
+msgstr ""
+
+#: library/custom-post-type.php:35
+#@ bonestheme
+msgid "Add New Custom Type"
+msgstr ""
+
+#: library/custom-post-type.php:37
+#@ bonestheme
+msgid "Edit Post Types"
+msgstr ""
+
+#: library/custom-post-type.php:38
+#@ bonestheme
+msgid "New Post Type"
+msgstr ""
+
+#: library/custom-post-type.php:39
+#@ bonestheme
+msgid "View Post Type"
+msgstr ""
+
+#: library/custom-post-type.php:40
+#@ bonestheme
+msgid "Search Post Type"
+msgstr ""
+
+#: library/custom-post-type.php:41
+#@ bonestheme
+msgid "Nothing found in the Database."
+msgstr ""
+
+#: library/custom-post-type.php:42
+#@ bonestheme
+msgid "Nothing found in Trash"
+msgstr ""
+
+#: library/custom-post-type.php:45
+#@ bonestheme
+msgid "This is the example custom post type"
+msgstr ""
+
+#: library/custom-post-type.php:82
+#@ bonestheme
+msgid "Custom Categories"
+msgstr ""
+
+#: library/custom-post-type.php:83
+#@ bonestheme
+msgid "Custom Category"
+msgstr ""
+
+#: library/custom-post-type.php:84
+#@ bonestheme
+msgid "Search Custom Categories"
+msgstr ""
+
+#: library/custom-post-type.php:85
+#@ bonestheme
+msgid "All Custom Categories"
+msgstr ""
+
+#: library/custom-post-type.php:86
+#@ bonestheme
+msgid "Parent Custom Category"
+msgstr ""
+
+#: library/custom-post-type.php:87
+#@ bonestheme
+msgid "Parent Custom Category:"
+msgstr ""
+
+#: library/custom-post-type.php:88
+#@ bonestheme
+msgid "Edit Custom Category"
+msgstr ""
+
+#: library/custom-post-type.php:89
+#@ bonestheme
+msgid "Update Custom Category"
+msgstr ""
+
+#: library/custom-post-type.php:90
+#@ bonestheme
+msgid "Add New Custom Category"
+msgstr ""
+
+#: library/custom-post-type.php:91
+#@ bonestheme
+msgid "New Custom Category Name"
+msgstr ""
+
+#: library/custom-post-type.php:105
+#@ bonestheme
+msgid "Custom Tags"
+msgstr ""
+
+#: library/custom-post-type.php:106
+#@ bonestheme
+msgid "Custom Tag"
+msgstr ""
+
+#: library/custom-post-type.php:107
+#@ bonestheme
+msgid "Search Custom Tags"
+msgstr ""
+
+#: library/custom-post-type.php:108
+#@ bonestheme
+msgid "All Custom Tags"
+msgstr ""
+
+#: library/custom-post-type.php:109
+#@ bonestheme
+msgid "Parent Custom Tag"
+msgstr ""
+
+#: library/custom-post-type.php:110
+#@ bonestheme
+msgid "Parent Custom Tag:"
+msgstr ""
+
+#: library/custom-post-type.php:111
+#@ bonestheme
+msgid "Edit Custom Tag"
+msgstr ""
+
+#: library/custom-post-type.php:112
+#@ bonestheme
+msgid "Update Custom Tag"
+msgstr ""
+
+#: library/custom-post-type.php:113
+#@ bonestheme
+msgid "Add New Custom Tag"
+msgstr ""
+
+#: library/custom-post-type.php:114
+#@ bonestheme
+msgid "New Custom Tag Name"
+msgstr ""
+
+#: options.php:144
+#@ options_framework_theme
+msgid "French Toast"
+msgstr ""
+
+#: options.php:145
+#@ options_framework_theme
+msgid "Pancake"
+msgstr ""
+
+#: options.php:146
+#@ options_framework_theme
+msgid "Omelette"
+msgstr ""
+
+#: options.php:147
+#@ options_framework_theme
+msgid "Crepe"
+msgstr ""
+
+#: options.php:148
+#@ options_framework_theme
+msgid "Waffle"
+msgstr ""
+
+#: options.php:303
+#@ eo_theme
+msgid "Common"
+msgstr "Genel"
+
+#: options.php:306
+#@ eo_theme
+msgid "Branding Logo"
+msgstr "Logo"
+
+#: options.php:312
+#@ eo_theme
+msgid "Custom favicon"
+msgstr "Favicon"
+
+#: options.php:318
+#@ eo_theme
+msgid "GA UA code"
+msgstr ""
+
+#: options.php:327
+#@ eo_theme
+msgid "Subdomains of ?"
+msgstr ""
+
+#: options.php:335
+#@ eo_theme
+msgid "Mult.top-level domains of ?"
+msgstr ""
+
+#: options.php:343
+#@ eo_theme
+msgid "Advertiser Support ?"
+msgstr ""
+
+#: options.php:359
+#@ eo_theme
+msgid "Enable pinned posts ?"
+msgstr ""
+
+#: options.php:367
+#@ eo_theme
+msgid "Pin Cat"
+msgstr ""
+
+#: options.php:377
+#@ eo_theme
+msgid "CSS"
+msgstr ""
+
+#: options.php:384
+#@ eo_theme
+msgid "Custom JS"
+msgstr ""
+
+#: options.php:395
+#@ eo_theme
+msgid "Slider -carousel- on homepage"
+msgstr ""
+
+#: options.php:403
+#@ eo_theme
+msgid "Slider position ?"
+msgstr ""
+
+#: options.php:412
+#@ eo_theme
+msgid "No# posts in slider"
+msgstr ""
+
+#: options.php:420
+#@ eo_theme
+msgid "Category slider"
+msgstr ""
+
+#: options.php:428
+#@ eo_theme
+msgid "Prevent overflow"
+msgstr ""
+
+#: options.php:436
+#@ eo_theme
+msgid "Max. height"
+msgstr ""
+
+#: options.php:444
+#@ eo_theme
+msgid "Blog page -jumbotron- unit (*former -hero-)"
+msgstr ""
+
+#: options.php:453
+#@ eo_theme
+msgid "What to display in jumbotron -former hero- ?"
+msgstr ""
+
+#: options.php:462
+#@ eo_theme
+msgid "Page to display in jumbotron"
+msgstr ""
+
+#: options.php:474
+#@ eo_theme
+msgid "Homepage page template jumbotron (old hero-unit) background color"
+msgstr ""
+
+#: options.php:482
+#@ eo_theme
+msgid "Highlights on home"
+msgstr ""
+
+#: options.php:490
+#@ eo_theme
+msgid "Featurettes on home"
+msgstr ""
+
+#: options.php:500
+#@ eo_theme
+msgid "Typography"
+msgstr ""
+
+#: options.php:504
+#@ eo_theme
+msgid "Google Webfont API key"
+msgstr ""
+
+#: options.php:511
+#@ eo_theme
+msgid "Refresh fonts from Google"
+msgstr ""
+
+#: options.php:565
+#@ eo_theme
+msgid "Headings"
+msgstr ""
+
+#: options.php:573
+#@ eo_theme
+msgid "Main Body Text"
+msgstr ""
+
+#: options.php:580
+#@ eo_theme
+msgid "Link Color"
+msgstr ""
+
+#: options.php:588
+#@ eo_theme
+msgid "Link:hover Color"
+msgstr ""
+
+#: options.php:596
+#@ eo_theme
+msgid "Link:active Color"
+msgstr ""
+
+#: options.php:604
+#@ eo_theme
+msgid "Customize"
+msgstr ""
+
+#: options.php:609
+#@ eo_theme
+msgid "Position"
+msgstr ""
+
+#: options.php:618
+#@ eo_theme
+msgid "Style"
+msgstr ""
+
+#: options.php:628
+#@ eo_theme
+msgid "Top nav background color"
+msgstr ""
+
+#: options.php:636
+#@ eo_theme
+msgid "Use gradient"
+msgstr ""
+
+#: options.php:644
+#@ eo_theme
+msgid "Bottom gradient color"
+msgstr ""
+
+#: options.php:653
+#@ eo_theme
+msgid "Top nav item color"
+msgstr ""
+
+#: options.php:661
+#@ eo_theme
+msgid "Top nav item hover color"
+msgstr ""
+
+#: options.php:669
+#@ eo_theme
+msgid "Top nav dropdown item color"
+msgstr ""
+
+#: options.php:677
+#@ eo_theme
+msgid "Top nav dropdown item hover bg color"
+msgstr ""
+
+#: options.php:685
+#@ eo_theme
+msgid "Search bar"
+msgstr ""
+
+#: options.php:693
+#@ eo_theme
+msgid "Sticky Footer"
+msgstr ""
+
+#: options.php:702
+#@ eo_theme
+msgid "CopyLeft"
+msgstr ""
+
+#: options.php:710
+#@ eo_theme
+msgid "-Comments are closed- message on pages"
+msgstr ""
+
+#: options.php:719
+#@ eo_theme
+msgid "Site name"
+msgstr ""
+
+#: options.php:726
+#@ eo_theme
+msgid "Theme"
+msgstr ""
+
+#: options.php:730
+#@ eo_theme
+msgid "Bootswatch.com Themes"
+msgstr ""
+
+#: options.php:737
+#@ eo_theme
+msgid "Refresh themes from Bootswatch"
+msgstr ""
+
+#: options.php:743
+#@ eo_theme
+msgid "Select a theme"
+msgstr ""
+
+#: options.php:752
+#@ eo_theme
+msgid "Use selected theme for admin too"
+msgstr ""
+
+#: options.php:760
+#@ eo_theme
+msgid "Xtend"
+msgstr ""
+
+#: options.php:765
+#@ eo_theme
+msgid "Lightbox"
+msgstr ""
+
+#: options.php:773
+#@ eo_theme
+msgid "Font Awesome"
+msgstr ""
+
+#: options.php:781
+#@ eo_theme
+msgid "Placeholders"
+msgstr ""
+
+#: options.php:788
+#@ eo_theme
+msgid "Dev."
+msgstr ""
+
+#: options.php:792
+#@ eo_theme
+msgid "Load via LESS"
+msgstr ""
+
+#: options.php:800
+#@ eo_theme
+msgid "LESS Resources"
+msgstr ""
+
+#: options.php:801
+#@ eo_theme
+msgid "Resources to load via LESS."
+msgstr ""
+
+#: options.php:853
+#: options.php:955
+#@ eo_theme
+msgid "Bootstrap .min ?"
+msgstr ""
+
+#: options.php:861
+#@ eo_theme
+msgid "Panel"
+msgstr ""
+
+#: options.php:866
+#@ eo_theme
+msgid "Admin Top Nav"
+msgstr ""
+
+#: options.php:875
+#@ eo_theme
+msgid "Admin Side Menu Nav"
+msgstr ""
+
+#: options.php:884
+#@ eo_theme
+msgid "Side Menu Heading Act."
+msgstr ""
+
+#: options.php:893
+#@ eo_theme
+msgid "Load chosen ?"
+msgstr ""
+
+#: options.php:903
+#@ eo_theme
+msgid "Chosen .min?"
+msgstr ""
+
+#: options.php:911
+#@ eo_theme
+msgid "Collapse WP menu"
+msgstr ""
+
+#: options.php:923
+#@ eo_theme
+msgid "Popover opt. prev."
+msgstr ""
+
+#: options.php:932
+#@ eo_theme
+msgid "ON/OFF Checkboxes ?"
+msgstr ""
+
+#: options.php:939
+#@ eo_theme
+msgid "Checkboxes Style"
+msgstr ""
+
+#: options.php:948
+#@ eo_theme
+msgid "Bootstrap Admin"
+msgstr ""
+
+#: options.php:976
+#@ eo_theme
+msgid "Test"
+msgstr ""
+
+#: options.php:990
+#@ eo_theme
+msgid "About"
+msgstr ""
+
+#: panel/inc/eo_of_submit.php:4
+#: panel/of/options-framework.php:318
+#@ options_framework_theme
+msgid "Save Options"
+msgstr ""
+
+#: panel/inc/eo_of_submit.php:6
+#: panel/of/options-framework.php:319
+#@ options_framework_theme
+msgid "Click OK to reset. Any theme settings will be lost!"
+msgstr ""
+
+#: panel/inc/eo_of_submit.php:6
+#: panel/of/options-framework.php:319
+#@ options_framework_theme
+msgid "Restore Defaults"
+msgstr ""
+
+#: panel/of/options-framework.php:184
+#: panel/of/options-framework.php:185
+#@ optionsframework
+msgid "Bootstrap UL Options"
+msgstr ""
+
+#: panel/of/options-framework.php:230
+#@ options_framework_theme
+msgid "Clear"
+msgstr ""
+
+#: panel/of/options-framework.php:231
+#@ options_framework_theme
+msgid "Default"
+msgstr ""
+
+#: panel/of/options-framework.php:232
+#@ options_framework_theme
+msgid "Select Color"
+msgstr ""
+
+#: panel/of/options-framework.php:353
+#@ options_framework_theme
+msgid "Default options restored."
+msgstr ""
+
+#: panel/of/options-framework.php:407
+#@ options_framework_theme
+msgid "Options saved."
+msgstr ""
+
+#: panel/of/options-framework.php:457
+#@ options_framework_theme
+msgid "Theme Options"
+msgstr ""
+
+#: panel/of/options-media-uploader.php:51
+#@ options_framework_theme
+msgid "No file chosen"
+msgstr ""
+
+#: panel/of/options-media-uploader.php:54
+#: panel/of/options-media-uploader.php:113
+#@ options_framework_theme
+msgid "Upload"
+msgstr ""
+
+#: panel/of/options-media-uploader.php:56
+#: panel/of/options-media-uploader.php:114
+#@ options_framework_theme
+msgid "Remove"
+msgstr ""
+
+#: panel/of/options-media-uploader.php:59
+#@ options_framework_theme
+msgid "Upgrade your version of WordPress for full media support."
+msgstr ""
+
+#: panel/of/options-media-uploader.php:83
+#@ options_framework_theme
+msgid "View File"
+msgstr ""
+
+#: panel/of/options-sanitize.php:278
+#@ options_framework_theme
+msgid "No Repeat"
+msgstr ""
+
+#: panel/of/options-sanitize.php:279
+#@ options_framework_theme
+msgid "Repeat Horizontally"
+msgstr ""
+
+#: panel/of/options-sanitize.php:280
+#@ options_framework_theme
+msgid "Repeat Vertically"
+msgstr ""
+
+#: panel/of/options-sanitize.php:281
+#@ options_framework_theme
+msgid "Repeat All"
+msgstr ""
+
+#: panel/of/options-sanitize.php:294
+#@ options_framework_theme
+msgid "Top Left"
+msgstr ""
+
+#: panel/of/options-sanitize.php:295
+#@ options_framework_theme
+msgid "Top Center"
+msgstr ""
+
+#: panel/of/options-sanitize.php:296
+#@ options_framework_theme
+msgid "Top Right"
+msgstr ""
+
+#: panel/of/options-sanitize.php:297
+#@ options_framework_theme
+msgid "Middle Left"
+msgstr ""
+
+#: panel/of/options-sanitize.php:298
+#@ options_framework_theme
+msgid "Middle Center"
+msgstr ""
+
+#: panel/of/options-sanitize.php:299
+#@ options_framework_theme
+msgid "Middle Right"
+msgstr ""
+
+#: panel/of/options-sanitize.php:300
+#@ options_framework_theme
+msgid "Bottom Left"
+msgstr ""
+
+#: panel/of/options-sanitize.php:301
+#@ options_framework_theme
+msgid "Bottom Center"
+msgstr ""
+
+#: panel/of/options-sanitize.php:302
+#@ options_framework_theme
+msgid "Bottom Right"
+msgstr ""
+
+#: panel/of/options-sanitize.php:315
+#@ options_framework_theme
+msgid "Scroll Normally"
+msgstr ""
+
+#: panel/of/options-sanitize.php:316
+#@ options_framework_theme
+msgid "Fixed in Place"
+msgstr ""
+
+#: panel/of/options-sanitize.php:390
+#@ options_framework_theme
+msgid "Normal"
+msgstr ""
+
+#: panel/of/options-sanitize.php:391
+#@ options_framework_theme
+msgid "Italic"
+msgstr ""
+
+#: panel/of/options-sanitize.php:392
+#@ options_framework_theme
+msgid "Bold"
+msgstr ""
+
+#: panel/of/options-sanitize.php:393
+#@ options_framework_theme
+msgid "Bold Italic"
+msgstr ""
+
+#: search.php:7
+#@ bonestheme
+msgid "Search Results for"
+msgstr ""
+
+#: search.php:22
+#@ bonestheme
+msgid "Read more on"
+msgstr ""
+
+#: sidebar-sidebar2.php:13
+#: sidebar.php:13
+#@ bonestheme
+msgid "Please activate some Widgets"
+msgstr ""
+
+#: single.php:36
+#@ bonestheme
+msgid "Edit post"
+msgstr ""
+
