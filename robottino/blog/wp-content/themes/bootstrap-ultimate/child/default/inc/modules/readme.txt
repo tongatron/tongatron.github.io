@@ -1,1 +1,0 @@
-You can place module files here for customizing, instead of editing the default ones, in order not to lose your changes with every update.
