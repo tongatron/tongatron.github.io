@@ -40,7 +40,11 @@ https://chat.whatsapp.com/IwdrBPxxGTR2VPsyosEzOB
 
 s
 
-[Pagina privata](../baron29giu/cisti/cisti,html)
+[Pagina privata](https://tongatron.github.io/baron/cisti/cisti.html)
+
+
+
+
 
 
 
