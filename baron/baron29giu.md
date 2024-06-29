@@ -40,4 +40,5 @@ https://chat.whatsapp.com/IwdrBPxxGTR2VPsyosEzOB
 
 
 
-[Pagina privata](https://tongatron.github.io/baron/baron29giu/private)
+[Pagina privata](https://tongatron.github.io/baron/baron29giu/private/index)
+
