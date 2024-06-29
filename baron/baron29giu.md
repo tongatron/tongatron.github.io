@@ -4,7 +4,7 @@
 
 sabato 29 giugno 2024
 
-![baronlogo](../img/baron/baronlogo-9625825.png) 
+<img src="../img/baron/baronlogo-9625825.png" alt="baronlogo" style="zoom:33%;" /> 
 
 
 
