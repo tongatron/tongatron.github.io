@@ -1,10 +1,10 @@
 
 
-# BarÔn290
+# BarÔn
 
 Sabato 29 giugno 2024
 
-<img src="img/baron/baronlogo.png" alt="baronlogo" style="zoom:25%;" />
+<img src="../img/baron/baronlogo.png" alt="baronlogo" style="zoom: 33%;" />
 
 
 
