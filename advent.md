@@ -1,4 +1,4 @@
-coppia diffusori ADVENT per preventivo
+coppia diffusori ADVENT per preventivo audioconika
 
 ![image-20240701180549158](img/image-20240701180549158.png)
 
