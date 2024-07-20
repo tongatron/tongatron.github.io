@@ -40,7 +40,7 @@ Escuela Europea de Coaching Italia srl, Milano, Italia
 
 **HR Product Manager - Consulente Applicativo**
 Copernico Paghe srl, Torino, Italia
-*2006 - Dicembre 2018*
+*2006 - 2018*
 
 - Gestione operativa dei progetti cliente sui software dei processi HR.
 - Coordinamento sviluppo dei prodotti software ERP.
