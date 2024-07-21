@@ -6,6 +6,14 @@ Creative Technology
 
 
 
+Physical objects for web interaction
+
+
+
+Forka Robottino Fablab
+
+
+
 **ICT project management**
 Gestione completa dei progetti ICT, dalla pianificazione alla realizzazione, garantendo il rispetto dei tempi e del budget. Coordinamento di team multidisciplinari e monitoraggio continuo per il successo del progetto.
 
@@ -22,7 +30,9 @@ Corsi di formazione professionale su tematiche ICT e innovazione digitale. Svilu
 
 **Chi sono**
 
-Da 20 anni lavoro nella gestione di sistemi informativi organizzativi e nell'integrazione di soluzioni software ERP come HR Tech Specialist. Ho collaborato con organizzazioni medie, grandi aziende e multinazionali.
+Da 20 anni lavoro nella gestione di sistemi informativi organizzativi e nell'integrazione di soluzioni software e hardware.
+
+Sono specializzato negli ERP come HR Tech Specialist. Ho collaborato con organizzazioni medie, grandi aziende e multinazionali.
 
 Ho esperienza di project management e interesse in vari temi dell'innovazione digitale, tra cui:
 
@@ -54,7 +64,16 @@ Mi piace la tecnologia democratica e creativa e sono interessato a contribuire a
 ## Robottino
 
 **Robot educativo**.
+
+2014 - 2018
+
 Scheda didattica STEM. La scheda Arduino sulla schiena consente la programmazione dekl'interazione dei componenti: display, sensori ambientali, buzzer, luci colorate, sensore di distanza ultrasonico e testa rotante. Si connette a internet e interagisce con tutto il mondo web.
+
+Collaborazioni: Arduino, Toolboox Coworking, Maker Faire Roma, Fondazione Giovanni Agnelli, CentroScienza onlus Torino, Politecnico di Torino
+
+https://www.facebook.com/robottinocc
+
+
 
 ## Selfomatic
 
