@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pagina Protetta</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+        }
+        #protected-content {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Benvenuto</h1>
+    <div id="login-form">
+        <p>Per favore, inserisci la password per accedere:</p>
+        <input type="password" id="password" placeholder="Password">
+        <button onclick="checkPassword()">Accedi</button>
+        <p id="error-message" style="color: red;"></p>
+    </div>
+    <div id="protected-content">
+        <h2>Contenuto Protetto</h2>
+        <p>Questo è il contenuto protetto che è visibile solo dopo aver inserito la password corretta.</p>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
+    <script>
+        function checkPassword() {
+            var password = document.getElementById('password').value;
+            var errorMessage = document.getElementById('error-message');
+            var protectedContent = document.getElementById('protected-content');
+            var loginForm = document.getElementById('login-form');
+
+            // Hash della password corretta
+            var correctHash = '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd1c2ac91d1a48311aa'; // Hash SHA-256 di "password"
+
+            // Calcola l'hash della password inserita
+            var hash = CryptoJS.SHA256(password).toString();
+
+            if (hash === correctHash) {
+                loginForm.style.display = 'none';
+                protectedContent.style.display = 'block';
+            } else {
+                errorMessage.textContent = 'Password errata, riprova.';
+            }
+        }
+    </script>
+</body>
+</html>
