@@ -12,7 +12,9 @@
 
 
 
-<link rel="stylesheet" href="tngstyle.css">      
+<link rel="stylesheet" href="tngstyle.css">
+
+
 
       <link rel="preconnect" href="https://fonts.googleapis.com">
       <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -39,7 +41,6 @@
           </a>
         </header>    
       </div>
-
 
 
 
@@ -161,7 +162,7 @@ Tinkering: giocare con la tecnologia, esplorare diverse possibilità su hardware
             <div class="col d-flex align-items-start">
               <div>
                 <h3 class="fw-bold mb-0 fs-4 text-body-emphasis">Fablab Torino</h3>
-                <br>
+                
                 <a href="https://fablabtorino.org/">fablabtorino.org</a>
                 Associazione e laboratorio di fabbricazione digitale
               
@@ -469,6 +470,10 @@ Tinkering: giocare con la tecnologia, esplorare diverse possibilità su hardware
             <a href="https://x.com/giobindi">x.com/giobindi</a><br>
             <a href="https://mastodon.social/@tongatron">mastodon.social/@tongatron</a><br>
 
+            <h1>
+            <i class="bi bi-dice-4"></i><i class="bi bi-dice-3-fill"></i>
+          </h1>
+
 
 
 
@@ -499,6 +504,123 @@ Tinkering: giocare con la tecnologia, esplorare diverse possibilità su hardware
 
 
 
+<div class="container">
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
+    <script>
+        let nodes = [];
+        let textData;
+        let invertColors = false;
+        let backgroundColor = 20;
+        let nodeColor = 255;
+        let lineColor = [255, 100];  // Colore delle linee con opacità
+        let highlightColor = [255, 255, 0]; // Colore di evidenziazione giallo
+
+        function setup() {
+            createCanvas(windowWidth, windowHeight);
+            textData = {
+                text: "TONGATRON\ncreative technologist\n読むバカ\nprojects",
+                size: 24,
+                x: width / 2,
+                y: height / 2,
+                bounds: null
+            };
+            textData.bounds = calculateTextBounds(textData.text, textData.size, textData.x, textData.y);
+
+            for (let i = 0; i < 100; i++) {
+                let node = {
+                    pos: createVector(random(width), random(height)),
+                    vel: p5.Vector.random2D().mult(random(0.5, 1.5))
+                };
+                nodes.push(node);
+            }
+
+            setInterval(toggleColors, 3000);  // Imposta l'inversione dei colori ogni 3 secondi
+        }
+
+        function draw() {
+            background(backgroundColor);
+            fill(nodeColor);
+            noStroke();
+            textAlign(CENTER, CENTER);
+            textSize(textData.size);
+            text(textData.text, textData.x, textData.y);
+
+            stroke(lineColor);
+            strokeWeight(1);
+
+            nodes.forEach(node => {
+                node.pos.add(node.vel);
+                checkCollision(node.pos, textData.bounds);
+                wrapAround(node.pos);
+            });
+
+            for (let i = 0; i < nodes.length; i++) {
+                for (let j = i + 1; j < nodes.length; j++) {
+                    if (dist(nodes[i].pos.x, nodes[i].pos.y, nodes[j].pos.x, nodes[j].pos.y) < 100) {
+                        line(nodes[i].pos.x, nodes[i].pos.y, nodes[j].pos.x, nodes[j].pos.y);
+                    }
+                }
+            }
+
+            nodes.forEach(node => {
+                fill(nodeColor);
+                noStroke();
+                ellipse(node.pos.x, node.pos.y, 8, 8);
+                if (dist(mouseX, mouseY, node.pos.x, node.pos.y) < 50) {
+                    fill(highlightColor);
+                    ellipse(node.pos.x, node.pos.y, 12, 12);
+                }
+            });
+        }
+
+        function toggleColors() {
+            invertColors = !invertColors;
+            if (invertColors) {
+                backgroundColor = 255;
+                nodeColor = 20;
+                lineColor = [20, 100];
+                highlightColor = [20, 20, 0];  // Inverti anche il colore di evidenziazione
+            } else {
+                backgroundColor = 20;
+                nodeColor = 255;
+                lineColor = [255, 100];
+                highlightColor = [255, 255, 0];
+            }
+        }
+
+        function calculateTextBounds(text, size, x, y) {
+            textSize(size);
+            let w = textWidth(text);
+            let h = size * 1.5 * (text.split('\n').length); // Approximation
+            return {x: x - w / 2, y: y - h / 2, w: w, h: h};
+        }
+
+        function checkCollision(position, bounds) {
+            if (position.x > bounds.x && position.x < bounds.x + bounds.w &&
+                position.y > bounds.y && position.y < bounds.y + bounds.h) {
+                let overlapX = position.x - bounds.x < bounds.x + bounds.w - position.x ? -1 : 1;
+                let overlapY = position.y - bounds.y < bounds.y + bounds.h - position.y ? -1 : 1;
+                position.add(createVector(overlapX, overlapY).mult(2));
+            }
+        }
+
+        function wrapAround(position) {
+            if (position.x < 0) position.x = width;
+            else if (position.x > width) position.x = 0;
+            if (position.y < 0) position.y = height;
+            else if (position.y > height) position.y = 0;
+        }
+
+        function windowResized() {
+            resizeCanvas(windowWidth, windowHeight);
+            textData.x = width / 2;
+            textData.y = height / 2;
+            textData.bounds = calculateTextBounds(textData.text, textData.size, textData.x, textData.y);
+        }
+    </script>
+
+</div>
 
 
 
