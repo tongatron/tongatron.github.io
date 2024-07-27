@@ -35,10 +35,11 @@
       <div class="container py-4">
         <header class="pb-3 mb-4 border-bottom">
           <a href="/" class="d-flex align-items-center text-body-emphasis text-decoration-none">
-    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-balloon-fill" viewBox="0 0 16 16">
-      <path fill-rule="evenodd" d="M8.48 10.901C11.211 10.227 13 7.837 13 5A5 5 0 0 0 3 5c0 2.837 1.789 5.227 4.52 5.901l-.244.487a.25.25 0 1 0 .448.224l.04-.08c.009.17.024.315.051.45.068.344.208.622.448 1.102l.013.028c.212.422.182.85.05 1.246-.135.402-.366.751-.534 1.003a.25.25 0 0 0 .416.278l.004-.007c.166-.248.431-.646.588-1.115.16-.479.212-1.051-.076-1.629-.258-.515-.365-.732-.419-1.004a2 2 0 0 1-.037-.289l.008.017a.25.25 0 1 0 .448-.224zM4.352 3.356a4 4 0 0 1 3.15-2.325C7.774.997 8 1.224 8 1.5s-.226.496-.498.542c-.95.162-1.749.78-2.173 1.617a.6.6 0 0 1-.52.341c-.346 0-.599-.329-.457-.644"/>
-    </svg>
-            <span class="fs-1">tongatron</span>
+    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-shuffle" viewBox="0 0 16 16">
+  <path fill-rule="evenodd" d="M0 3.5A.5.5 0 0 1 .5 3H1c2.202 0 3.827 1.24 4.874 2.418.49.552.865 1.102 1.126 1.532.26-.43.636-.98 1.126-1.532C9.173 4.24 10.798 3 13 3v1c-1.798 0-3.173 1.01-4.126 2.082A9.6 9.6 0 0 0 7.556 8a9.6 9.6 0 0 0 1.317 1.918C9.828 10.99 11.204 12 13 12v1c-2.202 0-3.827-1.24-4.874-2.418A10.6 10.6 0 0 1 7 9.05c-.26.43-.636.98-1.126 1.532C4.827 11.76 3.202 13 1 13H.5a.5.5 0 0 1 0-1H1c1.798 0 3.173-1.01 4.126-2.082A9.6 9.6 0 0 0 6.444 8a9.6 9.6 0 0 0-1.317-1.918C4.172 5.01 2.796 4 1 4H.5a.5.5 0 0 1-.5-.5"/>
+  <path d="M13 5.466V1.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384l-2.36 1.966a.25.25 0 0 1-.41-.192m0 9v-3.932a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384l-2.36 1.966a.25.25 0 0 1-.41-.192"/>
+</svg>
+            <span class="fs-2">MJprompt</span>
           </a>
         </header>    
       </div>
@@ -47,116 +48,105 @@
 
   <!-- Main-->
   <div class="container ">
-    <div class="row ">
+    <div class="row justify-content-md-left"">
       <div class="col col-lg-8">
-          <h3>MidJourney rnadomic promt generator</h3>
-          <br>
           
-          <p>
-            <h3>Come funziona</h3>
-            inserisci gli elementi che vuoi randomizzare, uno per riga, e clicca il pulsante per genrare l'elenco dei prompt.
-          </p>
+            
+            <p>
+            Inserisci gli elementi che vuoi randomizzare, uno per riga, e clicca il pulsante per genrare l'elenco dei prompt.
+            <br><br>
+            Per suggrimenti:<br><a href="mailto:giovanni.bindi@gmail.org">giovanni.bindi@gmail.com</a>
+            </p>
 
       </div>
-      <div class="col-md-auto">
-          <p>
-            <strong>Contatti:</strong><br>
-            <a href="mailto:giovanni.bindi@gmail.org">giovanni.bindi@gmail.com</a>
-            <br>    
-          </p>
-      </div>
+    
     </div>
+    
   </div>
 
-  <hr>
 
+<div class="container-mj">
 
   <!-- Input-->
   <div class="container">
+    <br>
+    <h3>Input</h3>
+    <br>
     <div class="row row-cols-1 row-cols-md-3 g-4">
       <div class="col">
-        <div>
-          <div class="card h-100">
-            <div class="card-body">
-          <label for="subjects"><h5>SOGGETTI</h5></label>
-          
-          <textarea class="form-control" id="subjects"
-          placeholder="incolla o scrivi" rows="5"></textarea>      
-            </div>
-          </div>
-        </div>
+              <label for="subjects"><h5>SOGGETTI</h5></label>          
+              <textarea class="form-control" id="subjects"
+              placeholder="incolla o scrivi" rows="5"></textarea>      
       </div>
+
       <div class="col">
-        <div>
-          <div class="card h-100">
-            <div class="card-body">
-          <label for="subjects"><h5>STILI</h5></label>
-          
-          <textarea class="form-control" id="styles" placeholder="incolla o scrivi" rows="5"></textarea>  
-            </div>
-          </div>
-        </div>
+              <label for="subjects"><h5>STILI</h5></label>          
+              <textarea class="form-control" id="styles"
+              placeholder="incolla o scrivi" rows="5"></textarea>      
       </div>
+
       <div class="col">
-        <div>
-          <div class="card h-100">
-            <div class="card-body">
-          <label for="subjects"><h5>ALTRO</h5></label>
-          
-          <textarea class="form-control" id="others" placeholder="incolla o scrivi" rows="5"></textarea>      
-            </div>
-          </div>
+              <label for="subjects"><h5>ALTRO</h5></label>          
+              <textarea class="form-control" id="others"
+              placeholder="incolla o scrivi" rows="5"></textarea>      
+      </div>
+
+
+    </div>
+  </div>
+
+  <!-- button-->
+  <div class="container">
+    <br>
+    <div class="row justify-content-md-center">
+        <div class="col col-md-4">
+          <br>
+          <p>
+          <button class="btn btn-warning btn-lg" onclick="generatePrompts()">Genera elenco dei prompt</button>
+          </p>
         </div>
-      </div>  
     </div>
   </div>
 
-  <hr>
+  <!-- risultati-->      
+  <div class="container">
+    <div class="row">
+      <p>
+      <label for="results"><h3>Risultato</h3></label>
+      </p>
+      <div class="col">
+                  
+            <textarea class="form-control" id="results" rows="10" readonly></textarea>
+      </div>
 
-<!-- button-->
-<div class="container text-center">
-  <div class="row justify-content-md-center">
-    <div class="col col-md-4">
-    <button class="btn btn-warning btn-lg" onclick="generatePrompts()">Genera elenco dei prompt</button>
+      <div class="col">
+
+                <p>  
+                  <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-filetype-txt"  viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M14 4.5V14a2 2 0 0 1-2 2h-2v-1h2a1 1 0 0 0 1-1V4.5h-2A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v9H2V2a2 2 0 0 1 2-2h5.5zM1.928 15.849v-3.337h1.136v-.662H0v.662h1.134v3.337zm4.689-3.999h-.894L4.9 13.289h-.035l-.832-1.439h-.932l1.228 1.983-1.24 2.016h.862l.853-1.415h.035l.85 1.415h.907l-1.253-1.992zm1.93.662v3.337h-.794v-3.337H6.619v-.662h3.064v.662H8.546Z"/>
+                  </svg>
+
+                  <a href="#" onclick="copyToClipboard()">copia negli appunti</a>
+
+                  <br><br>
+
+
+                  <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-copy" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M4 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1h1v1a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h1v1z"/>
+                  </svg>
+
+                  <a href="#" onclick="downloadAsTxt()">scarica il file txt</a>
+
+
+                </p>
+
+
+      </div>
+
+    </div>
   </div>
-  </div>
+
 </div>
-
-<hr>
-
-<!-- risultati-->      
-<div class="container">
-  <div class="row">
-    <label for="results"><h3>Risultato</h3></label>
-    <div class="col">
-                
-          <textarea class="form-control" id="results" rows="10" readonly></textarea>
-    </div>
-
-    <div class="col">
-
-              <p>  
-                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-filetype-txt"  viewBox="0 0 16 16">
-                  <path fill-rule="evenodd" d="M14 4.5V14a2 2 0 0 1-2 2h-2v-1h2a1 1 0 0 0 1-1V4.5h-2A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v9H2V2a2 2 0 0 1 2-2h5.5zM1.928 15.849v-3.337h1.136v-.662H0v.662h1.134v3.337zm4.689-3.999h-.894L4.9 13.289h-.035l-.832-1.439h-.932l1.228 1.983-1.24 2.016h.862l.853-1.415h.035l.85 1.415h.907l-1.253-1.992zm1.93.662v3.337h-.794v-3.337H6.619v-.662h3.064v.662H8.546Z"/>
-                </svg>
-
-                <a href="#" onclick="copyToClipboard()">copia negli appunti</a>
-
-                <br><br>
-
-
-                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-copy" viewBox="0 0 16 16">
-                  <path fill-rule="evenodd" d="M4 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1h1v1a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h1v1z"/>
-                </svg>
-
-                <a href="#" onclick="downloadAsTxt()">scarica il file txt</a>
-
-              </p>
-
-    </div>
-  </div>
-</div>
-
       
   <script>
     function generatePrompts() {
@@ -199,21 +189,10 @@
       document.body.removeChild(a);
       window.URL.revokeObjectURL(url);
     }
-  </script>
-
-
-
-
-          
-
-
-
-      
-    
-    
+  </script> 
     
     <div class="container">
-      <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+      <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 ">
         <p class="col-md-4 mb-0 text-body-secondary">2024 Tongatron - Giovanni Bindi</p>
 
         <a href="/" class="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
