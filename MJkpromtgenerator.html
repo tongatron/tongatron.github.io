@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Generatore di Prompt</title>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    textarea {
+      height: 200px;
+      resize: none;
+    }
+    .input-list {
+      height: 250px;
+      overflow-y: scroll;
+    }
+  </style>
+</head>
+<body>
+  <div class="container mt-5">
+    <h1>Generatore di Prompt</h1>
+    
+    <div class="form-group">
+      <label for="subjects">Soggetti</label>
+      <p>Inserisci un elenco di soggetti</p>
+      <textarea class="form-control input-list" id="subjects" rows="10" placeholder="Inserisci un elenco di soggetti separati da una virgola"></textarea>
+    </div>
+    
+    <div class="form-group">
+      <label for="styles">Stili</label>
+      <p>Inserisci un elenco di stili</p>
+      <textarea class="form-control input-list" id="styles" rows="10" placeholder="Inserisci un elenco di stili separati da una virgola"></textarea>
+    </div>
+    
+    <div class="form-group">
+      <label for="others">Altro</label>
+      <p>Inserisci un elenco di altro</p>
+      <textarea class="form-control input-list" id="others" rows="10" placeholder="Inserisci un elenco di altro separati da una virgola"></textarea>
+    </div>
+    
+    <button class="btn btn-primary" onclick="generatePrompts()">Genera elenco dei prompt</button>
+    
+    <div class="form-group mt-4">
+      <label for="results">Risultato</label>
+      <textarea class="form-control" id="results" rows="10" readonly></textarea>
+    </div>
+  </div>
+
+  <script>
+    function generatePrompts() {
+      const subjects = document.getElementById('subjects').value.split(',').map(item => item.trim());
+      const styles = document.getElementById('styles').value.split(',').map(item => item.trim());
+      const others = document.getElementById('others').value.split(',').map(item => item.trim());
+      let prompts = [];
+      
+      styles.forEach(style => {
+        subjects.forEach(subject => {
+          others.forEach(other => {
+            prompts.push(`${style} ${subject} ${other}`);
+          });
+        });
+      });
+
+      document.getElementById('results').value = prompts.join('\n');
+    }
+  </script>
+</body>
+</html>
+2
