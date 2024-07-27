@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Generatore di Prompt</title>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    textarea {
+      height: 150px;
+      resize: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container mt-5">
+    <h1>Generatore di Prompt</h1>
+    
+    <div class="form-row">
+      <div class="col-12 mb-3">
+        <label for="subjects">Soggetti</label>
+        <p>Inserisci un elenco di soggetti (uno per riga)</p>
+        <textarea class="form-control" id="subjects" placeholder="Inserisci un elenco di soggetti, uno per riga"></textarea>
+      </div>
+    </div>
+    
+    <div class="form-row">
+      <div class="col-12 mb-3">
+        <label for="styles">Stili</label>
+        <p>Inserisci un elenco di stili (uno per riga)</p>
+        <textarea class="form-control" id="styles" placeholder="Inserisci un elenco di stili, uno per riga"></textarea>
+      </div>
+    </div>
+    
+    <div class="form-row">
+      <div class="col-12 mb-3">
+        <label for="others">Altro</label>
+        <p>Inserisci un elenco di altro (uno per riga)</p>
+        <textarea class="form-control" id="others" placeholder="Inserisci un elenco di altro, uno per riga"></textarea>
+      </div>
+    </div>
+    
+    <button class="btn btn-primary" onclick="generatePrompts()">Genera elenco dei prompt</button>
+    
+    <div class="form-row mt-4">
+      <div class="col-12">
+        <label for="results">Risultato</label>
+        <textarea class="form-control" id="results" rows="10" readonly></textarea>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function generatePrompts() {
+      const subjects = document.getElementById('subjects').value.split('\n').map(item => item.trim()).filter(item => item);
+      const styles = document.getElementById('styles').value.split('\n').map(item => item.trim()).filter(item => item);
+      const others = document.getElementById('others').value.split('\n').map(item => item.trim()).filter(item => item);
+
+      let prompts = [];
+      
+      if (styles.length === 0) styles.push(''); // Aggiungi elemento vuoto se array vuoto
+      if (subjects.length === 0) subjects.push(''); // Aggiungi elemento vuoto se array vuoto
+      if (others.length === 0) others.push(''); // Aggiungi elemento vuoto se array vuoto
+
+      styles.forEach(style => {
+        subjects.forEach(subject => {
+          others.forEach(other => {
+            prompts.push(`${style} ${subject} ${other}`.trim());
+          });
+        });
+      });
+
+      document.getElementById('results').value = prompts.join('\n');
+    }
+  </script>
+</body>
+</html>
