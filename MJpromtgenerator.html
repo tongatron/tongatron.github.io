@@ -1,102 +1,145 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!doctype html>
+  <html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>MidJourney rnadomic promt generator</title>
+    <title>MidJourney rnadomic promt generator</title>
 
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-
-
-
-  <link rel="stylesheet" href="tngstyle.css">
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
-
-  <!-- Bootstrap icons-->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
-
-</head>
-<body>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
 
-    <div class="container py-4">
-      <header class="pb-3 mb-4 border-bottom">
-        <a href="/" class="d-flex align-items-center text-body-emphasis text-decoration-none">
-  <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-balloon-fill" viewBox="0 0 16 16">
-    <path fill-rule="evenodd" d="M8.48 10.901C11.211 10.227 13 7.837 13 5A5 5 0 0 0 3 5c0 2.837 1.789 5.227 4.52 5.901l-.244.487a.25.25 0 1 0 .448.224l.04-.08c.009.17.024.315.051.45.068.344.208.622.448 1.102l.013.028c.212.422.182.85.05 1.246-.135.402-.366.751-.534 1.003a.25.25 0 0 0 .416.278l.004-.007c.166-.248.431-.646.588-1.115.16-.479.212-1.051-.076-1.629-.258-.515-.365-.732-.419-1.004a2 2 0 0 1-.037-.289l.008.017a.25.25 0 1 0 .448-.224zM4.352 3.356a4 4 0 0 1 3.15-2.325C7.774.997 8 1.224 8 1.5s-.226.496-.498.542c-.95.162-1.749.78-2.173 1.617a.6.6 0 0 1-.52.341c-.346 0-.599-.329-.457-.644"/>
-  </svg>
-          <span class="fs-1">tongatron</span>
-        </a>
-      </header>    
+
+    <link rel="stylesheet" href="tngstyle.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap icons-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+
+  </head>
+  <body>
+
+
+      <div class="container py-4">
+        <header class="pb-3 mb-4 border-bottom">
+          <a href="/" class="d-flex align-items-center text-body-emphasis text-decoration-none">
+    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-balloon-fill" viewBox="0 0 16 16">
+      <path fill-rule="evenodd" d="M8.48 10.901C11.211 10.227 13 7.837 13 5A5 5 0 0 0 3 5c0 2.837 1.789 5.227 4.52 5.901l-.244.487a.25.25 0 1 0 .448.224l.04-.08c.009.17.024.315.051.45.068.344.208.622.448 1.102l.013.028c.212.422.182.85.05 1.246-.135.402-.366.751-.534 1.003a.25.25 0 0 0 .416.278l.004-.007c.166-.248.431-.646.588-1.115.16-.479.212-1.051-.076-1.629-.258-.515-.365-.732-.419-1.004a2 2 0 0 1-.037-.289l.008.017a.25.25 0 1 0 .448-.224zM4.352 3.356a4 4 0 0 1 3.15-2.325C7.774.997 8 1.224 8 1.5s-.226.496-.498.542c-.95.162-1.749.78-2.173 1.617a.6.6 0 0 1-.52.341c-.346 0-.599-.329-.457-.644"/>
+    </svg>
+            <span class="fs-1">tongatron</span>
+          </a>
+        </header>    
+      </div>
+
+
+
+
+  <div class="container ">
+    <div class="row ">
+      <div class="col col-lg-8">
+          <h3>MidJourney rnadomic promt generator</h3>
+          <br>
+          
+          <p>
+            <strong>Come funziona:</strong><br>
+            inserisci gli elementi che vuoi randomizzare, uno per riga, e clicca il pulsante per genrare l'elenco dei prompt.
+          </p>
+
+      </div>
+      <div class="col-md-auto">
+          <p>
+            <strong>Contatti:</strong><br>
+            <a href="mailto:giovanni.bindi@gmail.org">giovanni.bindi@gmail.com</a>
+            <br>    
+          </p>
+      </div>
+    </div>
+  </div>
+
+
+  <hr>
+
+  <div class="container">
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+      <div class="col">
+        <div>
+          <div class="card h-100">
+            <div class="card-body">
+          <label for="subjects"><h4>SOGGETTI</h4></label>
+          
+          <textarea class="form-control" id="subjects"
+          placeholder="incolla o scrivi" rows="5"></textarea>      
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div>
+          <div class="card h-100">
+            <div class="card-body">
+          <label for="subjects"><h4>STILI</h4></label>
+          
+          <textarea class="form-control" id="styles" placeholder="incolla o scrivi" rows="5"></textarea>  
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div>
+          <div class="card h-100">
+            <div class="card-body">
+          <label for="subjects"><h4>ALTRO</h4></label>
+          
+          <textarea class="form-control" id="others" placeholder="incolla o scrivi" rows="5"></textarea>      
+            </div>
+          </div>
+        </div>
+      </div>  
     </div>
 
+    
 
-
-
-<div class="container ">
-  <div class="row ">
-    <div class="col col-lg-8">
-        <h3>MidJourney rnadomic promt generator</h3>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam tincidunt quam nec enim pharetra, sed scelerisque augue faucibus. Aliquam accumsan, ipsum at tincidunt porta, diam risus vulputate ex, at scelerisque lectus lectus a leo. Nullam dignissim porta commodo. Vestibulum dictum enim et rutrum rutrum. Praesent ornare et nisi ut consequat
-        </p>
-
+    <div class="align-items-center">
+      <hr>
+      <button class="btn btn-warning btn-lg" onclick="generatePrompts()">Genera elenco dei prompt</button>
     </div>
-    <div class="col-md-auto">
-        <p>
-          <strong>Contatti:</strong><br>
-          <a href="mailto:giovanni.bindi@gmail.org">giovanni.bindi@gmail.com</a>
-          <br>    
-        </p>
+    <hr>
+
+  </div>
+  </div>          
+
+
+<div class="container">
+  <div class="row">
+    <label for="results"><h3>Risultato</h3></label>
+    <div class="col">
+                
+          <textarea class="form-control" id="results" rows="10" readonly></textarea>
+    </div>
+
+    <div class="col">
+
+
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-filetype-txt" viewBox="0 0 16 16">
+  <path fill-rule="evenodd" d="M14 4.5V14a2 2 0 0 1-2 2h-2v-1h2a1 1 0 0 0 1-1V4.5h-2A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v9H2V2a2 2 0 0 1 2-2h5.5zM1.928 15.849v-3.337h1.136v-.662H0v.662h1.134v3.337zm4.689-3.999h-.894L4.9 13.289h-.035l-.832-1.439h-.932l1.228 1.983-1.24 2.016h.862l.853-1.415h.035l.85 1.415h.907l-1.253-1.992zm1.93.662v3.337h-.794v-3.337H6.619v-.662h3.064v.662H8.546Z"/>
+</svg>
+
+
+
+                  <button class="btn btn-secondary" onclick="copyToClipboard()">Copia negli appunti</button>
+
+                  <i class="bi bi-filetype"></i>
+                  
+        <button class="btn btn-secondary" onclick="downloadAsTxt()">Scarica come .txt</button>
     </div>
   </div>
 </div>
 
-
-<hr>
-
-  <div class="container mt-5">
-    <h1>Generatore di Prompt</h1>
-    
-    <div class="form-row">
-      <div class="col-12 mb-3">
-        <label for="subjects">Soggetti</label>
-        <p>Inserisci un elenco di soggetti (uno per riga)</p>
-        <textarea class="form-control" id="subjects" placeholder="Inserisci un elenco di soggetti, uno per riga"></textarea>
-      </div>
-    </div>
-    
-    <div class="form-row">
-      <div class="col-12 mb-3">
-        <label for="styles">Stili</label>
-        <p>Inserisci un elenco di stili (uno per riga)</p>
-        <textarea class="form-control" id="styles" placeholder="Inserisci un elenco di stili, uno per riga"></textarea>
-      </div>
-    </div>
-    
-    <div class="form-row">
-      <div class="col-12 mb-3">
-        <label for="others">Altro</label>
-        <p>Inserisci un elenco di altro (uno per riga)</p>
-        <textarea class="form-control" id="others" placeholder="Inserisci un elenco di altro, uno per riga"></textarea>
-      </div>
-    </div>
-    
-    <button class="btn btn-primary" onclick="generatePrompts()">Genera elenco dei prompt</button>
-    
-    <div class="form-row mt-4">
-      <div class="col-12">
-        <label for="results">Risultato</label>
-        <textarea class="form-control" id="results" rows="10" readonly></textarea>
-      </div>
-    </div>
-  </div>
-
+      
   <script>
     function generatePrompts() {
       const subjects = document.getElementById('subjects').value.split('\n').map(item => item.trim()).filter(item => item);
@@ -119,38 +162,59 @@
 
       document.getElementById('results').value = prompts.join('\n');
     }
+
+    function copyToClipboard() {
+      const results = document.getElementById('results');
+      results.select();
+      document.execCommand('copy');
+    }
+
+    function downloadAsTxt() {
+      const results = document.getElementById('results').value;
+      const blob = new Blob([results], { type: 'text/plain' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'prompts.txt';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(url);
+    }
   </script>
 
 
-        
+
+
+          
 
 
 
+      
     
-  
-  
-  
-  <div class="container">
-    <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
-      <p class="col-md-4 mb-0 text-body-secondary">&copy; 2024 Tongatron - Giovanni Bindi</p>
+    
+    
+    <div class="container">
+      <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+        <p class="col-md-4 mb-0 text-body-secondary">&copy; 2024 Tongatron - Giovanni Bindi</p>
 
-      <a href="/" class="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
-        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-balloon-fill" viewBox="0 0 16 16">
-  <path fill-rule="evenodd" d="M8.48 10.901C11.211 10.227 13 7.837 13 5A5 5 0 0 0 3 5c0 2.837 1.789 5.227 4.52 5.901l-.244.487a.25.25 0 1 0 .448.224l.04-.08c.009.17.024.315.051.45.068.344.208.622.448 1.102l.013.028c.212.422.182.85.05 1.246-.135.402-.366.751-.534 1.003a.25.25 0 0 0 .416.278l.004-.007c.166-.248.431-.646.588-1.115.16-.479.212-1.051-.076-1.629-.258-.515-.365-.732-.419-1.004a2 2 0 0 1-.037-.289l.008.017a.25.25 0 1 0 .448-.224zM4.352 3.356a4 4 0 0 1 3.15-2.325C7.774.997 8 1.224 8 1.5s-.226.496-.498.542c-.95.162-1.749.78-2.173 1.617a.6.6 0 0 1-.52.341c-.346 0-.599-.329-.457-.644"/>
-
+        <a href="/" class="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-balloon-fill" viewBox="0 0 16 16">
+    <path fill-rule="evenodd" d="M8.48 10.901C11.211 10.227 13 7.837 13 5A5 5 0 0 0 3 5c0 2.837 1.789 5.227 4.52 5.901l-.244.487a.25.25 0 1 0 .448.224l.04-.08c.009.17.024.315.051.45.068.344.208.622.448 1.102l.013.028c.212.422.182.85.05 1.246-.135.402-.366.751-.534 1.003a.25.25 0 0 0 .416.278l.004-.007c.166-.248.431-.646.588-1.115.16-.479.212-1.051-.076-1.629-.258-.515-.365-.732-.419-1.004a2 2 0 0 1-.037-.289l.008.017a.25.25 0 1 0 .448-.224zM4.352 3.356a4 4 0 0 1 3.15-2.325C7.774.997 8 1.224 8 1.5s-.226.496-.498.542c-.95.162-1.749.78-2.173 1.617a.6.6 0 0 1-.52.341c-.346 0-.599-.329-.457-.644"/>
 
 
 
-</svg>
-      </a>
 
-    </footer>
-  </div>
+  </svg>
+        </a>
 
-</body>
-</html>
+      </footer>
+    </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+  </body>
+  </html>
 
-†
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+
+  †
