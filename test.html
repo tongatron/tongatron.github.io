@@ -16,6 +16,9 @@
       cursor: pointer;
       margin-right: 10px;
     }
+    .result-item {
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
@@ -51,24 +54,7 @@
     <div class="form-row mt-4">
       <div class="col-12">
         <label for="results">Risultato</label>
-        <textarea class="form-control" id="results" rows="10" readonly></textarea>
-      </div>
-    </div>
-    
-    <div class="form-row mt-3">
-      <div class="col-12">
-        <i class="fas fa-copy icon-btn" title="Copia negli appunti" onclick="copyToClipboard()"></i>
-        <i class="fas fa-download icon-btn" title="Scarica come .txt" onclick="downloadAsTxt()"></i>
-        <br>
-        <svg class="bi" width="32" height="32" fill="currentColor">
-  <use xlink:href="bootstrap-icons.svg#heart-fill"/>
-</svg>
-<svg class="bi" width="32" height="32" fill="currentColor">
-  <use xlink:href="bootstrap-icons.svg#toggles"/>
-</svg>
-<svg class="bi" width="32" height="32" fill="currentColor">
-  <use xlink:href="bootstrap-icons.svg#shop"/>
-</svg>
+        <div id="results" class="list-group"></div>
       </div>
     </div>
   </div>
@@ -93,26 +79,27 @@
         });
       });
 
-      document.getElementById('results').value = prompts.join('\n');
-    }
-
-    function copyToClipboard() {
       const results = document.getElementById('results');
-      results.select();
-      document.execCommand('copy');
+      results.innerHTML = '';
+      prompts.forEach(prompt => {
+        const item = document.createElement('a');
+        item.className = 'list-group-item list-group-item-action result-item';
+        item.textContent = prompt;
+        item.onclick = () => copyToClipboard(prompt);
+        results.appendChild(item);
+      });
     }
 
-    function downloadAsTxt() {
-      const results = document.getElementById('results').value;
-      const blob = new Blob([results], { type: 'text/plain' });
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'prompts.txt';
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      window.URL.revokeObjectURL(url);
+    function copyToClipboard(text) {
+      const tempInput = document.createElement('textarea');
+      tempInput.style.position = 'absolute';
+      tempInput.style.left = '-9999px';
+      tempInput.value = text;
+      document.body.appendChild(tempInput);
+      tempInput.select();
+      document.execCommand('copy');
+      document.body.removeChild(tempInput);
+      alert('Testo copiato: ' + text);
     }
   </script>
 </body>
