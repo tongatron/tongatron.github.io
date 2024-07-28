@@ -50,7 +50,7 @@
     <div class="col col-lg-12">
       <h2>MidJourney prompt generator</h2>
       <p>
-        Inserisci gli elementi da randomizzare, uno per riga, e clicca il pulsante per generare l'elenco dei prompt.
+        Inserisci gli elementi o seleziona i preset per generare l'elenco di tutti i prompt.
       </p>
 
 
@@ -101,14 +101,13 @@
   <!-- Input -->
   <div class="container">
     <br>
-    <h3>Input</h3>
-    <br>
+
     <div class="row row-cols-1 row-cols-md-3 g-4">
       <div class="col">
         <label for="subjects"><h5>SOGGETTI</h5></label>
         <div class="dropdown mb-2">
           <button class="btn btn-light btn-outline-dark btn-sm" type="button" id="dropdownMenuButtonSubjects" data-bs-toggle="dropdown" aria-expanded="false">
-            seleziona presets
+            seleziona preset
           </button>
           <ul class="dropdown-menu" aria-labelledby="dropdownMenuButtonSubjects">
             <li><a class="dropdown-item" href="#" onclick="loadPreset('Animali', 'subjects')">Animali</a></li>
@@ -122,7 +121,7 @@
         <label for="styles"><h5>STILI</h5></label>
         <div class="dropdown mb-2">
           <button class="btn btn-light btn-outline-dark btn-sm" type="button" id="dropdownMenuButtonStyles" data-bs-toggle="dropdown" aria-expanded="false">
-            seleziona presets
+            seleziona preset
           </button>
           <ul class="dropdown-menu" aria-labelledby="dropdownMenuButtonStyles">
             <li><a class="dropdown-item" href="#" onclick="loadPreset('Fotografia', 'styles')">Fotografia</a></li>
@@ -136,7 +135,7 @@
         <label for="others"><h5>ALTRO</h5></label>
         <div class="dropdown mb-2">
           <button class="btn btn-light btn-outline-dark btn-sm" type="button" id="dropdownMenuButtonOthers" data-bs-toggle="dropdown" aria-expanded="false">
-            seleziona presets
+            seleziona preset
           </button>
           <ul class="dropdown-menu" aria-labelledby="dropdownMenuButtonOthers">
             <li><a class="dropdown-item" href="#" onclick="loadPreset('Fotografi', 'others')">Fotografi</a></li>
