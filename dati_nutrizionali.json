@@ -1,0 +1,107 @@
+{
+    "crodino": {
+        "name": "Crodino",
+        "type": "drink",
+        "calories": 152.5,
+        "carbs": 37.5,
+        "sugars": 37.5,
+        "protein": 0,
+        "fat": 0,
+        "ml": 250
+    },
+    "redbull": {
+        "name": "Red Bull",
+        "type": "drink",
+        "calories": 112.5,
+        "carbs": 28,
+        "sugars": 27,
+        "protein": 1,
+        "fat": 0,
+        "ml": 250
+    },
+    "corona": {
+        "name": "Corona",
+        "type": "drink",
+        "calories": 140,
+        "carbs": 13.1,
+        "sugars": 0,
+        "protein": 1,
+        "fat": 0,
+        "ml": 330
+    },
+    "peroni": {
+        "name": "Birra Peroni",
+        "type": "drink",
+        "calories": 257.4,
+        "carbs": 23.4,
+        "sugars": 0,
+        "protein": 2,
+        "fat": 0,
+        "ml": 660
+    },
+    "pizza": {
+        "name": "Pizza",
+        "type": "food",
+        "calories": 834,
+        "carbs": 97,
+        "sugars": 6,
+        "protein": 37,
+        "fat": 27,
+        "saturatedFat": 10,
+        "sodium": 1120,
+        "fiber": 6,
+        "g": 300
+    },
+    "bastoncinoFindus": {
+        "name": "Bastoncino Findus",
+        "type": "food",
+        "calories": 210,
+        "carbs": 21,
+        "sugars": 1,
+        "protein": 12,
+        "fat": 9,
+        "saturatedFat": 1,
+        "sodium": 400,
+        "fiber": 1,
+        "g": 100
+    },
+    "uovo": {
+        "name": "Uovo",
+        "type": "food",
+        "calories": 68,
+        "carbs": 1,
+        "sugars": 1,
+        "protein": 6,
+        "fat": 5,
+        "saturatedFat": 1.6,
+        "sodium": 62,
+        "fiber": 0,
+        "g": 50
+    },
+    "pastaPesto": {
+        "name": "Pasta al pesto",
+        "type": "food",
+        "calories": 360,
+        "carbs": 40,
+        "sugars": 3,
+        "protein": 12,
+        "fat": 18,
+        "saturatedFat": 3,
+        "sodium": 550,
+        "fiber": 2,
+        "g": 100
+    },
+    "tramezzinoPhiladelphia": {
+        "name": "Tramezzino con Philadelphia",
+        "type": "food",
+        "calories": 250,
+        "carbs": 30,
+        "sugars": 3,
+        "protein": 8,
+        "fat": 10,
+        "saturatedFat": 5,
+        "sodium": 450,
+        "fiber": 2,
+        "g": 100
+    }
+}

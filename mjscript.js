@@ -1,47 +1,73 @@
-document.addEventListener("DOMContentLoaded", function() {
-  // Load presets from JSON file
-  fetch('presets.json')
-    .then(response => response.json())
-    .then(data => {
-      window.presets = data;
+let presets = {};
+
+fetch('presets.json')
+  .then(response => response.json())
+  .then(data => {
+    presets = data;
+    populateDropdowns();
+  })
+  .catch(error => console.error('Error loading presets:', error));
+
+function populateDropdowns() {
+  populateDropdown('Soggetti', 'dropdownMenuSubjects');
+  populateDropdown('Stili', 'dropdownMenuStyles');
+  populateDropdown('Altro', 'dropdownMenuOthers');
+}
+
+function populateDropdown(category, dropdownId) {
+  const dropdownMenu = document.getElementById(dropdownId);
+  if (dropdownMenu) {
+    Object.keys(presets[category]).forEach(preset => {
+      const li = document.createElement('li');
+      const a = document.createElement('a');
+      a.className = 'dropdown-item';
+      a.href = '#';
+      a.textContent = preset;
+      a.onclick = () => showPresetModal(preset, category);
+      li.appendChild(a);
+      dropdownMenu.appendChild(li);
     });
+  }
+}
 
-  document.getElementById('results-container').style.display = 'none';
-});
+function showPresetModal(preset, category) {
+  const presetList = document.getElementById('presetList');
+  presetList.innerHTML = '';
 
-function showPresetModal(preset, targetId) {
-  const items = window.presets[preset];
-  const presetItemsContainer = document.getElementById('presetItems');
-  presetItemsContainer.innerHTML = '';
-  items.forEach((item, index) => {
+  const items = presets[category][preset];
+  items.forEach(item => {
     const div = document.createElement('div');
-    div.className = 'form-check';
-    div.innerHTML = `
-      <input class="form-check-input" type="checkbox" value="${item}" id="presetItem${index}">
-      <label class="form-check-label" for="presetItem${index}">
-        ${item}
-      </label>
-    `;
-    presetItemsContainer.appendChild(div);
+    div.className = 'list-group-item list-group-item-action';
+    div.textContent = item;
+    div.onclick = () => toggleSelection(div);
+    presetList.appendChild(div);
   });
-  document.getElementById('selectAll').checked = false;
-  document.getElementById('selectAll').addEventListener('change', function() {
-    const checkboxes = document.querySelectorAll('#presetItems .form-check-input');
-    checkboxes.forEach(checkbox => checkbox.checked = this.checked);
-  });
-  document.getElementById('presetModal').setAttribute('data-target-id', targetId);
-  new bootstrap.Modal(document.getElementById('presetModal')).show();
+
+  document.getElementById('presetModalLabel').textContent = `Seleziona Preset per ${preset}`;
+  const selectAllBtn = document.getElementById('selectAllBtn');
+  selectAllBtn.onclick = () => selectAll(presetList, category.toLowerCase());
+
+  const modal = new bootstrap.Modal(document.getElementById('presetModal'));
+  modal.show();
 }
 
-function applyPreset() {
-  const targetId = document.getElementById('presetModal').getAttribute('data-target-id');
-  const checkboxes = document.querySelectorAll('#presetItems .form-check-input');
-  const selectedItems = Array.from(checkboxes).filter(checkbox => checkbox.checked).map(checkbox => checkbox.value);
+function toggleSelection(element) {
+  element.classList.toggle('active');
+}
+
+function selectAll(presetList, targetId) {
+  const items = presetList.querySelectorAll('.list-group-item');
+  const selectedItems = [];
+
+  items.forEach(item => {
+    item.classList.add('active');
+    selectedItems.push(item.textContent);
+  });
+
   document.getElementById(targetId).value = selectedItems.join('\n');
-  bootstrap.Modal.getInstance(document.getElementById('presetModal')).hide();
+  const modal = bootstrap.Modal.getInstance(document.getElementById('presetModal'));
+  modal.hide();
 }
-
-
 
 function generatePrompts() {
   const subjects = document.getElementById('subjects').value.split('\n').map(item => item.trim()).filter(item => item);
@@ -57,7 +83,7 @@ function generatePrompts() {
   styles.forEach(style => {
     subjects.forEach(subject => {
       others.forEach(other => {
-        prompts.push('"${subject}", style "${style}" as "${other}"`.trim());
+        prompts.push(`an "${subject}", style "${style}" as "${other}"`.trim());
       });
     });
   });
@@ -80,13 +106,12 @@ function generatePrompts() {
   }
 }
 
-
 function clearInputs() {
   document.getElementById('subjects').value = '';
   document.getElementById('styles').value = '';
   document.getElementById('others').value = '';
-  document.getElementById('results').innerHTML = '';
-  document.getElementById('results-container').style.display = 'none';
+  document.getElementById('results').innerHTML = ''; // Cancella anche i risultati
+  document.getElementById('results-container').style.display = 'none'; // Nascondi il contenitore dei risultati
 }
 
 function copyLineToClipboard(line) {
@@ -99,25 +124,11 @@ function copyLineToClipboard(line) {
   document.execCommand('copy');
   document.body.removeChild(tempInput);
 
-  // Mostra la notifica "copiato negli appunti"
-  const lineCopyNotification = document.getElementById('line-copy-notification');
-  lineCopyNotification.style.display = 'block';
-
-  // Nascondi la notifica dopo 2 secondi
+  const notification = document.getElementById('line-copy-notification');
+  notification.style.display = 'inline';
   setTimeout(() => {
-    lineCopyNotification.style.display = 'none';
+    notification.style.display = 'none';
   }, 2000);
-
-  // Evidenzia la riga cliccata
-  const resultItems = document.querySelectorAll('.result-item');
-  resultItems.forEach(item => {
-    if (item.textContent === line) {
-      item.classList.add('highlight');
-      setTimeout(() => {
-        item.classList.remove('highlight');
-      }, 2000);
-    }
-  });
 }
 
 function copyAllToClipboard() {
@@ -133,13 +144,10 @@ function copyAllToClipboard() {
   document.execCommand('copy');
   document.body.removeChild(tempInput);
 
-  // Mostra la notifica "copiato"
-  const copyNotification = document.getElementById('copy-notification');
-  copyNotification.style.display = 'inline';
-
-  // Nascondi la notifica dopo 2 secondi
+  const notification = document.getElementById('copy-notification');
+  notification.style.display = 'inline';
   setTimeout(() => {
-    copyNotification.style.display = 'none';
+    notification.style.display = 'none';
   }, 2000);
 }
 

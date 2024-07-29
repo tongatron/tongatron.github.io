@@ -74,59 +74,50 @@
 </div>
 
 <div class="container-mj">
-  <!-- Input -->
-  <div class="container">
-    <br>
-    <h3>Input</h3>
-    <br>
-    <div class="row row-cols-1 row-cols-md-3 g-4">
-      <div class="col">
-        <label for="subjects"><h5>SOGGETTI</h5></label>
-        <div class="dropdown mb-2">
-          <button class="btn btn-light btn-outline-dark btn-sm" type="button" id="dropdownMenuButtonSubjects" data-bs-toggle="dropdown" aria-expanded="false">
-            seleziona presets
-          </button>
-          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButtonSubjects">
-            <li><a class="dropdown-item" href="#" onclick="showPresetModal('Realismo', 'subjects')">Realismo</a></li>
-            <li><a class="dropdown-item" href="#" onclick="showPresetModal('Animali esotici', 'subjects')">Animali esotici</a></li>
-            <li><a class="dropdown-item" href="#" onclick="showPresetModal('Automobili', 'subjects')">Automobili</a></li>
-          </ul>
+    <!-- Input -->
+    <div class="container">
+      <br>
+      <h3>Input</h3>
+      <br>
+      <div class="row row-cols-1 row-cols-md-3 g-4">
+        <div class="col">
+          <label for="subjects"><h5>SOGGETTI</h5></label>
+          <div class="dropdown mb-2">
+            <button class="btn btn-light btn-outline-dark btn-sm" type="button" id="dropdownMenuButtonSubjects" data-bs-toggle="dropdown" aria-expanded="false">
+              seleziona presets
+            </button>
+            <ul class="dropdown-menu" id="dropdownMenuSubjects"></ul>
+          </div>
+          <textarea class="form-control" id="subjects" placeholder="incolla o scrivi" rows="5"></textarea>
         </div>
-        <textarea class="form-control" id="subjects" placeholder="incolla o scrivi" rows="5"></textarea>
-      </div>
 
-      <div class="col">
-        <label for="styles"><h5>STILI</h5></label>
-        <div class="dropdown mb-2">
-          <button class="btn btn-light btn-outline-dark btn-sm" type="button" id="dropdownMenuButtonStyles" data-bs-toggle="dropdown" aria-expanded="false">
-            seleziona presets
-          </button>
-          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButtonStyles">
-            <li><a class="dropdown-item" href="#" onclick="showPresetModal('Realistic photography', 'styles')">Realistic photography</a></li>
-            <li><a class="dropdown-item" href="#" onclick="showPresetModal('Old photography', 'styles')">Old photography</a></li>
-            <li><a class="dropdown-item" href="#" onclick="showPresetModal('Oil paint', 'styles')">Oil paint</a></li>
-            <li><a class="dropdown-item" href="#" onclick="showPresetModal('Watercolor', 'styles')">Watercolor</a></li>
-          </ul>
+        <div class="col">
+          <label for="styles"><h5>STILI</h5></label>
+          <div class="dropdown mb-2">
+            <button class="btn btn-light btn-outline-dark btn-sm" type="button" id="dropdownMenuButtonStyles" data-bs-toggle="dropdown" aria-expanded="false">
+              seleziona presets
+            </button>
+            <ul class="dropdown-menu" id="dropdownMenuStyles"></ul>
+          </div>
+          <textarea class="form-control" id="styles" placeholder="incolla o scrivi" rows="5"></textarea>
         </div>
-        <textarea class="form-control" id="styles" placeholder="incolla o scrivi" rows="5"></textarea>
-      </div>
 
-      <div class="col">
-        <label for="others"><h5>ALTRO</h5></label>
-        <div class="dropdown mb-2">
-          <button class="btn btn-light btn-outline-dark btn-sm" type="button" id="dropdownMenuButtonOthers" data-bs-toggle="dropdown" aria-expanded="false">
-            seleziona presets
-          </button>
-          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButtonOthers">
-            <li><a class="dropdown-item" href="#" onclick="showPresetModal('Artisti contemporanei', 'others')">Artisti contemporanei</a></li>
-            <li><a class="dropdown-item" href="#" onclick="showPresetModal('Pittori', 'others')">Pittori</a></li>
-            <li><a class="dropdown-item" href="#" onclick="showPresetModal('Fotografi', 'others')">Fotografi</a></li>
-          </ul>
+        <div class="col">
+          <label for="others"><h5>ALTRO</h5></label>
+          <div class="dropdown mb-2">
+            <button class="btn btn-light btn-outline-dark btn-sm" type="button" id="dropdownMenuButtonOthers" data-bs-toggle="dropdown" aria-expanded="false">
+              seleziona presets
+            </button>
+            <ul class="dropdown-menu" id="dropdownMenuOthers"></ul>
+          </div>
+          <textarea class="form-control" id="others" placeholder="incolla o scrivi" rows="5"></textarea>
         </div>
-        <textarea class="form-control" id="others" placeholder="incolla o scrivi" rows="5"></textarea>
       </div>
     </div>
-  </div>
+
+
+
+
 
   <!-- Modal -->
   <div class="modal fade" id="presetModal" tabindex="-1" aria-labelledby="presetModalLabel" aria-hidden="true">
@@ -151,24 +142,28 @@
       </div>
     </div>
   </div>
-</div>
+
+
+
 
 
   <!-- Buttons -->
   <div class="container">
     <br>
     <div class="row justify-content-md-center">
-      <div class="col col-md-8">
+      <div class="col col-md-auto">
         <br>
         <button class="btn btn-warning btn-lg" onclick="generatePrompts()">Genera elenco dei prompt</button>
       </div>
-      <div class="col-md-4">
+      <div class="col-md-auto">
         <br>
         <button class="btn btn-lg btn-outline-danger" onclick="clearInputs()">Cancella tutto</button>
         <br><br>
       </div>
     </div>
   </div>
+
+</div>  
 
   <!-- Risultati -->
   <div class="container" id="results-container" style="display: none;">
