@@ -1,122 +1,105 @@
 {
-  "Realismo": [
-    "Apple iPhone",
-    "Coca-Cola bottle",
-    "Nike shoes",
-    "Sony PlayStation",
-    "Samsung Galaxy",
-    "Lego bricks",
-    "Adidas sneakers",
-    "Microsoft Surface",
-    "Google Home",
-    "Amazon Echo"
-  ],
-  "Animali esotici": [
-    "Komodo Dragon",
-    "Fennec Fox",
-    "Axolotl",
-    "Okapi",
-    "Quokka",
-    "Aye-Aye",
-    "Sunda Colugo",
-    "Pangolin",
-    "Tarsier",
-    "Shoebill"
-  ],
-  "Automobili": [
-    "Toyota Corolla",
-    "Ford Focus",
-    "Volkswagen Golf",
-    "Honda Civic",
-    "BMW 3 Series",
-    "Mercedes-Benz C-Class",
-    "Audi A4",
-    "Chevrolet Malibu",
-    "Nissan Altima",
-    "Hyundai Elantra"
-  ],
-  "Realistic photography": [
-    "Canon EOS R5 with RF 24-70mm f/2.8L IS USM",
-    "Nikon Z7 II with NIKKOR Z 24-70mm f/2.8 S",
-    "Sony A7R IV with FE 24-70mm f/2.8 GM",
-    "Fujifilm GFX 100S with GF 32-64mm f/4 R LM WR",
-    "Panasonic Lumix S1R with Lumix S Pro 24-70mm f/2.8",
-    "Leica SL2 with Vario-Elmarit-SL 24-90mm f/2.8-4 ASPH",
-    "Olympus OM-D E-M1 Mark III with M.Zuiko 12-40mm f/2.8 PRO",
-    "Pentax K-1 Mark II with D FA 24-70mm f/2.8 ED SDM WR",
-    "Sigma fp L with 24-70mm f/2.8 DG DN Art",
-    "Hasselblad X1D II 50C with XCD 45mm f/3.5"
-  ],
-  "Old photography": [
-    "Kodak Brownie",
-    "Leica M3",
-    "Rolleiflex TLR",
-    "Polaroid SX-70",
-    "Graflex Speed Graphic",
-    "Zeiss Ikon Contax II",
-    "Yashica Mat-124G",
-    "Canon AE-1",
-    "Nikon F",
-    "Pentax Spotmatic"
-  ],
-  "Oil paint": [
-    "Impressionism",
-    "Expressionism",
-    "Surrealism",
-    "Abstract",
-    "Cubism",
-    "Realism",
-    "Baroque",
-    "Renaissance",
-    "Romanticism",
-    "Symbolism"
-  ],
-  "Watercolor": [
-    "Wet-on-wet",
-    "Dry brush",
-    "Glazing",
-    "Graded wash",
-    "Flat wash",
-    "Lifting off",
-    "Negative painting",
-    "Resist techniques",
-    "Splattering",
-    "Dropping in color"
-  ],
-  "Artisti contemporanei": [
-    "Jeff Koons",
-    "Damien Hirst",
-    "Yayoi Kusama",
-    "Banksy",
-    "Ai Weiwei",
-    "Anish Kapoor",
-    "Takashi Murakami",
-    "Cindy Sherman",
-    "Marina Abramović",
-    "Olafur Eliasson"
-  ],
-  "Pittori": [
-    "Leonardo da Vinci",
-    "Vincent van Gogh",
-    "Pablo Picasso",
-    "Claude Monet",
-    "Salvador Dalí",
-    "Rembrandt",
-    "Michelangelo",
-    "Edvard Munch",
-    "Paul Cézanne",
-    "Henri Matisse"
-  ],
-  "Fotografi": [
-    "Ansel Adams",
-    "Dorothea Lange",
-    "Henri Cartier-Bresson",
-    "Robert Capa",
-    "Steve McCurry",
-    "Cindy Sherman",
-    "Richard Avedon",
-    "Annie Leibovitz",
-    "Sebastião Salgado",
-    "Irving Penn"
-  ]
-}
+  "Soggetti": {
+    "Realismo": [
+      "Apple iPhone",
+      "Coca-Cola bottle",
+      "Nike shoes",
+      "Sony PlayStation",
+      "Samsung Galaxy",
+      "Lego bricks",
+      "Adidas sneakers",
+      "Microsoft Surface",
+      "Google Home",
+      "Amazon Echo"
+    ],
+    "Animali esotici": [
+      "Komodo Dragon",
+      "Fennec Fox",
+      "Axolotl",
+      "Okapi",
+      "Quokka",
+      "Aye-Aye",
+      "Sunda Colugo",
+      "Pangolin",
+      "Tarsier",
+      "Shoebill"
+    ],
+    "Automobili": [
+      "Toyota Corolla",
+      "Ford Focus",
+      "Volkswagen Golf",
+      "Honda Civic",
+      "BMW 3 Series",
+      "Mercedes-Benz C-Class",
+      "Audi A4",
+      "Chevrolet Malibu",
+      "Nissan Altima",
+      "Hyundai Elantra"
+    ],
+    "Discipline olimpiche": [
+      "Archery",
+      "Athletics",
+      "Badminton",
+      "Basketball",
+      "Boxing",
+      "Canoeing",
+      "Cycling",
+      "Diving",
+      "Equestrian",
+      "Fencing"
+    ],
+    "Atleti olimpici": [
+      "Simone Biles",
+      "Usain Bolt",
+      "Michael Phelps",
+      "Katie Ledecky",
+      "Allyson Felix",
+      "Mo Farah",
+      "Elaine Thompson-Herah",
+      "Caeleb Dressel",
+      "Shelly-Ann Fraser-Pryce",
+      "Teddy Riner"
+    ]
+  },
+  "Stili": {
+    "Realistic photography": [
+      "Canon EOS R5 with RF 24-70mm f/2.8L IS USM",
+      "Nikon Z7 II with NIKKOR Z 24-70mm f/2.8 S",
+      "Sony A7R IV with FE 24-70mm f/2.8 GM",
+      "Fujifilm GFX 100S with GF 32-64mm f/4 R LM WR",
+      "Panasonic Lumix S1R with Lumix S Pro 24-70mm f/2.8",
+      "Leica SL2 with Vario-Elmarit-SL 24-90mm f/2.8-4 ASPH",
+      "Olympus OM-D E-M1 Mark III with M.Zuiko 12-40mm f/2.8 PRO",
+      "Pentax K-1 Mark II with D FA 24-70mm f/2.8 ED SDM WR",
+      "Sigma fp L with 24-70mm f/2.8 DG DN Art",
+      "Hasselblad X1D II 50C with XCD 45mm f/3.5"
+    ],
+    "Old photography": [
+      "Kodak Brownie",
+      "Leica M3",
+      "Rolleiflex TLR",
+      "Polaroid SX-70",
+      "Graflex Speed Graphic",
+      "Zeiss Ikon Contax II",
+      "Yashica Mat-124G",
+      "Canon AE-1",
+      "Nikon F",
+      "Pentax Spotmatic"
+    ],
+    "Oil paint": [
+      "Impressionism",
+      "Expressionism",
+      "Surrealism",
+      "Abstract",
+      "Cubism",
+      "Realism",
+      "Baroque",
+      "Renaissance",
+      "Romanticism",
+      "Symbolism"
+    ],
+    "Watercolor": [
+      "Wet-on-wet",
+      "Dry brush",
+      "Glazing",
+      "Graded wash"

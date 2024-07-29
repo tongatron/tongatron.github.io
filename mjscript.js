@@ -9,10 +9,39 @@ document.addEventListener("DOMContentLoaded", function() {
   document.getElementById('results-container').style.display = 'none';
 });
 
-function loadPreset(preset, targetId) {
-  const data = window.presets[preset].join('\n');
-  document.getElementById(targetId).value = data;
+function showPresetModal(preset, targetId) {
+  const items = window.presets[preset];
+  const presetItemsContainer = document.getElementById('presetItems');
+  presetItemsContainer.innerHTML = '';
+  items.forEach((item, index) => {
+    const div = document.createElement('div');
+    div.className = 'form-check';
+    div.innerHTML = `
+      <input class="form-check-input" type="checkbox" value="${item}" id="presetItem${index}">
+      <label class="form-check-label" for="presetItem${index}">
+        ${item}
+      </label>
+    `;
+    presetItemsContainer.appendChild(div);
+  });
+  document.getElementById('selectAll').checked = false;
+  document.getElementById('selectAll').addEventListener('change', function() {
+    const checkboxes = document.querySelectorAll('#presetItems .form-check-input');
+    checkboxes.forEach(checkbox => checkbox.checked = this.checked);
+  });
+  document.getElementById('presetModal').setAttribute('data-target-id', targetId);
+  new bootstrap.Modal(document.getElementById('presetModal')).show();
 }
+
+function applyPreset() {
+  const targetId = document.getElementById('presetModal').getAttribute('data-target-id');
+  const checkboxes = document.querySelectorAll('#presetItems .form-check-input');
+  const selectedItems = Array.from(checkboxes).filter(checkbox => checkbox.checked).map(checkbox => checkbox.value);
+  document.getElementById(targetId).value = selectedItems.join('\n');
+  bootstrap.Modal.getInstance(document.getElementById('presetModal')).hide();
+}
+
+
 
 function generatePrompts() {
   const subjects = document.getElementById('subjects').value.split('\n').map(item => item.trim()).filter(item => item);
@@ -28,7 +57,7 @@ function generatePrompts() {
   styles.forEach(style => {
     subjects.forEach(subject => {
       others.forEach(other => {
-        prompts.push(`${style} ${subject} ${other}`.trim());
+        prompts.push('"${subject}", style "${style}" as "${other}"`.trim());
       });
     });
   });
@@ -50,6 +79,7 @@ function generatePrompts() {
     resultsContainer.style.display = 'none';
   }
 }
+
 
 function clearInputs() {
   document.getElementById('subjects').value = '';
