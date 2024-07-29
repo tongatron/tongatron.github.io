@@ -1,0 +1,92 @@
+{
+    "coca_cola": {
+        "name": "Coca-Cola",
+        "type": "drink",
+        "calories": 140,
+        "carbs": 39,
+        "sugars": 39,
+        "protein": 0,
+        "fat": 0
+    },
+    "pepsi": {
+        "name": "Pepsi",
+        "type": "drink",
+        "calories": 150,
+        "carbs": 41,
+        "sugars": 41,
+        "protein": 0,
+        "fat": 0
+    },
+    "fanta": {
+        "name": "Fanta",
+        "type": "drink",
+        "calories": 160,
+        "carbs": 44,
+        "sugars": 44,
+        "protein": 0,
+        "fat": 0
+    },
+    "sprite": {
+        "name": "Sprite",
+        "type": "drink",
+        "calories": 140,
+        "carbs": 38,
+        "sugars": 38,
+        "protein": 0,
+        "fat": 0
+    },
+    "redbull": {
+        "name": "Red Bull",
+        "type": "drink",
+        "calories": 112.5,
+        "carbs": 28,
+        "sugars": 27,
+        "protein": 1,
+        "fat": 0
+    },
+    "monster": {
+        "name": "Monster",
+        "type": "drink",
+        "calories": 210,
+        "carbs": 54,
+        "sugars": 54,
+        "protein": 0,
+        "fat": 0
+    },
+    "dr_pepper": {
+        "name": "Dr. Pepper",
+        "type": "drink",
+        "calories": 150,
+        "carbs": 40,
+        "sugars": 40,
+        "protein": 0,
+        "fat": 0
+    },
+    "mountain_dew": {
+        "name": "Mountain Dew",
+        "type": "drink",
+        "calories": 170,
+        "carbs": 46,
+        "sugars": 46,
+        "protein": 0,
+        "fat": 0
+    },
+    "gatorade": {
+        "name": "Gatorade",
+        "type": "drink",
+        "calories": 80,
+        "carbs": 21,
+        "sugars": 21,
+        "protein": 0,
+        "fat": 0
+    },
+    "7up": {
+        "name": "7-Up",
+        "type": "drink",
+        "calories": 140,
+        "carbs": 38,
+        "sugars": 38,
+        "protein": 0,
+        "fat": 0
+    }
+}

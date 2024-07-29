@@ -50,7 +50,7 @@
     <div class="col col-lg-12">
       <h2>MidJourney prompt generator</h2>
       <p>
-        Inserisci gli elementi da randomizzare, uno per riga, e clicca il pulsante per generare l'elenco dei prompt.
+        Inserisci gli elementi o seleziona i preset per generare l'elenco di tutti i prompt.
       </p>
 
 
@@ -64,7 +64,7 @@
           <path fill-rule="evenodd" d="M8.48 10.901C11.211 10.227 13 7.837 13 5A5 5 0 0 0 3 5c0 2.837 1.789 5.227 4.52 5.901l-.244.487a.25.25 0 1 0 .448.224l.04-.08c.009.17.024.315.051.45.068.344.208.622.448 1.102l.013.028c.212.422.182.85.05 1.246-.135.402-.366.751-.534 1.003a.25.25 0 0 0 .416.278l.004-.007c.166-.248.431-.646.588-1.115.16-.479.212-1.051-.076-1.629-.258-.515-.365-.732-.419-1.004a2 2 0 0 1-.037-.289l.008.017a.25.25 0 1 0 .448-.224zM4.352 3.356a4 4 0 0 1 3.15-2.325C7.774.997 8 1.224 8 1.5s-.226.496-.498.542c-.95.162-1.749.78-2.173 1.617a.6.6 0 0 1-.52.341c-.346 0-.599-.329-.457-.644"/>
         </svg>
 
-        <a href="https://tongatron.github.io/" style="color:black"> tongatron.github.io</a>
+        <a href="https://tongatron.github.io/"> tongatron.github.io</a>
 
         <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-images" viewBox="0 0 16 16">
           <path d="M4.502 9a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3"/>
@@ -111,8 +111,9 @@
             seleziona presets
           </button>
           <ul class="dropdown-menu" aria-labelledby="dropdownMenuButtonSubjects">
-            <li><a class="dropdown-item" href="#" onclick="loadPreset('Animali', 'subjects')">Animali</a></li>
             <li><a class="dropdown-item" href="#" onclick="loadPreset('Realismo', 'subjects')">Realismo</a></li>
+            <li><a class="dropdown-item" href="#" onclick="loadPreset('Animali esotici', 'subjects')">Animali esotici</a></li>
+            <li><a class="dropdown-item" href="#" onclick="loadPreset('Automobili', 'subjects')">Automobili</a></li>
           </ul>
         </div>
         <textarea class="form-control" id="subjects" placeholder="incolla o scrivi" rows="5"></textarea>
@@ -125,8 +126,10 @@
             seleziona presets
           </button>
           <ul class="dropdown-menu" aria-labelledby="dropdownMenuButtonStyles">
-            <li><a class="dropdown-item" href="#" onclick="loadPreset('Fotografia', 'styles')">Fotografia</a></li>
-            <li><a class="dropdown-item" href="#" onclick="loadPreset('Pittura', 'styles')">Pittura</a></li>
+            <li><a class="dropdown-item" href="#" onclick="loadPreset('Realistic photography', 'styles')">Realistic photography</a></li>
+            <li><a class="dropdown-item" href="#" onclick="loadPreset('Old photography', 'styles')">Old photography</a></li>
+            <li><a class="dropdown-item" href="#" onclick="loadPreset('Oil paint', 'styles')">Oil paint</a></li>
+            <li><a class="dropdown-item" href="#" onclick="loadPreset('Watercolor', 'styles')">Watercolor</a></li>
           </ul>
         </div>
         <textarea class="form-control" id="styles" placeholder="incolla o scrivi" rows="5"></textarea>
@@ -139,8 +142,9 @@
             seleziona presets
           </button>
           <ul class="dropdown-menu" aria-labelledby="dropdownMenuButtonOthers">
+            <li><a class="dropdown-item" href="#" onclick="loadPreset('Artisti contemporanei', 'others')">Artisti contemporanei</a></li>
+            <li><a class="dropdown-item" href="#" onclick="loadPreset('Pittori', 'others')">Pittori</a></li>
             <li><a class="dropdown-item" href="#" onclick="loadPreset('Fotografi', 'others')">Fotografi</a></li>
-            <li><a class="dropdown-item" href="#" onclick="loadPreset('Tecniche artistiche', 'others')">Tecniche artistiche</a></li>
           </ul>
         </div>
         <textarea class="form-control" id="others" placeholder="incolla o scrivi" rows="5"></textarea>
@@ -152,13 +156,14 @@
   <div class="container">
     <br>
     <div class="row justify-content-md-center">
-      <div class="col col-md-4">
+      <div class="col col-md-auto">
         <br>
         <button class="btn btn-warning btn-lg" onclick="generatePrompts()">Genera elenco dei prompt</button>
       </div>
-      <div class="col col-md-4">
+      <div class="col-md-auto">
         <br>
-        <button class="btn btn-danger btn-lg" onclick="clearInputs()">Cancella tutto</button>
+        <button class="btn btn-lg btn-outline-danger" onclick="clearInputs()">Cancella tutto</button>
+        <br><br>
       </div>
     </div>
   </div>
@@ -194,161 +199,9 @@
   </div>
 </div>
 
-<script>
-  function loadPreset(preset, targetId) {
-    let data = '';
-    if (preset === 'Fotografi') {
-      data = `Klaus Frahm
-Kansuke Yamamoto
-Arne Svenson
-Massimo Vitali
-Matthias Heiderich
-Nirav Patel
-Philip Lorca diCorcia
-Jessica Backhaus
-Filippo Minelli
-Gerry Johansson`;
-    } else if (preset === 'Tecniche artistiche') {
-      data = `Gum Bichromate
-Khokhloma
-Millimeter squared paper
-Circuit diagram`;
-    } else if (preset === 'Animali') {
-      data = `Koala
-Panda
-Dog
-Cat
-Magpie`;
-    } else if (preset === 'Realismo') {
-      data = `Toyota Yaris
-Sony alpha A6400 camera`;
-    } else if (preset === 'Fotografia') {
-      data = `Realistic Photography
-Macro Photography
-Artistic Photography
-BW Photography
-Old Picture`;
-    } else if (preset === 'Pittura') {
-      data = `Watercolor
-Oil paint`;
-    }
-    document.getElementById(targetId).value = data;
-  }
 
-  function generatePrompts() {
-    const subjects = document.getElementById('subjects').value.split('\n').map(item => item.trim()).filter(item => item);
-    const styles = document.getElementById('styles').value.split('\n').map(item => item.trim()).filter(item => item);
-    const others = document.getElementById('others').value.split('\n').map(item => item.trim()).filter(item => item);
-
-    let prompts = [];
-    
-    if (styles.length === 0) styles.push(''); // Aggiungi elemento vuoto se array vuoto
-    if (subjects.length === 0) subjects.push(''); // Aggiungi elemento vuoto se array vuoto
-    if (others.length === 0) others.push(''); // Aggiungi elemento vuoto se array vuoto
-
-    styles.forEach(style => {
-      subjects.forEach(subject => {
-        others.forEach(other => {
-          prompts.push(`${style} ${subject} ${other}`.trim());
-        });
-      });
-    });
-
-    const resultsContainer = document.getElementById('results-container');
-    const results = document.getElementById('results');
-    results.innerHTML = '';
-
-    if (prompts.length > 0) {
-      prompts.forEach(prompt => {
-        const item = document.createElement('a');
-        item.className = 'list-group-item list-group-item-action result-item';
-        item.textContent = prompt;
-        item.onclick = () => copyLineToClipboard(prompt);
-        results.appendChild(item);
-      });
-      resultsContainer.style.display = 'block';
-    } else {
-      resultsContainer.style.display = 'none';
-    }
-  }
-
-  function clearInputs() {
-    document.getElementById('subjects').value = '';
-    document.getElementById('styles').value = '';
-    document.getElementById('others').value = '';
-    document.getElementById('results').innerHTML = '';
-    document.getElementById('results-container').style.display = 'none';
-  }
-
-  function copyLineToClipboard(line) {
-    const tempInput = document.createElement('textarea');
-    tempInput.style.position = 'absolute';
-    tempInput.style.left = '-9999px';
-    tempInput.value = line;
-    document.body.appendChild(tempInput);
-    tempInput.select();
-    document.execCommand('copy');
-    document.body.removeChild(tempInput);
-
-    // Mostra la notifica "copiato negli appunti"
-    const lineCopyNotification = document.getElementById('line-copy-notification');
-    lineCopyNotification.style.display = 'block';
-
-    // Nascondi la notifica dopo 2 secondi
-    setTimeout(() => {
-      lineCopyNotification.style.display = 'none';
-    }, 2000);
-
-    // Evidenzia la riga cliccata
-    const resultItems = document.querySelectorAll('.result-item');
-    resultItems.forEach(item => {
-      if (item.textContent === line) {
-        item.classList.add('highlight');
-        setTimeout(() => {
-          item.classList.remove('highlight');
-        }, 2000);
-      }
-    });
-  }
-
-  function copyAllToClipboard() {
-    const results = Array.from(document.getElementById('results').children)
-      .map(item => item.textContent)
-      .join('\n');
-    const tempInput = document.createElement('textarea');
-    tempInput.style.position = 'absolute';
-    tempInput.style.left = '-9999px';
-    tempInput.value = results;
-    document.body.appendChild(tempInput);
-    tempInput.select();
-    document.execCommand('copy');
-    document.body.removeChild(tempInput);
-
-    // Mostra la notifica "copiato"
-    const copyNotification = document.getElementById('copy-notification');
-    copyNotification.style.display = 'inline';
-
-    // Nascondi la notifica dopo 2 secondi
-    setTimeout(() => {
-      copyNotification.style.display = 'none';
-    }, 2000);
-  }
-
-  function downloadAsTxt() {
-    const results = Array.from(document.getElementById('results').children)
-      .map(item => item.textContent)
-      .join('\n');
-    const blob = new Blob([results], { type: 'text/plain' });
-    const url = window.URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'prompts.txt';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    window.URL.revokeObjectURL(url);
-  }
-</script>
+<!-- External JS -->
+<script src="mjscript.js"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
