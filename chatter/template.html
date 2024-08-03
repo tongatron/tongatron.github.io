@@ -1,0 +1,42 @@
+import os
+from flask import Flask, request, render_template_string
+
+app = Flask(__name__)
+
+@app.route('/upload', methods=['POST'])
+def upload_file():
+    file = request.files['chatfile']
+    content = file.read().decode('utf-8')
+
+    pattern = re.compile(r'\[(\d{2}/\d{2}/\d{2}), (\d{2}:\d{2}:\d{2})\] (.+?): (.+)')
+    messages = []
+
+    for line in content.split('\n'):
+        match = pattern.match(line)
+        if match:
+            date, time, user, message = match.groups()
+            messages.append({'date': date, 'time': time, 'user': user, 'message': message})
+
+    rendered_html = render_template_string('''
+    <!DOCTYPE html>
+    <html lang="it">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Conversazione WhatsApp</title>
+        <style>
+            body { font-family: Arial, sans-serif; }
+            .message { margin-bottom: 10px; }
+            .date-time { color: gray; font-size: 0.9em; }
+            .user { font-weight: bold; }
+            .text { margin-left: 10px; }
+        </style>
+    </head>
+    <body>
+        <h1>Conversazione WhatsApp</h1>
+        <div class="chat">
+            {% for msg in messages %}
+            <div class="message">
+                <span class="date-time">[{{ msg.date }}, {{ msg.time }}]</span>
+                <span class="user">{{ msg.user }}:</span>
+            
