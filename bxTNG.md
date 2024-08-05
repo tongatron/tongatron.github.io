@@ -1,6 +1,14 @@
 # BoxeWoke
 
-Links:
+
+
+**links:**
+
+https://olympics.com/ioc
+
+https://x.com/TLexercise
+
+
 
 https://sex-matters.org
 
@@ -10,7 +18,19 @@ https://www.nytimes.com/2021/10/26/books/review/john-mcwhorter-woke-racism.html
 
 
 
-<img src="img/image-20240805003036811.png" alt="image-20240805003036811" style="zoom:33%;" />
+# Go
+
+https://x.com/iocmedia/status/1819667573698445793I
+
+Nella conferenza stampa odierna del CIO – Parigi 2024, il presidente del CIO Bach ha detto:
+"Ma ripeto, qui, questo non è un caso DSD, riguarda una donna che prende parte a una competizione femminile, e credo di averlo spiegato molte volte".
+
+Quello che si intendeva dire era:
+"Ma ripeto, qui, questo non è un caso transgender, riguarda una donna che prende parte a una competizione femminile, e credo di averlo spiegato molte volte".
+
+
+
+
 
 ### Emma Hilton
 
@@ -102,6 +122,10 @@ Punto 18, perché la presenza di XY non dovrebbe portare alla squalifica automat
 
 ### Paroline
 
+C'è un'immagine che potrebbe riassumere meglio il nostro nuovo movimento per i diritti degli uomini? Il sorrisetto di un uomo che sa di essere protetto da un'istituzione sportiva misogina che si gode il dolore di una donna che ha appena preso a pugni in testa e la cui ambizione di vita ha appena distrutto. #Paris2024
+
+
+
 Ci avete costretti ad usare intricati giri di paro per espimere un concetto semplice
 
 Ragnatela intricata avete tessuto per ingannare
@@ -125,6 +149,8 @@ Le Olimpiadi saranno ricordate per questo e per la degenerazione di uomini semin
 La vostra cattura ideologica non è passata inosservata ed è il fondamento della misoginia e sessismo
 
 Al prossimo giro canguri contro Imane Khelif, sarebbe un coimbattimento leale
+
+l termine “gaslighting” si riferisce a una forma di manipolazione psicologica in cui una persona o un gruppo cerca di far dubitare un’altra persona della propria percezione della realtà, memoria o giudizio. il gaslighting può coinvolgere comportamenti come negare fatti evidenti, mentire, distorcere eventi passati, sminuire i sentimenti o le preoccupazioni dell'altra persona, e utilizzare manipolazioni emotive per far sentire l'altra persona insicura e confusa. Lo scopo del gaslighting è spesso quello di ottenere il controllo o il potere su qualcun altro, facendogli mettere in discussione la propria sanità mentale e fiducia in se stesso.
 
 I vostri capricci non cambieranno la realtà e di certo non mi faranno tacere. Riderò solo di voi e dei vostri falliti, patetici tentativi di gaslighting.
 

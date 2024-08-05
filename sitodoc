@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <title>Dott. Albert Hoffman</title>
+</head>
+<body>
+
+<!-- Header -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">Dott. Albert Hoffman</a>
+</nav>
+
+<div class="container mt-4">
+    <!-- Informazioni di Contatto -->
+    <section id="contatti">
+        <h2>Informazioni di Contatto</h2>
+        <ul class="list-group">
+            <li class="list-group-item">Email: <a href="mailto:albert.hoffman@example.com">albert.hoffman@example.com</a></li>
+            <li class="list-group-item">Indirizzo: Via Esempio 123, Roma, Italia</li>
+            <li class="list-group-item">Telefono: +39 012 345 6789</li>
+            <li class="list-group-item">WhatsApp: <a href="https://wa.me/390123456789">+39 012 345 6789</a></li>
+        </ul>
+    </section>
+
+    <!-- Modalità di Prenotazione -->
+    <section id="prenotazione" class="mt-4">
+        <h2>Modalità di Prenotazione</h2>
+        <p>Per prenotare un appuntamento, seleziona uno slot disponibile nel calendario sottostante:</p>
+        <!-- Mockup Calendario -->
+        <div class="card">
+            <div class="card-body">
+                <div class="calendar">
+                    <!-- Inserire qui il mockup del calendario -->
+                    <p>Calendario con slot appuntamenti (Mockup)</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Metodologia -->
+    <section id="metodologia" class="mt-4">
+        <h2>Metodologia</h2>
+        <div class="accordion" id="metodologiaAccordion">
+            <div class="card">
+                <div class="card-header" id="headingOne">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            Trattamento A
+                        </button>
+                    </h5>
+                </div>
+
+                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#metodologiaAccordion">
+                    <div class="card-body">
+                        Descrizione dettagliata del Trattamento A.
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header" id="headingTwo">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                            Trattamento B
+                        </button>
+                    </h5>
+                </div>
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#metodologiaAccordion">
+                    <div class="card-body">
+                        Descrizione dettagliata del Trattamento B.
+                    </div>
+                </div>
+            </div>
+            <!-- Aggiungere altre sezioni per ulteriori trattamenti se necessario -->
+        </div>
+    </section>
+</div>
+
+<!-- Bootstrap JS, Popper.js, and jQuery -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.6/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

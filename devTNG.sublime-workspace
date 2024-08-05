@@ -1,0 +1,472 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"sty",
+				"style"
+			],
+			[
+				"col-",
+				"col-md-auto"
+			],
+			[
+				"col",
+				"col-lg-8"
+			],
+			[
+				"ali",
+				"align-content"
+			],
+			[
+				"background-c",
+				"background-color"
+			],
+			[
+				"cent",
+				"justify-content-center"
+			],
+			[
+				"ro",
+				"row"
+			],
+			[
+				"co",
+				"container"
+			],
+			[
+				"font-st",
+				"font-style"
+			],
+			[
+				"fon",
+				"font-weight"
+			],
+			[
+				"w",
+				"width"
+			],
+			[
+				"l",
+				"larger"
+			],
+			[
+				"st",
+				"strong"
+			],
+			[
+				"al",
+				"align-items-center"
+			],
+			[
+				"h",
+				"href"
+			],
+			[
+				"grey",
+				"lightgrey"
+			],
+			[
+				"bac",
+				"background-color"
+			],
+			[
+				"con",
+				"container"
+			],
+			[
+				"b",
+				"br"
+			],
+			[
+				"im",
+				"img"
+			],
+			[
+				"card",
+				"card-img-top"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"contents": "",
+			"settings":
+			{
+				"buffer_size": 0,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "sitodoc.md",
+			"settings":
+			{
+				"buffer_size": 480,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"python",
+				"Build With: Python - Syntax Check"
+			]
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 0.0,
+		"history":
+		[
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/Users/giovannibindi/Documents/Lavoro 2024/tng24/gallery.py",
+		"/Users/giovannibindi/Documents/Lavoro 2024/tng24/scimmia/unify.py",
+		"/Users/giovannibindi/Documents/Lavoro 2024/tng24/unify.py",
+		"/Users/giovannibindi/Documents/Lavoro 2024/tng24/test/prevideo.html",
+		"/Users/giovannibindi/Documents/Lavoro 2024/tng24/test/j.json",
+		"/Users/giovannibindi/Documents/Lavoro 2024/tng24/test/video.html",
+		"/Users/giovannibindi/Documents/Lavoro 2024/tng24/chatter.py",
+		"/Users/giovannibindi/Documents/GitHub/tongatron.github.io/landing1.html",
+		"/Users/giovannibindi/Documents/Lavoro 2024/tng24/mnk.py",
+		"/Users/giovannibindi/Documents/GitHub/tongatron.github.io/chatter/chatter.py",
+		"/Users/giovannibindi/Documents/Lavoro 2024/chat.txt",
+		"/Users/giovannibindi/Documents/Lavoro 2024/chat2.txt",
+		"/Users/giovannibindi/Documents/Lavoro 2024/simple-node-app/test.js",
+		"/Users/giovannibindi/Documents/Lavoro 2024/simple-node-app/backup.js",
+		"/Users/giovannibindi/Documents/Lavoro 2024/simple-node-app/.env",
+		"/Users/giovannibindi/Documents/Lavoro 2024/simple-node-app/index.js",
+		"/Users/giovannibindi/Documents/GitHub/tongatron.github.io/chatter/template.html",
+		"/Users/giovannibindi/Documents/GitHub/tongatron.github.io/chatter/chatter2.py",
+		"/Users/giovannibindi/Documents/Lavoro 2024/chatter2.py",
+		"/Users/giovannibindi/Documents/Lavoro 2024/chatter.py",
+		"/Users/giovannibindi/Documents/GitHub/tongatron.github.io/test4.html",
+		"/Users/giovannibindi/Documents/GitHub/tongatron.github.io/cherry.html",
+		"/Users/giovannibindi/Documents/GitHub/tongatron.github.io/nubivaghi.html",
+		"/Users/giovannibindi/Documents/GitHub/tongatron.github.io/robottino.html",
+		"/Users/giovannibindi/Documents/GitHub/tongatron.github.io/home.html",
+		"/Users/giovannibindi/Documents/GitHub/tongatron.github.io/index.html",
+		"/Users/giovannibindi/Documents/GitHub/tongatron.github.io/calories.json",
+		"/Users/giovannibindi/Documents/GitHub/tongatron.github.io/testscript.js",
+		"/Users/giovannibindi/Documents/GitHub/tongatron.github.io/dati_nutrizionali.json",
+		"/Users/giovannibindi/Documents/GitHub/tongatron.github.io/analisinutrizionale-test.html",
+		"/Users/giovannibindi/Documents/GitHub/tongatron.github.io/analisinutrizionale-backup.html",
+		"/Users/giovannibindi/Documents/GitHub/tongatron.github.io/mjprompt.html",
+		"/Users/giovannibindi/Documents/GitHub/tongatron.github.io/tngstyle.css",
+		"/Users/giovannibindi/Documents/GitHub/tongatron.github.io/analisinutrizionale.html",
+		"/Users/giovannibindi/Documents/Lavoro 2024/simple-node-app/mongo.env",
+		"/Users/giovannibindi/Documents/GitHub/tongatron.github.io/alcol.html",
+		"/Users/giovannibindi/Documents/GitHub/tongatron.github.io/mjscript.js",
+		"/Users/giovannibindi/Documents/GitHub/tongatron.github.io/presets.json",
+		"/Users/giovannibindi/Documents/GitHub/tongatron.github.io/test2.html",
+		"/Users/giovannibindi/Documents/GitHub/tongatron.github.io/MJpromt-test.html",
+		"/Users/giovannibindi/Documents/GitHub/tongatron.github.io/caloscript.js",
+		"/Users/giovannibindi/Documents/GitHub/tongatron.github.io/calories-test.html",
+		"/Users/giovannibindi/Documents/GitHub/tongatron.github.io/calories.html",
+		"/Users/giovannibindi/Documents/GitHub/tongatron.github.io/calotest.html",
+		"/Users/giovannibindi/Documents/GitHub/tongatron.github.io/test.json",
+		"/Users/giovannibindi/Documents/GitHub/tongatron.github.io/test2script.js",
+		"/Users/giovannibindi/Documents/GitHub/tongatron.github.io/test3.html",
+		"/Users/giovannibindi/Documents/GitHub/tongatron.github.io/MJkpromtgenerator.html",
+		"/Users/giovannibindi/Documents/GitHub/tongatron.github.io/test.html",
+		"/Users/giovannibindi/Documents/GitHub/tongatron.github.io/mjpromt.html",
+		"/Users/giovannibindi/Documents/GitHub/tongatron.github.io/selfomatic.html",
+		"/Users/giovannibindi/Documents/GitHub/tongatron.github.io/MJpromtgenerator3.html",
+		"/Users/giovannibindi/Documents/GitHub/tongatron.github.io/MJpromtgenerator.html",
+		"/Users/giovannibindi/Documents/GitHub/tongatron.github.io/icons.html",
+		"/Users/giovannibindi/Documents/Lavoro 2024/tongatron.com 2/test2.html",
+		"/Users/giovannibindi/Documents/Lavoro 2024/tongatron.com 2/test3.html",
+		"/Users/giovannibindi/Documents/Lavoro 2024/tongatron.com 2/test.html",
+		"/Users/giovannibindi/Documents/Lavoro 2024/tongatron.com 2/tngstyle.css",
+		"/Users/giovannibindi/Documents/Lavoro 2024/tongatron.com 2/index.html",
+		"/Users/giovannibindi/Documents/GitHub/tongatron.github.io/index2.html",
+		"/Users/giovannibindi/Documents/GitHub/tongatron.github.io/tema/css/styles.css",
+		"/Users/giovannibindi/Documents/GitHub/tongatron.github.io/tema/index.html",
+		"/Users/giovannibindi/Documents/GitHub/tongatron.github.io/bootstrap/index2.html",
+		"/Users/giovannibindi/Documents/Siti/minimaold/index.md",
+		"/Users/giovannibindi/Documents/AI_ChatGPT/Interfacce/chatgpt-demo/.env",
+		"/Users/giovannibindi/Documents/GitHub/test/index.html",
+		"/Users/giovannibindi/Documents/AI_ChatGPT/Web/Sito/openai-test.js",
+		"/Users/giovannibindi/Documents/AI_ChatGPT/Web/Sito/server.js",
+		"/Users/giovannibindi/Documents/AI_ChatGPT/Web/AIweb/AIwebGIT/package-lock.json",
+		"/Users/giovannibindi/Documents/AI_ChatGPT/Web/AIweb/AIwebGIT/package.json",
+		"/Users/giovannibindi/Documents/AI_ChatGPT/Web/Sito/lanciajson.html",
+		"/Users/giovannibindi/Documents/AI_ChatGPT/Web/Sito/.env",
+		"/Users/giovannibindi/Documents/AI_ChatGPT/Web/Sito/index.html",
+		"/Users/giovannibindi/Documents/AI_ChatGPT/Web/Sito/test1.html",
+		"/Users/giovannibindi/Documents/AI_ChatGPT/Web/Sito/streaming.js",
+		"/Users/giovannibindi/Documents/AI_ChatGPT/Web/Sito/hello-world.js",
+		"/Users/giovannibindi/Documents/AI_ChatGPT/Web/Sito/package.json",
+		"/Users/giovannibindi/Documents/Siti/tongatron.it 2019/index.html",
+		"/Users/giovannibindi/Documents/Siti/tongatron2024/index.html",
+		"/Users/giovannibindi/Downloads/ai.html",
+		"/Users/giovannibindi/Documents/Siti/robottino.cc old/index_test.html",
+		"/Users/giovannibindi/Documents/Siti/robottino.cc old/ita.html",
+		"/Users/giovannibindi/Documents/Siti/tongatron2019/index.html",
+		"/Users/giovannibindi/Downloads/play.html",
+		"/Users/giovannibindi/Downloads/reach.html",
+		"/Users/giovannibindi/Documents/FaberSum/index.html",
+		"/Users/giovannibindi/Documents/GitHub/tongatron.github.io/countdown.html",
+		"/Users/giovannibindi/Documents/GitHub/tongatron.github.io/home3.html",
+		"/Users/giovannibindi/Documents/GitHub/tongatron.github.io/prese.html",
+		"/Users/giovannibindi/Downloads/Qfield consegna lavori Torino/PFATOCOLL_vb_01.shp.xml",
+		"/Users/giovannibindi/Documents/GitHub/tongatron.github.io/ageita.html",
+		"/Users/giovannibindi/Documents/GitHub/tongatron.github.io/agemonths.html",
+		"/Users/giovannibindi/Documents/GitHub/tongatron.github.io/beer.html",
+		"/Users/giovannibindi/Documents/GitHub/pythontools/nascita.py",
+		"/Users/giovannibindi/Documents/GitHub/tongatron.github.io/birthdayweekdayfinder.html",
+		"/Users/giovannibindi/Documents/GitHub/tongatron.github.io/birthdayweekdayfinder_2.html",
+		"/Users/giovannibindi/Documents/GitHub/tongatron.github.io/birthdayweekdayfinder_3.html",
+		"/Users/giovannibindi/Documents/GitHub/tongatron.github.io/ruota.html",
+		"/Users/giovannibindi/Documents/GitHub/tongatron.github.io/error.html",
+		"/Users/giovannibindi/Documents/GitHub/tongatron.github.io/angela.html",
+		"/Users/giovannibindi/Documents/GitHub/tongatron.github.io/cricca.html",
+		"/Users/giovannibindi/Documents/GitHub/tongatron.github.io/unita.html",
+		"/Users/giovannibindi/Documents/GitHub/tongatron.github.io/ua2.html",
+		"/Users/giovannibindi/Downloads/win.html",
+		"/Users/giovannibindi/Downloads/psi.html",
+		"/Users/giovannibindi/Documents/GitHub/tongatron.github.io/fontold.html",
+		"/Users/giovannibindi/Documents/GitHub/tongatron.github.io/futurismo.html",
+		"/Users/giovannibindi/Documents/GitHub/pythontools/listfile.py",
+		"/Users/giovannibindi/Documents/GitHub/pythontools/listfile2.py",
+		"/Users/giovannibindi/Documents/GitHub/pythontools/xart.py",
+		"/Users/giovannibindi/Documents/GitHub/tongatron.github.io/age.html",
+		"/Users/giovannibindi/Documents/GitHub/age4.html",
+		"/Users/giovannibindi/Documents/GitHub/age3.html",
+		"/Users/giovannibindi/Documents/GitHub/age2.html",
+		"/Users/giovannibindi/Documents/GitHub/age.html",
+		"/Users/giovannibindi/Documents/GitHub/ligh.html",
+		"/Users/giovannibindi/Documents/GitHub/emo.html",
+		"/Users/giovannibindi/Downloads/random.html",
+		"/Users/giovannibindi/Documents/GitHub/pythontools/flask/flask1.py",
+		"/Users/giovannibindi/Documents/GitHub/python/testpython.html",
+		"/Users/giovannibindi/Documents/GitHub/python/test.html",
+		"/Users/giovannibindi/Documents/GitHub/python/mdfile.py",
+		"/Users/giovannibindi/Documents/GitHub/python/interfaccia.py",
+		"/Users/giovannibindi/Documents/GitHub/python/testtkinter.py",
+		"/Users/giovannibindi/Documents/GitHub/python/orescopo.py",
+		"/Users/giovannibindi/Documents/GitHub/python/print.py",
+		"/Users/giovannibindi/Downloads/mio_script.py",
+		"/Users/giovannibindi/Documents/GitHub/tongatron.github.io/index.md"
+	],
+	"find":
+	{
+		"height": 30.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": true,
+		"find_history":
+		[
+			"your-spine",
+			"mp",
+			"mp4",
+			"video",
+			"13-a8",
+			"spine",
+			"mp4"
+		],
+		"highlight": false,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": true,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"scrollbar_highlights": true,
+		"show_context": true,
+		"use_buffer2": true,
+		"use_gitignore": true,
+		"whole_word": true,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 0,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"stack_multiselect": false,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "sitodoc.md",
+					"selected": true,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 480,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Markdown/Markdown.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"stack_multiselect": false,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 30.0
+	},
+	"input":
+	{
+		"height": 0.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 144.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "Packages/Python/Python.sublime-build",
+	"project": "devTNG.sublime-project",
+	"replace":
+	{
+		"height": 56.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"",
+				"test/video.html"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 334.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
