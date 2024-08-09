@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generazione di Rumore Bianco con Controlli</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+            text-align: center;
+        }
+        h1 {
+            margin-bottom: 20px;
+        }
+        .controls {
+            margin-bottom: 20px;
+        }
+        label {
+            margin-right: 10px;
+        }
+        button, select, input[type="range"] {
+            padding: 10px;
+            font-size: 16px;
+            margin: 5px;
+            cursor: pointer;
+        }
+        button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        select, input[type="range"] {
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+    </style>
+    <!-- Caricamento di Tone.js tramite CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.39/Tone.js"></script>
+</head>
+<body>
+
+    <h1>Generatore di Rumore con Controlli</h1>
+
+    <div class="controls">
+        <button onclick="startNoise()">Inizia Rumore</button>
+        <button onclick="stopNoise()">Ferma Rumore</button>
+    </div>
+
+    <div class="controls">
+        <label for="noiseType">Tipo di Rumore:</label>
+        <select id="noiseType" onchange="updateNoiseType()">
+            <option value="white">Bianco</option>
+            <option value="pink">Rosa</option>
+            <option value="brown">Marrone</option>
+        </select>
+    </div>
+
+    <div class="controls">
+        <label for="volumeControl">Volume:</label>
+        <input type="range" id="volumeControl" min="-30" max="0" value="-10" onchange="updateVolume()">
+    </div>
+
+    <script>
+        let noise;
+        let gainNode;
+
+        // Funzione per iniziare il rumore
+        function startNoise() {
+            const noiseType = document.getElementById('noiseType').value;
+            noise = new Tone.Noise(noiseType).start();
+            gainNode = new Tone.Gain().toDestination();
+            noise.connect(gainNode);
+
+            updateVolume(); // Applica il volume iniziale
+            Tone.Transport.start();
+        }
+
+        // Funzione per fermare il rumore
+        function stopNoise() {
+            if (noise) {
+                noise.stop();
+                Tone.Transport.stop();
+            }
+        }
+
+        // Funzione per aggiornare il tipo di rumore
+        function updateNoiseType() {
+            if (noise) {
+                const noiseType = document.getElementById('noiseType').value;
+                noise.type = noiseType;
+            }
+        }
+
+        // Funzione per aggiornare il volume
+        function updateVolume() {
+            if (gainNode) {
+                const volume = document.getElementById('volumeControl').value;
+                gainNode.gain.value = Tone.gainToDb(parseFloat(volume));
+            }
+        }
+    </script>
+
+</body>
+</html>

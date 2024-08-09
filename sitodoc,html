@@ -39,7 +39,7 @@
             </div>
         </div>
     </section>
-
+    
     <!-- Metodologia -->
     <section id="metodologia" class="mt-4">
         <h2>Metodologia</h2>
@@ -52,7 +52,7 @@
                         </button>
                     </h5>
                 </div>
-
+    
                 <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#metodologiaAccordion">
                     <div class="card-body">
                         Descrizione dettagliata del Trattamento A.
