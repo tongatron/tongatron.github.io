@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Generazione di Rumore Bianco con Controlli</title>
+    <title>Noize</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            background-color: #333;
+            color: #f4f4f4;
             padding: 20px;
             text-align: center;
         }
@@ -38,6 +39,8 @@
         select, input[type="range"] {
             border-radius: 5px;
             border: 1px solid #ccc;
+            background-color: #444;
+            color: #f4f4f4;
         }
     </style>
     <!-- Caricamento di Tone.js tramite CDN -->
@@ -45,7 +48,7 @@
 </head>
 <body>
 
-    <h1>Generatore di Rumore con Controlli</h1>
+    <h1>Noize</h1>
 
     <div class="controls">
         <button onclick="startNoise()">Inizia Rumore</button>
@@ -58,26 +61,31 @@
             <option value="white">Bianco</option>
             <option value="pink">Rosa</option>
             <option value="brown">Marrone</option>
+            <option value="blue">Blu</option>
+            <option value="violet">Viola</option>
         </select>
     </div>
 
     <div class="controls">
-        <label for="volumeControl">Volume:</label>
-        <input type="range" id="volumeControl" min="-30" max="0" value="-10" onchange="updateVolume()">
+        <label for="filterControl">Frequenza Filtro Passa-Basso:</label>
+        <input type="range" id="filterControl" min="100" max="20000" value="20000" step="100" onchange="updateFilter()">
+        <span id="filterValue">20000</span> Hz
     </div>
 
     <script>
         let noise;
-        let gainNode;
+        let filter;
 
         // Funzione per iniziare il rumore
         function startNoise() {
             const noiseType = document.getElementById('noiseType').value;
             noise = new Tone.Noise(noiseType).start();
-            gainNode = new Tone.Gain().toDestination();
-            noise.connect(gainNode);
+            filter = new Tone.Filter({
+                frequency: document.getElementById('filterControl').value,
+                type: "lowpass"
+            }).toDestination();
+            noise.connect(filter);
 
-            updateVolume(); // Applica il volume iniziale
             Tone.Transport.start();
         }
 
@@ -97,11 +105,12 @@
             }
         }
 
-        // Funzione per aggiornare il volume
-        function updateVolume() {
-            if (gainNode) {
-                const volume = document.getElementById('volumeControl').value;
-                gainNode.gain.value = Tone.gainToDb(parseFloat(volume));
+        // Funzione per aggiornare il filtro passa-basso
+        function updateFilter() {
+            const filterValue = document.getElementById('filterControl').value;
+            document.getElementById('filterValue').innerText = filterValue;
+            if (filter) {
+                filter.frequency.value = filterValue;
             }
         }
     </script>
