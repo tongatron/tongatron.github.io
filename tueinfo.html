@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Informazioni del Dispositivo</title>
+    <style>
+        body {
+            background-color: #1e1e1e;
+            color: #c5c6c7;
+            font-family: "Courier New", Courier, monospace;
+            margin: 0;
+            padding: 20px;
+        }
+        #terminal {
+            background-color: #000;
+            padding: 20px;
+            border-radius: 5px;
+        }
+        .command {
+            color: #00ff00;
+        }
+        .explanation {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Informazioni del Dispositivo</h1>
+    <div id="terminal">
+        <p class="command">$ uname -a</p>
+        <p>Linux nome-host 5.4.0-73-generic #82-Ubuntu SMP Wed Apr 14 17:39:42 UTC 2021 x86_64 x86_64 x86_64 GNU/Linux</p>
+        
+        <p class="command">$ lscpu</p>
+        <p>
+            Architecture:            x86_64<br>
+            CPU op-mode(s):          32-bit, 64-bit<br>
+            Byte Order:              Little Endian<br>
+            CPU(s):                  4<br>
+            On-line CPU(s) list:     0-3<br>
+            Thread(s) per core:      2<br>
+            Core(s) per socket:      2<br>
+            Socket(s):               1<br>
+            Vendor ID:               GenuineIntel<br>
+            CPU family:              6<br>
+            Model:                   142<br>
+            Model name:              Intel(R) Core(TM) i5-7200U CPU @ 2.50GHz<br>
+            Stepping:                9<br>
+            CPU MHz:                 800.042<br>
+            BogoMIPS:                4992.00<br>
+        </p>
+
+        <p class="command">$ free -h</p>
+        <p>
+            total        used        free      shared  buff/cache   available<br>
+            Mem:           7.7G        2.3G        3.9G        169M        1.5G        5.1G<br>
+            Swap:          2.0G        0B        2.0G<br>
+        </p>
+
+        <p class="command">$ df -h</p>
+        <p>
+            Filesystem      Size  Used Avail Use% Mounted on<br>
+            /dev/sda1        50G   15G   33G  31% /<br>
+            tmpfs           3.9G  1.2M  3.9G   1% /dev/shm<br>
+            /dev/sdb1       100G   40G   55G  43% /media/data<br>
+        </p>
+    </div>
+
+    <div class="explanation">
+        <h2>Traduzione e Spiegazione</h2>
+        <p>
+            <strong>uname -a:</strong> Questo comando visualizza tutte le informazioni importanti sul sistema operativo, inclusi il nome del kernel, la versione e l'architettura. <br>
+            <em>Traduzione:</em> "Linux nome-host 5.4.0-73-generic #82-Ubuntu SMP Wed Apr 14 17:39:42 UTC 2021 x86_64 x86_64 x86_64 GNU/Linux"
+        </p>
+        <p>
+            <strong>lscpu:</strong> Mostra informazioni dettagliate sulla CPU del sistema, come il numero di core, i thread per core, la frequenza della CPU, e altro. <br>
+            <em>Traduzione:</em> "Architettura: x86_64, Modalità operativa della CPU: 32-bit, 64-bit, Ordine dei byte: Little Endian, CPU totali: 4, Core per socket: 2, Nome modello: Intel(R) Core(TM) i5-7200U CPU @ 2.50GHz"
+        </p>
+        <p>
+            <strong>free -h:</strong> Fornisce informazioni sulla memoria disponibile e utilizzata nel sistema, sia per la RAM che per lo swap. <br>
+            <em>Traduzione:</em> "Memoria totale: 7.7G, Usata: 2.3G, Libera: 3.9G, Cache: 1.5G, Swap totale: 2.0G, Usata: 0B"
+        </p>
+        <p>
+            <strong>df -h:</strong> Mostra lo spazio disponibile e utilizzato su tutti i filesystem montati. <br>
+            <em>Traduzione:</em> "Filesystem: /dev/sda1, Dimensione: 50G, Usata: 15G, Disponibile: 33G, Percentuale di utilizzo: 31%, Montato su: /"
+        </p>
+    </div>
+</body>
+</html>
