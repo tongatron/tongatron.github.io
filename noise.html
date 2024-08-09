@@ -36,7 +36,7 @@
             </svg>
 
             <i class="bi bi-balloon-fill" width="28" height="28" fill="currentColor"> </i>
-            <span class="fs-1" style="font-weight: 600;">&nbspnoiseee</span>
+            <span class="fs-1" style="font-weight: 600;">&nbspNoiseee</span>
             </a>
         </header>    
 </div>
@@ -44,14 +44,12 @@
 <div class="container">
     <div class="row">
         <div class="col">
-            <h1>Noiseeeeee</h1>
+            <h1>noiseeeeeee generator</h1>
+
+
 
                 <div class="controls">
-                    <button onclick="startNoise()">Avvia</button>
-                    <button onclick="stopNoise()">Stop</button>
-                </div>
-
-                <div class="controls">
+                    <br>
                     <label for="noiseType">Colore:</label>
                     <select id="noiseType" onchange="updateNoiseType()">
                         <option value="brown">Marrone</option>
@@ -67,11 +65,16 @@
                     <input type="range" id="filterControl" min="100" max="20000" value="20000" step="100" onchange="updateFilter()">
                     <span id="filterValue">20000</span> Hz
                 </div>
+
+                <div class="controls">
+                    <br>
+                    <button onclick="startNoise()">Avvia</button> 
+
+                    <button onclick="stopNoise()">Stop</button>
+                </div>                
             
         </div>
-        <div class="col">
-            xxx
-        </div>        
+       
     </div>
 </div>
 
