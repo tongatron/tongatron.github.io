@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Noize</title>
+    <title>Noiseee</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -22,25 +22,31 @@
             margin-right: 10px;
         }
         button, select, input[type="range"] {
-            padding: 10px;
-            font-size: 16px;
-            margin: 5px;
+            padding: 15px;
+            font-size: 18px;
+            margin: 10px;
             cursor: pointer;
         }
         button {
-            background-color: #007BFF;
+            background-color: transparent;
             color: white;
-            border: none;
+            border: 2px solid #007BFF;
             border-radius: 5px;
         }
         button:hover {
-            background-color: #0056b3;
+            background-color: rgba(0, 123, 255, 0.1);
         }
         select, input[type="range"] {
             border-radius: 5px;
             border: 1px solid #ccc;
             background-color: #444;
             color: #f4f4f4;
+            width: 100%;
+            max-width: 300px;
+            font-size: 18px;
+        }
+        input[type="range"] {
+            width: 80%;
         }
     </style>
     <!-- Caricamento di Tone.js tramite CDN -->
@@ -48,11 +54,11 @@
 </head>
 <body>
 
-    <h1>Noize</h1>
+    <h1>Noiseee</h1>
 
     <div class="controls">
-        <button onclick="startNoise()">Inizia Rumore</button>
-        <button onclick="stopNoise()">Ferma Rumore</button>
+        <button onclick="startNoise()">Avvia</button>
+        <button onclick="stopNoise()">Stop</button>
     </div>
 
     <div class="controls">
@@ -67,7 +73,7 @@
     </div>
 
     <div class="controls">
-        <label for="filterControl">Frequenza Filtro Passa-Basso:</label>
+        <label for="filterControl">filtro passa-basso:</label>
         <input type="range" id="filterControl" min="100" max="20000" value="20000" step="100" onchange="updateFilter()">
         <span id="filterValue">20000</span> Hz
     </div>
