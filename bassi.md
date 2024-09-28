@@ -1,6 +1,8 @@
 # Bassi e Amplificatori Usati in Vendita
 
-![Bassi](img/bassi.jpg)
+
+
+![Bassi](https://tongatron.github.io/img/bassi.jpg)
 
 Se sei alla ricerca di strumenti di qualità che combinano **suono**, **versatilità** e **potenza**, questa è l'occasione giusta per te!
 
@@ -66,6 +68,6 @@ Tutti gli strumenti sono disponibili per essere provati **a casa mia a Torino**,
 📞 329 3245532  
 ✉️ giovanni@tongatron.org
 
-<img src="img/fender.jpg" alt="Fender Jazz" style="zoom:25%;" />
+<img src="https://tongatron.github.io/img/fender.jpg" alt="Fender Jazz" style="zoom:25%;" />
 
-![Amplificatori](img/ampli.jpg)
+![Amplificatori](https://tongatron.github.io/img/ampli.jpg)
