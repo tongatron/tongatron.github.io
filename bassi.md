@@ -23,12 +23,11 @@ Strumenti di qualità che combinano suono, versatilità e potenza
   - Un basso dallo stile vintage che offre il suono pieno e corposo degli anni '50.
 
 - **Fretless**
-  - **Corpo**: Ontano o mogano (specifiche su richiesta)
   - **Manico**: Acero con tastiera in ebano senza tasti
   - **Pickup**: Configurazione PJ (Precision/Jazz) per massima versatilità
   - **Controlli**: Volume, tono
   - Perfetto per bassisti che cercano un suono fluido e dinamico, con la possibilità di espressioni sonore uniche.
-
+  
 - **Acustico Stagg**
   - **Corpo**: Jumbo acustico
   - **Top**: Abete
