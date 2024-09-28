@@ -4,7 +4,7 @@
 
 ![Bassi](https://tongatron.github.io/img/bassi.jpg)
 
-Se sei alla ricerca di strumenti di qualità che combinano **suono**, **versatilità** e **potenza**, questa è l'occasione giusta per te!
+Strumenti di qualità che combinano suono, versatilità e potenza
 
 ## Bassi in Vendita
 
