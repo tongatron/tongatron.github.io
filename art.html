@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>Pagina Artistica Interattiva</title>
+    <style>
+        /* Stili per il corpo della pagina */
+        body {
+            margin: 0;
+            overflow: hidden;
+            background: linear-gradient(135deg, #2c3e50, #34495e); /* Gradiente blu petrolio */
+        }
+        /* Il canvas occupa tutto lo schermo */
+        canvas {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <!-- Elemento canvas per il disegno -->
+    <canvas id="canvas"></canvas>
+
+    <script>
+        // Selezione del canvas e del contesto di rendering
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+
+        // Creazione di un canvas offscreen per le grafiche di sfondo
+        const bgCanvas = document.createElement('canvas');
+        const bgCtx = bgCanvas.getContext('2d');
+
+        // Funzione per ridimensionare il canvas alla dimensione della finestra
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            bgCanvas.width = window.innerWidth;
+            bgCanvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        // Classe per i pallini rossi fluttuanti
+        class RedDot {
+            constructor() {
+                this.radius = 10;
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.vx = (Math.random() - 0.5) * 1;
+                this.vy = (Math.random() - 0.5) * 1;
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.fillStyle = 'red';
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fill();
+            }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+
+                // Rimbalzo ai bordi dello schermo
+                if (this.x < this.radius || this.x > canvas.width - this.radius) {
+                    this.vx *= -1;
+                }
+                if (this.y < this.radius || this.y > canvas.height - this.radius) {
+                    this.vy *= -1;
+                }
+            }
+        }
+
+        // Creazione di un array di pallini rossi
+        let redDots = [];
+        for (let i = 0; i < 10; i++) {
+            redDots.push(new RedDot());
+        }
+
+        // Funzione per generare grafiche casuali
+        function generateRandomGraphics() {
+            // Pulisce il canvas di sfondo
+            bgCtx.fillStyle = '#2c3e50';
+            bgCtx.fillRect(0, 0, bgCanvas.width, bgCanvas.height);
+
+            // Genera forme casuali
+            for (let i = 0; i < 50; i++) {
+                bgCtx.beginPath();
+                const x = Math.random() * bgCanvas.width;
+                const y = Math.random() * bgCanvas.height;
+                const size = Math.random() * 50;
+                bgCtx.fillStyle = `rgba(${Math.floor(Math.random()*255)}, ${Math.floor(Math.random()*255)}, ${Math.floor(Math.random()*255)}, 0.5)`;
+                bgCtx.arc(x, y, size, 0, Math.PI * 2);
+                bgCtx.fill();
+            }
+        }
+
+        // Chiama la funzione per generare le grafiche iniziali
+        generateRandomGraphics();
+
+        // Funzione di animazione
+        function animate() {
+            // Pulisce il canvas principale
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Disegna le grafiche di sfondo
+            ctx.drawImage(bgCanvas, 0, 0);
+
+            // Aggiorna e disegna i pallini rossi
+            redDots.forEach(dot => {
+                dot.update();
+                dot.draw();
+            });
+
+            requestAnimationFrame(animate);
+        }
+        animate();
+
+        // Gestione del clic sul canvas
+        canvas.addEventListener('click', function(event) {
+            const rect = canvas.getBoundingClientRect();
+            const mouseX = event.clientX - rect.left;
+            const mouseY = event.clientY - rect.top;
+
+            // Verifica se il clic è su un pallino rosso
+            redDots.forEach(dot => {
+                const dx = mouseX - dot.x;
+                const dy = mouseY - dot.y;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+
+                if (distance < dot.radius) {
+                    // Genera nuove grafiche casuali
+                    generateRandomGraphics();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
