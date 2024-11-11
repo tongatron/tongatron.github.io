@@ -2,20 +2,21 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
-    <title>Cuori Interattivi Esplosivi</title>
+    <title>Cuori Interattivi Esplosivi con Fulvia</title>
     <style>
         body {
             margin: 0;
             overflow: hidden;
             background-color: #f0f0f0; /* Sfondo chiaro */
         }
-        .heart {
+        .heart, .fulvia {
             position: absolute;
             bottom: -50px;
-            font-size: 50px; /* Cuori più grandi */
-            color: #000; /* Cuore nero */
+            font-size: 50px; /* Elementi più grandi */
+            color: #000; /* Colore nero */
             animation: rise linear infinite;
             cursor: pointer; /* Indica che l'elemento è cliccabile */
+            white-space: nowrap; /* Evita che la scritta vada a capo */
         }
         @keyframes rise {
             0% {
@@ -33,17 +34,19 @@
                 opacity: 0;
             }
         }
-        .exploding {
-            animation: explode 1s forwards;
+        .particle {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            background-color: #ff1493; /* Rosa fluo */
+            border-radius: 50%;
+            pointer-events: none; /* Le particelle non devono essere cliccabili */
+            animation: particleAnimation 1s forwards;
         }
-        @keyframes explode {
-            0% {
-                opacity: 1;
-                transform: scale(1);
-            }
-            100% {
+        @keyframes particleAnimation {
+            to {
                 opacity: 0;
-                transform: scale(3);
+                transform: translate(var(--dx), var(--dy));
             }
         }
     </style>
@@ -51,46 +54,63 @@
 <body>
 
 <script>
-    function createHeart() {
-        const heart = document.createElement('div');
-        heart.classList.add('heart');
-        heart.style.left = Math.random() * 100 + 'vw';
-        heart.style.animationDuration = 3 + Math.random() * 5 + 's';
-        // Cuori più grandi
-        heart.style.fontSize = 40 + Math.random() * 60 + 'px';
-        heart.textContent = '🖤';
-        document.body.appendChild(heart);
+    function createHeartOrFulvia() {
+        const element = document.createElement('div');
+        let isFulvia = Math.random() < 0.1; // 10% di probabilità di creare "Fulvia"
+        if (isFulvia) {
+            element.classList.add('fulvia');
+            element.textContent = 'Fulvia';
+        } else {
+            element.classList.add('heart');
+            element.textContent = '🖤';
+        }
+        element.style.left = Math.random() * 100 + 'vw';
+        element.style.animationDuration = 3 + Math.random() * 5 + 's';
+        // Dimensioni più grandi per "Fulvia"
+        if (isFulvia) {
+            element.style.fontSize = 50 + Math.random() * 50 + 'px';
+        } else {
+            element.style.fontSize = 40 + Math.random() * 60 + 'px';
+        }
+        document.body.appendChild(element);
 
-        // Aggiungi evento click per esplodere il cuore
-        heart.addEventListener('click', () => {
-            heart.classList.add('exploding');
-            // Rimuovi il cuore dopo l'animazione di esplosione
-            setTimeout(() => {
-                heart.remove();
-            }, 1000); // Durata dell'animazione di esplosione
+        // Aggiungi evento click per esplodere l'elemento
+        element.addEventListener('click', (e) => {
+            createExplosion(e.clientX, e.clientY);
+            element.remove();
         });
 
-        // Aggiungi esplosione casuale
-        if (Math.random() < 0.3) { // 30% di probabilità che un cuore esploda da solo
-            setTimeout(() => {
-                if (!heart.classList.contains('exploding')) {
-                    heart.classList.add('exploding');
-                    setTimeout(() => {
-                        heart.remove();
-                    }, 1000);
-                }
-            }, (Math.random() * parseFloat(heart.style.animationDuration) * 1000));
-        }
-
-        // Rimuovi il cuore dopo l'animazione di salita, se non è già esploso
+        // Rimuovi l'elemento dopo l'animazione di salita
         setTimeout(() => {
-            if (!heart.classList.contains('exploding')) {
-                heart.remove();
-            }
-        }, parseFloat(heart.style.animationDuration) * 1000);
+            element.remove();
+        }, parseFloat(element.style.animationDuration) * 1000);
     }
 
-    setInterval(createHeart, 500);
+    function createExplosion(x, y) {
+        const particles = 30; // Numero di particelle
+        for (let i = 0; i < particles; i++) {
+            const particle = document.createElement('div');
+            particle.classList.add('particle');
+            document.body.appendChild(particle);
+
+            const angle = Math.random() * 2 * Math.PI;
+            const radius = Math.random() * 100;
+            const dx = Math.cos(angle) * radius + 'px';
+            const dy = Math.sin(angle) * radius + 'px';
+
+            particle.style.left = x + 'px';
+            particle.style.top = y + 'px';
+            particle.style.setProperty('--dx', dx);
+            particle.style.setProperty('--dy', dy);
+
+            // Rimuovi la particella dopo l'animazione
+            particle.addEventListener('animationend', () => {
+                particle.remove();
+            });
+        }
+    }
+
+    setInterval(createHeartOrFulvia, 500);
 </script>
 
 </body>
