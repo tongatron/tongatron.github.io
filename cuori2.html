@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>Cuori Neri Scoppiettanti</title>
+    <style>
+        body {
+            background-color: #111;
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+        }
+        .heart {
+            position: absolute;
+            font-size: 40px;
+            cursor: pointer;
+            user-select: none;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+        .burst {
+            transform: scale(2);
+            opacity: 0;
+        }
+    </style>
+</head>
+<body>
+
+<script>
+    // Funzione per generare cuori in posizioni casuali
+    function generateHearts(numHearts) {
+        for (let i = 0; i < numHearts; i++) {
+            let heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerText = '🖤';
+
+            // Posizione casuale
+            heart.style.left = Math.random() * window.innerWidth + 'px';
+            heart.style.top = Math.random() * window.innerHeight + 'px';
+
+            // Aggiungi evento click
+            heart.addEventListener('click', function() {
+                heart.classList.add('burst');
+                setTimeout(() => {
+                    heart.remove();
+                }, 300);
+            });
+
+            document.body.appendChild(heart);
+        }
+    }
+
+    // Genera 100 cuori neri
+    generateHearts(100);
+
+    // Aggiorna le posizioni dei cuori al ridimensionamento della finestra
+    window.addEventListener('resize', () => {
+        document.querySelectorAll('.heart').forEach(heart => {
+            heart.style.left = Math.random() * window.innerWidth + 'px';
+            heart.style.top = Math.random() * window.innerHeight + 'px';
+        });
+    });
+</script>
+</body>
+</html>
