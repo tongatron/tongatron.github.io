@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>Cuori Interattivi Esplosivi</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: #f0f0f0; /* Sfondo chiaro */
+        }
+        .heart {
+            position: absolute;
+            bottom: -50px;
+            font-size: 50px; /* Cuori più grandi */
+            color: #000; /* Cuore nero */
+            animation: rise linear infinite;
+            cursor: pointer; /* Indica che l'elemento è cliccabile */
+        }
+        @keyframes rise {
+            0% {
+                transform: translateY(0) scale(0.5);
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+            }
+            80% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) scale(1.5);
+                opacity: 0;
+            }
+        }
+        .exploding {
+            animation: explode 1s forwards;
+        }
+        @keyframes explode {
+            0% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(3);
+            }
+        }
+    </style>
+</head>
+<body>
+
+<script>
+    function createHeart() {
+        const heart = document.createElement('div');
+        heart.classList.add('heart');
+        heart.style.left = Math.random() * 100 + 'vw';
+        heart.style.animationDuration = 3 + Math.random() * 5 + 's';
+        // Cuori più grandi
+        heart.style.fontSize = 40 + Math.random() * 60 + 'px';
+        heart.textContent = '🖤';
+        document.body.appendChild(heart);
+
+        // Aggiungi evento click per esplodere il cuore
+        heart.addEventListener('click', () => {
+            heart.classList.add('exploding');
+            // Rimuovi il cuore dopo l'animazione di esplosione
+            setTimeout(() => {
+                heart.remove();
+            }, 1000); // Durata dell'animazione di esplosione
+        });
+
+        // Aggiungi esplosione casuale
+        if (Math.random() < 0.3) { // 30% di probabilità che un cuore esploda da solo
+            setTimeout(() => {
+                if (!heart.classList.contains('exploding')) {
+                    heart.classList.add('exploding');
+                    setTimeout(() => {
+                        heart.remove();
+                    }, 1000);
+                }
+            }, (Math.random() * parseFloat(heart.style.animationDuration) * 1000));
+        }
+
+        // Rimuovi il cuore dopo l'animazione di salita, se non è già esploso
+        setTimeout(() => {
+            if (!heart.classList.contains('exploding')) {
+                heart.remove();
+            }
+        }, parseFloat(heart.style.animationDuration) * 1000);
+    }
+
+    setInterval(createHeart, 500);
+</script>
+
+</body>
+</html>

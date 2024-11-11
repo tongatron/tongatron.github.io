@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>Pastore Biellese - Il Custode delle Alpi</title>
+  <!-- Meta Tag per il Responsive Design -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <!-- Link al Foglio di Stile Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <!-- Font Google -->
+  <link href="https://fonts.googleapis.com/css?family=Merriweather&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+  <!-- Stili Personalizzati -->
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      color: #333;
+    }
+    h1, h2, h3 {
+      font-family: 'Merriweather', serif;
+    }
+    .hero {
+      position: relative;
+      height: 100vh;
+      background-image: url('alpi-biellesi.jpg');
+      background-size: cover;
+      background-position: center;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+    }
+    .hero-content {
+      position: relative;
+      z-index: 1;
+    }
+    .hero h1 {
+      font-size: 4em;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+    }
+    .hero p {
+      font-size: 1.5em;
+      margin-bottom: 30px;
+    }
+    .btn-cta {
+      padding: 15px 30px;
+      font-size: 1.2em;
+      border-radius: 50px;
+    }
+    .section {
+      padding: 60px 0;
+    }
+    .section-light {
+      background-color: #f9f9f9;
+    }
+    .icon {
+      font-size: 3em;
+      margin-bottom: 20px;
+      color: #28a745;
+    }
+    .gallery img {
+      width: 100%;
+      height: auto;
+      transition: transform 0.3s;
+    }
+    .gallery img:hover {
+      transform: scale(1.05);
+    }
+    .testimonials {
+      background-color: #333;
+      color: #fff;
+      padding: 60px 0;
+    }
+    .testimonial {
+      margin-bottom: 30px;
+    }
+    .testimonial p {
+      font-style: italic;
+    }
+    .contact-form {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    footer {
+      background-color: #222;
+      color: #bbb;
+      padding: 20px 0;
+      text-align: center;
+    }
+    /* Animazioni */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translate3d(0, 40px, 0);
+      }
+      to {
+        opacity: 1;
+        transform: none;
+      }
+    }
+    .animated {
+      animation-duration: 1s;
+      animation-fill-mode: both;
+    }
+    .fadeInUp {
+      animation-name: fadeInUp;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sezione Hero -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1 class="animated fadeInUp">Pastore Biellese</h1>
+      <p class="animated fadeInUp delay-1s">Il Custode delle Alpi</p>
+      <a href="#chi-siamo" class="btn btn-primary btn-cta animated fadeInUp delay-2s">Scopri di più</a>
+    </div>
+  </section>
+
+  <!-- Sezione "Chi Siamo" -->
+  <section id="chi-siamo" class="section">
+    <div class="container">
+      <h2 class="text-center mb-5">Chi Siamo</h2>
+      <div class="row">
+        <div class="col-md-6">
+          <p>Il <strong>Pastore Biellese</strong> è una razza canina originaria delle Alpi Biellesi, conosciuta per la sua fedeltà, agilità e intelligenza. Da secoli accompagna i pastori nelle montagne, proteggendo greggi e famiglie.</p>
+          <p>Questa razza è ideale per chi cerca un compagno leale e protettivo, adatto sia alla vita in montagna che in famiglia.</p>
+        </div>
+        <div class="col-md-6">
+          <img src="pastore-biellese.jpg" alt="Pastore Biellese" class="img-fluid rounded">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sezione Punti di Forza -->
+  <section class="section section-light">
+    <div class="container">
+      <h2 class="text-center mb-5">Perché Sceglierlo</h2>
+      <div class="row text-center">
+        <div class="col-md-4">
+          <div class="icon mb-3">
+            <i class="fas fa-heart"></i>
+          </div>
+          <h4>Fedeltà</h4>
+          <p>Un compagno leale che ti accompagnerà ovunque.</p>
+        </div>
+        <div class="col-md-4">
+          <div class="icon mb-3">
+            <i class="fas fa-bolt"></i>
+          </div>
+          <h4>Agilità</h4>
+          <p>Perfetto per attività all'aria aperta e sport.</p>
+        </div>
+        <div class="col-md-4">
+          <div class="icon mb-3">
+            <i class="fas fa-brain"></i>
+          </div>
+          <h4>Intelligenza</h4>
+          <p>Facile da addestrare grazie alla sua elevata intelligenza.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sezione Galleria -->
+  <section class="section">
+    <div class="container">
+      <h2 class="text-center mb-5">Galleria</h2>
+      <div class="row gallery">
+        <div class="col-md-4 mb-4">
+          <img src="gallery1.jpg" alt="Pastore Biellese 1" class="img-fluid rounded">
+        </div>
+        <div class="col-md-4 mb-4">
+          <img src="gallery2.jpg" alt="Pastore Biellese 2" class="img-fluid rounded">
+        </div>
+        <div class="col-md-4 mb-4">
+          <img src="gallery3.jpg" alt="Pastore Biellese 3" class="img-fluid rounded">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sezione Testimonianze -->
+  <section class="testimonials">
+    <div class="container">
+      <h2 class="text-center mb-5">Testimonianze</h2>
+      <div class="row">
+        <div class="col-md-4 testimonial">
+          <p>"Il Pastore Biellese è un compagno incredibile, sempre pronto all'avventura!"</p>
+          <h5>- Luca R.</h5>
+        </div>
+        <div class="col-md-4 testimonial">
+          <p>"Non potrei immaginare la mia famiglia senza il nostro fedele amico."</p>
+          <h5>- Maria S.</h5>
+        </div>
+        <div class="col-md-4 testimonial">
+          <p>"Un cane intelligente e protettivo, perfetto per la vita in montagna."</p>
+          <h5>- Giovanni T.</h5>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sezione Contatto -->
+  <section class="section section-light">
+    <div class="container">
+      <h2 class="text-center mb-5">Contattaci</h2>
+      <form class="contact-form">
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <input type="text" class="form-control" placeholder="Nome">
+          </div>
+          <div class="form-group col-md-6">
+            <input type="email" class="form-control" placeholder="Email">
+          </div>
+        </div>
+        <div class="form-group">
+          <textarea class="form-control" rows="5" placeholder="Messaggio"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Invia</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2023 Pastore Biellese. Tutti i diritti riservati.</p>
+  </footer>
+
+  <!-- Script JavaScript Bootstrap e Font Awesome -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <!-- Font Awesome per le icone -->
+  <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+</body>
+</html>
