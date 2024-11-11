@@ -12,14 +12,60 @@
         }
         .heart {
             position: absolute;
-            font-size: 40px;
+            font-size: 80px; /* Cuori più grandi */
             cursor: pointer;
             user-select: none;
             transition: transform 0.3s ease, opacity 0.3s ease;
         }
-        .burst {
-            transform: scale(2);
+
+        .heart::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: pink;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
             opacity: 0;
+            pointer-events: none;
+        }
+
+        .burst {
+            animation: burst-animation 0.5s forwards;
+        }
+
+        .burst::after {
+            animation: pink-burst 0.5s forwards;
+        }
+
+        @keyframes burst-animation {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.5);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1.5);
+                opacity: 0;
+            }
+        }
+
+        @keyframes pink-burst {
+            0% {
+                width: 0;
+                height: 0;
+                opacity: 0.5;
+            }
+            100% {
+                width: 150px;
+                height: 150px;
+                opacity: 0;
+            }
         }
     </style>
 </head>
@@ -34,29 +80,29 @@
             heart.innerText = '🖤';
 
             // Posizione casuale
-            heart.style.left = Math.random() * window.innerWidth + 'px';
-            heart.style.top = Math.random() * window.innerHeight + 'px';
+            heart.style.left = Math.random() * (window.innerWidth - 80) + 'px';
+            heart.style.top = Math.random() * (window.innerHeight - 80) + 'px';
 
             // Aggiungi evento click
             heart.addEventListener('click', function() {
                 heart.classList.add('burst');
                 setTimeout(() => {
                     heart.remove();
-                }, 300);
+                }, 500);
             });
 
             document.body.appendChild(heart);
         }
     }
 
-    // Genera 100 cuori neri
-    generateHearts(100);
+    // Genera 50 cuori neri
+    generateHearts(50);
 
     // Aggiorna le posizioni dei cuori al ridimensionamento della finestra
     window.addEventListener('resize', () => {
         document.querySelectorAll('.heart').forEach(heart => {
-            heart.style.left = Math.random() * window.innerWidth + 'px';
-            heart.style.top = Math.random() * window.innerHeight + 'px';
+            heart.style.left = Math.random() * (window.innerWidth - 80) + 'px';
+            heart.style.top = Math.random() * (window.innerHeight - 80) + 'px';
         });
     });
 </script>
