@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>Timeline con Blink</title>
+  <!-- Bootstrap 5 -->
+  <link 
+    rel="stylesheet" 
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+  >
+  <style>
+    /* Riduce font e spazi per comprimere la tabella */
+    body {
+      font-size: 0.7rem; 
+      margin: 1rem;
+    }
+    .table-sm th, .table-sm td {
+      padding: 0.2rem !important;
+      line-height: 1 !important;
+    }
+    /* Animazione blink (sparisce e riappare) */
+    @keyframes blink {
+      0%, 50%, 100% { opacity: 1; }
+      25%, 75% { opacity: 0; }
+    }
+    .blink {
+      animation: blink 1s infinite;
+      background-color: #ffeb3b; /* Giallino per evidenziare */
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <table class="table table-bordered table-sm text-center align-middle">
+    <thead class="table-dark">
+      <tr>
+        <th>Anno</th>
+        <th>Gen</th><th>Feb</th><th>Mar</th><th>Apr</th>
+        <th>Mag</th><th>Giu</th><th>Lug</th><th>Ago</th>
+        <th>Set</th><th>Ott</th><th>Nov</th><th>Dic</th>
+      </tr>
+    </thead>
+    <tbody id="timeline-body"></tbody>
+  </table>
+
+  <script>
+    // Parametri
+    const birthYear  = 1981;
+    const birthMonth = 2;   // Febbraio
+    const lifeSpan   = 88;
+    const endYear    = birthYear + lifeSpan - 1; // 2068
+
+    // Data e mese/anno correnti
+    const now       = new Date();
+    const nowYear   = now.getFullYear();
+    const nowMonth  = now.getMonth() + 1; // (getMonth() restituisce 0-11)
+    
+    // Riferimento al <tbody>
+    const tableBody = document.getElementById("timeline-body");
+
+    for (let year = birthYear; year <= endYear; year++) {
+      const row      = document.createElement("tr");
+      const yearCell = document.createElement("td");
+      yearCell.textContent = year;
+      row.appendChild(yearCell);
+
+      // 12 celle per i 12 mesi
+      for (let month = 1; month <= 12; month++) {
+        const cell      = document.createElement("td");
+        const checkDate = new Date(year, month - 1, 1); // 1° giorno del mese/anno
+
+        // Logica simboli:
+        // - Se < "adesso" => ✅
+        // - Se == "mese attuale" => blink
+        // - Se > "adesso" => ❓
+        //
+        // Per il confronto "mese attuale" è sufficiente verificare
+        // year == nowYear e month == nowMonth
+        if (
+          (year < nowYear) ||
+          (year === nowYear && month < nowMonth)
+        ) {
+          // Già trascorso
+          cell.textContent = '✅';
+        } else if (
+          (year === nowYear) &&
+          (month === nowMonth)
+        ) {
+          // Mese/anno correnti -> blink
+          cell.classList.add('blink');
+          cell.textContent = 'NOW';
+        } else {
+          // Futuro
+          cell.textContent = '❓';
+        }
+
+        row.appendChild(cell);
+      }
+
+      tableBody.appendChild(row);
+    }
+  </script>
+</body>
+</html>
