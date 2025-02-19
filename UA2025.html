@@ -13,28 +13,32 @@
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const drinks = {
-                "Birra 5% (330ml)": { units: 1.65, grams: 13.2 },
-                "Bicchiere di Vino 12% (125ml)": { units: 1.5, grams: 12 },
-                "Bottiglia di Vino 12% (750ml)": { units: 9, grams: 72 },
-                "Bicchiere di Vodka 40% (40ml)": { units: 1.6, grams: 12.8 },
-                "Bottiglia di Vodka 40% (700ml)": { units: 28, grams: 224 }
+                "Birra 5% (330ml)": { units: 1.65, grams: 13.2, calories: 132 },
+                "Bicchiere di Vino 12% (125ml)": { units: 1.5, grams: 12, calories: 105 },
+                "Bottiglia di Vino 12% (750ml)": { units: 9, grams: 72, calories: 630 },
+                "Bicchiere di Vodka 40% (40ml)": { units: 1.6, grams: 12.8, calories: 90 },
+                "Bottiglia di Vodka 40% (700ml)": { units: 28, grams: 224, calories: 1575 }
             };
             
             const drinkList = document.getElementById("drink-list");
             const totalUnits = document.getElementById("total-units");
             const totalGrams = document.getElementById("total-grams");
+            const totalCalories = document.getElementById("total-calories");
             const resetButton = document.getElementById("reset");
             let counts = {};
             
             function updateTotal() {
                 let totalUnit = 0;
                 let totalGram = 0;
+                let totalCal = 0;
                 for (let drink in counts) {
                     totalUnit += counts[drink] * drinks[drink].units;
                     totalGram += counts[drink] * drinks[drink].grams;
+                    totalCal += counts[drink] * drinks[drink].calories;
                 }
                 totalUnits.textContent = totalUnit.toFixed(2);
                 totalGrams.textContent = totalGram.toFixed(2);
+                totalCalories.textContent = totalCal.toFixed(2);
             }
             
             function changeAmount(drink, change) {
@@ -89,6 +93,7 @@
     </table>
     <h3>Totale Unità Alcoliche: <span id="total-units">0</span></h3>
     <h3>Totale Grammi di Alcol: <span id="total-grams">0</span></h3>
+    <h3>Totale Calorie: <span id="total-calories">0</span></h3>
     <button id="reset" class="btn btn-warning">Cancella Tutto</button>
 </body>
 </html>
