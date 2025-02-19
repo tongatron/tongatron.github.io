@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Landing Page - Montagne</title>
+  <style>
+    /* Reset CSS di base */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* Corpo pagina */
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(#87ceeb, #f0f8ff);
+      overflow-x: hidden; /* Evita lo scroll orizzontale quando le nuvole escono dallo schermo */
+    }
+
+    /* Sezione principale (può rappresentare l'hero della landing page) */
+    .hero {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    /* Montagne di sfondo (strati multipli per effetto parallasse) */
+    .mountain-layer {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background-repeat: no-repeat;
+      background-position: bottom;
+      background-size: cover;
+      z-index: 1; /* Ogni layer avrà uno z-index differente */
+    }
+
+    /* In questo esempio uso sfondi statici,
+       ma potresti usare immagini reali (PNG/SVG) con sfumature */
+    .mountain-layer-1 {
+      background-image: linear-gradient(to top, #2b2e2b, #434d43);
+      z-index: 1;
+    }
+
+    .mountain-layer-2 {
+      background-image: linear-gradient(to top, #454c45, #5f6e5f);
+      z-index: 2;
+    }
+
+    .mountain-layer-3 {
+      background-image: linear-gradient(to top, #667866, #98a298);
+      z-index: 3;
+    }
+
+    /* Le nuvole che si muovono sullo schermo */
+    .cloud {
+      position: absolute;
+      top: 20%;
+      width: 200px;
+      height: 120px;
+      background: rgba(255, 255, 255, 0.7);
+      border-radius: 50%;
+      box-shadow:
+        50px 30px 40px rgba(255, 255, 255, 0.7),
+        80px 20px 60px rgba(255, 255, 255, 0.6),
+        130px 40px 50px rgba(255, 255, 255, 0.7);
+      z-index: 4; /* Davanti alle montagne */
+    }
+
+    /* Contenuto della sezione (titolo e pulsante) */
+    .hero-content {
+      position: relative;
+      z-index: 5; /* Sopra alle nuvole e montagne */
+      text-align: center;
+      margin: 0 20px;
+    }
+
+    .hero h1 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      color: #fff;
+      text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.4);
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+      max-width: 600px;
+      line-height: 1.4;
+      color: #f0f0f0;
+    }
+
+    .hero button {
+      padding: 1rem 2rem;
+      font-size: 1rem;
+      color: #fff;
+      background-color: #2e8b57;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+      transition: background-color 0.3s ease;
+    }
+
+    .hero button:hover {
+      background-color: #207f48;
+    }
+
+    /* Sezione "info" sotto la hero, per esempio */
+    .info-section {
+      padding: 2rem;
+      background-color: #fafafa;
+      color: #333;
+      text-align: center;
+    }
+
+    .info-section h2 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .info-section p {
+      max-width: 800px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+  <section class="hero">
+    <!-- Layer di montagne per effetto parallasse -->
+    <div class="mountain-layer mountain-layer-3" data-speed="0.3"></div>
+    <div class="mountain-layer mountain-layer-2" data-speed="0.6"></div>
+    <div class="mountain-layer mountain-layer-1" data-speed="0.9"></div>
+
+    <!-- Creiamo alcune nuvole da animare orizzontalmente -->
+    <div class="cloud" id="cloud1" style="top:15%; left:-200px;"></div>
+    <div class="cloud" id="cloud2" style="top:30%; left:-400px;"></div>
+    <div class="cloud" id="cloud3" style="top:50%; left:-300px;"></div>
+
+    <!-- Contenuto hero -->
+    <div class="hero-content">
+      <h1>Benvenuti tra le Montagne</h1>
+      <p>Goditi il panorama, l'aria fresca e lasciati stupire da ciò che la natura sa offrire.</p>
+      <button>Scopri di più</button>
+    </div>
+  </section>
+
+  <section class="info-section">
+    <h2>Informazioni</h2>
+    <p>
+      Questa sezione può essere utilizzata per descrivere le caratteristiche
+      del viaggio in montagna, le attività disponibili, i percorsi escursionistici
+      o qualsiasi altro contenuto rilevante per l’utente.
+    </p>
+  </section>
+
+  <script>
+    // Effetto di animazione delle nuvole (movimento orizzontale)
+    // L'idea di base è spostarle da sinistra a destra con una velocità costante
+    // e riportarle indietro quando escono dallo schermo.
+
+    const clouds = [
+      { element: document.getElementById('cloud1'), speed: 0.5 },
+      { element: document.getElementById('cloud2'), speed: 0.3 },
+      { element: document.getElementById('cloud3'), speed: 0.4 },
+    ];
+
+    // Otteniamo la larghezza dello schermo per calcolare
+    // il riposizionamento quando la nuvola esce a destra
+    let screenWidth = window.innerWidth;
+
+    function animateClouds() {
+      clouds.forEach(cloud => {
+        // Otteniamo la posizione attuale
+        let left = parseFloat(cloud.element.style.left);
+
+        // Aggiorniamo la posizione in base alla velocità
+        cloud.element.style.left = left + cloud.speed + "px";
+
+        // Se la nuvola esce dallo schermo, la riportiamo a sinistra
+        if (left > screenWidth + 100) {
+          cloud.element.style.left = -200 + "px"; 
+        }
+      });
+
+      requestAnimationFrame(animateClouds);
+    }
+
+    // Avviamo l’animazione delle nuvole
+    animateClouds();
+
+
+    // Effetto parallasse delle montagne
+    // Quando si fa scroll, modifichiamo la posizione di sfondo in base a data-speed
+    const mountainLayers = document.querySelectorAll('.mountain-layer');
+
+    window.addEventListener('scroll', () => {
+      let scrollY = window.scrollY;
+      mountainLayers.forEach(layer => {
+        let speed = layer.getAttribute('data-speed');
+        let yPos = - (scrollY * speed);
+        // Trasliamo verticalmente il background
+        layer.style.transform = `translateY(${yPos}px)`;
+      });
+    });
+
+    // Ricalcoliamo la larghezza dello schermo al ridimensionamento
+    window.addEventListener('resize', () => {
+      screenWidth = window.innerWidth;
+    });
+  </script>
+</body>
+</html>

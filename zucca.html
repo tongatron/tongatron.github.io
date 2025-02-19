@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="description" content="Ricette gustose con fiori di zucca, pasta, risotti, fritti e tanto altro." />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mia Cucina - Ricette con Fiori di Zucca</title>
+
+  <!-- STILI INCORPORATI -->
+  <style>
+    /* RESET BASICO */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* BODY */
+    body {
+      font-family: Arial, sans-serif;
+      color: #333;
+      background-color: #f8f8f8;
+      line-height: 1.6;
+    }
+
+    /* HEADER */
+    header {
+      background-color: #ffa500;
+      color: #fff;
+      padding: 1rem;
+    }
+
+    header .logo {
+      text-align: center;
+    }
+
+    nav ul {
+      display: flex;
+      justify-content: center;
+      list-style: none;
+      margin-top: 1rem;
+    }
+
+    nav ul li {
+      margin: 0 1rem;
+    }
+
+    nav ul li a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    nav ul li a:hover {
+      border-bottom: 2px solid #fff;
+    }
+
+    /* MAIN */
+    main {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+
+    .intro {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .intro img {
+      max-width: 100%;
+      height: auto;
+      margin-top: 1rem;
+    }
+
+    /* SEZIONE RICETTE */
+    section {
+      margin-bottom: 2rem;
+    }
+
+    h2 {
+      margin-bottom: 1rem;
+      border-bottom: 2px solid #ffa500;
+      display: inline-block;
+      padding-bottom: 0.5rem;
+    }
+
+    .ricetta-content {
+      background-color: #fff;
+      padding: 1rem;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+      margin-top: 1rem;
+    }
+
+    .ricetta-content h3 {
+      color: #ffa500;
+      margin-bottom: 0.5rem;
+    }
+
+    .ricetta-content img {
+      max-width: 100%;
+      height: auto;
+      margin: 1rem 0;
+    }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 1rem;
+      background-color: #ffa500;
+      color: #fff;
+      margin-top: 2rem;
+    }
+
+    /* BOTTONE "TORNA SU" */
+    #backToTop {
+      position: fixed;
+      bottom: 40px;
+      right: 40px;
+      display: none;
+      background-color: #ffa500;
+      color: #fff;
+      border: none;
+      padding: 0.8rem 1rem;
+      border-radius: 50px;
+      cursor: pointer;
+      font-size: 1rem;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    }
+
+    #backToTop:hover {
+      background-color: #cc8400;
+    }
+  </style>
+</head>
+<body>
+  <!-- HEADER -->
+  <header>
+    <div class="logo">
+      <h1>Mia Cucina</h1>
+      <p>Ricette semplici e gustose</p>
+    </div>
+    <nav>
+      <ul>
+        <!-- Link che puntano alle sezioni singole -->
+        <li><a href="#intro">Home</a></li>
+        <li><a href="#fiori-fritti">Fiori Fritti</a></li>
+        <li><a href="#fiori-ripieni">Fiori Ripieni</a></li>
+        <li><a href="#pasta-fiori">Pasta</a></li>
+        <li><a href="#risotto-fiori">Risotto</a></li>
+        <li><a href="#pizza-fiori">Pizza</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main>
+    <!-- SEZIONE INTRODUZIONE -->
+    <section class="intro" id="intro">
+      <h2>Benvenuti nella mia cucina!</h2>
+      <p>
+        Qui troverai ricette tradizionali e creative con i fiori di zucca: fritti, ripieni, 
+        in pasta o nel risotto. Sperimenta con ingredienti e spezie, e divertiti a creare piatti unici!
+      </p>
+      <img src="https://via.placeholder.com/600x300.png?text=Fiori+di+Zucca" alt="Fiori di zucca su un tagliere" />
+    </section>
+
+    <!-- SEZIONE FIORI DI ZUCCA FRITTI -->
+    <section id="fiori-fritti">
+      <h2>Fiori di Zucca Fritti</h2>
+      <div class="ricetta-content">
+        <h3>Ingredienti</h3>
+        <ul>
+          <li>Fiori di zucca freschi</li>
+          <li>Farina 00 (o mix con farina di riso)</li>
+          <li>Acqua fredda/birra ghiacciata</li>
+          <li>Sale e pepe</li>
+          <li>Olio di semi (arachidi o girasole alto oleico)</li>
+        </ul>
+        <img src="https://via.placeholder.com/400x200.png?text=Fiori+Fritti" alt="Fiori di zucca fritti" />
+        <h3>Procedura</h3>
+        <ol>
+          <li>Sciacqua e asciuga i fiori di zucca.</li>
+          <li>Prepara la pastella mescolando farina, acqua/birra ghiacciata e un pizzico di sale.</li>
+          <li>Immergi i fiori nella pastella e friggili in olio caldo (170-180°C) fino a leggera doratura.</li>
+          <li>Scola su carta assorbente, sala e servi caldi.</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- SEZIONE FIORI DI ZUCCA RIPIENI -->
+    <section id="fiori-ripieni">
+      <h2>Fiori di Zucca Ripieni</h2>
+      <div class="ricetta-content">
+        <h3>Ingredienti</h3>
+        <ul>
+          <li>Fiori di zucca</li>
+          <li>Ricotta o altro formaggio morbido (es. stracchino)</li>
+          <li>Prosciutto cotto a cubetti (o scamorza, filetti d’acciuga)</li>
+          <li>Erbe aromatiche (erba cipollina, timo, basilico)</li>
+          <li>Olio extravergine d’oliva, sale e pepe</li>
+        </ul>
+        <img src="https://via.placeholder.com/400x200.png?text=Fiori+Ripieni" alt="Fiori di zucca ripieni" />
+        <h3>Procedura (Forno)</h3>
+        <ol>
+          <li>Pulisci i fiori eliminando il pistillo.</li>
+          <li>Mescola ricotta, prosciutto ed erbe in una ciotola.</li>
+          <li>Riempi i fiori con il ripieno e chiudi delicatamente la punta.</li>
+          <li>Disponi in una teglia unta, aggiungi un filo d’olio e inforna a 180°C per ~15 minuti.</li>
+        </ol>
+        <h3>Procedura (Fritti)</h3>
+        <p>
+          Dopo averli riempiti, passali in una leggera pastella o in farina e friggili in olio caldo.
+        </p>
+      </div>
+    </section>
+
+    <!-- SEZIONE PASTA CON FIORI DI ZUCCA -->
+    <section id="pasta-fiori">
+      <h2>Pasta con Fiori di Zucca</h2>
+      <div class="ricetta-content">
+        <h3>Ingredienti</h3>
+        <ul>
+          <li>Pasta (linguine, fusilli, paccheri…)</li>
+          <li>Fiori di zucca</li>
+          <li>Zucchine</li>
+          <li>Zafferano</li>
+          <li>Cipolla o scalogno</li>
+          <li>Olio extravergine d’oliva, sale, pepe</li>
+        </ul>
+        <img src="https://via.placeholder.com/400x200.png?text=Pasta+con+Fiori" alt="Pasta con fiori di zucca" />
+        <h3>Procedura</h3>
+        <ol>
+          <li>Soffriggi la cipolla in olio e aggiungi le zucchine a fettine.</li>
+          <li>Sciogli lo zafferano in poca acqua di cottura.</li>
+          <li>Aggiungi i fiori di zucca a striscioline quasi a fine cottura.</li>
+          <li>Scola la pasta al dente e condiscila con le zucchine e i fiori, unendo lo zafferano.</li>
+          <li>Aggiusta di sale, pepe e servi ben caldo.</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- SEZIONE RISOTTO CON FIORI DI ZUCCA -->
+    <section id="risotto-fiori">
+      <h2>Risotto con Fiori di Zucca</h2>
+      <div class="ricetta-content">
+        <h3>Ingredienti</h3>
+        <ul>
+          <li>Riso Carnaroli o Arborio</li>
+          <li>Brodo vegetale</li>
+          <li>Fiori di zucca</li>
+          <li>Cipolla o scalogno</li>
+          <li>Burro e/o olio EVO</li>
+          <li>Vino bianco</li>
+          <li>Provola affumicata (o altro formaggio)</li>
+        </ul>
+        <img src="https://via.placeholder.com/400x200.png?text=Risotto+con+Fiori" alt="Risotto con fiori di zucca" />
+        <h3>Procedura</h3>
+        <ol>
+          <li>Soffriggi la cipolla in burro/olio, tosta il riso e sfuma con vino bianco.</li>
+          <li>Cuoci il risotto aggiungendo brodo caldo poco per volta.</li>
+          <li>A metà cottura, aggiungi i fiori di zucca tagliati a pezzetti.</li>
+          <li>A fine cottura, manteca con provola affumicata e (se vuoi) un po’ di parmigiano.</li>
+          <li>Lascia riposare un minuto e servi.</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- SEZIONE PIZZA CON FIORI DI ZUCCA E ALICI -->
+    <section id="pizza-fiori">
+      <h2>Pizza con Fiori di Zucca e Alici</h2>
+      <div class="ricetta-content">
+        <h3>Ingredienti</h3>
+        <ul>
+          <li>Base pizza o focaccia (impasto tradizionale)</li>
+          <li>Fiori di zucca</li>
+          <li>Alici (sott’olio o sotto sale, ben dissalate)</li>
+          <li>Mozzarella (fiordilatte ben scolata)</li>
+          <li>Olio extravergine d’oliva, sale</li>
+        </ul>
+        <img src="https://via.placeholder.com/400x200.png?text=Pizza+con+Fiori" alt="Pizza con fiori di zucca e alici" />
+        <h3>Procedura</h3>
+        <ol>
+          <li>Stendi l’impasto e lascialo lievitare il tempo necessario.</li>
+          <li>Distribuisci mozzarella, alici e fiori di zucca sulla superficie.</li>
+          <li>Aggiungi un filo d’olio e cuoci in forno caldo (circa 250°C) per 10-15 minuti.</li>
+          <li>Sforna e servi calda.</li>
+        </ol>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>&copy; 2024 Mia Cucina. Tutti i diritti riservati.</p>
+  </footer>
+
+  <!-- BOTTONE "TORNA SU" -->
+  <button id="backToTop">↑ Torna su</button>
+
+  <!-- JAVASCRIPT INCORPORATO -->
+  <script>
+    // Mostra il bottone "Torna su" dopo un certo scroll
+    const backToTopBtn = document.getElementById('backToTop');
+
+    window.addEventListener('scroll', () => {
+      if (document.documentElement.scrollTop > 300) {
+        backToTopBtn.style.display = "block";
+      } else {
+        backToTopBtn.style.display = "none";
+      }
+    });
+
+    // Al click, torna in cima alla pagina
+    backToTopBtn.addEventListener('click', () => {
+      document.documentElement.scrollTop = 0; 
+    });
+  </script>
+</body>
+</html>
