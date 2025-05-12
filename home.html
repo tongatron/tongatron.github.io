@@ -54,29 +54,26 @@
           
         </div>
         <div class="col">
-          <h4>Creative Technology</h4>
+          <h4>Creative Technology, Innovation Manager</h4>
               
           <p>
           
-            Giovanni Bindi, nato a Biella 45 anni fa, figlio di una maestra e di un noto negoziante di giocattoli, ha sviluppato fin dall’infanzia una passione per il gioco come mezzo di esplorazione e scoperta. Durante l’adolescenza, l’influenza del punk gli ha trasmesso un forte senso di indipendenza. Professionista versatile, Giovanni si dedica al “tinkering”, ovvero la sperimentazione pratica con hardware e software, senza la necessità di un obiettivo prefissato, guidato dalla curiosità e dall’innovazione.
-          
-
-
+           Professionista con oltre 15 anni di esperienza all’incrocio tra tecnologia, gestione progetti e innovazione organizzativa. Psicologo del lavoro con background tecnico, ho coordinato progetti complessi in ambito HR Tech, trasformazione digitale e fabbricazione digitale, con particolare attenzione all’impatto sociale e formativo. Ho lavorato in contesti corporate, cooperativi e creativi, combinando capacità analitiche, visione strategica e competenze operative. Appassionato di tecnologie emergenti, promuovo un’innovazione inclusiva e sostenibile, guidando il cambiamento con un approccio umano-centrico e data-driven.
+        
 
           </p>    
 
-
+  
                 
         </div>
         <div class="col">
           
 
-<P>Sin dall'infanzia il gioco era...esplorazione, scoperta, curiosità.
-                Durante l'adolescenza la passione per il punk mi insegna una cosa semplice: farmi i cazzi miei.
+<P>Il mio approccio è pratico, orientato alla sperimentazione e all’autonomia progettuale: ho diretto il Fablab Torino e promosso iniziative educative come Fablab for Kids e Torino Mini Maker Faire, convinto che la tecnologia possa essere uno strumento creativo e democratico. Ho sviluppato soluzioni digitali per eventi (Self-O-Matic), insegnato coding e robotica, e accompagnato la trasformazione digitale di organizzazioni complesse.  
               </P>
               <p>
 
-Tinkering: giocare con la tecnologia, esplorare diverse possibilità su hardware e sfyware, senza che sia necessario uno scopo preefinito. Un termine inglese che significa adoperarsi, armeggiare, smanettare.
+Questo sito raccoglie i miei progetti professionali e creativi. Perché la mia visione del lavoro non si separa mai dalla mia estetica e dal mio immaginario.
               </P>
           
         </div>
@@ -176,15 +173,7 @@ Tinkering: giocare con la tecnologia, esplorare diverse possibilità su hardware
                 
               </div>
             </div>
-            <div class="col d-flex align-items-start">
-              <div>
-                <h3 class="fw-bold mb-0 fs-4 text-body-emphasis">Prototype Factory</h3>
-                <a href="http://www.prototype-factory.com/">prototype-factory.com</a>
-                <br>  
-                <p>Servizi di protipazione rapida. Modellazione, stampa 3D, lasercut, termoformatura</p>
-                
-              </div>
-            </div>
+
   
             </div>
           </div>
@@ -437,8 +426,6 @@ Tinkering: giocare con la tecnologia, esplorare diverse possibilità su hardware
           <p>
             <strong>Social network</strong><br>
             <a href="">linkedin.com/in/giovannibindi </a><br>
-            <a href="https://www.facebook.com/giovanni.bindi">facebook.com/giovanni.bindi</a><br>
-            <a href="https://www.instagram.com/frantitorino/">instagram.com/frantitorino/</a><br>
             <a href="https://x.com/giobindi">x.com/giobindi</a><br>
             <a href="https://mastodon.social/@tongatron">mastodon.social/@tongatron</a><br>
 
@@ -458,7 +445,7 @@ Tinkering: giocare con la tecnologia, esplorare diverse possibilità su hardware
 
       <div class="container">
         <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
-          <p class="col-md-4 mb-0 text-body-secondary">&copy; 2024 Tongatron</p>
+          <p class="col-md-4 mb-0 text-body-secondary">&copy; 2025 Tongatron</p>
 
 
           <ul class="nav col-md-4 justify-content-end">
@@ -471,128 +458,6 @@ Tinkering: giocare con la tecnologia, esplorare diverse possibilità su hardware
       </div>
 
 
-
-
-
-
-
-<div class="container">
-  
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
-    <script>
-        let nodes = [];
-        let textData;
-        let invertColors = false;
-        let backgroundColor = 20;
-        let nodeColor = 255;
-        let lineColor = [255, 100];  // Colore delle linee con opacità
-        let highlightColor = [255, 255, 0]; // Colore di evidenziazione giallo
-
-        function setup() {
-            createCanvas(windowWidth, windowHeight);
-            textData = {
-                text: "TONGATRON\ncreative technologist\n読むバカ\nprojects",
-                size: 24,
-                x: width / 2,
-                y: height / 2,
-                bounds: null
-            };
-            textData.bounds = calculateTextBounds(textData.text, textData.size, textData.x, textData.y);
-
-            for (let i = 0; i < 100; i++) {
-                let node = {
-                    pos: createVector(random(width), random(height)),
-                    vel: p5.Vector.random2D().mult(random(0.5, 1.5))
-                };
-                nodes.push(node);
-            }
-
-            setInterval(toggleColors, 3000);  // Imposta l'inversione dei colori ogni 3 secondi
-        }
-
-        function draw() {
-            background(backgroundColor);
-            fill(nodeColor);
-            noStroke();
-            textAlign(CENTER, CENTER);
-            textSize(textData.size);
-            text(textData.text, textData.x, textData.y);
-
-            stroke(lineColor);
-            strokeWeight(1);
-
-            nodes.forEach(node => {
-                node.pos.add(node.vel);
-                checkCollision(node.pos, textData.bounds);
-                wrapAround(node.pos);
-            });
-
-            for (let i = 0; i < nodes.length; i++) {
-                for (let j = i + 1; j < nodes.length; j++) {
-                    if (dist(nodes[i].pos.x, nodes[i].pos.y, nodes[j].pos.x, nodes[j].pos.y) < 100) {
-                        line(nodes[i].pos.x, nodes[i].pos.y, nodes[j].pos.x, nodes[j].pos.y);
-                    }
-                }
-            }
-
-            nodes.forEach(node => {
-                fill(nodeColor);
-                noStroke();
-                ellipse(node.pos.x, node.pos.y, 8, 8);
-                if (dist(mouseX, mouseY, node.pos.x, node.pos.y) < 50) {
-                    fill(highlightColor);
-                    ellipse(node.pos.x, node.pos.y, 12, 12);
-                }
-            });
-        }
-
-        function toggleColors() {
-            invertColors = !invertColors;
-            if (invertColors) {
-                backgroundColor = 255;
-                nodeColor = 20;
-                lineColor = [20, 100];
-                highlightColor = [20, 20, 0];  // Inverti anche il colore di evidenziazione
-            } else {
-                backgroundColor = 20;
-                nodeColor = 255;
-                lineColor = [255, 100];
-                highlightColor = [255, 255, 0];
-            }
-        }
-
-        function calculateTextBounds(text, size, x, y) {
-            textSize(size);
-            let w = textWidth(text);
-            let h = size * 1.5 * (text.split('\n').length); // Approximation
-            return {x: x - w / 2, y: y - h / 2, w: w, h: h};
-        }
-
-        function checkCollision(position, bounds) {
-            if (position.x > bounds.x && position.x < bounds.x + bounds.w &&
-                position.y > bounds.y && position.y < bounds.y + bounds.h) {
-                let overlapX = position.x - bounds.x < bounds.x + bounds.w - position.x ? -1 : 1;
-                let overlapY = position.y - bounds.y < bounds.y + bounds.h - position.y ? -1 : 1;
-                position.add(createVector(overlapX, overlapY).mult(2));
-            }
-        }
-
-        function wrapAround(position) {
-            if (position.x < 0) position.x = width;
-            else if (position.x > width) position.x = 0;
-            if (position.y < 0) position.y = height;
-            else if (position.y > height) position.y = 0;
-        }
-
-        function windowResized() {
-            resizeCanvas(windowWidth, windowHeight);
-            textData.x = width / 2;
-            textData.y = height / 2;
-            textData.bounds = calculateTextBounds(textData.text, textData.size, textData.x, textData.y);
-        }
-    </script>
-
-</div>
 
 
 
