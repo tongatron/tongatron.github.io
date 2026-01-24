@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <title>Verifica utenti Facebook segnalati</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
+    .spinner {
+      width: 4rem;
+      height: 4rem;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container vh-100 d-flex align-items-center justify-content-center">
+  <div class="card shadow p-4 w-100" style="max-width: 420px;">
+    <div id="step-form">
+      <h3 class="mb-4 text-center">Verifica utenti Facebook segnalati</h3>
+      <div class="mb-3">
+        <label for="fullname" class="form-label">Nome e Cognome dell'utente Facebook</label>
+        <input type="text" class="form-control" id="fullname" placeholder="Es. Jack la Furia">
+      </div>
+      <button type="button" class="btn btn-primary w-100" id="submitBtn">Invia</button>
+    </div>
+
+    <div id="step-loading" class="text-center d-none">
+      <h4 class="mb-3">Analisi in corso</h4>
+      <div class="spinner-border text-primary spinner" role="status"></div>
+      <p class="mt-3 text-muted">Verifica delle informazioni in corso…</p>
+    </div>
+
+    <div id="step-result" class="d-none"></div>
+
+    <div class="mt-4 text-muted small">
+      <hr>
+      <p><strong>24/01/2026</strong><br>
+      La piattaforma Facebook è stata recentemente hackerata dal gruppo di attivisti <em>HackerSkater</em>.
+      Sono trapelati i nomi dei profili controllati dalla società stessa e dalle autorità.
+      Ovvero: sanno chi siete, sanno cosa fate.<br>
+      Da questa pagina puoi verificare il tuo profilo.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Robust event wiring for the "Invia" button
+  document.addEventListener('DOMContentLoaded', () => {
+    // Try to find the explicit submit button, otherwise take the first primary button
+    let btn = document.getElementById('submitBtn');
+    if (!btn) {
+      btn = document.querySelector('button[type="button"], button.btn-primary');
+      if (btn) btn.id = 'submitBtn';
+    }
+
+    if (btn) {
+      // ensure it's not a submit that refreshes the page
+      btn.setAttribute('type', 'button');
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        startAnalysis();
+      });
+    }
+  });
+
+  function startAnalysis() {
+    const input = document.getElementById('fullname');
+    if (!input) {
+      alert('Campo di input non trovato');
+      return;
+    }
+    const name = input.value.trim();
+    if (!name) {
+      alert('Inserisci un nome e cognome');
+      return;
+    }
+
+    const form = document.getElementById('step-form');
+    const loading = document.getElementById('step-loading');
+    const result = document.getElementById('step-result');
+
+    if (form) form.classList.add('d-none');
+    if (result) result.classList.add('d-none');
+    if (loading) loading.classList.remove('d-none');
+
+    // simulazione: 5 secondi
+    setTimeout(() => showResult(name), 5000);
+  }
+
+  function showResult(name) {
+    const loading = document.getElementById('step-loading');
+    const result = document.getElementById('step-result');
+    if (loading) loading.classList.add('d-none');
+    if (!result) return;
+    result.classList.remove('d-none');
+
+    if (name === 'Marco Rallino') {
+      result.innerHTML = `
+        <div class="alert alert-warning mb-3"><strong>Avviso:</strong> l’utente è nel registro degli account sospetti e monitorati dalle autorità competenti.</div>
+        <h4 class="mb-3 text-success">Informazioni raccolte</h4>
+        <ul class="list-group">
+          <li class="list-group-item"><strong>Nome:</strong> Marco</li>
+          <li class="list-group-item"><strong>Cognome:</strong> Cabras</li>
+          <li class="list-group-item"><strong>Telefono:</strong> 329 7345563</li>
+          <li class="list-group-item"><strong>Mail:</strong> </li>
+          <li class="list-group-item"><strong>Posizione tipica GPS:</strong> via Vescovado, Biella (BI)</li>
+        </ul>
+        <button class="btn btn-outline-primary mt-3 w-100" onclick="resetSearch()">Torna alla ricerca</button>
+      `;
+    } else {
+      result.innerHTML = `
+        <h4 class="text-danger">Utente non trovato</h4>
+        <p class="text-muted">Nessuna informazione disponibile per l'utente inserito.</p>
+        <button class="btn btn-outline-secondary mt-3 w-100" onclick="resetSearch()">Torna alla ricerca</button>
+      `;
+    }
+  }
+
+  function resetSearch() {
+    const form = document.getElementById('step-form');
+    const result = document.getElementById('step-result');
+    const loading = document.getElementById('step-loading');
+    const input = document.getElementById('fullname');
+
+    if (result) result.classList.add('d-none');
+    if (loading) loading.classList.add('d-none');
+    if (form) form.classList.remove('d-none');
+    if (input) input.value = '';
+  }
+</script>
+
+</body>
+</html>
