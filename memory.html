@@ -39,6 +39,15 @@ input.form-control{border-radius:12px; border:1px solid #ccc; padding:6px 10px;}
 
 /* Carte abbinate evidenziate */
 .card.matched .back { background:#d0f0fd; border-color:#007aff; }
+
+/* Nascondi i box dei risultati su mobile */
+@media (max-width: 768px) {
+  #playerStatsBox,
+  #recordBox,
+  #statusBox {
+    display: none;
+  }
+}
 </style>
 </head>
 <body>
@@ -82,6 +91,7 @@ const grid=document.getElementById("grid");
 const movesEl=document.getElementById("moves");
 const statusBox=document.getElementById("statusBox");
 const playerStatsBox=document.getElementById("playerStatsBox");
+const recordBox=document.getElementById("recordBox");
 
 // Login
 function loginPlayer(){
