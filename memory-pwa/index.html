@@ -1,143 +1,213 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>La Mia PWA</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Memory</title>
 
-  <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#000000">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#007aff">
 
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f5f5f5;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-    }
+<style>
+:root{--gap:16px;--card-size:80px}
+html,body{height:100%;margin:0;overflow:hidden;font-family:-apple-system;background:#e3e3e3}
+body{display:flex;flex-direction:column}
+header{text-align:center;padding:14px 10px 6px}
+h1{margin:0;font-size:1.8rem}
+#moves,#timer{color:#666;margin-top:2px}
 
-    main {
-      flex: 1;
-      padding: 20px;
-    }
+main{flex:1;display:flex;justify-content:center;align-items:center;overflow:hidden}
+.grid{display:grid;gap:var(--gap)}
 
-    footer {
-      height: 50px;
-      background: #111;
-      color: white;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 15px;
-      font-size: 14px;
-    }
+.card{width:var(--card-size);aspect-ratio:1;perspective:800px;cursor:pointer}
+.inner{width:100%;height:100%;transform-style:preserve-3d;transition:.4s;position:relative}
+.card.flipped .inner{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;border-radius:14px;background:white;display:flex;align-items:center;justify-content:center;backface-visibility:hidden;box-shadow:0 5px 14px rgba(0,0,0,.08)}
+.back{transform:rotateY(180deg);font-size:clamp(26px,5vw,48px)}
 
-    .version {
-      opacity: 0.7;
-    }
-  </style>
+footer{background:#fff;border-top:1px solid #ddd;padding:10px;display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
+
+button.active[data-total]{background:#d1d1d1;color:#111;}
+button#newGameBtn{background:#007aff;color:white;border:none;border-radius:18px;padding:8px 12px;font-weight:600;cursor:pointer}
+button#newGameBtn:active{transform:scale(.95)}
+
+button{border:none;background:#e9e9ef;border-radius:18px;padding:8px 12px;font-weight:600}
+button:active{transform:scale(.95)}
+
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.35);display:none;align-items:center;justify-content:center}
+.box{background:white;border-radius:16px;padding:18px;width:min(90vw,360px);text-align:center}
+.actions{display:flex;justify-content:space-between;margin-top:10px}
+</style>
 </head>
-
 <body>
 
+<header>
+  <h1>Memory</h1>
+  <div id="moves">Mosse: 0</div>
+  <div id="timer">Tempo: 0s</div>
+</header>
+
 <main>
-  <h1>La Mia PWA</h1>
-  <p>Applicazione installabile su Android.</p>
+  <div id="grid" class="grid"></div>
 </main>
 
 <footer>
-  <div>© 2026</div>
-  <div class="version" id="appVersion">
-    Versione: ...
-  </div>
+  <button data-total="16" class="active">4×4</button>
+  <button data-total="20">4×5</button>
+  <button data-total="24">4×6</button>
+  <button data-total="28">4×7</button>
+  <button onclick="openRecords()">Record</button>
+  <button id="newGameBtn" onclick="newGameManual()">Nuova Partita</button>
 </footer>
 
+<div id="recordsModal" class="modal">
+  <div class="box">
+    <h3>Record locali</h3>
+    <div id="recordsList"></div>
+    <div class="actions">
+      <button onclick="resetRecords()">Reset</button>
+      <button onclick="closeRecords()">Chiudi</button>
+    </div>
+  </div>
+</div>
+
 <script>
-  // Registrazione Service Worker
-  if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("sw.js")
-      .then(reg => {
-        console.log("SW registrato");
-      });
-  }
+// ================= GAME =================
+const symbols=["💀","🎧","🍺","🔥","⚽","🧠","🦊","🐱","🎸","🚀","🍕","👾","🎲","🌈","🥁","🍓","🍉","🍔"];
+let rows=4, cols=4, moves=0, timer=0, intervalId;
+let first=null, second=null, lock=false;
 
-  // Richiesta versione al Service Worker
-  function requestVersion() {
-    if (navigator.serviceWorker.controller) {
-      navigator.serviceWorker.controller.postMessage({
-        type: "GET_VERSION"
-      });
-    }
-  }
+const grid=document.getElementById("grid");
+const movesEl=document.getElementById("moves");
+const timerEl=document.getElementById("timer");
 
-  navigator.serviceWorker.addEventListener("message", (event) => {
-    if (event.data && event.data.type === "VERSION") {
-      document.getElementById("appVersion").textContent =
-        "Versione: " + event.data.version;
-    }
+function layout(total){
+  cols=Math.ceil(total/rows);
+  const gap=16;
+  const vh=window.innerHeight;
+  const vw=window.innerWidth;
+  const headerH=document.querySelector("header").offsetHeight;
+  const footerH=document.querySelector("footer").offsetHeight;
+  const h=vh-headerH-footerH-10;
+  const w=vw-10;
+  const size=Math.floor(Math.min(
+    (w-(cols-1)*gap)/cols,
+    (h-(rows-1)*gap)/rows
+  ));
+  document.documentElement.style.setProperty("--card-size",size+"px");
+  grid.style.gridTemplateColumns=`repeat(${cols},${size}px)`;
+  grid.style.gridTemplateRows=`repeat(${rows},${size}px)`;
+}
+
+const shuffle=a=>a.sort(()=>Math.random()-.5);
+
+function build(total){
+  grid.innerHTML="";
+  const pairs=Math.floor(total/2);
+  const chosen=shuffle(symbols).slice(0,pairs);
+  const cards=shuffle([...chosen,...chosen]);
+  cards.forEach(sym=>{
+    const el=document.createElement("div");
+    el.className="card";
+    el.dataset.sym=sym;
+    el.innerHTML=`<div class="inner"><div class="face"></div><div class="face back">${sym}</div></div>`;
+    el.onclick=flip;
+    grid.appendChild(el);
   });
+}
 
-  // Aspetta che SW sia pronto
-  navigator.serviceWorker.ready.then(() => {
-    requestVersion();
+function flip(e){
+  const c=e.currentTarget;
+  if(lock||c.classList.contains("flipped"))return;
+  c.classList.add("flipped");
+  if(!first){first=c;return;}
+  second=c;
+  moves++;movesEl.textContent="Mosse: "+moves;
+
+  if(first.dataset.sym===second.dataset.sym){
+    first=second=null;
+    if(document.querySelectorAll(".flipped").length===grid.children.length) win();
+  }else{
+    lock=true;
+    setTimeout(()=>{
+      first.classList.remove("flipped");
+      second.classList.remove("flipped");
+      first=second=null;lock=false;
+    },600);
+  }
+}
+
+function win(){
+  clearInterval(intervalId);
+  const matrix=rows+"x"+cols;
+  const newRec=saveRecord(matrix,moves,timer);
+  setTimeout(()=>alert("Vittoria! "+(newRec?"Nuovo record!":"")),250);
+}
+
+// ================= RECORDS =================
+function loadRecords(){return JSON.parse(localStorage.getItem("memoryRecords")||"{}")}
+function saveRecords(r){localStorage.setItem("memoryRecords",JSON.stringify(r))}
+function saveRecord(matrix,moves,time){
+  const r=loadRecords();
+  if(!r[matrix] || moves<r[matrix].moves || (moves===r[matrix].moves && time<r[matrix].time)){
+    r[matrix]={moves,time,date:new Date().toISOString()};
+    saveRecords(r);
+    return true;
+  }
+  return false;
+}
+
+function openRecords(){
+  const list=document.getElementById("recordsList");
+  const r=loadRecords();
+  if(!Object.keys(r).length) list.innerHTML="Nessun record";
+  else list.innerHTML=Object.entries(r).map(([m,v])=>{
+    const d=new Date(v.date).toLocaleString();
+    return `<b>${m}</b>: ${v.moves} mosse, ${v.time}s<br><small>${d}</small><hr>`;
+  }).join("");
+  document.getElementById("recordsModal").style.display="flex";
+}
+function closeRecords(){document.getElementById("recordsModal").style.display="none"}
+function resetRecords(){
+  if(confirm("Cancellare record?")){
+    localStorage.removeItem("memoryRecords");
+    openRecords();
+  }
+}
+
+function newGame(total){
+  moves=0;timer=0;
+  movesEl.textContent="Mosse: 0";
+  timerEl.textContent="Tempo: 0s";
+  clearInterval(intervalId);
+  layout(total);
+  build(total);
+  intervalId=setInterval(()=>{timer++;timerEl.textContent="Tempo: "+timer+"s";},1000);
+}
+function newGameManual(){
+  const active=document.querySelector("footer button.active");
+  newGame(+active.dataset.total);
+}
+
+document.querySelectorAll("footer button[data-total]").forEach(b=>{
+  b.onclick=()=>{
+    document.querySelectorAll("footer button").forEach(x=>x.classList.remove("active"));
+    b.classList.add("active");
+    newGame(+b.dataset.total);
+  }
+});
+window.addEventListener("resize",()=>{ 
+  const active=document.querySelector("footer button.active");
+  newGame(+active.dataset.total);
+});
+newGame(16);
+
+// ================= SERVICE WORKER =================
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("sw.js");
   });
+}
 </script>
-
 </body>
 </html>
-
-
-<script>
-if ("serviceWorker" in navigator) {
-
-  navigator.serviceWorker.register("sw.js").then(reg => {
-
-    // Se c'è già un SW in waiting
-    if (reg.waiting) {
-      showUpdateButton(reg.waiting);
-    }
-
-    reg.addEventListener("updatefound", () => {
-      const newWorker = reg.installing;
-
-      newWorker.addEventListener("statechange", () => {
-        if (newWorker.state === "installed" && navigator.serviceWorker.controller) {
-          showUpdateButton(newWorker);
-        }
-      });
-    });
-
-  });
-
-  navigator.serviceWorker.addEventListener("message", (event) => {
-    if (event.data && event.data.type === "VERSION") {
-      document.getElementById("appVersion").textContent =
-        "Versione: " + event.data.version;
-    }
-  });
-}
-
-function showUpdateButton(worker) {
-  const button = document.createElement("button");
-  button.textContent = "Aggiornamento disponibile";
-  button.style.position = "fixed";
-  button.style.bottom = "70px";
-  button.style.right = "20px";
-  button.style.padding = "10px";
-  button.style.background = "#ff9800";
-  button.style.color = "white";
-  button.style.border = "none";
-  button.style.borderRadius = "5px";
-  button.style.cursor = "pointer";
-  button.style.zIndex = "9999";
-
-  button.onclick = () => {
-    worker.postMessage({ type: "SKIP_WAITING" });
-    window.location.reload();
-  };
-
-  document.body.appendChild(button);
-}
-</script>
