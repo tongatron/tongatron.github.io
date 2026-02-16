@@ -1,27 +1,21 @@
-const CACHE_NAME = 'memory-pwa-v2'; // cambia versione ad ogni update
-const urlsToCache = [
-  './',
-  './index.html',
-  './manifest.json'
-];
+const CACHE="memory-v3";
 
-self.addEventListener('install', e => {
+self.addEventListener("install",e=>{
   e.waitUntil(
-    caches.open(CACHE_NAME).then(cache => cache.addAll(urlsToCache))
+    caches.open(CACHE).then(c=>c.addAll(["./","./index.html"]))
   );
 });
 
-self.addEventListener('activate', e => {
-  // cancella vecchie cache
+self.addEventListener("activate",e=>{
   e.waitUntil(
-    caches.keys().then(keys => 
-      Promise.all(keys.map(k => { if(k !== CACHE_NAME) return caches.delete(k); }))
-    )
+    caches.keys().then(keys=>Promise.all(
+      keys.map(k=>k!==CACHE&&caches.delete(k))
+    ))
   );
 });
 
-self.addEventListener('fetch', e => {
+self.addEventListener("fetch",e=>{
   e.respondWith(
-    caches.match(e.request).then(resp => resp || fetch(e.request))
+    caches.match(e.request).then(r=>r||fetch(e.request))
   );
 });

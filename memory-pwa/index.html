@@ -1,113 +1,38 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Memory PWA Minimal</title>
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#007aff">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Memory</title>
+
+<!-- QR LIB -->
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
+
 <style>
-:root{
-  --gap: 18px;
-  --card-size: 90px;
-}
+:root{--gap:16px;--card-size:80px}
+html,body{height:100%;margin:0;overflow:hidden;font-family:-apple-system;background:#e3e3e3}
+body{display:flex;flex-direction:column}
+header{text-align:center;padding:14px 10px 6px}
+h1{margin:0;font-size:1.8rem}
+#moves{color:#666}
 
-body{
-  margin:0;
-  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display",sans-serif;
-  background:#e0e0e0; /* più grigio */
-  color:#111;
-  display:flex;
-  flex-direction:column;
-  height:100vh;
-}
+main{flex:1;display:flex;justify-content:center;align-items:center;overflow:hidden}
+.grid{display:grid;gap:var(--gap)}
 
-/* HEADER */
-header{
-  text-align:center;
-  padding:18px 10px 8px;
-}
-h1{margin:0;font-weight:700;font-size:2.2rem}
-#moves{color:#666;margin-top:4px}
-
-/* GRID CENTER */
-main{
-  flex:1;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-}
-
-.grid{
-  display:grid;
-  gap:var(--gap);
-  justify-content:center;
-}
-
-/* CARD */
-.card{
-  width:var(--card-size);
-  aspect-ratio:1/1;
-  perspective:900px;
-  cursor:pointer;
-}
-.inner{
-  width:100%;height:100%;
-  transform-style:preserve-3d;
-  transition:.45s cubic-bezier(.34,1.56,.64,1);
-  position:relative;
-}
+.card{width:var(--card-size);aspect-ratio:1;perspective:800px;cursor:pointer}
+.inner{width:100%;height:100%;transform-style:preserve-3d;transition:.4s;position:relative}
 .card.flipped .inner{transform:rotateY(180deg)}
-.face{
-  position:absolute;
-  width:100%;height:100%;
-  border-radius:18px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  backface-visibility:hidden;
-  background:#ffffff; /* carte bianche */
-  box-shadow:0 6px 14px rgba(0,0,0,.08);
-}
-.back{
-  transform:rotateY(180deg);
-  font-size:clamp(30px,5vw,56px);
-}
-.card.matched .face{
-  background:#f2f2f2;
-}
+.face{position:absolute;inset:0;border-radius:14px;background:white;display:flex;align-items:center;justify-content:center;backface-visibility:hidden;box-shadow:0 5px 14px rgba(0,0,0,.08)}
+.back{transform:rotateY(180deg);font-size:clamp(26px,5vw,48px)}
 
-/* WIN */
-@keyframes win {
-  0%{transform:scale(1)}
-  30%{transform:scale(1.1)}
-  60%{transform:scale(.94)}
-  100%{transform:scale(1)}
-}
-.card.win .inner{animation:win .8s ease 3}
+footer{background:#fff;border-top:1px solid #ddd;padding:10px;display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
+button{border:none;background:#e9e9ef;border-radius:18px;padding:8px 12px;font-weight:600}
+button.active{background:#007aff;color:white}
 
-/* FOOTER */
-footer{
-  background:#fff;
-  border-top:1px solid #ddd;
-  padding:12px;
-  display:flex;
-  justify-content:center;
-  gap:10px;
-}
-button{
-  border:none;
-  background:#e9e9ef;
-  border-radius:22px;
-  padding:9px 16px;
-  font-weight:600;
-  cursor:pointer;
-}
-button.active{
-  background:#007aff;
-  color:white;
-}
-button:active{transform:scale(.95)}
+/* MODALS */
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.35);display:none;align-items:center;justify-content:center}
+.box{background:white;border-radius:16px;padding:18px;width:min(90vw,360px);text-align:center}
+.actions{display:flex;justify-content:space-between;margin-top:10px}
 </style>
 </head>
 <body>
@@ -122,42 +47,74 @@ button:active{transform:scale(.95)}
 </main>
 
 <footer>
-  <button data-cols="4" class="active">4×4</button>
-  <button data-cols="5">4×5</button>
-  <button data-cols="6">4×6</button>
-  <button data-cols="7">4×7</button>
+  <button data-total="16" class="active">4×4</button>
+  <button data-total="20">4×5</button>
+  <button data-total="24">4×6</button>
+  <button data-total="28">4×7</button>
+  <button onclick="openRecords()">Record</button>
+  <button onclick="openExport()">Esporta</button>
 </footer>
 
+<!-- RECORD MODAL -->
+<div id="recordsModal" class="modal">
+  <div class="box">
+    <h3>Record locali</h3>
+    <div id="recordsList"></div>
+    <div class="actions">
+      <button onclick="resetRecords()">Reset</button>
+      <button onclick="closeRecords()">Chiudi</button>
+    </div>
+  </div>
+</div>
+
+<!-- EXPORT MODAL -->
+<div id="exportModal" class="modal">
+  <div class="box">
+    <h3>Esporta record</h3>
+    <button onclick="exportEmail()">📧 Manda via email</button>
+    <button onclick="exportQR()">📱 QR Code</button>
+    <div id="qr" style="margin-top:15px"></div>
+    <div class="actions">
+      <span></span>
+      <button onclick="closeExport()">Chiudi</button>
+    </div>
+  </div>
+</div>
+
 <script>
-const symbols=["💀","🎧","🍺","🔥","⚽","🧠","🦊","🐱","🎸","🚀","🍕","👾","🎲","🌈","🥁","🍓","🍉","🍔","🍩","🌮"];
-let rows=4, cols=4, cards=[], first=null, second=null, lock=false, moves=0;
+// ================= GAME =================
+const symbols=["💀","🎧","🍺","🔥","⚽","🧠","🦊","🐱","🎸","🚀","🍕","👾","🎲","🌈","🥁","🍓","🍉","🍔"];
+let rows=4, cols=4, moves=0;
+let first=null, second=null, lock=false;
 
 const grid=document.getElementById("grid");
 const movesEl=document.getElementById("moves");
-const shuffle=a=>a.sort(()=>Math.random()-.5);
 
-/* SCALING AUTOMATICO */
-function layout(){
-  const vw=window.innerWidth;
+function layout(total){
+  cols=Math.ceil(total/rows);
+  const gap=16;
   const vh=window.innerHeight;
-  const maxWidth=Math.min(720,vw-40);
-  const maxHeight=vh-180;
-  const gap=18;
-  const sizeByWidth=(maxWidth-(cols-1)*gap)/cols;
-  const sizeByHeight=(maxHeight-(rows-1)*gap)/rows;
-  const size=Math.floor(Math.min(sizeByWidth,sizeByHeight));
+  const vw=window.innerWidth;
+  const headerH=document.querySelector("header").offsetHeight;
+  const footerH=document.querySelector("footer").offsetHeight;
+  const h=vh-headerH-footerH-10;
+  const w=vw-10;
+  const size=Math.floor(Math.min(
+    (w-(cols-1)*gap)/cols,
+    (h-(rows-1)*gap)/rows
+  ));
   document.documentElement.style.setProperty("--card-size",size+"px");
-  grid.style.gridTemplateColumns=`repeat(${cols}, ${size}px)`;
-  grid.style.gridTemplateRows=`repeat(${rows}, ${size}px)`; /* righe sempre 4 */
+  grid.style.gridTemplateColumns=`repeat(${cols},${size}px)`;
+  grid.style.gridTemplateRows=`repeat(${rows},${size}px)`;
 }
 
-/* BUILD */
-function build(){
+const shuffle=a=>a.sort(()=>Math.random()-.5);
+
+function build(total){
   grid.innerHTML="";
-  const total=rows*cols;
   const pairs=Math.floor(total/2);
   const chosen=shuffle(symbols).slice(0,pairs);
-  cards=shuffle([...chosen,...chosen]);
+  const cards=shuffle([...chosen,...chosen]);
   cards.forEach(sym=>{
     const el=document.createElement("div");
     el.className="card";
@@ -168,81 +125,123 @@ function build(){
   });
 }
 
-/* FLIP */
 function flip(e){
-  const card=e.currentTarget;
-  if(lock || card.classList.contains("flipped") || card.classList.contains("matched")) return;
-  card.classList.add("flipped");
-  if(!first){first=card;return;}
-  second=card;
-  moves++; movesEl.textContent="Mosse: "+moves;
+  const c=e.currentTarget;
+  if(lock||c.classList.contains("flipped"))return;
+  c.classList.add("flipped");
+  if(!first){first=c;return;}
+  second=c;
+  moves++;movesEl.textContent="Mosse: "+moves;
+
   if(first.dataset.sym===second.dataset.sym){
-    first.classList.add("matched");
-    second.classList.add("matched");
     first=second=null;
-    checkWin();
+    if(document.querySelectorAll(".flipped").length===grid.children.length) win();
   }else{
     lock=true;
     setTimeout(()=>{
       first.classList.remove("flipped");
       second.classList.remove("flipped");
-      first=second=null;
-      lock=false;
+      first=second=null;lock=false;
     },600);
   }
 }
 
-/* WIN */
-function checkWin(){
-  if(document.querySelectorAll(".matched").length===cards.length){
-    document.querySelectorAll(".card").forEach(c=>{
-      c.classList.add("win");
-      setTimeout(()=>c.classList.remove("win"),2000);
-    });
-    setTimeout(()=>alert("Vittoria in "+moves+" mosse!"),300);
+function win(){
+  const matrix=rows+"x"+cols;
+  const newRec=saveRecord(matrix,moves);
+  setTimeout(()=>alert("Vittoria! "+(newRec?"Nuovo record!":"")),250);
+}
+
+// ================= RECORD STORAGE =================
+function loadRecords(){
+  return JSON.parse(localStorage.getItem("memoryRecords")||"{}");
+}
+function saveRecords(r){
+  localStorage.setItem("memoryRecords",JSON.stringify(r));
+}
+function saveRecord(matrix,moves){
+  const r=loadRecords();
+  if(!r[matrix]||moves<r[matrix].moves){
+    r[matrix]={moves,date:new Date().toISOString()};
+    saveRecords(r);
+    return true;
+  }
+  return false;
+}
+
+// ================= RECORD MODAL =================
+function openRecords(){
+  const list=document.getElementById("recordsList");
+  const r=loadRecords();
+  if(!Object.keys(r).length) list.innerHTML="Nessun record";
+  else list.innerHTML=Object.entries(r).map(([m,v])=>{
+    const d=new Date(v.date).toLocaleString();
+    return `<b>${m}</b>: ${v.moves}<br><small>${d}</small><hr>`;
+  }).join("");
+  document.getElementById("recordsModal").style.display="flex";
+}
+function closeRecords(){document.getElementById("recordsModal").style.display="none"}
+function resetRecords(){
+  if(confirm("Cancellare record?")){
+    localStorage.removeItem("memoryRecords");
+    openRecords();
   }
 }
 
-/* NEW GAME */
-function newGame(c){
-  cols=c;
-  rows=4; // righe sempre fisse
-  moves=0;
-  movesEl.textContent="Mosse: 0";
-  layout();
-  build();
+// ================= EXPORT =================
+function openExport(){
+  document.getElementById("qr").innerHTML="";
+  document.getElementById("exportModal").style.display="flex";
+}
+function closeExport(){
+  document.getElementById("exportModal").style.display="none";
 }
 
-/* BUTTONS */
-document.querySelectorAll("footer button").forEach(btn=>{
-  btn.onclick=()=>{
-    document.querySelectorAll("footer button").forEach(b=>b.classList.remove("active"));
-    btn.classList.add("active");
-    newGame(parseInt(btn.dataset.cols));
+// EMAIL
+function exportEmail(){
+  const data=localStorage.getItem("memoryRecords");
+  if(!data)return alert("Nessun record");
+  const subject=encodeURIComponent("Memory Records");
+  const body=encodeURIComponent("Ecco i miei record:\n\n"+data);
+  window.location.href=`mailto:?subject=${subject}&body=${body}`;
+}
+
+// QR
+function exportQR(){
+  const data=localStorage.getItem("memoryRecords");
+  if(!data)return alert("Nessun record");
+
+  const container=document.getElementById("qr");
+  container.innerHTML="";
+  new QRCode(container,{
+    text:data,
+    width:220,
+    height:220
+  });
+}
+
+// ================= START =================
+function newGame(total){
+  moves=0;
+  movesEl.textContent="Mosse: 0";
+  layout(total);
+  build(total);
+}
+
+document.querySelectorAll("footer button[data-total]").forEach(b=>{
+  b.onclick=()=>{
+    document.querySelectorAll("footer button").forEach(x=>x.classList.remove("active"));
+    b.classList.add("active");
+    newGame(+b.dataset.total);
   };
 });
 
-/* INIT */
-window.addEventListener("resize",layout);
-newGame(4);
+window.addEventListener("resize",()=>{
+  const active=document.querySelector("footer button.active");
+  newGame(+active.dataset.total);
+});
+
+newGame(16);
 </script>
 </body>
 </html>
-
-<script>
-if('serviceWorker' in navigator){
-  navigator.serviceWorker.register('sw.js').then(reg=>{
-    reg.onupdatefound = ()=>{
-      const newWorker = reg.installing;
-      newWorker.onstatechange = ()=>{
-        if(newWorker.state === 'installed'){
-          if(navigator.serviceWorker.controller){
-            alert("Nuova versione disponibile! Riapri l'app per aggiornare.");
-          }
-        }
-      }
-    }
-  });
-}
-</script>
-
