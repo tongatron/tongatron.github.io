@@ -5,6 +5,9 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Memory</title>
 
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#007aff">
+
 <style>
 :root{--gap:16px;--card-size:80px}
 html,body{height:100%;margin:0;overflow:hidden;font-family:-apple-system;background:#e3e3e3}
@@ -24,17 +27,13 @@ main{flex:1;display:flex;justify-content:center;align-items:center;overflow:hidd
 
 footer{background:#fff;border-top:1px solid #ddd;padding:10px;display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
 
-/* Griglia attiva */
 button.active[data-total]{background:#d1d1d1;color:#111;}
-
-/* Nuova partita */
 button#newGameBtn{background:#007aff;color:white;border:none;border-radius:18px;padding:8px 12px;font-weight:600;cursor:pointer}
 button#newGameBtn:active{transform:scale(.95)}
 
 button{border:none;background:#e9e9ef;border-radius:18px;padding:8px 12px;font-weight:600}
 button:active{transform:scale(.95)}
 
-/* MODALS */
 .modal{position:fixed;inset:0;background:rgba(0,0,0,.35);display:none;align-items:center;justify-content:center}
 .box{background:white;border-radius:16px;padding:18px;width:min(90vw,360px);text-align:center}
 .actions{display:flex;justify-content:space-between;margin-top:10px}
@@ -61,7 +60,6 @@ button:active{transform:scale(.95)}
   <button id="newGameBtn" onclick="newGameManual()">Nuova Partita</button>
 </footer>
 
-<!-- RECORD MODAL -->
 <div id="recordsModal" class="modal">
   <div class="box">
     <h3>Record locali</h3>
@@ -83,7 +81,6 @@ const grid=document.getElementById("grid");
 const movesEl=document.getElementById("moves");
 const timerEl=document.getElementById("timer");
 
-// --- LAYOUT ---
 function layout(total){
   cols=Math.ceil(total/rows);
   const gap=16;
@@ -102,10 +99,8 @@ function layout(total){
   grid.style.gridTemplateRows=`repeat(${rows},${size}px)`;
 }
 
-// --- SHUFFLE ---
 const shuffle=a=>a.sort(()=>Math.random()-.5);
 
-// --- BUILD GRID ---
 function build(total){
   grid.innerHTML="";
   const pairs=Math.floor(total/2);
@@ -121,7 +116,6 @@ function build(total){
   });
 }
 
-// --- FLIP ---
 function flip(e){
   const c=e.currentTarget;
   if(lock||c.classList.contains("flipped"))return;
@@ -143,7 +137,6 @@ function flip(e){
   }
 }
 
-// --- WIN ---
 function win(){
   clearInterval(intervalId);
   const matrix=rows+"x"+cols;
@@ -164,7 +157,6 @@ function saveRecord(matrix,moves,time){
   return false;
 }
 
-// ================= MODAL RECORD =================
 function openRecords(){
   const list=document.getElementById("recordsList");
   const r=loadRecords();
@@ -183,10 +175,8 @@ function resetRecords(){
   }
 }
 
-// ================= NUOVA PARTITA =================
 function newGame(total){
-  moves=0;
-  timer=0;
+  moves=0;timer=0;
   movesEl.textContent="Mosse: 0";
   timerEl.textContent="Tempo: 0s";
   clearInterval(intervalId);
@@ -199,7 +189,6 @@ function newGameManual(){
   newGame(+active.dataset.total);
 }
 
-// ================= INIT =================
 document.querySelectorAll("footer button[data-total]").forEach(b=>{
   b.onclick=()=>{
     document.querySelectorAll("footer button").forEach(x=>x.classList.remove("active"));
@@ -211,8 +200,14 @@ window.addEventListener("resize",()=>{
   const active=document.querySelector("footer button.active");
   newGame(+active.dataset.total);
 });
-
 newGame(16);
+
+// ================= SERVICE WORKER =================
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("sw.js");
+  });
+}
 </script>
 </body>
 </html>
