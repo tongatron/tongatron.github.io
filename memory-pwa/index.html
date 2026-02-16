@@ -5,16 +5,13 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Memory</title>
 
-<!-- QR LIB -->
-<script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
-
 <style>
 :root{--gap:16px;--card-size:80px}
 html,body{height:100%;margin:0;overflow:hidden;font-family:-apple-system;background:#e3e3e3}
 body{display:flex;flex-direction:column}
 header{text-align:center;padding:14px 10px 6px}
 h1{margin:0;font-size:1.8rem}
-#moves{color:#666}
+#moves,#timer{color:#666;margin-top:2px}
 
 main{flex:1;display:flex;justify-content:center;align-items:center;overflow:hidden}
 .grid{display:grid;gap:var(--gap)}
@@ -26,8 +23,16 @@ main{flex:1;display:flex;justify-content:center;align-items:center;overflow:hidd
 .back{transform:rotateY(180deg);font-size:clamp(26px,5vw,48px)}
 
 footer{background:#fff;border-top:1px solid #ddd;padding:10px;display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
+
+/* Griglia attiva */
+button.active[data-total]{background:#d1d1d1;color:#111;}
+
+/* Nuova partita */
+button#newGameBtn{background:#007aff;color:white;border:none;border-radius:18px;padding:8px 12px;font-weight:600;cursor:pointer}
+button#newGameBtn:active{transform:scale(.95)}
+
 button{border:none;background:#e9e9ef;border-radius:18px;padding:8px 12px;font-weight:600}
-button.active{background:#007aff;color:white}
+button:active{transform:scale(.95)}
 
 /* MODALS */
 .modal{position:fixed;inset:0;background:rgba(0,0,0,.35);display:none;align-items:center;justify-content:center}
@@ -40,6 +45,7 @@ button.active{background:#007aff;color:white}
 <header>
   <h1>Memory</h1>
   <div id="moves">Mosse: 0</div>
+  <div id="timer">Tempo: 0s</div>
 </header>
 
 <main>
@@ -52,7 +58,7 @@ button.active{background:#007aff;color:white}
   <button data-total="24">4×6</button>
   <button data-total="28">4×7</button>
   <button onclick="openRecords()">Record</button>
-  <button onclick="openExport()">Esporta</button>
+  <button id="newGameBtn" onclick="newGameManual()">Nuova Partita</button>
 </footer>
 
 <!-- RECORD MODAL -->
@@ -67,29 +73,17 @@ button.active{background:#007aff;color:white}
   </div>
 </div>
 
-<!-- EXPORT MODAL -->
-<div id="exportModal" class="modal">
-  <div class="box">
-    <h3>Esporta record</h3>
-    <button onclick="exportEmail()">📧 Manda via email</button>
-    <button onclick="exportQR()">📱 QR Code</button>
-    <div id="qr" style="margin-top:15px"></div>
-    <div class="actions">
-      <span></span>
-      <button onclick="closeExport()">Chiudi</button>
-    </div>
-  </div>
-</div>
-
 <script>
 // ================= GAME =================
 const symbols=["💀","🎧","🍺","🔥","⚽","🧠","🦊","🐱","🎸","🚀","🍕","👾","🎲","🌈","🥁","🍓","🍉","🍔"];
-let rows=4, cols=4, moves=0;
+let rows=4, cols=4, moves=0, timer=0, intervalId;
 let first=null, second=null, lock=false;
 
 const grid=document.getElementById("grid");
 const movesEl=document.getElementById("moves");
+const timerEl=document.getElementById("timer");
 
+// --- LAYOUT ---
 function layout(total){
   cols=Math.ceil(total/rows);
   const gap=16;
@@ -108,8 +102,10 @@ function layout(total){
   grid.style.gridTemplateRows=`repeat(${rows},${size}px)`;
 }
 
+// --- SHUFFLE ---
 const shuffle=a=>a.sort(()=>Math.random()-.5);
 
+// --- BUILD GRID ---
 function build(total){
   grid.innerHTML="";
   const pairs=Math.floor(total/2);
@@ -125,6 +121,7 @@ function build(total){
   });
 }
 
+// --- FLIP ---
 function flip(e){
   const c=e.currentTarget;
   if(lock||c.classList.contains("flipped"))return;
@@ -146,37 +143,35 @@ function flip(e){
   }
 }
 
+// --- WIN ---
 function win(){
+  clearInterval(intervalId);
   const matrix=rows+"x"+cols;
-  const newRec=saveRecord(matrix,moves);
+  const newRec=saveRecord(matrix,moves,timer);
   setTimeout(()=>alert("Vittoria! "+(newRec?"Nuovo record!":"")),250);
 }
 
-// ================= RECORD STORAGE =================
-function loadRecords(){
-  return JSON.parse(localStorage.getItem("memoryRecords")||"{}");
-}
-function saveRecords(r){
-  localStorage.setItem("memoryRecords",JSON.stringify(r));
-}
-function saveRecord(matrix,moves){
+// ================= RECORDS =================
+function loadRecords(){return JSON.parse(localStorage.getItem("memoryRecords")||"{}")}
+function saveRecords(r){localStorage.setItem("memoryRecords",JSON.stringify(r))}
+function saveRecord(matrix,moves,time){
   const r=loadRecords();
-  if(!r[matrix]||moves<r[matrix].moves){
-    r[matrix]={moves,date:new Date().toISOString()};
+  if(!r[matrix] || moves<r[matrix].moves || (moves===r[matrix].moves && time<r[matrix].time)){
+    r[matrix]={moves,time,date:new Date().toISOString()};
     saveRecords(r);
     return true;
   }
   return false;
 }
 
-// ================= RECORD MODAL =================
+// ================= MODAL RECORD =================
 function openRecords(){
   const list=document.getElementById("recordsList");
   const r=loadRecords();
   if(!Object.keys(r).length) list.innerHTML="Nessun record";
   else list.innerHTML=Object.entries(r).map(([m,v])=>{
     const d=new Date(v.date).toLocaleString();
-    return `<b>${m}</b>: ${v.moves}<br><small>${d}</small><hr>`;
+    return `<b>${m}</b>: ${v.moves} mosse, ${v.time}s<br><small>${d}</small><hr>`;
   }).join("");
   document.getElementById("recordsModal").style.display="flex";
 }
@@ -188,55 +183,31 @@ function resetRecords(){
   }
 }
 
-// ================= EXPORT =================
-function openExport(){
-  document.getElementById("qr").innerHTML="";
-  document.getElementById("exportModal").style.display="flex";
-}
-function closeExport(){
-  document.getElementById("exportModal").style.display="none";
-}
-
-// EMAIL
-function exportEmail(){
-  const data=localStorage.getItem("memoryRecords");
-  if(!data)return alert("Nessun record");
-  const subject=encodeURIComponent("Memory Records");
-  const body=encodeURIComponent("Ecco i miei record:\n\n"+data);
-  window.location.href=`mailto:?subject=${subject}&body=${body}`;
-}
-
-// QR
-function exportQR(){
-  const data=localStorage.getItem("memoryRecords");
-  if(!data)return alert("Nessun record");
-
-  const container=document.getElementById("qr");
-  container.innerHTML="";
-  new QRCode(container,{
-    text:data,
-    width:220,
-    height:220
-  });
-}
-
-// ================= START =================
+// ================= NUOVA PARTITA =================
 function newGame(total){
   moves=0;
+  timer=0;
   movesEl.textContent="Mosse: 0";
+  timerEl.textContent="Tempo: 0s";
+  clearInterval(intervalId);
   layout(total);
   build(total);
+  intervalId=setInterval(()=>{timer++;timerEl.textContent="Tempo: "+timer+"s";},1000);
+}
+function newGameManual(){
+  const active=document.querySelector("footer button.active");
+  newGame(+active.dataset.total);
 }
 
+// ================= INIT =================
 document.querySelectorAll("footer button[data-total]").forEach(b=>{
   b.onclick=()=>{
     document.querySelectorAll("footer button").forEach(x=>x.classList.remove("active"));
     b.classList.add("active");
     newGame(+b.dataset.total);
-  };
+  }
 });
-
-window.addEventListener("resize",()=>{
+window.addEventListener("resize",()=>{ 
   const active=document.querySelector("footer button.active");
   newGame(+active.dataset.total);
 });
