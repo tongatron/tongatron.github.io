@@ -21,7 +21,22 @@ html,body{
 
 body{display:flex;flex-direction:column}
 
-header{text-align:center;padding:14px 10px 6px}
+header{
+  position:relative;
+  text-align:center;
+  padding:14px 10px 6px
+}
+
+/* VERSIONE IN ALTO A DX */
+.topVersion{
+  position:absolute;
+  top:6px;
+  right:10px;
+  font-family:"Courier New", monospace;
+  font-size:11px;
+  color:#555;
+}
+
 h1{margin:0;font-size:1.8rem}
 #moves,#timer{color:#666;margin-top:2px}
 
@@ -33,19 +48,7 @@ main{
   overflow:hidden
 }
 
-/* ================= GRID RESPONSIVE ================= */
-
 .grid{display:grid;gap:var(--gap)}
-
-/* PC = sviluppo orizzontale */
-@media (min-width:769px){
-  main{overflow-x:auto}
-}
-
-/* Mobile = verticale */
-@media (max-width:768px){
-  main{overflow:hidden}
-}
 
 .card{
   width:var(--card-size);
@@ -81,8 +84,6 @@ main{
   font-size:clamp(26px,5vw,48px)
 }
 
-/* ================= FOOTER ================= */
-
 footer{
   background:#fff;
   border-top:1px solid #ddd;
@@ -94,6 +95,7 @@ footer{
   position:relative;
 }
 
+/* VERSIONE NEL FOOTER */
 .version{
   position:absolute;
   right:10px;
@@ -149,8 +151,6 @@ button:active{transform:scale(.95)}
   margin-top:10px
 }
 
-/* ================= UPDATE BUTTON ================= */
-
 #updateBtn{
   display:none;
   position:fixed;
@@ -171,6 +171,7 @@ button:active{transform:scale(.95)}
 <body>
 
 <header>
+  <div class="topVersion">Versione: 1.1.3</div>
   <h1>Memory</h1>
   <div id="moves">Mosse: 0</div>
   <div id="timer">Tempo: 0s</div>
@@ -187,7 +188,6 @@ button:active{transform:scale(.95)}
   <button data-total="28">4×7</button>
   <button onclick="openRecords()">Record</button>
   <button id="newGameBtn" onclick="newGameManual()">Nuova Partita</button>
-
   <div class="version" id="appVersion">Versione: ...</div>
 </footer>
 
@@ -205,7 +205,7 @@ button:active{transform:scale(.95)}
 </div>
 
 <script>
-/* ================= GIOCO (TUO CODICE INALTERATO) ================= */
+// ================= GAME =================
 const symbols=["💀","🎧","🍺","🔥","⚽","🧠","🦊","🐱","🎸","🚀","🍕","👾","🎲","🌈","🥁","🍓","🍉","🍔"];
 let rows=4, cols=4, moves=0, timer=0, intervalId;
 let first=null, second=null, lock=false;
@@ -277,7 +277,6 @@ function win(){
   setTimeout(()=>alert("Vittoria! "+(newRec?"Nuovo record!":"")),250);
 }
 
-// ================= RECORDS =================
 function loadRecords(){return JSON.parse(localStorage.getItem("memoryRecords")||"{}")}
 function saveRecords(r){localStorage.setItem("memoryRecords",JSON.stringify(r))}
 function saveRecord(matrix,moves,time){
@@ -300,7 +299,9 @@ function openRecords(){
   }).join("");
   document.getElementById("recordsModal").style.display="flex";
 }
+
 function closeRecords(){document.getElementById("recordsModal").style.display="none"}
+
 function resetRecords(){
   if(confirm("Cancellare record?")){
     localStorage.removeItem("memoryRecords");
@@ -315,8 +316,12 @@ function newGame(total){
   clearInterval(intervalId);
   layout(total);
   build(total);
-  intervalId=setInterval(()=>{timer++;timerEl.textContent="Tempo: "+timer+"s";},1000);
+  intervalId=setInterval(()=>{
+    timer++;
+    timerEl.textContent="Tempo: "+timer+"s";
+  },1000);
 }
+
 function newGameManual(){
   const active=document.querySelector("footer button.active");
   newGame(+active.dataset.total);
@@ -329,22 +334,19 @@ document.querySelectorAll("footer button[data-total]").forEach(b=>{
     newGame(+b.dataset.total);
   }
 });
-window.addEventListener("resize",()=>{ 
+
+window.addEventListener("resize",()=>{
   const active=document.querySelector("footer button.active");
   newGame(+active.dataset.total);
 });
+
 newGame(16);
-</script>
 
-<script>
-/* ================= SERVICE WORKER + VERSIONE + UPDATE ================= */
-
+// ================= SERVICE WORKER =================
 let newWorker=null;
 
 if("serviceWorker" in navigator){
-
   window.addEventListener("load",()=>{
-
     navigator.serviceWorker.register("sw.js").then(reg=>{
 
       navigator.serviceWorker.ready.then(()=>{
@@ -360,7 +362,6 @@ if("serviceWorker" in navigator){
 
       reg.addEventListener("updatefound",()=>{
         newWorker=reg.installing;
-
         newWorker.addEventListener("statechange",()=>{
           if(newWorker.state==="installed" && navigator.serviceWorker.controller){
             showUpdateButton();
@@ -376,7 +377,6 @@ if("serviceWorker" in navigator){
           "Versione: "+event.data.version;
       }
     });
-
   });
 }
 
