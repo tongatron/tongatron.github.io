@@ -11,7 +11,6 @@ const timerEl=document.getElementById("timer");
 const matrixSelect=document.getElementById("matrixSelect");
 const celebrationEl=document.getElementById("celebration");
 const confettiLayer=document.getElementById("confettiLayer");
-const winSummaryEl=document.getElementById("winSummary");
 
 function layout(total){
   const isMobile=window.matchMedia(`(max-width:${MOBILE_BREAKPOINT}px)`).matches;
@@ -78,23 +77,12 @@ function flip(e){
 
 function win(){
   clearInterval(intervalId);
-  celebrate({
-    matrix:matrixSelect.options[matrixSelect.selectedIndex].textContent,
-    moves,
-    elapsed:timer
-  });
+  celebrate();
 }
 
-function formatElapsed(totalSeconds){
-  const mins=Math.floor(totalSeconds/60);
-  const secs=String(totalSeconds%60).padStart(2,"0");
-  return `${mins}:${secs}`;
-}
-
-function celebrate(result){
+function celebrate(){
   const colors=["#ff3b30","#ff9500","#ffcc00","#34c759","#5ac8fa","#007aff","#ff2d55"];
   confettiLayer.innerHTML="";
-  winSummaryEl.textContent=`Matrice ${result.matrix} • Mosse ${result.moves} • Tempo ${formatElapsed(result.elapsed)}`;
 
   for(let i=0;i<56;i++){
     const piece=document.createElement("span");

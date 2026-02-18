@@ -166,27 +166,6 @@ button:active{transform:scale(.95)}
 
 .celebration.show{opacity:1}
 
-.celebrationText{
-  position:absolute;
-  top:18%;
-  left:50%;
-  transform:translateX(-50%);
-  background:rgba(255,255,255,.9);
-  border-radius:18px;
-  padding:10px 16px;
-  font-weight:700;
-  text-align:center;
-  box-shadow:0 10px 24px rgba(0,0,0,.16);
-  animation:popIn .35s ease;
-}
-
-.winSummary{
-  margin-top:6px;
-  font-size:14px;
-  font-weight:600;
-  color:#333;
-}
-
 .confettiLayer{
   position:absolute;
   inset:0;
@@ -207,9 +186,4 @@ button:active{transform:scale(.95)}
 @keyframes fall{
   from{transform:translateY(0) rotate(0deg)}
   to{transform:translateY(120vh) rotate(540deg)}
-}
-
-@keyframes popIn{
-  from{transform:translateX(-50%) scale(.8);opacity:0}
-  to{transform:translateX(-50%) scale(1);opacity:1}
 }
