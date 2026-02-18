@@ -13,7 +13,7 @@
 <body>
 
 <header>
-  <div class="topVersion">Versione: 1.1.5</div>
+  <div class="topVersion">Versione: 1.1.6</div>
   <h1>Memory</h1>
   <div id="moves">Mosse: 0</div>
   <div id="timer">Tempo: 0s</div>
@@ -24,15 +24,25 @@
 </main>
 
 <footer>
-  <button data-total="16" class="active">4×4</button>
-  <button data-total="20">4×5</button>
-  <button data-total="24">4×6</button>
-  <button data-total="28">4×7</button>
+  <select id="matrixSelect" aria-label="Seleziona matrice">
+    <option value="16" selected>4×4</option>
+    <option value="20">4×5</option>
+    <option value="24">4×6</option>
+    <option value="28">4×7</option>
+  </select>
   <button onclick="openRecords()">Record</button>
   <button id="newGameBtn" onclick="newGameManual()">Nuova Partita</button>
 </footer>
 
 <button id="updateBtn">Aggiornamento disponibile</button>
+
+<div id="celebration" class="celebration" aria-hidden="true">
+  <div class="celebrationText">
+    <div>🎉 Griglia completata! 🎉</div>
+    <div id="winSummary" class="winSummary"></div>
+  </div>
+  <div id="confettiLayer" class="confettiLayer"></div>
+</div>
 
 <div id="recordsModal" class="modal">
   <div class="box">

@@ -8,6 +8,10 @@ let first=null, second=null, lock=false;
 const grid=document.getElementById("grid");
 const movesEl=document.getElementById("moves");
 const timerEl=document.getElementById("timer");
+const matrixSelect=document.getElementById("matrixSelect");
+const celebrationEl=document.getElementById("celebration");
+const confettiLayer=document.getElementById("confettiLayer");
+const winSummaryEl=document.getElementById("winSummary");
 
 function layout(total){
   const isMobile=window.matchMedia(`(max-width:${MOBILE_BREAKPOINT}px)`).matches;
@@ -74,7 +78,36 @@ function flip(e){
 
 function win(){
   clearInterval(intervalId);
-  alert("Vittoria!");
+  celebrate({
+    matrix:matrixSelect.options[matrixSelect.selectedIndex].textContent,
+    moves,
+    elapsed:timer
+  });
+}
+
+function formatElapsed(totalSeconds){
+  const mins=Math.floor(totalSeconds/60);
+  const secs=String(totalSeconds%60).padStart(2,"0");
+  return `${mins}:${secs}`;
+}
+
+function celebrate(result){
+  const colors=["#ff3b30","#ff9500","#ffcc00","#34c759","#5ac8fa","#007aff","#ff2d55"];
+  confettiLayer.innerHTML="";
+  winSummaryEl.textContent=`Matrice ${result.matrix} • Mosse ${result.moves} • Tempo ${formatElapsed(result.elapsed)}`;
+
+  for(let i=0;i<56;i++){
+    const piece=document.createElement("span");
+    piece.className="confettiPiece";
+    piece.style.left=Math.random()*100+"vw";
+    piece.style.background=colors[Math.floor(Math.random()*colors.length)];
+    piece.style.setProperty("--dur",(1.1+Math.random()*1.2)+"s");
+    piece.style.setProperty("--delay",(Math.random()*.35)+"s");
+    confettiLayer.appendChild(piece);
+  }
+
+  celebrationEl.classList.add("show");
+  setTimeout(()=>celebrationEl.classList.remove("show"),1800);
 }
 
 function newGame(total){
@@ -91,24 +124,16 @@ function newGame(total){
 }
 
 function newGameManual(){
-  const active=document.querySelector("footer button.active");
-  newGame(+active.dataset.total);
+  newGame(+matrixSelect.value);
 }
 
-document.querySelectorAll("footer button[data-total]").forEach(b=>{
-  b.onclick=()=>{
-    document.querySelectorAll("footer button").forEach(x=>x.classList.remove("active"));
-    b.classList.add("active");
-    newGame(+b.dataset.total);
-  }
-});
+matrixSelect.addEventListener("change",()=>newGame(+matrixSelect.value));
 
 window.addEventListener("resize",()=>{
-  const active=document.querySelector("footer button.active");
-  newGame(+active.dataset.total);
+  newGame(+matrixSelect.value);
 });
 
-newGame(16);
+newGame(+matrixSelect.value);
 
 // ================= SERVICE WORKER =================
 let newWorker=null;

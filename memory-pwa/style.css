@@ -91,8 +91,6 @@ footer{
   color:#666;
 }
 
-button.active[data-total]{background:#d1d1d1;color:#111;}
-
 button{
   border:none;
   background:#e9e9ef;
@@ -108,6 +106,16 @@ button#newGameBtn{
 }
 
 button:active{transform:scale(.95)}
+
+#matrixSelect{
+  border:none;
+  background:#e9e9ef;
+  border-radius:18px;
+  padding:8px 12px;
+  font-weight:600;
+  cursor:pointer;
+  min-width:86px;
+}
 
 .modal{
   position:fixed;
@@ -145,4 +153,63 @@ button:active{transform:scale(.95)}
   font-size:14px;
   z-index:9999;
   box-shadow:0 2px 8px rgba(0,0,0,.3);
+}
+
+.celebration{
+  position:fixed;
+  inset:0;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .25s ease;
+  z-index:9998;
+}
+
+.celebration.show{opacity:1}
+
+.celebrationText{
+  position:absolute;
+  top:18%;
+  left:50%;
+  transform:translateX(-50%);
+  background:rgba(255,255,255,.9);
+  border-radius:18px;
+  padding:10px 16px;
+  font-weight:700;
+  text-align:center;
+  box-shadow:0 10px 24px rgba(0,0,0,.16);
+  animation:popIn .35s ease;
+}
+
+.winSummary{
+  margin-top:6px;
+  font-size:14px;
+  font-weight:600;
+  color:#333;
+}
+
+.confettiLayer{
+  position:absolute;
+  inset:0;
+  overflow:hidden;
+}
+
+.confettiPiece{
+  position:absolute;
+  top:-12vh;
+  width:10px;
+  height:16px;
+  border-radius:2px;
+  opacity:.9;
+  animation:fall var(--dur) linear forwards;
+  animation-delay:var(--delay);
+}
+
+@keyframes fall{
+  from{transform:translateY(0) rotate(0deg)}
+  to{transform:translateY(120vh) rotate(540deg)}
+}
+
+@keyframes popIn{
+  from{transform:translateX(-50%) scale(.8);opacity:0}
+  to{transform:translateX(-50%) scale(1);opacity:1}
 }
