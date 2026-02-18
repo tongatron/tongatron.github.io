@@ -73,7 +73,10 @@ function flip(e){
 
   if(first.dataset.sym===second.dataset.sym){
     first=second=null;
-    if(document.querySelectorAll(".flipped").length===grid.children.length) win();
+    if(document.querySelectorAll(".flipped").length===grid.children.length){
+      win();
+      return;
+    }
   }else{
     lock=true;
     setTimeout(()=>{
