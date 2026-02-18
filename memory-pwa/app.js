@@ -112,10 +112,12 @@ newGame(16);
 
 // ================= SERVICE WORKER =================
 let newWorker=null;
+let isRefreshing=false;
 
 if("serviceWorker" in navigator){
   window.addEventListener("load",()=>{
-    navigator.serviceWorker.register("sw.js").then(reg=>{
+    navigator.serviceWorker.register("/sw.js",{updateViaCache:"none"}).then(reg=>{
+      reg.update();
 
       navigator.serviceWorker.ready.then(()=>{
         if(navigator.serviceWorker.controller){
@@ -137,12 +139,20 @@ if("serviceWorker" in navigator){
         });
       });
 
+      navigator.serviceWorker.addEventListener("controllerchange",()=>{
+        if(isRefreshing) return;
+        isRefreshing=true;
+        window.location.reload();
+      });
+
     });
 
     navigator.serviceWorker.addEventListener("message",event=>{
       if(event.data?.type==="VERSION"){
-        document.getElementById("appVersion").textContent=
-          "Versione: "+event.data.version;
+        const versionEl=document.getElementById("appVersion") || document.querySelector(".topVersion");
+        if(versionEl){
+          versionEl.textContent="Versione: "+event.data.version;
+        }
       }
     });
   });
@@ -152,8 +162,9 @@ function showUpdateButton(){
   const btn=document.getElementById("updateBtn");
   btn.style.display="block";
   btn.onclick=()=>{
-    if(newWorker){
+    if(newWorker && newWorker.state==="installed"){
       newWorker.postMessage({type:"SKIP_WAITING"});
+      return;
     }
     window.location.reload();
   };
