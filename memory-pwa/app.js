@@ -1,6 +1,8 @@
 // ================= GAME =================
 const symbols=["💀","🎧","🍺","🔥","⚽","🧠","🦊","🐱","🎸","🚀","🍕","👾","🎲","🌈","🥁","🍓","🍉","🍔"];
-let rows=4, cols=4, moves=0, timer=0, intervalId;
+const BASE_SIDE=4;
+const MOBILE_BREAKPOINT=768;
+let rows=BASE_SIDE, cols=BASE_SIDE, moves=0, timer=0, intervalId;
 let first=null, second=null, lock=false;
 
 const grid=document.getElementById("grid");
@@ -8,7 +10,14 @@ const movesEl=document.getElementById("moves");
 const timerEl=document.getElementById("timer");
 
 function layout(total){
-  cols=Math.ceil(total/rows);
+  const isMobile=window.matchMedia(`(max-width:${MOBILE_BREAKPOINT}px)`).matches;
+  if(isMobile){
+    cols=BASE_SIDE;
+    rows=Math.ceil(total/cols);
+  }else{
+    rows=BASE_SIDE;
+    cols=Math.ceil(total/rows);
+  }
   const gap=16;
   const vh=window.innerHeight;
   const vw=window.innerWidth;
