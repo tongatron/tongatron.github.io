@@ -11,6 +11,14 @@ const timerEl=document.getElementById("timer");
 const matrixSelect=document.getElementById("matrixSelect");
 const celebrationEl=document.getElementById("celebration");
 const confettiLayer=document.getElementById("confettiLayer");
+const resultMatrixEl=document.getElementById("resultMatrix");
+const resultMovesEl=document.getElementById("resultMoves");
+const resultTimeEl=document.getElementById("resultTime");
+const resultBadgeEl=document.getElementById("resultBadge");
+const recordsModal=document.getElementById("recordsModal");
+const recordsListEl=document.getElementById("recordsList");
+const RECORDS_KEY="memoryRecordsV1";
+const MATRIX_LABELS={16:"4x4",20:"4x5",24:"4x6",28:"4x7"};
 
 function layout(total){
   const isMobile=window.matchMedia(`(max-width:${MOBILE_BREAKPOINT}px)`).matches;
@@ -44,10 +52,11 @@ function build(total){
   const pairs=Math.floor(total/2);
   const chosen=shuffle(symbols).slice(0,pairs);
   const cards=shuffle([...chosen,...chosen]);
-  cards.forEach(sym=>{
+  cards.forEach((sym,index)=>{
     const el=document.createElement("div");
     el.className="card";
     el.dataset.sym=sym;
+    el.style.setProperty("--i",index);
     el.innerHTML=`<div class="inner"><div class="face"></div><div class="face back">${sym}</div></div>`;
     el.onclick=flip;
     grid.appendChild(el);
@@ -77,25 +86,91 @@ function flip(e){
 
 function win(){
   clearInterval(intervalId);
-  celebrate();
+  const matrixLabel=matrixSelect.options[matrixSelect.selectedIndex].textContent;
+  const hasNewRecord=saveRecord(+matrixSelect.value,moves,timer);
+  celebrate({matrixLabel,moves,time:timer,hasNewRecord});
 }
 
-function celebrate(){
+function celebrate(result){
   const colors=["#ff3b30","#ff9500","#ffcc00","#34c759","#5ac8fa","#007aff","#ff2d55"];
   confettiLayer.innerHTML="";
+  resultMatrixEl.textContent=`Matrice: ${result.matrixLabel}`;
+  resultMovesEl.textContent=`Mosse: ${result.moves}`;
+  resultTimeEl.textContent=`Tempo: ${formatTime(result.time)}`;
+  resultBadgeEl.classList.toggle("show",result.hasNewRecord);
 
   for(let i=0;i<56;i++){
     const piece=document.createElement("span");
     piece.className="confettiPiece";
     piece.style.left=Math.random()*100+"vw";
     piece.style.background=colors[Math.floor(Math.random()*colors.length)];
-    piece.style.setProperty("--dur",(1.1+Math.random()*1.2)+"s");
-    piece.style.setProperty("--delay",(Math.random()*.35)+"s");
+    piece.style.setProperty("--dur",(1.2+Math.random()*1.5)+"s");
+    piece.style.setProperty("--delay",(Math.random()*.25)+"s");
+    piece.style.setProperty("--dx",(Math.random()*120-60)+"px");
+    piece.style.setProperty("--spin",(220+Math.random()*760)+"deg");
     confettiLayer.appendChild(piece);
   }
 
   celebrationEl.classList.add("show");
   setTimeout(()=>celebrationEl.classList.remove("show"),1800);
+}
+
+function formatTime(totalSeconds){
+  const mins=Math.floor(totalSeconds/60);
+  const secs=String(totalSeconds%60).padStart(2,"0");
+  return `${mins}:${secs}`;
+}
+
+function readRecords(){
+  try{
+    return JSON.parse(localStorage.getItem(RECORDS_KEY) || "{}");
+  }catch{
+    return {};
+  }
+}
+
+function isBetterRecord(next,current){
+  if(!current) return true;
+  if(next.moves<current.moves) return true;
+  if(next.moves===current.moves && next.time<current.time) return true;
+  return false;
+}
+
+function saveRecord(total,movesCount,timeSpent){
+  const matrix=MATRIX_LABELS[total] || `${rows}x${cols}`;
+  const records=readRecords();
+  const candidate={moves:movesCount,time:timeSpent,updatedAt:Date.now()};
+  if(isBetterRecord(candidate,records[matrix])){
+    records[matrix]=candidate;
+    localStorage.setItem(RECORDS_KEY,JSON.stringify(records));
+    return true;
+  }
+  return false;
+}
+
+function renderRecords(){
+  const order=["4x4","4x5","4x6","4x7"];
+  const records=readRecords();
+  const lines=order.map(matrix=>{
+    const item=records[matrix];
+    if(!item) return `<div class="recordRow"><strong>${matrix}</strong><span>—</span></div>`;
+    return `<div class="recordRow"><strong>${matrix}</strong><span>${item.moves} mosse · ${formatTime(item.time)}</span></div>`;
+  });
+  recordsListEl.innerHTML=lines.join("");
+}
+
+function openRecords(){
+  renderRecords();
+  recordsModal.style.display="flex";
+}
+
+function closeRecords(){
+  recordsModal.style.display="none";
+}
+
+function resetRecords(){
+  localStorage.removeItem(RECORDS_KEY);
+  renderRecords();
 }
 
 function newGame(total){
@@ -119,6 +194,10 @@ matrixSelect.addEventListener("change",()=>newGame(+matrixSelect.value));
 
 window.addEventListener("resize",()=>{
   newGame(+matrixSelect.value);
+});
+
+recordsModal.addEventListener("click",e=>{
+  if(e.target===recordsModal) closeRecords();
 });
 
 newGame(+matrixSelect.value);

@@ -42,14 +42,18 @@ main{
   width:var(--card-size);
   aspect-ratio:1;
   perspective:800px;
-  cursor:pointer
+  cursor:pointer;
+  opacity:0;
+  transform:translateY(10px) scale(.98);
+  animation:cardIn .45s ease-out forwards;
+  animation-delay:calc(var(--i) * 20ms);
 }
 
 .inner{
   width:100%;
   height:100%;
   transform-style:preserve-3d;
-  transition:.4s;
+  transition:transform .5s cubic-bezier(.22,.61,.36,1);
   position:relative
 }
 
@@ -140,6 +144,16 @@ button:active{transform:scale(.95)}
   margin-top:10px
 }
 
+.recordRow{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  padding:6px 0;
+  border-bottom:1px solid #f0f0f0;
+}
+
+.recordRow:last-child{border-bottom:none}
+
 #updateBtn{
   display:none;
   position:fixed;
@@ -166,6 +180,30 @@ button:active{transform:scale(.95)}
 
 .celebration.show{opacity:1}
 
+.resultPopup{
+  position:absolute;
+  left:50%;
+  bottom:96px;
+  transform:translateX(-50%);
+  min-width:min(86vw,320px);
+  background:rgba(255,255,255,.95);
+  border-radius:14px;
+  padding:12px 14px;
+  text-align:center;
+  color:#1f1f1f;
+  box-shadow:0 10px 26px rgba(0,0,0,.2);
+  backdrop-filter:blur(2px);
+}
+
+.resultBadge{
+  margin-top:8px;
+  font-weight:700;
+  color:#0f8a32;
+  display:none;
+}
+
+.resultBadge.show{display:block}
+
 .confettiLayer{
   position:absolute;
   inset:0;
@@ -179,11 +217,17 @@ button:active{transform:scale(.95)}
   height:16px;
   border-radius:2px;
   opacity:.9;
-  animation:fall var(--dur) linear forwards;
+  animation:fall var(--dur) cubic-bezier(.2,.6,.2,1) forwards;
   animation-delay:var(--delay);
+  will-change:transform;
 }
 
 @keyframes fall{
-  from{transform:translateY(0) rotate(0deg)}
-  to{transform:translateY(120vh) rotate(540deg)}
+  from{transform:translate3d(0,0,0) rotate(0deg)}
+  to{transform:translate3d(var(--dx),120vh,0) rotate(var(--spin))}
+}
+
+@keyframes cardIn{
+  from{opacity:0;transform:translateY(10px) scale(.98)}
+  to{opacity:1;transform:translateY(0) scale(1)}
 }

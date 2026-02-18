@@ -2,7 +2,7 @@
    VERSIONE APP
 ================================ */
 
-const APP_VERSION = "1.1.6";
+const APP_VERSION = "1.1.8";
 const CACHE_NAME = "app-cache-" + APP_VERSION;
 
 /* ===============================
