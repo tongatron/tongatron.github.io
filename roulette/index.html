@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Roulette Casino Simulator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Manrope:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app">
+      <header class="header">
+        <h1>Roulette</h1>
+        <p>Simulatore web del gioco della roulette da casinò.</p>
+      </header>
+
+      <section class="status-panel">
+        <div>
+          <span class="label">Saldo</span>
+          <strong id="balance">€ 1000</strong>
+        </div>
+        <div>
+          <span class="label">Ultimo risultato</span>
+          <strong id="last-result">--</strong>
+        </div>
+        <div>
+          <span class="label">Numero estratto</span>
+          <strong id="drawn-number">-</strong>
+        </div>
+      </section>
+
+      <section class="bets-grid">
+        <article class="bet-card">
+          <h2>Numero singolo</h2>
+          <div class="number-bets" id="number-bets"></div>
+        </article>
+
+        <article class="bet-card">
+          <h2>Puntate esterne</h2>
+          <div class="outside-bets" id="outside-bets">
+            <button data-bet-type="color" data-bet-value="rosso">Rosso (2x)</button>
+            <button data-bet-type="color" data-bet-value="nero">Nero (2x)</button>
+            <button data-bet-type="parity" data-bet-value="pari">Pari (2x)</button>
+            <button data-bet-type="parity" data-bet-value="dispari">Dispari (2x)</button>
+            <button data-bet-type="dozen" data-bet-value="1">1a Dozzina (3x)</button>
+            <button data-bet-type="dozen" data-bet-value="2">2a Dozzina (3x)</button>
+            <button data-bet-type="dozen" data-bet-value="3">3a Dozzina (3x)</button>
+          </div>
+        </article>
+      </section>
+
+      <section class="controls">
+        <label>
+          Valore fiches
+          <input id="chip-value" type="number" min="1" value="10" />
+        </label>
+        <div class="bet-preview" id="bet-preview" aria-live="polite">
+          <span class="label">Puntata pronta</span>
+          <strong id="bet-preview-kind">Nessuna</strong>
+          <small id="bet-preview-details">Dettaglio: -</small>
+          <small id="bet-preview-total">Totale: € 0.00</small>
+          <small class="bet-preview-meta">
+            <span id="bet-preview-win">Possibile vincita: € 0.00</span>
+            <span id="bet-preview-prob">Probabilità: 0.00%</span>
+          </small>
+        </div>
+        <button id="spin-btn" type="button">Gira la ruota</button>
+        <button id="clear-bets-btn" type="button" class="ghost">Annulla puntate</button>
+      </section>
+
+      <section class="wheel-panel">
+        <div class="wheel-wrap">
+          <div class="wheel-pointer" aria-hidden="true"></div>
+          <div class="wheel" id="wheel"></div>
+          <div class="ball" id="ball" aria-hidden="true"></div>
+          <div class="wheel-center" aria-hidden="true"></div>
+        </div>
+        <div class="wheel-result" id="wheel-result" aria-live="polite">
+          <div class="wheel-result-number" id="wheel-result-number">-</div>
+          <div class="wheel-result-tags">
+            <span class="wheel-result-tag" id="wheel-tag-color">-</span>
+            <span class="wheel-result-tag" id="wheel-tag-parity">-</span>
+            <span class="wheel-result-tag" id="wheel-tag-dozen">-</span>
+            <span class="wheel-result-tag" id="wheel-tag-range">-</span>
+          </div>
+        </div>
+      </section>
+      <section class="history">
+        <h2>Storico giri</h2>
+        <ul id="history-list">
+          <li>Nessun giro effettuato.</li>
+        </ul>
+      </section>
+    </main>
+
+    <div class="result-modal hidden" id="result-modal" role="dialog" aria-modal="true" aria-labelledby="result-modal-title">
+      <div class="result-modal-card">
+        <h2 id="result-modal-title">Risultato giro</h2>
+        <p id="result-modal-number">Numero: -</p>
+        <p id="result-modal-win">Vincita totale: € 0.00</p>
+        <p id="result-modal-net">Netto turno: € 0.00</p>
+        <button id="result-modal-close" type="button">Chiudi</button>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
