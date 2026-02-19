@@ -1,0 +1,241 @@
+:root {
+  --bg-deep: #07111f;
+  --bg-mid: #10263f;
+  --felt: #0f6a48;
+  --felt-dark: #0a4e35;
+  --ink: #f4f1e9;
+  --muted: #b9c7d8;
+  --accent: #ffd166;
+  --danger: #ff6b6b;
+  --ok: #74f2ce;
+  --card: #f7f2e9;
+  --card-ink: #111319;
+  --chip: rgba(0, 0, 0, 0.25);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Space Grotesk", sans-serif;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at 15% 25%, rgba(255, 209, 102, 0.2), transparent 30%),
+    radial-gradient(circle at 80% 10%, rgba(116, 242, 206, 0.18), transparent 28%),
+    linear-gradient(145deg, var(--bg-deep), var(--bg-mid));
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+
+.table-wrap {
+  width: min(1000px, 100%);
+  border-radius: 28px;
+  padding: 20px;
+  background: linear-gradient(160deg, var(--felt), var(--felt-dark));
+  border: 3px solid rgba(255, 209, 102, 0.35);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45);
+  display: grid;
+  gap: 20px;
+  transform: translateY(6px);
+  animation: tableEnter 600ms ease-out forwards;
+}
+
+.hud {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.hud-item {
+  background: var(--chip);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 12px;
+  padding: 10px 12px;
+  display: grid;
+  gap: 4px;
+}
+
+.label {
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.value {
+  font-weight: 700;
+}
+
+#message {
+  color: var(--accent);
+}
+
+.board {
+  display: grid;
+  gap: 14px;
+}
+
+.hand-zone {
+  background: rgba(8, 19, 35, 0.28);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 14px;
+}
+
+.hand-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+h2 {
+  margin: 0;
+  font: 400 1.7rem/1 "Bebas Neue", sans-serif;
+  letter-spacing: 0.06em;
+}
+
+.total {
+  font-weight: 700;
+  color: var(--muted);
+}
+
+.cards {
+  min-height: 102px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.card {
+  width: 72px;
+  height: 98px;
+  border-radius: 10px;
+  background: var(--card);
+  color: var(--card-ink);
+  padding: 6px;
+  display: grid;
+  align-content: space-between;
+  border: 1px solid #d7d3ca;
+  box-shadow: 0 8px 14px rgba(0, 0, 0, 0.25);
+  animation: pop 240ms ease-out;
+}
+
+.card.red {
+  color: #a0132f;
+}
+
+.card .top,
+.card .bottom {
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.card .center {
+  justify-self: center;
+  align-self: center;
+  font-size: 1.35rem;
+}
+
+.card .bottom {
+  transform: rotate(180deg);
+}
+
+.card.back {
+  background:
+    repeating-linear-gradient(45deg, #12335b, #12335b 6px, #1d4f80 6px, #1d4f80 12px);
+  border-color: #2a5f93;
+}
+
+.controls {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  align-items: end;
+}
+
+.btn,
+.bet-control input {
+  border: 0;
+  border-radius: 10px;
+  font: 700 0.95rem/1 "Space Grotesk", sans-serif;
+}
+
+.btn {
+  min-height: 44px;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.14);
+  color: var(--ink);
+}
+
+.btn:hover:not(:disabled) {
+  filter: brightness(1.1);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn.primary {
+  background: linear-gradient(120deg, var(--accent), #ffbe3b);
+  color: #1a1f27;
+}
+
+.bet-control {
+  display: grid;
+  gap: 5px;
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+
+.bet-control input {
+  min-height: 44px;
+  padding: 0 12px;
+  background: rgba(255, 255, 255, 0.88);
+  color: #10131a;
+}
+
+.win {
+  color: var(--ok) !important;
+}
+
+.lose {
+  color: var(--danger) !important;
+}
+
+@keyframes pop {
+  from {
+    transform: translateY(6px) scale(0.97);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes tableEnter {
+  to {
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 760px) {
+  .hud {
+    grid-template-columns: 1fr;
+  }
+
+  .controls {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .card {
+    width: 62px;
+    height: 88px;
+  }
+}
