@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSV da vendere vs venduto</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app">
+      <h1>Confronto CSV da vendere vs venduto</h1>
+      <p class="subtitle">
+        Carica due CSV, scegli la colonna da confrontare e genera un nuovo file da vendere con il
+        miglior testo trovato in venduto e la percentuale di corrispondenza.
+      </p>
+
+      <section class="panels">
+        <article class="panel">
+          <h2>da vendere (sinistra)</h2>
+          <label class="field">
+            <span>CSV da vendere</span>
+            <input type="file" id="daVendereFile" accept=".csv,text/csv" />
+          </label>
+          <label class="field">
+            <span>Colonna da vendere da controllare</span>
+            <select id="daVendereColumn" disabled>
+              <option value="">Carica prima un CSV da vendere</option>
+            </select>
+          </label>
+          <p id="daVendereInfo" class="info">Nessun file caricato</p>
+        </article>
+
+        <article class="panel">
+          <h2>venduto (destra)</h2>
+          <label class="field">
+            <span>CSV venduto</span>
+            <input type="file" id="vendutoFile" accept=".csv,text/csv" />
+          </label>
+          <label class="field">
+            <span>Colonna venduto da controllare</span>
+            <select id="vendutoColumn" disabled>
+              <option value="">Carica prima un CSV venduto</option>
+            </select>
+          </label>
+          <p id="vendutoInfo" class="info">Nessun file caricato</p>
+        </article>
+      </section>
+
+      <section class="actions">
+        <button id="processBtn" disabled>Elabora</button>
+        <button id="downloadBtn" disabled>Scarica CSV risultato</button>
+      </section>
+
+      <section class="progress-wrap" aria-live="polite">
+        <div class="progress-label" id="progressLabel">In attesa di dati...</div>
+        <div class="progress-bar"><div id="progressFill"></div></div>
+      </section>
+
+      <section id="summary" class="summary"></section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>

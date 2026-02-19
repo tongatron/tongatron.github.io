@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Morra Sarda - Simulazione</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app">
+      <header>
+        <h1>Morra Sarda</h1>
+        <p class="subtitle">Simulazione contro il computer</p>
+      </header>
+
+      <section class="scoreboard" aria-label="Punteggio">
+        <div class="card">
+          <span class="label">Tu</span>
+          <strong id="playerScore">0</strong>
+        </div>
+        <div class="card">
+          <span class="label">CPU</span>
+          <strong id="cpuScore">0</strong>
+        </div>
+        <div class="card">
+          <span class="label">Round</span>
+          <strong id="roundCount">1</strong>
+        </div>
+      </section>
+
+      <section class="controls" aria-label="Giocata">
+        <label for="fingers">Le tue dita (1-5)</label>
+        <select id="fingers"></select>
+
+        <label for="call">La tua chiamata (2-10)</label>
+        <select id="call"></select>
+
+        <button id="playBtn" type="button">Gioca round</button>
+        <button id="resetBtn" type="button" class="secondary">Nuova partita</button>
+      </section>
+
+      <section class="result" aria-live="polite">
+        <h2>Esito round</h2>
+        <p id="roundResult">Pronto a iniziare.</p>
+        <p id="roundDetails" class="details"></p>
+      </section>
+
+      <section class="rules">
+        <h2>Regole usate</h2>
+        <ul>
+          <li>Entrambi mostrano da 1 a 5 dita.</li>
+          <li>Entrambi chiamano un totale da 2 a 10.</li>
+          <li>Segna 1 punto chi indovina da solo il totale.</li>
+          <li>Se indovinano entrambi o nessuno, il round e nullo.</li>
+          <li>Vince chi arriva prima a 5 punti.</li>
+        </ul>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
