@@ -69,7 +69,7 @@ function flip(e){
   c.classList.add("flipped");
   if(!first){first=c;return;}
   second=c;
-  moves++;movesEl.textContent="Mosse: "+moves;
+  moves++;movesEl.textContent="Moves: "+moves;
 
   if(first.dataset.sym===second.dataset.sym){
     first=second=null;
@@ -97,9 +97,9 @@ function win(){
 function celebrate(result){
   const colors=["#ff3b30","#ff9500","#ffcc00","#34c759","#5ac8fa","#007aff","#ff2d55"];
   confettiLayer.innerHTML="";
-  resultMatrixEl.textContent=`Matrice: ${result.matrixLabel}`;
-  resultMovesEl.textContent=`Mosse: ${result.moves}`;
-  resultTimeEl.textContent=`Tempo: ${formatTime(result.time)}`;
+  resultMatrixEl.textContent=`Matrix: ${result.matrixLabel}`;
+  resultMovesEl.textContent=`Moves: ${result.moves}`;
+  resultTimeEl.textContent=`Time: ${formatTime(result.time)}`;
   resultBadgeEl.classList.toggle("show",result.hasNewRecord);
 
   for(let i=0;i<56;i++){
@@ -157,7 +157,7 @@ function renderRecords(){
   const lines=order.map(matrix=>{
     const item=records[matrix];
     if(!item) return `<div class="recordRow"><strong>${matrix}</strong><span>—</span></div>`;
-    return `<div class="recordRow"><strong>${matrix}</strong><span>${item.moves} mosse · ${formatTime(item.time)}</span></div>`;
+    return `<div class="recordRow"><strong>${matrix}</strong><span>${item.moves} moves · ${formatTime(item.time)}</span></div>`;
   });
   recordsListEl.innerHTML=lines.join("");
 }
@@ -178,14 +178,14 @@ function resetRecords(){
 
 function newGame(total){
   moves=0;timer=0;
-  movesEl.textContent="Mosse: 0";
-  timerEl.textContent="Tempo: 0s";
+  movesEl.textContent="Moves: 0";
+  timerEl.textContent="Time: 0s";
   clearInterval(intervalId);
   layout(total);
   build(total);
   intervalId=setInterval(()=>{
     timer++;
-    timerEl.textContent="Tempo: "+timer+"s";
+    timerEl.textContent="Time: "+timer+"s";
   },1000);
 }
 
@@ -246,7 +246,7 @@ if("serviceWorker" in navigator){
       if(event.data?.type==="VERSION"){
         const versionEl=document.getElementById("appVersion") || document.querySelector(".topVersion");
         if(versionEl){
-          versionEl.textContent="Versione: "+event.data.version;
+          versionEl.textContent="Version: "+event.data.version;
         }
       }
     });

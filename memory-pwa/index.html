@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="it">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -13,10 +13,10 @@
 <body>
 
 <header>
-  <div class="topVersion">Versione: 1.1.8</div>
+  <div class="topVersion">Version: 1.1.9</div>
   <h1>Memory</h1>
-  <div id="moves">Mosse: 0</div>
-  <div id="timer">Tempo: 0s</div>
+  <div id="moves">Moves: 0</div>
+  <div id="timer">Time: 0s</div>
 </header>
 
 <main>
@@ -24,35 +24,35 @@
 </main>
 
 <footer>
-  <select id="matrixSelect" aria-label="Seleziona matrice">
+  <select id="matrixSelect" aria-label="Select matrix">
     <option value="16" selected>4×4</option>
     <option value="20">4×5</option>
     <option value="24">4×6</option>
     <option value="28">4×7</option>
   </select>
-  <button onclick="openRecords()">Record</button>
-  <button id="newGameBtn" onclick="newGameManual()">Nuova Partita</button>
+  <button onclick="openRecords()">Records</button>
+  <button id="newGameBtn" onclick="newGameManual()">New Game</button>
 </footer>
 
-<button id="updateBtn">Aggiornamento disponibile</button>
+<button id="updateBtn">Update available</button>
 
 <div id="celebration" class="celebration" aria-hidden="true">
   <div class="resultPopup">
     <div id="resultMatrix"></div>
     <div id="resultMoves"></div>
     <div id="resultTime"></div>
-    <div id="resultBadge" class="resultBadge">Nuovo record!</div>
+    <div id="resultBadge" class="resultBadge">New record!</div>
   </div>
   <div id="confettiLayer" class="confettiLayer"></div>
 </div>
 
 <div id="recordsModal" class="modal">
   <div class="box">
-    <h3>Record locali</h3>
+    <h3>Local records</h3>
     <div id="recordsList"></div>
     <div class="actions">
       <button onclick="resetRecords()">Reset</button>
-      <button onclick="closeRecords()">Chiudi</button>
+      <button onclick="closeRecords()">Close</button>
     </div>
   </div>
 </div>
