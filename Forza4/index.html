@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="it">
+<html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Forza 4</title>
+  <title>Connect Four</title>
   <style>
     :root {
       --bg-1: #0d0f1f;
@@ -337,37 +337,37 @@
   <main class="app">
     <header class="topbar">
       <div>
-        <h1 class="title">Forza 4</h1>
-        <div id="status" class="status">Inserisci il tuo nome e scegli la difficoltà.</div>
+        <h1 class="title">Connect Four</h1>
+        <div id="status" class="status">Enter your name and choose the difficulty.</div>
       </div>
       <div class="controls">
-        <select id="difficultyTop" class="pill" aria-label="Difficoltà">
+        <select id="difficultyTop" class="pill" aria-label="Difficulty">
           <option value="low">low</option>
           <option value="middle" selected>middle</option>
           <option value="high">high</option>
         </select>
-        <button id="restartBtn" class="pill" type="button">Nuova partita</button>
+        <button id="restartBtn" class="pill" type="button">New Game</button>
       </div>
     </header>
 
     <section class="game-wrap">
       <div class="board-shell">
         <div id="columnButtons" class="col-buttons"></div>
-        <div id="board" class="board" role="grid" aria-label="Tabellone Forza 4"></div>
+        <div id="board" class="board" role="grid" aria-label="Connect Four board"></div>
       </div>
     </section>
   </main>
 
   <div id="setupOverlay" class="overlay">
     <div class="panel">
-      <h2>Inizia la sfida</h2>
-      <p>Gioca contro il computer: tu sei <strong>rosso</strong>, il computer è <strong>giallo</strong>.</p>
+      <h2>Start the match</h2>
+      <p>Play against the computer: you are <strong>red</strong>, the computer is <strong>yellow</strong>.</p>
       <div class="field">
-        <label for="playerName">Nome giocatore</label>
-        <input id="playerName" type="text" maxlength="20" placeholder="Es. Luca" autocomplete="off" />
+        <label for="playerName">Player name</label>
+        <input id="playerName" type="text" maxlength="20" placeholder="e.g. Alex" autocomplete="off" />
       </div>
       <div class="field">
-        <label for="difficultySetup">Difficoltà computer</label>
+        <label for="difficultySetup">Computer difficulty</label>
         <select id="difficultySetup">
           <option value="low">low</option>
           <option value="middle" selected>middle</option>
@@ -375,9 +375,9 @@
         </select>
       </div>
       <div class="actions">
-        <button id="startBtn" class="start" type="button">Gioca</button>
+        <button id="startBtn" class="start" type="button">Play</button>
       </div>
-      <div class="muted-note">Il computer inizia sempre dopo la tua prima mossa.</div>
+      <div class="muted-note">The computer always starts after your first move.</div>
     </div>
   </div>
 
@@ -407,7 +407,7 @@
       let cells = [];
       let gameOver = false;
       let currentPlayer = HUMAN;
-      let playerName = "Giocatore";
+      let playerName = "Player";
       let aiLevel = "middle";
       let winningCoords = [];
       let aiThinking = false;
@@ -481,7 +481,7 @@
         aiThinking = false;
         renderGrid();
         updateColumnButtons();
-        setStatus(`${playerName}, tocca a te.`);
+        setStatus(`${playerName}, your turn.`);
       }
 
       function setStatus(msg) {
@@ -716,16 +716,16 @@
           renderGrid();
           updateColumnButtons();
           if (lastPiece === HUMAN) {
-            setStatus(`Vittoria di ${playerName}!`);
+            setStatus(`${playerName} wins!`);
           } else {
-            setStatus("Il computer ha vinto.");
+            setStatus("Computer wins.");
           }
           return true;
         }
 
         if (getValidColumns(grid).length === 0) {
           gameOver = true;
-          setStatus("Pareggio.");
+          setStatus("Draw.");
           updateColumnButtons();
           return true;
         }
@@ -751,7 +751,7 @@
         currentPlayer = AI;
         aiThinking = true;
         updateColumnButtons();
-        setStatus("Il computer sta pensando...");
+        setStatus("Computer is thinking...");
 
         window.setTimeout(() => {
           const aiCol = pickAIMove(grid, aiLevel);
@@ -759,7 +759,7 @@
             placeAndRender(aiCol, AI);
             if (!finishIfEnded(AI)) {
               currentPlayer = HUMAN;
-              setStatus(`${playerName}, tocca a te.`);
+              setStatus(`${playerName}, your turn.`);
             }
           }
           aiThinking = false;
@@ -775,7 +775,7 @@
 
       startBtn.addEventListener("click", () => {
         const value = playerNameInput.value.trim();
-        playerName = value || "Giocatore";
+        playerName = value || "Player";
         syncDifficultyFrom(difficultySetup);
         overlayEl.classList.add("hidden");
         resetGame();
@@ -784,7 +784,7 @@
       difficultyTop.addEventListener("change", () => {
         syncDifficultyFrom(difficultyTop);
         if (!overlayEl.classList.contains("hidden")) return;
-        setStatus(`Difficoltà impostata su ${aiLevel}. ${playerName}, tocca a te.`);
+        setStatus(`Difficulty set to ${aiLevel}. ${playerName}, your turn.`);
         resetGame();
       });
 

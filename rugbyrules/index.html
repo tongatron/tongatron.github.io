@@ -1,0 +1,527 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rugby Falli e Sanzioni</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;700;800&family=Teko:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #f4efe2;
+        --paper: #fffaf0;
+        --ink: #112118;
+        --muted: #42554a;
+        --pitch: #1f5a3b;
+        --pitch-dark: #133927;
+        --alert: #c62828;
+        --warn: #e67e22;
+        --ok: #2e7d32;
+        --line: #d6ccb7;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: "Barlow", sans-serif;
+        color: var(--ink);
+        background:
+          radial-gradient(circle at 10% 20%, #ffffffc8 0 14%, transparent 20%),
+          radial-gradient(circle at 90% 80%, #ffffff80 0 12%, transparent 16%),
+          linear-gradient(160deg, #f8f3e8 0%, var(--bg) 55%, #e9dfca 100%);
+        min-height: 100vh;
+      }
+
+      .hero {
+        padding: 3.5rem 1.2rem 2.4rem;
+        background: linear-gradient(130deg, var(--pitch-dark), var(--pitch));
+        color: #fff;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .hero::before,
+      .hero::after {
+        content: "";
+        position: absolute;
+        border-radius: 999px;
+        opacity: 0.13;
+      }
+
+      .hero::before {
+        width: 420px;
+        height: 420px;
+        background: #fff;
+        top: -200px;
+        left: -100px;
+      }
+
+      .hero::after {
+        width: 300px;
+        height: 300px;
+        border: 4px solid #fff;
+        right: -100px;
+        bottom: -150px;
+      }
+
+      .wrap {
+        max-width: 1050px;
+        margin: 0 auto;
+        position: relative;
+        z-index: 2;
+      }
+
+      h1,
+      h2,
+      h3 {
+        margin: 0;
+        line-height: 1.1;
+      }
+
+      h1 {
+        font-family: "Teko", sans-serif;
+        font-size: clamp(2.6rem, 7.6vw, 5rem);
+        letter-spacing: 0.02em;
+        margin-bottom: 0.5rem;
+      }
+
+      .subtitle {
+        max-width: 740px;
+        font-size: clamp(1rem, 2.6vw, 1.25rem);
+        color: #ebf7ef;
+      }
+
+      main {
+        padding: 1.1rem 1.2rem 2.6rem;
+      }
+
+      section {
+        margin-top: 1.3rem;
+        background: var(--paper);
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        box-shadow: 0 8px 18px #1a1a1a12;
+        padding: 1rem;
+        animation: reveal 0.55s ease both;
+      }
+
+      section:nth-child(2) {
+        animation-delay: 0.08s;
+      }
+
+      section:nth-child(3) {
+        animation-delay: 0.15s;
+      }
+
+      @keyframes reveal {
+        from {
+          opacity: 0;
+          transform: translateY(12px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      h2 {
+        font-size: clamp(1.4rem, 3.7vw, 2rem);
+        margin-bottom: 0.8rem;
+      }
+
+      .cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+        gap: 0.75rem;
+      }
+
+      .card {
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        background: #fff;
+        padding: 0.85rem;
+      }
+
+      .badge {
+        display: inline-block;
+        font-size: 0.78rem;
+        font-weight: 700;
+        border-radius: 999px;
+        padding: 0.2rem 0.55rem;
+        margin-bottom: 0.45rem;
+      }
+
+      .badge.punizione {
+        background: #ffd9d9;
+        color: #7c1313;
+      }
+
+      .badge.mischia {
+        background: #d7ecff;
+        color: #0f4570;
+      }
+
+      .badge.cartellino {
+        background: #fff2c6;
+        color: #7f5b00;
+      }
+
+      .card h3 {
+        font-size: 1.06rem;
+        margin-bottom: 0.35rem;
+      }
+
+      .card p {
+        margin: 0;
+        color: var(--muted);
+      }
+
+      .legend {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-bottom: 0.9rem;
+      }
+
+      .chip {
+        border: 1px solid var(--line);
+        padding: 0.28rem 0.6rem;
+        border-radius: 999px;
+        font-size: 0.9rem;
+        background: #fff;
+      }
+
+      .tool {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 0.65rem;
+      }
+
+      label {
+        font-weight: 600;
+      }
+
+      select,
+      button {
+        font-family: inherit;
+        font-size: 1rem;
+        border-radius: 10px;
+        border: 1px solid var(--line);
+        padding: 0.6rem 0.72rem;
+      }
+
+      button {
+        cursor: pointer;
+        border: 0;
+        background: linear-gradient(130deg, #2f7f53, #195138);
+        color: #fff;
+        font-weight: 700;
+      }
+
+      button:hover {
+        filter: brightness(1.07);
+      }
+
+      .result {
+        margin-top: 0.35rem;
+        padding: 0.7rem;
+        border-radius: 11px;
+        border: 1px solid var(--line);
+        background: #fff;
+      }
+
+      .result strong {
+        display: block;
+        margin-bottom: 0.25rem;
+      }
+
+      .result ul {
+        margin: 0.25rem 0 0;
+        padding-left: 1.2rem;
+      }
+
+      .result.good {
+        border-left: 6px solid var(--ok);
+      }
+
+      .result.warn {
+        border-left: 6px solid var(--warn);
+      }
+
+      .result.bad {
+        border-left: 6px solid var(--alert);
+      }
+
+      .note {
+        margin-top: 0.75rem;
+        color: var(--muted);
+        font-size: 0.95rem;
+      }
+
+      footer {
+        max-width: 1050px;
+        margin: 0 auto;
+        padding: 0 1.2rem 2rem;
+        color: #365043;
+        font-size: 0.92rem;
+      }
+
+      @media (max-width: 600px) {
+        .hero {
+          padding-top: 2.8rem;
+        }
+
+        section {
+          border-radius: 14px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="hero">
+      <div class="wrap">
+        <h1>FALLI NEL RUGBY</h1>
+        <p class="subtitle">
+          Guida rapida per capire cosa non si puo fare e quale sanzione viene data:
+          calcio di punizione, calcio libero, mischia o cartellino.
+        </p>
+      </div>
+    </header>
+
+    <main class="wrap">
+      <section>
+        <h2>Tipi di infrazione e conseguenze</h2>
+        <div class="cards">
+          <article class="card">
+            <span class="badge punizione">Calcio di punizione</span>
+            <h3>Fuorigioco in fase aperta</h3>
+            <p>La squadra non in possesso e davanti alla linea del pallone.</p>
+          </article>
+          <article class="card">
+            <span class="badge punizione">Calcio di punizione</span>
+            <h3>Placcaggio alto</h3>
+            <p>Contatto sopra la linea delle spalle: puo portare anche a cartellino.</p>
+          </article>
+          <article class="card">
+            <span class="badge mischia">Mischia</span>
+            <h3>Avanti volontario/non volontario</h3>
+            <p>Palla in avanti con mano o braccio (se non c'e vantaggio).</p>
+          </article>
+          <article class="card">
+            <span class="badge mischia">Mischia</span>
+            <h3>Passaggio in avanti</h3>
+            <p>Passaggio diretto in avanti: ripresa con mischia alla squadra avversaria.</p>
+          </article>
+          <article class="card">
+            <span class="badge punizione">Calcio di punizione</span>
+            <h3>Crollo della mischia</h3>
+            <p>Infrazione tecnica in prima linea: spesso punita con calcio.</p>
+          </article>
+          <article class="card">
+            <span class="badge cartellino">Cartellino</span>
+            <h3>Gioco pericoloso/reiterato</h3>
+            <p>Giallo (10 minuti) o rosso nei casi gravi di antisportivita.</p>
+          </article>
+        </div>
+      </section>
+
+      <section>
+        <h2>Quando si assegna cosa?</h2>
+        <div class="legend">
+          <span class="chip"><strong>Punizione:</strong> fallo tecnico o pericoloso</span>
+          <span class="chip"><strong>Calcio libero:</strong> infrazione tecnica minore</span>
+          <span class="chip"><strong>Mischia:</strong> errore di gestione palla</span>
+          <span class="chip"><strong>Cartellino:</strong> pericolosita o recidiva</span>
+        </div>
+        <p>
+          L'arbitro puo applicare il <strong>vantaggio</strong>: se la squadra non colpevole trae
+          un beneficio immediato, il gioco continua. Se il vantaggio non si concretizza,
+          si torna alla sanzione originaria.
+        </p>
+      </section>
+
+      <section>
+        <h2>Simulatore rapido</h2>
+        <div class="tool">
+          <label for="foul">Scegli un'infrazione:</label>
+          <select id="foul">
+            <option value="">Seleziona...</option>
+            <option value="passaggio-avanti">Passaggio in avanti</option>
+            <option value="avanti">Avanti (knock-on)</option>
+            <option value="fuorigioco">Fuorigioco</option>
+            <option value="placcaggio-alto">Placcaggio alto</option>
+            <option value="mischia-crollata">Mischia crollata volontariamente</option>
+            <option value="gioco-scorretto">Gioco scorretto ripetuto</option>
+          </select>
+          <button id="check" type="button">Vedi conseguenza</button>
+          <div id="result" class="result" aria-live="polite">
+            Seleziona un'infrazione per visualizzare la sanzione.
+          </div>
+        </div>
+        <p class="note">
+          Nota: le decisioni effettive dipendono da dinamica, contatto, intenzionalita e linee guida arbitrali.
+        </p>
+      </section>
+
+      <section>
+        <h2>Parti dalla conseguenza arbitrale</h2>
+        <div class="tool">
+          <label for="sanction">Scegli una conseguenza:</label>
+          <select id="sanction">
+            <option value="">Seleziona...</option>
+            <option value="mischia">Mischia</option>
+            <option value="calcio-punizione">Calcio di punizione</option>
+            <option value="calcio-libero">Calcio libero</option>
+            <option value="cartellino-giallo">Cartellino giallo</option>
+            <option value="cartellino-rosso">Cartellino rosso</option>
+          </select>
+          <button id="find-fouls" type="button">Vedi possibili infrazioni</button>
+          <div id="sanction-result" class="result" aria-live="polite">
+            Seleziona una conseguenza arbitrale per vedere le infrazioni possibili.
+          </div>
+        </div>
+        <p class="note">
+          Una stessa conseguenza puo derivare da infrazioni diverse, in base a gravita, dinamica e recidiva.
+        </p>
+      </section>
+    </main>
+
+    <footer>
+      Pagina didattica sintetica. Per l'applicazione ufficiale fare sempre riferimento alle Laws di World Rugby.
+    </footer>
+
+    <script>
+      const outcomes = {
+        "passaggio-avanti": {
+          level: "good",
+          title: "Mischia alla squadra avversaria",
+          detail: "Errore di gestione del pallone: ripresa standard con mischia.",
+        },
+        avanti: {
+          level: "good",
+          title: "Mischia alla squadra avversaria",
+          detail: "Knock-on senza vantaggio: gioco riparte con mischia.",
+        },
+        fuorigioco: {
+          level: "warn",
+          title: "Calcio di punizione",
+          detail: "Posizionamento irregolare che ostacola il gioco avversario.",
+        },
+        "placcaggio-alto": {
+          level: "bad",
+          title: "Calcio di punizione + possibile cartellino",
+          detail:
+            "Se il contatto e pericoloso o alla testa, si puo salire a giallo/rosso.",
+        },
+        "mischia-crollata": {
+          level: "warn",
+          title: "Calcio di punizione",
+          detail:
+            "Infrazione tecnica seria in mischia; in caso reiterato puo arrivare il cartellino.",
+        },
+        "gioco-scorretto": {
+          level: "bad",
+          title: "Calcio di punizione + cartellino",
+          detail: "Falli ripetuti o antisportivi portano spesso ad ammonizione.",
+        },
+      };
+
+      const button = document.getElementById("check");
+      const select = document.getElementById("foul");
+      const result = document.getElementById("result");
+      const sanctionButton = document.getElementById("find-fouls");
+      const sanctionSelect = document.getElementById("sanction");
+      const sanctionResult = document.getElementById("sanction-result");
+
+      const foulsBySanction = {
+        mischia: {
+          level: "good",
+          title: "Infrazioni tipiche che portano a mischia",
+          items: [
+            "Passaggio in avanti",
+            "Avanti (knock-on)",
+            "Alcuni errori tecnici minori senza pericolo immediato",
+          ],
+        },
+        "calcio-punizione": {
+          level: "warn",
+          title: "Infrazioni tipiche che portano a calcio di punizione",
+          items: [
+            "Fuorigioco",
+            "Placcaggio alto",
+            "Mischia crollata volontariamente",
+            "Gioco scorretto o ostruzione",
+          ],
+        },
+        "calcio-libero": {
+          level: "good",
+          title: "Infrazioni tipiche che portano a calcio libero",
+          items: [
+            "Alcune infrazioni tecniche minori in mischia o touche",
+            "Mancato rispetto di determinate procedure di ripresa",
+          ],
+        },
+        "cartellino-giallo": {
+          level: "bad",
+          title: "Infrazioni tipiche che portano a cartellino giallo",
+          items: [
+            "Falli ripetuti di squadra",
+            "Placcaggio pericoloso con soglia da ammonizione",
+            "Infrazione professionale per fermare un'azione promettente",
+          ],
+        },
+        "cartellino-rosso": {
+          level: "bad",
+          title: "Infrazioni tipiche che portano a cartellino rosso",
+          items: [
+            "Gioco violento",
+            "Contatto alla testa con alto grado di pericolo e senza attenuanti",
+            "Comportamento gravemente antisportivo",
+          ],
+        },
+      };
+
+      function showOutcome() {
+        const value = select.value;
+        const data = outcomes[value];
+
+        if (!data) {
+          result.className = "result";
+          result.innerHTML = "Seleziona un'infrazione per visualizzare la sanzione.";
+          return;
+        }
+
+        result.className = `result ${data.level}`;
+        result.innerHTML = `<strong>${data.title}</strong><span>${data.detail}</span>`;
+      }
+
+      function showFoulsForSanction() {
+        const value = sanctionSelect.value;
+        const data = foulsBySanction[value];
+
+        if (!data) {
+          sanctionResult.className = "result";
+          sanctionResult.innerHTML =
+            "Seleziona una conseguenza arbitrale per vedere le infrazioni possibili.";
+          return;
+        }
+
+        const items = data.items.map((item) => `<li>${item}</li>`).join("");
+        sanctionResult.className = `result ${data.level}`;
+        sanctionResult.innerHTML = `<strong>${data.title}</strong><ul>${items}</ul>`;
+      }
+
+      button.addEventListener("click", showOutcome);
+      select.addEventListener("change", showOutcome);
+      sanctionButton.addEventListener("click", showFoulsForSanction);
+      sanctionSelect.addEventListener("change", showFoulsForSanction);
+    </script>
+  </body>
+</html>
