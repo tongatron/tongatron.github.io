@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#111827" />
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="stylesheet" href="./style.css" />
+    <title>Maze Game</title>
+  </head>
+  <body>
+    <main class="game">
+      <h1>Maze</h1>
+      <p>Guide the player to the green square.</p>
+      <div class="settings">
+        <label for="difficulty">Difficulty</label>
+        <select id="difficulty" aria-label="Select difficulty">
+          <option value="easy">Easy</option>
+          <option value="medium" selected>Medium</option>
+          <option value="hard">Hard</option>
+        </select>
+        <button id="newMaze" type="button">New</button>
+      </div>
+      <canvas id="maze" width="504" height="504" aria-label="Maze"></canvas>
+
+      <div class="controls" aria-label="Mobile controls">
+        <span class="empty"></span>
+        <button data-dir="up" aria-label="Up">▲</button>
+        <span class="empty"></span>
+        <button data-dir="left" aria-label="Left">◀</button>
+        <button data-dir="down" aria-label="Down">▼</button>
+        <button data-dir="right" aria-label="Right">▶</button>
+      </div>
+
+      <div class="hint">Desktop: use arrow keys. Mobile: use on-screen buttons.</div>
+      <div id="pwaStatus" class="pwa-status">PWA inactive</div>
+      <span id="appVersion" class="app-version">Version -</span>
+    </main>
+
+    <script src="./app.js" defer></script>
+  </body>
+</html>
