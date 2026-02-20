@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Connect Four - Offline</title>
+  <meta name="theme-color" content="#1d4ed8" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .offline {
+      min-height: 100dvh;
+      display: grid;
+      place-items: center;
+      padding: 20px;
+    }
+
+    .offline-card {
+      width: min(540px, 100%);
+      background: linear-gradient(160deg, #1e293bcc, #0b1220dd);
+      border: 1px solid #334155;
+      border-radius: 14px;
+      box-shadow: 0 12px 35px #00000055;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .offline-card h1 {
+      margin: 0 0 10px;
+      font-size: 1.7rem;
+    }
+
+    .offline-card p {
+      margin: 0;
+      color: #cbd5e1;
+    }
+  </style>
+</head>
+<body>
+  <main class="offline">
+    <section class="offline-card">
+      <h1>You're Offline</h1>
+      <p>Connect Four is not available right now. Check your connection and try again.</p>
+    </section>
+  </main>
+</body>
+</html>

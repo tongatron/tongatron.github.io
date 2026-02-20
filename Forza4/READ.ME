@@ -1,6 +1,7 @@
 # Connect Four
 
 This project is a browser-based Connect Four game inspired by the classic board interface.
+Version: `0.1.0`.
 
 ## Main Features
 
@@ -11,6 +12,7 @@ This project is a browser-based Connect Four game inspired by the classic board 
 - Win detection for horizontal, vertical, and diagonal lines.
 - Draw detection when the board is full.
 - Responsive layout that adapts to browser height.
+- PWA-ready setup (manifest, service worker, offline page).
 
 ## AI Difficulty
 
@@ -20,10 +22,19 @@ This project is a browser-based Connect Four game inspired by the classic board 
 
 ## Run
 
-Open `index.html` in a modern browser.
+1. Start a local server in this folder (for example: `python3 -m http.server 8080`).
+2. Open `http://localhost:8080` in a modern browser.
+
+Note: PWA features require `https` or `localhost`.
 
 ## Files
 
 - `index.html`: game UI + logic.
+- `style.css`: game styles.
+- `script.js`: game logic + service worker registration.
+- `manifest.webmanifest`: PWA metadata.
+- `sw.js`: versioned caching service worker.
+- `offline.html`: offline fallback page.
+- `assets/icons/icon.svg`: app icon.
 - `README.md`: full documentation.
 - `READ.ME`: quick project overview.
