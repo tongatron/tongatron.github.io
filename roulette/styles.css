@@ -22,6 +22,20 @@ body {
   color: var(--text);
 }
 
+.version-badge {
+  position: fixed;
+  top: 0.85rem;
+  right: 0.9rem;
+  z-index: 30;
+  font-size: 0.8rem;
+  color: #d5e2da;
+  border: 1px solid #3b7058;
+  border-radius: 999px;
+  padding: 0.24rem 0.65rem;
+  background: rgba(6, 26, 18, 0.75);
+  backdrop-filter: blur(6px);
+}
+
 .app {
   width: min(1100px, 95vw);
   margin: 2rem auto;

@@ -1,4 +1,5 @@
 const redNumbers = new Set([1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 21, 23, 25, 27, 30, 32, 34, 36]);
+const APP_VERSION = "0.1.0";
 const wheelOrder = Array.from({ length: 37 }, (_, i) => i);
 const wheelStep = 360 / wheelOrder.length;
 const wheelSpinDurationMs = 4400;
@@ -18,6 +19,7 @@ const el = {
   balance: document.getElementById("balance"),
   lastResult: document.getElementById("last-result"),
   drawnNumber: document.getElementById("drawn-number"),
+  versionBadge: document.getElementById("version-badge"),
   chipValue: document.getElementById("chip-value"),
   betPreview: document.getElementById("bet-preview"),
   betPreviewKind: document.getElementById("bet-preview-kind"),
@@ -169,6 +171,15 @@ function openResultModal(resultNumber, color, totalWin, net) {
 
 function closeResultModal() {
   el.resultModal.classList.add("hidden");
+}
+
+function registerServiceWorker() {
+  const isWebContext = window.location.protocol === "http:" || window.location.protocol === "https:";
+  if (!("serviceWorker" in navigator) || !isWebContext) return;
+
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./sw.js").catch(() => {});
+  });
 }
 
 function getResultFeatures(number) {
@@ -454,5 +465,11 @@ buildWheel();
 updateStatus();
 renderBetPreview();
 renderHistory();
+
+if (el.versionBadge) {
+  el.versionBadge.textContent = `Version: ${APP_VERSION}.`;
+}
+
+registerServiceWorker();
 
 window.addEventListener("resize", placeWheelNumbers);
