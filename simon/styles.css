@@ -167,3 +167,30 @@ button,
     grid-template-columns: 1fr;
   }
 }
+
+@media (min-width: 900px) {
+  body {
+    min-height: 100svh;
+    padding: 16px 24px;
+  }
+
+  .game {
+    min-height: calc(100svh - 32px);
+    display: grid;
+    grid-template-rows: auto 1fr auto auto auto;
+  }
+
+  .board-wrap {
+    display: grid;
+    place-items: center;
+    min-height: 0;
+  }
+
+  .board {
+    --board-size: clamp(240px, calc(100svh - 360px), 480px);
+    width: min(100%, var(--board-size));
+    height: min(100%, var(--board-size));
+    max-width: none;
+    aspect-ratio: auto;
+  }
+}
