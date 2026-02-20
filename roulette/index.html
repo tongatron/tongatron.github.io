@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="it">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -15,65 +15,65 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <div class="version-badge" id="version-badge">Version: 0.1.0.</div>
+    <div class="version-badge" id="version-badge">Version: 0.2.0.</div>
     <main class="app">
       <header class="header">
         <h1>Roulette</h1>
-        <p>Simulatore web del gioco della roulette da casinò.</p>
+        <p>Web simulator for casino roulette.</p>
       </header>
 
       <section class="status-panel">
         <div>
-          <span class="label">Saldo</span>
+          <span class="label">Balance</span>
           <strong id="balance">€ 1000</strong>
         </div>
         <div>
-          <span class="label">Ultimo risultato</span>
+          <span class="label">Last result</span>
           <strong id="last-result">--</strong>
         </div>
         <div>
-          <span class="label">Numero estratto</span>
+          <span class="label">Drawn number</span>
           <strong id="drawn-number">-</strong>
         </div>
       </section>
 
       <section class="bets-grid">
         <article class="bet-card">
-          <h2>Numero singolo</h2>
+          <h2>Single number</h2>
           <div class="number-bets" id="number-bets"></div>
         </article>
 
         <article class="bet-card">
-          <h2>Puntate esterne</h2>
+          <h2>Outside bets</h2>
           <div class="outside-bets" id="outside-bets">
-            <button data-bet-type="color" data-bet-value="rosso">Rosso (2x)</button>
-            <button data-bet-type="color" data-bet-value="nero">Nero (2x)</button>
-            <button data-bet-type="parity" data-bet-value="pari">Pari (2x)</button>
-            <button data-bet-type="parity" data-bet-value="dispari">Dispari (2x)</button>
-            <button data-bet-type="dozen" data-bet-value="1">1a Dozzina (3x)</button>
-            <button data-bet-type="dozen" data-bet-value="2">2a Dozzina (3x)</button>
-            <button data-bet-type="dozen" data-bet-value="3">3a Dozzina (3x)</button>
+            <button data-bet-type="color" data-bet-value="red">Red (2x)</button>
+            <button data-bet-type="color" data-bet-value="black">Black (2x)</button>
+            <button data-bet-type="parity" data-bet-value="even">Even (2x)</button>
+            <button data-bet-type="parity" data-bet-value="odd">Odd (2x)</button>
+            <button data-bet-type="dozen" data-bet-value="1">1st Dozen (3x)</button>
+            <button data-bet-type="dozen" data-bet-value="2">2nd Dozen (3x)</button>
+            <button data-bet-type="dozen" data-bet-value="3">3rd Dozen (3x)</button>
           </div>
         </article>
       </section>
 
       <section class="controls">
         <label>
-          Valore fiches
+          Chip value
           <input id="chip-value" type="number" min="1" value="10" />
         </label>
         <div class="bet-preview" id="bet-preview" aria-live="polite">
-          <span class="label">Puntata pronta</span>
-          <strong id="bet-preview-kind">Nessuna</strong>
-          <small id="bet-preview-details">Dettaglio: -</small>
-          <small id="bet-preview-total">Totale: € 0.00</small>
+          <span class="label">Bet ready</span>
+          <strong id="bet-preview-kind">None</strong>
+          <small id="bet-preview-details">Details: -</small>
+          <small id="bet-preview-total">Total: € 0.00</small>
           <small class="bet-preview-meta">
-            <span id="bet-preview-win">Possibile vincita: € 0.00</span>
-            <span id="bet-preview-prob">Probabilità: 0.00%</span>
+            <span id="bet-preview-win">Possible payout: € 0.00</span>
+            <span id="bet-preview-prob">Probability: 0.00%</span>
           </small>
         </div>
-        <button id="spin-btn" type="button">Gira la ruota</button>
-        <button id="clear-bets-btn" type="button" class="ghost">Annulla puntate</button>
+        <button id="spin-btn" type="button">Spin wheel</button>
+        <button id="clear-bets-btn" type="button" class="ghost">Clear bets</button>
       </section>
 
       <section class="wheel-panel">
@@ -94,20 +94,20 @@
         </div>
       </section>
       <section class="history">
-        <h2>Storico giri</h2>
+        <h2>Spin history</h2>
         <ul id="history-list">
-          <li>Nessun giro effettuato.</li>
+          <li>No spins yet.</li>
         </ul>
       </section>
     </main>
 
     <div class="result-modal hidden" id="result-modal" role="dialog" aria-modal="true" aria-labelledby="result-modal-title">
       <div class="result-modal-card">
-        <h2 id="result-modal-title">Risultato giro</h2>
-        <p id="result-modal-number">Numero: -</p>
-        <p id="result-modal-win">Vincita totale: € 0.00</p>
-        <p id="result-modal-net">Netto turno: € 0.00</p>
-        <button id="result-modal-close" type="button">Chiudi</button>
+        <h2 id="result-modal-title">Spin result</h2>
+        <p id="result-modal-number">Number: -</p>
+        <p id="result-modal-win">Total win: € 0.00</p>
+        <p id="result-modal-net">Round net: € 0.00</p>
+        <button id="result-modal-close" type="button">Close</button>
       </div>
     </div>
 

@@ -8,7 +8,7 @@
   "display": "standalone",
   "background_color": "#0d1f16",
   "theme_color": "#0d1f16",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "icons": [
     {
       "src": "./icons/icon-192.svg",

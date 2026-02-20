@@ -1,4 +1,4 @@
-const CACHE_VERSION = "0.1.0";
+const CACHE_VERSION = "0.2.0";
 const CACHE_NAME = `roulette-cache-${CACHE_VERSION}`;
 const ASSETS_TO_CACHE = [
   "./",

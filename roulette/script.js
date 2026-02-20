@@ -1,5 +1,5 @@
 const redNumbers = new Set([1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 21, 23, 25, 27, 30, 32, 34, 36]);
-const APP_VERSION = "0.1.0";
+const APP_VERSION = "0.2.0";
 const wheelOrder = Array.from({ length: 37 }, (_, i) => i);
 const wheelStep = 360 / wheelOrder.length;
 const wheelSpinDurationMs = 4400;
@@ -48,8 +48,8 @@ const el = {
 };
 
 function getColor(number) {
-  if (number === 0) return "verde";
-  return redNumbers.has(number) ? "rosso" : "nero";
+  if (number === 0) return "green";
+  return redNumbers.has(number) ? "red" : "black";
 }
 
 function formatMoney(amount) {
@@ -102,21 +102,21 @@ function placeWheelNumbers() {
 }
 
 function getBetCategoryLabel() {
-  if (state.bets.length === 0) return "Nessuna";
+  if (state.bets.length === 0) return "None";
 
   const hasNumberBet = state.bets.some((bet) => bet.type === "number");
   const hasOutsideBet = state.bets.some((bet) => bet.type !== "number");
 
-  if (hasNumberBet && hasOutsideBet) return "Mista (Numero + Esterne)";
-  if (hasNumberBet) return "Numero singolo";
-  return "Puntate esterne";
+  if (hasNumberBet && hasOutsideBet) return "Mixed (Single + Outside)";
+  if (hasNumberBet) return "Single number";
+  return "Outside bets";
 }
 
 function getBetDetailLabel(bet) {
-  if (bet.type === "number") return `Numero ${bet.value}`;
+  if (bet.type === "number") return `Number ${bet.value}`;
   if (bet.type === "color") return bet.value[0].toUpperCase() + bet.value.slice(1);
   if (bet.type === "parity") return bet.value[0].toUpperCase() + bet.value.slice(1);
-  if (bet.type === "dozen") return `${bet.value}a Dozzina`;
+  if (bet.type === "dozen") return `${bet.value}${bet.value === "1" ? "st" : bet.value === "2" ? "nd" : "rd"} Dozen`;
   return `${bet.type}:${bet.value}`;
 }
 
@@ -154,18 +154,18 @@ function renderBetPreview() {
   const details = detailLabels.length === 0 ? "-" : detailLabels.join(", ");
   const stats = calculatePreviewStats();
   el.betPreviewKind.textContent = kind;
-  el.betPreviewDetails.textContent = `Dettaglio: ${details}`;
-  el.betPreviewTotal.textContent = `Totale: ${formatMoney(totalBet)}`;
-  el.betPreviewWin.textContent = `Possibile vincita: ${formatMoney(stats.maxPayout)}`;
-  el.betPreviewProb.textContent = `Probabilità: ${stats.winProbability.toFixed(2)}%`;
+  el.betPreviewDetails.textContent = `Details: ${details}`;
+  el.betPreviewTotal.textContent = `Total: ${formatMoney(totalBet)}`;
+  el.betPreviewWin.textContent = `Possible payout: ${formatMoney(stats.maxPayout)}`;
+  el.betPreviewProb.textContent = `Probability: ${stats.winProbability.toFixed(2)}%`;
   el.betPreview.classList.toggle("ready", state.bets.length > 0);
 }
 
 function openResultModal(resultNumber, color, totalWin, net) {
   const netLabel = `${net >= 0 ? "+" : "-"}${formatMoney(Math.abs(net))}`;
-  el.resultModalNumber.textContent = `Numero: ${resultNumber} (${color})`;
-  el.resultModalWin.textContent = `Vincita totale: ${formatMoney(totalWin)}`;
-  el.resultModalNet.textContent = `Netto turno: ${netLabel}`;
+  el.resultModalNumber.textContent = `Number: ${resultNumber} (${color})`;
+  el.resultModalWin.textContent = `Total win: ${formatMoney(totalWin)}`;
+  el.resultModalNet.textContent = `Round net: ${netLabel}`;
   el.resultModal.classList.remove("hidden");
 }
 
@@ -185,7 +185,7 @@ function registerServiceWorker() {
 function getResultFeatures(number) {
   if (number === 0) {
     return {
-      color: "verde",
+      color: "green",
       parity: "zero",
       dozen: "zero",
       range: "zero"
@@ -194,9 +194,9 @@ function getResultFeatures(number) {
 
   return {
     color: getColor(number),
-    parity: number % 2 === 0 ? "pari" : "dispari",
-    dozen: `${Math.ceil(number / 12)}a dozzina`,
-    range: number <= 18 ? "basso (1-18)" : "alto (19-36)"
+    parity: number % 2 === 0 ? "even" : "odd",
+    dozen: `${Math.ceil(number / 12)}${Math.ceil(number / 12) === 1 ? "st" : Math.ceil(number / 12) === 2 ? "nd" : "rd"} dozen`,
+    range: number <= 18 ? "low (1-18)" : "high (19-36)"
   };
 }
 
@@ -215,15 +215,15 @@ function highlightWinningWheelNumber(number) {
 
 function renderWheelResult(number) {
   const features = getResultFeatures(number);
-  const colorClass = features.color === "rosso" ? "red" : features.color === "nero" ? "black" : "green";
+  const colorClass = features.color === "red" ? "red" : features.color === "black" ? "black" : "green";
 
   el.wheelResultNumber.classList.remove("red", "black", "green");
   el.wheelResultNumber.classList.add(colorClass);
-  el.wheelResultNumber.textContent = `Numero ${number}`;
+  el.wheelResultNumber.textContent = `Number ${number}`;
 
-  el.wheelTagColor.textContent = `Colore: ${features.color}`;
-  el.wheelTagParity.textContent = `Parità: ${features.parity}`;
-  el.wheelTagDozen.textContent = `Dozzina: ${features.dozen}`;
+  el.wheelTagColor.textContent = `Color: ${features.color}`;
+  el.wheelTagParity.textContent = `Parity: ${features.parity}`;
+  el.wheelTagDozen.textContent = `Dozen: ${features.dozen}`;
   el.wheelTagRange.textContent = `Range: ${features.range}`;
 
   el.wheelResult.classList.remove("show");
@@ -235,7 +235,7 @@ function renderHistory() {
   el.historyList.innerHTML = "";
 
   if (state.history.length === 0) {
-    el.historyList.innerHTML = "<li>Nessun giro effettuato.</li>";
+    el.historyList.innerHTML = "<li>No spins yet.</li>";
     return;
   }
 
@@ -251,10 +251,10 @@ function updateStatus() {
 }
 
 function describeBet(bet) {
-  if (bet.type === "number") return `Numero ${bet.value} (36x)`;
+  if (bet.type === "number") return `Number ${bet.value} (36x)`;
   if (bet.type === "color") return `${bet.value[0].toUpperCase() + bet.value.slice(1)} (2x)`;
   if (bet.type === "parity") return `${bet.value[0].toUpperCase() + bet.value.slice(1)} (2x)`;
-  if (bet.type === "dozen") return `${bet.value}a dozzina (3x)`;
+  if (bet.type === "dozen") return `${bet.value}${bet.value === "1" ? "st" : bet.value === "2" ? "nd" : "rd"} dozen (3x)`;
   return `${bet.type}:${bet.value}`;
 }
 
@@ -264,12 +264,12 @@ function addBet(type, value) {
   const amount = Number(el.chipValue.value);
 
   if (!Number.isFinite(amount) || amount <= 0) {
-    window.alert("Inserisci un valore fiches valido.");
+    window.alert("Enter a valid chip value.");
     return;
   }
 
   if (amount > state.balance) {
-    window.alert("Saldo insufficiente per questa puntata.");
+    window.alert("Insufficient balance for this bet.");
     return;
   }
 
@@ -284,7 +284,7 @@ function addBet(type, value) {
 function isWinningBet(bet, number) {
   if (bet.type === "number") return Number(bet.value) === number;
   if (bet.type === "color") return number !== 0 && getColor(number) === bet.value;
-  if (bet.type === "parity") return number !== 0 && (number % 2 === 0 ? "pari" : "dispari") === bet.value;
+  if (bet.type === "parity") return number !== 0 && (number % 2 === 0 ? "even" : "odd") === bet.value;
 
   if (bet.type === "dozen") {
     if (number === 0) return false;
@@ -383,9 +383,9 @@ function finishRound(resultNumber) {
   const totalBet = state.bets.reduce((sum, bet) => sum + bet.amount, 0);
   const net = totalWin - totalBet;
   const netLabel = `${net >= 0 ? "+" : ""}${formatMoney(net)}`;
-  const summary = `N.${resultNumber} ${color} | Vincite: ${winningBets} | Totale: ${formatMoney(totalWin)} | Netto: ${netLabel}`;
+  const summary = `No.${resultNumber} ${color} | Wins: ${winningBets} | Total: ${formatMoney(totalWin)} | Net: ${netLabel}`;
 
-  el.lastResult.textContent = net >= 0 ? `Vinto ${formatMoney(net)}` : `Perso ${formatMoney(Math.abs(net))}`;
+  el.lastResult.textContent = net >= 0 ? `Won ${formatMoney(net)}` : `Lost ${formatMoney(Math.abs(net))}`;
   el.drawnNumber.textContent = `${resultNumber} (${color})`;
   renderWheelResult(resultNumber);
   highlightWinningWheelNumber(resultNumber);
@@ -403,7 +403,7 @@ function finishRound(resultNumber) {
     el.spinBtn.disabled = true;
     el.clearBetsBtn.disabled = true;
     el.chipValue.disabled = true;
-    window.alert("Hai finito il saldo. Ricarica la pagina per una nuova sessione.");
+    window.alert("You ran out of balance. Reload the page for a new session.");
     return;
   }
 
@@ -412,7 +412,7 @@ function finishRound(resultNumber) {
 
 function spinRoulette() {
   if (state.bets.length === 0) {
-    window.alert("Piazza almeno una puntata prima di girare.");
+    window.alert("Place at least one bet before spinning.");
     return;
   }
 
