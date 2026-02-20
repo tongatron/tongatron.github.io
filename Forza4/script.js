@@ -1,5 +1,5 @@
     (() => {
-      const APP_VERSION = "0.1.0";
+      const APP_VERSION = "0.2.0";
       const COLS = 7;
       const ROWS = 6;
       const HUMAN = 1;
@@ -13,11 +13,7 @@
       const topbarEl = document.querySelector(".topbar");
       const gameWrapEl = document.querySelector(".game-wrap");
       const boardShellEl = document.querySelector(".board-shell");
-      const overlayEl = document.getElementById("setupOverlay");
-      const startBtn = document.getElementById("startBtn");
       const restartBtn = document.getElementById("restartBtn");
-      const playerNameInput = document.getElementById("playerName");
-      const difficultySetup = document.getElementById("difficultySetup");
       const difficultyTop = document.getElementById("difficultyTop");
       const versionTagEl = document.getElementById("versionTag");
 
@@ -388,35 +384,16 @@
       function syncDifficultyFrom(selectEl) {
         aiLevel = selectEl.value;
         difficultyTop.value = aiLevel;
-        difficultySetup.value = aiLevel;
       }
-
-      startBtn.addEventListener("click", () => {
-        const value = playerNameInput.value.trim();
-        playerName = value || "Player";
-        syncDifficultyFrom(difficultySetup);
-        overlayEl.classList.add("hidden");
-        resetGame();
-      });
 
       difficultyTop.addEventListener("change", () => {
         syncDifficultyFrom(difficultyTop);
-        if (!overlayEl.classList.contains("hidden")) return;
         setStatus(`Difficulty set to ${aiLevel}. ${playerName}, your turn.`);
         resetGame();
       });
 
-      difficultySetup.addEventListener("change", () => {
-        syncDifficultyFrom(difficultySetup);
-      });
-
       restartBtn.addEventListener("click", () => {
-        if (!overlayEl.classList.contains("hidden")) return;
         resetGame();
-      });
-
-      playerNameInput.addEventListener("keydown", (e) => {
-        if (e.key === "Enter") startBtn.click();
       });
 
       window.addEventListener("resize", fitBoardToViewport);
@@ -427,7 +404,7 @@
       updateColumnButtons();
       fitBoardToViewport();
       difficultyTop.value = "middle";
-      difficultySetup.value = "middle";
+      resetGame();
 
       if ("serviceWorker" in navigator) {
         window.addEventListener("load", () => {

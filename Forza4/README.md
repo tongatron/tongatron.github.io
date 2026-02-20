@@ -1,7 +1,7 @@
 # Connect Four Web Game
 
 A browser-based Connect Four game inspired by the classic original interface, with a human player vs computer AI.
-Current version: `0.1.0`.
+Current version: `0.2.0`.
 
 ## Features
 
@@ -23,7 +23,7 @@ Current version: `0.1.0`.
 - PWA support:
   - Installable web app (manifest + service worker).
   - Offline fallback page.
-  - Versioned cache (`connect-four-0.1.0`).
+  - Versioned cache (`connect-four-0.2.0`).
 
 ## Game Rules
 
@@ -65,7 +65,7 @@ Note: PWA installation and service workers require `https` or `localhost` (not `
 - `index.html`: main HTML layout and PWA meta.
 - `style.css`: game and layout styles.
 - `script.js`: game logic, AI, and service worker registration.
-- `manifest.webmanifest`: PWA manifest (v0.1.0).
+- `manifest.webmanifest`: PWA manifest (v0.2.0).
 - `sw.js`: service worker with versioned caching.
 - `offline.html`: fallback page for offline navigation.
 - `assets/icons/icon.svg`: app icon.

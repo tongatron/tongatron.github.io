@@ -19,7 +19,7 @@
     <header class="topbar">
       <div>
         <h1 class="title">Connect Four</h1>
-        <div id="status" class="status">Enter your name and choose the difficulty.</div>
+        <div id="status" class="status">Select difficulty and start playing.</div>
       </div>
       <div class="controls">
         <select id="difficultyTop" class="pill" aria-label="Difficulty">
@@ -27,7 +27,7 @@
           <option value="middle" selected>middle</option>
           <option value="high">high</option>
         </select>
-        <button id="restartBtn" class="pill" type="button">New Game</button>
+        <button id="restartBtn" class="pill" type="button">New Match</button>
       </div>
     </header>
 
@@ -39,29 +39,6 @@
     </section>
   </main>
   <div id="versionTag" class="version-tag" aria-label="Application version">Version: --.--.--</div>
-
-  <div id="setupOverlay" class="overlay">
-    <div class="panel">
-      <h2>Start the match</h2>
-      <p>Play against the computer: you are <strong>red</strong>, the computer is <strong>yellow</strong>.</p>
-      <div class="field">
-        <label for="playerName">Player name</label>
-        <input id="playerName" type="text" maxlength="20" placeholder="e.g. Alex" autocomplete="off" />
-      </div>
-      <div class="field">
-        <label for="difficultySetup">Computer difficulty</label>
-        <select id="difficultySetup">
-          <option value="low">low</option>
-          <option value="middle" selected>middle</option>
-          <option value="high">high</option>
-        </select>
-      </div>
-      <div class="actions">
-        <button id="startBtn" class="start" type="button">Play</button>
-      </div>
-      <div class="muted-note">The computer always starts after your first move.</div>
-    </div>
-  </div>
 
   <script src="script.js"></script>
 </body>
