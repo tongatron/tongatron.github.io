@@ -16,15 +16,6 @@ header{
   padding:14px 10px 6px
 }
 
-.topVersion{
-  position:absolute;
-  top:6px;
-  right:10px;
-  font-family:"Courier New", monospace;
-  font-size:11px;
-  color:#555;
-}
-
 h1{margin:0;font-size:1.8rem}
 #moves,#timer{color:#666;margin-top:2px}
 
@@ -153,6 +144,16 @@ button:active{transform:scale(.95)}
 }
 
 .recordRow:last-child{border-bottom:none}
+
+.appVersion{
+  position:fixed;
+  right:12px;
+  bottom:58px;
+  font-family:"Courier New", monospace;
+  font-size:11px;
+  color:#666;
+  z-index:1000;
+}
 
 #updateBtn{
   display:none;

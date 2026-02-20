@@ -244,7 +244,7 @@ if("serviceWorker" in navigator){
 
     navigator.serviceWorker.addEventListener("message",event=>{
       if(event.data?.type==="VERSION"){
-        const versionEl=document.getElementById("appVersion") || document.querySelector(".topVersion");
+        const versionEl=document.getElementById("appVersion") || document.querySelector(".appVersion");
         if(versionEl){
           versionEl.textContent="Version: "+event.data.version;
         }
