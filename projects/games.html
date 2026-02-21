@@ -1,0 +1,369 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>web projects - Tongatron Projects</title>
+  <meta name="description" content="Raccolta dei giochi e simulatori sviluppati nei progetti Tongatron.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #ffffff;
+      --surface: #ffffff;
+      --card: #ffffff;
+      --line: #000000;
+      --line-soft: #000000;
+      --text: #000000;
+      --muted: #000000;
+      --accent: #000000;
+      --accent-soft: #ffffff;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      min-height: 100vh;
+    }
+
+    .page {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 32px 20px 56px;
+    }
+
+    .top {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: flex-start;
+      margin-bottom: 26px;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 18px;
+    }
+
+    .eyebrow {
+      margin: 0 0 10px;
+      color: var(--muted);
+      font-size: 13px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(30px, 5vw, 46px);
+      letter-spacing: 0.03em;
+      line-height: 1.1;
+      color: var(--text);
+    }
+
+    .subtitle {
+      margin: 10px 0 0;
+      color: var(--text);
+      font-size: 16px;
+    }
+
+    .home-link {
+      flex-shrink: 0;
+      display: inline-block;
+      text-decoration: none;
+      color: var(--text);
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 10px 14px;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .home-link:hover {
+      border-color: var(--accent);
+      color: #ffffff;
+      background: #000000;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+    }
+
+    .install-panel {
+      border: 1px solid #8f8f8f;
+      border-radius: 10px;
+      padding: 16px;
+      margin-top: 28px;
+      background: linear-gradient(180deg, #f2f2f2 0%, #dddddd 100%);
+      box-shadow: inset 0 1px 0 #ffffff;
+    }
+
+    .install-title {
+      margin: 0 0 12px;
+      font-size: 18px;
+      text-transform: lowercase;
+    }
+
+    .install-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 12px;
+    }
+
+    .install-card {
+      border: 1px solid #a8a8a8;
+      border-radius: 8px;
+      padding: 12px;
+      background: linear-gradient(180deg, #ffffff 0%, #efefef 100%);
+    }
+
+    .install-card h3 {
+      margin: 0 0 8px;
+      font-size: 15px;
+      text-transform: lowercase;
+    }
+
+    .install-card ol {
+      margin: 0;
+      padding-left: 20px;
+      line-height: 1.5;
+      font-size: 14px;
+    }
+
+    .install-note {
+      margin: 12px 0 0;
+      font-size: 13px;
+      border-top: 1px solid #a0a0a0;
+      padding-top: 10px;
+    }
+
+    .section-block + .section-block {
+      margin-top: 26px;
+    }
+
+    .section-heading {
+      margin: 0 0 12px;
+      font-size: 18px;
+      text-transform: lowercase;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 8px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line-soft);
+      border-radius: 10px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      min-height: 190px;
+    }
+
+    .card:hover {
+      border-color: #000000;
+    }
+
+    .tag {
+      display: inline-block;
+      width: fit-content;
+      border: 1px solid #000000;
+      color: #000000;
+      border-radius: 4px;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 4px 8px;
+      background: #ffffff;
+    }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .card h2 {
+      margin: 0;
+      font-size: 20px;
+      color: #000000;
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.45;
+      font-size: 14px;
+      flex-grow: 1;
+    }
+
+    .card a {
+      text-decoration: none;
+      color: #000000;
+      border: 1px solid #000000;
+      border-radius: 6px;
+      padding: 9px 10px;
+      font-size: 13px;
+      display: inline-block;
+      width: fit-content;
+      background: #ffffff;
+    }
+
+    .card a:hover {
+      border-color: #000000;
+      background: #000000;
+      color: #ffffff;
+    }
+
+    .foot {
+      margin-top: 22px;
+      padding-top: 14px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .updated-at {
+      margin-top: 6px;
+    }
+
+    @media (max-width: 720px) {
+      .top {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="top">
+      <div>
+        <p class="eyebrow">Tongatron / Projects</p>
+        <h1>web projects</h1>
+        <p class="subtitle">giochi e simulatori per browser e mobile.</p>
+      </div>
+      <a class="home-link" href="../index.html">Torna alla home</a>
+    </header>
+
+    <main>
+      <section class="section-block">
+        <h2 class="section-heading">giochi</h2>
+        <div class="grid">
+          <article class="card">
+            <div class="tag-row">
+              <span class="tag">Android PWA</span>
+            </div>
+            <h2>Connect Four</h2>
+            <p>Classico Forza 4 contro CPU con selezione difficolta e nuova partita rapida.</p>
+            <a href="./forza4/index.html">Apri progetto</a>
+          </article>
+
+          <article class="card">
+            <div class="tag-row">
+              <span class="tag">Android PWA</span>
+            </div>
+            <h2>Maze Game</h2>
+            <p>Gioco del labirinto con livelli easy/medium/hard, comandi tastiera e controlli touch.</p>
+            <a href="./labirinto/index.html">Apri progetto</a>
+          </article>
+
+          <article class="card">
+            <div class="tag-row">
+              <span class="tag">Android PWA</span>
+            </div>
+            <h2>Memory</h2>
+            <p>Memory card game con timer, conteggio mosse, records locali e diverse dimensioni griglia.</p>
+            <a href="./memory/index.html">Apri progetto</a>
+          </article>
+
+          <article class="card">
+            <div class="tag-row">
+              <span class="tag">Android PWA</span>
+            </div>
+            <h2>Simon Simulator</h2>
+            <p>Versione web del gioco Simon: ripeti la sequenza colori con modalita strict opzionale.</p>
+            <a href="./simon/index.html">Apri progetto</a>
+          </article>
+
+          <article class="card">
+            <h2>Tic Tac Toe</h2>
+            <p>Tris contro CPU con livelli di difficolta, scoreboard e reset del punteggio.</p>
+            <a href="./tictactoe/index.html">Apri progetto</a>
+          </article>
+        </div>
+      </section>
+
+      <section class="section-block">
+        <h2 class="section-heading">simulatori</h2>
+        <div class="grid">
+          <article class="card">
+            <div class="tag-row">
+              <span class="tag">music</span>
+              <span class="tag">Android PWA</span>
+            </div>
+            <h2>Multi Web Simulator</h2>
+            <p>Simulazione web della board open-source MULTI del laboratorio elettroacustico Pangrus.</p>
+            <a href="./multi-simulator/index.html">Apri progetto</a>
+          </article>
+
+          <article class="card">
+            <div class="tag-row">
+              <span class="tag">Android PWA</span>
+            </div>
+            <h2>Roulette Simulator</h2>
+            <p>Simulatore stile casino con ruota animata, puntate multiple, bilancio e storico spin.</p>
+            <a href="./roulette/index.html">Apri progetto</a>
+          </article>
+
+          <article class="card">
+            <div class="tag-row">
+              <span class="tag">music</span>
+              <span class="tag">Android PWA</span>
+            </div>
+            <h2>Rumore Bianco</h2>
+            <p>Generatore audio con parametri regolabili in tempo reale (volume, filtro e controlli sonori).</p>
+            <a href="./rumorebianco/index.html">Apri progetto</a>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <section class="install-panel" aria-label="Istruzioni installazione PWA Android">
+      <h2 class="install-title">installazione app pwa su android</h2>
+      <div class="install-grid">
+        <article class="install-card">
+          <h3>metodo rapido (consigliato)</h3>
+          <ol>
+            <li>Apri il progetto in Chrome su Android.</li>
+            <li>Tocca il menu con i tre puntini in alto a destra.</li>
+            <li>Seleziona <strong>Installa app</strong> o <strong>Aggiungi a schermata Home</strong>.</li>
+            <li>Conferma con <strong>Installa</strong>.</li>
+          </ol>
+        </article>
+        <article class="install-card">
+          <h3>se non compare il pulsante installa</h3>
+          <ol>
+            <li>Ricarica la pagina e attendi alcuni secondi.</li>
+            <li>Verifica di usare Chrome aggiornato.</li>
+            <li>Apri di nuovo il menu e scegli <strong>Aggiungi a schermata Home</strong>.</li>
+            <li>Avvia l'app dall'icona creata nella Home di Android.</li>
+          </ol>
+        </article>
+      </div>
+      <p class="install-note">Nota: i progetti con tag <strong>Android PWA</strong> supportano installazione tipo app nativa.</p>
+    </section>
+
+    <footer class="foot">
+      Pagina indice dei progetti evidenziati nella cartella <code>projects</code>.
+      <div class="updated-at">Aggiornato: 21 febbraio 2026</div>
+    </footer>
+  </div>
+</body>
+</html>
