@@ -7,7 +7,7 @@
   <meta name="description" content="Raccolta dei giochi e simulatori sviluppati nei progetti Tongatron.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Roboto:wght@300;400;500;700;900&family=Orbitron:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
       --bg: #ffffff;
@@ -150,9 +150,123 @@
     .section-heading {
       margin: 0 0 12px;
       font-size: 18px;
-      text-transform: lowercase;
+      text-transform: uppercase;
       border-bottom: 1px solid var(--line);
       padding-bottom: 8px;
+    }
+
+    .retro-80s {
+      border: 2px solid #ff4fd8;
+      border-radius: 12px;
+      padding: 14px;
+      background:
+        linear-gradient(180deg, #1d0a35 0%, #111936 55%, #0a1328 100%);
+      box-shadow: inset 0 0 0 1px #31f6ff, 0 8px 28px rgba(31, 9, 53, 0.45);
+    }
+
+    .retro-80s .section-heading {
+      border-bottom-color: #31f6ff;
+      color: #31f6ff;
+      font-family: "Press Start 2P", cursive;
+      font-size: clamp(12px, 2.2vw, 16px);
+      letter-spacing: 0.06em;
+      text-shadow: 0 0 8px rgba(49, 246, 255, 0.35);
+    }
+
+    .retro-80s .card {
+      background: linear-gradient(180deg, #251247 0%, #1b1236 100%);
+      border: 1px solid #ff4fd8;
+      color: #f5eeff;
+      box-shadow: inset 0 0 0 1px rgba(49, 246, 255, 0.2);
+    }
+
+    .retro-80s .card:hover {
+      border-color: #31f6ff;
+    }
+
+    .retro-80s .card h2 {
+      color: #f8f2ff;
+      font-family: "Orbitron", "Roboto", sans-serif;
+      letter-spacing: 0.03em;
+    }
+
+    .retro-80s .card p {
+      color: #dbd0ef;
+    }
+
+    .retro-80s .tag {
+      color: #31f6ff;
+      border-color: #31f6ff;
+      background: rgba(49, 246, 255, 0.1);
+    }
+
+    .retro-80s .card a {
+      color: #31f6ff;
+      border-color: #31f6ff;
+      background: transparent;
+    }
+
+    .retro-80s .card a:hover {
+      color: #14122b;
+      border-color: #31f6ff;
+      background: #31f6ff;
+    }
+
+    .future-minimal {
+      border: 1px solid #d7dce3;
+      border-radius: 12px;
+      padding: 14px;
+      background: linear-gradient(180deg, #fbfcfd 0%, #f2f5f8 100%);
+    }
+
+    .future-minimal .section-heading {
+      border-bottom-color: #c8d0d8;
+      color: #0f1720;
+      font-family: "Orbitron", "Roboto", sans-serif;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+    }
+
+    .future-minimal .card {
+      background: #ffffff;
+      border: 1px solid #d5dce4;
+      border-radius: 8px;
+      box-shadow: 0 8px 16px rgba(15, 23, 32, 0.06);
+    }
+
+    .future-minimal .card:hover {
+      border-color: #0f1720;
+    }
+
+    .future-minimal .card h2 {
+      color: #0f1720;
+      font-family: "Orbitron", "Roboto", sans-serif;
+      font-size: 18px;
+      letter-spacing: 0.02em;
+    }
+
+    .future-minimal .card p {
+      color: #2a3643;
+    }
+
+    .future-minimal .tag {
+      color: #1b2733;
+      border-color: #bcc8d3;
+      background: #edf2f6;
+    }
+
+    .future-minimal .card a {
+      color: #0f1720;
+      border-color: #b8c6d3;
+      background: #f4f7fa;
+      border-radius: 999px;
+      padding-inline: 14px;
+    }
+
+    .future-minimal .card a:hover {
+      color: #ffffff;
+      border-color: #0f1720;
+      background: #0f1720;
     }
 
     .card {
@@ -253,8 +367,8 @@
     </header>
 
     <main>
-      <section class="section-block">
-        <h2 class="section-heading">giochi</h2>
+      <section class="section-block retro-80s">
+        <h2 class="section-heading">GIOCHI</h2>
         <div class="grid">
           <article class="card">
             <div class="tag-row">
@@ -262,7 +376,7 @@
             </div>
             <h2>Connect Four</h2>
             <p>Classico Forza 4 contro CPU con selezione difficolta e nuova partita rapida.</p>
-            <a href="./forza4/index.html">Apri progetto</a>
+            <a href="./forza4/index.html">apri</a>
           </article>
 
           <article class="card">
@@ -271,7 +385,7 @@
             </div>
             <h2>Maze Game</h2>
             <p>Gioco del labirinto con livelli easy/medium/hard, comandi tastiera e controlli touch.</p>
-            <a href="./labirinto/index.html">Apri progetto</a>
+            <a href="./labirinto/index.html">apri</a>
           </article>
 
           <article class="card">
@@ -280,7 +394,7 @@
             </div>
             <h2>Memory</h2>
             <p>Memory card game con timer, conteggio mosse, records locali e diverse dimensioni griglia.</p>
-            <a href="./memory/index.html">Apri progetto</a>
+            <a href="./memory/index.html">apri</a>
           </article>
 
           <article class="card">
@@ -289,19 +403,19 @@
             </div>
             <h2>Simon Simulator</h2>
             <p>Versione web del gioco Simon: ripeti la sequenza colori con modalita strict opzionale.</p>
-            <a href="./simon/index.html">Apri progetto</a>
+            <a href="./simon/index.html">apri</a>
           </article>
 
           <article class="card">
             <h2>Tic Tac Toe</h2>
             <p>Tris contro CPU con livelli di difficolta, scoreboard e reset del punteggio.</p>
-            <a href="./tictactoe/index.html">Apri progetto</a>
+            <a href="./tictactoe/index.html">apri</a>
           </article>
         </div>
       </section>
 
-      <section class="section-block">
-        <h2 class="section-heading">simulatori</h2>
+      <section class="section-block future-minimal">
+        <h2 class="section-heading">SIMULATORI</h2>
         <div class="grid">
           <article class="card">
             <div class="tag-row">
@@ -310,7 +424,7 @@
             </div>
             <h2>Multi Web Simulator</h2>
             <p>Simulazione web della board open-source MULTI del laboratorio elettroacustico Pangrus.</p>
-            <a href="./multi-simulator/index.html">Apri progetto</a>
+            <a href="./multi-simulator/index.html">apri</a>
           </article>
 
           <article class="card">
@@ -319,7 +433,7 @@
             </div>
             <h2>Roulette Simulator</h2>
             <p>Simulatore stile casino con ruota animata, puntate multiple, bilancio e storico spin.</p>
-            <a href="./roulette/index.html">Apri progetto</a>
+            <a href="./roulette/index.html">apri</a>
           </article>
 
           <article class="card">
@@ -329,7 +443,7 @@
             </div>
             <h2>Rumore Bianco</h2>
             <p>Generatore audio con parametri regolabili in tempo reale (volume, filtro e controlli sonori).</p>
-            <a href="./rumorebianco/index.html">Apri progetto</a>
+            <a href="./rumorebianco/index.html">apri</a>
           </article>
         </div>
       </section>
