@@ -423,6 +423,18 @@ h1 {
   font-family: "Courier New", monospace;
 }
 
+.version-pill {
+  display: inline-block;
+  margin-left: 0.55rem;
+  padding: 0.11rem 0.4rem;
+  border-radius: 999px;
+  border: 1px solid rgba(12, 36, 48, 0.32);
+  background: rgba(255, 255, 255, 0.35);
+  color: #062534;
+  font-size: 0.74em;
+  letter-spacing: 0.06em;
+}
+
 @keyframes riseIn {
   from {
     opacity: 0;
@@ -537,6 +549,11 @@ h1 {
   .help {
     font-size: 0.72rem;
   }
+
+  .version-pill {
+    margin-left: 0.38rem;
+    padding: 0.08rem 0.34rem;
+  }
 }
 
 @media (max-width: 520px) {
@@ -628,5 +645,9 @@ h1 {
 
   .help {
     font-size: 0.64rem;
+  }
+
+  .version-pill {
+    margin-left: 0.28rem;
   }
 }

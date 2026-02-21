@@ -1,3 +1,4 @@
+const APP_VERSION = "1.0.0";
 const KNOB_COUNT = 6;
 const KNOB_MIN = 0;
 const KNOB_MAX = 127;
@@ -50,6 +51,7 @@ const ui = {
   scope: document.getElementById("scope"),
   programSelect: document.getElementById("program-select"),
   programDescription: document.getElementById("program-description"),
+  version: document.getElementById("app-version"),
 };
 
 function clamp(value, min, max) {
@@ -541,7 +543,25 @@ function setupButtons() {
   });
 }
 
+function setupVersionBadge() {
+  if (!ui.version) return;
+  ui.version.textContent = `v${APP_VERSION}`;
+}
+
+async function setupPwa() {
+  const isSecure = window.isSecureContext || location.hostname === "localhost" || location.hostname === "127.0.0.1";
+  if (!("serviceWorker" in navigator) || !isSecure) return;
+
+  try {
+    await navigator.serviceWorker.register(`./sw.js?v=${encodeURIComponent(APP_VERSION)}`, { scope: "./" });
+  } catch (error) {
+    console.warn("Service worker registration failed:", error);
+  }
+}
+
 function init() {
+  setupVersionBadge();
+  setupPwa();
   setupProgramSelector();
   setupKnobs();
   setupButtons();
