@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192">
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#ea962e"/>
+      <stop offset="1" stop-color="#ad6214"/>
+    </linearGradient>
+    <linearGradient id="ring" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0" stop-color="#fdf4cc"/>
+      <stop offset="1" stop-color="#d7e6ee"/>
+    </linearGradient>
+  </defs>
+  <rect width="192" height="192" rx="36" fill="url(#bg)"/>
+  <rect x="16" y="16" width="160" height="160" rx="26" fill="none" stroke="rgba(255,255,255,0.55)" stroke-width="4"/>
+  <circle cx="52" cy="64" r="18" fill="#f42e2e"/>
+  <circle cx="96" cy="64" r="18" fill="#24df73"/>
+  <circle cx="140" cy="64" r="18" fill="#2f74f9"/>
+  <circle cx="68" cy="126" r="20" fill="#2f9de2"/>
+  <circle cx="124" cy="126" r="20" fill="#2f9de2"/>
+  <circle cx="96" cy="96" r="24" fill="#0a1a22" stroke="url(#ring)" stroke-width="5"/>
+  <path d="M96 84 L96 96 L108 96" stroke="#59f6c8" stroke-width="5" stroke-linecap="round" fill="none"/>
+</svg>

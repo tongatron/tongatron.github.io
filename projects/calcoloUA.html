@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calcolo Unità Alcoliche</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .container {
+            max-width: 600px;
+        }
+    </style>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const drinks = {
+                "Birra 5% (330ml)": { units: 1.65, grams: 13.2, calories: 132 },
+                "Bicchiere di Vino 12% (125ml)": { units: 1.5, grams: 12, calories: 105 },
+                "Bottiglia di Vino 12% (750ml)": { units: 9, grams: 72, calories: 630 },
+                "Bicchiere di Vodka 40% (40ml)": { units: 1.6, grams: 12.8, calories: 90 },
+                "Bottiglia di Vodka 40% (700ml)": { units: 28, grams: 224, calories: 1575 }
+            };
+            
+            const drinkList = document.getElementById("drink-list");
+            const totalUnits = document.getElementById("total-units");
+            const totalGrams = document.getElementById("total-grams");
+            const totalCalories = document.getElementById("total-calories");
+            const resetButton = document.getElementById("reset");
+            let counts = {};
+            
+            function updateTotal() {
+                let totalUnit = 0;
+                let totalGram = 0;
+                let totalCal = 0;
+                for (let drink in counts) {
+                    totalUnit += counts[drink] * drinks[drink].units;
+                    totalGram += counts[drink] * drinks[drink].grams;
+                    totalCal += counts[drink] * drinks[drink].calories;
+                }
+                totalUnits.textContent = totalUnit.toFixed(2);
+                totalGrams.textContent = totalGram.toFixed(2);
+                totalCalories.textContent = totalCal.toFixed(2);
+            }
+            
+            function changeAmount(drink, change) {
+                counts[drink] = (counts[drink] || 0) + change;
+                if (counts[drink] < 0) counts[drink] = 0;
+                document.getElementById(`count-${drink}`).textContent = counts[drink];
+                updateTotal();
+            }
+            
+            function reset() {
+                counts = {};
+                document.querySelectorAll(".drink-count").forEach(el => el.textContent = 0);
+                updateTotal();
+            }
+            
+            for (let drink in drinks) {
+                counts[drink] = 0;
+                let row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${drink}</td>
+                    <td>
+                        <button class="btn btn-danger btn-sm" data-drink="${drink}">-</button>
+                        <span id="count-${drink}" class="drink-count">0</span>
+                        <button class="btn btn-success btn-sm" data-drink="${drink}">+</button>
+                    </td>
+                `;
+                drinkList.appendChild(row);
+            }
+            
+            drinkList.addEventListener("click", function(event) {
+                if (event.target.tagName === "BUTTON") {
+                    let drink = event.target.getAttribute("data-drink");
+                    let change = event.target.textContent === "+" ? 1 : -1;
+                    changeAmount(drink, change);
+                }
+            });
+            
+            resetButton.addEventListener("click", reset);
+        });
+    </script>
+</head>
+<body class="container py-5">
+    <h1 class="mb-4">Calcolo Unità Alcoliche</h1>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Bevanda</th>
+                <th>Quantità</th>
+            </tr>
+        </thead>
+        <tbody id="drink-list"></tbody>
+    </table>
+    <h3>Totale Unità Alcoliche: <span id="total-units">0</span></h3>
+    <h3>Totale Grammi di Alcol: <span id="total-grams">0</span></h3>
+    <h3>Totale Calorie: <span id="total-calories">0</span></h3>
+    <button id="reset" class="btn btn-warning">Cancella Tutto</button>
+</body>
+</html>

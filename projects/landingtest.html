@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  body, html {
+    height: 100%;
+    margin: 0;
+    overflow: hidden; /* No scrolling */
+    color: #FFF; /* All text in white */
+    font-family: 'Arial', sans-serif; /* Sans-serif font for all text */
+  }
+  .content {
+    position: absolute;
+    top: 40%; /* Adjusted for subtitle */
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+  }
+  .title {
+    font-size: 48px;
+    font-weight: bold; /* Bold title */
+  }
+  .subtitle {
+    font-size: 24px;
+    margin-top: 20px; /* Space between title and subtitle */
+  }
+  canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000; /* Black background */
+  }
+</style>
+</head>
+<body>
+<canvas id="backgroundCanvas"></canvas>
+<div class="content">
+  <div class="title">TONGATRON</div>
+  <div class="subtitle">creative technologist</div>
+  <div>読むバカ</div>
+  <hr>
+  <div><a href="https://sites.google.com/view/tongatron/home-page" style="color:white">projects</a></div>
+</div>
+
+<script>
+  const canvas = document.getElementById('backgroundCanvas');
+  const ctx = canvas.getContext('2d');
+
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  const triangles = [];
+  const numTriangles = 30; // Less triangles for clearer visuals
+
+  class Triangle {
+    constructor() {
+      this.x = Math.random() * canvas.width;
+      this.y = Math.random() * canvas.height;
+      this.l = 50 + Math.random() * 50; // Random length of the side of the triangle
+      this.speedX = (Math.random() - 0.5) * 8;
+      this.speedY = (Math.random() - 0.5) * 8;
+      this.color = Math.random() < 0.5 ? '#FFF' : '#000'; // Randomly black or white
+    }
+
+    draw() {
+      ctx.beginPath();
+      ctx.moveTo(this.x, this.y);
+      ctx.lineTo(this.x + this.l, this.y);
+      ctx.lineTo(this.x + this.l / 2, this.y - Math.sqrt(3) / 2 * this.l); // Equilateral triangle calculations
+      ctx.closePath();
+      ctx.fillStyle = this.color;
+      ctx.fill();
+    }
+
+    update() {
+      this.x += this.speedX;
+      this.y += this.speedY;
+
+      // Bounce off the edges
+      if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+      if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+    }
+  }
+
+  function init() {
+    for (let i = 0; i < numTriangles; i++) {
+      triangles.push(new Triangle());
+    }
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    triangles.forEach(triangle => {
+      triangle.update();
+      triangle.draw();
+    });
+  }
+
+  function update() {
+    draw();
+    setTimeout(update, 150); // Slower update for smoother movement
+  }
+
+  init();
+  update();
+</script>
+</body>
+</html>

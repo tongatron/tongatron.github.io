@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-label="Roulette icon">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1d4a37"/>
+      <stop offset="1" stop-color="#0d1f16"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="96" fill="url(#bg)"/>
+  <circle cx="256" cy="256" r="186" fill="#102f22" stroke="#b99b4a" stroke-width="26"/>
+  <circle cx="256" cy="256" r="58" fill="#d0ad58"/>
+  <circle cx="256" cy="88" r="22" fill="#f0b429"/>
+  <text x="256" y="286" text-anchor="middle" font-family="Arial, sans-serif" font-weight="700" font-size="98" fill="#f3f6f4">R</text>
+</svg>
