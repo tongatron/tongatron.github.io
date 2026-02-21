@@ -37,10 +37,18 @@ body {
   display: grid;
   grid-template-rows: auto 1fr auto;
   gap: 0.75rem;
+  position: relative;
 }
 
 .hero {
   max-width: 820px;
+}
+
+.top-right-meta {
+  position: absolute;
+  top: 0.7rem;
+  right: 0;
+  z-index: 3;
 }
 
 .eyebrow {
@@ -554,6 +562,11 @@ h1 {
     margin-left: 0.38rem;
     padding: 0.08rem 0.34rem;
   }
+
+  .top-right-meta {
+    top: 0.45rem;
+    right: 0.1rem;
+  }
 }
 
 @media (max-width: 520px) {
@@ -648,6 +661,13 @@ h1 {
   }
 
   .version-pill {
-    margin-left: 0.28rem;
+    margin-left: 0;
+    font-size: 0.66em;
+    padding: 0.07rem 0.28rem;
+  }
+
+  .top-right-meta {
+    top: 0.35rem;
+    right: 0.08rem;
   }
 }
