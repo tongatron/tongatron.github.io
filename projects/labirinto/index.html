@@ -1,40 +1,75 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="it">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#111827" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet" />
     <link rel="manifest" href="./manifest.webmanifest" />
     <link rel="stylesheet" href="./style.css" />
-    <title>Maze Game</title>
+    <title>Maze Arcade</title>
   </head>
   <body>
     <main class="game">
-      <h1>Maze</h1>
-      <p>Guide the player to the green square.</p>
-      <div class="settings">
-        <label for="difficulty">Difficulty</label>
-        <select id="difficulty" aria-label="Select difficulty">
-          <option value="easy">Easy</option>
-          <option value="medium" selected>Medium</option>
-          <option value="hard">Hard</option>
-        </select>
-        <button id="newMaze" type="button">New</button>
-      </div>
-      <canvas id="maze" width="504" height="504" aria-label="Maze"></canvas>
+      <header class="topbar">
+        <h1>MAZE ARCADE</h1>
+        <p>Griglia dinamica, difficoltà progressive e schermata piena in puro stile sala giochi.</p>
+      </header>
 
-      <div class="controls" aria-label="Mobile controls">
+      <section class="settings" aria-label="Parametri gioco">
+        <label class="field" for="difficulty">
+          <span>DIFFICOLTÀ</span>
+          <select id="difficulty" aria-label="Seleziona difficoltà">
+            <option value="rookie">Rookie</option>
+            <option value="arcade" selected>Arcade</option>
+            <option value="hard">Hard</option>
+            <option value="nightmare">Nightmare</option>
+            <option value="legend">Legend</option>
+          </select>
+        </label>
+
+        <label class="field" for="mazeSize">
+          <span>DIMENSIONE</span>
+          <input id="mazeSize" type="range" min="15" max="121" step="2" value="41" aria-label="Dimensione griglia" />
+          <strong id="sizeValue">41x41</strong>
+        </label>
+
+        <label class="field" for="viewMode">
+          <span>VISTA</span>
+          <select id="viewMode" aria-label="Modalità vista">
+            <option value="full" selected>Full page</option>
+            <option value="fit">Compatta</option>
+          </select>
+        </label>
+
+        <button id="newMaze" type="button">NEW LEVEL</button>
+      </section>
+
+      <section class="maze-shell">
+        <canvas id="maze" aria-label="Labirinto"></canvas>
+        <div id="winBanner" class="win-banner" aria-live="polite">LEVEL CLEAR</div>
+      </section>
+
+      <div id="statusLine" class="status-line">Usa frecce o WASD per muoverti.</div>
+
+      <div class="controls" aria-label="Controlli touch">
         <span class="empty"></span>
-        <button data-dir="up" aria-label="Up">▲</button>
+        <button data-dir="up" aria-label="Su">▲</button>
         <span class="empty"></span>
-        <button data-dir="left" aria-label="Left">◀</button>
-        <button data-dir="down" aria-label="Down">▼</button>
-        <button data-dir="right" aria-label="Right">▶</button>
+        <button data-dir="left" aria-label="Sinistra">◀</button>
+        <button data-dir="down" aria-label="Giù">▼</button>
+        <button data-dir="right" aria-label="Destra">▶</button>
       </div>
 
-      <div class="hint">Desktop: use arrow keys. Mobile: use on-screen buttons.</div>
-      <div id="pwaStatus" class="pwa-status">PWA inactive</div>
-      <span id="appVersion" class="app-version">Version -</span>
+      <footer class="meta">
+        <div class="hint">Desktop: frecce/WASD • Mobile: pad touch</div>
+        <div class="meta-right">
+          <div id="pwaStatus" class="pwa-status">PWA inactive</div>
+          <span id="appVersion" class="app-version">Version -</span>
+        </div>
+      </footer>
     </main>
 
     <script src="./app.js" defer></script>

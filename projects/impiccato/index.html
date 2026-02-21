@@ -1,0 +1,504 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Il Gioco dell'Impiccato</title>
+  <meta name="description" content="Gioco dell'impiccato con database di 100 parole in italiano.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&amp;family=Press+Start+2P&amp;display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #120824;
+      --bg-2: #1b0e36;
+      --panel: #211144;
+      --panel-2: #2a1655;
+      --line: #5b35a2;
+      --text: #f5f7ff;
+      --muted: #b7b1d9;
+      --primary: #00d4ff;
+      --primary-2: #00f5a0;
+      --danger: #ff4d6d;
+      --ok: #66ff8f;
+      --yellow: #ffd166;
+      --orange: #ff8a3d;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Baloo 2", "Segoe UI", Roboto, Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(900px 380px at 10% -8%, #41226f 0%, transparent 65%),
+        radial-gradient(900px 420px at 95% -10%, #183a7c 0%, transparent 60%),
+        linear-gradient(180deg, var(--bg) 0%, #0d061f 100%);
+      min-height: 100vh;
+    }
+
+    .page {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 18px 12px 30px;
+      display: grid;
+      gap: 12px;
+    }
+
+    .panel {
+      background: linear-gradient(180deg, var(--panel) 0%, var(--panel-2) 100%);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 14px;
+      box-shadow: 0 10px 26px rgba(0, 0, 0, 0.26), inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-family: "Press Start 2P", "Baloo 2", sans-serif;
+      font-size: clamp(24px, 5.2vw, 38px);
+      line-height: 1.08;
+      color: #dff7ff;
+      text-shadow: 0 0 14px rgba(0, 212, 255, 0.35);
+    }
+
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.45;
+      font-size: 1.15rem;
+    }
+
+    .badges {
+      margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .badge {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: 14px;
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.08);
+      font-weight: 700;
+    }
+
+    .game {
+      display: grid;
+      grid-template-columns: minmax(240px, 300px) 1fr;
+      gap: 12px;
+      align-items: start;
+    }
+
+    .gallows {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 10px;
+      background:
+        linear-gradient(145deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02)),
+        linear-gradient(180deg, #25124a 0%, #190b33 100%);
+    }
+
+    svg {
+      width: 100%;
+      height: auto;
+      display: block;
+      filter: drop-shadow(0 0 8px rgba(0, 212, 255, 0.25));
+    }
+
+    .part { opacity: 0; transition: opacity 140ms ease; }
+    .part.show { opacity: 1; }
+
+    .gallow-line {
+      stroke: #7fd7ff;
+      stroke-width: 6;
+    }
+
+    .hangman {
+      stroke: #f8fbff;
+      stroke-width: 5;
+    }
+
+    .mascot-box {
+      margin-top: 10px;
+      border: 1px solid #7147c9;
+      background: rgba(8, 6, 20, 0.4);
+      border-radius: 10px;
+      padding: 8px;
+      text-align: center;
+    }
+
+    .mascot-face {
+      font-size: 38px;
+      line-height: 1;
+      animation: bob 1.7s ease-in-out infinite;
+      user-select: none;
+    }
+
+    .mascot-line {
+      margin: 6px 0 0;
+      font-size: 14px;
+      color: #f5ecff;
+      min-height: 22px;
+    }
+
+    @keyframes bob {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-4px); }
+    }
+
+    .word {
+      margin: 0;
+      font-size: clamp(26px, 5vw, 40px);
+      font-weight: 800;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: #fff8df;
+      text-shadow: 0 0 8px rgba(255, 209, 102, 0.25);
+      line-height: 1.2;
+      min-height: 56px;
+      word-break: break-word;
+    }
+
+    .status {
+      margin: 8px 0 0;
+      font-weight: 700;
+      min-height: 22px;
+    }
+
+    .status.win { color: var(--ok); }
+    .status.lose { color: var(--danger); }
+
+    .wrong {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 16px;
+      min-height: 21px;
+    }
+
+    .keyboard {
+      margin-top: 12px;
+      display: grid;
+      grid-template-columns: repeat(9, minmax(0, 1fr));
+      gap: 6px;
+    }
+
+    .key {
+      border: 1px solid #7c57cc;
+      background: linear-gradient(180deg, #3a1f76 0%, #2a1657 100%);
+      color: #fff;
+      border-radius: 8px;
+      min-height: 38px;
+      font-weight: 700;
+      font-family: "Baloo 2", sans-serif;
+      font-size: 16px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .key:hover:not(:disabled) {
+      border-color: #8cdbff;
+      background: linear-gradient(180deg, #4e2b95 0%, #3b2076 100%);
+    }
+
+    .key:disabled {
+      opacity: .5;
+      cursor: not-allowed;
+    }
+
+    .key.hit {
+      border-color: #53efb4;
+      background: linear-gradient(180deg, #1b7e60 0%, #135945 100%);
+      color: #d9ffe9;
+    }
+
+    .key.miss {
+      border-color: #ff8099;
+      background: linear-gradient(180deg, #91305e 0%, #6f2146 100%);
+      color: #ffe6ee;
+    }
+
+    .actions {
+      margin-top: 12px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .btn {
+      border: 1px solid #8f67d9;
+      background: linear-gradient(180deg, #381c72 0%, #28144f 100%);
+      color: #fff;
+      border-radius: 10px;
+      padding: 10px 12px;
+      cursor: pointer;
+      font-weight: 700;
+      font-family: "Baloo 2", sans-serif;
+      font-size: 16px;
+    }
+
+    .btn.primary {
+      border-color: #0ab8ff;
+      background: linear-gradient(90deg, var(--primary) 0%, var(--primary-2) 100%);
+      color: #062034;
+    }
+
+    .help {
+      color: var(--muted);
+      margin-top: 8px;
+      font-size: 14px;
+    }
+
+    @media (max-width: 800px) {
+      .game {
+        grid-template-columns: 1fr;
+      }
+
+      .keyboard {
+        grid-template-columns: repeat(7, minmax(0, 1fr));
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="panel">
+      <h1>Il gioco dell'impiccato</h1>
+      <p class="subtitle">Modalità arcade attiva: indovina la parola prima che il pupazzo perda la pazienza.</p>
+      <div class="badges">
+        <span id="dbCount" class="badge">Parole nel database: --</span>
+        <span id="scoreWin" class="badge">Vittorie: 0</span>
+        <span id="scoreLose" class="badge">Sconfitte: 0</span>
+      </div>
+    </section>
+
+    <section class="panel game">
+      <div class="gallows">
+        <svg viewBox="0 0 220 220" role="img" aria-label="Stato impiccato">
+          <line class="gallow-line" x1="20" y1="200" x2="130" y2="200" />
+          <line class="gallow-line" x1="45" y1="200" x2="45" y2="20" />
+          <line class="gallow-line" x1="45" y1="20" x2="150" y2="20" />
+          <line class="gallow-line" x1="150" y1="20" x2="150" y2="45" />
+
+          <circle id="part1" class="part hangman" cx="150" cy="62" r="16" fill="none" />
+          <line id="part2" class="part hangman" x1="150" y1="78" x2="150" y2="122" />
+          <line id="part3" class="part hangman" x1="150" y1="88" x2="126" y2="110" />
+          <line id="part4" class="part hangman" x1="150" y1="88" x2="174" y2="110" />
+          <line id="part5" class="part hangman" x1="150" y1="122" x2="130" y2="156" />
+          <line id="part6" class="part hangman" x1="150" y1="122" x2="170" y2="156" />
+        </svg>
+
+        <div class="mascot-box">
+          <div id="mascotFace" class="mascot-face">🤖</div>
+          <p id="mascotLine" class="mascot-line">Pronto a giocare!</p>
+        </div>
+      </div>
+
+      <div>
+        <p id="word" class="word">_ _ _ _</p>
+        <p id="status" class="status">Seleziona una lettera.</p>
+        <p id="wrong" class="wrong">Errori: nessuno</p>
+
+        <div id="keyboard" class="keyboard" aria-label="Tastiera lettere"></div>
+
+        <div class="actions">
+          <button id="newWord" class="btn primary" type="button">Nuova parola</button>
+        </div>
+        <p class="help">Puoi giocare anche con la tastiera del computer.</p>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const WORDS = [
+      "abbraccio","aeroplano","alfabeto","amicizia","ananas","arcipelago","armadio","armonia","asparago","astronave",
+      "atlante","avventura","balcone","biblioteca","bicicletta","biscotto","bottiglia","bretella","bruco","bussola",
+      "calamaro","campanile","canzone","caramella","castagna","cavaliere","ceramica","cioccolato","coccinella","collina",
+      "cometa","computer","conchiglia","coraggio","cuscino","diamante","delfino","disegno","elefante","emozione",
+      "energia","farfalla","finestra","fiume","foresta","formaggio","fragola","frigorifero","fulmine","gabbiano",
+      "galassia","gelato","giardino","girasole","giornale","giocattolo","girandola","ghiacciaio","gomitolo","grappolo",
+      "hamburger","ispirazione","lampadina","lavagna","leggenda","limonata","macchina","margherita","mattone","melodia",
+      "montagna","motocicletta","museo","nebulosa","occhiale","ombrello","orchidea","pagliaccio","panetteria","papavero",
+      "paracadute","pavimento","pianoforte","piscina","poltrona","pomodoro","portafoglio","prateria","quaderno","racchetta",
+      "ragnatela","rinoceronte","robotica","sciarpa","scivolo","semaforo","sentiero","sirena","sogno","valigia"
+    ];
+
+    const ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+    const MAX_ERRORS = 6;
+
+    const dbCountEl = document.getElementById("dbCount");
+    const scoreWinEl = document.getElementById("scoreWin");
+    const scoreLoseEl = document.getElementById("scoreLose");
+    const wordEl = document.getElementById("word");
+    const statusEl = document.getElementById("status");
+    const wrongEl = document.getElementById("wrong");
+    const keyboardEl = document.getElementById("keyboard");
+    const newWordBtn = document.getElementById("newWord");
+    const mascotFaceEl = document.getElementById("mascotFace");
+    const mascotLineEl = document.getElementById("mascotLine");
+
+    const partEls = [1,2,3,4,5,6].map((n) => document.getElementById("part" + n));
+
+    let state = {
+      word: "",
+      guessed: new Set(),
+      wrong: new Set(),
+      ended: false,
+      wins: 0,
+      losses: 0
+    };
+
+    function pickWord() {
+      const idx = Math.floor(Math.random() * WORDS.length);
+      return WORDS[idx].toUpperCase();
+    }
+
+    function renderWord() {
+      const out = state.word.split("").map((ch) => (state.guessed.has(ch) ? ch : "_"));
+      wordEl.textContent = out.join(" ");
+    }
+
+    function renderKeyboard() {
+      keyboardEl.innerHTML = "";
+      ALPHABET.forEach((letter) => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "key";
+        btn.textContent = letter;
+
+        if (state.guessed.has(letter)) btn.classList.add("hit");
+        if (state.wrong.has(letter)) btn.classList.add("miss");
+        if (state.guessed.has(letter) || state.wrong.has(letter) || state.ended) btn.disabled = true;
+
+        btn.addEventListener("click", () => play(letter));
+        keyboardEl.appendChild(btn);
+      });
+    }
+
+    function renderGallows() {
+      const errors = state.wrong.size;
+      partEls.forEach((el, i) => {
+        el.classList.toggle("show", i < errors);
+      });
+    }
+
+    function updateMascot(mode = "auto") {
+      if (mode === "win") {
+        mascotFaceEl.textContent = "🥳";
+        mascotLineEl.textContent = "Grande! Livello superato!";
+        return;
+      }
+      if (mode === "lose") {
+        mascotFaceEl.textContent = "💀";
+        mascotLineEl.textContent = "Game over. Riproviamo!";
+        return;
+      }
+
+      const errors = state.wrong.size;
+      if (errors === 0) {
+        mascotFaceEl.textContent = "🤖";
+        mascotLineEl.textContent = "Pronto a giocare!";
+      } else if (errors <= 2) {
+        mascotFaceEl.textContent = "😎";
+        mascotLineEl.textContent = "Ci siamo, continua!";
+      } else if (errors <= 4) {
+        mascotFaceEl.textContent = "😬";
+        mascotLineEl.textContent = "Occhio, stai attento alle lettere.";
+      } else {
+        mascotFaceEl.textContent = "😵";
+        mascotLineEl.textContent = "Ultime vite, scegli bene!";
+      }
+    }
+
+    function renderStatus(message = "") {
+      if (message) statusEl.textContent = message;
+      const wrongLetters = Array.from(state.wrong).join(", ");
+      wrongEl.textContent = state.wrong.size ? ("Errori: " + wrongLetters) : "Errori: nessuno";
+      scoreWinEl.textContent = "Vittorie: " + state.wins;
+      scoreLoseEl.textContent = "Sconfitte: " + state.losses;
+    }
+
+    function win() {
+      state.ended = true;
+      state.wins += 1;
+      statusEl.textContent = "Bravo! Hai indovinato: " + state.word;
+      statusEl.className = "status win";
+      updateMascot("win");
+      renderStatus();
+      renderKeyboard();
+    }
+
+    function lose() {
+      state.ended = true;
+      state.losses += 1;
+      statusEl.textContent = "Peccato! La parola era: " + state.word;
+      statusEl.className = "status lose";
+      updateMascot("lose");
+      renderStatus();
+      renderKeyboard();
+    }
+
+    function isSolved() {
+      return state.word.split("").every((ch) => state.guessed.has(ch));
+    }
+
+    function play(letter) {
+      if (state.ended) return;
+      if (state.guessed.has(letter) || state.wrong.has(letter)) return;
+
+      if (state.word.includes(letter)) {
+        state.guessed.add(letter);
+        renderWord();
+        if (isSolved()) {
+          win();
+          return;
+        }
+        statusEl.className = "status";
+        renderStatus("Giusto! Continua.");
+        updateMascot();
+      } else {
+        state.wrong.add(letter);
+        renderGallows();
+        if (state.wrong.size >= MAX_ERRORS) {
+          renderWord();
+          lose();
+          return;
+        }
+        statusEl.className = "status";
+        renderStatus("Non c'e. Tentativi rimasti: " + (MAX_ERRORS - state.wrong.size));
+        updateMascot();
+      }
+
+      renderKeyboard();
+    }
+
+    function newRound() {
+      state.word = pickWord();
+      state.guessed = new Set();
+      state.wrong = new Set();
+      state.ended = false;
+
+      statusEl.className = "status";
+      renderWord();
+      renderGallows();
+      renderKeyboard();
+      renderStatus("Seleziona una lettera.");
+      updateMascot();
+    }
+
+    document.addEventListener("keydown", (e) => {
+      const key = e.key.toUpperCase();
+      if (/^[A-Z]$/.test(key)) play(key);
+    });
+
+    newWordBtn.addEventListener("click", newRound);
+
+    dbCountEl.textContent = "Parole nel database: " + WORDS.length;
+    newRound();
+  </script>
+</body>
+</html>

@@ -1,99 +1,207 @@
 :root {
-  --bg: #111827;
-  --panel: #1f2937;
-  --wall: #0f172a;
-  --path: #dbeafe;
-  --player: #ef4444;
-  --goal: #10b981;
-  --btn: #334155;
-  --btn-active: #475569;
+  --bg: #06060c;
+  --panel: #101020;
+  --line: #29415f;
+  --text: #d7ebff;
+  --muted: #8ab0d2;
+  --neon: #00ff9f;
+  --neon-2: #2de2e6;
+  --danger: #ff3d81;
+  --wall: #0b1424;
+  --path: #b9fbc0;
+  --player: #ff3d81;
+  --goal: #00ff9f;
+  --btn: #112038;
+  --btn-active: #1a3358;
 }
 
 * {
   box-sizing: border-box;
 }
 
+html,
 body {
   margin: 0;
-  min-height: 100vh;
-  font-family: "Trebuchet MS", "Segoe UI", sans-serif;
-  background: radial-gradient(circle at top, #1f2937, var(--bg));
-  color: #f9fafb;
-  display: grid;
-  place-items: center;
-  padding: 16px;
+  height: 100%;
+}
+
+body {
+  min-height: 100%;
+  font-family: "VT323", "Trebuchet MS", monospace;
+  color: var(--text);
+  background:
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.02) 0 1px, transparent 1px 3px),
+    radial-gradient(1000px 420px at 85% -5%, rgba(45, 226, 230, 0.14) 0%, transparent 70%),
+    radial-gradient(1000px 420px at -5% -10%, rgba(0, 255, 159, 0.1) 0%, transparent 65%),
+    var(--bg);
+  padding: 0;
+  overflow: hidden;
 }
 
 .game {
   position: relative;
-  width: min(92vw, 540px);
-  background: #111827;
-  border: 1px solid #334155;
-  border-radius: 14px;
-  padding: 16px 16px 34px;
-  box-shadow: 0 14px 36px rgb(0 0 0 / 0.35);
+  width: 100vw;
+  height: 100vh;
+  margin: 0 auto;
+  border: 2px solid var(--line);
+  border-radius: 0;
+  background: linear-gradient(180deg, #0d1322 0%, #0a1020 100%);
+  box-shadow: inset 0 0 0 1px rgba(45, 226, 230, 0.18), 0 0 30px rgba(0, 0, 0, 0.45);
+  padding: 12px;
+  display: grid;
+  grid-template-rows: auto auto minmax(0, 1fr) auto auto;
+  gap: 8px;
 }
 
-h1 {
-  margin: 0 0 10px;
-  font-size: 1.35rem;
+.game::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.04) 0,
+    rgba(255, 255, 255, 0.04) 1px,
+    transparent 2px,
+    transparent 4px
+  );
+  opacity: 0.18;
+  mix-blend-mode: screen;
 }
 
-p {
-  margin: 0 0 12px;
-  opacity: 0.9;
+.topbar h1 {
+  margin: 0;
+  font-family: "Press Start 2P", monospace;
+  font-size: clamp(13px, 2.2vw, 20px);
+  line-height: 1.4;
+  color: var(--neon-2);
+  text-shadow: 0 0 8px rgba(45, 226, 230, 0.5);
+}
+
+.topbar p {
+  margin: 4px 0 0;
+  color: var(--muted);
+  font-size: clamp(20px, 2.3vw, 28px);
+  letter-spacing: 0.02em;
 }
 
 .settings {
-  display: flex;
-  align-items: center;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(120px, 1fr));
   gap: 8px;
-  margin: 0 0 12px;
+  align-items: end;
 }
 
-.settings label {
-  font-size: 0.9rem;
-  opacity: 0.9;
+.field {
+  display: grid;
+  gap: 4px;
+}
+
+.field span {
+  font-family: "Press Start 2P", monospace;
+  font-size: 10px;
+  color: #9cc8ed;
+}
+
+.field strong {
+  color: var(--neon);
+  font-size: 21px;
 }
 
 .settings select,
+.settings input,
 .settings button {
-  background: #0f172a;
-  color: #f9fafb;
-  border: 1px solid #334155;
+  font-family: inherit;
+  font-size: 22px;
+  color: #eaf4ff;
+  background: #0f1a2d;
+  border: 1px solid #2d4a6b;
   border-radius: 8px;
   padding: 6px 10px;
-  font-size: 0.9rem;
+}
+
+.settings input[type="range"] {
+  accent-color: var(--neon);
+  padding: 0;
 }
 
 .settings button {
   cursor: pointer;
+  background: linear-gradient(180deg, #10335e 0%, #0f2747 100%);
+  border-color: #356397;
+  font-family: "Press Start 2P", monospace;
+  font-size: 11px;
+  color: #bfe3ff;
+}
+
+.settings button:hover {
+  border-color: #4d84c0;
+}
+
+.maze-shell {
+  position: relative;
+  border: 1px solid #29415f;
+  border-radius: 10px;
+  background: #08101d;
+  display: grid;
+  min-height: 0;
+  place-items: center;
+  overflow: hidden;
 }
 
 canvas {
-  width: 100%;
-  height: auto;
   display: block;
-  border-radius: 10px;
-  border: 1px solid #475569;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  border: 1px solid #34567b;
+  border-radius: 8px;
   background: var(--path);
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.win-banner {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%) scale(0.9);
+  padding: 6px 10px;
+  border: 1px solid #45cf95;
+  border-radius: 8px;
+  background: rgba(5, 35, 28, 0.9);
+  color: #8fffd0;
+  font-family: "Press Start 2P", monospace;
+  font-size: 10px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 140ms ease, transform 140ms ease;
+}
+
+.win-banner.show {
+  opacity: 1;
+  transform: translateX(-50%) scale(1);
+}
+
+.status-line {
+  min-height: 24px;
+  color: #9cc8ed;
+  font-size: 24px;
 }
 
 .controls {
   display: none;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(44px, 68px));
   gap: 8px;
-  max-width: 230px;
-  margin: 14px auto 0;
+  justify-content: center;
 }
 
 .controls button {
-  border: 0;
-  border-radius: 10px;
+  border: 1px solid #36557a;
+  border-radius: 8px;
   padding: 10px 0;
-  font-size: 1.1rem;
+  font-size: 22px;
   background: var(--btn);
-  color: white;
+  color: #dbf0ff;
   font-weight: 700;
   cursor: pointer;
 }
@@ -107,26 +215,50 @@ canvas {
   visibility: hidden;
 }
 
-.hint {
-  margin-top: 10px;
-  font-size: 0.9rem;
-  opacity: 0.8;
-  text-align: center;
+.meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: center;
+  color: var(--muted);
+  font-size: 20px;
 }
 
-.pwa-status {
-  margin-top: 8px;
-  text-align: center;
-  font-size: 0.82rem;
-  opacity: 0.78;
+.meta-right {
+  display: flex;
+  gap: 12px;
+  align-items: center;
 }
 
+.pwa-status,
 .app-version {
-  position: absolute;
-  right: 12px;
-  bottom: 10px;
-  font-size: 0.76rem;
-  opacity: 0.75;
+  white-space: nowrap;
+}
+
+@media (max-width: 980px) {
+  body {
+    overflow: auto;
+  }
+
+  .game {
+    min-height: 100vh;
+    height: auto;
+  }
+
+  .settings {
+    grid-template-columns: repeat(2, minmax(120px, 1fr));
+  }
+
+  .meta {
+    font-size: 18px;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .meta-right {
+    gap: 8px;
+    flex-wrap: wrap;
+  }
 }
 
 @media (hover: none), (pointer: coarse) {

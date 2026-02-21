@@ -19,6 +19,7 @@ const recordsModal=document.getElementById("recordsModal");
 const recordsListEl=document.getElementById("recordsList");
 const RECORDS_KEY="memoryRecordsV1";
 const MATRIX_LABELS={16:"4x4",20:"4x5",24:"4x6",28:"4x7"};
+const COVER_VARIANTS=["0","1","2"];
 
 function layout(total){
   const isMobile=window.matchMedia(`(max-width:${MOBILE_BREAKPOINT}px)`).matches;
@@ -176,11 +177,17 @@ function resetRecords(){
   renderRecords();
 }
 
+function applyRandomCoverVariant(){
+  const variant=COVER_VARIANTS[Math.floor(Math.random()*COVER_VARIANTS.length)];
+  document.body.setAttribute("data-cover",variant);
+}
+
 function newGame(total){
   moves=0;timer=0;
   movesEl.textContent="Moves: 0";
   timerEl.textContent="Time: 0s";
   clearInterval(intervalId);
+  applyRandomCoverVariant();
   layout(total);
   build(total);
   intervalId=setInterval(()=>{
