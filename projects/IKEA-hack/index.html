@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>IKEA Hack Nordli | Tongatron</title>
+  <meta name="description" content="IKEA hack per cassettiere Nordli: ogni cassetto diventa un tavolino estraibile tramite pannello tagliato a laser.">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --accent: #d62828;
+      --accent-dark: #9c1d1d;
+      --ink: #1f2937;
+      --muted: #6b7280;
+    }
+
+    body {
+      color: var(--ink);
+      background: #f7f8fa;
+    }
+
+    .hero {
+      position: relative;
+      min-height: 56vh;
+      display: flex;
+      align-items: end;
+      color: #fff;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(180deg, rgba(0, 0, 0, 0.22) 0%, rgba(0, 0, 0, 0.72) 100%),
+        url("./ikea.jpg") center/cover no-repeat;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      padding: 3.2rem 0;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      border: 1px solid rgba(255, 255, 255, 0.45);
+      border-radius: 999px;
+      padding: 0.35rem 0.75rem;
+      font-size: 0.85rem;
+      margin-right: 0.4rem;
+      margin-bottom: 0.5rem;
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .section-title {
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    .card-clean {
+      border: 0;
+      border-radius: 1rem;
+      box-shadow: 0 0.6rem 1.8rem rgba(15, 23, 42, 0.08);
+    }
+
+    .iframe-wrap {
+      position: relative;
+      width: 100%;
+      padding-top: 56.25%;
+      border-radius: 0.9rem;
+      overflow: hidden;
+      background: #000;
+    }
+
+    .iframe-wrap iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    .gallery-img {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      border-radius: 0.8rem;
+      border: 1px solid #e5e7eb;
+    }
+
+    .list-dot li + li {
+      margin-top: 0.6rem;
+    }
+
+    .cta {
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+      color: #fff;
+      border-radius: 1rem;
+    }
+
+    .cta a.btn {
+      border-width: 2px;
+    }
+
+    footer {
+      color: var(--muted);
+    }
+  </style>
+</head>
+<body>
+  <header class="hero mb-4">
+    <div class="container hero-content">
+      <p class="text-uppercase mb-2" style="letter-spacing:.08em;">Tongatron / IKEA Hack</p>
+      <h1 class="display-5 fw-bold mb-3">IKEA Hack per Nordli</h1>
+      <p class="lead mb-3">Ogni cassetto puo nascondere un tavolino utile, tagliato a laser e montato in pochi passaggi.</p>
+      <div>
+        <span class="chip"><i class="bi bi-calendar-event"></i>10 marzo 2017</span>
+        <span class="chip"><i class="bi bi-person"></i>Giovanni Bindi</span>
+        <span class="chip"><i class="bi bi-tools"></i>Laser cut + legno</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="container pb-5">
+    <section class="row g-4 mb-2">
+      <div class="col-12 col-lg-7">
+        <div class="card card-clean h-100">
+          <div class="card-body p-4">
+            <h2 class="section-title h4">Come funziona</h2>
+            <div class="iframe-wrap mb-3">
+              <iframe width="460" height="315" src="https://www.youtube.com/embed/spbYojW0Ouk?si=Sgi03V8ZTIb9pB-E" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
+            <p class="mb-0 text-secondary">Il pannello tagliato a laser si aggancia al cassetto Nordli e diventa un piano di appoggio estraibile.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-lg-5">
+        <div class="card card-clean h-100">
+          <div class="card-body p-4">
+            <h2 class="section-title h4">File disponibili in cartella</h2>
+            <ul class="mb-3">
+              <li><code>2017-03-05-IKEA-hack.md</code> (testo originale progetto)</li>
+              <li><code>ikea.jpg</code> (immagine locale copertina)</li>
+            </ul>
+            <h3 class="h6 text-uppercase text-secondary">Link progetto originale</h3>
+            <div class="d-grid gap-2 mt-2">
+              <a class="btn btn-outline-dark" href="https://github.com/tongatron/IKEA-Nordli-hack" target="_blank" rel="noopener">Repository GitHub</a>
+              <a class="btn btn-outline-dark" href="https://github.com/tongatron/IKEA-Nordli-hack/raw/gh-pages/design/IKEA-Nordli-hack.zip" target="_blank" rel="noopener">Scarica file di taglio (.zip)</a>
+              <a class="btn btn-outline-dark" href="https://www.ikea.com/us/en/cat/nordli-series-27271/" target="_blank" rel="noopener">Serie IKEA Nordli</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card card-clean p-4 mb-4">
+      <h2 class="section-title h4">Foto del progetto</h2>
+      <div class="row g-3">
+        <div class="col-12 col-md-6 col-lg-3">
+          <img class="gallery-img" src="https://raw.githubusercontent.com/tongatron/IKEA-Nordli-hack/gh-pages/img/cassetto3.jpg" alt="Drawer 1">
+        </div>
+        <div class="col-12 col-md-6 col-lg-3">
+          <img class="gallery-img" src="https://raw.githubusercontent.com/tongatron/IKEA-Nordli-hack/gh-pages/img/cassetto2.jpg" alt="Drawer 2">
+        </div>
+        <div class="col-12 col-md-6 col-lg-3">
+          <img class="gallery-img" src="https://raw.githubusercontent.com/tongatron/IKEA-Nordli-hack/gh-pages/img/IKEA-Nordli-hack-4.jpg" alt="Drawer 3">
+        </div>
+        <div class="col-12 col-md-6 col-lg-3">
+          <img class="gallery-img" src="https://raw.githubusercontent.com/tongatron/IKEA-Nordli-hack/gh-pages/img/nordli_original.jpg" alt="Nordli originale">
+        </div>
+      </div>
+    </section>
+
+    <section class="row g-4 mb-4">
+      <div class="col-12 col-lg-6">
+        <div class="card card-clean h-100">
+          <div class="card-body p-4">
+            <h2 class="section-title h4">Materiali necessari</h2>
+            <ul class="list-dot mb-0">
+              <li><strong>Pannello in legno da 6 mm</strong>: almeno 320x390 mm (cassetto corto) o 320x790 mm (cassetto lungo).</li>
+              <li><strong>Macchina laser cut</strong> (FabLab o laboratorio con taglio digitale).</li>
+              <li><strong>File di design</strong> per i due formati di cassetto.</li>
+              <li><strong>Colla per legno</strong> per fissare i ganci al pannello.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="card card-clean h-100">
+          <div class="card-body p-4">
+            <h2 class="section-title h4">Istruzioni base</h2>
+            <ol class="mb-0">
+              <li>Scarica i file e imposta il taglio laser sul materiale scelto.</li>
+              <li>Taglia il pannello in base al cassetto Nordli (corto o lungo).</li>
+              <li>Incolla i ganci al piano tagliato e lascia asciugare completamente.</li>
+              <li>Inserisci il piano nel cassetto e verifica stabilita e scorrimento.</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card card-clean p-4 mb-4">
+      <h2 class="section-title h4">Suggerimenti utili (aggiunti)</h2>
+      <div class="row g-4">
+        <div class="col-12 col-md-4">
+          <h3 class="h6 text-uppercase text-secondary">Prima del taglio</h3>
+          <ul class="mb-0">
+            <li>Fai un test su cartone per verificare tolleranze e incastri.</li>
+            <li>Controlla le misure reali del tuo modulo Nordli prima di tagliare.</li>
+          </ul>
+        </div>
+        <div class="col-12 col-md-4">
+          <h3 class="h6 text-uppercase text-secondary">Finitura</h3>
+          <ul class="mb-0">
+            <li>Carteggia i bordi e applica olio/vernice protettiva leggera.</li>
+            <li>Valuta feltrini antiscivolo sul lato inferiore del piano.</li>
+          </ul>
+        </div>
+        <div class="col-12 col-md-4">
+          <h3 class="h6 text-uppercase text-secondary">Uso quotidiano</h3>
+          <ul class="mb-0">
+            <li>Definisci un carico massimo per evitare flessioni nel tempo.</li>
+            <li>Se usi peso elevato, aumenta spessore o rinforza il pannello.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta p-4 p-md-5 mb-3">
+      <div class="row align-items-center g-3">
+        <div class="col-12 col-lg-8">
+          <h2 class="h3 fw-bold mb-2">Vuoi rifarlo in un FabLab vicino?</h2>
+          <p class="mb-0">Trova un laboratorio di fabbricazione digitale e porta i file gia pronti per il taglio.</p>
+        </div>
+        <div class="col-12 col-lg-4 text-lg-end">
+          <a class="btn btn-light btn-lg" href="https://www.fablabs.io/labs/map" target="_blank" rel="noopener">Apri mappa FabLab</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="container pb-4">
+    <div class="border-top pt-3 d-flex flex-wrap justify-content-between gap-2">
+      <span>Made in FabLab Torino</span>
+      <a href="https://fablabtorino.org/" target="_blank" rel="noopener">fablabtorino.org</a>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+</body>
+</html>

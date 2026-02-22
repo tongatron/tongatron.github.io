@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Self-O-Matic | Social Camera per Eventi</title>
+  <meta name="description" content="Self-O-Matic: social camera per eventi, con pubblicazione foto in tempo reale e noleggio personalizzato.">
+  <meta name="author" content="Tongatron">
+  <link rel="shortcut icon" href="favicon.ico">
+
+  <meta property="og:site_name" content="Self-O-Matic">
+  <meta property="og:title" content="Self-O-Matic | Social Camera per Eventi">
+  <meta property="og:type" content="website">
+  <meta property="og:description" content="Scatta, pubblica e racconta il tuo evento in diretta social.">
+  <meta property="og:url" content="https://www.self-o-matic.com/">
+  <meta property="og:image" content="https://tongatron.it/selfomatic/img/selfo.jpg">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800|Lobster+Two:700italic&amp;display=swap" rel="stylesheet" type="text/css">
+
+  <!--[if lt IE 9]>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+  <style>
+    * {
+      font-family: "Open Sans", sans-serif;
+    }
+
+    body {
+      background: #ffffff;
+      color: #2f2f2f;
+      line-height: 1.6;
+    }
+
+    .brand-font {
+      font-family: "Lobster Two", sans-serif;
+      font-style: italic;
+    }
+
+    .hero {
+      background: linear-gradient(140deg, #dd1c1a 0%, #b31514 100%);
+      color: #fff;
+      padding: 46px 0 42px;
+      margin-bottom: 30px;
+    }
+
+    .hero h1 {
+      margin: 0;
+      color: #fff;
+      font-size: clamp(42px, 8vw, 78px);
+      font-weight: 700;
+    }
+
+    .hero p {
+      margin: 8px 0 0;
+      color: #f8dede;
+      font-size: 20px;
+      font-weight: 300;
+    }
+
+    .quick-nav {
+      margin-top: 22px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .quick-nav a {
+      display: inline-block;
+      border: 1px solid rgba(255, 255, 255, 0.45);
+      color: #fff;
+      padding: 8px 12px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .quick-nav a:hover {
+      background: rgba(255, 255, 255, 0.16);
+      border-color: #fff;
+    }
+
+    .section {
+      margin-bottom: 36px;
+    }
+
+    .section-title {
+      color: #dd1c1a;
+      font-size: 32px;
+      font-weight: 800;
+      margin: 0 0 18px;
+    }
+
+    .lead-text {
+      font-size: 22px;
+      font-weight: 300;
+      color: #4a4a4a;
+    }
+
+    .cta-btn {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 12px 18px;
+      border-radius: 8px;
+      border: 1px solid #3b5998;
+      background: #8b9dc3;
+      color: #fff;
+      text-decoration: none;
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .cta-btn:hover {
+      background: #3b5998;
+      color: #fff;
+      text-decoration: none;
+    }
+
+    .feature-card {
+      border: 1px solid #ececec;
+      border-radius: 12px;
+      padding: 18px;
+      background: #fff;
+      min-height: 170px;
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.04);
+    }
+
+    .feature-card h3 {
+      margin-top: 0;
+      color: #dd1c1a;
+      font-size: 22px;
+      font-weight: 700;
+    }
+
+    .gallery {
+      background: #f7f7f7;
+      border-radius: 12px;
+      padding: 22px;
+      border: 1px solid #ececec;
+    }
+
+    .gallery img {
+      width: 100%;
+      height: 230px;
+      object-fit: cover;
+      border-radius: 10px;
+      border: 1px solid #ddd;
+      margin-bottom: 14px;
+      background: #fff;
+    }
+
+    .project-box {
+      background: #eef2fb;
+      border: 1px solid #dbe3f6;
+      border-radius: 12px;
+      padding: 20px;
+    }
+
+    .contact-box {
+      border: 1px solid #ececec;
+      border-radius: 12px;
+      padding: 18px;
+      background: #fff;
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.04);
+    }
+
+    .unavailable {
+      border: 1px solid #f1c7cf;
+      background: #fff5f7;
+      border-radius: 10px;
+      padding: 16px;
+      text-align: center;
+      color: #9a1834;
+    }
+
+    .unavailable h3 {
+      margin: 0 0 8px;
+      font-size: 24px;
+      color: #c22647;
+      font-weight: 700;
+    }
+
+    .unavailable p {
+      margin: 0;
+      font-size: 18px;
+      color: #9a1834;
+    }
+
+    .contact-img {
+      width: 100%;
+      border-radius: 12px;
+      border: 1px solid #ddd;
+      margin-bottom: 12px;
+    }
+
+    footer {
+      background: #dd1c1a;
+      color: #fff;
+      margin-top: 30px;
+      padding: 24px 0 28px;
+    }
+
+    footer h3 {
+      color: #fff;
+      margin-top: 0;
+      font-size: 22px;
+      font-weight: 400;
+    }
+
+    footer p,
+    footer a {
+      color: #fff;
+      font-size: 15px;
+    }
+
+    footer a:hover {
+      color: #f8dede;
+      text-decoration: none;
+    }
+
+    @media (max-width: 767px) {
+      .hero {
+        padding: 34px 0 30px;
+      }
+
+      .hero p {
+        font-size: 18px;
+      }
+
+      .lead-text {
+        font-size: 20px;
+      }
+
+      .gallery img {
+        height: 210px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="container">
+      <h1 class="brand-font">Self-O-Matic</h1>
+      <p>Social camera per eventi: scatta e pubblica in diretta.</p>
+      <nav class="quick-nav" aria-label="Navigazione rapida">
+        <a href="#come-funziona">Come funziona</a>
+        <a href="#servizi">Servizi</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#progetto">Progetto</a>
+        <a href="#contatti">Contatti</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="container section" id="come-funziona">
+      <div class="row">
+        <div class="col-md-6">
+          <img src="img/rendering%20muro%20per%20copertina%20facebook%204.jpg" alt="Self-O-Matic installazione" class="img-responsive img-rounded">
+        </div>
+        <div class="col-md-6">
+          <h2 class="section-title">Social Camera</h2>
+          <p class="lead-text">Premi il pulsante: Self-O-Matic scatta la fotografia e aggiorna in diretta i tuoi canali social.</p>
+          <p>Ideale per eventi, fiere, lanci prodotto e attivazioni digitali con contenuti generati dagli ospiti.</p>
+          <a class="cta-btn" href="#contatti" role="button">Contattaci per il noleggio</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="container section" id="servizi">
+      <div class="row">
+        <div class="col-md-4">
+          <article class="feature-card">
+            <h3>Come funziona</h3>
+            <p><strong>Autoscatto:</strong> l'utente preme il pulsante e scatta.</p>
+            <p><strong>Pubblicazione immediata:</strong> la foto viene pubblicata in tempo reale su album social e servizi web.</p>
+          </article>
+        </div>
+        <div class="col-md-4">
+          <article class="feature-card">
+            <h3>Servizi</h3>
+            <p>Progettazione e setup evento.</p>
+            <p>Personalizzazione grafica: loghi, testi automatici e hashtag.</p>
+            <p>Installazione in loco e assistenza remota.</p>
+          </article>
+        </div>
+        <div class="col-md-4">
+          <article class="feature-card">
+            <h3>Per il tuo evento</h3>
+            <p>Noleggio configurato su misura per il tuo format.</p>
+            <p>Modello standard o case custom, con integrazione social e workflow dedicato.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="container section" id="gallery">
+      <h2 class="section-title text-center">Gallery</h2>
+      <div class="gallery">
+        <div class="row">
+          <div class="col-sm-6 col-md-4">
+            <img src="img/selfo.jpg" alt="Self-O-Matic evento 1">
+          </div>
+          <div class="col-sm-6 col-md-4">
+            <img src="img/Collage%20Cristina%20copy.jpg" alt="Self-O-Matic collage evento">
+          </div>
+          <div class="col-sm-6 col-md-4">
+            <img src="img/rendering%20muro%20per%20copertina%20facebook%202.jpg" alt="Self-O-Matic wall preview">
+          </div>
+          <div class="col-sm-6 col-md-4">
+            <img src="img/image%20wall%202.jpg" alt="Self-O-Matic wall showcase">
+          </div>
+          <div class="col-sm-6 col-md-4">
+            <img src="img/816226708_15600136436303383454%202.jpg" alt="Self-O-Matic evento live">
+          </div>
+          <div class="col-sm-6 col-md-4">
+            <img src="img/1966266_1020139934677241_2060119382886883867_o%202.png" alt="Self-O-Matic social wall">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="container section" id="progetto">
+      <div class="project-box">
+        <div class="row">
+          <div class="col-md-8">
+            <h2 class="section-title" style="margin-top:0;">Il progetto</h2>
+            <p>Self-O-Matic e sviluppato presso <a href="https://fablabtorino.org/" target="_blank" rel="noopener">FabLab Torino</a> ed e aperto a partnership per installazioni digitali connesse al web.</p>
+            <p><strong>Design:</strong> case in legno colorato, tagliato e inciso con macchine lasercut, adattabile a esigenze estetiche e funzionali.</p>
+            <p><strong>Hardware:</strong> piattaforma Raspberry Pi con display personalizzabile e output HDMI su monitor esterni.</p>
+            <p><strong>Software:</strong> stack Python open source con integrazione social API e configurazione remota.</p>
+          </div>
+          <div class="col-md-4">
+            <img src="img/techs.png" alt="Tecnologie Self-O-Matic" class="img-responsive" style="margin-top:8px;">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="container section" id="contatti">
+      <div class="row">
+        <div class="col-md-4">
+          <div class="contact-box">
+            <h2 class="section-title" style="font-size:28px;margin-top:0;">Contattaci</h2>
+            <img src="img/contact.png" alt="Contatti Self-O-Matic" class="contact-img">
+            <p>Noleggio per social media advertising, manifestazioni, eventi e locali.</p>
+            <p>Disponibile in versione standard o personalizzata.</p>
+          </div>
+        </div>
+        <div class="col-md-8">
+          <div class="contact-box">
+            <div class="unavailable">
+              <h3>Servizio attualmente non disponibile</h3>
+              <p>Il form di contatto e temporaneamente offline. Scrivici via Facebook per richieste e noleggio.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4">
+          <h3>Dove siamo</h3>
+          <p>
+            <strong>Self-O-Matic</strong><br>
+            c/o Toolbox Coworking<br>
+            via Agostino da Montefeltro 2<br>
+            10134, Torino (ITA)
+          </p>
+        </div>
+        <div class="col-md-4">
+          <h3>Facebook</h3>
+          <p><a href="https://www.facebook.com/selfomatic.italia" target="_blank" rel="noopener">facebook.com/selfomatic.italia</a></p>
+        </div>
+        <div class="col-md-4">
+          <h3>Made in FabLab Torino</h3>
+          <p><a href="https://fablabtorino.org/" target="_blank" rel="noopener">fablabtorino.org</a></p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js"></script>
+</body>
+</html>
