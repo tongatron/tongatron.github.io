@@ -3,316 +3,215 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>web projects - Tongatron Projects</title>
-  <meta name="description" content="Raccolta dei giochi e simulatori sviluppati nei progetti Tongatron.">
+  <title>Projects | Tongatron</title>
+  <meta name="description" content="Raccolta dei progetti web e mobile Tongatron: giochi, simulatori, IoT e fabbricazione digitale.">
   <!-- SEO + Social -->
-  <meta name="keywords" content="Tongatron, progetti web, innovazione digitale, fablab, giochi web, simulatori">
+  <meta name="keywords" content="Tongatron, progetti web, web e mobile, giochi, simulatori, IoT, fablab">
   <meta name="robots" content="index, follow, max-image-preview:large">
   <meta name="author" content="Tongatron">
   <link rel="canonical" href="https://tongatron.org/projects/games.html">
   <meta property="og:locale" content="it_IT">
   <meta property="og:site_name" content="Tongatron">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="web projects - Tongatron Projects">
-  <meta property="og:description" content="Raccolta dei giochi e simulatori sviluppati nei progetti Tongatron.">
+  <meta property="og:title" content="Projects | Tongatron">
+  <meta property="og:description" content="Raccolta dei progetti web e mobile Tongatron: giochi, simulatori, IoT e fabbricazione digitale.">
   <meta property="og:url" content="https://tongatron.org/projects/games.html">
   <meta property="og:image" content="https://tongatron.org/img/prof2.jpg">
-  <meta property="og:image:alt" content="Tongatron preview image">
+  <meta property="og:image:alt" content="Tongatron projects preview">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="web projects - Tongatron Projects">
-  <meta name="twitter:description" content="Raccolta dei giochi e simulatori sviluppati nei progetti Tongatron.">
+  <meta name="twitter:title" content="Projects | Tongatron">
+  <meta name="twitter:description" content="Raccolta dei progetti web e mobile Tongatron: giochi, simulatori, IoT e fabbricazione digitale.">
   <meta name="twitter:image" content="https://tongatron.org/img/prof2.jpg">
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Roboto:wght@300;400;500;700;900&family=Orbitron:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #ffffff;
-      --surface: #ffffff;
-      --card: #ffffff;
-      --line: #000000;
-      --line-soft: #000000;
-      --text: #000000;
-      --muted: #000000;
-      --accent: #000000;
-      --accent-soft: #ffffff;
+      --bg-0: #0a0f14;
+      --bg-1: #101b26;
+      --bg-2: #16283a;
+      --panel: #111d2a;
+      --panel-soft: #172738;
+      --line: #264158;
+      --text: #e6f3ff;
+      --muted: #93afc7;
+      --accent: #2f93b8;
+      --accent-2: #67b2d6;
+      --shadow: 0 18px 36px rgba(0, 0, 0, 0.35);
     }
 
     * { box-sizing: border-box; }
 
     body {
       margin: 0;
-      font-family: "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+      font-family: "Space Grotesk", system-ui, sans-serif;
       color: var(--text);
-      background: var(--bg);
+      background:
+        radial-gradient(900px 420px at 8% -10%, #183f64 0%, transparent 58%),
+        radial-gradient(1000px 500px at 100% 0%, #14354f 0%, transparent 56%),
+        linear-gradient(150deg, var(--bg-0) 0%, var(--bg-1) 52%, var(--bg-2) 100%);
       min-height: 100vh;
     }
 
-    .page {
-      max-width: 1120px;
-      margin: 0 auto;
-      padding: 32px 20px 56px;
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(147, 175, 199, 0.07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(147, 175, 199, 0.07) 1px, transparent 1px);
+      background-size: 36px 36px;
+      mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.95), rgba(0, 0, 0, 0.35));
     }
 
-    .top {
+    .page {
+      width: min(1280px, 92vw);
+      margin: 0 auto;
+      padding: 28px 0 46px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .surface {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: linear-gradient(160deg, rgba(10, 19, 29, 0.9), rgba(20, 32, 46, 0.9));
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(5px);
+    }
+
+    .header {
+      padding: 22px;
       display: flex;
       justify-content: space-between;
       gap: 16px;
-      align-items: flex-start;
-      margin-bottom: 26px;
-      border-bottom: 1px solid var(--line);
-      padding-bottom: 18px;
+      align-items: center;
+      margin-bottom: 20px;
     }
 
     .eyebrow {
-      margin: 0 0 10px;
-      color: var(--muted);
-      font-size: 13px;
-      letter-spacing: 0.12em;
+      margin: 0 0 8px;
+      color: var(--accent);
+      font-size: 0.78rem;
+      letter-spacing: 0.13em;
       text-transform: uppercase;
+      font-family: "Chakra Petch", sans-serif;
+      font-weight: 600;
     }
 
     h1 {
       margin: 0;
-      font-size: clamp(30px, 5vw, 46px);
-      letter-spacing: 0.03em;
-      line-height: 1.1;
-      color: var(--text);
-    }
-
-    .subtitle {
-      margin: 10px 0 0;
-      color: var(--text);
-      font-size: 16px;
+      font-family: "Chakra Petch", sans-serif;
+      font-weight: 700;
+      font-size: clamp(2rem, 5vw, 3rem);
+      letter-spacing: 0.02em;
     }
 
     .home-link {
-      flex-shrink: 0;
-      display: inline-block;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
       text-decoration: none;
-      color: var(--text);
-      background: var(--surface);
-      border: 1px solid var(--line);
-      border-radius: 6px;
-      padding: 10px 14px;
-      font-size: 13px;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
+      color: #06151d;
+      background: linear-gradient(120deg, var(--accent), var(--accent-2));
+      border: 0;
+      border-radius: 999px;
+      padding: 10px 16px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      box-shadow: 0 6px 16px rgba(39, 208, 194, 0.28);
+      transition: transform 0.2s ease;
     }
 
     .home-link:hover {
-      border-color: var(--accent);
-      color: #ffffff;
-      background: #000000;
+      transform: translateY(-1px);
     }
 
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 16px;
+    .block {
+      padding: 20px;
+      margin-bottom: 18px;
+      animation: rise 0.5s ease both;
     }
 
-    .install-panel {
-      border: 1px solid #8f8f8f;
-      border-radius: 10px;
-      padding: 16px;
-      margin-top: 28px;
-      background: linear-gradient(180deg, #f2f2f2 0%, #dddddd 100%);
-      box-shadow: inset 0 1px 0 #ffffff;
+    .block:nth-of-type(2) { animation-delay: 0.06s; }
+    .block:nth-of-type(3) { animation-delay: 0.12s; }
+
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
-    .install-title {
-      margin: 0 0 12px;
-      font-size: 18px;
-      text-transform: lowercase;
+    .title-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 10px;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 10px;
+      margin-bottom: 14px;
     }
 
-    .install-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 12px;
-    }
-
-    .install-card {
-      border: 1px solid #a8a8a8;
-      border-radius: 8px;
-      padding: 12px;
-      background: linear-gradient(180deg, #ffffff 0%, #efefef 100%);
-    }
-
-    .install-card h3 {
-      margin: 0 0 8px;
-      font-size: 15px;
-      text-transform: lowercase;
-    }
-
-    .install-card ol {
+    h2 {
       margin: 0;
-      padding-left: 20px;
-      line-height: 1.5;
-      font-size: 14px;
-    }
-
-    .install-note {
-      margin: 12px 0 0;
-      font-size: 13px;
-      border-top: 1px solid #a0a0a0;
-      padding-top: 10px;
-    }
-
-    .section-block + .section-block {
-      margin-top: 26px;
-    }
-
-    .section-heading {
-      margin: 0 0 12px;
-      font-size: 18px;
+      font-family: "Chakra Petch", sans-serif;
       text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 1.15rem;
+    }
+
+    .desc {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.45;
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .sub-panel {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 14px;
+      background: linear-gradient(155deg, rgba(18, 29, 42, 0.96), rgba(12, 22, 34, 0.96));
+    }
+
+    .sub-panel h3 {
+      margin: 0 0 12px;
+      font-size: 1rem;
+      font-family: "Chakra Petch", sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent);
       border-bottom: 1px solid var(--line);
       padding-bottom: 8px;
     }
 
-    .retro-80s {
-      border: 2px solid #ff4fd8;
-      border-radius: 12px;
-      padding: 14px;
-      background:
-        linear-gradient(180deg, #1d0a35 0%, #111936 55%, #0a1328 100%);
-      box-shadow: inset 0 0 0 1px #31f6ff, 0 8px 28px rgba(31, 9, 53, 0.45);
-    }
-
-    .retro-80s .section-heading {
-      border-bottom-color: #31f6ff;
-      color: #31f6ff;
-      font-family: "Press Start 2P", cursive;
-      font-size: clamp(12px, 2.2vw, 16px);
-      letter-spacing: 0.06em;
-      text-shadow: 0 0 8px rgba(49, 246, 255, 0.35);
-    }
-
-    .retro-80s .card {
-      background: linear-gradient(180deg, #251247 0%, #1b1236 100%);
-      border: 1px solid #ff4fd8;
-      color: #f5eeff;
-      box-shadow: inset 0 0 0 1px rgba(49, 246, 255, 0.2);
-    }
-
-    .retro-80s .card:hover {
-      border-color: #31f6ff;
-    }
-
-    .retro-80s .card h2 {
-      color: #f8f2ff;
-      font-family: "Orbitron", "Roboto", sans-serif;
-      letter-spacing: 0.03em;
-    }
-
-    .retro-80s .card p {
-      color: #dbd0ef;
-    }
-
-    .retro-80s .tag {
-      color: #31f6ff;
-      border-color: #31f6ff;
-      background: rgba(49, 246, 255, 0.1);
-    }
-
-    .retro-80s .card a {
-      color: #31f6ff;
-      border-color: #31f6ff;
-      background: transparent;
-    }
-
-    .retro-80s .card a:hover {
-      color: #14122b;
-      border-color: #31f6ff;
-      background: #31f6ff;
-    }
-
-    .future-minimal {
-      border: 1px solid #d7dce3;
-      border-radius: 12px;
-      padding: 14px;
-      background: linear-gradient(180deg, #fbfcfd 0%, #f2f5f8 100%);
-    }
-
-    .future-minimal .section-heading {
-      border-bottom-color: #c8d0d8;
-      color: #0f1720;
-      font-family: "Orbitron", "Roboto", sans-serif;
-      font-weight: 600;
-      letter-spacing: 0.12em;
-    }
-
-    .future-minimal .card {
-      background: #ffffff;
-      border: 1px solid #d5dce4;
-      border-radius: 8px;
-      box-shadow: 0 8px 16px rgba(15, 23, 32, 0.06);
-    }
-
-    .future-minimal .card:hover {
-      border-color: #0f1720;
-    }
-
-    .future-minimal .card h2 {
-      color: #0f1720;
-      font-family: "Orbitron", "Roboto", sans-serif;
-      font-size: 18px;
-      letter-spacing: 0.02em;
-    }
-
-    .future-minimal .card p {
-      color: #2a3643;
-    }
-
-    .future-minimal .tag {
-      color: #1b2733;
-      border-color: #bcc8d3;
-      background: #edf2f6;
-    }
-
-    .future-minimal .card a {
-      color: #0f1720;
-      border-color: #b8c6d3;
-      background: #f4f7fa;
-      border-radius: 999px;
-      padding-inline: 14px;
-    }
-
-    .future-minimal .card a:hover {
-      color: #ffffff;
-      border-color: #0f1720;
-      background: #0f1720;
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
     }
 
     .card {
-      background: var(--card);
-      border: 1px solid var(--line-soft);
-      border-radius: 10px;
-      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--panel);
+      padding: 12px;
       display: flex;
       flex-direction: column;
-      gap: 10px;
-      min-height: 190px;
+      gap: 8px;
+      min-height: 196px;
+      transition: transform 0.2s ease, border-color 0.2s ease;
     }
 
     .card:hover {
-      border-color: #000000;
-    }
-
-    .tag {
-      display: inline-block;
-      width: fit-content;
-      border: 1px solid #000000;
-      color: #000000;
-      border-radius: 4px;
-      font-size: 11px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      padding: 4px 8px;
-      background: #ffffff;
+      transform: translateY(-2px);
+      border-color: var(--accent);
     }
 
     .tag-row {
@@ -321,177 +220,229 @@
       gap: 6px;
     }
 
-    .card h2 {
+    .tag {
+      display: inline-block;
+      border: 1px solid #3f627a;
+      border-radius: 999px;
+      padding: 4px 10px;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #c2deef;
+      background: #17293a;
+      font-family: "Chakra Petch", sans-serif;
+      font-weight: 600;
+    }
+
+    .card h4 {
       margin: 0;
-      font-size: 20px;
-      color: #000000;
+      font-size: 1.7rem;
+      line-height: 1;
+      font-family: "Chakra Petch", sans-serif;
+      font-weight: 700;
+      letter-spacing: 0.01em;
     }
 
     .card p {
       margin: 0;
       color: var(--muted);
-      line-height: 1.45;
-      font-size: 14px;
+      line-height: 1.4;
+      font-size: 0.92rem;
       flex-grow: 1;
     }
 
-    .card a {
-      text-decoration: none;
-      color: #000000;
-      border: 1px solid #000000;
-      border-radius: 6px;
-      padding: 9px 10px;
-      font-size: 13px;
-      display: inline-block;
+    .open {
       width: fit-content;
-      background: #ffffff;
+      text-decoration: none;
+      color: #08141c;
+      background: linear-gradient(120deg, var(--accent), var(--accent-2));
+      border-radius: 999px;
+      padding: 7px 14px;
+      font-size: 0.86rem;
+      font-weight: 700;
+      border: 0;
     }
 
-    .card a:hover {
-      border-color: #000000;
-      background: #000000;
-      color: #ffffff;
+    .iot-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
     }
 
-    .foot {
-      margin-top: 22px;
-      padding-top: 14px;
-      border-top: 1px solid var(--line);
+    .iot-card {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      overflow: hidden;
+      background: var(--panel);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .iot-card img {
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      object-fit: cover;
+      border-bottom: 1px solid var(--line);
+      background: var(--panel-soft);
+    }
+
+    .iot-body {
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      flex-grow: 1;
+    }
+
+    .iot-body h4 {
+      margin: 0;
+      font-size: 1.55rem;
+      line-height: 1;
+      font-family: "Chakra Petch", sans-serif;
+      font-weight: 700;
+    }
+
+    .iot-body p {
+      margin: 0;
       color: var(--muted);
-      font-size: 13px;
+      line-height: 1.4;
+      font-size: 0.9rem;
+      flex-grow: 1;
     }
 
-    .updated-at {
-      margin-top: 6px;
+    @media (max-width: 1080px) {
+      .split { grid-template-columns: 1fr; }
+      .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .iot-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
 
-    @media (max-width: 720px) {
-      .top {
-        flex-direction: column;
-        align-items: flex-start;
-      }
+    @media (max-width: 680px) {
+      .header { flex-direction: column; align-items: flex-start; }
+      .grid { grid-template-columns: 1fr; }
+      .iot-grid { grid-template-columns: 1fr; }
+      .page { width: min(1280px, 94vw); }
     }
   </style>
 </head>
 <body>
   <div class="page">
-    <header class="top">
+    <header class="surface header">
       <div>
         <p class="eyebrow">Tongatron / Projects</p>
-        <h1>web projects</h1>
-        <p class="subtitle">giochi e simulatori per browser e mobile.</p>
+        <h1>Projects</h1>
       </div>
       <a class="home-link" href="../index.html">Torna alla home</a>
     </header>
 
-    <main>
-      <section class="section-block retro-80s">
-        <h2 class="section-heading">GIOCHI</h2>
-        <div class="grid">
-          <article class="card">
-            <div class="tag-row">
-              <span class="tag">Android PWA</span>
-            </div>
-            <h2>Connect Four</h2>
-            <p>Classico Forza 4 contro CPU con selezione difficolta e nuova partita rapida.</p>
-            <a href="./Forza4/index.html">apri</a>
-          </article>
+    <section class="surface block">
+      <div class="title-row">
+        <h2>Web e Mobile</h2>
+      </div>
+      <p class="desc">Giochi e simulatori sviluppati per browser, con supporto ottimizzato anche su dispositivi mobili.</p>
 
-          <article class="card">
-            <div class="tag-row">
-              <span class="tag">Android PWA</span>
-            </div>
-            <h2>Maze Game</h2>
-            <p>Gioco del labirinto con livelli easy/medium/hard, comandi tastiera e controlli touch.</p>
-            <a href="./labirinto/index.html">apri</a>
-          </article>
+      <div class="split" style="margin-top: 14px;">
+        <article class="sub-panel">
+          <h3>Giochi</h3>
+          <div class="grid">
+            <article class="card">
+              <div class="tag-row"><span class="tag">Android PWA</span></div>
+              <h4>Connect Four</h4>
+              <p>Classico Forza 4 contro CPU con selezione difficolta e nuova partita rapida.</p>
+              <a class="open" href="./Forza4/index.html">apri</a>
+            </article>
 
-          <article class="card">
-            <div class="tag-row">
-              <span class="tag">Android PWA</span>
-            </div>
-            <h2>Memory</h2>
-            <p>Memory card game con timer, conteggio mosse, records locali e diverse dimensioni griglia.</p>
-            <a href="./memory/index.html">apri</a>
-          </article>
+            <article class="card">
+              <div class="tag-row"><span class="tag">Android PWA</span></div>
+              <h4>Maze Game</h4>
+              <p>Gioco del labirinto con livelli easy/medium/hard, comandi tastiera e controlli touch.</p>
+              <a class="open" href="./labirinto/index.html">apri</a>
+            </article>
 
-          <article class="card">
-            <div class="tag-row">
-              <span class="tag">Android PWA</span>
-            </div>
-            <h2>Simon Simulator</h2>
-            <p>Versione web del gioco Simon: ripeti la sequenza colori con modalita strict opzionale.</p>
-            <a href="./simon/index.html">apri</a>
-          </article>
+            <article class="card">
+              <div class="tag-row"><span class="tag">Android PWA</span></div>
+              <h4>Memory</h4>
+              <p>Memory card game con timer, conteggio mosse, records locali e diverse dimensioni griglia.</p>
+              <a class="open" href="./memory/index.html">apri</a>
+            </article>
 
-        </div>
-      </section>
-
-      <section class="section-block future-minimal">
-        <h2 class="section-heading">SIMULATORI</h2>
-        <div class="grid">
-          <article class="card">
-            <div class="tag-row">
-              <span class="tag">music</span>
-              <span class="tag">Android PWA</span>
-            </div>
-            <h2>Multi Web Simulator</h2>
-            <p>Simulazione web della board open-source MULTI del laboratorio elettroacustico Pangrus.</p>
-            <a href="./multi-simulator/index.html">apri</a>
-          </article>
-
-          <article class="card">
-            <div class="tag-row">
-              <span class="tag">Android PWA</span>
-            </div>
-            <h2>Roulette Simulator</h2>
-            <p>Simulatore stile casino con ruota animata, puntate multiple, bilancio e storico spin.</p>
-            <a href="./roulette/index.html">apri</a>
-          </article>
-
-          <article class="card">
-            <div class="tag-row">
-              <span class="tag">music</span>
-              <span class="tag">Android PWA</span>
-            </div>
-            <h2>Rumore Bianco</h2>
-            <p>Generatore audio con parametri regolabili in tempo reale (volume, filtro e controlli sonori).</p>
-            <a href="./rumorebianco/index.html">apri</a>
-          </article>
-
-        </div>
-      </section>
-    </main>
-
-    <section class="install-panel" aria-label="Istruzioni installazione PWA Android">
-      <h2 class="install-title">installazione app pwa su android</h2>
-      <div class="install-grid">
-        <article class="install-card">
-          <h3>metodo rapido (consigliato)</h3>
-          <ol>
-            <li>Apri il progetto in Chrome su Android.</li>
-            <li>Tocca il menu con i tre puntini in alto a destra.</li>
-            <li>Seleziona <strong>Installa app</strong> o <strong>Aggiungi a schermata Home</strong>.</li>
-            <li>Conferma con <strong>Installa</strong>.</li>
-          </ol>
+            <article class="card">
+              <div class="tag-row"><span class="tag">Android PWA</span></div>
+              <h4>Simon Simulator</h4>
+              <p>Versione web del gioco Simon: ripeti la sequenza colori con modalita strict opzionale.</p>
+              <a class="open" href="./simon/index.html">apri</a>
+            </article>
+          </div>
         </article>
-        <article class="install-card">
-          <h3>se non compare il pulsante installa</h3>
-          <ol>
-            <li>Ricarica la pagina e attendi alcuni secondi.</li>
-            <li>Verifica di usare Chrome aggiornato.</li>
-            <li>Apri di nuovo il menu e scegli <strong>Aggiungi a schermata Home</strong>.</li>
-            <li>Avvia l'app dall'icona creata nella Home di Android.</li>
-          </ol>
+
+        <article class="sub-panel">
+          <h3>Simulatori</h3>
+          <div class="grid">
+            <article class="card">
+              <div class="tag-row">
+                <span class="tag">Music</span>
+                <span class="tag">Android PWA</span>
+              </div>
+              <h4>Multi Web Simulator</h4>
+              <p>Simulazione web della board open-source MULTI del laboratorio elettroacustico Pangrus.</p>
+              <a class="open" href="./multi-simulator/index.html">apri</a>
+            </article>
+
+            <article class="card">
+              <div class="tag-row"><span class="tag">Android PWA</span></div>
+              <h4>Roulette Simulator</h4>
+              <p>Simulatore stile casino con ruota animata, puntate multiple, bilancio e storico spin.</p>
+              <a class="open" href="./roulette/index.html">apri</a>
+            </article>
+
+            <article class="card">
+              <div class="tag-row">
+                <span class="tag">Music</span>
+                <span class="tag">Android PWA</span>
+              </div>
+              <h4>Rumore Bianco</h4>
+              <p>Generatore audio con parametri regolabili in tempo reale (volume, filtro e controlli sonori).</p>
+              <a class="open" href="./rumorebianco/index.html">apri</a>
+            </article>
+          </div>
         </article>
       </div>
-      <p class="install-note">Nota: i progetti con tag <strong>Android PWA</strong> supportano installazione tipo app nativa.</p>
     </section>
 
-    <footer class="foot">
-      Pagina indice dei progetti evidenziati nella cartella <code>projects</code>.
-      <div class="updated-at">Aggiornato: 21 febbraio 2026</div>
-    </footer>
+    <section class="surface block">
+      <div class="title-row">
+        <h2>IoT e Fabbricazione Digitale</h2>
+      </div>
+      <p class="desc">Progetti sviluppati in ambito FabLab: robotica educativa, social camera per eventi e hack di prodotto.</p>
+
+      <div class="iot-grid" style="margin-top: 14px;">
+        <article class="iot-card">
+          <img src="../img/robottino.jpg" alt="Robottino">
+          <div class="iot-body">
+            <h4>Robottino</h4>
+            <p>Robot educativo STEM open source basato su Arduino, con sensori, luci RGB, display e testa rotante programmabile.</p>
+            <a class="open" href="./robottino/robottino-site/index.html">apri</a>
+          </div>
+        </article>
+
+        <article class="iot-card">
+          <img src="../img/contact.png" alt="Selfomatic">
+          <div class="iot-body">
+            <h4>Selfomatic</h4>
+            <p>Social camera per eventi con scatto automatico e pubblicazione in tempo reale, pensata per attivazioni e comunicazione live.</p>
+            <a class="open" href="./selfomatic/index.html">apri</a>
+          </div>
+        </article>
+
+        <article class="iot-card">
+          <img src="./IKEA-hack/ikea.jpg" alt="IKEA Hack Nordli">
+          <div class="iot-body">
+            <h4>IKEA Hack Nordli</h4>
+            <p>Progetto FabLab: personalizzazione della cassettiera Nordli con tavolino estraibile realizzato tramite pannello tagliato a laser.</p>
+            <a class="open" href="./IKEA-hack/index.html">apri</a>
+          </div>
+        </article>
+      </div>
+    </section>
   </div>
 </body>
 </html>
