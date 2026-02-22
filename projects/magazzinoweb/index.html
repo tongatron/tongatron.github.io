@@ -1,0 +1,579 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Magazzino Sereno | Web</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="bg-orb orb-a"></div>
+  <div class="bg-orb orb-b"></div>
+  <div class="bg-orb orb-c"></div>
+
+  <div class="container-fluid app-shell py-3 py-lg-4">
+    <header class="glass-panel p-3 p-lg-4 mb-3 mb-lg-4">
+      <div class="d-flex flex-column flex-lg-row gap-3 align-items-lg-center justify-content-between">
+        <div>
+          <p class="kicker mb-1">Sereno Giocattoli</p>
+          <h1 class="m-0 title-main">Magazzino Web</h1>
+          <p class="subtle mb-0">Interfaccia moderna Bootstrap con funzioni storiche: fornitori, articoli, carichi, scarichi, ordini, etichette e report.</p>
+        </div>
+        <div class="d-flex gap-2 flex-wrap">
+          <button id="export-json-btn" class="btn btn-outline-light btn-sm"><i class="bi bi-download me-1"></i>Backup JSON</button>
+          <button id="reset-data-btn" class="btn btn-warning btn-sm"><i class="bi bi-arrow-clockwise me-1"></i>Ripristina Demo</button>
+        </div>
+      </div>
+    </header>
+
+    <div class="row g-3 g-lg-4">
+      <aside class="col-12 col-lg-3 col-xxl-2">
+        <nav class="glass-panel p-2 p-lg-3 h-100">
+          <p class="kicker px-2 mb-2">Menu Operativo</p>
+          <div class="d-flex flex-lg-column gap-2 overflow-x-auto pb-2 pb-lg-0">
+            <button class="btn menu-link active" data-section="dashboard"><i class="bi bi-speedometer2 me-2"></i>Dashboard</button>
+            <button class="btn menu-link" data-section="fornitori"><i class="bi bi-building me-2"></i>Fornitori</button>
+            <button class="btn menu-link" data-section="articoli"><i class="bi bi-box-seam me-2"></i>Articoli</button>
+            <button class="btn menu-link" data-section="carichi"><i class="bi bi-box-arrow-in-down me-2"></i>Carichi</button>
+            <button class="btn menu-link" data-section="scarichi"><i class="bi bi-box-arrow-up me-2"></i>Scarichi</button>
+            <button class="btn menu-link" data-section="ricerche"><i class="bi bi-search me-2"></i>Ricerche</button>
+            <button class="btn menu-link" data-section="ordini"><i class="bi bi-journal-check me-2"></i>Ordini</button>
+            <button class="btn menu-link" data-section="etichette"><i class="bi bi-upc-scan me-2"></i>Etichette</button>
+            <button class="btn menu-link" data-section="report"><i class="bi bi-file-earmark-spreadsheet me-2"></i>Report</button>
+          </div>
+        </nav>
+      </aside>
+
+      <main class="col-12 col-lg-9 col-xxl-10">
+        <section id="section-dashboard" class="app-section active">
+          <div class="row g-3">
+            <div class="col-sm-6 col-xl-3">
+              <article class="metric-card">
+                <p>Articoli</p>
+                <h3 id="metric-products">0</h3>
+                <small>Anagrafica attiva</small>
+              </article>
+            </div>
+            <div class="col-sm-6 col-xl-3">
+              <article class="metric-card">
+                <p>Giacenza Totale</p>
+                <h3 id="metric-stock">0</h3>
+                <small>Pezzi disponibili</small>
+              </article>
+            </div>
+            <div class="col-sm-6 col-xl-3">
+              <article class="metric-card">
+                <p>Valore Magazzino</p>
+                <h3 id="metric-value">EUR 0</h3>
+                <small>Calcolo su costo medio</small>
+              </article>
+            </div>
+            <div class="col-sm-6 col-xl-3">
+              <article class="metric-card">
+                <p>Ordini Aperti</p>
+                <h3 id="metric-orders">0</h3>
+                <small>Quantita in ordine</small>
+              </article>
+            </div>
+          </div>
+
+          <div class="row g-3 mt-1">
+            <div class="col-12 col-xl-7">
+              <div class="glass-panel p-3 p-lg-4 h-100">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                  <h2 class="section-title mb-0">Sottoscorta</h2>
+                  <span class="badge text-bg-warning" id="low-stock-count">0 articoli</span>
+                </div>
+                <div class="table-responsive table-slim">
+                  <table class="table table-dark table-hover align-middle mb-0">
+                    <thead>
+                      <tr>
+                        <th>Codice</th>
+                        <th>Descrizione</th>
+                        <th>Ditta</th>
+                        <th>Giac.</th>
+                        <th>Min</th>
+                      </tr>
+                    </thead>
+                    <tbody id="dashboard-low-stock"></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12 col-xl-5">
+              <div class="glass-panel p-3 p-lg-4 h-100">
+                <h2 class="section-title mb-3">Top Ditte per Valore</h2>
+                <div id="dashboard-top-suppliers" class="stack-list"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="section-fornitori" class="app-section">
+          <div class="glass-panel p-3 p-lg-4">
+            <div class="row g-3">
+              <div class="col-12 col-xl-4">
+                <h2 class="section-title">Gestione Fornitori</h2>
+                <form id="supplier-form" class="vstack gap-2 mt-3">
+                  <div>
+                    <label for="supplier-code" class="form-label">Codice (3 caratteri)</label>
+                    <input id="supplier-code" class="form-control" maxlength="3" required>
+                  </div>
+                  <div>
+                    <label for="supplier-name" class="form-label">Denominazione</label>
+                    <input id="supplier-name" class="form-control" required>
+                  </div>
+                  <div>
+                    <label for="supplier-country" class="form-label">Stato / Nazione</label>
+                    <input id="supplier-country" class="form-control" placeholder="IT">
+                  </div>
+                  <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-primary flex-grow-1">Salva</button>
+                    <button type="button" id="supplier-reset" class="btn btn-outline-light">Nuovo</button>
+                  </div>
+                </form>
+              </div>
+              <div class="col-12 col-xl-8">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                  <h2 class="section-title mb-0">Elenco Fornitori</h2>
+                  <span class="badge text-bg-info" id="suppliers-count">0 records</span>
+                </div>
+                <div class="table-responsive">
+                  <table class="table table-dark table-hover align-middle">
+                    <thead>
+                      <tr>
+                        <th>Codice</th>
+                        <th>Nome</th>
+                        <th>Stato</th>
+                        <th class="text-end">Azioni</th>
+                      </tr>
+                    </thead>
+                    <tbody id="suppliers-table-body"></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="section-articoli" class="app-section">
+          <div class="glass-panel p-3 p-lg-4">
+            <div class="row g-3">
+              <div class="col-12 col-xxl-5">
+                <h2 class="section-title">Anagrafica Articoli</h2>
+                <form id="product-form" class="row g-2 mt-1">
+                  <div class="col-sm-6">
+                    <label for="product-code" class="form-label">Codice</label>
+                    <input id="product-code" class="form-control" maxlength="6" required>
+                  </div>
+                  <div class="col-sm-6">
+                    <label for="product-article" class="form-label">Articolo</label>
+                    <input id="product-article" class="form-control" required>
+                  </div>
+                  <div class="col-sm-6">
+                    <label for="product-supplier" class="form-label">Produttore/Distr.</label>
+                    <select id="product-supplier" class="form-select" required></select>
+                  </div>
+                  <div class="col-sm-6">
+                    <label for="product-category" class="form-label">Categoria</label>
+                    <input id="product-category" class="form-control" maxlength="4" required>
+                  </div>
+                  <div class="col-12">
+                    <label for="product-description" class="form-label">Descrizione</label>
+                    <input id="product-description" class="form-control" required>
+                  </div>
+                  <div class="col-sm-4">
+                    <label for="product-channel" class="form-label">Canale</label>
+                    <input id="product-channel" class="form-control" maxlength="2" placeholder="02">
+                  </div>
+                  <div class="col-sm-4">
+                    <label for="product-cost" class="form-label">Costo</label>
+                    <input id="product-cost" type="number" class="form-control" min="0" step="0.01" required>
+                  </div>
+                  <div class="col-sm-4">
+                    <label for="product-price" class="form-label">Prezzo</label>
+                    <input id="product-price" type="number" class="form-control" min="0" step="0.01" required>
+                  </div>
+                  <div class="col-sm-4">
+                    <label for="product-vat" class="form-label">IVA %</label>
+                    <input id="product-vat" type="number" class="form-control" min="0" max="100" step="1" value="22">
+                  </div>
+                  <div class="col-sm-4">
+                    <label for="product-barcode" class="form-label">Codice a barre</label>
+                    <input id="product-barcode" class="form-control">
+                  </div>
+                  <div class="col-sm-4">
+                    <label for="product-vedes" class="form-label">Codice Vedes</label>
+                    <input id="product-vedes" class="form-control">
+                  </div>
+                  <div class="col-sm-4">
+                    <label for="product-min-stock" class="form-label">Scorta Minima</label>
+                    <input id="product-min-stock" type="number" class="form-control" min="0" value="0">
+                  </div>
+                  <div class="col-12 d-flex gap-2">
+                    <button class="btn btn-primary flex-grow-1" type="submit">Salva Articolo</button>
+                    <button class="btn btn-outline-light" type="button" id="product-reset">Nuovo</button>
+                  </div>
+                </form>
+              </div>
+
+              <div class="col-12 col-xxl-7">
+                <div class="d-flex flex-column flex-md-row gap-2 justify-content-between align-items-md-center mb-3">
+                  <h2 class="section-title mb-0">Lista Magazzino</h2>
+                  <input id="products-table-filter" class="form-control form-control-sm w-auto" placeholder="Filtro rapido">
+                </div>
+                <div class="table-responsive">
+                  <table class="table table-dark table-hover align-middle">
+                    <thead>
+                      <tr>
+                        <th>Codice</th>
+                        <th>Descrizione</th>
+                        <th>Ditta</th>
+                        <th>Cat.</th>
+                        <th>Costo</th>
+                        <th>Prezzo</th>
+                        <th>Giac.</th>
+                        <th class="text-end">Azioni</th>
+                      </tr>
+                    </thead>
+                    <tbody id="products-table-body"></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="section-carichi" class="app-section">
+          <div class="glass-panel p-3 p-lg-4">
+            <div class="row g-3">
+              <div class="col-12 col-xl-4">
+                <h2 class="section-title">Registrazione Carichi</h2>
+                <form id="load-form" class="vstack gap-2 mt-3">
+                  <div>
+                    <label for="load-date" class="form-label">Data</label>
+                    <input id="load-date" type="date" class="form-control" required>
+                  </div>
+                  <div>
+                    <label for="load-type" class="form-label">Tipo</label>
+                    <select id="load-type" class="form-select">
+                      <option value="01">01 - Da inventario</option>
+                      <option value="02" selected>02 - Da bolla/fattura</option>
+                      <option value="03">03 - In ordine</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label for="load-supplier" class="form-label">Fornitore</label>
+                    <select id="load-supplier" class="form-select" required></select>
+                  </div>
+                  <div>
+                    <label for="load-product" class="form-label">Articolo</label>
+                    <select id="load-product" class="form-select" required></select>
+                  </div>
+                  <div class="row g-2">
+                    <div class="col-6">
+                      <label for="load-quantity" class="form-label">Quantita</label>
+                      <input id="load-quantity" type="number" class="form-control" min="1" required>
+                    </div>
+                    <div class="col-6">
+                      <label for="load-cost" class="form-label">Costo Unitario</label>
+                      <input id="load-cost" type="number" class="form-control" min="0" step="0.01" required>
+                    </div>
+                  </div>
+                  <div class="row g-2">
+                    <div class="col-6">
+                      <label for="load-discount" class="form-label">Sconto %</label>
+                      <input id="load-discount" type="number" class="form-control" min="0" max="99" step="0.01" value="0">
+                    </div>
+                    <div class="col-6">
+                      <label for="load-channel" class="form-label">Canale</label>
+                      <input id="load-channel" class="form-control" maxlength="2" placeholder="02">
+                    </div>
+                  </div>
+                  <button type="submit" class="btn btn-primary">Registra Carico</button>
+                </form>
+              </div>
+
+              <div class="col-12 col-xl-8">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                  <h2 class="section-title mb-0">Storico Carichi</h2>
+                  <button class="btn btn-outline-light btn-sm" data-export="loads"><i class="bi bi-filetype-csv me-1"></i>Esporta CSV</button>
+                </div>
+                <div class="table-responsive">
+                  <table class="table table-dark table-hover align-middle">
+                    <thead>
+                      <tr>
+                        <th>Data</th>
+                        <th>Tipo</th>
+                        <th>Prodotto</th>
+                        <th>Qta</th>
+                        <th>Costo Netto</th>
+                        <th>Totale</th>
+                      </tr>
+                    </thead>
+                    <tbody id="loads-table-body"></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="section-scarichi" class="app-section">
+          <div class="glass-panel p-3 p-lg-4">
+            <div class="row g-3">
+              <div class="col-12 col-xl-4">
+                <h2 class="section-title">Registrazione Scarichi</h2>
+                <form id="unload-form" class="vstack gap-2 mt-3">
+                  <div>
+                    <label for="unload-date" class="form-label">Data</label>
+                    <input id="unload-date" type="date" class="form-control" required>
+                  </div>
+                  <div>
+                    <label for="unload-product" class="form-label">Articolo</label>
+                    <select id="unload-product" class="form-select" required></select>
+                  </div>
+                  <div>
+                    <label for="unload-quantity" class="form-label">Quantita</label>
+                    <input id="unload-quantity" type="number" class="form-control" min="1" required>
+                  </div>
+                  <button type="submit" class="btn btn-primary">Registra Scarico</button>
+                </form>
+              </div>
+
+              <div class="col-12 col-xl-8">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                  <h2 class="section-title mb-0">Storico Scarichi</h2>
+                  <button class="btn btn-outline-light btn-sm" data-export="unloads"><i class="bi bi-filetype-csv me-1"></i>Esporta CSV</button>
+                </div>
+                <div class="table-responsive">
+                  <table class="table table-dark table-hover align-middle">
+                    <thead>
+                      <tr>
+                        <th>Data</th>
+                        <th>Prodotto</th>
+                        <th>Qta</th>
+                        <th>Giacenza post movimento</th>
+                      </tr>
+                    </thead>
+                    <tbody id="unloads-table-body"></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="section-ricerche" class="app-section">
+          <div class="glass-panel p-3 p-lg-4">
+            <h2 class="section-title">Ricerche e Controlli</h2>
+            <div class="row g-2 mt-1 mb-3">
+              <div class="col-12 col-md-4">
+                <input id="search-keyword" class="form-control" placeholder="Chiave (codice, descrizione, barcode)">
+              </div>
+              <div class="col-6 col-md-3">
+                <select id="search-supplier" class="form-select"></select>
+              </div>
+              <div class="col-6 col-md-3">
+                <input id="search-category" class="form-control" placeholder="Categoria">
+              </div>
+              <div class="col-12 col-md-2 d-flex gap-2 align-items-center">
+                <div class="form-check form-switch m-0">
+                  <input class="form-check-input" type="checkbox" id="search-understock">
+                  <label class="form-check-label" for="search-understock">Sottoscorta</label>
+                </div>
+              </div>
+            </div>
+            <div class="d-flex gap-2 mb-3">
+              <button id="search-run-btn" class="btn btn-primary">Esegui Ricerca</button>
+              <button id="search-export-btn" class="btn btn-outline-light">Esporta Risultati</button>
+              <span class="badge text-bg-info ms-auto align-self-center" id="search-results-count">0 risultati</span>
+            </div>
+            <div class="table-responsive">
+              <table class="table table-dark table-hover align-middle">
+                <thead>
+                  <tr>
+                    <th>Codice</th>
+                    <th>Descrizione</th>
+                    <th>Ditta</th>
+                    <th>Cat.</th>
+                    <th>Giacenza</th>
+                    <th>Scorta Min.</th>
+                    <th>Ult. Carico</th>
+                    <th>Ult. Vendita</th>
+                  </tr>
+                </thead>
+                <tbody id="search-results-body"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <section id="section-ordini" class="app-section">
+          <div class="glass-panel p-3 p-lg-4">
+            <div class="row g-3">
+              <div class="col-12 col-xl-7">
+                <div class="d-flex flex-column flex-md-row gap-2 align-items-md-end mb-3">
+                  <div class="flex-grow-1">
+                    <label for="order-supplier" class="form-label">Ditta per formazione ordine</label>
+                    <select id="order-supplier" class="form-select"></select>
+                  </div>
+                  <button id="build-order-btn" class="btn btn-primary">Forma Ordine</button>
+                </div>
+                <div class="table-responsive">
+                  <table class="table table-dark table-hover align-middle">
+                    <thead>
+                      <tr>
+                        <th>Articolo</th>
+                        <th>Giac.</th>
+                        <th>Min</th>
+                        <th>Suggerito</th>
+                        <th>Qta Ordine</th>
+                        <th>Valore</th>
+                      </tr>
+                    </thead>
+                    <tbody id="order-lines-body"></tbody>
+                  </table>
+                </div>
+                <div class="d-flex justify-content-between align-items-center mt-3">
+                  <h3 class="mb-0 h5">Totale ordine: <span id="order-total">EUR 0.00</span></h3>
+                  <button id="save-order-btn" class="btn btn-success">Conferma Ordine</button>
+                </div>
+              </div>
+
+              <div class="col-12 col-xl-5">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                  <h2 class="section-title mb-0">Storico Ordini</h2>
+                  <button class="btn btn-outline-light btn-sm" data-export="orders"><i class="bi bi-filetype-csv me-1"></i>Esporta CSV</button>
+                </div>
+                <div class="table-responsive table-slim">
+                  <table class="table table-dark table-hover align-middle">
+                    <thead>
+                      <tr>
+                        <th>Data</th>
+                        <th>Ditta</th>
+                        <th>Righe</th>
+                        <th>Totale</th>
+                      </tr>
+                    </thead>
+                    <tbody id="orders-history-body"></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="section-etichette" class="app-section">
+          <div class="glass-panel p-3 p-lg-4">
+            <div class="row g-3">
+              <div class="col-12 col-xl-4">
+                <h2 class="section-title">Creazione Etichette</h2>
+                <form id="label-form" class="vstack gap-2 mt-3">
+                  <div>
+                    <label for="label-product" class="form-label">Prodotto</label>
+                    <select id="label-product" class="form-select" required></select>
+                  </div>
+                  <div>
+                    <label for="label-quantity" class="form-label">Numero etichette</label>
+                    <input id="label-quantity" type="number" class="form-control" min="1" value="1" required>
+                  </div>
+                  <button type="submit" class="btn btn-primary">Aggiungi in coda stampa</button>
+                </form>
+                <div class="d-flex gap-2 mt-3">
+                  <button id="print-labels-btn" class="btn btn-outline-light flex-grow-1">Stampa simulata</button>
+                  <button id="clear-labels-btn" class="btn btn-outline-danger">Svuota</button>
+                </div>
+              </div>
+              <div class="col-12 col-xl-8">
+                <h2 class="section-title mb-3">Coda Etichette</h2>
+                <div class="table-responsive">
+                  <table class="table table-dark table-hover align-middle">
+                    <thead>
+                      <tr>
+                        <th>Prodotto</th>
+                        <th>Barcode</th>
+                        <th>Prezzo</th>
+                        <th>Qta Etichette</th>
+                        <th class="text-end">Azioni</th>
+                      </tr>
+                    </thead>
+                    <tbody id="labels-table-body"></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="section-report" class="app-section">
+          <div class="glass-panel p-3 p-lg-4">
+            <h2 class="section-title">Report Rapidi</h2>
+            <div class="row g-3 mt-1">
+              <div class="col-6 col-lg-4 col-xl-3">
+                <button class="report-chip w-100" data-export="suppliers">
+                  <i class="bi bi-building"></i>
+                  <span>Fornitori CSV</span>
+                </button>
+              </div>
+              <div class="col-6 col-lg-4 col-xl-3">
+                <button class="report-chip w-100" data-export="products">
+                  <i class="bi bi-box-seam"></i>
+                  <span>Articoli CSV</span>
+                </button>
+              </div>
+              <div class="col-6 col-lg-4 col-xl-3">
+                <button class="report-chip w-100" data-export="loads">
+                  <i class="bi bi-box-arrow-in-down"></i>
+                  <span>Carichi CSV</span>
+                </button>
+              </div>
+              <div class="col-6 col-lg-4 col-xl-3">
+                <button class="report-chip w-100" data-export="unloads">
+                  <i class="bi bi-box-arrow-up"></i>
+                  <span>Scarichi CSV</span>
+                </button>
+              </div>
+              <div class="col-6 col-lg-4 col-xl-3">
+                <button class="report-chip w-100" data-export="orders">
+                  <i class="bi bi-journal-check"></i>
+                  <span>Ordini CSV</span>
+                </button>
+              </div>
+              <div class="col-6 col-lg-4 col-xl-3">
+                <button class="report-chip w-100" data-export="lowstock">
+                  <i class="bi bi-exclamation-triangle"></i>
+                  <span>Sottoscorta CSV</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="mt-4">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <h3 class="h6 mb-0">Registro Attivita</h3>
+                <span class="subtle small">Ultimi movimenti</span>
+              </div>
+              <div id="activity-feed" class="activity-feed"></div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="app-toast" class="toast text-bg-dark border border-light-subtle" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="toast-body" id="app-toast-body"></div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  <script src="app.js"></script>
+</body>
+</html>

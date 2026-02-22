@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Interfaccia moderna che simula il comportamento del MULTI web simulator."
+    />
+    <title>MULTI Modern Web</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;700;800&family=Space+Mono:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="bg-orb orb-a" aria-hidden="true"></div>
+    <div class="bg-orb orb-b" aria-hidden="true"></div>
+    <main class="shell">
+      <header class="hero">
+        <p class="eyebrow">hardware synth simulation</p>
+        <h1>MULTI Modern Web</h1>
+        <p class="hero-text">
+          Replica web in stile moderno del programma MULTI: selezione sketch,
+          6 knob, due pulsanti di controllo e visualizzazione real-time.
+        </p>
+      </header>
+
+      <section class="panel board" aria-label="Simulatore multi">
+        <div class="panel-top">
+          <div class="program-block">
+            <label for="program-select">Programma</label>
+            <select id="program-select" aria-label="Selezione programma"></select>
+          </div>
+          <p id="program-description" class="program-description"></p>
+        </div>
+
+        <div class="knobs-grid" id="knobs-grid"></div>
+
+        <div class="controls-row">
+          <button class="pad" id="pb1" type="button" aria-pressed="false">
+            <span class="pad-title">PB1</span>
+            <span class="pad-sub" id="pb1-sub">DRONE</span>
+          </button>
+
+          <div class="scope-wrap">
+            <canvas id="scope" width="960" height="220" aria-label="Oscilloscopio"></canvas>
+          </div>
+
+          <button class="pad" id="pb2" type="button" aria-pressed="false">
+            <span class="pad-title">PB2</span>
+            <span class="pad-sub" id="pb2-sub">LFO</span>
+          </button>
+        </div>
+
+        <footer class="status-row">
+          <div class="chip">
+            <span class="led" id="led-pb1"></span>
+            <span id="led-pb1-label">DRONE</span>
+          </div>
+          <div class="chip">
+            <span class="led" id="led-pb2"></span>
+            <span id="led-pb2-label">LFO</span>
+          </div>
+          <p id="status-text">Seleziona un programma e premi PB1</p>
+        </footer>
+      </section>
+
+      <p class="help">
+        Controllo knob: drag verticale, rotella mouse o frecce su/giu.
+      </p>
+    </main>
+    <script src="./app.js"></script>
+  </body>
+</html>
