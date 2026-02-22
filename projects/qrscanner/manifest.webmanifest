@@ -1,0 +1,25 @@
+{
+  "name": "QR Scanner Mobile",
+  "short_name": "QR Scanner",
+  "description": "Scanner QR mobile-first con stop automatico della camera al rilevamento.",
+  "version": "1.0.0",
+  "lang": "it-IT",
+  "start_url": "./?v=1.0.0",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#ecfeff",
+  "theme_color": "#14b8a6",
+  "icons": [
+    {
+      "src": "./icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": [
+    "utilities",
+    "productivity"
+  ]
+}
