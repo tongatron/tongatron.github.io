@@ -1,13 +1,14 @@
-const APP_VERSION = "1.0.0";
+const APP_VERSION = "1.1.0";
 const CACHE_PREFIX = "qrscanner-cache";
 const CACHE_NAME = `${CACHE_PREFIX}-${APP_VERSION}`;
 const APP_SHELL = [
   "./",
-  "./?v=1.0.0",
+  "./?v=1.1.0",
   "./index.html",
-  "./style.css?v=1.0.0",
-  "./app.js?v=1.0.0",
-  "./manifest.webmanifest?v=1.0.0",
+  "./style.css?v=1.1.0",
+  "./app.js?v=1.1.0",
+  "./vendor/jsQR.min.js?v=1.1.0",
+  "./manifest.webmanifest?v=1.1.0",
   "./icons/icon.svg"
 ];
 
