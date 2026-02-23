@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Projects | Tongatron</title>
+  <title>Projects</title>
   <meta name="description" content="Raccolta dei progetti web e mobile Tongatron: giochi, simulatori, IoT e fabbricazione digitale.">
   <!-- SEO + Social -->
   <meta name="keywords" content="Tongatron, progetti web, web e mobile, giochi, simulatori, IoT, fablab">
@@ -13,13 +13,13 @@
   <meta property="og:locale" content="it_IT">
   <meta property="og:site_name" content="Tongatron">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Projects | Tongatron">
+  <meta property="og:title" content="Projects">
   <meta property="og:description" content="Raccolta dei progetti web e mobile Tongatron: giochi, simulatori, IoT e fabbricazione digitale.">
   <meta property="og:url" content="https://tongatron.org/projects/index.html">
   <meta property="og:image" content="https://tongatron.org/img/prof2.jpg">
   <meta property="og:image:alt" content="Tongatron projects preview">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Projects | Tongatron">
+  <meta name="twitter:title" content="Projects">
   <meta name="twitter:description" content="Raccolta dei progetti web e mobile Tongatron: giochi, simulatori, IoT e fabbricazione digitale.">
   <meta name="twitter:image" content="https://tongatron.org/img/prof2.jpg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -27,17 +27,17 @@
   <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg-0: #0a0f14;
-      --bg-1: #101b26;
-      --bg-2: #16283a;
-      --panel: #111d2a;
-      --panel-soft: #172738;
-      --line: #264158;
-      --text: #e6f3ff;
-      --muted: #93afc7;
-      --accent: #2f93b8;
-      --accent-2: #67b2d6;
-      --shadow: 0 18px 36px rgba(0, 0, 0, 0.35);
+      --bg-0: #f5f7fb;
+      --bg-1: #eef3f8;
+      --bg-2: #f8fbff;
+      --panel: #ffffff;
+      --panel-soft: #f3f6fa;
+      --line: #d5dde6;
+      --text: #1f2d3a;
+      --muted: #576b7e;
+      --accent: #2e6f95;
+      --accent-2: #4f8db0;
+      --shadow: 0 10px 24px rgba(14, 36, 56, 0.08);
     }
 
     * { box-sizing: border-box; }
@@ -47,8 +47,8 @@
       font-family: "Space Grotesk", system-ui, sans-serif;
       color: var(--text);
       background:
-        radial-gradient(900px 420px at 8% -10%, #183f64 0%, transparent 58%),
-        radial-gradient(1000px 500px at 100% 0%, #14354f 0%, transparent 56%),
+        radial-gradient(900px 420px at 8% -10%, #e4edf5 0%, transparent 58%),
+        radial-gradient(1000px 500px at 100% 0%, #e8f0f8 0%, transparent 56%),
         linear-gradient(150deg, var(--bg-0) 0%, var(--bg-1) 52%, var(--bg-2) 100%);
       min-height: 100vh;
     }
@@ -59,10 +59,10 @@
       inset: 0;
       pointer-events: none;
       background-image:
-        linear-gradient(rgba(147, 175, 199, 0.07) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(147, 175, 199, 0.07) 1px, transparent 1px);
+        linear-gradient(rgba(147, 175, 199, 0.10) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(147, 175, 199, 0.10) 1px, transparent 1px);
       background-size: 36px 36px;
-      mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.95), rgba(0, 0, 0, 0.35));
+      mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.12));
     }
 
     .page {
@@ -76,9 +76,8 @@
     .surface {
       border: 1px solid var(--line);
       border-radius: 18px;
-      background: linear-gradient(160deg, rgba(10, 19, 29, 0.9), rgba(20, 32, 46, 0.9));
+      background: linear-gradient(160deg, #ffffff, #f3f7fb);
       box-shadow: var(--shadow);
-      backdrop-filter: blur(5px);
     }
 
     .header {
@@ -106,6 +105,7 @@
       font-weight: 700;
       font-size: clamp(2rem, 5vw, 3rem);
       letter-spacing: 0.02em;
+      color: #0f1f2e;
     }
 
     .home-link {
@@ -113,19 +113,22 @@
       align-items: center;
       gap: 8px;
       text-decoration: none;
-      color: #06151d;
-      background: linear-gradient(120deg, var(--accent), var(--accent-2));
-      border: 0;
+      color: var(--accent);
+      background: #ffffff;
+      border: 1px solid var(--line);
       border-radius: 999px;
       padding: 10px 16px;
       font-weight: 700;
       font-size: 0.9rem;
-      box-shadow: 0 6px 16px rgba(39, 208, 194, 0.28);
+      box-shadow: 0 4px 10px rgba(28, 57, 80, 0.08);
       transition: transform 0.2s ease;
     }
 
     .home-link:hover {
       transform: translateY(-1px);
+      color: #ffffff;
+      background: var(--accent);
+      border-color: var(--accent);
     }
 
     .block {
@@ -171,13 +174,14 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 14px;
+      margin-top: 14px;
     }
 
     .sub-panel {
       border: 1px solid var(--line);
       border-radius: 14px;
       padding: 14px;
-      background: linear-gradient(155deg, rgba(18, 29, 42, 0.96), rgba(12, 22, 34, 0.96));
+      background: var(--panel-soft);
     }
 
     .sub-panel h3 {
@@ -193,7 +197,7 @@
 
     .grid {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
       gap: 12px;
     }
 
@@ -220,16 +224,34 @@
       gap: 6px;
     }
 
+    .card-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .project-icon {
+      width: 54px;
+      height: 54px;
+      object-fit: contain;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 7px;
+      background: var(--panel-soft);
+      flex-shrink: 0;
+    }
+
     .tag {
       display: inline-block;
-      border: 1px solid #3f627a;
+      border: 1px solid #b8c8d7;
       border-radius: 999px;
       padding: 4px 10px;
       font-size: 0.72rem;
       text-transform: uppercase;
       letter-spacing: 0.08em;
-      color: #c2deef;
-      background: #17293a;
+      color: #375168;
+      background: #eef4f9;
       font-family: "Chakra Petch", sans-serif;
       font-weight: 600;
     }
@@ -254,13 +276,19 @@
     .open {
       width: fit-content;
       text-decoration: none;
-      color: #08141c;
-      background: linear-gradient(120deg, var(--accent), var(--accent-2));
-      border-radius: 999px;
-      padding: 7px 14px;
+      color: var(--accent);
+      background: #ffffff;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 8px 14px;
       font-size: 0.86rem;
       font-weight: 700;
-      border: 0;
+    }
+
+    .open:hover {
+      color: #ffffff;
+      background: var(--accent);
+      border-color: var(--accent);
     }
 
     .iot-grid {
@@ -328,7 +356,7 @@
   <div class="page">
     <header class="surface header">
       <div>
-        <p class="eyebrow">Tongatron / Projects / Test Variation</p>
+        <p class="eyebrow">Tongatron / Projects</p>
         <h1>Projects</h1>
       </div>
       <a class="home-link" href="../index.html">Torna alla home</a>
@@ -340,33 +368,45 @@
       </div>
       <p class="desc">Giochi e simulatori sviluppati per browser, con supporto ottimizzato anche su dispositivi mobili.</p>
 
-      <div class="split" style="margin-top: 14px;">
+      <div class="split">
         <article class="sub-panel">
-          <h3>Giochi</h3>
+          <h3>GIOCHI</h3>
           <div class="grid">
             <article class="card">
-              <div class="tag-row"><span class="tag">Android PWA</span></div>
+              <div class="card-head">
+                <img src="./forza4/assets/icons/icon.svg" alt="Icona Connect Four" class="project-icon">
+                <div class="tag-row"><span class="tag">Android PWA</span></div>
+              </div>
               <h4>Connect Four</h4>
               <p>Classico Forza 4 contro CPU con selezione difficolta e nuova partita rapida.</p>
               <a class="open" href="./Forza4/index.html">apri</a>
             </article>
 
             <article class="card">
-              <div class="tag-row"><span class="tag">Android PWA</span></div>
+              <div class="card-head">
+                <img src="./labirinto/icons/icon-192.svg" alt="Icona Maze Game" class="project-icon">
+                <div class="tag-row"><span class="tag">Android PWA</span></div>
+              </div>
               <h4>Maze Game</h4>
               <p>Gioco del labirinto con livelli easy/medium/hard, comandi tastiera e controlli touch.</p>
               <a class="open" href="./labirinto/index.html">apri</a>
             </article>
 
             <article class="card">
-              <div class="tag-row"><span class="tag">Android PWA</span></div>
+              <div class="card-head">
+                <img src="./memory/icon-192.png" alt="Icona Memory" class="project-icon">
+                <div class="tag-row"><span class="tag">Android PWA</span></div>
+              </div>
               <h4>Memory</h4>
               <p>Memory card game con timer, conteggio mosse, records locali e diverse dimensioni griglia.</p>
               <a class="open" href="./memory/index.html">apri</a>
             </article>
 
             <article class="card">
-              <div class="tag-row"><span class="tag">Android PWA</span></div>
+              <div class="card-head">
+                <img src="./simon/icons/icon-192.png" alt="Icona Simon Simulator" class="project-icon">
+                <div class="tag-row"><span class="tag">Android PWA</span></div>
+              </div>
               <h4>Simon Simulator</h4>
               <p>Versione web del gioco Simon: ripeti la sequenza colori con modalita strict opzionale.</p>
               <a class="open" href="./simon/index.html">apri</a>
@@ -375,12 +415,15 @@
         </article>
 
         <article class="sub-panel">
-          <h3>Simulatori</h3>
+          <h3>SIMULATORI</h3>
           <div class="grid">
             <article class="card">
-              <div class="tag-row">
-                <span class="tag">Music</span>
-                <span class="tag">Android PWA</span>
+              <div class="card-head">
+                <img src="./multi-simulator/icons/icon-192.svg" alt="Icona Multi Web Simulator" class="project-icon">
+                <div class="tag-row">
+                  <span class="tag">Music</span>
+                  <span class="tag">Android PWA</span>
+                </div>
               </div>
               <h4>Multi Web Simulator</h4>
               <p>Simulazione web della board open-source MULTI del laboratorio elettroacustico Pangrus.</p>
@@ -388,16 +431,22 @@
             </article>
 
             <article class="card">
-              <div class="tag-row"><span class="tag">Android PWA</span></div>
+              <div class="card-head">
+                <img src="./roulette/icons/icon-192.svg" alt="Icona Roulette Simulator" class="project-icon">
+                <div class="tag-row"><span class="tag">Android PWA</span></div>
+              </div>
               <h4>Roulette Simulator</h4>
               <p>Simulatore stile casino con ruota animata, puntate multiple, bilancio e storico spin.</p>
               <a class="open" href="./roulette/index.html">apri</a>
             </article>
 
             <article class="card">
-              <div class="tag-row">
-                <span class="tag">Music</span>
-                <span class="tag">Android PWA</span>
+              <div class="card-head">
+                <img src="./rumorebianco/icons/icon-192.svg" alt="Icona Rumore Bianco" class="project-icon">
+                <div class="tag-row">
+                  <span class="tag">Music</span>
+                  <span class="tag">Android PWA</span>
+                </div>
               </div>
               <h4>Rumore Bianco</h4>
               <p>Generatore audio con parametri regolabili in tempo reale (volume, filtro e controlli sonori).</p>
@@ -443,6 +492,7 @@
         </article>
       </div>
     </section>
+
   </div>
 </body>
 </html>

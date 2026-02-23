@@ -59,103 +59,6 @@
     .stack-list li + li {
       margin-top: 1rem;
     }
-
-    .web-projects-shell {
-      border: 1px solid #dee2e6;
-      border-radius: 18px;
-      background: #ffffff;
-      padding: 1.25rem;
-    }
-
-    .web-projects-intro {
-      color: #495057;
-      margin-bottom: 1rem;
-    }
-
-    .web-projects-cards {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 1rem;
-    }
-
-    .web-project-card {
-      border: 1px solid #dee2e6;
-      border-radius: 14px;
-      background: #ffffff;
-      padding: 1rem;
-      display: flex;
-      flex-direction: column;
-      min-height: 100%;
-    }
-
-    .web-project-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 0.75rem;
-      margin-bottom: 0.85rem;
-    }
-
-    .web-project-icon {
-      width: 56px;
-      height: 56px;
-      object-fit: contain;
-      border: 1px solid #dee2e6;
-      border-radius: 12px;
-      padding: 0.45rem;
-      background: #ffffff;
-      flex-shrink: 0;
-    }
-
-    .web-project-tags {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-      gap: 0.35rem;
-    }
-
-    .web-project-tag {
-      border: 1px solid #ced4da;
-      border-radius: 999px;
-      padding: 0.12rem 0.5rem;
-      font-size: 0.68rem;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      font-weight: 600;
-      color: #495057;
-      background: #f8f9fa;
-    }
-
-    .web-project-card h4 {
-      font-size: 1.25rem;
-      margin: 0 0 0.5rem;
-      line-height: 1.2;
-    }
-
-    .web-project-card p {
-      margin: 0 0 0.95rem;
-      color: #495057;
-      flex-grow: 1;
-    }
-
-    .web-project-open {
-      align-self: flex-start;
-      min-width: 82px;
-      border-radius: 0.7rem;
-    }
-
-    @media (max-width: 1399.98px) {
-      .web-projects-cards {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-    }
-
-    @media (max-width: 767.98px) {
-      .web-projects-cards {
-        grid-template-columns: 1fr;
-      }
-    }
-
   </style>
 </head>
 <body>
@@ -231,6 +134,48 @@
     </section>
 
     <section class="container py-4 border-top">
+      <h2 class="fw-bold section-title">Collaborazioni</h2>
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-xl-4 g-4">
+        <div class="col">
+          <article class="card h-100 border-0 shadow-sm">
+            <div class="card-body">
+              <h3 class="h5 card-title mb-2">FaberSum</h3>
+              <p class="mb-2">Lavorazioni CNC e prototipazione digitale</p>
+              <a href="http://www.fabersum.it/">fabersum.it</a>
+            </div>
+          </article>
+        </div>
+        <div class="col">
+          <article class="card h-100 border-0 shadow-sm">
+            <div class="card-body">
+              <h3 class="h5 card-title mb-2">Pangrus</h3>
+              <p class="mb-2">Laboratorio di ricerca elettroacustica</p>
+              <a href="https://www.peal.space/">peal.space</a>
+            </div>
+          </article>
+        </div>
+        <div class="col">
+          <article class="card h-100 border-0 shadow-sm">
+            <div class="card-body">
+              <h3 class="h5 card-title mb-2">Fablab Torino</h3>
+              <p class="mb-2">Associazione e laboratorio di fabbricazione digitale</p>
+              <a href="https://fablabtorino.org/">fablabtorino.org</a>
+            </div>
+          </article>
+        </div>
+        <div class="col">
+          <article class="card h-100 border-0 shadow-sm">
+            <div class="card-body">
+              <h3 class="h5 card-title mb-2">LittleEndian</h3>
+              <p class="mb-2">Sviluppo software, sistemi embedded e IoT</p>
+              <a href="https://www.little-endian.it/">little-endian.it</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="container py-4 border-top">
       <h2 class="fw-bold section-title">IoT e fabbricazione digitale</h2>
       <div class="row g-4 mb-4">
         <div class="col-12 col-lg-7">
@@ -294,103 +239,52 @@
     </section>
 
     <section class="container py-4 border-top">
-      <h2 class="fw-bold section-title">Web e mobile</h2>
-      <p class="web-projects-intro">Giochi e simulatori sviluppati per browser, con supporto ottimizzato anche su dispositivi mobili.</p>
-      <div class="web-projects-shell">
-        <div class="web-projects-cards">
-          <article class="web-project-card">
-            <div class="web-project-head">
-              <img src="projects/forza4/assets/icons/icon.svg" alt="Icona Connect Four" class="web-project-icon">
-              <div class="web-project-tags">
-                <span class="web-project-tag">game</span>
-              </div>
-            </div>
-            <h4 class="h2 fw-bold">Connect Four</h4>
-            <p>Classico Forza 4 contro CPU con selezione difficolta e nuova partita rapida.</p>
-            <a class="btn btn-outline-primary web-project-open" href="projects/forza4/index.html">apri</a>
-          </article>
+      <h2 class="fw-bold section-title">Musica</h2>
+      <p class="mb-4">
+        Progetti musicali e produzioni indipendenti tra punk, sperimentazione e ricerca sonora.<br>
+        <a href="https://www.discogs.com/artist/4340085-Giovanni-Bindi">discogs.com/artist/4340085-Giovanni-Bindi</a>
+      </p>
 
-          <article class="web-project-card">
-            <div class="web-project-head">
-              <img src="projects/memory/icon-192.png" alt="Icona Memory" class="web-project-icon">
-              <div class="web-project-tags">
-                <span class="web-project-tag">game</span>
-              </div>
+      <div class="row row-cols-1 row-cols-lg-3 g-4">
+        <div class="col">
+          <article class="card h-100 border-0 shadow-sm">
+            <iframe style="border-radius:12px" src="https://open.spotify.com/embed/artist/5v9nShoZMJdsTsfbLvKH0v?utm_source=generator" width="100%" height="352" frameborder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+            <div class="card-body">
+              <h3 class="h5 card-title mb-2">Deraglio</h3>
+              <p class="mb-2">Trashcore / HC punk (1999). Vacation House Records, CD-EP, 2001.</p>
+              <a href="https://www.discogs.com/release/2081865-Deraglio-Deraglio">Discogs</a>
             </div>
-            <h4 class="h2 fw-bold">Memory</h4>
-            <p>Memory card game con timer, conteggio mosse, records locali e diverse dimensioni griglia.</p>
-            <a class="btn btn-outline-primary web-project-open" href="projects/memory/index.html">apri</a>
-          </article>
-
-          <article class="web-project-card">
-            <div class="web-project-head">
-              <img src="projects/simon/icons/icon-192.png" alt="Icona Simon" class="web-project-icon">
-              <div class="web-project-tags">
-                <span class="web-project-tag">game</span>
-              </div>
-            </div>
-            <h4 class="h2 fw-bold">Simon</h4>
-            <p>Versione web del gioco Simon: ripeti la sequenza colori con modalita strict opzionale.</p>
-            <a class="btn btn-outline-primary web-project-open" href="projects/simon/index.html">apri</a>
-          </article>
-
-          <article class="web-project-card">
-            <div class="web-project-head">
-              <img src="projects/rumorebianco/icons/icon-192.svg" alt="Icona Rumore Bianco" class="web-project-icon">
-              <div class="web-project-tags">
-                <span class="web-project-tag">simulator</span>
-                <span class="web-project-tag">music</span>
-              </div>
-            </div>
-            <h4 class="h2 fw-bold">Rumore Bianco</h4>
-            <p>Generatore audio con parametri regolabili in tempo reale (volume, filtro e controlli sonori).</p>
-            <a class="btn btn-outline-primary web-project-open" href="projects/rumorebianco/index.html">apri</a>
           </article>
         </div>
-        <div class="mt-3 text-end">
-          <a class="btn btn-outline-primary" href="projects/index.html">altri progetti</a>
+        <div class="col">
+          <article class="card h-100 border-0 shadow-sm">
+            <iframe style="border-radius:12px" src="https://open.spotify.com/embed/artist/2RaPFpRfgqz5EzpIwAlzRS?utm_source=generator&theme=0" width="100%" height="352" frameborder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+            <div class="card-body">
+              <h3 class="h5 card-title mb-0">Mattia Martinengo e gli Psiconauti</h3>
+            </div>
+          </article>
+        </div>
+        <div class="col">
+          <article class="card h-100 border-0 shadow-sm">
+            <iframe width="100%" height="352" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/1242265927%3Fsecret_token%3Ds-bQdbHM28Xvy&color=%23090909&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true"></iframe>
+            <div class="card-body">
+              <h3 class="h5 card-title mb-2">Nubivaghi</h3>
+              <p class="mb-0"><a href="https://soundcloud.com/tongatron/sets/nubifraghi-ep-provvisorio/s-bQdbHM28Xvy">Ascolta su SoundCloud</a></p>
+            </div>
+          </article>
         </div>
       </div>
     </section>
 
     <section class="container py-4 border-top">
-      <h2 class="fw-bold section-title">Collaborazioni</h2>
-      <div class="row row-cols-1 row-cols-sm-2 row-cols-xl-4 g-4">
-        <div class="col">
-          <article class="card h-100 border-0 shadow-sm">
-            <div class="card-body">
-              <h3 class="h5 card-title mb-2">FaberSum</h3>
-              <p class="mb-2">Lavorazioni CNC e prototipazione digitale</p>
-              <a href="http://www.fabersum.it/">fabersum.it</a>
-            </div>
-          </article>
-        </div>
-        <div class="col">
-          <article class="card h-100 border-0 shadow-sm">
-            <div class="card-body">
-              <h3 class="h5 card-title mb-2">Pangrus</h3>
-              <p class="mb-2">Laboratorio di ricerca elettroacustica</p>
-              <a href="https://www.peal.space/">peal.space</a>
-            </div>
-          </article>
-        </div>
-        <div class="col">
-          <article class="card h-100 border-0 shadow-sm">
-            <div class="card-body">
-              <h3 class="h5 card-title mb-2">Fablab Torino</h3>
-              <p class="mb-2">Associazione e laboratorio di fabbricazione digitale</p>
-              <a href="https://fablabtorino.org/">fablabtorino.org</a>
-            </div>
-          </article>
-        </div>
-        <div class="col">
-          <article class="card h-100 border-0 shadow-sm">
-            <div class="card-body">
-              <h3 class="h5 card-title mb-2">LittleEndian</h3>
-              <p class="mb-2">Sviluppo software, sistemi embedded e IoT</p>
-              <a href="https://www.little-endian.it/">little-endian.it</a>
-            </div>
-          </article>
+      <h2 class="fw-bold section-title">Web Games</h2>
+      <div class="card border-0 shadow-sm">
+        <div class="card-body">
+          <p class="mb-3">
+            Raccolta di giochi e simulatori web sviluppati come progetto creativo e didattico.
+            Esperimenti interattivi per browser, pensati per essere semplici, accessibili e in continua evoluzione.
+          </p>
+          <a class="btn btn-outline-primary btn-sm" href="projects/games.html">vai alla sezione games</a>
         </div>
       </div>
     </section>
