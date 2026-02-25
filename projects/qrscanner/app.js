@@ -1,4 +1,4 @@
-const APP_VERSION = "1.1.0";
+const APP_VERSION = "1.3.0";
 const LOCAL_HOSTNAMES = new Set(["localhost", "127.0.0.1", "::1"]);
 const SCAN_INTERVAL_MS = 220;
 
@@ -29,6 +29,15 @@ let torchEnabled = false;
 function setStatus(message, type = "ok") {
   els.status.textContent = message;
   els.status.classList.toggle("warn", type === "warn");
+}
+
+function isStandalonePwa() {
+  const standaloneByDisplayMode =
+    typeof window.matchMedia === "function" &&
+    window.matchMedia("(display-mode: standalone)").matches;
+  const standaloneByIosFlag = window.navigator.standalone === true;
+  const standaloneByReferrer = document.referrer.startsWith("android-app://");
+  return standaloneByDisplayMode || standaloneByIosFlag || standaloneByReferrer;
 }
 
 function isProbablyUrl(text) {
@@ -274,6 +283,17 @@ async function registerServiceWorker() {
   }
 }
 
+async function tryAutoStartInPwa() {
+  if (!isStandalonePwa()) {
+    return;
+  }
+  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+    return;
+  }
+  setStatus("Tentativo apertura camera automatico...");
+  await startScanner();
+}
+
 els.appVersion.textContent = `v${APP_VERSION}`;
 
 els.startBtn.addEventListener("click", async () => {
@@ -324,6 +344,7 @@ window.addEventListener("beforeunload", () => {
   });
 });
 
-window.addEventListener("load", () => {
-  registerServiceWorker();
+window.addEventListener("load", async () => {
+  await registerServiceWorker();
+  await tryAutoStartInPwa();
 });
