@@ -1,4 +1,4 @@
-const APP_VERSION = "2.1.1";
+const APP_VERSION = "2.1.2";
 const DIFFICULTY_LEVELS = {
   rookie: { label: "Rookie", visionRadius: Infinity },
   arcade: { label: "Arcade", visionRadius: 10 },
@@ -236,12 +236,21 @@ async function registerServiceWorker() {
     return;
   }
 
+  const isLocalhost = ["localhost", "127.0.0.1", "[::1]"].includes(window.location.hostname);
+  const isSecureOrigin = window.location.protocol === "https:" || isLocalhost;
+  if (!isSecureOrigin) {
+    pwaStatusEl.textContent = "PWA requires HTTPS";
+    return;
+  }
+
   try {
-    const registration = await navigator.serviceWorker.register("./service-worker.js");
+    const swUrl = `./service-worker.js?v=${encodeURIComponent(APP_VERSION)}`;
+    const registration = await navigator.serviceWorker.register(swUrl, { scope: "./" });
     pwaStatusEl.textContent = "PWA active";
     registration.update();
-  } catch (_error) {
-    pwaStatusEl.textContent = "PWA registration failed";
+  } catch (error) {
+    const reason = error && error.message ? error.message : "registration error";
+    pwaStatusEl.textContent = `PWA failed (${reason})`;
   }
 }
 
