@@ -1,4 +1,4 @@
-const APP_VERSION = "1.0.0";
+const APP_VERSION = "1.1.0";
 
 const els = {
   video: document.getElementById("camera"),
@@ -12,6 +12,7 @@ const els = {
   stopBtn: document.getElementById("stopBtn"),
   copyBtn: document.getElementById("copyBtn"),
   clearBtn: document.getElementById("clearBtn"),
+  installBtn: document.getElementById("installBtn"),
   statusLine: document.getElementById("statusLine"),
   statsLine: document.getElementById("statsLine"),
   liveText: document.getElementById("liveText"),
@@ -37,6 +38,10 @@ const previewCtx = els.preview.getContext("2d");
 
 els.appVersion.textContent = `v${APP_VERSION}`;
 els.intervalValue.textContent = `${els.interval.value} ms`;
+els.installBtn.hidden = true;
+els.installBtn.disabled = true;
+
+let deferredInstallPrompt = null;
 
 function setStatus(message) {
   els.statusLine.textContent = message;
@@ -257,6 +262,37 @@ async function resetSession() {
   setStatus("Sessione pulita");
 }
 
+function updateInstallButton() {
+  const standalone = window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone === true;
+  if (standalone) {
+    els.installBtn.hidden = true;
+    els.installBtn.disabled = true;
+    return;
+  }
+
+  if (deferredInstallPrompt) {
+    els.installBtn.hidden = false;
+    els.installBtn.disabled = false;
+    return;
+  }
+
+  els.installBtn.hidden = true;
+  els.installBtn.disabled = true;
+}
+
+window.addEventListener("beforeinstallprompt", (event) => {
+  event.preventDefault();
+  deferredInstallPrompt = event;
+  updateInstallButton();
+  els.pwaStatus.textContent = "Install available";
+});
+
+window.addEventListener("appinstalled", () => {
+  deferredInstallPrompt = null;
+  updateInstallButton();
+  els.pwaStatus.textContent = "PWA installed";
+});
+
 async function registerServiceWorker() {
   if (!("serviceWorker" in navigator)) {
     els.pwaStatus.textContent = "PWA not supported";
@@ -309,6 +345,23 @@ els.copyBtn.addEventListener("click", async () => {
   }
 });
 
+els.installBtn.addEventListener("click", async () => {
+  if (!deferredInstallPrompt) {
+    setStatus("Installazione non disponibile ora");
+    return;
+  }
+
+  deferredInstallPrompt.prompt();
+  const result = await deferredInstallPrompt.userChoice;
+  if (result && result.outcome === "accepted") {
+    setStatus("Installazione confermata");
+  } else {
+    setStatus("Installazione annullata");
+  }
+  deferredInstallPrompt = null;
+  updateInstallButton();
+});
+
 els.clearBtn.addEventListener("click", () => {
   resetSession();
 });
@@ -319,4 +372,5 @@ window.addEventListener("beforeunload", () => {
 });
 
 updateStats();
+updateInstallButton();
 registerServiceWorker();

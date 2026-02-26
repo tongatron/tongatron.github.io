@@ -1,4 +1,4 @@
-const APP_VERSION = "1.0.0";
+const APP_VERSION = "1.1.0";
 const CACHE_NAME = `imgrecognition-${APP_VERSION}`;
 
 const CORE_ASSETS = [
@@ -7,9 +7,15 @@ const CORE_ASSETS = [
   "./style.css",
   "./app.js",
   "./manifest.webmanifest",
-  "./icons/icon-192.svg",
-  "./icons/icon-512.svg",
+  "./icons/icon-192.png",
+  "./icons/icon-512.png",
+  "https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js",
 ];
+
+const CACHEABLE_ORIGINS = new Set([
+  self.location.origin,
+  "https://cdn.jsdelivr.net",
+]);
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
@@ -38,14 +44,23 @@ self.addEventListener("fetch", (event) => {
     caches.match(event.request).then((cachedResponse) => {
       if (cachedResponse) return cachedResponse;
 
-      return fetch(event.request).then((networkResponse) => {
-        const sameOrigin = new URL(event.request.url).origin === self.location.origin;
-        if (sameOrigin && networkResponse && networkResponse.status === 200) {
-          const clone = networkResponse.clone();
-          caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
-        }
-        return networkResponse;
-      });
+      return fetch(event.request)
+        .then((networkResponse) => {
+          const origin = new URL(event.request.url).origin;
+          const canCache = CACHEABLE_ORIGINS.has(origin);
+          const okResponse = networkResponse && (networkResponse.ok || networkResponse.type === "opaque");
+
+          if (canCache && okResponse) {
+            const clone = networkResponse.clone();
+            caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
+          }
+
+          return networkResponse;
+        })
+        .catch(() => {
+          if (event.request.mode === "navigate") return caches.match("./index.html");
+          return new Response("Offline", { status: 503, statusText: "Offline" });
+        });
     }),
   );
 });
