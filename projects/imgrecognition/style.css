@@ -1,0 +1,206 @@
+:root {
+  --bg: #0b1020;
+  --panel: #111827;
+  --panel-2: #0f172a;
+  --line: #2a3a57;
+  --text: #e5eefc;
+  --muted: #9cb3d9;
+  --accent: #3b82f6;
+  --accent-2: #60a5fa;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  font-family: "Space Grotesk", "Segoe UI", sans-serif;
+  color: var(--text);
+  background: radial-gradient(circle at top, #162139, var(--bg));
+}
+
+.app {
+  width: min(900px, 100%);
+  margin: 0 auto;
+  padding: 14px;
+  display: grid;
+  gap: 12px;
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  gap: 10px;
+}
+
+.topbar h1 {
+  margin: 0;
+  font-size: 1.35rem;
+}
+
+.topbar p {
+  margin: 4px 0 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.version {
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-top: 4px;
+}
+
+.camera-card,
+.controls,
+.status,
+.outputs article {
+  background: linear-gradient(180deg, var(--panel), var(--panel-2));
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}
+
+.camera-card {
+  padding: 10px;
+  display: grid;
+  gap: 10px;
+}
+
+#camera,
+#processedPreview {
+  width: 100%;
+  border-radius: 8px;
+  background: #020617;
+  border: 1px solid #334155;
+}
+
+#camera {
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+}
+
+#processedPreview {
+  aspect-ratio: 3 / 2;
+  object-fit: contain;
+}
+
+.controls {
+  padding: 10px;
+  display: grid;
+  gap: 10px;
+}
+
+.controls label {
+  display: grid;
+  gap: 6px;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.controls select,
+.controls input[type="range"],
+.controls button {
+  width: 100%;
+}
+
+.controls select,
+.controls button {
+  background: #0b1222;
+  color: var(--text);
+  border: 1px solid #3a4b70;
+  border-radius: 8px;
+  padding: 10px;
+  font-size: 0.95rem;
+}
+
+.switch-row {
+  display: flex !important;
+  align-items: center;
+  gap: 10px;
+}
+
+.switch-row input {
+  width: 18px;
+  height: 18px;
+}
+
+.button-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+button.primary {
+  background: linear-gradient(180deg, var(--accent-2), var(--accent));
+  border-color: #5a93fa;
+  color: #071124;
+  font-weight: 700;
+}
+
+.status {
+  padding: 10px;
+  display: grid;
+  gap: 4px;
+}
+
+.status p {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.outputs {
+  display: grid;
+  gap: 10px;
+}
+
+.outputs article {
+  padding: 10px;
+}
+
+.outputs h2 {
+  margin: 0 0 8px;
+  font-size: 0.98rem;
+}
+
+pre {
+  margin: 0;
+  min-height: 90px;
+  max-height: 220px;
+  overflow: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+  background: #060d1a;
+  border: 1px solid #243350;
+  border-radius: 8px;
+  padding: 8px;
+  font-family: "SFMono-Regular", Menlo, monospace;
+  font-size: 0.88rem;
+}
+
+.hidden {
+  display: none;
+}
+
+@media (min-width: 900px) {
+  .app {
+    grid-template-columns: 1.1fr 1fr;
+    align-items: start;
+  }
+
+  .topbar,
+  .status,
+  .outputs {
+    grid-column: 1 / -1;
+  }
+
+  .camera-card,
+  .controls {
+    min-height: 100%;
+  }
+}
