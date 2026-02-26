@@ -1,4 +1,4 @@
-const APP_VERSION = "2.1.0";
+const APP_VERSION = "2.1.1";
 const DIFFICULTY_LEVELS = {
   rookie: { label: "Rookie", visionRadius: Infinity },
   arcade: { label: "Arcade", visionRadius: 10 },

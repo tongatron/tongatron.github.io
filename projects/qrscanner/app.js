@@ -1,14 +1,15 @@
-const APP_VERSION = "1.3.0";
+const APP_VERSION = "1.5.0";
 const LOCAL_HOSTNAMES = new Set(["localhost", "127.0.0.1", "::1"]);
 const SCAN_INTERVAL_MS = 220;
 
 const els = {
   video: document.getElementById("video"),
+  freezeFrame: document.getElementById("freezeFrame"),
   status: document.getElementById("status"),
   startBtn: document.getElementById("startBtn"),
-  stopBtn: document.getElementById("stopBtn"),
   rescanBtn: document.getElementById("rescanBtn"),
   torchBtn: document.getElementById("torchBtn"),
+  installBtn: document.getElementById("installBtn"),
   resultBox: document.getElementById("resultBox"),
   resultValue: document.getElementById("resultValue"),
   openBtn: document.getElementById("openBtn"),
@@ -18,6 +19,8 @@ const els = {
 
 const scratchCanvas = document.createElement("canvas");
 const scratchCtx = scratchCanvas.getContext("2d", { willReadFrequently: true });
+const freezeCanvas = document.createElement("canvas");
+const freezeCtx = freezeCanvas.getContext("2d");
 
 let mediaStream = null;
 let detector = null;
@@ -25,10 +28,19 @@ let isScanning = false;
 let scanPaused = false;
 let lastScanAt = 0;
 let torchEnabled = false;
+let deferredInstallPrompt = null;
 
 function setStatus(message, type = "ok") {
   els.status.textContent = message;
   els.status.classList.toggle("warn", type === "warn");
+}
+
+function setInstallButtonVisibility(visible) {
+  if (!els.installBtn) {
+    return;
+  }
+  els.installBtn.hidden = !visible;
+  els.installBtn.disabled = !visible;
 }
 
 function isStandalonePwa() {
@@ -62,6 +74,30 @@ function clearResult() {
   els.resultBox.classList.remove("visible", "highlight");
   els.copyBtn.disabled = true;
   els.openBtn.disabled = true;
+}
+
+function clearFreezeFrame() {
+  if (!els.freezeFrame) {
+    return;
+  }
+  els.freezeFrame.classList.remove("visible");
+  els.freezeFrame.removeAttribute("src");
+}
+
+function captureFreezeFrame() {
+  if (!els.freezeFrame || !freezeCtx) {
+    return;
+  }
+  const width = els.video.videoWidth;
+  const height = els.video.videoHeight;
+  if (!width || !height) {
+    return;
+  }
+  freezeCanvas.width = width;
+  freezeCanvas.height = height;
+  freezeCtx.drawImage(els.video, 0, 0, width, height);
+  els.freezeFrame.src = freezeCanvas.toDataURL("image/jpeg", 0.9);
+  els.freezeFrame.classList.add("visible");
 }
 
 function setTorchUI(enabled, available) {
@@ -146,6 +182,7 @@ function stopTracks(stream) {
 
 function stopScanner(options = {}) {
   const keepResult = Boolean(options.keepResult);
+  const keepFreezeFrame = Boolean(options.keepFreezeFrame);
   const statusMessage = options.statusMessage || "Scanner fermato.";
   const statusType = options.statusType || "ok";
 
@@ -161,11 +198,13 @@ function stopScanner(options = {}) {
   mediaStream = null;
 
   els.startBtn.disabled = false;
-  els.stopBtn.disabled = true;
   els.rescanBtn.disabled = !keepResult;
 
   if (!keepResult) {
     clearResult();
+  }
+  if (!keepFreezeFrame) {
+    clearFreezeFrame();
   }
 
   setStatus(statusMessage, statusType);
@@ -176,13 +215,16 @@ function onQrDetected(rawValue) {
   if (!value) {
     return;
   }
+  const linkFound = isProbablyUrl(value);
 
+  captureFreezeFrame();
   showResult(value);
-  if (navigator.vibrate) {
+  if (linkFound && navigator.vibrate) {
     navigator.vibrate([70, 30, 90]);
   }
   stopScanner({
     keepResult: true,
+    keepFreezeFrame: true,
     statusMessage: "QR trovato: fotocamera fermata automaticamente."
   });
 }
@@ -224,6 +266,7 @@ async function startScanner() {
   }
 
   clearResult();
+  clearFreezeFrame();
   scanPaused = false;
 
   try {
@@ -264,7 +307,6 @@ async function startScanner() {
 
   setTorchUI(false, getTorchSupport());
   els.startBtn.disabled = true;
-  els.stopBtn.disabled = false;
   els.rescanBtn.disabled = true;
 
   requestAnimationFrame(scanLoop);
@@ -294,17 +336,52 @@ async function tryAutoStartInPwa() {
   await startScanner();
 }
 
+function bindInstallPromptForAndroid() {
+  if (!els.installBtn) {
+    return;
+  }
+
+  setInstallButtonVisibility(false);
+
+  window.addEventListener("beforeinstallprompt", (event) => {
+    event.preventDefault();
+    deferredInstallPrompt = event;
+    if (!isStandalonePwa()) {
+      setInstallButtonVisibility(true);
+      setStatus("Installazione disponibile su Android.");
+    }
+  });
+
+  window.addEventListener("appinstalled", () => {
+    deferredInstallPrompt = null;
+    setInstallButtonVisibility(false);
+    setStatus("App installata.");
+  });
+
+  els.installBtn.addEventListener("click", async () => {
+    if (!deferredInstallPrompt) {
+      return;
+    }
+    const promptEvent = deferredInstallPrompt;
+    deferredInstallPrompt = null;
+    setInstallButtonVisibility(false);
+
+    promptEvent.prompt();
+    try {
+      const choice = await promptEvent.userChoice;
+      if (choice && choice.outcome === "accepted") {
+        setStatus("Installazione avviata.");
+      }
+    } catch {
+      setStatus("Installazione non completata.", "warn");
+    }
+  });
+}
+
 els.appVersion.textContent = `v${APP_VERSION}`;
 
 els.startBtn.addEventListener("click", async () => {
   await startScanner();
-});
-
-els.stopBtn.addEventListener("click", () => {
-  stopScanner({
-    keepResult: false,
-    statusMessage: "Scanner fermato manualmente."
-  });
 });
 
 els.rescanBtn.addEventListener("click", async () => {
@@ -345,6 +422,7 @@ window.addEventListener("beforeunload", () => {
 });
 
 window.addEventListener("load", async () => {
+  bindInstallPromptForAndroid();
   await registerServiceWorker();
   await tryAutoStartInPwa();
 });

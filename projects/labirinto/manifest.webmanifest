@@ -1,7 +1,7 @@
 {
   "name": "Maze Game",
   "short_name": "Maze",
-  "version": "1.2.0",
+  "version": "2.1.1",
   "description": "Maze game with keyboard and touch controls",
   "start_url": "./index.html",
   "scope": "./",

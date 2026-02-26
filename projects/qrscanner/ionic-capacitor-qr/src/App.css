@@ -1,0 +1,101 @@
+.screen {
+  min-height: 100%;
+  padding: calc(env(safe-area-inset-top) + 12px) 12px calc(env(safe-area-inset-bottom) + 18px);
+  background:
+    radial-gradient(1100px 550px at 0% 0%, #d1fae5 0%, transparent 55%),
+    radial-gradient(800px 500px at 100% 10%, #fbcfe8 0%, transparent 55%),
+    linear-gradient(155deg, #ecfeff, #fff7ed);
+}
+
+.panel {
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 20px 44px rgba(15, 23, 42, 0.14);
+}
+
+.status-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.status-text {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.viewer {
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px;
+  background: #dce9f4;
+  aspect-ratio: 3 / 4;
+}
+
+.viewer video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.video-on {
+  display: block;
+}
+
+.video-off {
+  display: none;
+}
+
+.scanner-frame {
+  position: absolute;
+  inset: 14% 10%;
+  border-radius: 20px;
+  border: 2px solid rgba(255, 255, 255, 0.9);
+  box-shadow:
+    inset 0 0 0 1px rgba(20, 184, 166, 0.65),
+    0 0 0 2px rgba(20, 184, 166, 0.28);
+  pointer-events: none;
+}
+
+.native-note {
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  bottom: 10px;
+  margin: 0;
+  text-align: center;
+  font-size: 0.78rem;
+  color: #475569;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 10px;
+  padding: 6px 8px;
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.result-panel {
+  margin-top: 12px;
+}
+
+.result-title {
+  margin: 0 0 8px;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #64748b;
+  font-weight: 700;
+}
+
+.result-value {
+  margin: 0;
+  min-height: 2em;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  color: #0f172a;
+  word-break: break-word;
+}

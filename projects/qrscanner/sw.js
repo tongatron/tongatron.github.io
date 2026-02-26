@@ -1,15 +1,21 @@
-const APP_VERSION = "1.3.0";
+const APP_VERSION = "1.5.0";
 const CACHE_PREFIX = "qrscanner-cache";
 const CACHE_NAME = `${CACHE_PREFIX}-${APP_VERSION}`;
 const APP_SHELL = [
   "./",
-  "./?v=1.3.0",
+  "./?v=1.5.0",
+  "./?v=1.5.0&source=pwa",
+  "./?v=1.5.0&source=shortcut",
   "./index.html",
-  "./style.css?v=1.3.0",
-  "./app.js?v=1.3.0",
-  "./vendor/jsQR.min.js?v=1.3.0",
-  "./manifest.webmanifest?v=1.3.0",
-  "./icons/icon.svg"
+  "./style.css?v=1.5.0",
+  "./app.js?v=1.5.0",
+  "./vendor/jsQR.min.js?v=1.5.0",
+  "./manifest.webmanifest?v=1.5.0",
+  "./icons/icon.svg",
+  "./icons/icon-192.png",
+  "./icons/icon-512.png",
+  "./icons/maskable-192.png",
+  "./icons/maskable-512.png"
 ];
 
 self.addEventListener("install", (event) => {

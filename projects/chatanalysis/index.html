@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ChatAnalysis - Importa e Analizza Chat</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="bg-shape bg-one"></div>
+    <div class="bg-shape bg-two"></div>
+
+    <main class="container">
+      <header class="hero">
+        <p class="kicker">Chat Intelligence</p>
+        <h1>Importa log chat e ottieni analisi immediate</h1>
+        <p class="subtitle">
+          Carica un file esportato da WhatsApp (.txt) e visualizza metriche,
+          pattern conversazionali e sentiment analysis base.
+        </p>
+      </header>
+
+      <section class="panel upload-panel">
+        <label for="chatFile" class="upload-label">File log chat</label>
+        <input id="chatFile" type="file" accept=".txt" />
+        <button id="analyzeBtn">Analizza conversazione</button>
+        <p id="status" class="status">In attesa di file...</p>
+      </section>
+
+      <section id="results" class="results hidden">
+        <div id="summaryCards" class="cards"></div>
+
+        <div class="grid">
+          <article class="panel">
+            <h2>Partecipanti</h2>
+            <div id="participantStats"></div>
+          </article>
+
+          <article class="panel">
+            <h2>Top parole</h2>
+            <ul id="topWords" class="word-list"></ul>
+          </article>
+
+          <article class="panel">
+            <h2>Sentiment analysis</h2>
+            <div id="sentimentInsights"></div>
+          </article>
+
+          <article class="panel">
+            <h2>Coppie di parole (bigrammi)</h2>
+            <ul id="topBigrams" class="word-list"></ul>
+          </article>
+
+          <article class="panel">
+            <h2>Tre parole in fila (trigrammi)</h2>
+            <ul id="topTrigrams" class="word-list"></ul>
+          </article>
+
+          <article class="panel full">
+            <h2>Parole frequenti per persona</h2>
+            <div id="personTopWords" class="person-words-grid"></div>
+          </article>
+
+          <article class="panel full">
+            <h2>Distribuzione messaggi per partecipante</h2>
+            <div id="messageBars" class="bars"></div>
+          </article>
+
+          <article class="panel full">
+            <h2>Messaggi nel tempo</h2>
+            <p id="chartSummary" class="chart-summary"></p>
+            <div id="dailyChart" class="chart-wrap"></div>
+            <h3 class="chart-subtitle">Andamento mensile</h3>
+            <div id="monthlyBars" class="bars"></div>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>
