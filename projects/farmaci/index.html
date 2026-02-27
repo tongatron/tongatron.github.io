@@ -3,15 +3,109 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Farmaci</title>
+    <title>Gestione Farmaci</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./app.css" />
     <link rel="manifest" href="./manifest.webmanifest" />
     <meta name="theme-color" content="#1f8a70" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
     <meta name="apple-mobile-web-app-title" content="Diario Farmaci" />
     <link rel="apple-touch-icon" href="./icons/icon-192.png" />
-    <meta http-equiv="refresh" content="0; url=./armadietto.html" />
   </head>
-  <body>
-    <p>Reindirizzamento in corso... <a href="./armadietto.html">Apri Armadietto</a></p>
+  <body data-page="home">
+    <nav class="bottom-nav">
+      <a class="nav-item nav-home" href="./index.html">Gestione</a>
+      <a class="nav-item nav-armadietto" href="./armadietto.html">Armadietto</a>
+      <a class="nav-item nav-terapia" href="./terapia.html">Terapia</a>
+      <a class="nav-item nav-diario" href="./diario.html">Diario</a>
+    </nav>
+
+    <main class="app">
+      <section class="hero">
+        <h1>Gestione Farmaci</h1>
+        <p>
+          Sistema unico per organizzare armadietto, piano terapia e diario assunzioni con backup
+          JSON locale.
+        </p>
+      </section>
+
+      <section class="section">
+        <h2>Come Funziona</h2>
+        <p class="hint">
+          1) Inserisci i farmaci in Armadietto. 2) Crea le assunzioni in Terapia. 3) Segna
+          giornalmente il Diario per monitorare l'aderenza.
+        </p>
+      </section>
+
+      <section class="section">
+        <h2>Dashboard Terapia</h2>
+        <div class="home-dashboard-grid">
+          <article class="home-stat-card">
+            <p class="home-stat-label">Terapie attive</p>
+            <p class="home-stat-value" id="home-active-therapy">0</p>
+          </article>
+          <article class="home-stat-card">
+            <p class="home-stat-label">Farmaci in terapia</p>
+            <p class="home-stat-value" id="home-active-meds">0</p>
+          </article>
+          <article class="home-stat-card">
+            <p class="home-stat-label">Unità pianificate / giorno</p>
+            <p class="home-stat-value" id="home-units-day">0</p>
+          </article>
+          <article class="home-stat-card">
+            <p class="home-stat-label">Aderenza ultimi 30 giorni</p>
+            <p class="home-stat-value" id="home-month-adherence">-</p>
+          </article>
+        </div>
+
+        <div class="home-trend-wrap">
+          <div class="home-trend-head">
+            <h3>Andamento Assunzioni Ultimo Mese</h3>
+            <p id="home-trend-summary" class="meta">Nessun dato</p>
+          </div>
+          <div id="home-trend-bars" class="home-trend-bars" aria-live="polite"></div>
+        </div>
+
+        <div>
+          <h3 class="home-subtitle">Fasce attive in terapia</h3>
+          <div id="home-block-breakdown" class="tag-row"></div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="home-settings-head">
+          <h2>Impostazioni e Backup</h2>
+          <p id="home-app-version" class="settings-version">Versione app: -</p>
+        </div>
+        <p class="hint">
+          Da qui puoi esportare/importare dati completi e resettare gli archivi storici.
+        </p>
+        <div class="home-settings-actions">
+          <button id="home-import-backup-btn" class="secondary btn-compact" type="button">
+            Importa backup JSON
+          </button>
+          <button id="home-export-backup-btn" class="secondary btn-compact" type="button">
+            Esporta backup JSON
+          </button>
+          <button id="home-reset-archive-btn" class="delete-soft btn-compact" type="button">
+            Reset archivi storici
+          </button>
+          <input
+            id="home-import-backup-input"
+            class="hidden"
+            type="file"
+            accept=".json,application/json"
+          />
+        </div>
+      </section>
+    </main>
+
+    <script src="./app.js"></script>
   </body>
 </html>

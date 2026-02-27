@@ -3,7 +3,7 @@
   "short_name": "Farmaci",
   "description": "Armadietto farmaci, piano terapia e diario assunzioni.",
   "lang": "it-IT",
-  "start_url": "./armadietto.html",
+  "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait-primary",

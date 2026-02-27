@@ -582,7 +582,7 @@ body[data-page="diario"] #diary-list {
   width: min(760px, 100%);
   margin: 12px auto 0;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 8px;
   padding: calc(10px + env(safe-area-inset-top)) 12px 10px;
   background: rgba(36, 42, 48, 0.92);
@@ -631,5 +631,129 @@ body[data-page="diario"] #diary-list {
 
   .bottom-nav {
     margin-top: 16px;
+  }
+}
+
+.home-dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.home-stat-card {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 10px;
+  background: #ffffff;
+}
+
+.home-stat-label {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+.home-stat-value {
+  margin: 2px 0 0;
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.home-trend-wrap {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 10px;
+  margin-bottom: 12px;
+}
+
+.home-trend-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+}
+
+.home-trend-head h3 {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.home-trend-bars {
+  display: grid;
+  grid-template-columns: repeat(30, minmax(0, 1fr));
+  gap: 4px;
+  align-items: end;
+}
+
+.home-trend-bar {
+  height: 20px;
+  border-radius: 4px;
+  border: 1px solid #cfd8de;
+  background: #f1f4f7;
+}
+
+.home-trend-bar.full {
+  background: #bde8d6;
+  border-color: #7ac7a6;
+}
+
+.home-trend-bar.high {
+  background: #d8ecff;
+  border-color: #afcfee;
+}
+
+.home-trend-bar.mid {
+  background: #fff1c9;
+  border-color: #e8d39a;
+}
+
+.home-trend-bar.low {
+  background: #ffe2df;
+  border-color: #e6b6b0;
+}
+
+.home-trend-bar.empty {
+  background: #eff2f5;
+  border-color: #d6dde3;
+}
+
+.home-subtitle {
+  margin: 0 0 8px;
+  font-size: 0.9rem;
+}
+
+.home-settings-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.home-settings-actions {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.home-settings-actions .btn-compact {
+  width: 100%;
+}
+
+.bottom-nav {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+@media (max-width: 620px) {
+  .home-dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .home-settings-actions {
+    grid-template-columns: 1fr;
   }
 }

@@ -20,9 +20,10 @@
   </head>
   <body data-page="diario">
     <nav class="bottom-nav">
+      <a class="nav-item nav-home" href="./index.html">Gestione</a>
       <a class="nav-item nav-armadietto" href="./armadietto.html">Armadietto</a>
       <a class="nav-item nav-terapia" href="./terapia.html">Terapia</a>
-      <a class="nav-item nav-diario" href="./diario.html">Diario Assunzioni</a>
+      <a class="nav-item nav-diario" href="./diario.html">Diario</a>
     </nav>
 
     <main class="app">
@@ -62,15 +63,6 @@
         </div>
         <div class="subline">
           <div class="summary" id="daily-summary">Nessuna registrazione</div>
-          <div class="subline-actions">
-            <button id="import-backup-btn" class="secondary btn-compact" type="button">
-              Importa backup JSON
-            </button>
-            <button id="export-backup-btn" class="secondary btn-compact" type="button">
-              Esporta backup JSON
-            </button>
-            <input id="import-backup-input" class="hidden" type="file" accept=".json,application/json" />
-          </div>
         </div>
         <div id="diary-list" class="cards" aria-live="polite"></div>
       </section>

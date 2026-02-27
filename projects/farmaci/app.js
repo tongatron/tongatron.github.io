@@ -5,6 +5,7 @@ const CATEGORY_VALUES = ["psicofarmaci", "pressione", "colesterolo", "altro"];
 const ARCHIVE_RETENTION_DAYS = 180;
 const IMPORT_KEY = `${STORAGE_KEY}_import_armadietto_2026_02_27`;
 const PRE_IMPORT_BACKUP_KEY = `${STORAGE_KEY}_pre_import_backup_v1`;
+const APP_VERSION = "v2.4.0";
 const IMPORT_ITEMS = [
   { name: "VENLAFAXINA", dosage: "225 mg" },
   { name: "DEPAKIN", dosage: "500 mg" },
@@ -33,6 +34,9 @@ if (PAGE === "terapia") {
 }
 if (PAGE === "diario") {
   initDiaryPage();
+}
+if (PAGE === "home") {
+  initHomePage();
 }
 
 function initCabinetPage() {
@@ -355,6 +359,153 @@ function renderTherapyPage({ listEl, filterWrapEl, medSelectEl, uiState, onReren
   });
 }
 
+function initHomePage() {
+  const activeTherapyEl = document.getElementById("home-active-therapy");
+  const activeMedsEl = document.getElementById("home-active-meds");
+  const unitsDayEl = document.getElementById("home-units-day");
+  const adherenceEl = document.getElementById("home-month-adherence");
+  const trendSummaryEl = document.getElementById("home-trend-summary");
+  const trendBarsEl = document.getElementById("home-trend-bars");
+  const blockBreakdownEl = document.getElementById("home-block-breakdown");
+
+  const versionEl = document.getElementById("home-app-version");
+  const exportBtn = document.getElementById("home-export-backup-btn");
+  const importBtn = document.getElementById("home-import-backup-btn");
+  const importInput = document.getElementById("home-import-backup-input");
+  const resetArchiveBtn = document.getElementById("home-reset-archive-btn");
+
+  const renderDashboard = () => {
+    const sortedTherapy = getSortedTherapy();
+    const therapyItems = getDiaryItems();
+    const uniqueMedIds = new Set(sortedTherapy.map((entry) => entry.medId));
+    const unitsPerDay = sortedTherapy.reduce((sum, entry) => sum + toPositiveInt(entry.quantity, 1), 0);
+
+    if (activeTherapyEl) activeTherapyEl.textContent = String(sortedTherapy.length);
+    if (activeMedsEl) activeMedsEl.textContent = String(uniqueMedIds.size);
+    if (unitsDayEl) unitsDayEl.textContent = String(unitsPerDay);
+
+    const dailyStats = getDiaryDailyStats(therapyItems);
+    const last30 = getLastDaysStats(30, dailyStats);
+    const monthTotal = last30.reduce((sum, day) => sum + day.total, 0);
+    const monthYes = last30.reduce((sum, day) => sum + day.yes, 0);
+    const trackedDays = last30.filter((day) => day.total > 0).length;
+    const completeDays = last30.filter((day) => day.total > 0 && day.yes === day.total).length;
+    const monthMissed = Math.max(0, monthTotal - monthYes);
+
+    if (adherenceEl) {
+      adherenceEl.textContent = monthTotal > 0 ? `${Math.round((monthYes / monthTotal) * 100)}%` : "-";
+    }
+
+    if (trendSummaryEl) {
+      trendSummaryEl.textContent =
+        monthTotal > 0
+          ? `Assunti: ${monthYes} · Mancati: ${monthMissed} · Giorni completi: ${completeDays}/${trackedDays}`
+          : "Nessuna registrazione negli ultimi 30 giorni";
+    }
+
+    if (trendBarsEl) {
+      trendBarsEl.innerHTML = "";
+      last30.forEach((day) => {
+        const bar = document.createElement("div");
+        const ratio = day.total > 0 ? day.yes / day.total : 0;
+        let cls = "empty";
+        if (day.total > 0 && ratio >= 1) cls = "full";
+        else if (day.total > 0 && ratio >= 0.66) cls = "high";
+        else if (day.total > 0 && ratio >= 0.33) cls = "mid";
+        else if (day.total > 0) cls = "low";
+        bar.className = `home-trend-bar ${cls}`;
+        bar.title = `${formatDateLong(day.date)}: ${day.yes}/${day.total}`;
+        trendBarsEl.append(bar);
+      });
+    }
+
+    if (blockBreakdownEl) {
+      blockBreakdownEl.innerHTML = "";
+      if (!sortedTherapy.length) {
+        const empty = document.createElement("span");
+        empty.className = "tag";
+        empty.textContent = "Nessuna terapia attiva";
+        blockBreakdownEl.append(empty);
+      } else {
+        const counts = new Map();
+        sortedTherapy.forEach((entry) => {
+          counts.set(entry.block, (counts.get(entry.block) || 0) + 1);
+        });
+        const orderedBlocks = [
+          ...BLOCK_ORDER.filter((blockName) => counts.has(blockName)),
+          ...Array.from(counts.keys()).filter((blockName) => !BLOCK_ORDER.includes(blockName)).sort()
+        ];
+        orderedBlocks.forEach((blockName) => {
+          const chip = document.createElement("span");
+          chip.className = "tag";
+          chip.textContent = `${blockName}: ${counts.get(blockName)}`;
+          blockBreakdownEl.append(chip);
+        });
+      }
+    }
+  };
+
+  if (versionEl) {
+    versionEl.textContent = `Versione app: ${APP_VERSION}`;
+  }
+
+  if (exportBtn) {
+    exportBtn.addEventListener("click", () => {
+      exportBackupJson();
+    });
+  }
+
+  if (importBtn && importInput) {
+    importBtn.addEventListener("click", () => {
+      importInput.click();
+    });
+
+    importInput.addEventListener("change", async () => {
+      const file = importInput.files?.[0];
+      importInput.value = "";
+      if (!file) return;
+      try {
+        const result = await importBackupJson(file);
+        if (!result.applied) return;
+        renderDashboard();
+        alert(
+          `Import completato: ${result.medicines} farmaci, ${result.therapy} terapie, ${result.archiveDays} giorni archiviati.`
+        );
+      } catch (error) {
+        const message = error instanceof Error ? error.message : "Import non riuscito.";
+        alert(message);
+      }
+    });
+  }
+
+  if (resetArchiveBtn) {
+    resetArchiveBtn.addEventListener("click", () => {
+      const result = resetArchiveDaily();
+      if (!result.changed) {
+        if (result.message) alert(result.message);
+        return;
+      }
+      renderDashboard();
+      alert(`Archivi storici azzerati: ${result.removedDays} giorni rimossi.`);
+    });
+  }
+
+  renderDashboard();
+}
+
+function getLastDaysStats(days, dailyStats) {
+  const stats = [];
+  const base = new Date();
+  for (let offset = days - 1; offset >= 0; offset -= 1) {
+    const date = new Date(base);
+    date.setDate(base.getDate() - offset);
+    const key = getLocalIsoDate(date);
+    const day = dailyStats[key] || { yes: 0, total: 0 };
+    stats.push({ date: key, yes: toNonNegativeInt(day.yes), total: toNonNegativeInt(day.total) });
+  }
+  return stats;
+}
+
 function initDiaryPage() {
   const list = document.getElementById("diary-list");
   const summary = document.getElementById("daily-summary");
@@ -364,9 +515,7 @@ function initDiaryPage() {
   const prevBtn = document.getElementById("calendar-prev");
   const nextBtn = document.getElementById("calendar-next");
   const toggleCalendarBtn = document.getElementById("toggle-calendar-btn");
-  const exportBtn = document.getElementById("export-backup-btn");
-  const importBtn = document.getElementById("import-backup-btn");
-  const importInput = document.getElementById("import-backup-input");
+
   if (
     !list ||
     !summary ||
@@ -383,6 +532,7 @@ function initDiaryPage() {
   let selectedDate = today;
   let visibleYear = Number(today.slice(0, 4));
   let visibleMonth = Number(today.slice(5, 7)) - 1;
+
   const setCalendarOpen = (isOpen) => {
     calendarWrap.classList.toggle("hidden", !isOpen);
     toggleCalendarBtn.textContent = isOpen ? "Chiudi calendario" : "Apri calendario";
@@ -412,6 +562,7 @@ function initDiaryPage() {
   toggleCalendarBtn.addEventListener("click", () => {
     setCalendarOpen(calendarWrap.classList.contains("hidden"));
   });
+
   prevBtn.addEventListener("click", () => {
     visibleMonth -= 1;
     if (visibleMonth < 0) {
@@ -420,6 +571,7 @@ function initDiaryPage() {
     }
     renderAll();
   });
+
   nextBtn.addEventListener("click", () => {
     visibleMonth += 1;
     if (visibleMonth > 11) {
@@ -428,32 +580,6 @@ function initDiaryPage() {
     }
     renderAll();
   });
-  if (exportBtn) {
-    exportBtn.addEventListener("click", () => {
-      exportBackupJson();
-    });
-  }
-  if (importBtn && importInput) {
-    importBtn.addEventListener("click", () => {
-      importInput.click();
-    });
-    importInput.addEventListener("change", async () => {
-      const file = importInput.files?.[0];
-      importInput.value = "";
-      if (!file) return;
-      try {
-        const result = await importBackupJson(file);
-        if (!result.applied) return;
-        renderAll();
-        alert(
-          `Import completato: ${result.medicines} farmaci, ${result.therapy} terapie, ${result.archiveDays} giorni archiviati.`
-        );
-      } catch (error) {
-        const message = error instanceof Error ? error.message : "Import non riuscito.";
-        alert(message);
-      }
-    });
-  }
 
   setCalendarOpen(false);
   renderAll();
@@ -698,50 +824,116 @@ function createEmptyState() {
   return { cabinet: [], therapy: [], archive: { daily: {} } };
 }
 
+function pickFirstArray(...values) {
+  for (const value of values) {
+    if (Array.isArray(value)) return value;
+  }
+  return [];
+}
+
+function pickFirstObject(...values) {
+  for (const value of values) {
+    if (value && typeof value === "object") return value;
+  }
+  return {};
+}
+
 function sanitizeState(raw) {
   const parsed = raw && typeof raw === "object" ? raw : {};
-  const cabinet = Array.isArray(parsed.cabinet)
-    ? parsed.cabinet
-        .map((item) => {
-          const category = normalizeCategory(item?.category);
-          return {
-            id: item?.id || createId(),
-            name: String(item?.name || "").trim(),
-            dosage: String(item?.dosage || "").trim(),
-            quantity: toNonNegativeInt(item?.quantity),
-            category,
-            categoryOther:
-              category === "altro"
-                ? String(item?.categoryOther || "").replace(/\s+/g, " ").trim()
-                : ""
-          };
-        })
-        .filter((item) => item.name && item.dosage)
-    : [];
 
-  const therapy = Array.isArray(parsed.therapy)
-    ? parsed.therapy
-        .map((entry) => {
-          const medId = String(entry?.medId || "").trim();
-          const block = String(entry?.block || "Mattina").trim() || "Mattina";
-          const timeRaw = typeof entry?.time === "string" ? entry.time.trim() : "";
-          return {
-            id: entry?.id || createId(),
-            medId,
-            block,
-            time: /^\d{2}:\d{2}$/.test(timeRaw) ? timeRaw : "",
-            quantity: toPositiveInt(entry?.quantity, 1),
-            takenLog: sanitizeTakenLog(entry?.takenLog)
-          };
-        })
-        .filter((entry) => entry.medId)
-    : [];
+  const sourceCabinet = pickFirstArray(
+    parsed.cabinet,
+    parsed.medicines,
+    parsed.armadietto,
+    parsed.farmaci
+  );
+
+  const cabinet = sourceCabinet
+    .map((item) => {
+      const category = normalizeCategory(item?.category);
+      return {
+        id: item?.id || createId(),
+        name: String(item?.name || item?.medicineName || item?.farmaco || "").trim(),
+        dosage: String(item?.dosage || item?.dose || item?.posology || "").trim(),
+        quantity: toNonNegativeInt(item?.quantity ?? item?.qty ?? item?.stock),
+        category,
+        categoryOther:
+          category === "altro"
+            ? String(item?.categoryOther || item?.categoryDetail || "").replace(/\s+/g, " ").trim()
+            : ""
+      };
+    })
+    .filter((item) => item.name && item.dosage);
+
+  const cabinetByKey = new Map(cabinet.map((med) => [normalizeText(`${med.name}|${med.dosage}`), med.id]));
+
+  const sourceTherapy = pickFirstArray(
+    parsed.therapy,
+    parsed.terapia,
+    parsed.treatments,
+    parsed.plan,
+    parsed.pianoTerapia
+  );
+
+  const therapy = sourceTherapy
+    .map((entry) => {
+      const medId = resolveMedIdFromEntry(entry, cabinet, cabinetByKey);
+      const block = String(entry?.block || entry?.slot || entry?.fascia || "Mattina").trim() || "Mattina";
+      const timeRaw =
+        typeof entry?.time === "string"
+          ? entry.time.trim()
+          : typeof entry?.hour === "string"
+            ? entry.hour.trim()
+            : typeof entry?.orario === "string"
+              ? entry.orario.trim()
+              : "";
+
+      return {
+        id: entry?.id || createId(),
+        medId,
+        block,
+        time: /^\d{2}:\d{2}$/.test(timeRaw) ? timeRaw : "",
+        quantity: toPositiveInt(entry?.quantity ?? entry?.doseQty ?? entry?.dose ?? entry?.qta, 1),
+        takenLog: sanitizeTakenLog(
+          entry?.takenLog || entry?.assunzioni || entry?.log || entry?.taken || entry?.statusLog
+        )
+      };
+    })
+    .filter((entry) => entry.medId);
+
+  const archiveSource = pickFirstObject(
+    parsed.archive?.daily,
+    parsed.archiveDaily,
+    parsed.archivio?.daily,
+    parsed.archivioGiornaliero
+  );
 
   return {
     cabinet,
     therapy,
-    archive: { daily: sanitizeArchiveDaily(parsed.archive?.daily) }
+    archive: { daily: sanitizeArchiveDaily(archiveSource) }
   };
+}
+
+function resolveMedIdFromEntry(entry, cabinet, cabinetByKey) {
+  const directId = String(entry?.medId || entry?.medicineId || entry?.farmacoId || entry?.cabinetId || "").trim();
+  if (directId) return directId;
+
+  const name = String(entry?.medName || entry?.medicineName || entry?.name || entry?.farmaco || "").trim();
+  const dosage = String(entry?.dosage || entry?.dose || entry?.posology || "").trim();
+
+  if (name && dosage) {
+    const key = normalizeText(`${name}|${dosage}`);
+    if (cabinetByKey.has(key)) return cabinetByKey.get(key);
+  }
+
+  if (name) {
+    const normalizedName = normalizeText(name);
+    const match = cabinet.find((med) => normalizeText(med.name) === normalizedName);
+    if (match) return match.id;
+  }
+
+  return "";
 }
 
 function sanitizeArchiveDaily(rawDaily) {
@@ -767,9 +959,25 @@ function sanitizeTakenLog(rawTakenLog) {
   const safeTakenLog = {};
   Object.entries(takenLog).forEach(([dateKey, status]) => {
     if (!isIsoDateKey(dateKey)) return;
-    if (status === "yes" || status === "no") safeTakenLog[dateKey] = status;
+    const normalized = normalizeTakenStatus(status);
+    if (normalized) safeTakenLog[dateKey] = normalized;
   });
   return safeTakenLog;
+}
+
+function normalizeTakenStatus(status) {
+  if (status === "yes" || status === true || status === 1) return "yes";
+  if (status === "no" || status === false || status === 0) return "no";
+
+  const value = String(status || "").trim().toLowerCase();
+  if (["yes", "si", "sì", "true", "taken", "assunto", "ok", "1"].includes(value)) {
+    return "yes";
+  }
+  if (["no", "false", "not_taken", "non_assunto", "saltato", "0"].includes(value)) {
+    return "no";
+  }
+
+  return "";
 }
 
 function toNonNegativeInt(value) {
@@ -936,8 +1144,38 @@ async function importBackupJson(file) {
 
 function extractImportStatePayload(payload) {
   if (!payload || typeof payload !== "object") return null;
-  if (payload.data && typeof payload.data === "object") return payload.data;
+
+  if (payload.data && typeof payload.data === "object") {
+    if (payload.data.state && typeof payload.data.state === "object") return payload.data.state;
+    return payload.data;
+  }
+
+  if (payload.state && typeof payload.state === "object") return payload.state;
+  if (payload.backup?.data && typeof payload.backup.data === "object") return payload.backup.data;
+  if (payload.payload?.data && typeof payload.payload.data === "object") return payload.payload.data;
+
   return payload;
+}
+
+function resetArchiveDaily() {
+  const archive = state.archive && typeof state.archive === "object" ? state.archive : { daily: {} };
+  const daily = archive.daily && typeof archive.daily === "object" ? archive.daily : {};
+  const removedDays = Object.keys(daily).length;
+
+  if (!removedDays) {
+    return { changed: false, removedDays: 0, message: "Nessun archivio da resettare." };
+  }
+
+  const confirmReset = window.confirm(
+    `Vuoi cancellare ${removedDays} giorni negli archivi storici? Questa azione non e annullabile.`
+  );
+  if (!confirmReset) {
+    return { changed: false, removedDays: 0, message: "Reset annullato." };
+  }
+
+  state.archive = { ...archive, daily: {} };
+  saveState();
+  return { changed: true, removedDays, message: "" };
 }
 
 function backupStateBeforeImport() {
