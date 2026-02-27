@@ -5,6 +5,8 @@ const CATEGORY_VALUES = ["psicofarmaci", "pressione", "colesterolo", "altro"];
 const ARCHIVE_RETENTION_DAYS = 180;
 const IMPORT_KEY = `${STORAGE_KEY}_import_armadietto_2026_02_27`;
 const PRE_IMPORT_BACKUP_KEY = `${STORAGE_KEY}_pre_import_backup_v1`;
+const DIARY_PREVIOUS_DAY_UNTIL_HOUR = 5;
+const DIARY_VIEW_MODE_KEY = `${STORAGE_KEY}_diary_view_mode`;
 const APP_VERSION = "v2.4.0";
 const IMPORT_ITEMS = [
   { name: "VENLAFAXINA", dosage: "225 mg" },
@@ -179,6 +181,7 @@ function initTherapyPage() {
   const formWrap = document.getElementById("therapy-form-wrap");
   const openFormBtn = document.getElementById("therapy-open-form");
   const closeFormBtn = document.getElementById("therapy-cancel-form");
+  const printBtn = document.getElementById("therapy-print-btn");
   if (
     !form ||
     !list ||
@@ -214,6 +217,12 @@ function initTherapyPage() {
   closeFormBtn.addEventListener("click", () => {
     setFormOpen(false);
   });
+
+  if (printBtn) {
+    printBtn.addEventListener("click", () => {
+      printTherapyPlanPdf();
+    });
+  }
 
   form.addEventListener("submit", (event) => {
     event.preventDefault();
@@ -271,10 +280,12 @@ function renderTherapyPage({ listEl, filterWrapEl, medSelectEl, uiState, onReren
     if (!grouped.has(key)) grouped.set(key, []);
     grouped.get(key).push(item);
   });
+
   const activeBlocks = [
     ...BLOCK_ORDER.filter((block) => grouped.has(block)),
     ...Array.from(grouped.keys()).filter((block) => !BLOCK_ORDER.includes(block)).sort()
   ];
+
   if (uiState.activeBlock !== "all" && !activeBlocks.includes(uiState.activeBlock)) {
     uiState.activeBlock = "all";
   }
@@ -294,7 +305,7 @@ function renderTherapyPage({ listEl, filterWrapEl, medSelectEl, uiState, onReren
     const blockButton = document.createElement("button");
     blockButton.type = "button";
     blockButton.className = `therapy-filter-chip ${uiState.activeBlock === block ? "active" : ""}`;
-    blockButton.textContent = `${block} (${grouped.get(block).length})`;
+    blockButton.textContent = `${block} (${(grouped.get(block) || []).length})`;
     blockButton.addEventListener("click", () => {
       uiState.activeBlock = block;
       onRerender();
@@ -317,7 +328,9 @@ function renderTherapyPage({ listEl, filterWrapEl, medSelectEl, uiState, onReren
       </div>
       <div class="therapy-block-list"></div>
     `;
+
     const listInside = card.querySelector(".therapy-block-list");
+
     blockItems.forEach(({ entry, med }) => {
       const categoryTag = formatCategoryTag(med);
       const row = document.createElement("div");
@@ -325,18 +338,19 @@ function renderTherapyPage({ listEl, filterWrapEl, medSelectEl, uiState, onReren
       row.innerHTML = `
         <div>
           <h4 class="item-title">${escapeHtml(med.name)}</h4>
-          <p class="meta">${escapeHtml(med.dosage)} | ${entry.quantity} unità</p>
+          <p class="meta">${escapeHtml(med.dosage)} • ${entry.quantity} unità</p>
           ${entry.time ? `<p class="meta">${formatTime(entry.time)}</p>` : ""}
           <div class="tag-row">
             <span class="tag tag-cat ${escapeHtml(categoryTag.className)}">${escapeHtml(categoryTag.label)}</span>
           </div>
         </div>
-        <div class="actions">
+        <div class="actions therapy-actions">
           <button class="secondary btn-compact" type="button" data-edit="${entry.id}">Modifica</button>
           <button class="delete-soft btn-compact" type="button" data-remove="${entry.id}">Elimina</button>
         </div>
         <div class="edit-area hidden" data-edit-area="${entry.id}"></div>
       `;
+
       row.querySelector("[data-edit]").addEventListener("click", () => {
         const area = row.querySelector("[data-edit-area]");
         if (!area) return;
@@ -348,16 +362,161 @@ function renderTherapyPage({ listEl, filterWrapEl, medSelectEl, uiState, onReren
         area.classList.remove("hidden");
         renderTherapyEditForm(area, entry, onRerender);
       });
+
       row.querySelector("[data-remove]").addEventListener("click", () => {
         state.therapy = state.therapy.filter((item) => item.id !== entry.id);
         saveState();
         onRerender();
       });
+
       listInside.append(row);
     });
+
     listEl.append(card);
   });
 }
+function printTherapyPlanPdf() {
+  const rows = getSortedTherapy()
+    .map((entry) => ({
+      entry,
+      med: state.cabinet.find((item) => item.id === entry.medId)
+    }))
+    .filter((item) => item.med);
+
+  if (!rows.length) {
+    alert("Nessuna terapia da stampare.");
+    return;
+  }
+
+  const grouped = new Map();
+  rows.forEach((item) => {
+    const key = item.entry.block || "Altro";
+    if (!grouped.has(key)) grouped.set(key, []);
+    grouped.get(key).push(item);
+  });
+
+  const orderedBlocks = [
+    ...BLOCK_ORDER.filter((blockName) => grouped.has(blockName)),
+    ...Array.from(grouped.keys()).filter((blockName) => !BLOCK_ORDER.includes(blockName)).sort()
+  ];
+
+  let tableRows = "";
+  orderedBlocks.forEach((blockName) => {
+    const blockItems = grouped.get(blockName) || [];
+    tableRows += `
+      <tr class="print-block-row">
+        <td colspan="5">${escapeHtml(blockName)} (${blockItems.length})</td>
+      </tr>
+    `;
+    blockItems.forEach(({ entry, med }) => {
+      const category = formatCategoryTag(med).label;
+      tableRows += `
+        <tr>
+          <td>${escapeHtml(med.name)}</td>
+          <td>${escapeHtml(med.dosage)}</td>
+          <td>${entry.quantity}</td>
+          <td>${entry.time ? escapeHtml(formatTime(entry.time)) : "-"}</td>
+          <td>${escapeHtml(category)}</td>
+        </tr>
+      `;
+    });
+  });
+
+  const generatedLabel = new Date().toLocaleString("it-IT", {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit"
+  });
+
+  const html = `<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <title>Piano terapia</title>
+  <style>
+    @page { size: A4; margin: 11mm; }
+    body { font-family: Arial, sans-serif; color: #111; margin: 0; font-size: 12px; }
+    h1 { margin: 0 0 4px; font-size: 20px; }
+    .meta { margin: 0 0 10px; color: #444; font-size: 11px; }
+    table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+    th, td { border: 1px solid #c9c9c9; padding: 6px 7px; vertical-align: top; word-wrap: break-word; }
+    th { background: #f1f1f1; text-align: left; }
+    .print-block-row td { background: #e8ecef; font-weight: 700; }
+    .small { font-size: 10px; color: #555; margin-top: 8px; }
+  </style>
+</head>
+<body>
+  <h1>Piano Terapia</h1>
+  <p class="meta">Generato il ${escapeHtml(generatedLabel)} · Totale assunzioni giornaliere: ${rows.length}</p>
+  <table>
+    <thead>
+      <tr>
+        <th style="width:33%">Farmaco</th>
+        <th style="width:16%">Dosaggio</th>
+        <th style="width:12%">Unità</th>
+        <th style="width:16%">Orario</th>
+        <th style="width:23%">Categoria</th>
+      </tr>
+    </thead>
+    <tbody>${tableRows}</tbody>
+  </table>
+  <p class="small">Per creare il PDF scegli “Salva come PDF” nella finestra di stampa.</p>
+</body>
+</html>`;
+
+const printFrame = document.createElement("iframe");
+printFrame.style.position = "fixed";
+printFrame.style.width = "0";
+printFrame.style.height = "0";
+printFrame.style.opacity = "0";
+printFrame.style.pointerEvents = "none";
+printFrame.style.border = "0";
+printFrame.setAttribute("aria-hidden", "true");
+document.body.append(printFrame);
+
+const frameDoc = printFrame.contentDocument;
+const frameWin = printFrame.contentWindow;
+if (!frameDoc || !frameWin) {
+  printFrame.remove();
+  alert("Stampa non disponibile su questo dispositivo.");
+  return;
+}
+
+const cleanup = () => {
+  setTimeout(() => {
+    try {
+      printFrame.remove();
+    } catch {
+      // Ignore cleanup errors.
+    }
+  }, 600);
+};
+
+const runPrint = () => {
+  try {
+    frameWin.focus();
+    frameWin.print();
+    setTimeout(cleanup, 1200);
+  } catch {
+    cleanup();
+    alert("Impossibile avviare la stampa. Riprova.");
+  }
+};
+
+frameDoc.open();
+frameDoc.write(html);
+frameDoc.close();
+
+if (frameDoc.readyState === "complete") {
+  setTimeout(runPrint, 160);
+} else {
+  printFrame.addEventListener("load", () => setTimeout(runPrint, 160), { once: true });
+}
+}
+
 
 function initHomePage() {
   const activeTherapyEl = document.getElementById("home-active-therapy");
@@ -365,7 +524,10 @@ function initHomePage() {
   const unitsDayEl = document.getElementById("home-units-day");
   const adherenceEl = document.getElementById("home-month-adherence");
   const trendSummaryEl = document.getElementById("home-trend-summary");
-  const trendBarsEl = document.getElementById("home-trend-bars");
+  const homeCalendarEl = document.getElementById("home-month-calendar");
+  const homeCalendarMonthEl = document.getElementById("home-calendar-month");
+  const homeCalendarPrevBtn = document.getElementById("home-calendar-prev");
+  const homeCalendarNextBtn = document.getElementById("home-calendar-next");
   const blockBreakdownEl = document.getElementById("home-block-breakdown");
 
   const versionEl = document.getElementById("home-app-version");
@@ -373,6 +535,13 @@ function initHomePage() {
   const importBtn = document.getElementById("home-import-backup-btn");
   const importInput = document.getElementById("home-import-backup-input");
   const resetArchiveBtn = document.getElementById("home-reset-archive-btn");
+  const settingsToggleBtn = document.getElementById("home-settings-toggle-btn");
+  const settingsBody = document.getElementById("home-settings-body");
+
+  const homeCalendarToday = getDiaryReferenceIsoDate();
+  const homeCalendarParts = parseIsoDate(homeCalendarToday);
+  let homeVisibleYear = homeCalendarParts.year;
+  let homeVisibleMonth = homeCalendarParts.month;
 
   const renderDashboard = () => {
     const sortedTherapy = getSortedTherapy();
@@ -388,35 +557,25 @@ function initHomePage() {
     const last30 = getLastDaysStats(30, dailyStats);
     const monthTotal = last30.reduce((sum, day) => sum + day.total, 0);
     const monthYes = last30.reduce((sum, day) => sum + day.yes, 0);
-    const trackedDays = last30.filter((day) => day.total > 0).length;
-    const completeDays = last30.filter((day) => day.total > 0 && day.yes === day.total).length;
-    const monthMissed = Math.max(0, monthTotal - monthYes);
 
     if (adherenceEl) {
       adherenceEl.textContent = monthTotal > 0 ? `${Math.round((monthYes / monthTotal) * 100)}%` : "-";
     }
 
+    const monthVisualStats = renderHomeMonthCalendar({
+      calendarEl: homeCalendarEl,
+      monthLabelEl: homeCalendarMonthEl,
+      visibleYear: homeVisibleYear,
+      visibleMonth: homeVisibleMonth,
+      dailyStats,
+      todayDate: homeCalendarToday
+    });
+
     if (trendSummaryEl) {
       trendSummaryEl.textContent =
-        monthTotal > 0
-          ? `Assunti: ${monthYes} · Mancati: ${monthMissed} · Giorni completi: ${completeDays}/${trackedDays}`
-          : "Nessuna registrazione negli ultimi 30 giorni";
-    }
-
-    if (trendBarsEl) {
-      trendBarsEl.innerHTML = "";
-      last30.forEach((day) => {
-        const bar = document.createElement("div");
-        const ratio = day.total > 0 ? day.yes / day.total : 0;
-        let cls = "empty";
-        if (day.total > 0 && ratio >= 1) cls = "full";
-        else if (day.total > 0 && ratio >= 0.66) cls = "high";
-        else if (day.total > 0 && ratio >= 0.33) cls = "mid";
-        else if (day.total > 0) cls = "low";
-        bar.className = `home-trend-bar ${cls}`;
-        bar.title = `${formatDateLong(day.date)}: ${day.yes}/${day.total}`;
-        trendBarsEl.append(bar);
-      });
+        monthVisualStats.trackedDays > 0
+          ? `Verdi: ${monthVisualStats.greenDays} · Gialli: ${monthVisualStats.yellowDays} · Rossi: ${monthVisualStats.redDays}`
+          : "Nessuna registrazione nel mese selezionato";
     }
 
     if (blockBreakdownEl) {
@@ -447,6 +606,16 @@ function initHomePage() {
 
   if (versionEl) {
     versionEl.textContent = `Versione app: ${APP_VERSION}`;
+  }
+
+  if (settingsToggleBtn && settingsBody) {
+    settingsToggleBtn.addEventListener("click", () => {
+      const willOpen = settingsBody.classList.contains("hidden");
+      settingsBody.classList.toggle("hidden", !willOpen);
+      settingsToggleBtn.setAttribute("aria-expanded", String(willOpen));
+      settingsToggleBtn.textContent = willOpen ? "-" : "+";
+      settingsToggleBtn.title = willOpen ? "Chiudi impostazioni" : "Apri impostazioni";
+    });
   }
 
   if (exportBtn) {
@@ -490,8 +659,32 @@ function initHomePage() {
     });
   }
 
+  if (homeCalendarPrevBtn) {
+    homeCalendarPrevBtn.addEventListener("click", () => {
+      homeVisibleMonth -= 1;
+      if (homeVisibleMonth < 0) {
+        homeVisibleMonth = 11;
+        homeVisibleYear -= 1;
+      }
+      renderDashboard();
+    });
+  }
+
+  if (homeCalendarNextBtn) {
+    homeCalendarNextBtn.addEventListener("click", () => {
+      homeVisibleMonth += 1;
+      if (homeVisibleMonth > 11) {
+        homeVisibleMonth = 0;
+        homeVisibleYear += 1;
+      }
+      renderDashboard();
+    });
+  }
+
   renderDashboard();
 }
+
+
 
 function getLastDaysStats(days, dailyStats) {
   const stats = [];
@@ -506,6 +699,80 @@ function getLastDaysStats(days, dailyStats) {
   return stats;
 }
 
+function renderHomeMonthCalendar({
+  calendarEl,
+  monthLabelEl,
+  visibleYear,
+  visibleMonth,
+  dailyStats,
+  todayDate = today
+}) {
+  if (!calendarEl || !monthLabelEl) {
+    return { greenDays: 0, yellowDays: 0, redDays: 0, trackedDays: 0 };
+  }
+
+  const monthName = new Date(visibleYear, visibleMonth, 1).toLocaleDateString("it-IT", {
+    month: "long",
+    year: "numeric"
+  });
+  monthLabelEl.textContent = monthName.charAt(0).toUpperCase() + monthName.slice(1);
+
+  const firstDay = new Date(visibleYear, visibleMonth, 1);
+  const daysInMonth = new Date(visibleYear, visibleMonth + 1, 0).getDate();
+  const firstWeekdayMondayBased = (firstDay.getDay() + 6) % 7;
+
+  calendarEl.innerHTML = "";
+
+  for (let i = 0; i < firstWeekdayMondayBased; i += 1) {
+    const spacer = document.createElement("div");
+    spacer.className = "home-month-day empty";
+    calendarEl.append(spacer);
+  }
+
+  let greenDays = 0;
+  let yellowDays = 0;
+  let redDays = 0;
+
+  for (let day = 1; day <= daysInMonth; day += 1) {
+    const dateIso = toIsoDate(visibleYear, visibleMonth, day);
+    const stats = dailyStats[dateIso] || { yes: 0, total: 0 };
+
+    const cell = document.createElement("div");
+    cell.className = "home-month-day";
+
+    if (dateIso === todayDate) {
+      cell.classList.add("today");
+    }
+
+    if (stats.total > 0) {
+      if (stats.yes === stats.total) {
+        cell.classList.add("good");
+        greenDays += 1;
+      } else if (stats.yes > 0) {
+        cell.classList.add("warn");
+        yellowDays += 1;
+      } else {
+        cell.classList.add("bad");
+        redDays += 1;
+      }
+    } else {
+      cell.classList.add("no-data");
+    }
+
+    cell.innerHTML = `
+      <span class="home-month-day-num">${day}</span>
+      <span class="home-month-day-meta">${stats.total > 0 ? `${stats.yes}/${stats.total}` : "-"}</span>
+    `;
+
+    const titleText = stats.total > 0 ? `${stats.yes}/${stats.total}` : "nessun dato";
+    cell.title = `${formatDateLong(dateIso)}: ${titleText}`;
+    calendarEl.append(cell);
+  }
+
+  const trackedDays = greenDays + yellowDays + redDays;
+  return { greenDays, yellowDays, redDays, trackedDays };
+}
+
 function initDiaryPage() {
   const list = document.getElementById("diary-list");
   const summary = document.getElementById("daily-summary");
@@ -515,6 +782,8 @@ function initDiaryPage() {
   const prevBtn = document.getElementById("calendar-prev");
   const nextBtn = document.getElementById("calendar-next");
   const toggleCalendarBtn = document.getElementById("toggle-calendar-btn");
+  const standardViewBtn = document.getElementById("diary-view-standard-btn");
+  const checklistViewBtn = document.getElementById("diary-view-checklist-btn");
 
   if (
     !list ||
@@ -529,14 +798,23 @@ function initDiaryPage() {
     return;
   }
 
-  let selectedDate = today;
-  let visibleYear = Number(today.slice(0, 4));
-  let visibleMonth = Number(today.slice(5, 7)) - 1;
+  const diaryToday = getDiaryReferenceIsoDate();
+  let selectedDate = diaryToday;
+  let visibleYear = Number(diaryToday.slice(0, 4));
+  let visibleMonth = Number(diaryToday.slice(5, 7)) - 1;
+  let diaryViewMode = loadDiaryViewMode();
 
   const setCalendarOpen = (isOpen) => {
     calendarWrap.classList.toggle("hidden", !isOpen);
     toggleCalendarBtn.textContent = isOpen ? "Chiudi calendario" : "Apri calendario";
     toggleCalendarBtn.setAttribute("aria-expanded", String(isOpen));
+  };
+
+  const setDiaryViewMode = (mode) => {
+    diaryViewMode = normalizeDiaryViewMode(mode);
+    saveDiaryViewMode(diaryViewMode);
+    updateDiaryViewButtons(standardViewBtn, checklistViewBtn, diaryViewMode);
+    renderAll();
   };
 
   const renderAll = () => {
@@ -554,9 +832,15 @@ function initDiaryPage() {
         visibleYear = parts.year;
         visibleMonth = parts.month;
         renderAll();
-      }
+      },
+      todayDate: diaryToday
     });
-    renderDiary(list, summary, { selectedDate, items });
+    renderDiary(list, summary, {
+      selectedDate,
+      items,
+      viewMode: diaryViewMode,
+      onToggleTaken: renderAll
+    });
   };
 
   toggleCalendarBtn.addEventListener("click", () => {
@@ -581,15 +865,38 @@ function initDiaryPage() {
     renderAll();
   });
 
+  if (standardViewBtn) {
+    standardViewBtn.addEventListener("click", () => {
+      setDiaryViewMode("standard");
+    });
+  }
+
+  if (checklistViewBtn) {
+    checklistViewBtn.addEventListener("click", () => {
+      setDiaryViewMode("checklist");
+    });
+  }
+
+  updateDiaryViewButtons(standardViewBtn, checklistViewBtn, diaryViewMode);
   setCalendarOpen(false);
   renderAll();
 }
 
 function renderDiary(listEl, summaryEl, filters) {
-  const { selectedDate, items } = filters;
+  const { selectedDate, items, onToggleTaken } = filters;
+  const viewMode = normalizeDiaryViewMode(filters.viewMode);
   const sorted = Array.isArray(items) ? items : getDiaryItems();
+
+  listEl.classList.toggle("checklist-mode", viewMode === "checklist");
+
   if (!sorted.length) {
     listEl.innerHTML = '<div class="empty">Nessuna terapia da registrare.</div>';
+    summaryEl.textContent = formatDateLong(selectedDate);
+    return;
+  }
+
+  if (viewMode === "checklist") {
+    renderDiaryChecklist(listEl, { selectedDate, sorted, onToggleTaken });
     summaryEl.textContent = formatDateLong(selectedDate);
     return;
   }
@@ -652,6 +959,10 @@ function renderDiary(listEl, summaryEl, filters) {
       `;
       row.querySelector("[data-toggle-taken]").addEventListener("click", () => {
         setTakenStatus(entry.id, selectedDate, isTaken ? "" : "yes");
+        if (typeof onToggleTaken === "function") {
+          onToggleTaken();
+          return;
+        }
         renderDiary(listEl, summaryEl, filters);
       });
       listInside.append(row);
@@ -662,6 +973,71 @@ function renderDiary(listEl, summaryEl, filters) {
   summaryEl.textContent = formatDateLong(selectedDate);
 }
 
+function renderDiaryChecklist(listEl, options) {
+  const { selectedDate, sorted, onToggleTaken } = options;
+
+  listEl.innerHTML = "";
+
+  const grouped = new Map();
+  sorted.forEach((item) => {
+    const key = item.entry.block;
+    if (!grouped.has(key)) grouped.set(key, []);
+    grouped.get(key).push(item);
+  });
+  const orderedBlocks = [
+    ...BLOCK_ORDER.filter((blockName) => grouped.has(blockName)),
+    ...Array.from(grouped.keys()).filter((blockName) => !BLOCK_ORDER.includes(blockName)).sort()
+  ];
+
+  orderedBlocks.forEach((blockName) => {
+    const blockItems = grouped.get(blockName) || [];
+    const card = document.createElement("article");
+    card.className = `item therapy-block checklist-card block-${blockToClassName(blockName)}`;
+    card.innerHTML = `
+      <div class="therapy-block-head">
+        <h3 class="item-title">${escapeHtml(blockName)}</h3>
+        <span class="tag">${blockItems.length}</span>
+      </div>
+      <div class="checklist-list"></div>
+    `;
+
+    const listInside = card.querySelector(".checklist-list");
+    blockItems.forEach(({ entry, med }) => {
+      const isTaken = (entry.takenLog?.[selectedDate] || "") === "yes";
+      const detailLine = [med.dosage, `${entry.quantity} unità`, entry.time ? formatTime(entry.time) : ""]
+        .filter(Boolean)
+        .join(" • ");
+
+      const row = document.createElement("label");
+      row.className = `checklist-item ${isTaken ? "done" : ""}`;
+      row.innerHTML = `
+        <span class="checklist-main">
+          <span class="checklist-name">${escapeHtml(med.name)}</span>
+          ${isTaken ? "" : `<span class="checklist-note">${escapeHtml(detailLine)}</span>`}
+        </span>
+        <input
+          type="checkbox"
+          data-check-taken="${entry.id}"
+          ${isTaken ? "checked" : ""}
+          aria-label="Segna ${escapeHtml(med.name)} come assunto"
+        />
+      `;
+
+      row.querySelector("[data-check-taken]").addEventListener("change", (event) => {
+        const nextStatus = event.target.checked ? "yes" : "";
+        setTakenStatus(entry.id, selectedDate, nextStatus);
+        if (typeof onToggleTaken === "function") {
+          onToggleTaken();
+        }
+      });
+
+      listInside.append(row);
+    });
+
+    listEl.append(card);
+  });
+}
+
 function renderDiaryCalendar({
   calendarEl,
   monthLabelEl,
@@ -669,7 +1045,8 @@ function renderDiaryCalendar({
   visibleYear,
   visibleMonth,
   items,
-  onSelectDate
+  onSelectDate,
+  todayDate = today
 }) {
   const monthName = new Date(visibleYear, visibleMonth, 1).toLocaleDateString("it-IT", {
     month: "long",
@@ -696,7 +1073,7 @@ function renderDiaryCalendar({
     button.type = "button";
     button.className = "calendar-day";
     if (dateIso === selectedDate) button.classList.add("selected");
-    if (dateIso === today) button.classList.add("today");
+    if (dateIso === todayDate) button.classList.add("today");
     if (stats.total > 0) {
       if (stats.yes === stats.total) {
         button.classList.add("done");
@@ -1208,6 +1585,40 @@ function activateNav() {
   if (active) active.classList.add("active");
 }
 
+function normalizeDiaryViewMode(value) {
+  return value === "checklist" ? "checklist" : "standard";
+}
+
+function loadDiaryViewMode() {
+  try {
+    return normalizeDiaryViewMode(localStorage.getItem(DIARY_VIEW_MODE_KEY));
+  } catch {
+    return "standard";
+  }
+}
+
+function saveDiaryViewMode(mode) {
+  try {
+    localStorage.setItem(DIARY_VIEW_MODE_KEY, normalizeDiaryViewMode(mode));
+  } catch {
+    // Ignore storage write failures and keep the session view mode.
+  }
+}
+
+function updateDiaryViewButtons(standardBtn, checklistBtn, mode) {
+  const normalized = normalizeDiaryViewMode(mode);
+  if (standardBtn) {
+    const active = normalized === "standard";
+    standardBtn.classList.toggle("active", active);
+    standardBtn.setAttribute("aria-pressed", String(active));
+  }
+  if (checklistBtn) {
+    const active = normalized === "checklist";
+    checklistBtn.classList.toggle("active", active);
+    checklistBtn.setAttribute("aria-pressed", String(active));
+  }
+}
+
 function formatTime(time) {
   return time || "";
 }
@@ -1250,6 +1661,14 @@ function getIsoDateDaysAgo(days) {
   const date = new Date();
   date.setDate(date.getDate() - days);
   return getLocalIsoDate(date);
+}
+
+function getDiaryReferenceIsoDate(now = new Date()) {
+  const shifted = new Date(now);
+  if (shifted.getHours() < DIARY_PREVIOUS_DAY_UNTIL_HOUR) {
+    shifted.setDate(shifted.getDate() - 1);
+  }
+  return getLocalIsoDate(shifted);
 }
 
 function getLocalIsoDate(date = new Date()) {

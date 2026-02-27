@@ -1,15 +1,15 @@
 :root {
-  --bg: #2c3138;
+  --bg: #eef2f5;
   --card: #ffffff;
-  --ink: #182229;
-  --muted: #66727a;
-  --accent: #1f8a70;
-  --accent-soft: #d8f0e9;
-  --warn: #d86146;
-  --ok: #2c9f6b;
-  --line: #d5dde3;
-  --radius: 18px;
-  --shadow: 0 14px 30px rgba(7, 12, 20, 0.24);
+  --ink: #1c2b36;
+  --muted: #5f7180;
+  --accent: #2e6da4;
+  --accent-soft: #e6f0fa;
+  --warn: #b94d48;
+  --ok: #2f8f67;
+  --line: #cfd9e3;
+  --radius: 16px;
+  --shadow: 0 8px 18px rgba(20, 42, 62, 0.08);
 }
 
 * {
@@ -20,7 +20,7 @@ body {
   margin: 0;
   font-family: "Titillium Web", sans-serif;
   color: var(--ink);
-  background: linear-gradient(180deg, #2a2f35 0%, #323840 100%);
+  background: var(--bg);
   min-height: 100vh;
 }
 
@@ -31,9 +31,9 @@ body {
 }
 
 .hero {
-  background: linear-gradient(125deg, #1e7f68, #2f9b83);
-  color: #f8fffd;
-  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: linear-gradient(130deg, #3d78ad, #2b5f92);
+  color: #f7fbff;
+  border: 1px solid #d3dfeb;
   border-radius: 24px;
   padding: 20px 18px;
   box-shadow: var(--shadow);
@@ -95,8 +95,8 @@ button {
 input:focus,
 select:focus {
   outline: none;
-  border-color: #6fbcab;
-  box-shadow: 0 0 0 3px rgba(111, 188, 171, 0.2);
+  border-color: #7ea7cf;
+  box-shadow: 0 0 0 3px rgba(126, 167, 207, 0.25);
 }
 
 button {
@@ -112,7 +112,7 @@ button:hover {
 }
 
 button.secondary {
-  background: #edf7f4;
+  background: #f2f6fa;
   color: var(--ink);
   border: 1px solid var(--line);
 }
@@ -123,8 +123,8 @@ button.secondary {
 }
 
 .delete-soft {
-  background: #f8f9f8;
-  color: #54605f;
+  background: #f2f4f6;
+  color: #5d6e7b;
   border: 1px solid var(--line);
 }
 
@@ -189,7 +189,7 @@ button.secondary {
   display: inline-block;
   font-size: 0.74rem;
   background: var(--accent-soft);
-  color: #0d4f3f;
+  color: #2b5f92;
   border-radius: 999px;
   padding: 4px 8px;
 }
@@ -206,23 +206,23 @@ button.secondary {
 }
 
 .tag-cat.psicofarmaci {
-  background: #ffe9ef;
-  color: #8d2f53;
+  background: #f3eefe;
+  color: #5b477b;
 }
 
 .tag-cat.pressione {
-  background: #e5f0ff;
-  color: #224f9d;
+  background: #e8f2ff;
+  color: #2a5fa4;
 }
 
 .tag-cat.colesterolo {
-  background: #fff3db;
-  color: #8a5a00;
+  background: #f9f2e5;
+  color: #7b5b2c;
 }
 
 .tag-cat.altro {
-  background: #ececf2;
-  color: #4a4a60;
+  background: #edf1f5;
+  color: #4f6271;
 }
 
 .status {
@@ -231,17 +231,17 @@ button.secondary {
 }
 
 .status button {
-  background: #f4f6f5;
-  color: #33403f;
+  background: #f2f6fa;
+  color: #32495b;
 }
 
 .status button.active-yes {
-  background: #e6f7ef;
+  background: #e4f3ec;
   color: var(--ok);
 }
 
 .status button.active-no {
-  background: #fff1ed;
+  background: #fcebe9;
   color: var(--warn);
 }
 
@@ -252,9 +252,9 @@ button.secondary {
 .diary-taken-btn {
   width: auto;
   min-width: 126px;
-  border: 1px solid #e4c391;
-  background: #fff7ea;
-  color: #8a541f;
+  border: 1px solid #c8d8ea;
+  background: #e8f0fb;
+  color: #2b5f92;
   font-weight: 700;
   letter-spacing: 0.01em;
 }
@@ -266,8 +266,8 @@ button.secondary {
 }
 
 .diary-taken-btn.state-taken {
-  border-color: #1f8a70;
-  background: #1f8a70;
+  border-color: #2f8f67;
+  background: #2f8f67;
   color: #f6fffc;
 }
 
@@ -337,6 +337,22 @@ body[data-page="diario"] .status {
   display: flex;
   justify-content: flex-start;
   margin-bottom: 8px;
+}
+
+.diary-view-toggle {
+  display: flex;
+  gap: 8px;
+  margin: 0 0 10px;
+}
+
+.diary-view-btn {
+  flex: 1;
+}
+
+.diary-view-btn.active {
+  background: var(--accent);
+  color: #f7f9fb;
+  border-color: #2a6293;
 }
 
 .calendar-toolbar {
@@ -409,16 +425,16 @@ body[data-page="diario"] .status {
 }
 
 .calendar-day.missed {
-  background: #fff1ed;
+  background: #fcebe9;
   border-color: #efc0b3;
 }
 
 .calendar-day.today {
-  box-shadow: inset 0 0 0 1px #1f8a70;
+  box-shadow: inset 0 0 0 1px var(--accent);
 }
 
 .calendar-day.selected {
-  outline: 2px solid #1f8a70;
+  outline: 2px solid var(--accent);
   outline-offset: 0;
 }
 
@@ -483,13 +499,34 @@ body[data-page="diario"] .status {
   justify-content: flex-start;
 }
 
+.therapy-actions {
+  display: inline-flex;
+  gap: 4px;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.therapy-actions .btn-compact {
+  padding: 6px 9px;
+  border-radius: 9px;
+}
+
+body[data-page="terapia"] #therapy-list .therapy-entry .item-title {
+  font-size: 1.1rem;
+  line-height: 1.05;
+}
+
+body[data-page="terapia"] #therapy-list .therapy-entry .meta {
+  font-size: 0.82rem;
+}
+
 .diary-entry {
   gap: 8px;
   transition: background-color 0.2s ease, border-color 0.2s ease;
 }
 
 .diary-entry.is-taken {
-  background: #e6f7ef;
+  background: #e4f3ec;
   border-color: #95d2b0;
 }
 
@@ -497,29 +534,87 @@ body[data-page="diario"] .status {
   justify-content: flex-start;
 }
 
+.checklist-card {
+  padding: 9px;
+}
+
+.checklist-list {
+  display: grid;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.checklist-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  border: 1px solid rgba(18, 33, 34, 0.15);
+  border-radius: 10px;
+  background: #fff;
+  padding: 8px 10px;
+}
+
+.checklist-item.done {
+  background: #e8f7ef;
+  border-color: #95d2b0;
+}
+
+.checklist-main {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.checklist-name {
+  font-family: "Chakra Petch", "Titillium Web", sans-serif;
+  font-size: 0.98rem;
+  font-weight: 600;
+  line-height: 1.05;
+}
+
+.checklist-note {
+  font-size: 0.76rem;
+  color: var(--muted);
+}
+
+.checklist-item.done .checklist-note {
+  display: none;
+}
+
+.checklist-item input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  padding: 0;
+  border-radius: 6px;
+  accent-color: #2f8f67;
+  flex: 0 0 auto;
+}
+
 .block-mattina {
-  background: #fff8e9;
-  border-color: #f1ddb0;
+  background: #f7fbff;
+  border-color: #dbe8f5;
 }
 
 .block-pranzo {
-  background: #eef9ff;
-  border-color: #c8e2ef;
+  background: #f2f8fe;
+  border-color: #d5e4f2;
 }
 
 .block-pomeriggio {
-  background: #f1f5ff;
-  border-color: #d0d8f8;
+  background: #f4f6fb;
+  border-color: #d9dfeb;
 }
 
 .block-sera {
-  background: #fdf0f7;
-  border-color: #eec7dd;
+  background: #f7f4fb;
+  border-color: #dfd8ea;
 }
 
 .block-notte {
-  background: #f2f3f8;
-  border-color: #d6d9e8;
+  background: #f3f5f8;
+  border-color: #d6dbe3;
 }
 
 .edit-area {
@@ -570,9 +665,19 @@ body[data-page="terapia"] #therapy-list {
   align-items: start;
 }
 
+.therapy-print-wrap {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 12px;
+}
+
 body[data-page="diario"] #diary-list {
   grid-template-columns: repeat(2, minmax(0, 1fr));
   align-items: start;
+}
+
+body[data-page="diario"] #diary-list.checklist-mode {
+  grid-template-columns: 1fr;
 }
 
 .bottom-nav {
@@ -585,11 +690,11 @@ body[data-page="diario"] #diary-list {
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 8px;
   padding: calc(10px + env(safe-area-inset-top)) 12px 10px;
-  background: rgba(36, 42, 48, 0.92);
-  backdrop-filter: blur(10px);
-  border: 1px solid #495360;
+  background: rgba(243, 247, 251, 0.96);
+  backdrop-filter: blur(8px);
+  border: 1px solid #cfdae5;
   border-radius: 18px;
-  box-shadow: 0 10px 24px rgba(6, 10, 16, 0.3);
+  box-shadow: 0 8px 20px rgba(36, 58, 80, 0.12);
 }
 
 .nav-item {
@@ -598,9 +703,9 @@ body[data-page="diario"] #diary-list {
   justify-content: center;
   text-align: center;
   text-decoration: none;
-  color: #17222a;
-  background: #f4f6f8;
-  border: 1px solid #cbd4dc;
+  color: #223647;
+  background: #ffffff;
+  border: 1px solid #c9d6e3;
   border-radius: 12px;
   padding: 10px 8px;
   font-size: 0.82rem;
@@ -609,10 +714,10 @@ body[data-page="diario"] #diary-list {
 }
 
 .nav-item.active {
-  background: #30363d;
+  background: #2e6da4;
   color: #f7f9fb;
-  border-color: #434b55;
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+  border-color: #255a8a;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.14);
 }
 
 .nav-item:hover {
@@ -620,7 +725,7 @@ body[data-page="diario"] #diary-list {
 }
 
 .nav-item:focus-visible {
-  outline: 2px solid #8ed3c3;
+  outline: 2px solid #7ea7cf;
   outline-offset: 1px;
 }
 
@@ -682,43 +787,123 @@ body[data-page="diario"] #diary-list {
   font-size: 0.95rem;
 }
 
-.home-trend-bars {
+.home-calendar-controls {
   display: grid;
-  grid-template-columns: repeat(30, minmax(0, 1fr));
-  gap: 4px;
-  align-items: end;
+  grid-template-columns: auto 1fr auto;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 8px;
 }
 
-.home-trend-bar {
-  height: 20px;
-  border-radius: 4px;
+.home-calendar-month {
+  text-align: center;
+  font-weight: 700;
+  text-transform: capitalize;
+}
+
+.home-calendar-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 6px;
+  margin-bottom: 6px;
+  font-size: 0.74rem;
+  color: var(--muted);
+  text-align: center;
+}
+
+.home-month-calendar {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.home-month-day {
+  min-height: 54px;
   border: 1px solid #cfd8de;
-  background: #f1f4f7;
+  border-radius: 10px;
+  padding: 5px 4px;
+  background: #f8f9fa;
+  display: grid;
+  gap: 1px;
+  align-content: center;
+  justify-items: center;
 }
 
-.home-trend-bar.full {
-  background: #bde8d6;
-  border-color: #7ac7a6;
+.home-month-day.empty {
+  border: none;
+  background: transparent;
 }
 
-.home-trend-bar.high {
-  background: #d8ecff;
-  border-color: #afcfee;
+.home-month-day.no-data {
+  background: #f3f5f7;
+  border-color: #d7dfe5;
 }
 
-.home-trend-bar.mid {
-  background: #fff1c9;
-  border-color: #e8d39a;
+.home-month-day.good {
+  background: #dff4e8;
+  border-color: #79c79f;
 }
 
-.home-trend-bar.low {
-  background: #ffe2df;
-  border-color: #e6b6b0;
+.home-month-day.warn {
+  background: #fff2cc;
+  border-color: #e7c96d;
 }
 
-.home-trend-bar.empty {
-  background: #eff2f5;
-  border-color: #d6dde3;
+.home-month-day.bad {
+  background: #ffe1dc;
+  border-color: #de8a7f;
+}
+
+.home-month-day.today {
+  box-shadow: inset 0 0 0 2px var(--accent);
+}
+
+.home-month-day-num {
+  font-weight: 700;
+  font-size: 0.88rem;
+}
+
+.home-month-day-meta {
+  font-size: 0.7rem;
+  color: #45525c;
+}
+
+.home-calendar-legend {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+  font-size: 0.78rem;
+  color: #314049;
+}
+
+.home-calendar-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.legend-dot {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  border: 1px solid #c4ccd3;
+  display: inline-block;
+}
+
+.legend-dot.good {
+  background: #79c79f;
+  border-color: #5aa985;
+}
+
+.legend-dot.warn {
+  background: #f0cd68;
+  border-color: #d2aa45;
+}
+
+.legend-dot.bad {
+  background: #e19588;
+  border-color: #c06d60;
 }
 
 .home-subtitle {
@@ -729,19 +914,54 @@ body[data-page="diario"] #diary-list {
 .home-settings-head {
   display: flex;
   justify-content: space-between;
-  align-items: baseline;
+  align-items: center;
   gap: 8px;
   flex-wrap: wrap;
 }
 
-.home-settings-actions {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+.home-settings-right {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
   gap: 8px;
 }
 
+.home-square-btn {
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  min-width: 34px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.05rem;
+  line-height: 1;
+}
+
+.home-settings-body {
+  margin-top: 10px;
+  display: grid;
+  gap: 8px;
+  justify-items: end;
+  text-align: right;
+}
+
+.home-settings-body .hint {
+  margin: 0;
+  max-width: 560px;
+}
+
+.home-settings-actions {
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  gap: 8px;
+  justify-content: end;
+}
+
 .home-settings-actions .btn-compact {
-  width: 100%;
+  width: auto;
+  min-width: 170px;
 }
 
 .bottom-nav {
@@ -755,5 +975,30 @@ body[data-page="diario"] #diary-list {
 
   .home-settings-actions {
     grid-template-columns: 1fr;
+    justify-content: stretch;
+  }
+
+  .home-settings-actions .btn-compact {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .home-settings-body {
+    justify-items: stretch;
+    text-align: left;
+  }
+
+  .home-settings-right {
+    margin-left: 0;
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .home-calendar-controls {
+    grid-template-columns: 1fr;
+  }
+
+  .home-calendar-controls .btn-compact {
+    width: 100%;
   }
 }

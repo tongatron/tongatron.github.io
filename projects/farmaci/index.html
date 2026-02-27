@@ -66,10 +66,29 @@
 
         <div class="home-trend-wrap">
           <div class="home-trend-head">
-            <h3>Andamento Assunzioni Ultimo Mese</h3>
+            <h3>Calendario Assunzioni</h3>
             <p id="home-trend-summary" class="meta">Nessun dato</p>
           </div>
-          <div id="home-trend-bars" class="home-trend-bars" aria-live="polite"></div>
+          <div class="home-calendar-controls">
+            <button id="home-calendar-prev" class="secondary btn-compact" type="button">Mese prec.</button>
+            <div id="home-calendar-month" class="home-calendar-month"></div>
+            <button id="home-calendar-next" class="secondary btn-compact" type="button">Mese succ.</button>
+          </div>
+          <div class="home-calendar-weekdays" aria-hidden="true">
+            <span>Lun</span>
+            <span>Mar</span>
+            <span>Mer</span>
+            <span>Gio</span>
+            <span>Ven</span>
+            <span>Sab</span>
+            <span>Dom</span>
+          </div>
+          <div id="home-month-calendar" class="home-month-calendar" aria-live="polite"></div>
+          <div class="home-calendar-legend">
+            <span><i class="legend-dot good"></i>Completo</span>
+            <span><i class="legend-dot warn"></i>Parziale</span>
+            <span><i class="legend-dot bad"></i>Mancato</span>
+          </div>
         </div>
 
         <div>
@@ -81,27 +100,41 @@
       <section class="section">
         <div class="home-settings-head">
           <h2>Impostazioni e Backup</h2>
-          <p id="home-app-version" class="settings-version">Versione app: -</p>
+          <div class="home-settings-right">
+            <p id="home-app-version" class="settings-version">Versione app: -</p>
+            <button
+              id="home-settings-toggle-btn"
+              class="secondary home-square-btn"
+              type="button"
+              aria-controls="home-settings-body"
+              aria-expanded="false"
+              title="Apri impostazioni"
+            >
+              +
+            </button>
+          </div>
         </div>
-        <p class="hint">
-          Da qui puoi esportare/importare dati completi e resettare gli archivi storici.
-        </p>
-        <div class="home-settings-actions">
-          <button id="home-import-backup-btn" class="secondary btn-compact" type="button">
-            Importa backup JSON
-          </button>
-          <button id="home-export-backup-btn" class="secondary btn-compact" type="button">
-            Esporta backup JSON
-          </button>
-          <button id="home-reset-archive-btn" class="delete-soft btn-compact" type="button">
-            Reset archivi storici
-          </button>
-          <input
-            id="home-import-backup-input"
-            class="hidden"
-            type="file"
-            accept=".json,application/json"
-          />
+        <div id="home-settings-body" class="home-settings-body hidden">
+          <p class="hint">
+            Da qui puoi esportare/importare dati completi e resettare gli archivi storici.
+          </p>
+          <div class="home-settings-actions">
+            <button id="home-import-backup-btn" class="secondary btn-compact" type="button">
+              Importa backup JSON
+            </button>
+            <button id="home-export-backup-btn" class="secondary btn-compact" type="button">
+              Esporta backup JSON
+            </button>
+            <button id="home-reset-archive-btn" class="delete-soft btn-compact" type="button">
+              Reset archivi storici
+            </button>
+            <input
+              id="home-import-backup-input"
+              class="hidden"
+              type="file"
+              accept=".json,application/json"
+            />
+          </div>
         </div>
       </section>
     </main>

@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@400;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@400;600;700&family=Chakra+Petch:wght@500;600;700&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="./app.css" />
@@ -44,6 +44,24 @@
             Apri calendario
           </button>
         </div>
+<div class="diary-view-toggle" role="group" aria-label="Seleziona vista diario">
+  <button
+    id="diary-view-standard-btn"
+    type="button"
+    class="secondary btn-compact diary-view-btn active"
+    aria-pressed="true"
+  >
+    Standard
+  </button>
+  <button
+    id="diary-view-checklist-btn"
+    type="button"
+    class="secondary btn-compact diary-view-btn"
+    aria-pressed="false"
+  >
+    Check-list
+  </button>
+</div>
         <div id="calendar-wrap" class="calendar-card hidden">
           <div class="calendar-toolbar">
             <button id="calendar-prev" class="secondary btn-compact" type="button">Mese prec.</button>
