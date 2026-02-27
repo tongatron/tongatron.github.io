@@ -23,6 +23,7 @@ const today = getLocalIsoDate();
 autoArchiveOldLogs();
 importCabinetItemsOnce();
 activateNav();
+registerPwa();
 
 if (PAGE === "armadietto") {
   initCabinetPage();
@@ -506,7 +507,7 @@ function renderDiary(listEl, summaryEl, filters) {
         .join(" • ");
 
       const row = document.createElement("div");
-      row.className = "therapy-entry diary-entry";
+      row.className = `therapy-entry diary-entry ${isTaken ? "is-taken" : ""}`.trim();
       row.innerHTML = `
         <div>
           <h4 class="item-title">${escapeHtml(med.name)}</h4>
@@ -953,6 +954,15 @@ function backupStateBeforeImport() {
   } catch {
     // Best effort backup: ignore storage failures and continue import.
   }
+}
+
+function registerPwa() {
+  if (!("serviceWorker" in navigator)) return;
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./sw.js", { scope: "./" }).catch(() => {
+      // Ignore registration failures and keep app usable.
+    });
+  });
 }
 
 function activateNav() {

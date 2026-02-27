@@ -1,15 +1,15 @@
 :root {
-  --bg: #f8f7f2;
+  --bg: #2c3138;
   --card: #ffffff;
-  --ink: #122122;
-  --muted: #5b6665;
+  --ink: #182229;
+  --muted: #66727a;
   --accent: #1f8a70;
   --accent-soft: #d8f0e9;
   --warn: #d86146;
   --ok: #2c9f6b;
-  --line: #dbe3df;
+  --line: #d5dde3;
   --radius: 18px;
-  --shadow: 0 10px 30px rgba(18, 33, 34, 0.08);
+  --shadow: 0 14px 30px rgba(7, 12, 20, 0.24);
 }
 
 * {
@@ -18,12 +18,9 @@
 
 body {
   margin: 0;
-  font-family: "Space Grotesk", sans-serif;
+  font-family: "Titillium Web", sans-serif;
   color: var(--ink);
-  background:
-    radial-gradient(circle at 15% -10%, #d8f0e9 8%, transparent 36%),
-    radial-gradient(circle at 95% 15%, #ffe8cc 10%, transparent 40%),
-    var(--bg);
+  background: linear-gradient(180deg, #2a2f35 0%, #323840 100%);
   min-height: 100vh;
 }
 
@@ -34,8 +31,9 @@ body {
 }
 
 .hero {
-  background: linear-gradient(125deg, #1f8a70, #3aaf95);
+  background: linear-gradient(125deg, #1e7f68, #2f9b83);
   color: #f8fffd;
+  border: 1px solid rgba(255, 255, 255, 0.18);
   border-radius: 24px;
   padding: 20px 18px;
   box-shadow: var(--shadow);
@@ -43,7 +41,7 @@ body {
 
 .hero h1 {
   margin: 0;
-  font-family: "Newsreader", serif;
+  font-family: "Titillium Web", sans-serif;
   font-size: 2rem;
   line-height: 1.05;
 }
@@ -56,6 +54,7 @@ body {
 .section {
   margin-top: 14px;
   background: var(--card);
+  border: 1px solid var(--line);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
   padding: 14px;
@@ -90,12 +89,14 @@ button {
   border-radius: 12px;
   padding: 10px 12px;
   font: inherit;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease;
 }
 
 input:focus,
 select:focus {
-  outline: 2px solid #8ed3c3;
-  outline-offset: 1px;
+  outline: none;
+  border-color: #6fbcab;
+  box-shadow: 0 0 0 3px rgba(111, 188, 171, 0.2);
 }
 
 button {
@@ -104,6 +105,10 @@ button {
   background: var(--accent);
   color: #f6fffc;
   font-weight: 600;
+}
+
+button:hover {
+  transform: translateY(-1px);
 }
 
 button.secondary {
@@ -157,6 +162,7 @@ button.secondary {
   border-radius: 14px;
   padding: 11px;
   background: #fff;
+  box-shadow: 0 4px 12px rgba(18, 26, 34, 0.06);
   display: grid;
   gap: 8px;
 }
@@ -479,6 +485,12 @@ body[data-page="diario"] .status {
 
 .diary-entry {
   gap: 8px;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.diary-entry.is-taken {
+  background: #e6f7ef;
+  border-color: #95d2b0;
 }
 
 .diary-entry .status {
@@ -528,7 +540,7 @@ body[data-page="diario"] .status {
 }
 
 body[data-page="armadietto"] #cabinet-list {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 body[data-page="armadietto"] #cabinet-list .item {
@@ -573,10 +585,11 @@ body[data-page="diario"] #diary-list {
   grid-template-columns: 1fr 1fr 1fr;
   gap: 8px;
   padding: calc(10px + env(safe-area-inset-top)) 12px 10px;
-  background: rgba(248, 247, 242, 0.95);
-  backdrop-filter: blur(8px);
-  border: 1px solid var(--line);
+  background: rgba(36, 42, 48, 0.92);
+  backdrop-filter: blur(10px);
+  border: 1px solid #495360;
   border-radius: 18px;
+  box-shadow: 0 10px 24px rgba(6, 10, 16, 0.3);
 }
 
 .nav-item {
@@ -585,19 +598,30 @@ body[data-page="diario"] #diary-list {
   justify-content: center;
   text-align: center;
   text-decoration: none;
-  color: var(--ink);
-  background: #ffffff;
-  border: 1px solid var(--line);
+  color: #17222a;
+  background: #f4f6f8;
+  border: 1px solid #cbd4dc;
   border-radius: 12px;
   padding: 10px 8px;
   font-size: 0.82rem;
   font-weight: 600;
+  transition: transform 0.15s ease, background-color 0.2s ease, color 0.2s ease;
 }
 
 .nav-item.active {
-  background: var(--accent);
-  color: #fff;
-  border-color: transparent;
+  background: #30363d;
+  color: #f7f9fb;
+  border-color: #434b55;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+.nav-item:hover {
+  transform: translateY(-1px);
+}
+
+.nav-item:focus-visible {
+  outline: 2px solid #8ed3c3;
+  outline-offset: 1px;
 }
 
 @media (min-width: 760px) {
