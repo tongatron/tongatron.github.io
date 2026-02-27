@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Armadietto Farmaci</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./app.css" />
+  </head>
+  <body data-page="armadietto">
+    <nav class="bottom-nav">
+      <a class="nav-item nav-armadietto" href="./armadietto.html">Armadietto</a>
+      <a class="nav-item nav-terapia" href="./terapia.html">Terapia</a>
+      <a class="nav-item nav-diario" href="./diario.html">Diario Assunzioni</a>
+    </nav>
+
+    <main class="app">
+      <section class="hero">
+        <h1>Armadietto</h1>
+        <p>Armadietto unico: inserisci e modifica i medicinali disponibili.</p>
+      </section>
+
+      <section class="section">
+        <h2>Nuovo medicinale</h2>
+        <p class="hint">Aggiungi farmaci nello stesso armadietto (non vengono creati altri armadietti).</p>
+        <button id="cabinet-open-form" class="secondary btn-compact" type="button">
+          + Nuovo medicinale
+        </button>
+        <div id="cabinet-form-wrap" class="hidden form-wrap">
+          <form id="cabinet-form" class="form-grid">
+            <div>
+              <label for="cab-name">Nome medicinale</label>
+              <input id="cab-name" required placeholder="Es. Tachipirina" />
+            </div>
+            <div class="row">
+              <div>
+                <label for="cab-dose">Dosaggio</label>
+                <input id="cab-dose" required placeholder="Es. 500 mg" />
+              </div>
+              <div>
+                <label for="cab-qty">N. nella confezione</label>
+                <input id="cab-qty" type="number" min="1" required placeholder="Es. 20" />
+              </div>
+            </div>
+            <div>
+              <label for="cab-category">Categoria (facoltativa)</label>
+              <select id="cab-category">
+                <option value="">Nessuna</option>
+                <option value="psicofarmaci">Psicofarmaci</option>
+                <option value="pressione">Pressione</option>
+                <option value="colesterolo">Colesterolo</option>
+                <option value="altro">Altro (specifica)</option>
+              </select>
+            </div>
+            <div id="cab-category-other-wrap" class="hidden">
+              <label for="cab-category-other">Specifica categoria</label>
+              <input id="cab-category-other" placeholder="Es. Antidolorifici" />
+            </div>
+            <div class="actions">
+              <button type="submit">Aggiungi</button>
+              <button id="cabinet-cancel-form" class="secondary" type="button">Chiudi</button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>Farmaci in armadietto</h2>
+        <div id="cabinet-list" class="cards" aria-live="polite"></div>
+      </section>
+    </main>
+
+    <script src="./app.js"></script>
+  </body>
+</html>

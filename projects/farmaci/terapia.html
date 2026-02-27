@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Terapia Farmaci</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./app.css" />
+  </head>
+  <body data-page="terapia">
+    <nav class="bottom-nav">
+      <a class="nav-item nav-armadietto" href="./armadietto.html">Armadietto</a>
+      <a class="nav-item nav-terapia" href="./terapia.html">Terapia</a>
+      <a class="nav-item nav-diario" href="./diario.html">Diario Assunzioni</a>
+    </nav>
+
+    <main class="app">
+      <section class="hero">
+        <h1>Terapia</h1>
+        <p>Organizza i farmaci in blocchi orari. L'orario preciso è facoltativo.</p>
+      </section>
+
+      <section class="section">
+        <h2>Nuova assunzione</h2>
+        <button id="therapy-open-form" class="secondary btn-compact" type="button">
+          Aggiungi terapia
+        </button>
+        <div id="therapy-form-wrap" class="hidden form-wrap">
+          <form id="therapy-form" class="form-grid">
+            <div>
+              <label for="th-med">Medicinale</label>
+              <select id="th-med" required>
+                <option value="">Seleziona dall'armadietto</option>
+              </select>
+            </div>
+            <div>
+              <label for="th-block">Blocco orario</label>
+              <select id="th-block" required>
+                <option value="">Seleziona blocco</option>
+                <option value="Mattina">Mattina</option>
+                <option value="Pranzo">Pranzo</option>
+                <option value="Pomeriggio">Pomeriggio</option>
+                <option value="Sera">Sera</option>
+                <option value="Notte">Notte</option>
+              </select>
+            </div>
+            <div class="row">
+              <div>
+                <label for="th-time">Orario (opzionale)</label>
+                <input id="th-time" type="time" />
+              </div>
+              <div>
+                <label for="th-dose">Quantità da assumere</label>
+                <input id="th-dose" type="number" min="1" value="1" required />
+              </div>
+            </div>
+            <div class="actions">
+              <button type="submit">Aggiungi alla terapia</button>
+              <button id="therapy-cancel-form" class="secondary" type="button">Chiudi</button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>Piano terapia</h2>
+        <p class="hint">Filtra solo le fasce attive, blocchi colorati per fascia e modifica rapida.</p>
+        <div id="therapy-block-filters" class="therapy-filters"></div>
+        <div id="therapy-list" class="cards" aria-live="polite"></div>
+      </section>
+    </main>
+
+    <script src="./app.js"></script>
+  </body>
+</html>

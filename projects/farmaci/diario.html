@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Diario Assunzioni</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./app.css" />
+  </head>
+  <body data-page="diario">
+    <nav class="bottom-nav">
+      <a class="nav-item nav-armadietto" href="./armadietto.html">Armadietto</a>
+      <a class="nav-item nav-terapia" href="./terapia.html">Terapia</a>
+      <a class="nav-item nav-diario" href="./diario.html">Diario Assunzioni</a>
+    </nav>
+
+    <main class="app">
+      <section class="hero">
+        <h1>Diario Assunzioni</h1>
+        <p>Segna giorno per giorno se il farmaco è stato assunto.</p>
+      </section>
+
+      <section class="section">
+        <div class="calendar-toggle">
+          <button
+            id="toggle-calendar-btn"
+            class="secondary btn-compact"
+            type="button"
+            aria-controls="calendar-wrap"
+            aria-expanded="false"
+          >
+            Apri calendario
+          </button>
+        </div>
+        <div id="calendar-wrap" class="calendar-card hidden">
+          <div class="calendar-toolbar">
+            <button id="calendar-prev" class="secondary btn-compact" type="button">Mese prec.</button>
+            <div id="calendar-month-label" class="calendar-month"></div>
+            <button id="calendar-next" class="secondary btn-compact" type="button">Mese succ.</button>
+          </div>
+          <div class="calendar-weekdays">
+            <span>Lun</span>
+            <span>Mar</span>
+            <span>Mer</span>
+            <span>Gio</span>
+            <span>Ven</span>
+            <span>Sab</span>
+            <span>Dom</span>
+          </div>
+          <div id="diary-calendar" class="calendar-grid" aria-live="polite"></div>
+        </div>
+        <div class="subline">
+          <div class="summary" id="daily-summary">Nessuna registrazione</div>
+          <div class="subline-actions">
+            <button id="import-backup-btn" class="secondary btn-compact" type="button">
+              Importa backup JSON
+            </button>
+            <button id="export-backup-btn" class="secondary btn-compact" type="button">
+              Esporta backup JSON
+            </button>
+            <input id="import-backup-input" class="hidden" type="file" accept=".json,application/json" />
+          </div>
+        </div>
+        <div id="diary-list" class="cards" aria-live="polite"></div>
+      </section>
+    </main>
+
+    <script src="./app.js"></script>
+  </body>
+</html>

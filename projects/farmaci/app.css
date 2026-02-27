@@ -1,0 +1,611 @@
+:root {
+  --bg: #f8f7f2;
+  --card: #ffffff;
+  --ink: #122122;
+  --muted: #5b6665;
+  --accent: #1f8a70;
+  --accent-soft: #d8f0e9;
+  --warn: #d86146;
+  --ok: #2c9f6b;
+  --line: #dbe3df;
+  --radius: 18px;
+  --shadow: 0 10px 30px rgba(18, 33, 34, 0.08);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Space Grotesk", sans-serif;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at 15% -10%, #d8f0e9 8%, transparent 36%),
+    radial-gradient(circle at 95% 15%, #ffe8cc 10%, transparent 40%),
+    var(--bg);
+  min-height: 100vh;
+}
+
+.app {
+  width: min(760px, 100%);
+  margin: 0 auto;
+  padding: 16px 14px 28px;
+}
+
+.hero {
+  background: linear-gradient(125deg, #1f8a70, #3aaf95);
+  color: #f8fffd;
+  border-radius: 24px;
+  padding: 20px 18px;
+  box-shadow: var(--shadow);
+}
+
+.hero h1 {
+  margin: 0;
+  font-family: "Newsreader", serif;
+  font-size: 2rem;
+  line-height: 1.05;
+}
+
+.hero p {
+  margin: 8px 0 0;
+  opacity: 0.95;
+}
+
+.section {
+  margin-top: 14px;
+  background: var(--card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 14px;
+}
+
+.section h2 {
+  margin: 2px 0 10px;
+  font-size: 1.1rem;
+}
+
+.hint {
+  color: var(--muted);
+  font-size: 0.88rem;
+  margin: 0 0 12px;
+}
+
+.form-grid {
+  display: grid;
+  gap: 10px;
+}
+
+label {
+  font-size: 0.84rem;
+  color: var(--muted);
+}
+
+input,
+select,
+button {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 10px 12px;
+  font: inherit;
+}
+
+input:focus,
+select:focus {
+  outline: 2px solid #8ed3c3;
+  outline-offset: 1px;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: var(--accent);
+  color: #f6fffc;
+  font-weight: 600;
+}
+
+button.secondary {
+  background: #edf7f4;
+  color: var(--ink);
+  border: 1px solid var(--line);
+}
+
+.delete {
+  background: #fff3f0;
+  color: var(--warn);
+}
+
+.delete-soft {
+  background: #f8f9f8;
+  color: #54605f;
+  border: 1px solid var(--line);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.cards {
+  display: grid;
+  gap: 10px;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+}
+
+.actions button {
+  width: auto;
+  padding: 9px 10px;
+}
+
+.btn-compact {
+  width: auto;
+  font-size: 0.82rem;
+  padding: 7px 11px;
+}
+
+.item {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 11px;
+  background: #fff;
+  display: grid;
+  gap: 8px;
+}
+
+.item-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.item-title {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.meta {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.84rem;
+}
+
+.tag {
+  display: inline-block;
+  font-size: 0.74rem;
+  background: var(--accent-soft);
+  color: #0d4f3f;
+  border-radius: 999px;
+  padding: 4px 8px;
+}
+
+.tag-row {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 2px;
+}
+
+.tag-cat {
+  font-weight: 600;
+}
+
+.tag-cat.psicofarmaci {
+  background: #ffe9ef;
+  color: #8d2f53;
+}
+
+.tag-cat.pressione {
+  background: #e5f0ff;
+  color: #224f9d;
+}
+
+.tag-cat.colesterolo {
+  background: #fff3db;
+  color: #8a5a00;
+}
+
+.tag-cat.altro {
+  background: #ececf2;
+  color: #4a4a60;
+}
+
+.status {
+  display: flex;
+  gap: 8px;
+}
+
+.status button {
+  background: #f4f6f5;
+  color: #33403f;
+}
+
+.status button.active-yes {
+  background: #e6f7ef;
+  color: var(--ok);
+}
+
+.status button.active-no {
+  background: #fff1ed;
+  color: var(--warn);
+}
+
+.status button.active-clear {
+  border: 1px solid var(--line);
+}
+
+.diary-taken-btn {
+  width: auto;
+  min-width: 126px;
+  border: 1px solid #e4c391;
+  background: #fff7ea;
+  color: #8a541f;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+.diary-taken-btn.state-pending {
+  border-color: var(--line);
+  background: #ffffff;
+  color: var(--ink);
+}
+
+.diary-taken-btn.state-taken {
+  border-color: #1f8a70;
+  background: #1f8a70;
+  color: #f6fffc;
+}
+
+.diary-summary-lines {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+body[data-page="diario"] .status {
+  justify-content: flex-start;
+}
+
+.empty {
+  text-align: center;
+  border: 1px dashed var(--line);
+  border-radius: 12px;
+  padding: 14px;
+  color: var(--muted);
+  font-size: 0.9rem;
+  grid-column: 1 / -1;
+}
+
+.subline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin: 8px 0 12px;
+}
+
+.subline input {
+  max-width: 190px;
+}
+
+.subline-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.summary {
+  font-size: 1.32rem;
+  color: var(--ink);
+  font-weight: 700;
+  text-transform: capitalize;
+  line-height: 1.2;
+}
+
+.filters {
+  display: grid;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.calendar-card {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 10px;
+  background: #fff;
+}
+
+.calendar-toggle {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 8px;
+}
+
+.calendar-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.calendar-month {
+  font-weight: 700;
+  text-transform: capitalize;
+  text-align: center;
+  flex: 1;
+}
+
+.calendar-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 4px;
+  margin-bottom: 6px;
+  font-size: 0.72rem;
+  color: var(--muted);
+  text-align: center;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 4px;
+}
+
+.calendar-day {
+  width: 100%;
+  min-height: 44px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #fff;
+  color: var(--ink);
+  padding: 5px 4px;
+  display: grid;
+  gap: 2px;
+  text-align: center;
+}
+
+.calendar-day.empty-day {
+  border: none;
+  background: transparent;
+}
+
+.calendar-day .day-num {
+  font-weight: 700;
+  font-size: 0.8rem;
+}
+
+.calendar-day .day-meta {
+  font-size: 0.64rem;
+  color: var(--muted);
+}
+
+.calendar-day.done {
+  background: #e8f7ef;
+  border-color: #95d2b0;
+}
+
+.calendar-day.partial {
+  background: #fff6e4;
+  border-color: #f0d3a0;
+}
+
+.calendar-day.missed {
+  background: #fff1ed;
+  border-color: #efc0b3;
+}
+
+.calendar-day.today {
+  box-shadow: inset 0 0 0 1px #1f8a70;
+}
+
+.calendar-day.selected {
+  outline: 2px solid #1f8a70;
+  outline-offset: 0;
+}
+
+.therapy-filters {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin: 8px 0 10px;
+}
+
+.therapy-filter-chip {
+  width: auto;
+  border: 1px solid var(--line);
+  background: #fff;
+  color: var(--ink);
+  border-radius: 999px;
+  padding: 7px 11px;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.therapy-filter-chip.active {
+  background: var(--accent);
+  color: #fff;
+  border-color: transparent;
+}
+
+.therapy-block {
+  padding: 10px;
+}
+
+.therapy-block-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.therapy-block-list {
+  display: grid;
+  gap: 8px;
+}
+
+.therapy-entry {
+  border: 1px solid rgba(18, 33, 34, 0.12);
+  border-radius: 10px;
+  background: #fff;
+  padding: 8px;
+  display: grid;
+  gap: 6px;
+}
+
+.therapy-entry .item-title {
+  font-size: 0.9rem;
+}
+
+.therapy-entry .meta {
+  font-size: 0.78rem;
+}
+
+.therapy-entry .actions {
+  justify-content: flex-start;
+}
+
+.diary-entry {
+  gap: 8px;
+}
+
+.diary-entry .status {
+  justify-content: flex-start;
+}
+
+.block-mattina {
+  background: #fff8e9;
+  border-color: #f1ddb0;
+}
+
+.block-pranzo {
+  background: #eef9ff;
+  border-color: #c8e2ef;
+}
+
+.block-pomeriggio {
+  background: #f1f5ff;
+  border-color: #d0d8f8;
+}
+
+.block-sera {
+  background: #fdf0f7;
+  border-color: #eec7dd;
+}
+
+.block-notte {
+  background: #f2f3f8;
+  border-color: #d6d9e8;
+}
+
+.edit-area {
+  border-top: 1px solid var(--line);
+  padding-top: 10px;
+}
+
+.edit-form {
+  margin-top: 2px;
+}
+
+.form-wrap {
+  margin-top: 10px;
+}
+
+.hidden {
+  display: none;
+}
+
+body[data-page="armadietto"] #cabinet-list {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+body[data-page="armadietto"] #cabinet-list .item {
+  padding: 8px;
+  gap: 6px;
+}
+
+body[data-page="armadietto"] #cabinet-list .item-title {
+  font-size: 0.92rem;
+}
+
+body[data-page="armadietto"] #cabinet-list .meta {
+  font-size: 0.78rem;
+}
+
+body[data-page="armadietto"] #cabinet-list .tag {
+  font-size: 0.68rem;
+  padding: 3px 7px;
+}
+
+body[data-page="armadietto"] #cabinet-list .actions {
+  justify-content: flex-start;
+}
+
+body[data-page="terapia"] #therapy-list {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
+}
+
+body[data-page="diario"] #diary-list {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
+}
+
+.bottom-nav {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  width: min(760px, 100%);
+  margin: 12px auto 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 8px;
+  padding: calc(10px + env(safe-area-inset-top)) 12px 10px;
+  background: rgba(248, 247, 242, 0.95);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+}
+
+.nav-item {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  text-decoration: none;
+  color: var(--ink);
+  background: #ffffff;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 10px 8px;
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.nav-item.active {
+  background: var(--accent);
+  color: #fff;
+  border-color: transparent;
+}
+
+@media (min-width: 760px) {
+  .app {
+    padding-top: 26px;
+  }
+
+  .bottom-nav {
+    margin-top: 16px;
+  }
+}
