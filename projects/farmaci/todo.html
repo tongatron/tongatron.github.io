@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>To-Do Appunti</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./app.css" />
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <meta name="theme-color" content="#1f8a70" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Diario Farmaci" />
+    <link rel="apple-touch-icon" href="./icons/icon-192.png" />
+  </head>
+  <body data-page="todo">
+    <nav class="bottom-nav">
+      <a class="nav-item nav-home" href="./index.html">Gestione</a>
+      <a class="nav-item nav-armadietto" href="./armadietto.html">Armadietto</a>
+      <a class="nav-item nav-terapia" href="./terapia.html">Terapia</a>
+      <a class="nav-item nav-diario" href="./diario.html">Diario</a>
+      <a class="nav-item nav-todo" href="./todo.html">To-Do</a>
+    </nav>
+
+    <main class="app">
+      <section class="hero">
+        <h1>To-Do Appunti</h1>
+        <p>Aggiungi note rapide in stile post-it e pinnale in alto quando sono prioritarie.</p>
+      </section>
+
+      <section class="section">
+        <form id="todo-form" class="home-notes-form">
+          <textarea
+            id="todo-text"
+            class="home-note-input"
+            rows="3"
+            maxlength="420"
+            placeholder="Es. Ricordare ricetta Ramipril, chiamare medico, comprare organizer"
+          ></textarea>
+          <div class="home-notes-form-actions">
+            <select id="todo-pin-mode" aria-label="Priorita appunto">
+              <option value="normal">Normale</option>
+              <option value="pinned">Pinnato</option>
+            </select>
+            <button type="submit" class="secondary btn-compact">Aggiungi post-it</button>
+          </div>
+        </form>
+        <div id="todo-list" class="home-notes-grid" aria-live="polite"></div>
+      </section>
+    </main>
+
+    <script src="./app.js"></script>
+  </body>
+</html>

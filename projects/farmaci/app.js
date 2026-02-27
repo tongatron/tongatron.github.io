@@ -7,10 +7,11 @@ const IMPORT_KEY = `${STORAGE_KEY}_import_armadietto_2026_02_27`;
 const PRE_IMPORT_BACKUP_KEY = `${STORAGE_KEY}_pre_import_backup_v1`;
 const DIARY_PREVIOUS_DAY_UNTIL_HOUR = 5;
 const DIARY_VIEW_MODE_KEY = `${STORAGE_KEY}_diary_view_mode`;
+const THERAPY_VIEW_MODE_KEY = `${STORAGE_KEY}_therapy_view_mode`;
 const CABINET_LAYOUT_MODE_KEY = `${STORAGE_KEY}_cabinet_layout_mode`;
 const THERAPY_LAYOUT_MODE_KEY = `${STORAGE_KEY}_therapy_layout_mode`;
 const DIARY_LAYOUT_MODE_KEY = `${STORAGE_KEY}_diary_layout_mode`;
-const APP_VERSION = "v2.5.0";
+const APP_VERSION = "v2.6.3";
 const IMPORT_ITEMS = [
   { name: "VENLAFAXINA", dosage: "225 mg" },
   { name: "DEPAKIN", dosage: "500 mg" },
@@ -44,6 +45,9 @@ if (PAGE === "diario") {
 if (PAGE === "home") {
   initHomePage();
 }
+if (PAGE === "todo") {
+  initTodoPage();
+}
 
 function renderVersionBadge() {
   if (!document.body) return;
@@ -63,7 +67,7 @@ function initCabinetPage() {
   const categorySelect = document.getElementById("cab-category");
   const categoryOtherWrap = document.getElementById("cab-category-other-wrap");
   const categoryOtherInput = document.getElementById("cab-category-other");
-  const layoutModeSelect = document.getElementById("cabinet-layout-mode");
+  const viewModeSelect = document.getElementById("cabinet-view-mode");
   if (
     !form ||
     !list ||
@@ -78,8 +82,8 @@ function initCabinetPage() {
   }
 
   let layoutMode = loadLayoutMode(CABINET_LAYOUT_MODE_KEY);
-  if (!layoutModeSelect) {
-    layoutMode = "list";
+  if (!viewModeSelect) {
+    layoutMode = "matrix";
     saveLayoutMode(CABINET_LAYOUT_MODE_KEY, layoutMode);
   }
 
@@ -99,7 +103,7 @@ function initCabinetPage() {
   const setLayoutMode = (mode) => {
     layoutMode = normalizeLayoutMode(mode);
     saveLayoutMode(CABINET_LAYOUT_MODE_KEY, layoutMode);
-    updateLayoutSelect(layoutModeSelect, layoutMode);
+    updateLayoutSelect(viewModeSelect, layoutMode);
     renderCabinet();
   };
 
@@ -110,9 +114,9 @@ function initCabinetPage() {
     setFormOpen(false);
   });
 
-  if (layoutModeSelect) {
-    layoutModeSelect.addEventListener("change", () => {
-      setLayoutMode(layoutModeSelect.value);
+  if (viewModeSelect) {
+    viewModeSelect.addEventListener("change", () => {
+      setLayoutMode(viewModeSelect.value);
     });
   }
 
@@ -156,7 +160,7 @@ function initCabinetPage() {
     renderCabinet();
   });
 
-  updateLayoutSelect(layoutModeSelect, layoutMode);
+  updateLayoutSelect(viewModeSelect, layoutMode);
   renderCabinet();
 }
 
@@ -217,6 +221,7 @@ function initTherapyPage() {
   const closeFormBtn = document.getElementById("therapy-cancel-form");
   const printBtn = document.getElementById("therapy-print-btn");
   const layoutModeSelect = document.getElementById("therapy-layout-mode");
+  const viewModeSelect = document.getElementById("therapy-view-mode");
   if (
     !form ||
     !list ||
@@ -231,11 +236,18 @@ function initTherapyPage() {
 
   const uiState = {
     activeBlock: "all",
-    layoutMode: loadLayoutMode(THERAPY_LAYOUT_MODE_KEY)
+    layoutMode: loadLayoutMode(THERAPY_LAYOUT_MODE_KEY),
+    viewMode: loadTherapyViewMode()
   };
+
   if (!layoutModeSelect) {
     uiState.layoutMode = "list";
     saveLayoutMode(THERAPY_LAYOUT_MODE_KEY, uiState.layoutMode);
+  }
+
+  if (!viewModeSelect) {
+    uiState.viewMode = "list";
+    saveTherapyViewMode(uiState.viewMode);
   }
 
   const renderTherapy = () => {
@@ -261,6 +273,13 @@ function initTherapyPage() {
     renderTherapy();
   };
 
+  const setViewMode = (mode) => {
+    uiState.viewMode = normalizeTherapyViewMode(mode);
+    saveTherapyViewMode(uiState.viewMode);
+    updateTherapyViewSelect(viewModeSelect, uiState.viewMode);
+    renderTherapy();
+  };
+
   openFormBtn.addEventListener("click", () => {
     setFormOpen(formWrap.classList.contains("hidden"));
   });
@@ -271,6 +290,12 @@ function initTherapyPage() {
   if (layoutModeSelect) {
     layoutModeSelect.addEventListener("change", () => {
       setLayoutMode(layoutModeSelect.value);
+    });
+  }
+
+  if (viewModeSelect) {
+    viewModeSelect.addEventListener("change", () => {
+      setViewMode(viewModeSelect.value);
     });
   }
 
@@ -306,12 +331,15 @@ function initTherapyPage() {
   });
 
   updateLayoutSelect(layoutModeSelect, uiState.layoutMode);
+  updateTherapyViewSelect(viewModeSelect, uiState.viewMode);
   renderTherapy();
 }
 
 function renderTherapyPage({ listEl, filterWrapEl, medSelectEl, uiState, onRerender }) {
   const layoutMode = normalizeLayoutMode(uiState.layoutMode);
+  const viewMode = normalizeTherapyViewMode(uiState.viewMode);
   listEl.classList.toggle("layout-matrix", layoutMode === "matrix");
+  listEl.classList.toggle("therapy-list-mode", viewMode === "list");
 
   populateMedicineSelect(medSelectEl);
   if (!state.cabinet.length) {
@@ -350,11 +378,18 @@ function renderTherapyPage({ listEl, filterWrapEl, medSelectEl, uiState, onReren
     uiState.activeBlock = "all";
   }
 
+  if (viewMode === "list") {
+    filterWrapEl.innerHTML = "";
+    uiState.activeBlock = "all";
+    renderTherapyListView({ listEl, sorted, onRerender });
+    return;
+  }
+
   filterWrapEl.innerHTML = "";
   const allButton = document.createElement("button");
   allButton.type = "button";
-  allButton.className = `therapy-filter-chip ${uiState.activeBlock === "all" ? "active" : ""}`;
-  allButton.textContent = `Tutte (${sorted.length})`;
+  allButton.className = "therapy-filter-chip " + (uiState.activeBlock === "all" ? "active" : "");
+  allButton.textContent = "Tutte (" + sorted.length + ")";
   allButton.addEventListener("click", () => {
     uiState.activeBlock = "all";
     onRerender();
@@ -364,8 +399,8 @@ function renderTherapyPage({ listEl, filterWrapEl, medSelectEl, uiState, onReren
   activeBlocks.forEach((block) => {
     const blockButton = document.createElement("button");
     blockButton.type = "button";
-    blockButton.className = `therapy-filter-chip ${uiState.activeBlock === block ? "active" : ""}`;
-    blockButton.textContent = `${block} (${(grouped.get(block) || []).length})`;
+    blockButton.className = "therapy-filter-chip " + (uiState.activeBlock === block ? "active" : "");
+    blockButton.textContent = block + " (" + ((grouped.get(block) || []).length) + ")";
     blockButton.addEventListener("click", () => {
       uiState.activeBlock = block;
       onRerender();
@@ -380,14 +415,13 @@ function renderTherapyPage({ listEl, filterWrapEl, medSelectEl, uiState, onReren
   visibleBlocks.forEach((block) => {
     const blockItems = grouped.get(block) || [];
     const card = document.createElement("article");
-    card.className = `item therapy-block block-${blockToClassName(block)}`;
-    card.innerHTML = `
-      <div class="therapy-block-head">
-        <h3 class="item-title">${escapeHtml(block)}</h3>
-        <span class="tag">${blockItems.length} attivi</span>
-      </div>
-      <div class="therapy-block-list"></div>
-    `;
+    card.className = "item therapy-block block-" + blockToClassName(block);
+    card.innerHTML =
+      '<div class="therapy-block-head">' +
+      '<h3 class="item-title">' + escapeHtml(block) + '</h3>' +
+      '<span class="tag">' + blockItems.length + ' attivi</span>' +
+      '</div>' +
+      '<div class="therapy-block-list"></div>';
 
     const listInside = card.querySelector(".therapy-block-list");
 
@@ -395,20 +429,19 @@ function renderTherapyPage({ listEl, filterWrapEl, medSelectEl, uiState, onReren
       const categoryTag = formatCategoryTag(med);
       const row = document.createElement("div");
       row.className = "therapy-entry";
-      row.innerHTML = `
-        <div>
-          <h4 class="item-title">${escapeHtml(med.name)}</h4>
-          <p class="meta">${escapeHtml(med.dosage)} • ${entry.quantity} unità</p>
-          ${entry.time ? `<p class="meta">${formatTime(entry.time)}</p>` : ""}
-          <div class="tag-row">
-            <span class="tag tag-cat ${escapeHtml(categoryTag.className)}">${escapeHtml(categoryTag.label)}</span>
-          </div>
-        </div>
-        <div class="actions therapy-actions">
-          <button class="secondary btn-compact" type="button" data-edit="${entry.id}">Modifica</button>
-        </div>
-        <div class="edit-area hidden" data-edit-area="${entry.id}"></div>
-      `;
+      row.innerHTML =
+        '<div>' +
+        '<h4 class="item-title">' + escapeHtml(med.name) + '</h4>' +
+        '<p class="meta">' + escapeHtml(med.dosage) + ' • ' + entry.quantity + ' unità</p>' +
+        (entry.time ? ('<p class="meta">' + formatTime(entry.time) + '</p>') : '') +
+        '<div class="tag-row">' +
+        '<span class="tag tag-cat ' + escapeHtml(categoryTag.className) + '">' + escapeHtml(categoryTag.label) + '</span>' +
+        '</div>' +
+        '</div>' +
+        '<div class="actions therapy-actions">' +
+        '<button class="secondary btn-compact" type="button" data-edit="' + entry.id + '">Modifica</button>' +
+        '</div>' +
+        '<div class="edit-area hidden" data-edit-area="' + entry.id + '"></div>';
 
       row.querySelector("[data-edit]").addEventListener("click", () => {
         const area = row.querySelector("[data-edit-area]");
@@ -428,6 +461,47 @@ function renderTherapyPage({ listEl, filterWrapEl, medSelectEl, uiState, onReren
     listEl.append(card);
   });
 }
+
+function renderTherapyListView({ listEl, sorted, onRerender }) {
+  listEl.innerHTML = "";
+
+  sorted.forEach(({ entry, med }) => {
+    const categoryTag = formatCategoryTag(med);
+    const row = document.createElement("article");
+    row.className = "item therapy-flat-item block-" + blockToClassName(entry.block);
+    row.innerHTML =
+      '<div class="therapy-flat-main">' +
+      '<div class="therapy-flat-top">' +
+      '<span class="tag">' + escapeHtml(entry.block) + '</span>' +
+      (entry.time ? ('<span class="tag">' + escapeHtml(formatTime(entry.time)) + '</span>') : '') +
+      '</div>' +
+      '<h3 class="item-title">' + escapeHtml(med.name) + '</h3>' +
+      '<p class="meta">' + escapeHtml(med.dosage) + ' • ' + entry.quantity + ' unità</p>' +
+      '<div class="tag-row">' +
+      '<span class="tag tag-cat ' + escapeHtml(categoryTag.className) + '">' + escapeHtml(categoryTag.label) + '</span>' +
+      '</div>' +
+      '</div>' +
+      '<div class="actions therapy-actions">' +
+      '<button class="secondary btn-compact" type="button" data-edit="' + entry.id + '">Modifica</button>' +
+      '</div>' +
+      '<div class="edit-area hidden" data-edit-area="' + entry.id + '"></div>';
+
+    row.querySelector("[data-edit]").addEventListener("click", () => {
+      const area = row.querySelector("[data-edit-area]");
+      if (!area) return;
+      if (!area.classList.contains("hidden")) {
+        area.classList.add("hidden");
+        area.innerHTML = "";
+        return;
+      }
+      area.classList.remove("hidden");
+      renderTherapyEditForm(area, entry, onRerender);
+    });
+
+    listEl.append(row);
+  });
+}
+
 function printTherapyPlanPdf() {
   const rows = getSortedTherapy()
     .map((entry) => ({
@@ -572,17 +646,6 @@ if (frameDoc.readyState === "complete") {
 
 
 function initHomePage() {
-  const activeTherapyEl = document.getElementById("home-active-therapy");
-  const activeMedsEl = document.getElementById("home-active-meds");
-  const unitsDayEl = document.getElementById("home-units-day");
-  const adherenceEl = document.getElementById("home-month-adherence");
-  const trendSummaryEl = document.getElementById("home-trend-summary");
-  const homeCalendarEl = document.getElementById("home-month-calendar");
-  const homeCalendarMonthEl = document.getElementById("home-calendar-month");
-  const homeCalendarPrevBtn = document.getElementById("home-calendar-prev");
-  const homeCalendarNextBtn = document.getElementById("home-calendar-next");
-  const blockBreakdownEl = document.getElementById("home-block-breakdown");
-
   const versionEl = document.getElementById("home-app-version");
   const exportBtn = document.getElementById("home-export-backup-btn");
   const importBtn = document.getElementById("home-import-backup-btn");
@@ -591,74 +654,8 @@ function initHomePage() {
   const settingsToggleBtn = document.getElementById("home-settings-toggle-btn");
   const settingsBody = document.getElementById("home-settings-body");
 
-  const homeCalendarToday = getDiaryReferenceIsoDate();
-  const homeCalendarParts = parseIsoDate(homeCalendarToday);
-  let homeVisibleYear = homeCalendarParts.year;
-  let homeVisibleMonth = homeCalendarParts.month;
-
-  const renderDashboard = () => {
-    const sortedTherapy = getSortedTherapy();
-    const therapyItems = getDiaryItems();
-    const uniqueMedIds = new Set(sortedTherapy.map((entry) => entry.medId));
-    const unitsPerDay = sortedTherapy.reduce((sum, entry) => sum + toPositiveInt(entry.quantity, 1), 0);
-
-    if (activeTherapyEl) activeTherapyEl.textContent = String(sortedTherapy.length);
-    if (activeMedsEl) activeMedsEl.textContent = String(uniqueMedIds.size);
-    if (unitsDayEl) unitsDayEl.textContent = String(unitsPerDay);
-
-    const dailyStats = getDiaryDailyStats(therapyItems);
-    const last30 = getLastDaysStats(30, dailyStats);
-    const monthTotal = last30.reduce((sum, day) => sum + day.total, 0);
-    const monthYes = last30.reduce((sum, day) => sum + day.yes, 0);
-
-    if (adherenceEl) {
-      adherenceEl.textContent = monthTotal > 0 ? `${Math.round((monthYes / monthTotal) * 100)}%` : "-";
-    }
-
-    const monthVisualStats = renderHomeMonthCalendar({
-      calendarEl: homeCalendarEl,
-      monthLabelEl: homeCalendarMonthEl,
-      visibleYear: homeVisibleYear,
-      visibleMonth: homeVisibleMonth,
-      dailyStats,
-      todayDate: homeCalendarToday
-    });
-
-    if (trendSummaryEl) {
-      trendSummaryEl.textContent =
-        monthVisualStats.trackedDays > 0
-          ? `Verdi: ${monthVisualStats.greenDays} · Gialli: ${monthVisualStats.yellowDays} · Rossi: ${monthVisualStats.redDays}`
-          : "Nessuna registrazione nel mese selezionato";
-    }
-
-    if (blockBreakdownEl) {
-      blockBreakdownEl.innerHTML = "";
-      if (!sortedTherapy.length) {
-        const empty = document.createElement("span");
-        empty.className = "tag";
-        empty.textContent = "Nessuna terapia attiva";
-        blockBreakdownEl.append(empty);
-      } else {
-        const counts = new Map();
-        sortedTherapy.forEach((entry) => {
-          counts.set(entry.block, (counts.get(entry.block) || 0) + 1);
-        });
-        const orderedBlocks = [
-          ...BLOCK_ORDER.filter((blockName) => counts.has(blockName)),
-          ...Array.from(counts.keys()).filter((blockName) => !BLOCK_ORDER.includes(blockName)).sort()
-        ];
-        orderedBlocks.forEach((blockName) => {
-          const chip = document.createElement("span");
-          chip.className = "tag";
-          chip.textContent = `${blockName}: ${counts.get(blockName)}`;
-          blockBreakdownEl.append(chip);
-        });
-      }
-    }
-  };
-
   if (versionEl) {
-    versionEl.textContent = `Versione app: ${APP_VERSION}`;
+    versionEl.textContent = "Versione app: " + APP_VERSION;
   }
 
   if (settingsToggleBtn && settingsBody) {
@@ -689,9 +686,16 @@ function initHomePage() {
       try {
         const result = await importBackupJson(file);
         if (!result.applied) return;
-        renderDashboard();
         alert(
-          `Import completato: ${result.medicines} farmaci, ${result.therapy} terapie, ${result.archiveDays} giorni archiviati.`
+          "Import completato: " +
+            result.medicines +
+            " farmaci, " +
+            result.therapy +
+            " terapie, " +
+            result.notes +
+            " appunti, " +
+            result.archiveDays +
+            " giorni archiviati."
         );
       } catch (error) {
         const message = error instanceof Error ? error.message : "Import non riuscito.";
@@ -707,37 +711,123 @@ function initHomePage() {
         if (result.message) alert(result.message);
         return;
       }
-      renderDashboard();
-      alert(`Archivi storici azzerati: ${result.removedDays} giorni rimossi.`);
+      alert("Archivi storici azzerati: " + result.removedDays + " giorni rimossi.");
     });
   }
-
-  if (homeCalendarPrevBtn) {
-    homeCalendarPrevBtn.addEventListener("click", () => {
-      homeVisibleMonth -= 1;
-      if (homeVisibleMonth < 0) {
-        homeVisibleMonth = 11;
-        homeVisibleYear -= 1;
-      }
-      renderDashboard();
-    });
-  }
-
-  if (homeCalendarNextBtn) {
-    homeCalendarNextBtn.addEventListener("click", () => {
-      homeVisibleMonth += 1;
-      if (homeVisibleMonth > 11) {
-        homeVisibleMonth = 0;
-        homeVisibleYear += 1;
-      }
-      renderDashboard();
-    });
-  }
-
-  renderDashboard();
 }
 
+function initTodoPage() {
+  const todoForm = document.getElementById("todo-form");
+  const todoTextInput = document.getElementById("todo-text");
+  const todoPinModeSelect = document.getElementById("todo-pin-mode");
+  const todoListEl = document.getElementById("todo-list");
 
+  if (!todoForm || !todoTextInput || !todoPinModeSelect || !todoListEl) {
+    return;
+  }
+
+  const renderTodoList = () => {
+    const notes = getSortedTodoNotes();
+    if (!notes.length) {
+      todoListEl.innerHTML = '<div class="empty">Nessun appunto. Aggiungi il primo post-it.</div>';
+      return;
+    }
+
+    todoListEl.innerHTML = "";
+    notes.forEach((todo) => {
+      const card = document.createElement("article");
+      const updatedLabel = new Date(todo.updatedAt || todo.createdAt || Date.now()).toLocaleDateString(
+        "it-IT",
+        { day: "2-digit", month: "2-digit", year: "numeric" }
+      );
+      card.className = ["home-note", todo.pinned ? "is-pinned" : "", todo.done ? "is-done" : ""]
+        .filter(Boolean)
+        .join(" ");
+      card.innerHTML =
+        '<div class="home-note-head">' +
+        '<span class="home-note-date">' +
+        updatedLabel +
+        "</span>" +
+        (todo.pinned ? '<span class="tag">Pinnato</span>' : "") +
+        "</div>" +
+        '<p class="home-note-text">' +
+        escapeHtml(todo.text) +
+        "</p>" +
+        '<div class="actions home-note-actions">' +
+        '<button type="button" class="secondary btn-compact" data-pin-note="' +
+        todo.id +
+        '">' +
+        (todo.pinned ? "Sblocca" : "Pin") +
+        "</button>" +
+        '<button type="button" class="secondary btn-compact" data-done-note="' +
+        todo.id +
+        '">' +
+        (todo.done ? "Da fare" : "Fatto") +
+        "</button>" +
+        '<button type="button" class="delete-soft btn-compact" data-remove-note="' +
+        todo.id +
+        '">Rimuovi</button>' +
+        "</div>";
+
+      const pinBtn = card.querySelector("[data-pin-note]");
+      if (pinBtn) {
+        pinBtn.addEventListener("click", () => {
+          todo.pinned = !todo.pinned;
+          todo.updatedAt = Date.now();
+          saveState();
+          renderTodoList();
+        });
+      }
+
+      const doneBtn = card.querySelector("[data-done-note]");
+      if (doneBtn) {
+        doneBtn.addEventListener("click", () => {
+          todo.done = !todo.done;
+          todo.updatedAt = Date.now();
+          saveState();
+          renderTodoList();
+        });
+      }
+
+      const removeBtn = card.querySelector("[data-remove-note]");
+      if (removeBtn) {
+        removeBtn.addEventListener("click", () => {
+          state.todos = state.todos.filter((item) => item.id !== todo.id);
+          saveState();
+          renderTodoList();
+        });
+      }
+
+      todoListEl.append(card);
+    });
+  };
+
+  todoForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const text = String(todoTextInput.value || "")
+      .replace(/\r\n?/g, "\n")
+      .trim();
+    if (!text) return;
+
+    if (!Array.isArray(state.todos)) state.todos = [];
+    const now = Date.now();
+    state.todos.push({
+      id: createId(),
+      text,
+      pinned: todoPinModeSelect.value === "pinned",
+      done: false,
+      createdAt: now,
+      updatedAt: now
+    });
+    saveState();
+
+    todoForm.reset();
+    todoPinModeSelect.value = "normal";
+    renderTodoList();
+  });
+
+  renderTodoList();
+}
 
 function getLastDaysStats(days, dailyStats) {
   const stats = [];
@@ -1257,6 +1347,17 @@ function getSortedTherapy() {
   });
 }
 
+function getSortedTodoNotes() {
+  const todos = Array.isArray(state.todos) ? state.todos : [];
+  return [...todos].sort((a, b) => {
+    if (Boolean(a.pinned) !== Boolean(b.pinned)) return a.pinned ? -1 : 1;
+    const updatedA = toEpochMillis(a.updatedAt || a.createdAt || 0);
+    const updatedB = toEpochMillis(b.updatedAt || b.createdAt || 0);
+    if (updatedA !== updatedB) return updatedB - updatedA;
+    return String(a.id).localeCompare(String(b.id));
+  });
+}
+
 function loadState() {
   try {
     const legacyRaw =
@@ -1271,7 +1372,7 @@ function loadState() {
 }
 
 function createEmptyState() {
-  return { cabinet: [], therapy: [], archive: { daily: {} } };
+  return { cabinet: [], therapy: [], archive: { daily: {} }, todos: [] };
 }
 
 function pickFirstArray(...values) {
@@ -1358,10 +1459,20 @@ function sanitizeState(raw) {
     parsed.archivioGiornaliero
   );
 
+  const todosSource = pickFirstArray(
+    parsed.todos,
+    parsed.todo,
+    parsed.notes,
+    parsed.appunti,
+    parsed.postits,
+    parsed.postIt
+  );
+
   return {
     cabinet,
     therapy,
-    archive: { daily: sanitizeArchiveDaily(archiveSource) }
+    archive: { daily: sanitizeArchiveDaily(archiveSource) },
+    todos: sanitizeTodoNotes(todosSource)
   };
 }
 
@@ -1413,6 +1524,53 @@ function sanitizeTakenLog(rawTakenLog) {
     if (normalized) safeTakenLog[dateKey] = normalized;
   });
   return safeTakenLog;
+}
+
+function sanitizeTodoNotes(rawTodos) {
+  const sourceTodos = Array.isArray(rawTodos) ? rawTodos : [];
+  return sourceTodos
+    .map((todo) => {
+      const text = String(todo?.text || todo?.note || todo?.appunto || "")
+        .replace(/\r\n?/g, "\n")
+        .trim();
+      if (!text) return null;
+
+      const createdAt = toEpochMillis(todo?.createdAt || todo?.created || todo?.date || Date.now());
+      const updatedAt = toEpochMillis(todo?.updatedAt || todo?.updated || createdAt);
+
+      return {
+        id: todo?.id || createId(),
+        text,
+        pinned: toBoolean(todo?.pinned || todo?.pin || todo?.isPinned),
+        done: toBoolean(todo?.done || todo?.completed || todo?.isDone),
+        createdAt,
+        updatedAt
+      };
+    })
+    .filter(Boolean);
+}
+
+function toEpochMillis(value) {
+  const numeric = Number(value);
+  if (Number.isFinite(numeric) && numeric > 0) return Math.floor(numeric);
+
+  if (typeof value === "string") {
+    const parsed = Date.parse(value);
+    if (Number.isFinite(parsed) && parsed > 0) return parsed;
+  }
+
+  return Date.now();
+}
+
+function toBoolean(value) {
+  if (value === true || value === 1) return true;
+  const normalized = String(value || "")
+    .replace(/\s+/g, " ")
+    .trim()
+    .toLowerCase();
+  return ["true", "1", "yes", "si", "sì", "on", "pinned", "done", "completed"].includes(
+    normalized
+  );
 }
 
 function normalizeTakenStatus(status) {
@@ -1556,7 +1714,8 @@ async function importBackupJson(file) {
 
   const importedState = sanitizeState(statePayload);
   const archiveDays = Object.keys(importedState.archive.daily || {}).length;
-  const totalRows = importedState.cabinet.length + importedState.therapy.length + archiveDays;
+  const notesCount = importedState.todos.length;
+  const totalRows = importedState.cabinet.length + importedState.therapy.length + archiveDays + notesCount;
 
   if (totalRows === 0) {
     const confirmEmpty = window.confirm(
@@ -1565,7 +1724,7 @@ async function importBackupJson(file) {
     if (!confirmEmpty) return { applied: false, medicines: 0, therapy: 0, archiveDays: 0 };
   } else {
     const confirmImport = window.confirm(
-      `Importare ${importedState.cabinet.length} farmaci, ${importedState.therapy.length} terapie e ${archiveDays} giorni archiviati? I dati locali attuali verranno sostituiti.`
+      `Importare ${importedState.cabinet.length} farmaci, ${importedState.therapy.length} terapie, ${notesCount} appunti e ${archiveDays} giorni archiviati? I dati locali attuali verranno sostituiti.`
     );
     if (!confirmImport) return { applied: false, medicines: 0, therapy: 0, archiveDays: 0 };
   }
@@ -1574,6 +1733,7 @@ async function importBackupJson(file) {
   state.cabinet = importedState.cabinet;
   state.therapy = importedState.therapy;
   state.archive = importedState.archive;
+  state.todos = importedState.todos;
   autoArchiveOldLogs();
 
   try {
@@ -1588,6 +1748,7 @@ async function importBackupJson(file) {
     applied: true,
     medicines: state.cabinet.length,
     therapy: state.therapy.length,
+    notes: state.todos.length,
     archiveDays: Object.keys(state.archive.daily || {}).length
   };
 }
@@ -1656,6 +1817,31 @@ function registerPwa() {
 function activateNav() {
   const active = document.querySelector(`.nav-${PAGE}`);
   if (active) active.classList.add("active");
+}
+
+function normalizeTherapyViewMode(value) {
+  return value === "blocks" ? "blocks" : "list";
+}
+
+function loadTherapyViewMode() {
+  try {
+    return normalizeTherapyViewMode(localStorage.getItem(THERAPY_VIEW_MODE_KEY));
+  } catch {
+    return "list";
+  }
+}
+
+function saveTherapyViewMode(mode) {
+  try {
+    localStorage.setItem(THERAPY_VIEW_MODE_KEY, normalizeTherapyViewMode(mode));
+  } catch {
+    // Ignore storage write failures and keep the session view mode.
+  }
+}
+
+function updateTherapyViewSelect(selectEl, mode) {
+  if (!selectEl) return;
+  selectEl.value = normalizeTherapyViewMode(mode);
 }
 
 function normalizeDiaryViewMode(value) {
@@ -1847,7 +2033,7 @@ function renderCabinetEditForm(container, med, listEl) {
       </div>
       <div class="actions">
         <button type="submit">Salva</button>
-        <button type="button" class="delete-soft" data-delete-med-edit>Rimuovi</button>
+        <button type="button" class="delete" data-delete-med-edit>Elimina</button>
         <button type="button" class="secondary" data-cancel-edit>Annulla</button>
       </div>
     </form>
@@ -1899,6 +2085,14 @@ function renderCabinetEditForm(container, med, listEl) {
   const deleteMedBtn = container.querySelector("[data-delete-med-edit]");
   if (deleteMedBtn) {
     deleteMedBtn.addEventListener("click", () => {
+      const linkedTherapyCount = state.therapy.filter((entry) => entry.medId === med.id).length;
+      const confirmMessage =
+        linkedTherapyCount > 0
+          ? `Eliminando questo farmaco verra rimosso anche dalla terapia (${linkedTherapyCount} voce${linkedTherapyCount === 1 ? "" : "i"}). Vuoi continuare?`
+          : "Confermi eliminazione del farmaco?";
+      const confirmDelete = window.confirm(confirmMessage);
+      if (!confirmDelete) return;
+
       state.cabinet = state.cabinet.filter((item) => item.id !== med.id);
       state.therapy = state.therapy.filter((entry) => entry.medId !== med.id);
       saveState();
@@ -1973,7 +2167,7 @@ function renderTherapyEditForm(container, entry, onRerender) {
       </div>
       <div class="actions">
         <button type="submit">Salva</button>
-        <button type="button" class="delete-soft" data-delete-therapy-edit>Elimina</button>
+        <button type="button" class="delete" data-delete-therapy-edit>Elimina</button>
         <button type="button" class="secondary" data-cancel-therapy-edit>Annulla</button>
       </div>
     </form>

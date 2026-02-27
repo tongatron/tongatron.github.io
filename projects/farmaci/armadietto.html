@@ -24,6 +24,7 @@
       <a class="nav-item nav-armadietto" href="./armadietto.html">Armadietto</a>
       <a class="nav-item nav-terapia" href="./terapia.html">Terapia</a>
       <a class="nav-item nav-diario" href="./diario.html">Diario</a>
+      <a class="nav-item nav-todo" href="./todo.html">To-Do</a>
     </nav>
 
     <main class="app">
@@ -34,6 +35,15 @@
 
       <section class="section">
         <h2>Farmaci in armadietto</h2>
+        <div class="section-toolbar">
+          <div class="view-inline">
+            <label for="cabinet-view-mode">Vista:</label>
+            <select id="cabinet-view-mode" aria-label="Seleziona vista armadietto">
+              <option value="list">elenco</option>
+              <option value="matrix">schede</option>
+            </select>
+          </div>
+        </div>
         <div class="actions cabinet-toolbar">
           <button id="cabinet-open-form" class="secondary btn-compact" type="button">
             Nuovo Medicinale

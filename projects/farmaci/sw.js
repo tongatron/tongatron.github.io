@@ -1,10 +1,11 @@
-const CACHE_NAME = "farmaci-pwa-v2-5-0";
+const CACHE_NAME = "farmaci-pwa-v2-6-3";
 const APP_SHELL = [
   "./",
   "./index.html",
   "./armadietto.html",
   "./terapia.html",
   "./diario.html",
+  "./todo.html",
   "./app.css",
   "./app.js",
   "./manifest.webmanifest",

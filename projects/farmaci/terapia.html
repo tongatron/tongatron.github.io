@@ -24,6 +24,7 @@
       <a class="nav-item nav-armadietto" href="./armadietto.html">Armadietto</a>
       <a class="nav-item nav-terapia" href="./terapia.html">Terapia</a>
       <a class="nav-item nav-diario" href="./diario.html">Diario</a>
+      <a class="nav-item nav-todo" href="./todo.html">To-Do</a>
     </nav>
 
     <main class="app">
@@ -75,6 +76,15 @@
           </form>
         </div>
         <p class="hint">Filtra solo le fasce attive, blocchi colorati per fascia e modifica rapida.</p>
+        <div class="section-toolbar">
+          <div class="view-inline">
+            <label for="therapy-view-mode">Vista:</label>
+            <select id="therapy-view-mode" aria-label="Seleziona vista terapia">
+              <option value="list">elenco</option>
+              <option value="blocks">blocchi</option>
+            </select>
+          </div>
+        </div>
         <div id="therapy-block-filters" class="therapy-filters"></div>
         <div id="therapy-list" class="cards" aria-live="polite"></div>
         <div class="therapy-print-wrap">

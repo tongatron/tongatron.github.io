@@ -24,6 +24,7 @@
       <a class="nav-item nav-armadietto" href="./armadietto.html">Armadietto</a>
       <a class="nav-item nav-terapia" href="./terapia.html">Terapia</a>
       <a class="nav-item nav-diario" href="./diario.html">Diario</a>
+      <a class="nav-item nav-todo" href="./todo.html">To-Do</a>
     </nav>
 
     <main class="app">
@@ -41,60 +42,6 @@
           1) Inserisci i farmaci in Armadietto. 2) Crea le assunzioni in Terapia. 3) Segna
           giornalmente il Diario per monitorare l'aderenza.
         </p>
-      </section>
-
-      <section class="section">
-        <h2>Dashboard Terapia</h2>
-        <div class="home-dashboard-grid">
-          <article class="home-stat-card">
-            <p class="home-stat-label">Terapie attive</p>
-            <p class="home-stat-value" id="home-active-therapy">0</p>
-          </article>
-          <article class="home-stat-card">
-            <p class="home-stat-label">Farmaci in terapia</p>
-            <p class="home-stat-value" id="home-active-meds">0</p>
-          </article>
-          <article class="home-stat-card">
-            <p class="home-stat-label">Unità pianificate / giorno</p>
-            <p class="home-stat-value" id="home-units-day">0</p>
-          </article>
-          <article class="home-stat-card">
-            <p class="home-stat-label">Aderenza ultimi 30 giorni</p>
-            <p class="home-stat-value" id="home-month-adherence">-</p>
-          </article>
-        </div>
-
-        <div class="home-trend-wrap">
-          <div class="home-trend-head">
-            <h3>Calendario Assunzioni</h3>
-            <p id="home-trend-summary" class="meta">Nessun dato</p>
-          </div>
-          <div class="home-calendar-controls">
-            <button id="home-calendar-prev" class="secondary btn-compact" type="button">Mese prec.</button>
-            <div id="home-calendar-month" class="home-calendar-month"></div>
-            <button id="home-calendar-next" class="secondary btn-compact" type="button">Mese succ.</button>
-          </div>
-          <div class="home-calendar-weekdays" aria-hidden="true">
-            <span>Lun</span>
-            <span>Mar</span>
-            <span>Mer</span>
-            <span>Gio</span>
-            <span>Ven</span>
-            <span>Sab</span>
-            <span>Dom</span>
-          </div>
-          <div id="home-month-calendar" class="home-month-calendar" aria-live="polite"></div>
-          <div class="home-calendar-legend">
-            <span><i class="legend-dot good"></i>Completo</span>
-            <span><i class="legend-dot warn"></i>Parziale</span>
-            <span><i class="legend-dot bad"></i>Mancato</span>
-          </div>
-        </div>
-
-        <div>
-          <h3 class="home-subtitle">Fasce attive in terapia</h3>
-          <div id="home-block-breakdown" class="tag-row"></div>
-        </div>
       </section>
 
       <section class="section">
