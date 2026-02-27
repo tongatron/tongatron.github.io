@@ -7,7 +7,10 @@ const IMPORT_KEY = `${STORAGE_KEY}_import_armadietto_2026_02_27`;
 const PRE_IMPORT_BACKUP_KEY = `${STORAGE_KEY}_pre_import_backup_v1`;
 const DIARY_PREVIOUS_DAY_UNTIL_HOUR = 5;
 const DIARY_VIEW_MODE_KEY = `${STORAGE_KEY}_diary_view_mode`;
-const APP_VERSION = "v2.4.0";
+const CABINET_LAYOUT_MODE_KEY = `${STORAGE_KEY}_cabinet_layout_mode`;
+const THERAPY_LAYOUT_MODE_KEY = `${STORAGE_KEY}_therapy_layout_mode`;
+const DIARY_LAYOUT_MODE_KEY = `${STORAGE_KEY}_diary_layout_mode`;
+const APP_VERSION = "v2.5.0";
 const IMPORT_ITEMS = [
   { name: "VENLAFAXINA", dosage: "225 mg" },
   { name: "DEPAKIN", dosage: "500 mg" },
@@ -27,6 +30,7 @@ autoArchiveOldLogs();
 importCabinetItemsOnce();
 activateNav();
 registerPwa();
+renderVersionBadge();
 
 if (PAGE === "armadietto") {
   initCabinetPage();
@@ -41,6 +45,15 @@ if (PAGE === "home") {
   initHomePage();
 }
 
+function renderVersionBadge() {
+  if (!document.body) return;
+  if (document.querySelector(".app-version-badge")) return;
+  const badge = document.createElement("div");
+  badge.className = "app-version-badge";
+  badge.textContent = APP_VERSION;
+  document.body.append(badge);
+}
+
 function initCabinetPage() {
   const form = document.getElementById("cabinet-form");
   const list = document.getElementById("cabinet-list");
@@ -50,6 +63,7 @@ function initCabinetPage() {
   const categorySelect = document.getElementById("cab-category");
   const categoryOtherWrap = document.getElementById("cab-category-other-wrap");
   const categoryOtherInput = document.getElementById("cab-category-other");
+  const layoutModeSelect = document.getElementById("cabinet-layout-mode");
   if (
     !form ||
     !list ||
@@ -63,13 +77,30 @@ function initCabinetPage() {
     return;
   }
 
+  let layoutMode = loadLayoutMode(CABINET_LAYOUT_MODE_KEY);
+  if (!layoutModeSelect) {
+    layoutMode = "list";
+    saveLayoutMode(CABINET_LAYOUT_MODE_KEY, layoutMode);
+  }
+
+  const renderCabinet = () => {
+    renderCabinetList(list, layoutMode);
+  };
+
   const setFormOpen = (isOpen) => {
     formWrap.classList.toggle("hidden", !isOpen);
-    openFormBtn.textContent = isOpen ? "Chiudi nuovo medicinale" : "+ Nuovo medicinale";
+    openFormBtn.textContent = isOpen ? "Chiudi nuovo medicinale" : "Nuovo Medicinale";
     if (!isOpen) {
       form.reset();
       toggleOtherCategoryField(categorySelect, categoryOtherWrap, categoryOtherInput);
     }
+  };
+
+  const setLayoutMode = (mode) => {
+    layoutMode = normalizeLayoutMode(mode);
+    saveLayoutMode(CABINET_LAYOUT_MODE_KEY, layoutMode);
+    updateLayoutSelect(layoutModeSelect, layoutMode);
+    renderCabinet();
   };
 
   openFormBtn.addEventListener("click", () => {
@@ -78,6 +109,12 @@ function initCabinetPage() {
   closeFormBtn.addEventListener("click", () => {
     setFormOpen(false);
   });
+
+  if (layoutModeSelect) {
+    layoutModeSelect.addEventListener("change", () => {
+      setLayoutMode(layoutModeSelect.value);
+    });
+  }
 
   categorySelect.addEventListener("change", () => {
     toggleOtherCategoryField(categorySelect, categoryOtherWrap, categoryOtherInput);
@@ -116,13 +153,17 @@ function initCabinetPage() {
     toggleOtherCategoryField(categorySelect, categoryOtherWrap, categoryOtherInput);
     setFormOpen(false);
     saveState();
-    renderCabinetList(list);
+    renderCabinet();
   });
 
-  renderCabinetList(list);
+  updateLayoutSelect(layoutModeSelect, layoutMode);
+  renderCabinet();
 }
 
-function renderCabinetList(listEl) {
+function renderCabinetList(listEl, layoutMode = "list") {
+  const normalizedLayoutMode = normalizeLayoutMode(layoutMode);
+  listEl.classList.toggle("layout-matrix", normalizedLayoutMode === "matrix");
+
   if (!state.cabinet.length) {
     listEl.innerHTML = '<div class="empty">Nessun medicinale inserito.</div>';
     return;
@@ -147,8 +188,7 @@ function renderCabinetList(listEl) {
         </div>
       </div>
       <div class="actions">
-        <button class="secondary btn-compact" type="button" data-edit="${med.id}">Modifica</button>
-        <button class="delete-soft btn-compact" type="button" data-delete="${med.id}">Rimuovi</button>
+        <button class="secondary btn-compact cabinet-edit-btn" type="button" data-edit="${med.id}">Modifica</button>
       </div>
       <div class="edit-area hidden" data-edit-area="${med.id}"></div>
     `;
@@ -163,12 +203,6 @@ function renderCabinetList(listEl) {
       area.classList.remove("hidden");
       renderCabinetEditForm(area, med, listEl);
     });
-    card.querySelector("[data-delete]").addEventListener("click", () => {
-      state.cabinet = state.cabinet.filter((item) => item.id !== med.id);
-      state.therapy = state.therapy.filter((entry) => entry.medId !== med.id);
-      saveState();
-      renderCabinetList(listEl);
-    });
     listEl.append(card);
   });
 }
@@ -182,6 +216,7 @@ function initTherapyPage() {
   const openFormBtn = document.getElementById("therapy-open-form");
   const closeFormBtn = document.getElementById("therapy-cancel-form");
   const printBtn = document.getElementById("therapy-print-btn");
+  const layoutModeSelect = document.getElementById("therapy-layout-mode");
   if (
     !form ||
     !list ||
@@ -194,7 +229,15 @@ function initTherapyPage() {
     return;
   }
 
-  const uiState = { activeBlock: "all" };
+  const uiState = {
+    activeBlock: "all",
+    layoutMode: loadLayoutMode(THERAPY_LAYOUT_MODE_KEY)
+  };
+  if (!layoutModeSelect) {
+    uiState.layoutMode = "list";
+    saveLayoutMode(THERAPY_LAYOUT_MODE_KEY, uiState.layoutMode);
+  }
+
   const renderTherapy = () => {
     renderTherapyPage({
       listEl: list,
@@ -207,8 +250,15 @@ function initTherapyPage() {
 
   const setFormOpen = (isOpen) => {
     formWrap.classList.toggle("hidden", !isOpen);
-    openFormBtn.textContent = isOpen ? "Chiudi aggiunta terapia" : "Aggiungi terapia";
+    openFormBtn.textContent = isOpen ? "Chiudi aggiunta terapia" : "Aggiungi Terapia";
     if (!isOpen) form.reset();
+  };
+
+  const setLayoutMode = (mode) => {
+    uiState.layoutMode = normalizeLayoutMode(mode);
+    saveLayoutMode(THERAPY_LAYOUT_MODE_KEY, uiState.layoutMode);
+    updateLayoutSelect(layoutModeSelect, uiState.layoutMode);
+    renderTherapy();
   };
 
   openFormBtn.addEventListener("click", () => {
@@ -217,6 +267,12 @@ function initTherapyPage() {
   closeFormBtn.addEventListener("click", () => {
     setFormOpen(false);
   });
+
+  if (layoutModeSelect) {
+    layoutModeSelect.addEventListener("change", () => {
+      setLayoutMode(layoutModeSelect.value);
+    });
+  }
 
   if (printBtn) {
     printBtn.addEventListener("click", () => {
@@ -249,10 +305,14 @@ function initTherapyPage() {
     renderTherapy();
   });
 
+  updateLayoutSelect(layoutModeSelect, uiState.layoutMode);
   renderTherapy();
 }
 
 function renderTherapyPage({ listEl, filterWrapEl, medSelectEl, uiState, onRerender }) {
+  const layoutMode = normalizeLayoutMode(uiState.layoutMode);
+  listEl.classList.toggle("layout-matrix", layoutMode === "matrix");
+
   populateMedicineSelect(medSelectEl);
   if (!state.cabinet.length) {
     filterWrapEl.innerHTML = "";
@@ -346,7 +406,6 @@ function renderTherapyPage({ listEl, filterWrapEl, medSelectEl, uiState, onReren
         </div>
         <div class="actions therapy-actions">
           <button class="secondary btn-compact" type="button" data-edit="${entry.id}">Modifica</button>
-          <button class="delete-soft btn-compact" type="button" data-remove="${entry.id}">Elimina</button>
         </div>
         <div class="edit-area hidden" data-edit-area="${entry.id}"></div>
       `;
@@ -361,12 +420,6 @@ function renderTherapyPage({ listEl, filterWrapEl, medSelectEl, uiState, onReren
         }
         area.classList.remove("hidden");
         renderTherapyEditForm(area, entry, onRerender);
-      });
-
-      row.querySelector("[data-remove]").addEventListener("click", () => {
-        state.therapy = state.therapy.filter((item) => item.id !== entry.id);
-        saveState();
-        onRerender();
       });
 
       listInside.append(row);
@@ -782,8 +835,8 @@ function initDiaryPage() {
   const prevBtn = document.getElementById("calendar-prev");
   const nextBtn = document.getElementById("calendar-next");
   const toggleCalendarBtn = document.getElementById("toggle-calendar-btn");
-  const standardViewBtn = document.getElementById("diary-view-standard-btn");
-  const checklistViewBtn = document.getElementById("diary-view-checklist-btn");
+  const viewModeSelect = document.getElementById("diary-view-mode");
+  const layoutModeSelect = document.getElementById("diary-layout-mode");
 
   if (
     !list ||
@@ -803,6 +856,16 @@ function initDiaryPage() {
   let visibleYear = Number(diaryToday.slice(0, 4));
   let visibleMonth = Number(diaryToday.slice(5, 7)) - 1;
   let diaryViewMode = loadDiaryViewMode();
+  let diaryLayoutMode = loadLayoutMode(DIARY_LAYOUT_MODE_KEY);
+
+  if (!viewModeSelect) {
+    diaryViewMode = "standard";
+    saveDiaryViewMode(diaryViewMode);
+  }
+  if (!layoutModeSelect) {
+    diaryLayoutMode = "list";
+    saveLayoutMode(DIARY_LAYOUT_MODE_KEY, diaryLayoutMode);
+  }
 
   const setCalendarOpen = (isOpen) => {
     calendarWrap.classList.toggle("hidden", !isOpen);
@@ -813,7 +876,14 @@ function initDiaryPage() {
   const setDiaryViewMode = (mode) => {
     diaryViewMode = normalizeDiaryViewMode(mode);
     saveDiaryViewMode(diaryViewMode);
-    updateDiaryViewButtons(standardViewBtn, checklistViewBtn, diaryViewMode);
+    updateDiaryViewSelect(viewModeSelect, diaryViewMode);
+    renderAll();
+  };
+
+  const setDiaryLayoutMode = (mode) => {
+    diaryLayoutMode = normalizeLayoutMode(mode);
+    saveLayoutMode(DIARY_LAYOUT_MODE_KEY, diaryLayoutMode);
+    updateLayoutSelect(layoutModeSelect, diaryLayoutMode);
     renderAll();
   };
 
@@ -839,6 +909,7 @@ function initDiaryPage() {
       selectedDate,
       items,
       viewMode: diaryViewMode,
+      layoutMode: diaryLayoutMode,
       onToggleTaken: renderAll
     });
   };
@@ -865,19 +936,19 @@ function initDiaryPage() {
     renderAll();
   });
 
-  if (standardViewBtn) {
-    standardViewBtn.addEventListener("click", () => {
-      setDiaryViewMode("standard");
+  if (viewModeSelect) {
+    viewModeSelect.addEventListener("change", () => {
+      setDiaryViewMode(viewModeSelect.value);
+    });
+  }
+  if (layoutModeSelect) {
+    layoutModeSelect.addEventListener("change", () => {
+      setDiaryLayoutMode(layoutModeSelect.value);
     });
   }
 
-  if (checklistViewBtn) {
-    checklistViewBtn.addEventListener("click", () => {
-      setDiaryViewMode("checklist");
-    });
-  }
-
-  updateDiaryViewButtons(standardViewBtn, checklistViewBtn, diaryViewMode);
+  updateDiaryViewSelect(viewModeSelect, diaryViewMode);
+  updateLayoutSelect(layoutModeSelect, diaryLayoutMode);
   setCalendarOpen(false);
   renderAll();
 }
@@ -885,9 +956,11 @@ function initDiaryPage() {
 function renderDiary(listEl, summaryEl, filters) {
   const { selectedDate, items, onToggleTaken } = filters;
   const viewMode = normalizeDiaryViewMode(filters.viewMode);
+  const layoutMode = normalizeLayoutMode(filters.layoutMode);
   const sorted = Array.isArray(items) ? items : getDiaryItems();
 
   listEl.classList.toggle("checklist-mode", viewMode === "checklist");
+  listEl.classList.toggle("layout-matrix", layoutMode === "matrix");
 
   if (!sorted.length) {
     listEl.innerHTML = '<div class="empty">Nessuna terapia da registrare.</div>';
@@ -1605,6 +1678,31 @@ function saveDiaryViewMode(mode) {
   }
 }
 
+function normalizeLayoutMode(value) {
+  return value === "matrix" ? "matrix" : "list";
+}
+
+function loadLayoutMode(storageKey) {
+  try {
+    return normalizeLayoutMode(localStorage.getItem(storageKey));
+  } catch {
+    return "list";
+  }
+}
+
+function saveLayoutMode(storageKey, mode) {
+  try {
+    localStorage.setItem(storageKey, normalizeLayoutMode(mode));
+  } catch {
+    // Ignore storage write failures and keep the session layout mode.
+  }
+}
+
+function updateLayoutSelect(selectEl, mode) {
+  if (!selectEl) return;
+  selectEl.value = normalizeLayoutMode(mode);
+}
+
 function updateDiaryViewButtons(standardBtn, checklistBtn, mode) {
   const normalized = normalizeDiaryViewMode(mode);
   if (standardBtn) {
@@ -1617,6 +1715,11 @@ function updateDiaryViewButtons(standardBtn, checklistBtn, mode) {
     checklistBtn.classList.toggle("active", active);
     checklistBtn.setAttribute("aria-pressed", String(active));
   }
+}
+
+function updateDiaryViewSelect(selectEl, mode) {
+  if (!selectEl) return;
+  selectEl.value = normalizeDiaryViewMode(mode);
 }
 
 function formatTime(time) {
@@ -1744,6 +1847,7 @@ function renderCabinetEditForm(container, med, listEl) {
       </div>
       <div class="actions">
         <button type="submit">Salva</button>
+        <button type="button" class="delete-soft" data-delete-med-edit>Rimuovi</button>
         <button type="button" class="secondary" data-cancel-edit>Annulla</button>
       </div>
     </form>
@@ -1789,8 +1893,18 @@ function renderCabinetEditForm(container, med, listEl) {
     med.category = category;
     med.categoryOther = categoryOther;
     saveState();
-    renderCabinetList(listEl);
+    renderCabinetList(listEl, listEl.classList.contains("layout-matrix") ? "matrix" : "list");
   });
+
+  const deleteMedBtn = container.querySelector("[data-delete-med-edit]");
+  if (deleteMedBtn) {
+    deleteMedBtn.addEventListener("click", () => {
+      state.cabinet = state.cabinet.filter((item) => item.id !== med.id);
+      state.therapy = state.therapy.filter((entry) => entry.medId !== med.id);
+      saveState();
+      renderCabinetList(listEl, listEl.classList.contains("layout-matrix") ? "matrix" : "list");
+    });
+  }
 
   const cancel = container.querySelector("[data-cancel-edit]");
   if (cancel) {
@@ -1859,6 +1973,7 @@ function renderTherapyEditForm(container, entry, onRerender) {
       </div>
       <div class="actions">
         <button type="submit">Salva</button>
+        <button type="button" class="delete-soft" data-delete-therapy-edit>Elimina</button>
         <button type="button" class="secondary" data-cancel-therapy-edit>Annulla</button>
       </div>
     </form>
@@ -1931,6 +2046,15 @@ function renderTherapyEditForm(container, entry, onRerender) {
     saveState();
     onRerender();
   });
+
+  const deleteTherapyBtn = container.querySelector("[data-delete-therapy-edit]");
+  if (deleteTherapyBtn) {
+    deleteTherapyBtn.addEventListener("click", () => {
+      state.therapy = state.therapy.filter((item) => item.id !== entry.id);
+      saveState();
+      onRerender();
+    });
+  }
 
   const cancel = container.querySelector("[data-cancel-therapy-edit]");
   if (cancel) {

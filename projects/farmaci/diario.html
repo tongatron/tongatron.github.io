@@ -33,7 +33,14 @@
       </section>
 
       <section class="section">
-        <div class="calendar-toggle">
+        <div class="diary-toolbar">
+          <div class="diary-view-inline">
+            <label for="diary-view-mode">Vista:</label>
+            <select id="diary-view-mode" aria-label="Seleziona vista diario">
+              <option value="standard">standard</option>
+              <option value="checklist">check list</option>
+            </select>
+          </div>
           <button
             id="toggle-calendar-btn"
             class="secondary btn-compact"
@@ -44,24 +51,6 @@
             Apri calendario
           </button>
         </div>
-<div class="diary-view-toggle" role="group" aria-label="Seleziona vista diario">
-  <button
-    id="diary-view-standard-btn"
-    type="button"
-    class="secondary btn-compact diary-view-btn active"
-    aria-pressed="true"
-  >
-    Standard
-  </button>
-  <button
-    id="diary-view-checklist-btn"
-    type="button"
-    class="secondary btn-compact diary-view-btn"
-    aria-pressed="false"
-  >
-    Check-list
-  </button>
-</div>
         <div id="calendar-wrap" class="calendar-card hidden">
           <div class="calendar-toolbar">
             <button id="calendar-prev" class="secondary btn-compact" type="button">Mese prec.</button>

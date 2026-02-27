@@ -33,11 +33,12 @@
       </section>
 
       <section class="section">
-        <h2>Nuovo medicinale</h2>
-        <p class="hint">Aggiungi farmaci nello stesso armadietto (non vengono creati altri armadietti).</p>
-        <button id="cabinet-open-form" class="secondary btn-compact" type="button">
-          + Nuovo medicinale
-        </button>
+        <h2>Farmaci in armadietto</h2>
+        <div class="actions cabinet-toolbar">
+          <button id="cabinet-open-form" class="secondary btn-compact" type="button">
+            Nuovo Medicinale
+          </button>
+        </div>
         <div id="cabinet-form-wrap" class="hidden form-wrap">
           <form id="cabinet-form" class="form-grid">
             <div>
@@ -74,10 +75,6 @@
             </div>
           </form>
         </div>
-      </section>
-
-      <section class="section">
-        <h2>Farmaci in armadietto</h2>
         <div id="cabinet-list" class="cards" aria-live="polite"></div>
       </section>
     </main>

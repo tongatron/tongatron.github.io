@@ -144,6 +144,7 @@ button.secondary {
   gap: 8px;
   justify-content: flex-end;
   flex-wrap: wrap;
+  align-items: flex-start;
 }
 
 .actions button {
@@ -301,6 +302,38 @@ body[data-page="diario"] .status {
   margin: 8px 0 12px;
 }
 
+.section-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+}
+
+.section-toolbar > button {
+  width: auto;
+  margin-left: auto;
+}
+
+.view-inline {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.view-inline label {
+  margin: 0;
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+
+.view-inline select {
+  width: auto;
+  min-width: 152px;
+  padding: 6px 10px;
+  font-size: 0.8rem;
+}
+
 .subline input {
   max-width: 190px;
 }
@@ -337,6 +370,36 @@ body[data-page="diario"] .status {
   display: flex;
   justify-content: flex-start;
   margin-bottom: 8px;
+}
+
+.diary-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.diary-view-inline {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.diary-view-inline label {
+  margin: 0;
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+
+.diary-view-inline select {
+  width: auto;
+  min-width: 150px;
+  padding: 6px 10px;
+  font-size: 0.8rem;
+}
+
+.diary-toolbar #toggle-calendar-btn {
+  margin-left: auto;
 }
 
 .diary-view-toggle {
@@ -507,8 +570,9 @@ body[data-page="diario"] .status {
 }
 
 .therapy-actions .btn-compact {
-  padding: 6px 9px;
-  border-radius: 9px;
+  padding: 4px 7px;
+  border-radius: 7px;
+  font-size: 0.72rem;
 }
 
 body[data-page="terapia"] #therapy-list .therapy-entry .item-title {
@@ -635,7 +699,11 @@ body[data-page="terapia"] #therapy-list .therapy-entry .meta {
 }
 
 body[data-page="armadietto"] #cabinet-list {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+body[data-page="armadietto"] #cabinet-list.layout-matrix {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
 body[data-page="armadietto"] #cabinet-list .item {
@@ -660,9 +728,23 @@ body[data-page="armadietto"] #cabinet-list .actions {
   justify-content: flex-start;
 }
 
+body[data-page="armadietto"] .cabinet-toolbar {
+  margin-bottom: 12px;
+}
+
+body[data-page="armadietto"] #cabinet-list .cabinet-edit-btn {
+  padding: 4px 7px;
+  border-radius: 7px;
+  font-size: 0.72rem;
+}
+
 body[data-page="terapia"] #therapy-list {
   grid-template-columns: repeat(2, minmax(0, 1fr));
   align-items: start;
+}
+
+body[data-page="terapia"] #therapy-list.layout-matrix {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .therapy-print-wrap {
@@ -676,8 +758,21 @@ body[data-page="diario"] #diary-list {
   align-items: start;
 }
 
+body[data-page="diario"] #diary-list.layout-matrix {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+body[data-page="diario"] .calendar-card {
+  max-width: 620px;
+  margin-left: auto;
+}
+
 body[data-page="diario"] #diary-list.checklist-mode {
   grid-template-columns: 1fr;
+}
+
+body[data-page="diario"] #diary-list.checklist-mode.layout-matrix {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .bottom-nav {
@@ -690,7 +785,7 @@ body[data-page="diario"] #diary-list.checklist-mode {
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 8px;
   padding: calc(10px + env(safe-area-inset-top)) 12px 10px;
-  background: rgba(243, 247, 251, 0.96);
+  background: rgba(219, 222, 226, 0.96);
   backdrop-filter: blur(8px);
   border: 1px solid #cfdae5;
   border-radius: 18px;
@@ -704,8 +799,8 @@ body[data-page="diario"] #diary-list.checklist-mode {
   text-align: center;
   text-decoration: none;
   color: #223647;
-  background: #ffffff;
-  border: 1px solid #c9d6e3;
+  background: #e6eaee;
+  border: 1px solid #b5c1cc;
   border-radius: 12px;
   padding: 10px 8px;
   font-size: 0.82rem;
@@ -750,7 +845,7 @@ body[data-page="diario"] #diary-list.checklist-mode {
   border: 1px solid var(--line);
   border-radius: 12px;
   padding: 10px;
-  background: #ffffff;
+  background: var(--card);
 }
 
 .home-stat-label {
@@ -973,6 +1068,22 @@ body[data-page="diario"] #diary-list.checklist-mode {
     grid-template-columns: 1fr;
   }
 
+  body[data-page="armadietto"] #cabinet-list.layout-matrix {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  body[data-page="terapia"] #therapy-list.layout-matrix {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  body[data-page="diario"] #diary-list.layout-matrix {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  body[data-page="diario"] #diary-list.checklist-mode.layout-matrix {
+    grid-template-columns: 1fr;
+  }
+
   .home-settings-actions {
     grid-template-columns: 1fr;
     justify-content: stretch;
@@ -1001,4 +1112,21 @@ body[data-page="diario"] #diary-list.checklist-mode {
   .home-calendar-controls .btn-compact {
     width: 100%;
   }
+}
+
+
+.app-version-badge {
+  position: fixed;
+  right: 10px;
+  bottom: calc(10px + env(safe-area-inset-bottom));
+  z-index: 60;
+  font-size: 0.72rem;
+  line-height: 1;
+  padding: 5px 8px;
+  border-radius: 999px;
+  border: 1px solid #bac6d3;
+  background: rgba(255, 255, 255, 0.92);
+  color: #32485b;
+  box-shadow: 0 2px 8px rgba(14, 26, 36, 0.16);
+  pointer-events: none;
 }
