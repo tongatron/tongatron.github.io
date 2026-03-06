@@ -28,7 +28,10 @@ Comet
 
 [Alibaba](https://chat.qwen.ai/)
 
+Zapier
+
 ------
 
 **Progetti personali**
+
 [Personal Assistant ](https://personal-assistant-web-1017135180152.europe-west1.run.app/)
