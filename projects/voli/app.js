@@ -1,5 +1,13 @@
 const ROUTES_API = "https://www.ryanair.com/api/views/locate/searchWidget/routes/it/airport/TRN";
 const CHEAPEST_PER_DAY_API = "https://www.ryanair.com/api/farfnd/3/oneWayFares";
+const URL_FILTER_KEYS = {
+  destination: "dest",
+  months: "months",
+  stay: "stay",
+  tolerance: "tol",
+  maxTotalPrice: "max",
+  view: "view",
+};
 
 const form = document.querySelector("#search-form");
 const airportFilterInput = document.querySelector("#airport-filter");
@@ -44,11 +52,15 @@ if (!appReady) {
 }
 
 async function initializeApp() {
+  const initialFilters = readFiltersFromUrl();
+  applyInitialFilters(initialFilters);
+
   form.addEventListener("submit", onSubmit);
 
   for (const input of viewModeInputs) {
     input.addEventListener("change", () => {
       renderResults(currentResults);
+      updateUrlFromCurrentFilters();
     });
   }
 
@@ -56,9 +68,9 @@ async function initializeApp() {
 
   try {
     availableAirports = await fetchReachableAirportsFromTurin();
-    populateAirportFilter(availableAirports);
+    populateAirportFilter(availableAirports, initialFilters.destinationCode);
     applyViewMode();
-    await runSearch();
+    await runSearch({ updateUrl: false });
   } catch (error) {
     setError(`Errore inizializzazione aeroporti: ${error.message}`);
   } finally {
@@ -71,7 +83,7 @@ async function onSubmit(event) {
   await runSearch();
 }
 
-async function runSearch() {
+async function runSearch({ updateUrl = true } = {}) {
   const dateFrom = localTodayIso();
   const months = Number(monthsInput?.value ?? 3);
   const targetStay = Number(targetStayInput?.value ?? 5);
@@ -106,6 +118,10 @@ async function runSearch() {
   if (airportsToSearch.length === 0) {
     setError("Aeroporto selezionato non disponibile.");
     return;
+  }
+
+  if (updateUrl) {
+    updateUrlFromCurrentFilters();
   }
 
   const dateTo = addDaysIso(addMonthsIso(dateFrom, months), -1);
@@ -244,7 +260,7 @@ async function fetchReachableAirportsFromTurin() {
   });
 }
 
-function populateAirportFilter(airports) {
+function populateAirportFilter(airports, preferredCode = null) {
   if (!airportFilterInput) {
     return;
   }
@@ -263,8 +279,15 @@ function populateAirportFilter(airports) {
     airportFilterInput.appendChild(option);
   }
 
+  const normalizedPreferredCode = preferredCode?.toUpperCase() ?? "";
+  const hasPreferred = airports.some((airport) => airport.code === normalizedPreferredCode);
   const hasStansted = airports.some((airport) => airport.code === "STN");
-  airportFilterInput.value = hasStansted ? "STN" : "all";
+
+  if (hasPreferred) {
+    airportFilterInput.value = normalizedPreferredCode;
+  } else {
+    airportFilterInput.value = hasStansted ? "STN" : "all";
+  }
 }
 
 async function buildRoundTripCandidates({
@@ -642,6 +665,65 @@ function roundCurrency(value) {
 function getViewMode() {
   const selected = document.querySelector('input[name="view-mode"]:checked');
   return selected?.value === "cards" ? "cards" : "list";
+}
+
+function setViewMode(mode) {
+  const normalizedMode = mode === "cards" ? "cards" : "list";
+  for (const input of viewModeInputs) {
+    input.checked = input.value === normalizedMode;
+  }
+}
+
+function readFiltersFromUrl() {
+  const params = new URLSearchParams(window.location.search);
+
+  return {
+    destinationCode: params.get(URL_FILTER_KEYS.destination)?.trim().toUpperCase() ?? "",
+    months: parseIntegerInRange(params.get(URL_FILTER_KEYS.months), 1, 12),
+    stay: parseIntegerInRange(params.get(URL_FILTER_KEYS.stay), 1, 30),
+    tolerance: parseIntegerInRange(params.get(URL_FILTER_KEYS.tolerance), 0, 7),
+    maxTotalPrice: parseIntegerInRange(params.get(URL_FILTER_KEYS.maxTotalPrice), 1, 2000),
+    view: params.get(URL_FILTER_KEYS.view) === "cards" ? "cards" : "list",
+  };
+}
+
+function applyInitialFilters(filters) {
+  if (Number.isFinite(filters.months)) {
+    monthsInput.value = String(filters.months);
+  }
+  if (Number.isFinite(filters.stay)) {
+    targetStayInput.value = String(filters.stay);
+  }
+  if (Number.isFinite(filters.tolerance)) {
+    stayToleranceInput.value = String(filters.tolerance);
+  }
+  if (Number.isFinite(filters.maxTotalPrice)) {
+    maxTotalPriceInput.value = String(filters.maxTotalPrice);
+  }
+  setViewMode(filters.view);
+}
+
+function updateUrlFromCurrentFilters() {
+  const params = new URLSearchParams(window.location.search);
+
+  params.set(URL_FILTER_KEYS.destination, airportFilterInput?.value ?? "all");
+  params.set(URL_FILTER_KEYS.months, monthsInput?.value ?? "3");
+  params.set(URL_FILTER_KEYS.stay, targetStayInput?.value ?? "5");
+  params.set(URL_FILTER_KEYS.tolerance, stayToleranceInput?.value ?? "1");
+  params.set(URL_FILTER_KEYS.maxTotalPrice, maxTotalPriceInput?.value ?? "70");
+  params.set(URL_FILTER_KEYS.view, getViewMode());
+
+  const query = params.toString();
+  const nextUrl = `${window.location.pathname}${query ? `?${query}` : ""}${window.location.hash}`;
+  window.history.replaceState(null, "", nextUrl);
+}
+
+function parseIntegerInRange(value, min, max) {
+  const parsed = Number.parseInt(value ?? "", 10);
+  if (Number.isNaN(parsed)) {
+    return Number.NaN;
+  }
+  return Math.min(max, Math.max(min, parsed));
 }
 
 async function mapWithConcurrency(items, limit, mapper) {
