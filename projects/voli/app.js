@@ -70,6 +70,65 @@ const I18N = {
     ariaLanguageGroup: "Selezione lingua",
     ariaViewMode: "Visualizzazione risultati",
   },
+  sc: {
+    pageTitle: "bolos dae Turinu",
+    heroEyebrow: "Chirca tarifas Ryanair",
+    heroTitle: "bolos dae Turinu",
+    heroDescription:
+      "Sa chirca impreat sas API pùblicas de Ryanair e mustrat su prètziu totale de andada e torrada pro sas tratas disponìbiles dae Turinu.",
+    labelDestination: "Aeroportu de destinatzione",
+    labelMonths: "Meses de analisare",
+    labelTargetStay: "Durada obietivu (dies)",
+    labelTolerance: "Tolleràntzia (± dies)",
+    labelMaxPrice: "Ispesa massima A/R (€)",
+    labelViewMode: "Visualizatzione Lista/Schedas",
+    viewList: "Lista",
+    viewCards: "Schedas",
+    buttonSearch: "Chirca bolos",
+    resultsTitle: "Resurtados ordinados pro data",
+    thDeparture: "Partèntzia",
+    thReturn: "Torrada",
+    thDestination: "Destinatzione",
+    thDuration: "Durada",
+    thTotalPrice: "Prètziu totale",
+    destinationAll: "Totus sos aeroportos chi si podent raggiànghere",
+    statusReady: "Prontu.",
+    loadingAirports: "Carrighende sos aeroportos disponìbiles dae Turinu...",
+    loadingPrices: "Recuperende sos prètzios diarios Ryanair...",
+    loadingPricesProgress: "Recuperende sos prètzios... {done}/{total} aeroportos",
+    errorInit: "Faddina in s'inizializatzione de sos aeroportos: {message}",
+    errorInvalidParams: "Paràmetros non vàlidos.",
+    errorNoAirports: "Perunu aeroportu disponìbile dae Turinu.",
+    errorAirportUnavailable: "S'aeroportu seberadu non est disponìbile.",
+    errorNetwork:
+      "Faddina de rete/API: su browser non podet leggere Ryanair. Controlla sa console DevTools (F12) pro CORS o bloccos de rete.",
+    errorSearch: "Faddina durante sa chirca: {message}",
+    errorRoutesRead: "Impossìbile leggere sas rotas dae Turinu ({status})",
+    errorPriceRead: "Faddina prètzios {departure}→{arrival} ({status})",
+    metaAllAirports: "Aeroportos: totus ({count})",
+    metaSingleAirport: "Aeroportu: {airport}",
+    metaDepartToday: "Partèntzia dae oe: {date}",
+    metaMaxSpend: "Ispesa massima A/R: € {max}",
+    statusNoResults: "Perunu bolu intro € {max} cun sos filtros seberados.",
+    statusFound: "Trovadas {count} optziones econòmicas in òrdine de data.",
+    statusFoundWithFailed:
+      "Trovadas {count} optziones econòmicas in òrdine de data. ({failed} aeroportos non disponìbiles: {codes})",
+    days: "{count} dies",
+    detailsTitle: "Detàllios bolos:",
+    detailsRoute: "Trata: {from} -> {to}",
+    detailsOutbound: "Andada: {value}",
+    detailsReturn: "Torrada: {value}",
+    detailsStay: "Permanèntzia: {days}",
+    cardRoute: "Trata:",
+    cardOutbound: "Andada:",
+    cardReturn: "Torrada:",
+    cardStay: "Permanèntzia:",
+    cardTotal: "Totale A/R:",
+    fromTurin: "Turinu (TRN)",
+    legTemplate: "{departure} -> {arrival} (€ {price})",
+    ariaLanguageGroup: "Seletzione limba",
+    ariaViewMode: "Visualizatzione resurtados",
+  },
   fa: {
     pageTitle: "پروازها از تورین",
     heroEyebrow: "جستجوی قیمت رایان‌ایر",
@@ -1017,20 +1076,35 @@ function setText(element, value) {
 }
 
 function getDateLocale() {
-  return currentLang === "fa" ? "fa-IR-u-ca-gregory" : "it-IT";
+  if (currentLang === "fa") {
+    return "fa-IR-u-ca-gregory";
+  }
+  return "it-IT";
 }
 
 function getNumberLocale() {
-  return currentLang === "fa" ? "fa-IR" : "it-IT";
+  if (currentLang === "fa") {
+    return "fa-IR";
+  }
+  return "it-IT";
 }
 
 function getBrowserLanguage() {
   const locale = (navigator.language ?? "it").toLowerCase();
-  return locale.startsWith("fa") ? "fa" : "it";
+  if (locale.startsWith("fa")) {
+    return "fa";
+  }
+  if (locale.startsWith("sc")) {
+    return "sc";
+  }
+  return "it";
 }
 
 function normalizeLanguage(value) {
-  return value === "fa" ? "fa" : "it";
+  if (value === "fa" || value === "sc") {
+    return value;
+  }
+  return "it";
 }
 
 function t(key, vars = {}) {

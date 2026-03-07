@@ -72,6 +72,14 @@ body[data-lang="fa"] h2 {
   justify-content: center;
 }
 
+.lang-flag-icon {
+  width: 21px;
+  height: 21px;
+  border-radius: 999px;
+  object-fit: cover;
+  border: 1px solid rgba(0, 0, 0, 0.14);
+}
+
 .lang-btn.is-active {
   border-color: var(--line);
   background: linear-gradient(120deg, var(--primary) 0%, var(--primary-2) 100%);
