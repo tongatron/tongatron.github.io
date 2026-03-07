@@ -296,8 +296,8 @@ function renderListRows(fares) {
       <td colspan="4">
         <div class="details-card">
           <strong>Dettagli voli:</strong><br />
-          Andata: ${formatDateTimeWithWeekday(fare.outboundDate)} -> ${formatDateTimeWithWeekday(fare.outboundArrivalDate)} (€ ${formatPrice(fare.outboundPrice)})<br />
-          Ritorno: ${formatDateTimeWithWeekday(fare.inboundDate)} -> ${formatDateTimeWithWeekday(fare.inboundArrivalDate)} (€ ${formatPrice(fare.inboundPrice)})<br />
+          Andata: ${formatLegDetails(fare.outboundDate, fare.outboundArrivalDate, fare.outboundPrice)}<br />
+          Ritorno: ${formatLegDetails(fare.inboundDate, fare.inboundArrivalDate, fare.inboundPrice)}<br />
           Permanenza: ${fare.tripDays} giorni
         </div>
       </td>
@@ -332,8 +332,8 @@ function renderCards(fares) {
     card.innerHTML = `
       <h3>${formatDateTimeWithWeekday(fare.outboundDate)}</h3>
       <p class="card-line"><strong>Tratta:</strong> Torino (TRN) -> Londra (STN)</p>
-      <p class="card-line"><strong>Andata:</strong> ${formatDateTimeWithWeekday(fare.outboundDate)} -> ${formatDateTimeWithWeekday(fare.outboundArrivalDate)} (€ ${formatPrice(fare.outboundPrice)})</p>
-      <p class="card-line"><strong>Ritorno:</strong> ${formatDateTimeWithWeekday(fare.inboundDate)} -> ${formatDateTimeWithWeekday(fare.inboundArrivalDate)} (€ ${formatPrice(fare.inboundPrice)})</p>
+      <p class="card-line"><strong>Andata:</strong> ${formatLegDetails(fare.outboundDate, fare.outboundArrivalDate, fare.outboundPrice)}</p>
+      <p class="card-line"><strong>Ritorno:</strong> ${formatLegDetails(fare.inboundDate, fare.inboundArrivalDate, fare.inboundPrice)}</p>
       <p class="card-line"><strong>Permanenza:</strong> ${fare.tripDays} giorni</p>
       <p class="card-line price"><strong>Totale A/R:</strong> € ${formatPrice(fare.totalPrice)}</p>
     `;
@@ -433,6 +433,33 @@ function formatDateTimeWithWeekday(value) {
     hour: "2-digit",
     minute: "2-digit",
   }).format(new Date(value));
+}
+
+function formatTime(value) {
+  return new Intl.DateTimeFormat("it-IT", {
+    hour: "2-digit",
+    minute: "2-digit",
+  }).format(new Date(value));
+}
+
+function isSameDay(a, b) {
+  const dateA = new Date(a);
+  const dateB = new Date(b);
+
+  return (
+    dateA.getFullYear() === dateB.getFullYear() &&
+    dateA.getMonth() === dateB.getMonth() &&
+    dateA.getDate() === dateB.getDate()
+  );
+}
+
+function formatLegDetails(departureDateTime, arrivalDateTime, price) {
+  const departureText = formatDateTimeWithWeekday(departureDateTime);
+  const arrivalText = isSameDay(departureDateTime, arrivalDateTime)
+    ? formatTime(arrivalDateTime)
+    : formatDateTimeWithWeekday(arrivalDateTime);
+
+  return `${departureText} -> ${arrivalText} (€ ${formatPrice(price)})`;
 }
 
 function formatPrice(value) {
