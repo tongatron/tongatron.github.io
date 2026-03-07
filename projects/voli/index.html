@@ -25,17 +25,24 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Space+Grotesk:wght@400;500;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Space+Grotesk:wght@400;500;700&family=Vazirmatn:wght@400;500;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="./styles.css?v=20260307-8" />
+    <link rel="stylesheet" href="./styles.css?v=20260307-10" />
   </head>
   <body>
     <main class="shell">
+      <div class="top-tools">
+        <div class="lang-switcher" role="group" aria-label="Selezione lingua">
+          <button type="button" class="lang-btn is-active" data-lang="it" aria-label="Italiano">🇮🇹</button>
+          <button type="button" class="lang-btn" data-lang="fa" aria-label="فارسی">🇮🇷</button>
+        </div>
+      </div>
+
       <section class="panel hero">
-        <p class="eyebrow">Ryanair Fare Finder</p>
-        <h1>voli da Torino</h1>
-        <p>
+        <p class="eyebrow" id="hero-eyebrow">Ryanair Fare Finder</p>
+        <h1 id="hero-title">voli da Torino</h1>
+        <p id="hero-description">
           La ricerca usa le API pubbliche Ryanair e mostra il prezzo totale andata+ritorno
           dalle rotte Ryanair disponibili in partenza da Torino.
         </p>
@@ -44,42 +51,42 @@
       <section class="panel controls">
         <form id="search-form" class="grid">
           <label>
-            Aeroporto destinazione
+            <span id="label-destination">Aeroporto destinazione</span>
             <select id="airport-filter">
               <option value="all">Tutti gli aeroporti raggiungibili</option>
             </select>
           </label>
 
           <label>
-            Mesi da analizzare
+            <span id="label-months">Mesi da analizzare</span>
             <input type="number" id="months" min="1" max="12" value="3" required />
           </label>
 
           <label>
-            Durata target (giorni)
+            <span id="label-target-stay">Durata target (giorni)</span>
             <input type="number" id="target-stay" min="1" max="30" value="5" required />
           </label>
 
           <label>
-            Tolleranza (± giorni)
+            <span id="label-tolerance">Tolleranza (± giorni)</span>
             <input type="number" id="stay-tolerance" min="0" max="7" value="1" required />
           </label>
 
           <label>
-            Spesa massima A/R (€)
+            <span id="label-max-price">Spesa massima A/R (€)</span>
             <input type="number" id="max-total-price" min="1" max="2000" step="1" value="70" required />
           </label>
 
           <div class="view-mode-toggle" role="group" aria-label="Visualizzazione risultati">
-            <span class="view-mode-label">Visualizza Lista/Schede</span>
+            <span class="view-mode-label" id="label-view-mode">Visualizza Lista/Schede</span>
             <span class="view-mode-row" role="radiogroup" aria-label="Visualizzazione risultati">
               <label class="view-mode-option">
                 <input type="radio" name="view-mode" value="list" checked />
-                <span>Lista</span>
+                <span id="view-label-list">Lista</span>
               </label>
               <label class="view-mode-option">
                 <input type="radio" name="view-mode" value="cards" />
-                <span>Schede</span>
+                <span id="view-label-cards">Schede</span>
               </label>
             </span>
           </div>
@@ -91,18 +98,18 @@
 
       <section class="panel results">
         <div class="results-head">
-          <h2>Risultati ordinati per data</h2>
+          <h2 id="results-title">Risultati ordinati per data</h2>
           <p id="status">Pronto.</p>
         </div>
         <div id="list-view" class="table-wrap">
           <table>
             <thead>
               <tr>
-                <th>Partenza</th>
-                <th>Ritorno</th>
-                <th>Destinazione</th>
-                <th>Durata</th>
-                <th>Prezzo totale</th>
+                <th id="th-departure">Partenza</th>
+                <th id="th-return">Ritorno</th>
+                <th id="th-destination">Destinazione</th>
+                <th id="th-duration">Durata</th>
+                <th id="th-total-price">Prezzo totale</th>
               </tr>
             </thead>
             <tbody id="results-body"></tbody>
@@ -112,7 +119,7 @@
       </section>
     </main>
 
-    <script src="./app.js?v=20260307-9" type="module"></script>
+    <script src="./app.js?v=20260307-10" type="module"></script>
     <script>
       if ("serviceWorker" in navigator) {
         window.addEventListener("load", function registerServiceWorker() {

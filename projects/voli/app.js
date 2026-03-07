@@ -7,6 +7,128 @@ const URL_FILTER_KEYS = {
   tolerance: "tol",
   maxTotalPrice: "max",
   view: "view",
+  lang: "lang",
+};
+
+const I18N = {
+  it: {
+    pageTitle: "voli da Torino",
+    heroEyebrow: "Ryanair Fare Finder",
+    heroTitle: "voli da Torino",
+    heroDescription:
+      "La ricerca usa le API pubbliche Ryanair e mostra il prezzo totale andata+ritorno dalle rotte Ryanair disponibili in partenza da Torino.",
+    labelDestination: "Aeroporto destinazione",
+    labelMonths: "Mesi da analizzare",
+    labelTargetStay: "Durata target (giorni)",
+    labelTolerance: "Tolleranza (± giorni)",
+    labelMaxPrice: "Spesa massima A/R (€)",
+    labelViewMode: "Visualizza Lista/Schede",
+    viewList: "Lista",
+    viewCards: "Schede",
+    buttonSearch: "Cerca voli",
+    resultsTitle: "Risultati ordinati per data",
+    thDeparture: "Partenza",
+    thReturn: "Ritorno",
+    thDestination: "Destinazione",
+    thDuration: "Durata",
+    thTotalPrice: "Prezzo totale",
+    destinationAll: "Tutti gli aeroporti raggiungibili",
+    statusReady: "Pronto.",
+    loadingAirports: "Carico aeroporti raggiungibili da Torino...",
+    loadingPrices: "Recupero prezzi giornalieri Ryanair...",
+    loadingPricesProgress: "Recupero prezzi Ryanair... {done}/{total} aeroporti",
+    errorInit: "Errore inizializzazione aeroporti: {message}",
+    errorInvalidParams: "Parametri non validi.",
+    errorNoAirports: "Nessun aeroporto disponibile da Torino.",
+    errorAirportUnavailable: "Aeroporto selezionato non disponibile.",
+    errorNetwork:
+      "Errore rete/API: il browser non riesce a leggere Ryanair. Controlla console DevTools (F12) per CORS o blocchi rete.",
+    errorSearch: "Errore durante la ricerca: {message}",
+    errorRoutesRead: "Impossibile leggere le rotte da Torino ({status})",
+    errorPriceRead: "Errore prezzi {departure}→{arrival} ({status})",
+    metaAllAirports: "Aeroporti: tutti ({count})",
+    metaSingleAirport: "Aeroporto: {airport}",
+    metaDepartToday: "Partenza da oggi: {date}",
+    metaMaxSpend: "Spesa massima A/R: € {max}",
+    statusNoResults: "Nessun volo entro € {max} trovato con i filtri scelti.",
+    statusFound: "Trovate {count} opzioni economiche in ordine di data.",
+    statusFoundWithFailed:
+      "Trovate {count} opzioni economiche in ordine di data. ({failed} aeroporti non disponibili: {codes})",
+    days: "{count} giorni",
+    detailsTitle: "Dettagli voli:",
+    detailsRoute: "Tratta: {from} -> {to}",
+    detailsOutbound: "Andata: {value}",
+    detailsReturn: "Ritorno: {value}",
+    detailsStay: "Permanenza: {days}",
+    cardRoute: "Tratta:",
+    cardOutbound: "Andata:",
+    cardReturn: "Ritorno:",
+    cardStay: "Permanenza:",
+    cardTotal: "Totale A/R:",
+    fromTurin: "Torino (TRN)",
+    legTemplate: "{departure} -> {arrival} (€ {price})",
+    ariaLanguageGroup: "Selezione lingua",
+    ariaViewMode: "Visualizzazione risultati",
+  },
+  fa: {
+    pageTitle: "پروازها از تورین",
+    heroEyebrow: "جستجوی قیمت رایان‌ایر",
+    heroTitle: "پروازها از تورین",
+    heroDescription:
+      "این جستجو از API عمومی Ryanair استفاده می‌کند و مجموع قیمت رفت‌وبرگشت مسیرهای قابل دسترس از تورین را نمایش می‌دهد.",
+    labelDestination: "فرودگاه مقصد",
+    labelMonths: "ماه‌های بررسی",
+    labelTargetStay: "مدت اقامت هدف (روز)",
+    labelTolerance: "بازه خطا (± روز)",
+    labelMaxPrice: "حداکثر هزینه رفت‌وبرگشت (€)",
+    labelViewMode: "نمایش لیست/کارت",
+    viewList: "لیست",
+    viewCards: "کارت",
+    buttonSearch: "جستجوی پرواز",
+    resultsTitle: "نتایج مرتب‌شده بر اساس تاریخ",
+    thDeparture: "رفت",
+    thReturn: "برگشت",
+    thDestination: "مقصد",
+    thDuration: "مدت",
+    thTotalPrice: "قیمت کل",
+    destinationAll: "همه فرودگاه‌های قابل دسترس",
+    statusReady: "آماده.",
+    loadingAirports: "در حال بارگذاری فرودگاه‌های قابل دسترس از تورین...",
+    loadingPrices: "در حال دریافت قیمت‌های روزانه Ryanair...",
+    loadingPricesProgress: "در حال دریافت قیمت‌ها... {done}/{total} فرودگاه",
+    errorInit: "خطا در مقداردهی اولیه فرودگاه‌ها: {message}",
+    errorInvalidParams: "پارامترها معتبر نیستند.",
+    errorNoAirports: "هیچ فرودگاهی از تورین در دسترس نیست.",
+    errorAirportUnavailable: "فرودگاه انتخاب‌شده در دسترس نیست.",
+    errorNetwork:
+      "خطای شبکه/API: مرورگر نتوانست به Ryanair دسترسی پیدا کند. کنسول DevTools (F12) را برای CORS یا محدودیت شبکه بررسی کنید.",
+    errorSearch: "خطا هنگام جستجو: {message}",
+    errorRoutesRead: "خواندن مسیرهای تورین ممکن نیست ({status})",
+    errorPriceRead: "خطای قیمت {departure}→{arrival} ({status})",
+    metaAllAirports: "فرودگاه‌ها: همه ({count})",
+    metaSingleAirport: "فرودگاه: {airport}",
+    metaDepartToday: "شروع از امروز: {date}",
+    metaMaxSpend: "حداکثر هزینه رفت‌وبرگشت: € {max}",
+    statusNoResults: "هیچ پروازی تا € {max} با فیلترهای انتخاب‌شده پیدا نشد.",
+    statusFound: "{count} گزینه ارزان بر اساس تاریخ پیدا شد.",
+    statusFoundWithFailed:
+      "{count} گزینه ارزان بر اساس تاریخ پیدا شد. ({failed} فرودگاه در دسترس نبود: {codes})",
+    days: "{count} روز",
+    detailsTitle: "جزئیات پرواز:",
+    detailsRoute: "مسیر: {from} -> {to}",
+    detailsOutbound: "رفت: {value}",
+    detailsReturn: "برگشت: {value}",
+    detailsStay: "مدت اقامت: {days}",
+    cardRoute: "مسیر:",
+    cardOutbound: "رفت:",
+    cardReturn: "برگشت:",
+    cardStay: "مدت اقامت:",
+    cardTotal: "جمع رفت‌وبرگشت:",
+    fromTurin: "تورین (TRN)",
+    legTemplate: "{departure} -> {arrival} (€ {price})",
+    ariaLanguageGroup: "انتخاب زبان",
+    ariaViewMode: "حالت نمایش نتایج",
+  },
 };
 
 const form = document.querySelector("#search-form");
@@ -16,6 +138,29 @@ const targetStayInput = document.querySelector("#target-stay");
 const stayToleranceInput = document.querySelector("#stay-tolerance");
 const maxTotalPriceInput = document.querySelector("#max-total-price");
 const viewModeInputs = document.querySelectorAll('input[name="view-mode"]');
+const langButtons = document.querySelectorAll(".lang-btn");
+const langSwitcherEl = document.querySelector(".lang-switcher");
+const viewModeToggleEl = document.querySelector(".view-mode-toggle");
+const viewModeRowEl = document.querySelector(".view-mode-row");
+
+const heroEyebrowEl = document.querySelector("#hero-eyebrow");
+const heroTitleEl = document.querySelector("#hero-title");
+const heroDescriptionEl = document.querySelector("#hero-description");
+const labelDestinationEl = document.querySelector("#label-destination");
+const labelMonthsEl = document.querySelector("#label-months");
+const labelTargetStayEl = document.querySelector("#label-target-stay");
+const labelToleranceEl = document.querySelector("#label-tolerance");
+const labelMaxPriceEl = document.querySelector("#label-max-price");
+const labelViewModeEl = document.querySelector("#label-view-mode");
+const viewLabelListEl = document.querySelector("#view-label-list");
+const viewLabelCardsEl = document.querySelector("#view-label-cards");
+const resultsTitleEl = document.querySelector("#results-title");
+const thDepartureEl = document.querySelector("#th-departure");
+const thReturnEl = document.querySelector("#th-return");
+const thDestinationEl = document.querySelector("#th-destination");
+const thDurationEl = document.querySelector("#th-duration");
+const thTotalPriceEl = document.querySelector("#th-total-price");
+
 const resultsBody = document.querySelector("#results-body");
 const listViewEl = document.querySelector("#list-view");
 const cardsViewEl = document.querySelector("#cards-view");
@@ -26,6 +171,8 @@ const searchBtn = document.querySelector("#search-btn");
 const dailyFareCache = new Map();
 let availableAirports = [];
 let currentResults = [];
+let currentLang = "it";
+let lastRunContext = null;
 
 const appReady = Boolean(
   form &&
@@ -35,6 +182,7 @@ const appReady = Boolean(
     stayToleranceInput &&
     maxTotalPriceInput &&
     viewModeInputs.length > 0 &&
+    langButtons.length >= 2 &&
     resultsBody &&
     statusEl &&
     metaEl &&
@@ -53,6 +201,7 @@ if (!appReady) {
 
 async function initializeApp() {
   const initialFilters = readFiltersFromUrl();
+  setLanguage(initialFilters.lang, { updateUrl: false, rerender: false });
   applyInitialFilters(initialFilters);
 
   form.addEventListener("submit", onSubmit);
@@ -64,7 +213,17 @@ async function initializeApp() {
     });
   }
 
-  setLoading(true, "Carico aeroporti raggiungibili da Torino...");
+  for (const button of langButtons) {
+    button.addEventListener("click", () => {
+      const selectedLang = normalizeLanguage(button.dataset.lang);
+      if (selectedLang === currentLang) {
+        return;
+      }
+      setLanguage(selectedLang, { updateUrl: true, rerender: true });
+    });
+  }
+
+  setLoading(true, t("loadingAirports"));
 
   try {
     availableAirports = await fetchReachableAirportsFromTurin();
@@ -72,7 +231,7 @@ async function initializeApp() {
     applyViewMode();
     await runSearch({ updateUrl: false });
   } catch (error) {
-    setError(`Errore inizializzazione aeroporti: ${error.message}`);
+    setError(t("errorInit", { message: error.message }));
   } finally {
     setLoading(false);
   }
@@ -100,12 +259,12 @@ async function runSearch({ updateUrl = true } = {}) {
     Number.isNaN(maxTotalPrice) ||
     maxTotalPrice <= 0
   ) {
-    setError("Parametri non validi.");
+    setError(t("errorInvalidParams"));
     return;
   }
 
   if (availableAirports.length === 0) {
-    setError("Nessun aeroporto disponibile da Torino.");
+    setError(t("errorNoAirports"));
     return;
   }
 
@@ -116,7 +275,7 @@ async function runSearch({ updateUrl = true } = {}) {
       : availableAirports.filter((airport) => airport.code === selectedAirportCode);
 
   if (airportsToSearch.length === 0) {
-    setError("Aeroporto selezionato non disponibile.");
+    setError(t("errorAirportUnavailable"));
     return;
   }
 
@@ -130,7 +289,7 @@ async function runSearch({ updateUrl = true } = {}) {
   const returnWindowTo = addDaysIso(dateTo, targetStay + tolerance);
   const inboundMonths = monthsBetween(returnWindowFrom, returnWindowTo);
 
-  setLoading(true, "Recupero prezzi giornalieri Ryanair...");
+  setLoading(true, t("loadingPrices"));
   currentResults = [];
   clearResults();
 
@@ -158,10 +317,7 @@ async function runSearch({ updateUrl = true } = {}) {
           return { airport, fares: [], error };
         } finally {
           completed += 1;
-          setLoading(
-            true,
-            `Recupero prezzi Ryanair... ${completed}/${totalAirports} aeroporti`
-          );
+          setLoading(true, t("loadingPricesProgress", { done: completed, total: totalAirports }));
         }
       }
     );
@@ -186,38 +342,34 @@ async function runSearch({ updateUrl = true } = {}) {
       merged = pickCheapestByOutboundDate(merged);
     }
 
-    metaEl.textContent = [
-      selectedAirportCode === "all"
-        ? `Aeroporti: tutti (${airportsToSearch.length})`
-        : `Aeroporto: ${formatAirportLabel(airportsToSearch[0])}`,
-      `Partenza da oggi: ${formatDate(dateFrom)}`,
-      `Spesa massima A/R: € ${formatPrice(maxTotalPrice)}`,
-    ].join(" • ");
+    lastRunContext = {
+      selectedAirportCode,
+      airportsCount: airportsToSearch.length,
+      selectedAirport: airportsToSearch[0] ?? null,
+      dateFrom,
+      maxTotalPrice,
+      resultCount: merged.length,
+      failedAirports,
+      empty: merged.length === 0,
+    };
+
+    renderMeta(lastRunContext);
 
     if (merged.length === 0) {
-      statusEl.classList.remove("error");
-      statusEl.textContent = `Nessun volo entro € ${formatPrice(maxTotalPrice)} trovato con i filtri scelti.`;
+      renderStatus(lastRunContext);
       return;
     }
 
     currentResults = merged;
     renderResults(currentResults);
-    statusEl.classList.remove("error");
-
-    const failedSuffix =
-      failedAirports.length > 0
-        ? ` (${failedAirports.length} aeroporti non disponibili: ${failedAirports.join(", ")})`
-        : "";
-
-    statusEl.textContent = `Trovate ${merged.length} opzioni economiche in ordine di data.${failedSuffix}`;
+    renderStatus(lastRunContext);
   } catch (error) {
+    lastRunContext = null;
     const isNetworkError = error?.message === "Failed to fetch" || error instanceof TypeError;
     if (isNetworkError) {
-      setError(
-        "Errore rete/API: il browser non riesce a leggere Ryanair. Controlla console DevTools (F12) per CORS o blocchi rete."
-      );
+      setError(t("errorNetwork"));
     } else {
-      setError(`Errore durante la ricerca: ${error.message}`);
+      setError(t("errorSearch", { message: error.message }));
     }
   } finally {
     setLoading(false);
@@ -228,7 +380,7 @@ async function fetchReachableAirportsFromTurin() {
   const response = await fetch(ROUTES_API);
 
   if (!response.ok) {
-    throw new Error(`Impossibile leggere le rotte da Torino (${response.status})`);
+    throw new Error(t("errorRoutesRead", { status: response.status }));
   }
 
   const routes = await response.json();
@@ -269,7 +421,7 @@ function populateAirportFilter(airports, preferredCode = null) {
 
   const allOption = document.createElement("option");
   allOption.value = "all";
-  allOption.textContent = "Tutti gli aeroporti raggiungibili";
+  allOption.textContent = t("destinationAll");
   airportFilterInput.appendChild(allOption);
 
   for (const airport of airports) {
@@ -283,7 +435,9 @@ function populateAirportFilter(airports, preferredCode = null) {
   const hasPreferred = airports.some((airport) => airport.code === normalizedPreferredCode);
   const hasStansted = airports.some((airport) => airport.code === "STN");
 
-  if (hasPreferred) {
+  if (normalizedPreferredCode === "all") {
+    airportFilterInput.value = "all";
+  } else if (hasPreferred) {
     airportFilterInput.value = normalizedPreferredCode;
   } else {
     airportFilterInput.value = hasStansted ? "STN" : "all";
@@ -393,7 +547,13 @@ async function fetchCheapestDailyMap({ departureCode, arrivalCode, monthStart })
   const response = await fetch(url);
 
   if (!response.ok) {
-    throw new Error(`Errore prezzi ${departureCode}→${arrivalCode} (${response.status})`);
+    throw new Error(
+      t("errorPriceRead", {
+        departure: departureCode,
+        arrival: arrivalCode,
+        status: response.status,
+      })
+    );
   }
 
   const data = await response.json();
@@ -460,7 +620,7 @@ function renderListRows(fares) {
       <td>${formatDateTimeWithWeekday(fare.outboundDate)}</td>
       <td>${formatDateTimeWithWeekday(fare.inboundDate)}</td>
       <td>${formatDestination(fare)}</td>
-      <td>${fare.tripDays} giorni</td>
+      <td>${t("days", { count: fare.tripDays })}</td>
       <td class="price">€ ${formatPrice(fare.totalPrice)}</td>
     `;
 
@@ -469,11 +629,15 @@ function renderListRows(fares) {
     detailsRow.innerHTML = `
       <td colspan="5">
         <div class="details-card">
-          <strong>Dettagli voli:</strong><br />
-          Tratta: Torino (TRN) -> ${formatDestination(fare)}<br />
-          Andata: ${formatLegDetails(fare.outboundDate, fare.outboundArrivalDate, fare.outboundPrice)}<br />
-          Ritorno: ${formatLegDetails(fare.inboundDate, fare.inboundArrivalDate, fare.inboundPrice)}<br />
-          Permanenza: ${fare.tripDays} giorni
+          <strong>${t("detailsTitle")}</strong><br />
+          ${t("detailsRoute", { from: t("fromTurin"), to: formatDestination(fare) })}<br />
+          ${t("detailsOutbound", {
+            value: formatLegDetails(fare.outboundDate, fare.outboundArrivalDate, fare.outboundPrice),
+          })}<br />
+          ${t("detailsReturn", {
+            value: formatLegDetails(fare.inboundDate, fare.inboundArrivalDate, fare.inboundPrice),
+          })}<br />
+          ${t("detailsStay", { days: t("days", { count: fare.tripDays }) })}
         </div>
       </td>
     `;
@@ -506,11 +670,11 @@ function renderCards(fares) {
     card.className = "flight-card";
     card.innerHTML = `
       <h3>${formatDateTimeWithWeekday(fare.outboundDate)}</h3>
-      <p class="card-line"><strong>Tratta:</strong> Torino (TRN) -> ${formatDestination(fare)}</p>
-      <p class="card-line"><strong>Andata:</strong> ${formatLegDetails(fare.outboundDate, fare.outboundArrivalDate, fare.outboundPrice)}</p>
-      <p class="card-line"><strong>Ritorno:</strong> ${formatLegDetails(fare.inboundDate, fare.inboundArrivalDate, fare.inboundPrice)}</p>
-      <p class="card-line"><strong>Permanenza:</strong> ${fare.tripDays} giorni</p>
-      <p class="card-line price"><strong>Totale A/R:</strong> € ${formatPrice(fare.totalPrice)}</p>
+      <p class="card-line"><strong>${t("cardRoute")}</strong> ${t("fromTurin")} -> ${formatDestination(fare)}</p>
+      <p class="card-line"><strong>${t("cardOutbound")}</strong> ${formatLegDetails(fare.outboundDate, fare.outboundArrivalDate, fare.outboundPrice)}</p>
+      <p class="card-line"><strong>${t("cardReturn")}</strong> ${formatLegDetails(fare.inboundDate, fare.inboundArrivalDate, fare.inboundPrice)}</p>
+      <p class="card-line"><strong>${t("cardStay")}</strong> ${t("days", { count: fare.tripDays })}</p>
+      <p class="card-line price"><strong>${t("cardTotal")}</strong> € ${formatPrice(fare.totalPrice)}</p>
     `;
     cardsViewEl.appendChild(card);
   }
@@ -544,6 +708,39 @@ function setLoading(isLoading, text = "") {
 function setError(message) {
   statusEl.classList.add("error");
   statusEl.textContent = message;
+}
+
+function renderMeta(context) {
+  const airportText =
+    context.selectedAirportCode === "all"
+      ? t("metaAllAirports", { count: context.airportsCount })
+      : t("metaSingleAirport", { airport: formatAirportLabel(context.selectedAirport) });
+
+  metaEl.textContent = [
+    airportText,
+    t("metaDepartToday", { date: formatDate(context.dateFrom) }),
+    t("metaMaxSpend", { max: formatPrice(context.maxTotalPrice) }),
+  ].join(" • ");
+}
+
+function renderStatus(context) {
+  statusEl.classList.remove("error");
+
+  if (context.empty) {
+    statusEl.textContent = t("statusNoResults", { max: formatPrice(context.maxTotalPrice) });
+    return;
+  }
+
+  if (context.failedAirports.length > 0) {
+    statusEl.textContent = t("statusFoundWithFailed", {
+      count: context.resultCount,
+      failed: context.failedAirports.length,
+      codes: context.failedAirports.join(", "),
+    });
+    return;
+  }
+
+  statusEl.textContent = t("statusFound", { count: context.resultCount });
 }
 
 function monthsBetween(startIso, endIso) {
@@ -594,13 +791,13 @@ function localTodayIso() {
 }
 
 function formatDate(isoDate) {
-  return new Intl.DateTimeFormat("it-IT", {
+  return new Intl.DateTimeFormat(getDateLocale(), {
     dateStyle: "medium",
   }).format(parseIsoDate(isoDate));
 }
 
 function formatDateTimeWithWeekday(value) {
-  return new Intl.DateTimeFormat("it-IT", {
+  return new Intl.DateTimeFormat(getDateLocale(), {
     weekday: "long",
     day: "2-digit",
     month: "short",
@@ -611,7 +808,7 @@ function formatDateTimeWithWeekday(value) {
 }
 
 function formatTime(value) {
-  return new Intl.DateTimeFormat("it-IT", {
+  return new Intl.DateTimeFormat(getDateLocale(), {
     hour: "2-digit",
     minute: "2-digit",
   }).format(new Date(value));
@@ -634,12 +831,16 @@ function formatLegDetails(departureDateTime, arrivalDateTime, price) {
     ? formatTime(arrivalDateTime)
     : formatDateTimeWithWeekday(arrivalDateTime);
 
-  return `${departureText} -> ${arrivalText} (€ ${formatPrice(price)})`;
+  return t("legTemplate", {
+    departure: departureText,
+    arrival: arrivalText,
+    price: formatPrice(price),
+  });
 }
 
 function formatAirportLabel(airport) {
-  const city = airport.cityName ? `${airport.cityName}` : airport.name;
-  return `${airport.code} · ${city}`;
+  const city = airport?.cityName ? `${airport.cityName}` : airport?.name ?? "";
+  return `${airport?.code ?? ""} · ${city}`;
 }
 
 function formatAirportFilterLabel(airport) {
@@ -655,7 +856,10 @@ function formatDestination(fare) {
 }
 
 function formatPrice(value) {
-  return Number(value).toFixed(2).replace(".", ",");
+  return new Intl.NumberFormat(getNumberLocale(), {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  }).format(Number(value));
 }
 
 function roundCurrency(value) {
@@ -684,6 +888,7 @@ function readFiltersFromUrl() {
     tolerance: parseIntegerInRange(params.get(URL_FILTER_KEYS.tolerance), 0, 7),
     maxTotalPrice: parseIntegerInRange(params.get(URL_FILTER_KEYS.maxTotalPrice), 1, 2000),
     view: params.get(URL_FILTER_KEYS.view) === "cards" ? "cards" : "list",
+    lang: normalizeLanguage(params.get(URL_FILTER_KEYS.lang) ?? getBrowserLanguage()),
   };
 }
 
@@ -712,6 +917,7 @@ function updateUrlFromCurrentFilters() {
   params.set(URL_FILTER_KEYS.tolerance, stayToleranceInput?.value ?? "1");
   params.set(URL_FILTER_KEYS.maxTotalPrice, maxTotalPriceInput?.value ?? "70");
   params.set(URL_FILTER_KEYS.view, getViewMode());
+  params.set(URL_FILTER_KEYS.lang, currentLang);
 
   const query = params.toString();
   const nextUrl = `${window.location.pathname}${query ? `?${query}` : ""}${window.location.hash}`;
@@ -724,6 +930,120 @@ function parseIntegerInRange(value, min, max) {
     return Number.NaN;
   }
   return Math.min(max, Math.max(min, parsed));
+}
+
+function setLanguage(lang, { updateUrl = true, rerender = true } = {}) {
+  currentLang = normalizeLanguage(lang);
+
+  document.documentElement.lang = currentLang;
+  document.documentElement.dir = currentLang === "fa" ? "rtl" : "ltr";
+  document.body.dataset.lang = currentLang;
+
+  updateLanguageButtons();
+  applyStaticTranslations();
+
+  if (availableAirports.length > 0) {
+    const selectedCode = airportFilterInput?.value ?? "all";
+    populateAirportFilter(availableAirports, selectedCode);
+  }
+
+  if (rerender) {
+    renderResults(currentResults);
+
+    if (lastRunContext) {
+      renderMeta(lastRunContext);
+      renderStatus(lastRunContext);
+    } else if (!statusEl.classList.contains("error")) {
+      statusEl.textContent = t("statusReady");
+    }
+  }
+
+  if (updateUrl) {
+    updateUrlFromCurrentFilters();
+  }
+}
+
+function applyStaticTranslations() {
+  document.title = t("pageTitle");
+
+  setText(heroEyebrowEl, t("heroEyebrow"));
+  setText(heroTitleEl, t("heroTitle"));
+  setText(heroDescriptionEl, t("heroDescription"));
+  setText(labelDestinationEl, t("labelDestination"));
+  setText(labelMonthsEl, t("labelMonths"));
+  setText(labelTargetStayEl, t("labelTargetStay"));
+  setText(labelToleranceEl, t("labelTolerance"));
+  setText(labelMaxPriceEl, t("labelMaxPrice"));
+  setText(labelViewModeEl, t("labelViewMode"));
+  setText(viewLabelListEl, t("viewList"));
+  setText(viewLabelCardsEl, t("viewCards"));
+  setText(searchBtn, t("buttonSearch"));
+  setText(resultsTitleEl, t("resultsTitle"));
+  setText(thDepartureEl, t("thDeparture"));
+  setText(thReturnEl, t("thReturn"));
+  setText(thDestinationEl, t("thDestination"));
+  setText(thDurationEl, t("thDuration"));
+  setText(thTotalPriceEl, t("thTotalPrice"));
+
+  if (!lastRunContext && !statusEl.classList.contains("error")) {
+    statusEl.textContent = t("statusReady");
+  }
+
+  if (langSwitcherEl) {
+    langSwitcherEl.setAttribute("aria-label", t("ariaLanguageGroup"));
+  }
+
+  if (viewModeRowEl) {
+    viewModeRowEl.setAttribute("aria-label", t("ariaViewMode"));
+  }
+
+  if (viewModeToggleEl) {
+    viewModeToggleEl.setAttribute("aria-label", t("ariaViewMode"));
+  }
+}
+
+function updateLanguageButtons() {
+  for (const button of langButtons) {
+    const isActive = normalizeLanguage(button.dataset.lang) === currentLang;
+    button.classList.toggle("is-active", isActive);
+    button.setAttribute("aria-pressed", isActive ? "true" : "false");
+  }
+}
+
+function setText(element, value) {
+  if (element) {
+    element.textContent = value;
+  }
+}
+
+function getDateLocale() {
+  return currentLang === "fa" ? "fa-IR-u-ca-gregory" : "it-IT";
+}
+
+function getNumberLocale() {
+  return currentLang === "fa" ? "fa-IR" : "it-IT";
+}
+
+function getBrowserLanguage() {
+  const locale = (navigator.language ?? "it").toLowerCase();
+  return locale.startsWith("fa") ? "fa" : "it";
+}
+
+function normalizeLanguage(value) {
+  return value === "fa" ? "fa" : "it";
+}
+
+function t(key, vars = {}) {
+  const dictionary = I18N[currentLang] ?? I18N.it;
+  const fallback = I18N.it[key] ?? key;
+  const template = dictionary[key] ?? fallback;
+
+  return template.replace(/\{(\w+)\}/g, (_, token) => {
+    if (Object.prototype.hasOwnProperty.call(vars, token)) {
+      return String(vars[token]);
+    }
+    return `{${token}}`;
+  });
 }
 
 async function mapWithConcurrency(items, limit, mapper) {

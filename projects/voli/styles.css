@@ -25,11 +25,57 @@ body {
     linear-gradient(155deg, var(--bg) 0%, var(--bg-accent) 100%);
 }
 
+body[data-lang="fa"] {
+  font-family: "Vazirmatn", "Space Grotesk", sans-serif;
+}
+
+body[data-lang="fa"] h1,
+body[data-lang="fa"] h2 {
+  font-family: "Vazirmatn", "Fraunces", serif;
+}
+
 .shell {
   width: min(1100px, 92vw);
   margin: 34px auto;
   display: grid;
   gap: 16px;
+}
+
+.top-tools {
+  display: flex;
+  justify-content: flex-end;
+  direction: ltr;
+}
+
+.lang-switcher {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.86);
+  padding: 6px;
+  box-shadow: 0 8px 20px rgba(24, 37, 32, 0.08);
+}
+
+.lang-btn {
+  width: 42px;
+  height: 36px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  background: transparent;
+  cursor: pointer;
+  font-size: 1.05rem;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lang-btn.is-active {
+  border-color: var(--line);
+  background: linear-gradient(120deg, var(--primary) 0%, var(--primary-2) 100%);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
 .panel {
@@ -105,7 +151,7 @@ label {
 
 input:not([type="radio"]),
 select,
-button {
+button:not(.lang-btn) {
   border-radius: 12px;
   border: 1px solid var(--line);
   font: inherit;
@@ -182,7 +228,7 @@ select {
   white-space: nowrap;
 }
 
-button {
+button:not(.lang-btn) {
   border: 0;
   padding: 0 16px;
   background: linear-gradient(120deg, var(--primary) 0%, var(--primary-2) 100%);
@@ -192,11 +238,11 @@ button {
   transition: transform 0.2s ease;
 }
 
-button:hover {
+button:not(.lang-btn):hover {
   transform: translateY(-1px);
 }
 
-button:disabled {
+button:not(.lang-btn):disabled {
   opacity: 0.6;
   cursor: not-allowed;
   transform: none;
@@ -248,6 +294,11 @@ td {
   padding: 11px 10px;
   border-bottom: 1px solid var(--line);
   text-align: left;
+}
+
+html[dir="rtl"] th,
+html[dir="rtl"] td {
+  text-align: right;
 }
 
 th {
@@ -348,6 +399,11 @@ tbody tr.details-row:hover {
   .shell {
     width: min(1150px, 95vw);
     margin: 16px auto;
+  }
+
+  .lang-btn {
+    width: 38px;
+    height: 34px;
   }
 
   .grid {
