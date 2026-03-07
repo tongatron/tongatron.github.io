@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Voli Economici Torino → Londra</title>
+    <title>Torino → Londra</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -16,7 +16,7 @@
     <main class="shell">
       <section class="panel hero">
         <p class="eyebrow">Ryanair Fare Finder</p>
-        <h1>Torino → Londra<br />voli low-cost con ritorno circa 5 giorni</h1>
+        <h1>Torino → Londra</h1>
         <p>
           La ricerca usa le API pubbliche Ryanair e mostra il prezzo totale andata+ritorno
           sulla tratta fissa Torino → Londra (Stansted), tenendo la soluzione più economica
@@ -42,8 +42,16 @@
           </label>
 
           <label>
-            Max risultati
-            <input type="number" id="max-results" min="5" max="200" value="40" required />
+            Spesa massima A/R (€)
+            <input type="number" id="max-total-price" min="1" max="2000" step="1" value="70" required />
+          </label>
+
+          <label>
+            Visualizzazione
+            <select id="view-mode">
+              <option value="list">Lista</option>
+              <option value="cards">Schede</option>
+            </select>
           </label>
 
           <button type="submit" id="search-btn">Cerca voli</button>
@@ -56,13 +64,12 @@
           <h2>Risultati ordinati per data</h2>
           <p id="status">Pronto.</p>
         </div>
-        <div class="table-wrap">
+        <div id="list-view" class="table-wrap">
           <table>
             <thead>
               <tr>
                 <th>Partenza</th>
                 <th>Ritorno</th>
-                <th>Aeroporto Londra</th>
                 <th>Durata</th>
                 <th>Prezzo totale</th>
               </tr>
@@ -70,6 +77,7 @@
             <tbody id="results-body"></tbody>
           </table>
         </div>
+        <div id="cards-view" class="cards-wrap hidden"></div>
       </section>
     </main>
 

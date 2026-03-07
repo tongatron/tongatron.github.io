@@ -7,8 +7,9 @@ Pagina web che mostra, in ordine di data, i voli piu economici da Torino (`TRN`)
 - Scarica i prezzi giornalieri tramite endpoint `cheapestPerDay`.
 - Combina andata + ritorno scegliendo il rientro piu economico entro `durata target ± tolleranza`.
 - Mantiene la soluzione piu economica per ogni data di partenza.
-- Filtra solo le opzioni con prezzo totale sotto `70€`.
-- Mostra i risultati ordinati per data e apre i dettagli voli al click sulla riga.
+- Filtra solo le opzioni entro la `spesa massima A/R` impostata nei filtri.
+- Mostra il giorno della settimana nelle date dei voli.
+- Supporta due viste risultati: `Lista` (con dettaglio al click) e `Schede` (cards complete).
 
 ## Avvio locale
 

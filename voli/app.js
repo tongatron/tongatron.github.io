@@ -3,21 +3,29 @@ const FIXED_AIRPORT = {
   code: "STN",
   name: "Londra (Stansted)",
 };
-const MAX_TOTAL_PRICE = 70;
 
 const form = document.querySelector("#search-form");
 const monthsInput = document.querySelector("#months");
 const targetStayInput = document.querySelector("#target-stay");
 const stayToleranceInput = document.querySelector("#stay-tolerance");
-const maxResultsInput = document.querySelector("#max-results");
+const maxTotalPriceInput = document.querySelector("#max-total-price");
+const viewModeInput = document.querySelector("#view-mode");
 const resultsBody = document.querySelector("#results-body");
+const listViewEl = document.querySelector("#list-view");
+const cardsViewEl = document.querySelector("#cards-view");
 const statusEl = document.querySelector("#status");
 const metaEl = document.querySelector("#meta");
 const searchBtn = document.querySelector("#search-btn");
 
 const dailyFareCache = new Map();
+let currentResults = [];
 
 form.addEventListener("submit", onSubmit);
+viewModeInput.addEventListener("change", () => {
+  renderResults(currentResults);
+});
+
+applyViewMode();
 void runSearch();
 
 async function onSubmit(event) {
@@ -30,9 +38,9 @@ async function runSearch() {
   const months = Number(monthsInput.value);
   const targetStay = Number(targetStayInput.value);
   const tolerance = Number(stayToleranceInput.value);
-  const maxResults = Number(maxResultsInput.value);
+  const maxTotalPrice = Number(maxTotalPriceInput.value);
 
-  if (Number.isNaN(months) || months < 1) {
+  if (Number.isNaN(months) || months < 1 || Number.isNaN(maxTotalPrice) || maxTotalPrice <= 0) {
     setError("Parametri non validi.");
     return;
   }
@@ -44,7 +52,8 @@ async function runSearch() {
   const inboundMonths = monthsBetween(returnWindowFrom, returnWindowTo);
 
   setLoading(true, "Recupero prezzi giornalieri Ryanair...");
-  clearRows();
+  currentResults = [];
+  clearResults();
 
   try {
     const candidates = await buildRoundTripCandidates({
@@ -60,23 +69,23 @@ async function runSearch() {
     metaEl.textContent = [
       `Tratta: TRN -> ${FIXED_AIRPORT.code} (${FIXED_AIRPORT.name})`,
       `Partenza da oggi: ${formatDate(dateFrom)}`,
-      `Filtro prezzo totale: sotto € ${formatPrice(MAX_TOTAL_PRICE)}`,
+      `Spesa massima A/R: € ${formatPrice(maxTotalPrice)}`,
     ].join(" • ");
 
     const cheapestByDate = pickCheapestByOutboundDate(candidates)
-      .filter((fare) => fare.totalPrice < MAX_TOTAL_PRICE)
-      .sort((a, b) => new Date(a.outboundDate) - new Date(b.outboundDate))
-      .slice(0, maxResults);
+      .filter((fare) => fare.totalPrice <= maxTotalPrice)
+      .sort((a, b) => new Date(a.outboundDate) - new Date(b.outboundDate));
 
     if (cheapestByDate.length === 0) {
       statusEl.classList.remove("error");
-      statusEl.textContent = "Nessun volo sotto 70€ trovato con i filtri scelti.";
+      statusEl.textContent = `Nessun volo entro € ${formatPrice(maxTotalPrice)} trovato con i filtri scelti.`;
       return;
     }
 
-    renderRows(cheapestByDate);
+    currentResults = cheapestByDate;
+    renderResults(currentResults);
     statusEl.classList.remove("error");
-    statusEl.textContent = `Trovate ${cheapestByDate.length} opzioni sotto 70€ (ordinate per data). Clicca una riga per i dettagli.`;
+    statusEl.textContent = `Trovate ${cheapestByDate.length} opzioni entro € ${formatPrice(maxTotalPrice)} (ordinate per data).`;
   } catch (error) {
     setError(`Errore durante la ricerca: ${error.message}`);
   } finally {
@@ -136,8 +145,6 @@ async function buildRoundTripCandidates({
       outboundPrice: outboundFare.price,
       inboundPrice: bestInbound.price,
       totalPrice: roundCurrency(outboundFare.price + bestInbound.price),
-      airportCode: airport.code,
-      airportName: airport.name,
     });
   }
 
@@ -231,17 +238,26 @@ function pickCheapestByOutboundDate(fares) {
   return [...byDate.values()];
 }
 
-function renderRows(fares) {
-  clearRows();
+function renderResults(fares) {
+  applyViewMode();
+  clearResults();
 
+  if (viewModeInput.value === "cards") {
+    renderCards(fares);
+    return;
+  }
+
+  renderListRows(fares);
+}
+
+function renderListRows(fares) {
   for (const fare of fares) {
     const row = document.createElement("tr");
     row.className = "result-row";
     row.tabIndex = 0;
     row.innerHTML = `
-      <td>${formatDateTime(fare.outboundDate)}</td>
-      <td>${formatDateTime(fare.inboundDate)}</td>
-      <td>${fare.airportCode} · ${fare.airportName}</td>
+      <td>${formatDateTimeWithWeekday(fare.outboundDate)}</td>
+      <td>${formatDateTimeWithWeekday(fare.inboundDate)}</td>
       <td>${fare.tripDays} giorni</td>
       <td class="price">€ ${formatPrice(fare.totalPrice)}</td>
     `;
@@ -249,11 +265,11 @@ function renderRows(fares) {
     const detailsRow = document.createElement("tr");
     detailsRow.className = "details-row hidden";
     detailsRow.innerHTML = `
-      <td colspan="5">
+      <td colspan="4">
         <div class="details-card">
           <strong>Dettagli voli:</strong><br />
-          Andata: ${formatDateTime(fare.outboundDate)} -> ${formatDateTime(fare.outboundArrivalDate)} (€ ${formatPrice(fare.outboundPrice)})<br />
-          Ritorno: ${formatDateTime(fare.inboundDate)} -> ${formatDateTime(fare.inboundArrivalDate)} (€ ${formatPrice(fare.inboundPrice)})<br />
+          Andata: ${formatDateTimeWithWeekday(fare.outboundDate)} -> ${formatDateTimeWithWeekday(fare.outboundArrivalDate)} (€ ${formatPrice(fare.outboundPrice)})<br />
+          Ritorno: ${formatDateTimeWithWeekday(fare.inboundDate)} -> ${formatDateTimeWithWeekday(fare.inboundArrivalDate)} (€ ${formatPrice(fare.inboundPrice)})<br />
           Permanenza: ${fare.tripDays} giorni
         </div>
       </td>
@@ -277,8 +293,31 @@ function renderRows(fares) {
   }
 }
 
-function clearRows() {
+function renderCards(fares) {
+  for (const fare of fares) {
+    const card = document.createElement("article");
+    card.className = "flight-card";
+    card.innerHTML = `
+      <h3>${formatDateTimeWithWeekday(fare.outboundDate)}</h3>
+      <p class="card-line"><strong>Tratta:</strong> Torino (TRN) -> Londra (STN)</p>
+      <p class="card-line"><strong>Andata:</strong> ${formatDateTimeWithWeekday(fare.outboundDate)} -> ${formatDateTimeWithWeekday(fare.outboundArrivalDate)} (€ ${formatPrice(fare.outboundPrice)})</p>
+      <p class="card-line"><strong>Ritorno:</strong> ${formatDateTimeWithWeekday(fare.inboundDate)} -> ${formatDateTimeWithWeekday(fare.inboundArrivalDate)} (€ ${formatPrice(fare.inboundPrice)})</p>
+      <p class="card-line"><strong>Permanenza:</strong> ${fare.tripDays} giorni</p>
+      <p class="card-line price"><strong>Totale A/R:</strong> € ${formatPrice(fare.totalPrice)}</p>
+    `;
+    cardsViewEl.appendChild(card);
+  }
+}
+
+function applyViewMode() {
+  const showCards = viewModeInput.value === "cards";
+  listViewEl.classList.toggle("hidden", showCards);
+  cardsViewEl.classList.toggle("hidden", !showCards);
+}
+
+function clearResults() {
   resultsBody.innerHTML = "";
+  cardsViewEl.innerHTML = "";
 }
 
 function setLoading(isLoading, text = "") {
@@ -347,10 +386,14 @@ function formatDate(isoDate) {
   }).format(parseIsoDate(isoDate));
 }
 
-function formatDateTime(value) {
+function formatDateTimeWithWeekday(value) {
   return new Intl.DateTimeFormat("it-IT", {
-    dateStyle: "medium",
-    timeStyle: "short",
+    weekday: "long",
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
   }).format(new Date(value));
 }
 

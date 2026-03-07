@@ -91,6 +91,7 @@ label {
 }
 
 input,
+select,
 button {
   border-radius: 12px;
   border: 1px solid var(--line);
@@ -99,6 +100,12 @@ button {
 }
 
 input {
+  padding: 0 10px;
+  color: var(--ink);
+  background: #fff;
+}
+
+select {
   padding: 0 10px;
   color: var(--ink);
   background: #fff;
@@ -152,6 +159,13 @@ button:disabled {
   margin-top: 12px;
 }
 
+.cards-wrap {
+  margin-top: 12px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 12px;
+}
+
 table {
   width: 100%;
   border-collapse: collapse;
@@ -196,6 +210,10 @@ tbody tr.details-row:hover {
   display: none;
 }
 
+.hidden {
+  display: none;
+}
+
 .details-row td {
   padding-top: 0;
 }
@@ -213,6 +231,25 @@ tbody tr.details-row:hover {
 
 .details-card strong {
   color: var(--ink);
+}
+
+.flight-card {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: #fbfdfc;
+  padding: 12px;
+}
+
+.flight-card h3 {
+  margin: 0 0 8px;
+  font-family: "Fraunces", serif;
+  font-size: 1.1rem;
+}
+
+.card-line {
+  margin: 3px 0;
+  color: var(--muted);
+  font-size: 0.92rem;
 }
 
 .price {
