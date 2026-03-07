@@ -1,0 +1,363 @@
+const CHEAPEST_PER_DAY_API = "https://www.ryanair.com/api/farfnd/3/oneWayFares";
+const FIXED_AIRPORT = {
+  code: "STN",
+  name: "Londra (Stansted)",
+};
+const MAX_TOTAL_PRICE = 70;
+
+const form = document.querySelector("#search-form");
+const monthsInput = document.querySelector("#months");
+const targetStayInput = document.querySelector("#target-stay");
+const stayToleranceInput = document.querySelector("#stay-tolerance");
+const maxResultsInput = document.querySelector("#max-results");
+const resultsBody = document.querySelector("#results-body");
+const statusEl = document.querySelector("#status");
+const metaEl = document.querySelector("#meta");
+const searchBtn = document.querySelector("#search-btn");
+
+const dailyFareCache = new Map();
+
+form.addEventListener("submit", onSubmit);
+void runSearch();
+
+async function onSubmit(event) {
+  event.preventDefault();
+  await runSearch();
+}
+
+async function runSearch() {
+  const dateFrom = localTodayIso();
+  const months = Number(monthsInput.value);
+  const targetStay = Number(targetStayInput.value);
+  const tolerance = Number(stayToleranceInput.value);
+  const maxResults = Number(maxResultsInput.value);
+
+  if (Number.isNaN(months) || months < 1) {
+    setError("Parametri non validi.");
+    return;
+  }
+
+  const dateTo = addDaysIso(addMonthsIso(dateFrom, months), -1);
+  const outboundMonths = monthsBetween(dateFrom, dateTo);
+  const returnWindowFrom = addDaysIso(dateFrom, Math.max(1, targetStay - tolerance));
+  const returnWindowTo = addDaysIso(dateTo, targetStay + tolerance);
+  const inboundMonths = monthsBetween(returnWindowFrom, returnWindowTo);
+
+  setLoading(true, "Recupero prezzi giornalieri Ryanair...");
+  clearRows();
+
+  try {
+    const candidates = await buildRoundTripCandidates({
+      airport: FIXED_AIRPORT,
+      dateFrom,
+      dateTo,
+      targetStay,
+      tolerance,
+      outboundMonths,
+      inboundMonths,
+    });
+
+    metaEl.textContent = [
+      `Tratta: TRN -> ${FIXED_AIRPORT.code} (${FIXED_AIRPORT.name})`,
+      `Partenza da oggi: ${formatDate(dateFrom)}`,
+      `Filtro prezzo totale: sotto € ${formatPrice(MAX_TOTAL_PRICE)}`,
+    ].join(" • ");
+
+    const cheapestByDate = pickCheapestByOutboundDate(candidates)
+      .filter((fare) => fare.totalPrice < MAX_TOTAL_PRICE)
+      .sort((a, b) => new Date(a.outboundDate) - new Date(b.outboundDate))
+      .slice(0, maxResults);
+
+    if (cheapestByDate.length === 0) {
+      statusEl.classList.remove("error");
+      statusEl.textContent = "Nessun volo sotto 70€ trovato con i filtri scelti.";
+      return;
+    }
+
+    renderRows(cheapestByDate);
+    statusEl.classList.remove("error");
+    statusEl.textContent = `Trovate ${cheapestByDate.length} opzioni sotto 70€ (ordinate per data). Clicca una riga per i dettagli.`;
+  } catch (error) {
+    setError(`Errore durante la ricerca: ${error.message}`);
+  } finally {
+    setLoading(false);
+  }
+}
+
+async function buildRoundTripCandidates({
+  airport,
+  dateFrom,
+  dateTo,
+  targetStay,
+  tolerance,
+  outboundMonths,
+  inboundMonths,
+}) {
+  const outboundMap = await fetchDailyFaresForMonths("TRN", airport.code, outboundMonths);
+  const inboundMap = await fetchDailyFaresForMonths(airport.code, "TRN", inboundMonths);
+
+  const minStay = Math.max(1, targetStay - tolerance);
+  const maxStay = targetStay + tolerance;
+
+  const candidates = [];
+
+  for (const [outboundDay, outboundFare] of outboundMap.entries()) {
+    if (outboundDay < dateFrom || outboundDay > dateTo) {
+      continue;
+    }
+
+    let bestInbound = null;
+    let bestStay = 0;
+
+    for (let stayDays = minStay; stayDays <= maxStay; stayDays += 1) {
+      const returnDay = addDaysIso(outboundDay, stayDays);
+      const inboundFare = inboundMap.get(returnDay);
+
+      if (!inboundFare) {
+        continue;
+      }
+
+      if (!bestInbound || inboundFare.price < bestInbound.price) {
+        bestInbound = inboundFare;
+        bestStay = stayDays;
+      }
+    }
+
+    if (!bestInbound) {
+      continue;
+    }
+
+    candidates.push({
+      outboundDate: outboundFare.departureDate,
+      outboundArrivalDate: outboundFare.arrivalDate,
+      inboundDate: bestInbound.departureDate,
+      inboundArrivalDate: bestInbound.arrivalDate,
+      tripDays: bestStay,
+      outboundPrice: outboundFare.price,
+      inboundPrice: bestInbound.price,
+      totalPrice: roundCurrency(outboundFare.price + bestInbound.price),
+      airportCode: airport.code,
+      airportName: airport.name,
+    });
+  }
+
+  return candidates;
+}
+
+async function fetchDailyFaresForMonths(departureCode, arrivalCode, monthStarts) {
+  const monthlyMaps = await Promise.all(
+    monthStarts.map((monthStart) =>
+      fetchCheapestDailyMap({
+        departureCode,
+        arrivalCode,
+        monthStart,
+      })
+    )
+  );
+
+  const merged = new Map();
+
+  for (const monthMap of monthlyMaps) {
+    for (const [day, fare] of monthMap.entries()) {
+      const current = merged.get(day);
+      if (!current || fare.price < current.price) {
+        merged.set(day, fare);
+      }
+    }
+  }
+
+  return merged;
+}
+
+async function fetchCheapestDailyMap({ departureCode, arrivalCode, monthStart }) {
+  const cacheKey = `${departureCode}-${arrivalCode}-${monthStart}`;
+  if (dailyFareCache.has(cacheKey)) {
+    return dailyFareCache.get(cacheKey);
+  }
+
+  const params = new URLSearchParams({
+    outboundMonthOfDate: monthStart,
+    market: "it-it",
+    currency: "EUR",
+  });
+
+  const url = `${CHEAPEST_PER_DAY_API}/${departureCode}/${arrivalCode}/cheapestPerDay?${params.toString()}`;
+  const response = await fetch(url);
+
+  if (!response.ok) {
+    throw new Error(`Errore prezzi ${departureCode}→${arrivalCode} (${response.status})`);
+  }
+
+  const data = await response.json();
+  const fares = data?.outbound?.fares ?? [];
+
+  const map = new Map();
+
+  for (const fare of fares) {
+    if (!fare || fare.unavailable || fare.soldOut || !fare.price) {
+      continue;
+    }
+
+    const day = fare.day;
+    const existing = map.get(day);
+    const price = Number(fare.price.value);
+
+    if (!existing || price < existing.price) {
+      map.set(day, {
+        day,
+        departureDate: fare.departureDate,
+        arrivalDate: fare.arrivalDate,
+        price,
+      });
+    }
+  }
+
+  dailyFareCache.set(cacheKey, map);
+  return map;
+}
+
+function pickCheapestByOutboundDate(fares) {
+  const byDate = new Map();
+
+  for (const fare of fares) {
+    const dateKey = fare.outboundDate.slice(0, 10);
+    const current = byDate.get(dateKey);
+
+    if (!current || fare.totalPrice < current.totalPrice) {
+      byDate.set(dateKey, fare);
+    }
+  }
+
+  return [...byDate.values()];
+}
+
+function renderRows(fares) {
+  clearRows();
+
+  for (const fare of fares) {
+    const row = document.createElement("tr");
+    row.className = "result-row";
+    row.tabIndex = 0;
+    row.innerHTML = `
+      <td>${formatDateTime(fare.outboundDate)}</td>
+      <td>${formatDateTime(fare.inboundDate)}</td>
+      <td>${fare.airportCode} · ${fare.airportName}</td>
+      <td>${fare.tripDays} giorni</td>
+      <td class="price">€ ${formatPrice(fare.totalPrice)}</td>
+    `;
+
+    const detailsRow = document.createElement("tr");
+    detailsRow.className = "details-row hidden";
+    detailsRow.innerHTML = `
+      <td colspan="5">
+        <div class="details-card">
+          <strong>Dettagli voli:</strong><br />
+          Andata: ${formatDateTime(fare.outboundDate)} -> ${formatDateTime(fare.outboundArrivalDate)} (€ ${formatPrice(fare.outboundPrice)})<br />
+          Ritorno: ${formatDateTime(fare.inboundDate)} -> ${formatDateTime(fare.inboundArrivalDate)} (€ ${formatPrice(fare.inboundPrice)})<br />
+          Permanenza: ${fare.tripDays} giorni
+        </div>
+      </td>
+    `;
+
+    const toggleDetails = () => {
+      detailsRow.classList.toggle("hidden");
+      row.classList.toggle("expanded");
+    };
+
+    row.addEventListener("click", toggleDetails);
+    row.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        toggleDetails();
+      }
+    });
+
+    resultsBody.appendChild(row);
+    resultsBody.appendChild(detailsRow);
+  }
+}
+
+function clearRows() {
+  resultsBody.innerHTML = "";
+}
+
+function setLoading(isLoading, text = "") {
+  searchBtn.disabled = isLoading;
+  if (isLoading && text) {
+    statusEl.classList.remove("error");
+    statusEl.textContent = text;
+  }
+}
+
+function setError(message) {
+  statusEl.classList.add("error");
+  statusEl.textContent = message;
+}
+
+function monthsBetween(startIso, endIso) {
+  const start = parseIsoDate(startIso);
+  start.setUTCDate(1);
+
+  const end = parseIsoDate(endIso);
+  end.setUTCDate(1);
+
+  const months = [];
+  const cursor = new Date(start);
+
+  while (cursor <= end) {
+    months.push(toIsoDate(cursor));
+    cursor.setUTCMonth(cursor.getUTCMonth() + 1);
+  }
+
+  return months;
+}
+
+function parseIsoDate(isoDate) {
+  const [year, month, day] = isoDate.split("-").map(Number);
+  return new Date(Date.UTC(year, month - 1, day));
+}
+
+function addDaysIso(isoDate, days) {
+  const date = parseIsoDate(isoDate);
+  date.setUTCDate(date.getUTCDate() + days);
+  return toIsoDate(date);
+}
+
+function addMonthsIso(isoDate, months) {
+  const date = parseIsoDate(isoDate);
+  date.setUTCMonth(date.getUTCMonth() + months);
+  return toIsoDate(date);
+}
+
+function toIsoDate(date) {
+  return date.toISOString().slice(0, 10);
+}
+
+function localTodayIso() {
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, "0");
+  const day = String(today.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
+
+function formatDate(isoDate) {
+  return new Intl.DateTimeFormat("it-IT", {
+    dateStyle: "medium",
+  }).format(parseIsoDate(isoDate));
+}
+
+function formatDateTime(value) {
+  return new Intl.DateTimeFormat("it-IT", {
+    dateStyle: "medium",
+    timeStyle: "short",
+  }).format(new Date(value));
+}
+
+function formatPrice(value) {
+  return Number(value).toFixed(2).replace(".", ",");
+}
+
+function roundCurrency(value) {
+  return Math.round((value + Number.EPSILON) * 100) / 100;
+}

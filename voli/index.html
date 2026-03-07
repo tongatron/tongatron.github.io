@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Voli Economici Torino → Londra</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Space+Grotesk:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <section class="panel hero">
+        <p class="eyebrow">Ryanair Fare Finder</p>
+        <h1>Torino → Londra<br />voli low-cost con ritorno circa 5 giorni</h1>
+        <p>
+          La ricerca usa le API pubbliche Ryanair e mostra il prezzo totale andata+ritorno
+          sulla tratta fissa Torino → Londra (Stansted), tenendo la soluzione più economica
+          per ogni data di partenza.
+        </p>
+      </section>
+
+      <section class="panel controls">
+        <form id="search-form" class="grid">
+          <label>
+            Mesi da analizzare
+            <input type="number" id="months" min="1" max="12" value="3" required />
+          </label>
+
+          <label>
+            Durata target (giorni)
+            <input type="number" id="target-stay" min="1" max="30" value="5" required />
+          </label>
+
+          <label>
+            Tolleranza (± giorni)
+            <input type="number" id="stay-tolerance" min="0" max="7" value="1" required />
+          </label>
+
+          <label>
+            Max risultati
+            <input type="number" id="max-results" min="5" max="200" value="40" required />
+          </label>
+
+          <button type="submit" id="search-btn">Cerca voli</button>
+        </form>
+        <p id="meta" class="meta"></p>
+      </section>
+
+      <section class="panel results">
+        <div class="results-head">
+          <h2>Risultati ordinati per data</h2>
+          <p id="status">Pronto.</p>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Partenza</th>
+                <th>Ritorno</th>
+                <th>Aeroporto Londra</th>
+                <th>Durata</th>
+                <th>Prezzo totale</th>
+              </tr>
+            </thead>
+            <tbody id="results-body"></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <script src="./app.js" type="module"></script>
+  </body>
+</html>
