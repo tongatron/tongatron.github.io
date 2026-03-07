@@ -28,7 +28,7 @@
       href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Space+Grotesk:wght@400;500;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="./styles.css?v=20260307-7" />
+    <link rel="stylesheet" href="./styles.css?v=20260307-8" />
   </head>
   <body>
     <main class="shell">
@@ -70,8 +70,8 @@
             <input type="number" id="max-total-price" min="1" max="2000" step="1" value="70" required />
           </label>
 
-          <label class="view-mode-toggle">
-            Visualizza Lista/Schede
+          <div class="view-mode-toggle" role="group" aria-label="Visualizzazione risultati">
+            <span class="view-mode-label">Visualizza Lista/Schede</span>
             <span class="view-mode-row" role="radiogroup" aria-label="Visualizzazione risultati">
               <label class="view-mode-option">
                 <input type="radio" name="view-mode" value="list" checked />
@@ -82,7 +82,7 @@
                 <span>Schede</span>
               </label>
             </span>
-          </label>
+          </div>
 
           <button type="submit" id="search-btn">Cerca voli</button>
         </form>
@@ -112,7 +112,7 @@
       </section>
     </main>
 
-    <script src="./app.js?v=20260307-7" type="module"></script>
+    <script src="./app.js?v=20260307-8" type="module"></script>
     <script>
       if ("serviceWorker" in navigator) {
         window.addEventListener("load", function registerServiceWorker() {

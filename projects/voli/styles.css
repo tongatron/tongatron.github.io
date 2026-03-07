@@ -79,11 +79,20 @@ h1 {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(165px, 1fr));
   gap: 12px;
-  align-items: end;
+  align-items: start;
 }
 
 .grid > * {
   min-width: 0;
+}
+
+.grid > label,
+.grid > .view-mode-toggle {
+  align-self: start;
+}
+
+.grid > button {
+  align-self: end;
 }
 
 label {
@@ -111,7 +120,15 @@ input:not([type="radio"]) {
 }
 
 .view-mode-toggle {
-  align-content: start;
+  display: grid;
+  gap: 6px;
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.view-mode-label {
+  display: block;
 }
 
 .view-mode-row {
