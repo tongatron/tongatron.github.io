@@ -4,6 +4,17 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Torino → Londra</title>
+    <script>
+      (function ensureTrailingSlashForProjectPages() {
+        var path = window.location.pathname;
+        var lastSegment = path.split("/").pop();
+        var looksLikeFile = lastSegment.indexOf(".") !== -1;
+
+        if (path !== "/" && !path.endsWith("/") && !looksLikeFile) {
+          window.location.replace(path + "/" + window.location.search + window.location.hash);
+        }
+      })();
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link

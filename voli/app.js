@@ -87,7 +87,14 @@ async function runSearch() {
     statusEl.classList.remove("error");
     statusEl.textContent = `Trovate ${cheapestByDate.length} opzioni entro € ${formatPrice(maxTotalPrice)} (ordinate per data).`;
   } catch (error) {
-    setError(`Errore durante la ricerca: ${error.message}`);
+    const isNetworkError = error?.message === "Failed to fetch" || error instanceof TypeError;
+    if (isNetworkError) {
+      setError(
+        "Errore rete/API: il browser non riesce a leggere Ryanair. Controlla console DevTools (F12) per CORS o blocchi rete."
+      );
+    } else {
+      setError(`Errore durante la ricerca: ${error.message}`);
+    }
   } finally {
     setLoading(false);
   }
