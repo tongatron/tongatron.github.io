@@ -70,6 +70,65 @@ const I18N = {
     ariaLanguageGroup: "Selezione lingua",
     ariaViewMode: "Visualizzazione risultati",
   },
+  pms: {
+    pageTitle: "vòl da Turin",
+    heroEyebrow: "Serca tarife Ryanair",
+    heroTitle: "vòl da Turin",
+    heroDescription:
+      "La chërca a deuvra le API pùbliche ëd Ryanair e a mosta ël press total andata+ritorn ant le rote disponìbij da Turin.",
+    labelDestination: "Aeroport ëd destinassion",
+    labelMonths: "Meis da analisé",
+    labelTargetStay: "Durà target (di)",
+    labelTolerance: "Tolëransa (± di)",
+    labelMaxPrice: "Spesa màssima A/R (€)",
+    labelViewMode: "Visualisassion Lista/Carte",
+    viewList: "Lista",
+    viewCards: "Carte",
+    buttonSearch: "Serca vòl",
+    resultsTitle: "Arzultà ordinà për data",
+    thDeparture: "Partensa",
+    thReturn: "Ritorn",
+    thDestination: "Destinassion",
+    thDuration: "Durà",
+    thTotalPrice: "Press total",
+    destinationAll: "Tùit ij aeroport raggiungìbij",
+    statusReady: "Pront.",
+    loadingAirports: "Cariament dij aeroport raggiungìbij da Turin...",
+    loadingPrices: "Recuper dij press giornalé Ryanair...",
+    loadingPricesProgress: "Recuper dij press... {done}/{total} aeroport",
+    errorInit: "Eror ant l'inizialisassion dij aeroport: {message}",
+    errorInvalidParams: "Paràmeter nen vàlid.",
+    errorNoAirports: "Gnun aeroport disponìbil da Turin.",
+    errorAirportUnavailable: "L'aeroport selessionà a l'é nen disponìbil.",
+    errorNetwork:
+      "Eror ëd ret/API: ël browser a ries nen a lese Ryanair. Contròla la console DevTools (F12) për CORS o blòch ëd ret.",
+    errorSearch: "Eror durant la chërca: {message}",
+    errorRoutesRead: "A l'é nen possìbil lese le rote da Turin ({status})",
+    errorPriceRead: "Eror press {departure}→{arrival} ({status})",
+    metaAllAirports: "Aeroport: tùit ({count})",
+    metaSingleAirport: "Aeroport: {airport}",
+    metaDepartToday: "Partensa da ancheuj: {date}",
+    metaMaxSpend: "Spesa màssima A/R: € {max}",
+    statusNoResults: "Gnun vòl sota € {max} trovà coi filtri selessionà.",
+    statusFound: "Trovà {count} opsion economiche an órdin ëd data.",
+    statusFoundWithFailed:
+      "Trovà {count} opsion economiche an órdin ëd data. ({failed} aeroport nen disponìbij: {codes})",
+    days: "{count} di",
+    detailsTitle: "Detaj dij vòl:",
+    detailsRoute: "Trata: {from} -> {to}",
+    detailsOutbound: "Andata: {value}",
+    detailsReturn: "Ritorn: {value}",
+    detailsStay: "Permanensa: {days}",
+    cardRoute: "Trata:",
+    cardOutbound: "Andata:",
+    cardReturn: "Ritorn:",
+    cardStay: "Permanensa:",
+    cardTotal: "Total A/R:",
+    fromTurin: "Turin (TRN)",
+    legTemplate: "{departure} -> {arrival} (€ {price})",
+    ariaLanguageGroup: "Selession lengua",
+    ariaViewMode: "Visualisassion arzultà",
+  },
   sc: {
     pageTitle: "bolos dae Turinu",
     heroEyebrow: "Chirca tarifas Ryanair",
@@ -1094,6 +1153,9 @@ function getBrowserLanguage() {
   if (locale.startsWith("fa")) {
     return "fa";
   }
+  if (locale.startsWith("pms")) {
+    return "pms";
+  }
   if (locale.startsWith("sc")) {
     return "sc";
   }
@@ -1101,7 +1163,7 @@ function getBrowserLanguage() {
 }
 
 function normalizeLanguage(value) {
-  if (value === "fa" || value === "sc") {
+  if (value === "fa" || value === "sc" || value === "pms") {
     return value;
   }
   return "it";

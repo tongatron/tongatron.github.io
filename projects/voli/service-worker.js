@@ -1,13 +1,14 @@
-const CACHE_VERSION = "voli-trn-v20260307-7";
+const CACHE_VERSION = "voli-trn-v20260307-8";
 const APP_SHELL = [
   "./",
   "./index.html",
-  "./styles.css?v=20260307-11",
-  "./app.js?v=20260307-11",
+  "./styles.css?v=20260307-12",
+  "./app.js?v=20260307-12",
   "./manifest.webmanifest",
   "./assets/icon.svg",
   "./assets/icon-192.png",
   "./assets/icon-512.png",
+  "./assets/flag-piedmont.svg",
   "./assets/flag-sardinia.svg",
 ];
 
