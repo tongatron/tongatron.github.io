@@ -19,14 +19,35 @@ const searchBtn = document.querySelector("#search-btn");
 
 const dailyFareCache = new Map();
 let currentResults = [];
+const appReady = Boolean(
+  form &&
+    monthsInput &&
+    targetStayInput &&
+    stayToleranceInput &&
+    maxTotalPriceInput &&
+    resultsBody &&
+    statusEl &&
+    metaEl &&
+    searchBtn
+);
 
-form.addEventListener("submit", onSubmit);
-viewModeInput.addEventListener("change", () => {
-  renderResults(currentResults);
-});
+if (!appReady) {
+  console.error("Markup non allineato: alcuni elementi DOM richiesti non sono presenti.");
+  document.body.insertAdjacentHTML(
+    "afterbegin",
+    '<p style="margin:12px;font-family:sans-serif;color:#c8512c;">Errore caricamento UI: aggiorna la pagina (Ctrl/Cmd+Shift+R) e verifica che il deploy GitHub Pages sia completo.</p>'
+  );
+} else {
+  form.addEventListener("submit", onSubmit);
+  if (viewModeInput) {
+    viewModeInput.addEventListener("change", () => {
+      renderResults(currentResults);
+    });
+  }
 
-applyViewMode();
-void runSearch();
+  applyViewMode();
+  void runSearch();
+}
 
 async function onSubmit(event) {
   event.preventDefault();
@@ -35,10 +56,10 @@ async function onSubmit(event) {
 
 async function runSearch() {
   const dateFrom = localTodayIso();
-  const months = Number(monthsInput.value);
-  const targetStay = Number(targetStayInput.value);
-  const tolerance = Number(stayToleranceInput.value);
-  const maxTotalPrice = Number(maxTotalPriceInput.value);
+  const months = Number(monthsInput?.value ?? 3);
+  const targetStay = Number(targetStayInput?.value ?? 5);
+  const tolerance = Number(stayToleranceInput?.value ?? 1);
+  const maxTotalPrice = Number(maxTotalPriceInput?.value ?? 70);
 
   if (Number.isNaN(months) || months < 1 || Number.isNaN(maxTotalPrice) || maxTotalPrice <= 0) {
     setError("Parametri non validi.");
@@ -249,7 +270,7 @@ function renderResults(fares) {
   applyViewMode();
   clearResults();
 
-  if (viewModeInput.value === "cards") {
+  if (getViewMode() === "cards") {
     renderCards(fares);
     return;
   }
@@ -301,6 +322,10 @@ function renderListRows(fares) {
 }
 
 function renderCards(fares) {
+  if (!cardsViewEl) {
+    return;
+  }
+
   for (const fare of fares) {
     const card = document.createElement("article");
     card.className = "flight-card";
@@ -317,14 +342,20 @@ function renderCards(fares) {
 }
 
 function applyViewMode() {
-  const showCards = viewModeInput.value === "cards";
+  if (!listViewEl || !cardsViewEl) {
+    return;
+  }
+
+  const showCards = getViewMode() === "cards";
   listViewEl.classList.toggle("hidden", showCards);
   cardsViewEl.classList.toggle("hidden", !showCards);
 }
 
 function clearResults() {
   resultsBody.innerHTML = "";
-  cardsViewEl.innerHTML = "";
+  if (cardsViewEl) {
+    cardsViewEl.innerHTML = "";
+  }
 }
 
 function setLoading(isLoading, text = "") {
@@ -410,4 +441,8 @@ function formatPrice(value) {
 
 function roundCurrency(value) {
   return Math.round((value + Number.EPSILON) * 100) / 100;
+}
+
+function getViewMode() {
+  return viewModeInput?.value === "cards" ? "cards" : "list";
 }
