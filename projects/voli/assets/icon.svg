@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Voli Torino icon">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0d5c63" />
+      <stop offset="100%" stop-color="#28a8a8" />
+    </linearGradient>
+    <linearGradient id="wing" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#ffffff" />
+      <stop offset="100%" stop-color="#dff8f7" />
+    </linearGradient>
+  </defs>
+
+  <rect x="24" y="24" width="464" height="464" rx="104" fill="url(#bg)" />
+  <circle cx="384" cy="128" r="44" fill="#83e7dd" opacity="0.6" />
+  <circle cx="124" cy="388" r="58" fill="#0f7f87" opacity="0.35" />
+
+  <path
+    d="M140 340c0-82 52-144 116-144h30v-37c0-18 14-32 32-32s32 14 32 32v37h20c26 0 50 10 68 27l-36 27c-8-8-20-13-32-13h-9l2 119h-56l2-79h-20c-30 0-53 28-53 63z"
+    fill="url(#wing)"
+  />
+  <path
+    d="M292 306 194 406c-12 12-32 12-44 0s-12-32 0-44l100-98z"
+    fill="#f4fffe"
+  />
+  <path
+    d="M338 364a22 22 0 1 1 0-44 22 22 0 0 1 0 44Z"
+    fill="#83e7dd"
+  />
+</svg>

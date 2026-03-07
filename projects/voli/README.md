@@ -10,6 +10,17 @@ Pagina web che mostra, in ordine di data, i voli economici da Torino (`TRN`) ver
 - Filtra solo le opzioni entro la `spesa massima A/R` impostata nei filtri.
 - Mostra il giorno della settimana nelle date dei voli.
 - Supporta due viste risultati: `Lista` (con dettaglio al click) e `Schede` (cards complete).
+- Include asset PWA (`manifest.webmanifest` + `service-worker.js`) e icona progetto in `assets/`.
+
+## Icona progetto
+
+- Sorgente vettoriale: `assets/icon.svg`
+- Versioni PNG per favicon/PWA: `assets/icon-192.png` e `assets/icon-512.png`
+
+## Uso come web app
+
+- Apri il progetto su HTTPS (es. GitHub Pages) o in locale con `http://localhost`.
+- Su browser compatibili puoi installarla dal menu (voce tipo `Installa app`).
 
 ## Avvio locale
 

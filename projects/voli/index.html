@@ -4,6 +4,13 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>voli da Torino</title>
+    <meta name="theme-color" content="#0d5c63" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="Voli TRN" />
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="icon" type="image/svg+xml" href="./assets/icon.svg" />
+    <link rel="icon" type="image/png" sizes="192x192" href="./assets/icon-192.png" />
+    <link rel="apple-touch-icon" href="./assets/icon-192.png" />
     <script>
       (function ensureTrailingSlashForProjectPages() {
         var path = window.location.pathname;
@@ -21,7 +28,7 @@
       href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Space+Grotesk:wght@400;500;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="./styles.css?v=20260307-4" />
+    <link rel="stylesheet" href="./styles.css?v=20260307-5" />
   </head>
   <body>
     <main class="shell">
@@ -99,6 +106,15 @@
       </section>
     </main>
 
-    <script src="./app.js?v=20260307-4" type="module"></script>
+    <script src="./app.js?v=20260307-5" type="module"></script>
+    <script>
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", function registerServiceWorker() {
+          navigator.serviceWorker.register("./service-worker.js").catch(function (error) {
+            console.warn("Service worker non registrato:", error);
+          });
+        });
+      }
+    </script>
   </body>
 </html>
