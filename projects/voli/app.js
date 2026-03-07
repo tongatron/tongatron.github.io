@@ -7,7 +7,7 @@ const monthsInput = document.querySelector("#months");
 const targetStayInput = document.querySelector("#target-stay");
 const stayToleranceInput = document.querySelector("#stay-tolerance");
 const maxTotalPriceInput = document.querySelector("#max-total-price");
-const viewModeInput = document.querySelector("#view-mode");
+const viewModeInputs = document.querySelectorAll('input[name="view-mode"]');
 const resultsBody = document.querySelector("#results-body");
 const listViewEl = document.querySelector("#list-view");
 const cardsViewEl = document.querySelector("#cards-view");
@@ -26,6 +26,7 @@ const appReady = Boolean(
     targetStayInput &&
     stayToleranceInput &&
     maxTotalPriceInput &&
+    viewModeInputs.length > 0 &&
     resultsBody &&
     statusEl &&
     metaEl &&
@@ -45,8 +46,8 @@ if (!appReady) {
 async function initializeApp() {
   form.addEventListener("submit", onSubmit);
 
-  if (viewModeInput) {
-    viewModeInput.addEventListener("change", () => {
+  for (const input of viewModeInputs) {
+    input.addEventListener("change", () => {
       renderResults(currentResults);
     });
   }
@@ -258,7 +259,7 @@ function populateAirportFilter(airports) {
   for (const airport of airports) {
     const option = document.createElement("option");
     option.value = airport.code;
-    option.textContent = formatAirportLabel(airport);
+    option.textContent = formatAirportFilterLabel(airport);
     airportFilterInput.appendChild(option);
   }
 
@@ -618,6 +619,11 @@ function formatAirportLabel(airport) {
   return `${airport.code} · ${city}`;
 }
 
+function formatAirportFilterLabel(airport) {
+  const city = airport.cityName ? `${airport.cityName}` : airport.name;
+  return `${city} · ${airport.code}`;
+}
+
 function formatDestination(fare) {
   if (fare.cityName && fare.cityName.trim()) {
     return `${fare.airportCode} · ${fare.cityName}`;
@@ -634,7 +640,8 @@ function roundCurrency(value) {
 }
 
 function getViewMode() {
-  return viewModeInput?.value === "cards" ? "cards" : "list";
+  const selected = document.querySelector('input[name="view-mode"]:checked');
+  return selected?.value === "cards" ? "cards" : "list";
 }
 
 async function mapWithConcurrency(items, limit, mapper) {

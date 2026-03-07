@@ -94,7 +94,7 @@ label {
   font-weight: 500;
 }
 
-input,
+input:not([type="radio"]),
 select,
 button {
   border-radius: 12px;
@@ -104,10 +104,56 @@ button {
   width: 100%;
 }
 
-input {
+input:not([type="radio"]) {
   padding: 0 10px;
   color: var(--ink);
   background: #fff;
+}
+
+.view-mode-toggle {
+  align-content: start;
+}
+
+.view-mode-row {
+  min-height: 43px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: stretch;
+  gap: 8px;
+  padding: 6px;
+  color: var(--ink);
+}
+
+.view-mode-option {
+  flex: 1;
+  display: flex;
+}
+
+.view-mode-option input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.view-mode-option span {
+  width: 100%;
+  min-height: 30px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  color: var(--muted);
+  transition: background-color 0.2s ease, color 0.2s ease;
+  cursor: pointer;
+}
+
+.view-mode-option input[type="radio"]:checked + span {
+  background: linear-gradient(120deg, var(--primary) 0%, var(--primary-2) 100%);
+  color: #fff;
 }
 
 select {
