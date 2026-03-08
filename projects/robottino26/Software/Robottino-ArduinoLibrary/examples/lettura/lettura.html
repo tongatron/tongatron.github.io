@@ -1,0 +1,522 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Robottino - Sensori e Parametri Componenti</title>
+  <style>
+    :root {
+      --bg: #f6f8fb;
+      --ink: #1f2a37;
+      --ink-soft: #4c5a6a;
+      --panel: #ffffff;
+      --line: #d8e0ea;
+      --accent: #0f766e;
+      --accent-2: #ea580c;
+      --shadow: 0 16px 40px rgba(17, 24, 39, 0.08);
+      --radius: 16px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Avenir Next", "Segoe UI", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(1200px 400px at 10% -10%, #e8f7f2 0%, transparent 70%),
+        radial-gradient(900px 380px at 95% 0%, #ffedd5 0%, transparent 65%),
+        var(--bg);
+      line-height: 1.5;
+    }
+
+    .wrap {
+      width: min(1120px, 92vw);
+      margin: 0 auto;
+      padding: 40px 0 64px;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #0f766e, #115e59 60%, #134e4a);
+      color: #ecfeff;
+      border-radius: 22px;
+      padding: 28px 28px 24px;
+      box-shadow: var(--shadow);
+      animation: rise 500ms ease-out both;
+    }
+
+    .hero h1 {
+      margin: 0 0 6px;
+      font-size: clamp(1.5rem, 1.1rem + 1.8vw, 2.5rem);
+      line-height: 1.15;
+    }
+
+    .hero p {
+      margin: 0;
+      max-width: 72ch;
+      color: #ccfbf1;
+    }
+
+    .grid {
+      margin-top: 18px;
+      display: grid;
+      gap: 14px;
+      grid-template-columns: repeat(12, 1fr);
+    }
+
+    .card {
+      grid-column: span 12;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 18px;
+      box-shadow: 0 8px 24px rgba(17, 24, 39, 0.06);
+      animation: rise 500ms ease-out both;
+    }
+
+    .card:nth-child(2) { animation-delay: 60ms; }
+    .card:nth-child(3) { animation-delay: 120ms; }
+    .card:nth-child(4) { animation-delay: 180ms; }
+
+    @media (min-width: 900px) {
+      .half { grid-column: span 6; }
+    }
+
+    h2 {
+      margin: 0 0 10px;
+      font-size: 1.18rem;
+      color: #0f172a;
+    }
+
+    .pill {
+      display: inline-block;
+      margin: 0 0 12px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      letter-spacing: 0.03em;
+      color: #042f2e;
+      background: #ccfbf1;
+      border: 1px solid #99f6e4;
+    }
+
+    .pill.alt {
+      color: #7c2d12;
+      background: #ffedd5;
+      border-color: #fed7aa;
+    }
+
+    ul {
+      margin: 8px 0 0;
+      padding-left: 18px;
+    }
+
+    li {
+      margin: 6px 0;
+      color: var(--ink-soft);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      overflow: hidden;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+    }
+
+    th, td {
+      text-align: left;
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--line);
+      vertical-align: top;
+      font-size: 0.95rem;
+    }
+
+    th {
+      background: #f8fafc;
+      color: #0f172a;
+      font-weight: 650;
+    }
+
+    tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .note {
+      margin-top: 10px;
+      font-size: 0.88rem;
+      color: #475569;
+    }
+
+    .controls {
+      margin-top: 12px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    button {
+      border: 0;
+      border-radius: 12px;
+      padding: 10px 14px;
+      font-weight: 650;
+      cursor: pointer;
+      color: white;
+      background: #0f766e;
+    }
+
+    button#disconnect {
+      background: #b91c1c;
+    }
+
+    .status {
+      font-size: 0.95rem;
+      color: #334155;
+    }
+
+    .live-grid {
+      margin-top: 12px;
+      display: grid;
+      gap: 12px;
+      grid-template-columns: repeat(12, 1fr);
+    }
+
+    .metric-card {
+      grid-column: span 12;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 12px;
+      background: #f8fafc;
+    }
+
+    .metric {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin: 4px 0 0;
+      color: #0f172a;
+    }
+
+    .metric-label {
+      color: #64748b;
+      font-size: 0.9rem;
+    }
+
+    .chart-card {
+      grid-column: span 12;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 12px;
+      background: #f8fafc;
+    }
+
+    canvas {
+      width: 100%;
+      height: 220px;
+      border-radius: 10px;
+      border: 1px solid var(--line);
+      background: #f8fafc;
+      display: block;
+    }
+
+    code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      background: #f1f5f9;
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      padding: 1px 6px;
+      font-size: 0.88em;
+    }
+
+    @keyframes rise {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (min-width: 900px) {
+      .span3 { grid-column: span 3; }
+      .span6 { grid-column: span 6; }
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <section class="hero">
+      <h1>Sensori e parametri del Robottino</h1>
+      <p>Panoramica tecnica dei componenti usati nel firmware Arduino (pin, soglie e valori operativi).</p>
+    </section>
+
+    <section class="grid">
+      <article class="card half">
+        <span class="pill">Sensori</span>
+        <h2>Distanza + luce</h2>
+        <ul>
+          <li><strong>Ultrasuoni</strong>: trigger su <code>PIN 7</code>, echo su <code>PIN 4</code>.</li>
+          <li>Lettura distanza aggiornata ogni circa <code>50 ms</code>.</li>
+          <li>Timeout lettura eco: <code>5700 us</code> (oltre ~100 cm, ritorna 0).</li>
+          <li>Soglia oggetto vicino: <code>20 cm</code>.</li>
+          <li><strong>LDR destro/sinistro</strong>: <code>A0</code> e <code>A1</code>.</li>
+          <li>Soglia luce accesa: <code>400</code> (scala ADC 0..1023).</li>
+        </ul>
+      </article>
+
+      <article class="card half">
+        <span class="pill alt">Attuatori</span>
+        <h2>Servo, buzzer, LED RGB, display</h2>
+        <ul>
+          <li><strong>Servo</strong> su <code>PIN 8</code>, posizione centrale <code>90 deg</code>.</li>
+          <li>Escursione software tipica: <code>+-40 deg</code>, passo <code>1 deg</code>.</li>
+          <li>Preset rotazione: <code>veloce=10</code>, <code>lento=30</code>, <code>impazzito=0</code> (ms tra step).</li>
+          <li><strong>Buzzer</strong> su <code>PIN 13</code>, preset <code>silenzio=0</code>, <code>allarme=1000</code>.</li>
+          <li><strong>LED RGB</strong> su <code>11/10/9</code> (R/G/B), con modalita arcobaleno gestita a firmware.</li>
+          <li><strong>OLED 128x64</strong> via I2C, refresh minimo <code>100 ms</code>.</li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <h2>Pinout componenti</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Componente</th>
+              <th>Pin</th>
+              <th>Note</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Buzzer</td><td>13</td><td>Uscita tono/beep</td></tr>
+            <tr><td>LED RGB - Red</td><td>11</td><td>PWM; possibili interazioni con <code>tone()</code></td></tr>
+            <tr><td>LED RGB - Green</td><td>10</td><td>PWM</td></tr>
+            <tr><td>LED RGB - Blue</td><td>9</td><td>PWM</td></tr>
+            <tr><td>Servo testa</td><td>8</td><td>Gestito con <code>SoftwareServo</code></td></tr>
+            <tr><td>Ultrasonic Trigger</td><td>7</td><td>Impulso di trigger</td></tr>
+            <tr><td>Ultrasonic Echo</td><td>4</td><td>Lettura durata eco</td></tr>
+            <tr><td>LDR destro</td><td>A0</td><td>Ingresso analogico</td></tr>
+            <tr><td>LDR sinistro</td><td>A1</td><td>Ingresso analogico</td></tr>
+          </tbody>
+        </table>
+      </article>
+
+      <article class="card">
+        <h2>Parametri firmware</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Parametro</th>
+              <th>Valore</th>
+              <th>Descrizione</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>distanceThreshold</code></td><td>20</td><td>Soglia in cm per <code>oggettoVicino()</code></td></tr>
+            <tr><td><code>lightThreshold</code></td><td>400</td><td>Soglia LDR per <code>luceAccesa()</code></td></tr>
+            <tr><td><code>ANGLE_BOUND</code></td><td>40</td><td>Limite angolare relativo al centro servo</td></tr>
+            <tr><td><code>ANGLE_STEP</code></td><td>1</td><td>Incremento angolare per iterazione</td></tr>
+            <tr><td><code>DISPLAY_DELAY</code></td><td>100 ms</td><td>Intervallo minimo aggiornamento OLED</td></tr>
+            <tr><td><code>thereminDelay</code></td><td>10 ms</td><td>Intervallo aggiornamento nota theremin</td></tr>
+            <tr><td><code>silenzio</code></td><td>0</td><td>Disattiva beep periodico</td></tr>
+            <tr><td><code>allarme</code></td><td>1000 ms</td><td>Beep ogni 1 secondo</td></tr>
+          </tbody>
+        </table>
+        <p class="note">Nota: la pagina riporta i parametri software presenti nella libreria Arduino del repository, non i limiti elettrici di targa dei singoli moduli.</p>
+      </article>
+
+      <article class="card">
+        <h2>Lettura sensori live (Web Serial)</h2>
+        <p class="note">Connetti la seriale del board per leggere in tempo reale distanza e luminosita dal file <code>lettura.ino</code>.</p>
+        <div class="controls">
+          <button id="connect">Connetti seriale</button>
+          <button id="disconnect" disabled>Disconnetti</button>
+          <span id="status" class="status">Stato: non connesso</span>
+        </div>
+
+        <div class="live-grid">
+          <article class="metric-card span3">
+            <div class="metric-label">Distanza (cm)</div>
+            <div id="distance" class="metric">-</div>
+          </article>
+
+          <article class="metric-card span3">
+            <div class="metric-label">LDR destro</div>
+            <div id="ldrRight" class="metric">-</div>
+          </article>
+
+          <article class="metric-card span3">
+            <div class="metric-label">LDR sinistro</div>
+            <div id="ldrLeft" class="metric">-</div>
+          </article>
+
+          <article class="metric-card span3">
+            <div class="metric-label">LDR medio</div>
+            <div id="ldrAvg" class="metric">-</div>
+          </article>
+
+          <article class="chart-card span6">
+            <div class="metric-label">Grafico distanza (cm)</div>
+            <canvas id="distanceChart" width="1000" height="220"></canvas>
+          </article>
+
+          <article class="chart-card span6">
+            <div class="metric-label">Grafico LDF medio (LDR)</div>
+            <canvas id="ldrChart" width="1000" height="220"></canvas>
+          </article>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <script>
+    const connectBtn = document.getElementById("connect");
+    const disconnectBtn = document.getElementById("disconnect");
+    const statusEl = document.getElementById("status");
+
+    const distanceEl = document.getElementById("distance");
+    const ldrRightEl = document.getElementById("ldrRight");
+    const ldrLeftEl = document.getElementById("ldrLeft");
+    const ldrAvgEl = document.getElementById("ldrAvg");
+
+    const distanceCanvas = document.getElementById("distanceChart");
+    const distanceCtx = distanceCanvas.getContext("2d");
+    const ldrCanvas = document.getElementById("ldrChart");
+    const ldrCtx = ldrCanvas.getContext("2d");
+
+    let port = null;
+    let reader = null;
+    let keepReading = false;
+
+    const historyDistance = [];
+    const historyLdrAvg = [];
+    const maxPoints = 120;
+
+    function setStatus(text) {
+      statusEl.textContent = "Stato: " + text;
+    }
+
+    function pushHistory(arr, value) {
+      arr.push(value);
+      if (arr.length > maxPoints) arr.shift();
+    }
+
+    function updateMetrics(row) {
+      distanceEl.textContent = row.distance_cm;
+      ldrRightEl.textContent = row.ldr_right;
+      ldrLeftEl.textContent = row.ldr_left;
+      ldrAvgEl.textContent = row.ldr_avg;
+    }
+
+    function drawLine(ctx, canvas, data, color, maxValue) {
+      if (data.length < 2) return;
+      const w = canvas.width;
+      const h = canvas.height;
+      const pad = 18;
+      const stepX = (w - pad * 2) / (maxPoints - 1);
+
+      ctx.beginPath();
+      for (let i = 0; i < data.length; i++) {
+        const x = pad + i * stepX;
+        const norm = Math.max(0, Math.min(1, data[i] / maxValue));
+        const y = h - pad - norm * (h - pad * 2);
+        if (i === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      }
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 2;
+      ctx.stroke();
+    }
+
+    function drawChartFrame(ctx, canvas) {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "#f8fafc";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      ctx.strokeStyle = "#d7e0eb";
+      ctx.lineWidth = 1;
+      ctx.strokeRect(0.5, 0.5, canvas.width - 1, canvas.height - 1);
+    }
+
+    function redrawCharts() {
+      drawChartFrame(distanceCtx, distanceCanvas);
+      drawChartFrame(ldrCtx, ldrCanvas);
+      drawLine(distanceCtx, distanceCanvas, historyDistance.map(v => Math.max(v, 0)), "#2563eb", 200);
+      drawLine(ldrCtx, ldrCanvas, historyLdrAvg, "#ea580c", 1023);
+    }
+
+    async function disconnectSerial() {
+      keepReading = false;
+      try {
+        if (reader) await reader.cancel();
+      } catch (e) {}
+      reader = null;
+      try {
+        if (port) await port.close();
+      } catch (e) {}
+      port = null;
+      connectBtn.disabled = false;
+      disconnectBtn.disabled = true;
+      setStatus("non connesso");
+    }
+
+    async function connectSerial() {
+      if (!("serial" in navigator)) {
+        setStatus("Web Serial non supportato in questo browser");
+        return;
+      }
+
+      try {
+        port = await navigator.serial.requestPort();
+        await port.open({ baudRate: 115200 });
+
+        const decoder = new TextDecoderStream();
+        port.readable.pipeTo(decoder.writable);
+        reader = decoder.readable.getReader();
+
+        keepReading = true;
+        connectBtn.disabled = true;
+        disconnectBtn.disabled = false;
+        setStatus("connesso");
+
+        let buffer = "";
+        while (keepReading) {
+          const { value, done } = await reader.read();
+          if (done) break;
+          buffer += value;
+
+          let nl = buffer.indexOf("\n");
+          while (nl >= 0) {
+            const line = buffer.slice(0, nl).trim();
+            buffer = buffer.slice(nl + 1);
+            nl = buffer.indexOf("\n");
+            if (!line) continue;
+
+            try {
+              const row = JSON.parse(line);
+              updateMetrics(row);
+              pushHistory(historyDistance, Number(row.distance_cm));
+              pushHistory(historyLdrAvg, Number(row.ldr_avg));
+              redrawCharts();
+            } catch (e) {}
+          }
+        }
+      } catch (err) {
+        setStatus("errore connessione");
+      } finally {
+        if (port) {
+          await disconnectSerial();
+        }
+      }
+    }
+
+    connectBtn.addEventListener("click", connectSerial);
+    disconnectBtn.addEventListener("click", disconnectSerial);
+    redrawCharts();
+  </script>
+</body>
+</html>

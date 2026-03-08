@@ -1,0 +1,1 @@
+**Material for Robottino case**: MDF 3mm thickness
