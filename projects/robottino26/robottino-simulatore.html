@@ -1,0 +1,1021 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Robottino 26 - Simulatore</title>
+  <style>
+    :root {
+      --paper: #efe3c2;
+      --paper-dark: #c39a64;
+      --paper-edge: #7a5638;
+      --ink: #23180f;
+      --scene: #f6efe2;
+      --scene-deep: #d8e6ef;
+      --panel: rgba(255, 251, 244, 0.82);
+      --line: rgba(74, 52, 34, 0.14);
+      --shadow: 0 18px 45px rgba(53, 31, 15, 0.14);
+      --nose: rgb(120, 160, 255);
+      --mouth-glow: rgba(118, 214, 255, 0.28);
+      --left-light: 58%;
+      --right-light: 62%;
+      --head-turn: 0deg;
+      --pulse-speed: 2.6s;
+      --distance-ring: 0.45;
+      --font-display: "Avenir Next Condensed", "Trebuchet MS", sans-serif;
+      --font-body: "Avenir Next", "Segoe UI", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      font-family: var(--font-body);
+      background:
+        radial-gradient(circle at top left, rgba(255, 232, 194, 0.9), transparent 32%),
+        radial-gradient(circle at top right, rgba(156, 206, 255, 0.7), transparent 28%),
+        linear-gradient(180deg, #fffaf2 0%, var(--scene) 55%, #ece6da 100%);
+    }
+
+    .shell {
+      width: min(1280px, calc(100vw - 32px));
+      margin: 0 auto;
+      padding: 28px 0 40px;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 22px;
+      align-items: stretch;
+    }
+
+    .hero-copy,
+    .panel,
+    .stage-wrap {
+      border: 1px solid var(--line);
+      background: var(--panel);
+      backdrop-filter: blur(14px);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+    }
+
+    .hero-copy {
+      padding: 28px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-copy::after {
+      content: "";
+      position: absolute;
+      inset: auto -40px -60px auto;
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 173, 71, 0.28), transparent 70%);
+      pointer-events: none;
+    }
+
+    .kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 7px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(122, 86, 56, 0.18);
+      background: rgba(255, 247, 234, 0.84);
+      font-size: 0.8rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 16px 0 12px;
+      max-width: 12ch;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2.3rem, 4vw, 4.8rem);
+      line-height: 0.96;
+      letter-spacing: -0.04em;
+    }
+
+    .lede {
+      max-width: 60ch;
+      font-size: 1.03rem;
+      color: rgba(35, 24, 15, 0.78);
+    }
+
+    .facts {
+      margin-top: 22px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .fact {
+      padding: 14px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.56);
+      border: 1px solid rgba(122, 86, 56, 0.14);
+    }
+
+    .fact strong {
+      display: block;
+      font-size: 1.4rem;
+      font-family: var(--font-display);
+    }
+
+    .fact span {
+      font-size: 0.88rem;
+      color: rgba(35, 24, 15, 0.7);
+    }
+
+    .hero-notes {
+      padding: 24px;
+      display: grid;
+      gap: 12px;
+      align-content: start;
+    }
+
+    .hero-notes h2,
+    .panel h2 {
+      margin: 0;
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+    }
+
+    .chip-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .chip {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      padding: 12px 14px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.6);
+      border: 1px solid rgba(122, 86, 56, 0.14);
+    }
+
+    .chip b {
+      display: block;
+      margin-bottom: 3px;
+    }
+
+    .chip span,
+    .chip small,
+    .hint,
+    .readout p,
+    .control label,
+    .legend,
+    .footer-note {
+      color: rgba(35, 24, 15, 0.72);
+    }
+
+    .chip-meter {
+      min-width: 64px;
+      text-align: right;
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+    }
+
+    .layout {
+      margin-top: 22px;
+      display: grid;
+      grid-template-columns: minmax(320px, 1.15fr) minmax(320px, 0.85fr);
+      gap: 22px;
+      align-items: start;
+    }
+
+    .stage-wrap {
+      padding: 24px;
+      overflow: hidden;
+      position: relative;
+      min-height: 720px;
+      background:
+        radial-gradient(circle at 20% 10%, rgba(255, 237, 205, 0.9), transparent 26%),
+        linear-gradient(180deg, rgba(230, 239, 247, 0.98), rgba(244, 235, 220, 0.96));
+    }
+
+    .stage-wrap::before {
+      content: "";
+      position: absolute;
+      inset: auto 8% 54px;
+      height: 28px;
+      background: radial-gradient(circle, rgba(31, 24, 21, 0.15), rgba(31, 24, 21, 0));
+      filter: blur(10px);
+    }
+
+    .stage-headline {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+
+    .badge {
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(122, 86, 56, 0.18);
+      background: rgba(255, 250, 243, 0.76);
+      font-size: 0.82rem;
+    }
+
+    .stage {
+      position: relative;
+      min-height: 620px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding-bottom: 48px;
+      perspective: 1200px;
+    }
+
+    .robot {
+      position: relative;
+      width: min(100%, 460px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transform: translateY(0);
+      animation: drift 4.8s ease-in-out infinite;
+    }
+
+    .head {
+      position: relative;
+      width: clamp(250px, 33vw, 340px);
+      aspect-ratio: 0.78;
+      border-radius: 10px;
+      transform: rotateY(var(--head-turn));
+      transform-origin: center calc(100% + 18px);
+      transform-style: preserve-3d;
+      transition: transform 300ms ease;
+      background:
+        linear-gradient(145deg, rgba(255, 252, 246, 0.3), transparent 26%),
+        linear-gradient(180deg, #d8b684 0%, var(--paper) 18%, #d7b581 100%);
+      border: 4px solid rgba(122, 86, 56, 0.9);
+      box-shadow: 0 28px 45px rgba(67, 39, 16, 0.18);
+    }
+
+    .head::before,
+    .head::after,
+    .edge-left,
+    .edge-right {
+      content: "";
+      position: absolute;
+      top: 12px;
+      bottom: 12px;
+      width: 12px;
+      background:
+        repeating-linear-gradient(
+          180deg,
+          var(--paper-edge) 0 16px,
+          transparent 16px 34px
+        );
+      opacity: 0.95;
+    }
+
+    .head::before,
+    .edge-left { left: -8px; }
+    .head::after,
+    .edge-right { right: -8px; }
+
+    .top-tabs,
+    .bottom-tabs {
+      position: absolute;
+      left: 12px;
+      right: 12px;
+      height: 12px;
+      background:
+        repeating-linear-gradient(90deg, var(--paper-edge) 0 28px, transparent 28px 70px);
+      opacity: 0.95;
+    }
+
+    .top-tabs { top: -8px; }
+    .bottom-tabs { bottom: -8px; }
+
+    .sensor-bar {
+      position: absolute;
+      top: -28px;
+      left: 50%;
+      width: 72%;
+      transform: translateX(-50%);
+      display: flex;
+      justify-content: space-between;
+      pointer-events: none;
+    }
+
+    .light-sensor {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      border: 2px solid rgba(122, 86, 56, 0.7);
+      background:
+        radial-gradient(circle at 35% 35%, rgba(255,255,255,0.92), rgba(255, 215, 90, 0.4) 28%, rgba(93, 68, 36, 0.5));
+      box-shadow: 0 0 0 8px rgba(255, 214, 102, 0.12);
+    }
+
+    .light-sensor.left {
+      filter: brightness(calc(0.7 + var(--left-light) / 100));
+    }
+
+    .light-sensor.right {
+      filter: brightness(calc(0.7 + var(--right-light) / 100));
+    }
+
+    .face {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding-top: 52px;
+    }
+
+    .eyes {
+      width: 72%;
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 24px;
+      position: relative;
+    }
+
+    .eye {
+      position: relative;
+      width: 86px;
+      height: 86px;
+      border-radius: 50%;
+      background: linear-gradient(180deg, #d3d3d3, #8f8f8f);
+      box-shadow:
+        inset 0 2px 4px rgba(255,255,255,0.85),
+        inset 0 -6px 10px rgba(0,0,0,0.2),
+        0 12px 18px rgba(63, 40, 18, 0.14);
+      border: 5px solid #ececec;
+      overflow: hidden;
+    }
+
+    .eye::before {
+      content: "";
+      position: absolute;
+      inset: 11px;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 44% 40%, rgba(220, 235, 245, 0.26), rgba(0,0,0,0) 28%),
+        radial-gradient(circle at center, #222 0 30%, #3d3d3d 31% 54%, #1b1b1b 55% 72%, #111 73% 100%);
+      opacity: 0.95;
+    }
+
+    .eye::after {
+      content: "";
+      position: absolute;
+      inset: -16px;
+      border-radius: 50%;
+      border: 3px solid rgba(126, 215, 255, var(--distance-ring));
+      animation: sonar var(--pulse-speed) linear infinite;
+    }
+
+    .eye.right::after { animation-delay: 0.3s; }
+
+    .nose {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      margin-bottom: 30px;
+      background: var(--nose);
+      border: 3px solid rgba(122, 86, 56, 0.3);
+      box-shadow:
+        0 0 18px color-mix(in srgb, var(--nose) 55%, transparent),
+        inset 0 3px 7px rgba(255,255,255,0.72),
+        0 10px 18px rgba(63, 40, 18, 0.14);
+      transition: background 180ms linear, box-shadow 180ms linear;
+    }
+
+    .mouth-frame {
+      margin-top: auto;
+      margin-bottom: 44px;
+      width: 42%;
+      min-width: 118px;
+      height: 72px;
+      border-radius: 4px;
+      background: #241c18;
+      box-shadow:
+        inset 0 0 0 3px rgba(0,0,0,0.44),
+        0 10px 15px rgba(63, 40, 18, 0.12);
+      display: grid;
+      place-items: center;
+    }
+
+    .mouth-display {
+      width: calc(100% - 12px);
+      height: calc(100% - 12px);
+      border-radius: 2px;
+      background:
+        linear-gradient(180deg, rgba(118, 214, 255, 0.14), rgba(0, 0, 0, 0.9)),
+        #05080b;
+      color: #b3f1ff;
+      text-shadow: 0 0 6px rgba(129, 238, 255, 0.5);
+      box-shadow: inset 0 0 18px var(--mouth-glow);
+      padding: 8px 10px;
+      font-family: "Courier New", monospace;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 6px;
+      overflow: hidden;
+    }
+
+    .mouth-face {
+      font-size: 1.2rem;
+      letter-spacing: 0.08em;
+      white-space: nowrap;
+    }
+
+    .mouth-text {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      white-space: nowrap;
+      overflow: hidden;
+      animation: marquee 8s linear infinite;
+      width: max-content;
+      min-width: 100%;
+    }
+
+    .neck {
+      position: absolute;
+      bottom: 22px;
+      left: 50%;
+      width: 92px;
+      height: 46px;
+      transform: translateX(-50%);
+      border-radius: 12px;
+      background: linear-gradient(180deg, #7a5638, #4c3523);
+      z-index: -1;
+      box-shadow: 0 16px 24px rgba(55, 32, 15, 0.24);
+    }
+
+    .base {
+      position: absolute;
+      bottom: -18px;
+      left: 50%;
+      width: 210px;
+      height: 44px;
+      transform: translateX(-50%);
+      border-radius: 14px;
+      background:
+        linear-gradient(180deg, #8c623f, #5a3e28 58%, #412c1d),
+        repeating-linear-gradient(90deg, rgba(255,255,255,0.04) 0 16px, transparent 16px 28px);
+      box-shadow: 0 18px 26px rgba(40, 25, 14, 0.24);
+      z-index: -2;
+    }
+
+    .board-back {
+      position: absolute;
+      inset: 16% auto auto -32px;
+      width: 44px;
+      height: 58%;
+      border-radius: 12px 0 0 12px;
+      background: linear-gradient(180deg, rgba(36, 118, 124, 0.95), rgba(20, 76, 80, 0.95));
+      box-shadow: inset -4px 0 0 rgba(255,255,255,0.08);
+      opacity: 0.24;
+      z-index: -1;
+    }
+
+    .beam {
+      position: absolute;
+      top: 112px;
+      width: 180px;
+      height: 130px;
+      border-radius: 50%;
+      filter: blur(0.4px);
+      opacity: calc(0.15 + var(--distance-ring) * 0.5);
+      background: radial-gradient(circle at center, rgba(119, 230, 255, 0.35), rgba(119, 230, 255, 0));
+      pointer-events: none;
+    }
+
+    .beam.left { left: 54px; }
+    .beam.right { right: 54px; }
+
+    .panel {
+      padding: 20px;
+      display: grid;
+      gap: 18px;
+    }
+
+    .control-grid {
+      display: grid;
+      gap: 14px;
+    }
+
+    .control {
+      display: grid;
+      gap: 8px;
+      padding: 14px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.56);
+      border: 1px solid rgba(122, 86, 56, 0.12);
+    }
+
+    .control-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: baseline;
+    }
+
+    .control strong,
+    .readout strong {
+      font-size: 0.98rem;
+    }
+
+    input[type="range"] {
+      width: 100%;
+      accent-color: #b56a32;
+    }
+
+    input[type="text"],
+    select {
+      width: 100%;
+      border: 1px solid rgba(122, 86, 56, 0.18);
+      border-radius: 12px;
+      background: rgba(255, 253, 248, 0.94);
+      padding: 11px 12px;
+      font: inherit;
+      color: var(--ink);
+    }
+
+    input[type="color"] {
+      width: 100%;
+      height: 42px;
+      padding: 0;
+      border: 1px solid rgba(122, 86, 56, 0.18);
+      border-radius: 12px;
+      background: transparent;
+    }
+
+    .toggle-row,
+    .button-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    button {
+      border: 0;
+      border-radius: 999px;
+      padding: 11px 14px;
+      font: inherit;
+      font-weight: 700;
+      color: #fffaf3;
+      background: linear-gradient(135deg, #a85524, #7a3f1a);
+      cursor: pointer;
+      box-shadow: 0 10px 20px rgba(122, 63, 26, 0.2);
+    }
+
+    button.secondary {
+      color: var(--ink);
+      background: rgba(255, 250, 241, 0.92);
+      border: 1px solid rgba(122, 86, 56, 0.18);
+      box-shadow: none;
+    }
+
+    .readouts {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .readout {
+      padding: 14px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.58);
+      border: 1px solid rgba(122, 86, 56, 0.12);
+    }
+
+    .readout-value {
+      margin-top: 6px;
+      font-family: var(--font-display);
+      font-size: 2rem;
+      line-height: 1;
+    }
+
+    .schematic {
+      display: grid;
+      gap: 10px;
+      padding: 14px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.52);
+      border: 1px dashed rgba(122, 86, 56, 0.22);
+    }
+
+    .legend {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      font-size: 0.9rem;
+    }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #7a5638;
+    }
+
+    .dot.blue { background: #47b5ff; }
+    .dot.gold { background: #ffca54; }
+    .dot.cyan { background: #82e8ff; }
+
+    .footer-note {
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    @keyframes sonar {
+      0% { transform: scale(0.72); opacity: 0.72; }
+      100% { transform: scale(1.22); opacity: 0; }
+    }
+
+    @keyframes drift {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-6px); }
+    }
+
+    @keyframes marquee {
+      0% { transform: translateX(0%); }
+      100% { transform: translateX(-55%); }
+    }
+
+    @media (max-width: 1080px) {
+      .hero,
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-copy h1 { max-width: none; }
+      .stage-wrap { min-height: unset; }
+    }
+
+    @media (max-width: 720px) {
+      .shell { width: min(100vw - 20px, 1280px); padding-top: 16px; }
+      .hero-copy,
+      .hero-notes,
+      .panel,
+      .stage-wrap { border-radius: 22px; }
+      .facts,
+      .readouts { grid-template-columns: 1fr; }
+      .stage { min-height: 520px; padding-bottom: 28px; }
+      .head { width: min(86vw, 310px); }
+      .eye { width: 74px; height: 74px; }
+      .beam.left { left: 24px; }
+      .beam.right { right: 24px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <section class="hero">
+      <div class="hero-copy">
+        <div class="kicker">Robottino 26 · Simulatore web</div>
+        <h1>Una faccia robotica costruita come shield Arduino.</h1>
+        <p class="lede">Questa pagina riproduce il tuo robottino come interfaccia interattiva: i due sensori di luce stanno sulla testa, il sensore di distanza fa da occhi, il LED RGB diventa il naso, lo schermo OLED e la bocca, mentre il motore alla base ruota la testa come nella versione fisica.</p>
+        <div class="facts">
+          <div class="fact"><strong>2</strong><span>sensori di luce sulla testa</span></div>
+          <div class="fact"><strong>1</strong><span>sensore di distanza usato come occhi</span></div>
+          <div class="fact"><strong>1</strong><span>motore alla base per la rotazione</span></div>
+        </div>
+      </div>
+      <aside class="hero-notes">
+        <h2>Mappa del volto</h2>
+        <div class="chip-list">
+          <div class="chip"><div><b>Testa</b><span>Due sensori di luce rilevano da quale lato arriva piu illuminazione.</span></div><div class="chip-meter" id="chipLightBias">0%</div></div>
+          <div class="chip"><div><b>Occhi</b><span>I due trasduttori del sensore ultrasuoni diventano gli occhi del personaggio.</span></div><div class="chip-meter" id="chipDistance">120</div></div>
+          <div class="chip"><div><b>Naso</b><span>Il LED RGB cambia colore e stato in tempo reale.</span></div><div class="chip-meter" id="chipNose">RGB</div></div>
+          <div class="chip"><div><b>Bocca</b><span>Lo schermo OLED mostra testo ed espressioni sintetiche.</span></div><div class="chip-meter" id="chipMood">HELLO</div></div>
+        </div>
+      </aside>
+    </section>
+
+    <section class="layout">
+      <section class="stage-wrap">
+        <div class="stage-headline">
+          <div>
+            <h2>Simulatore visivo</h2>
+            <div class="hint">Muovi i controlli a destra per vedere come reagiscono faccia, sensori e rotazione.</div>
+          </div>
+          <div class="badge" id="modeBadge">Modo: Manuale</div>
+        </div>
+
+        <div class="stage">
+          <div class="robot">
+            <div class="head" id="head">
+              <div class="top-tabs"></div>
+              <div class="bottom-tabs"></div>
+              <div class="board-back"></div>
+              <div class="sensor-bar">
+                <div class="light-sensor left" title="Sensore di luce sinistro"></div>
+                <div class="light-sensor right" title="Sensore di luce destro"></div>
+              </div>
+              <div class="beam left"></div>
+              <div class="beam right"></div>
+              <div class="face">
+                <div class="eyes">
+                  <div class="eye left" aria-hidden="true"></div>
+                  <div class="eye right" aria-hidden="true"></div>
+                </div>
+                <div class="nose" id="nose"></div>
+                <div class="mouth-frame">
+                  <div class="mouth-display">
+                    <div class="mouth-face" id="mouthFace">[ o_o ]</div>
+                    <div class="mouth-text" id="mouthText">CIAO, SONO ROBOTTINO 26</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="neck"></div>
+            <div class="base"></div>
+          </div>
+        </div>
+      </section>
+
+      <aside class="panel">
+        <div>
+          <h2>Controlli</h2>
+          <p class="hint">Manuale per spiegare i componenti, automatico per simulare il comportamento del robottino.</p>
+        </div>
+
+        <div class="control-grid">
+          <div class="control">
+            <div class="control-head"><strong>Sensore di luce sinistro</strong><span id="leftValue">58%</span></div>
+            <input id="leftLight" type="range" min="0" max="100" value="58">
+            <label>Più alto = più luce ricevuta sul lato sinistro della testa.</label>
+          </div>
+
+          <div class="control">
+            <div class="control-head"><strong>Sensore di luce destro</strong><span id="rightValue">62%</span></div>
+            <input id="rightLight" type="range" min="0" max="100" value="62">
+            <label>Il motore può inseguire il lato con valore maggiore.</label>
+          </div>
+
+          <div class="control">
+            <div class="control-head"><strong>Distanza rilevata</strong><span id="distanceValue">120 cm</span></div>
+            <input id="distance" type="range" min="5" max="220" value="120">
+            <label>Valori piccoli fanno reagire gli occhi e cambiano l'espressione sul display.</label>
+          </div>
+
+          <div class="control">
+            <div class="control-head"><strong>Colore LED RGB</strong><span id="colorLabel">#78a0ff</span></div>
+            <input id="noseColor" type="color" value="#78a0ff">
+            <label>Il naso simula il LED RGB al centro del volto.</label>
+          </div>
+
+          <div class="control">
+            <div class="control-head"><strong>Messaggio OLED</strong><span id="messageSize">18 caratteri</span></div>
+            <input id="mouthMessage" type="text" maxlength="48" value="CIAO, SONO ROBOTTINO 26">
+            <label>Testo scorrevole nella bocca-display.</label>
+          </div>
+
+          <div class="control">
+            <div class="control-head"><strong>Espressione</strong><span id="faceLabel">Curioso</span></div>
+            <select id="expression">
+              <option value="curioso">Curioso</option>
+              <option value="felice">Felice</option>
+              <option value="allerta">Allerta</option>
+              <option value="assonnato">Assonnato</option>
+              <option value="sorpreso">Sorpreso</option>
+            </select>
+          </div>
+
+          <div class="control">
+            <div class="control-head"><strong>Rotazione testa</strong><span id="angleValue">0°</span></div>
+            <input id="angle" type="range" min="-45" max="45" value="0">
+            <label>Il motorino alla base ruota la testa solo in orizzontale, verso sinistra o destra.</label>
+          </div>
+
+          <div class="control">
+            <strong>Modalita</strong>
+            <div class="button-row">
+              <button id="manualMode">Manuale</button>
+              <button id="autoMode" class="secondary">Auto-insegui luce</button>
+              <button id="demoMode" class="secondary">Demo</button>
+            </div>
+            <label>In auto il robot gira verso il sensore più illuminato. In demo oscilla da solo e cambia umore.</label>
+          </div>
+        </div>
+
+        <div class="readouts">
+          <div class="readout">
+            <strong>Bias luminoso</strong>
+            <div class="readout-value" id="biasValue">+4%</div>
+            <p>Differenza tra sensore destro e sinistro.</p>
+          </div>
+          <div class="readout">
+            <strong>Stato prossimita</strong>
+            <div class="readout-value" id="proximityState">Libero</div>
+            <p>Interpretazione semplice della distanza.</p>
+          </div>
+          <div class="readout">
+            <strong>Servo</strong>
+            <div class="readout-value" id="servoState">Idle</div>
+            <p>Motore alla base della testa.</p>
+          </div>
+          <div class="readout">
+            <strong>OLED</strong>
+            <div class="readout-value" id="oledState">Testo</div>
+            <p>Schermo frontale usato come bocca.</p>
+          </div>
+        </div>
+
+        <div class="schematic">
+          <h2>Lettura componenti</h2>
+          <div class="legend"><span class="dot gold"></span> due punti sopra la testa: sensori di luce</div>
+          <div class="legend"><span class="dot cyan"></span> due cerchi frontali: sensore di distanza trasformato in occhi</div>
+          <div class="legend"><span class="dot blue"></span> LED RGB centrale: naso luminoso</div>
+          <div class="legend"><span class="dot"></span> base in basso: supporto + motore di rotazione</div>
+        </div>
+
+        <p class="footer-note">Il disegno richiama la scatola in MDF vista nelle foto, con giunzioni a incastro, scheda Arduino montata sul retro e faccia minimale centrata sui componenti reali.</p>
+      </aside>
+    </section>
+  </main>
+
+  <script>
+    const state = {
+      mode: "manual",
+      left: 58,
+      right: 62,
+      distance: 120,
+      angle: 0,
+      noseColor: "#78a0ff",
+      message: "CIAO, SONO ROBOTTINO 26",
+      expression: "curioso"
+    };
+
+    const expressions = {
+      curioso: { face: "[ o_o ]", label: "Curioso" },
+      felice: { face: "[ ^_^ ]", label: "Felice" },
+      allerta: { face: "[ 0_0 ]", label: "Allerta" },
+      assonnato: { face: "[ -_- ]", label: "Assonnato" },
+      sorpreso: { face: "[ O_O ]", label: "Sorpreso" }
+    };
+
+    const els = {
+      leftLight: document.getElementById("leftLight"),
+      rightLight: document.getElementById("rightLight"),
+      distance: document.getElementById("distance"),
+      angle: document.getElementById("angle"),
+      noseColor: document.getElementById("noseColor"),
+      mouthMessage: document.getElementById("mouthMessage"),
+      expression: document.getElementById("expression"),
+      leftValue: document.getElementById("leftValue"),
+      rightValue: document.getElementById("rightValue"),
+      distanceValue: document.getElementById("distanceValue"),
+      angleValue: document.getElementById("angleValue"),
+      colorLabel: document.getElementById("colorLabel"),
+      messageSize: document.getElementById("messageSize"),
+      mouthFace: document.getElementById("mouthFace"),
+      mouthText: document.getElementById("mouthText"),
+      nose: document.getElementById("nose"),
+      biasValue: document.getElementById("biasValue"),
+      proximityState: document.getElementById("proximityState"),
+      servoState: document.getElementById("servoState"),
+      oledState: document.getElementById("oledState"),
+      chipLightBias: document.getElementById("chipLightBias"),
+      chipDistance: document.getElementById("chipDistance"),
+      chipNose: document.getElementById("chipNose"),
+      chipMood: document.getElementById("chipMood"),
+      faceLabel: document.getElementById("faceLabel"),
+      modeBadge: document.getElementById("modeBadge"),
+      manualMode: document.getElementById("manualMode"),
+      autoMode: document.getElementById("autoMode"),
+      demoMode: document.getElementById("demoMode")
+    };
+
+    function clamp(value, min, max) {
+      return Math.min(max, Math.max(min, value));
+    }
+
+    function setMode(mode) {
+      state.mode = mode;
+      els.modeBadge.textContent = `Modo: ${mode === "manual" ? "Manuale" : mode === "auto" ? "Auto-insegui luce" : "Demo"}`;
+      els.manualMode.className = mode === "manual" ? "" : "secondary";
+      els.autoMode.className = mode === "auto" ? "" : "secondary";
+      els.demoMode.className = mode === "demo" ? "" : "secondary";
+      render();
+    }
+
+    function distanceMood() {
+      if (state.distance < 25) return "sorpreso";
+      if (state.distance < 55) return "allerta";
+      if (state.distance > 170) return "assonnato";
+      return state.expression;
+    }
+
+    function proximityLabel() {
+      if (state.distance < 25) return "Vicino";
+      if (state.distance < 70) return "Attento";
+      if (state.distance > 170) return "Lontano";
+      return "Libero";
+    }
+
+    function servoLabel(bias) {
+      if (state.mode === "demo") return "Sweep";
+      if (Math.abs(bias) < 4) return "Idle";
+      return bias > 0 ? "Ruota dx" : "Ruota sx";
+    }
+
+    function applyAutoBehavior(now) {
+      if (state.mode === "auto") {
+        const bias = state.right - state.left;
+        state.angle = clamp(bias * 0.6, -45, 45);
+        els.angle.value = String(Math.round(state.angle));
+      }
+
+      if (state.mode === "demo") {
+        const t = now / 1000;
+        state.left = Math.round(50 + Math.sin(t * 0.9) * 40);
+        state.right = Math.round(50 + Math.cos(t * 1.1) * 40);
+        state.distance = Math.round(80 + (Math.sin(t * 1.4) + 1) * 55);
+        state.angle = Math.round(Math.sin(t * 0.8) * 32);
+        state.expression = ["curioso", "felice", "allerta", "sorpreso"][Math.floor((t / 3) % 4)];
+        els.leftLight.value = String(state.left);
+        els.rightLight.value = String(state.right);
+        els.distance.value = String(state.distance);
+        els.angle.value = String(state.angle);
+      }
+    }
+
+    function render() {
+      const bias = state.right - state.left;
+      const shownExpression = expressions[distanceMood()];
+      const pulse = clamp(1.1 - ((state.distance - 5) / 215), 0.18, 1);
+      const pulseSpeed = `${clamp(3.4 - pulse * 2.2, 0.9, 3.4)}s`;
+
+      document.documentElement.style.setProperty("--left-light", `${state.left}%`);
+      document.documentElement.style.setProperty("--right-light", `${state.right}%`);
+      document.documentElement.style.setProperty("--head-turn", `${state.angle}deg`);
+      document.documentElement.style.setProperty("--nose", state.noseColor);
+      document.documentElement.style.setProperty("--distance-ring", pulse.toFixed(2));
+      document.documentElement.style.setProperty("--pulse-speed", pulseSpeed);
+
+      els.leftValue.textContent = `${state.left}%`;
+      els.rightValue.textContent = `${state.right}%`;
+      els.distanceValue.textContent = `${state.distance} cm`;
+      els.angleValue.textContent = `${state.angle}°`;
+      els.colorLabel.textContent = state.noseColor;
+      els.messageSize.textContent = `${state.message.length} caratteri`;
+      els.mouthFace.textContent = shownExpression.face;
+      els.mouthText.textContent = state.message || "OLED READY";
+      els.biasValue.textContent = `${bias > 0 ? "+" : ""}${bias}%`;
+      els.proximityState.textContent = proximityLabel();
+      els.servoState.textContent = servoLabel(bias);
+      els.oledState.textContent = state.message.trim() ? "Testo" : "Standby";
+      els.chipLightBias.textContent = `${bias > 0 ? "+" : ""}${bias}%`;
+      els.chipDistance.textContent = `${state.distance}cm`;
+      els.chipNose.textContent = state.noseColor.replace("#", "").toUpperCase();
+      els.chipMood.textContent = shownExpression.label.toUpperCase();
+      els.faceLabel.textContent = expressions[state.expression].label;
+    }
+
+    function bindManual(el, key, parser = Number) {
+      el.addEventListener("input", (event) => {
+        state[key] = parser(event.target.value);
+        if (key !== "message" && state.mode !== "manual") {
+          setMode("manual");
+        } else {
+          render();
+        }
+      });
+    }
+
+    bindManual(els.leftLight, "left");
+    bindManual(els.rightLight, "right");
+    bindManual(els.distance, "distance");
+    bindManual(els.angle, "angle");
+    bindManual(els.noseColor, "noseColor", String);
+    bindManual(els.mouthMessage, "message", String);
+    bindManual(els.expression, "expression", String);
+
+    els.manualMode.addEventListener("click", () => setMode("manual"));
+    els.autoMode.addEventListener("click", () => setMode("auto"));
+    els.demoMode.addEventListener("click", () => setMode("demo"));
+
+    function tick(now) {
+      applyAutoBehavior(now);
+      render();
+      requestAnimationFrame(tick);
+    }
+
+    render();
+    requestAnimationFrame(tick);
+  </script>
+</body>
+</html>
