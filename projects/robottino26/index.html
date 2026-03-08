@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Robottino 26</title>
+  <style>
+    :root {
+      --bg: #f5efe3;
+      --bg-deep: #dbe8ef;
+      --panel: rgba(255, 251, 244, 0.86);
+      --ink: #241911;
+      --muted: rgba(36, 25, 17, 0.72);
+      --line: rgba(98, 70, 47, 0.14);
+      --wood: #d3ae7e;
+      --wood-dark: #7c5638;
+      --accent: #b45d2b;
+      --accent-dark: #7f3f1a;
+      --cyan: #8ae8ff;
+      --shadow: 0 22px 48px rgba(62, 39, 21, 0.14);
+      --radius: 26px;
+      --font-head: Georgia, "Times New Roman", serif;
+      --font-body: "Avenir Next", "Segoe UI", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: var(--font-body);
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(255, 224, 173, 0.7), transparent 28%),
+        radial-gradient(circle at top right, rgba(130, 214, 255, 0.45), transparent 24%),
+        linear-gradient(180deg, #fffbf5 0%, var(--bg) 52%, #ece3d3 100%);
+    }
+
+    .page {
+      width: min(1180px, calc(100vw - 32px));
+      margin: 0 auto;
+      padding: 28px 0 48px;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 22px;
+      align-items: stretch;
+    }
+
+    .hero-panel,
+    .card,
+    .summary {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(12px);
+    }
+
+    .hero-panel {
+      padding: 28px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-panel::after {
+      content: "";
+      position: absolute;
+      right: -40px;
+      bottom: -60px;
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(180, 93, 43, 0.18), transparent 70%);
+      pointer-events: none;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      border: 1px solid rgba(124, 86, 56, 0.16);
+      background: rgba(255, 247, 235, 0.9);
+    }
+
+    h1 {
+      margin: 18px 0 12px;
+      max-width: 11ch;
+      font-family: var(--font-head);
+      font-size: clamp(2.6rem, 4vw, 5rem);
+      line-height: 0.95;
+      letter-spacing: -0.04em;
+    }
+
+    .lede {
+      max-width: 64ch;
+      font-size: 1.04rem;
+      color: var(--muted);
+    }
+
+    .specs {
+      margin-top: 22px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .spec {
+      padding: 14px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.58);
+      border: 1px solid rgba(124, 86, 56, 0.12);
+    }
+
+    .spec strong {
+      display: block;
+      font-size: 1.5rem;
+    }
+
+    .spec span {
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    .summary {
+      padding: 24px;
+      display: grid;
+      gap: 14px;
+      align-content: start;
+    }
+
+    .summary h2,
+    .section h2 {
+      margin: 0;
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .summary-item {
+      display: grid;
+      gap: 4px;
+      padding: 12px 14px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.58);
+      border: 1px solid rgba(124, 86, 56, 0.12);
+    }
+
+    .summary-item b {
+      font-size: 0.98rem;
+    }
+
+    .summary-item span,
+    .section p,
+    .card p,
+    .card li {
+      color: var(--muted);
+    }
+
+    .section {
+      margin-top: 22px;
+      display: grid;
+      gap: 22px;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 22px;
+    }
+
+    .card {
+      padding: 22px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: auto auto -40px -20px;
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(138, 232, 255, 0.22), transparent 70%);
+      pointer-events: none;
+    }
+
+    .card-tag {
+      display: inline-block;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(255, 250, 243, 0.92);
+      border: 1px solid rgba(124, 86, 56, 0.14);
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .card h3 {
+      margin: 14px 0 10px;
+      font-size: 1.55rem;
+      font-family: var(--font-head);
+    }
+
+    ul {
+      margin: 12px 0 0;
+      padding-left: 18px;
+    }
+
+    li { margin: 6px 0; }
+
+    .actions {
+      margin-top: 18px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    a.button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      padding: 11px 16px;
+      border-radius: 999px;
+      text-decoration: none;
+      font-weight: 700;
+      color: #fffaf2;
+      background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+      box-shadow: 0 10px 22px rgba(127, 63, 26, 0.22);
+    }
+
+    a.button.secondary {
+      color: var(--ink);
+      background: rgba(255, 250, 243, 0.92);
+      border: 1px solid rgba(124, 86, 56, 0.14);
+      box-shadow: none;
+    }
+
+    .footer {
+      margin-top: 22px;
+      padding: 18px 22px;
+      border-radius: 22px;
+      background: rgba(255, 251, 244, 0.72);
+      border: 1px solid rgba(124, 86, 56, 0.12);
+      color: var(--muted);
+    }
+
+    @media (max-width: 980px) {
+      .hero,
+      .cards {
+        grid-template-columns: 1fr;
+      }
+
+      h1 { max-width: none; }
+    }
+
+    @media (max-width: 720px) {
+      .page {
+        width: min(100vw - 20px, 1180px);
+        padding-top: 16px;
+      }
+
+      .hero-panel,
+      .summary,
+      .card { border-radius: 22px; }
+      .specs { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="hero">
+      <div class="hero-panel">
+        <div class="eyebrow">Robottino 26 · overview progetto</div>
+        <h1>Un piccolo robot con una faccia fatta di componenti elettronici.</h1>
+        <p class="lede">Robottino 26 e un progetto educativo costruito come una shield Arduino: sul retro c'e la scheda, davanti invece i componenti diventano un volto. I due sensori di luce stanno sulla testa, il sensore di distanza fa da occhi, il LED RGB e il naso, lo schermo OLED e la bocca, mentre il motore alla base ruota la testa in orizzontale.</p>
+        <div class="specs">
+          <div class="spec"><strong>Arduino</strong><span>elettronica montata sul retro del case</span></div>
+          <div class="spec"><strong>Volto</strong><span>componenti reali trasformati in espressione</span></div>
+          <div class="spec"><strong>Rotazione</strong><span>testa motorizzata sull'asse orizzontale</span></div>
+        </div>
+      </div>
+
+      <aside class="summary">
+        <h2>Cosa trovi qui</h2>
+        <div class="summary-item"><b>Documentazione componenti</b><span>Una pagina tecnica che riassume sensori, pin, valori e parametri principali del robottino.</span></div>
+        <div class="summary-item"><b>Simulatore interattivo</b><span>Una pagina web che riproduce il volto del robot e permette di controllare luci, distanza, OLED, LED RGB e rotazione.</span></div>
+        <div class="summary-item"><b>Repository completo</b><span>Nel progetto ci sono anche libreria Arduino, file hardware, DXF del case e materiali didattici.</span></div>
+      </aside>
+    </section>
+
+    <section class="section">
+      <div>
+        <h2>Pagine web</h2>
+        <p>Questa cartella contiene due pagine principali: una per leggere la struttura del progetto e una per simulare il comportamento del robottino.</p>
+      </div>
+
+      <div class="cards">
+        <article class="card">
+          <span class="card-tag">Pagina tecnica</span>
+          <h3>Componenti e parametri</h3>
+          <p>Panoramica dei componenti usati nel firmware Arduino, con focus su sensori, collegamenti e letture operative.</p>
+          <ul>
+            <li>sensori di luce e distanza</li>
+            <li>pin e soglie operative</li>
+            <li>lettura tecnica del robottino</li>
+          </ul>
+          <div class="actions">
+            <a class="button" href="robottino-componenti.html">Apri la pagina componenti</a>
+          </div>
+        </article>
+
+        <article class="card">
+          <span class="card-tag">Esperienza interattiva</span>
+          <h3>Simulatore del robot</h3>
+          <p>Riproduzione visuale del volto del robottino, con controlli interattivi per far reagire occhi, naso, bocca-display e testa.</p>
+          <ul>
+            <li>controllo luce sinistra e destra</li>
+            <li>distanza rilevata e stato del volto</li>
+            <li>rotazione orizzontale della testa</li>
+          </ul>
+          <div class="actions">
+            <a class="button" href="robottino-simulatore.html">Apri il simulatore</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <div class="footer">
+      Robottino 26 raccoglie hardware, design, firmware Arduino e materiali educativi in un unico progetto. Questa pagina `index.html` serve come ingresso rapido alla parte web della cartella.
+    </div>
+  </main>
+</body>
+</html>
