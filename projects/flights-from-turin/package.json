@@ -1,0 +1,17 @@
+{
+  "name": "flights-from-turin",
+  "version": "1.0.0",
+  "description": "Pagina web che mostra, in ordine di data, i voli economici da Torino (`TRN`) verso gli aeroporti Ryanair raggiungibili, con ritorno dopo circa 5 giorni.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "bootstrap": "^5.3.8",
+    "bootstrap-icons": "^1.13.1"
+  }
+}

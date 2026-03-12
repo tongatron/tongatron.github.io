@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Bandiera della Sardegna">
+  <rect width="512" height="512" fill="#ffffff"/>
+  <rect x="228" width="56" height="512" fill="#d6001c"/>
+  <rect y="228" width="512" height="56" fill="#d6001c"/>
+
+  <g fill="#1f2d3a">
+    <circle cx="128" cy="128" r="34"/>
+    <rect x="100" y="152" width="56" height="64" rx="22"/>
+
+    <circle cx="384" cy="128" r="34"/>
+    <rect x="356" y="152" width="56" height="64" rx="22"/>
+
+    <circle cx="128" cy="384" r="34"/>
+    <rect x="100" y="408" width="56" height="64" rx="22"/>
+
+    <circle cx="384" cy="384" r="34"/>
+    <rect x="356" y="408" width="56" height="64" rx="22"/>
+  </g>
+</svg>

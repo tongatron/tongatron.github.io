@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Bandiera del Piemonte">
+  <rect width="512" height="512" fill="#ffffff"/>
+  <rect x="24" y="24" width="464" height="464" fill="#1e5aa8"/>
+  <rect x="24" y="24" width="464" height="464" fill="none" stroke="#c4142f" stroke-width="48"/>
+  <rect x="212" y="96" width="88" height="320" fill="#ffffff"/>
+  <rect x="96" y="212" width="320" height="88" fill="#ffffff"/>
+</svg>
