@@ -7,6 +7,7 @@ const URL_FILTER_KEYS = {
   tolerance: "tol",
   maxTotalPrice: "max",
   view: "view",
+  lang: "lang",
 };
 
 const I18N = {
@@ -16,6 +17,13 @@ const I18N = {
     heroTitle: "voli da Torino",
     heroDescription:
       "Confronta i voli Ryanair in partenza da Torino, filtra per budget e durata del soggiorno e condividi i risultati con un link.",
+    ticketOriginLabel: "Partenza",
+    ticketOriginCity: "Torino",
+    ticketDestinationLabel: "Destinazioni",
+    ticketDestinationTitle: "Aeroporti",
+    ticketDestinationSubtitle: "scegli dove andare",
+    ticketCaption:
+      "Imposta i filtri qui sotto per trovare le combinazioni migliori in pochi secondi.",
     labelDestination: "Aeroporto destinazione",
     labelMonths: "Mesi da analizzare",
     labelTargetStay: "Durata target (giorni)",
@@ -74,182 +82,76 @@ const I18N = {
     ariaLanguageGroup: "Selezione lingua",
     ariaViewMode: "Visualizzazione risultati",
   },
-  pms: {
-    pageTitle: "vòl da Turin",
-    heroEyebrow: "Serca tarife Ryanair",
-    heroTitle: "vòl da Turin",
+  en: {
+    pageTitle: "flights from Turin",
+    heroEyebrow: "Find Ryanair flights",
+    heroTitle: "flights from Turin",
     heroDescription:
-      "La chërca a deuvra le API pùbliche ëd Ryanair e a mosta ël press total andata+ritorn ant le rote disponìbij da Turin.",
-    labelDestination: "Aeroport ëd destinassion",
-    labelMonths: "Meis da analisé",
-    labelTargetStay: "Durà target (di)",
-    labelTolerance: "Tolëransa (± di)",
-    labelMaxPrice: "Spesa màssima A/R (€)",
-    labelViewMode: "Visualisassion Lista/Carte",
-    viewList: "Lista",
-    viewCards: "Carte",
-    buttonSearch: "Serca vòl",
-    resultsTitle: "Arzultà ordinà për data",
-    thDeparture: "Partensa",
-    thReturn: "Ritorn",
-    thDestination: "Destinassion",
-    thDuration: "Durà",
-    thTotalPrice: "Press total",
-    destinationAll: "Tùit ij aeroport raggiungìbij",
-    statusReady: "Pront.",
-    loadingAirports: "Cariament dij aeroport raggiungìbij da Turin...",
-    loadingPrices: "Recuper dij press giornalé Ryanair...",
-    loadingPricesProgress: "Recuper dij press... {done}/{total} aeroport",
-    errorInit: "Eror ant l'inizialisassion dij aeroport: {message}",
-    errorInvalidParams: "Paràmeter nen vàlid.",
-    errorNoAirports: "Gnun aeroport disponìbil da Turin.",
-    errorAirportUnavailable: "L'aeroport selessionà a l'é nen disponìbil.",
+      "Compare Ryanair flights departing from Turin, filter by budget and trip length, and share the results with a link.",
+    ticketOriginLabel: "Departure",
+    ticketOriginCity: "Turin",
+    ticketDestinationLabel: "Destinations",
+    ticketDestinationTitle: "Airports",
+    ticketDestinationSubtitle: "choose where to go",
+    ticketCaption:
+      "Set the filters below to find the best combinations in a few seconds.",
+    labelDestination: "Destination airport",
+    labelMonths: "Months to analyze",
+    labelTargetStay: "Target stay (days)",
+    labelTolerance: "Tolerance (± days)",
+    labelMaxPrice: "Max round-trip budget (€)",
+    labelViewMode: "View List/Cards",
+    viewList: "List",
+    viewCards: "Cards",
+    buttonSearch: "Search flights",
+    resultsTitle: "Results sorted by date",
+    thDeparture: "Departure",
+    thReturn: "Return",
+    thDestination: "Destination",
+    thDuration: "Duration",
+    thTotalPrice: "Total price",
+    destinationAll: "All reachable airports",
+    statusReady: "Ready.",
+    loadingAirports: "Loading airports reachable from Turin...",
+    loadingPrices: "Loading daily Ryanair fares...",
+    loadingPricesProgress: "Loading fares... {done}/{total} airports",
+    errorInit: "Airport initialization error: {message}",
+    errorInvalidParams: "Invalid parameters.",
+    errorNoAirports: "No airports available from Turin.",
+    errorAirportUnavailable: "Selected airport is not available.",
     errorNetwork:
-      "Eror ëd ret/API: ël browser a ries nen a lese Ryanair. Contròla la console DevTools (F12) për CORS o blòch ëd ret.",
-    errorSearch: "Eror durant la chërca: {message}",
-    errorRoutesRead: "A l'é nen possìbil lese le rote da Turin ({status})",
-    errorPriceRead: "Eror press {departure}→{arrival} ({status})",
-    metaAllAirports: "Aeroport: tùit ({count})",
-    metaSingleAirport: "Aeroport: {airport}",
-    metaDepartToday: "Partensa da ancheuj: {date}",
-    metaMaxSpend: "Spesa màssima A/R: € {max}",
-    statusNoResults: "Gnun vòl sota € {max} trovà coi filtri selessionà.",
-    statusFound: "Trovà {count} opsion economiche an órdin ëd data.",
+      "Network/API error: the browser could not read Ryanair data. Check DevTools (F12) for CORS or network blocking.",
+    errorSearch: "Search error: {message}",
+    errorRoutesRead: "Unable to read routes from Turin ({status})",
+    errorPriceRead: "Fare error {departure}→{arrival} ({status})",
+    metaAllAirports: "Airports: all ({count})",
+    metaSingleAirport: "Airport: {airport}",
+    metaDepartToday: "Departing from today: {date}",
+    metaMaxSpend: "Max round-trip budget: € {max}",
+    statusNoResults: "No flights under € {max} found with the selected filters.",
+    statusFound: "Found {count} low-cost options sorted by date.",
     statusFoundWithFailed:
-      "Trovà {count} opsion economiche an órdin ëd data. ({failed} aeroport nen disponìbij: {codes})",
-    days: "{count} di",
-    detailsTitle: "Detaj dij vòl:",
-    detailsRoute: "Trata: {from} -> {to}",
-    detailsOutbound: "Andata: {value}",
-    detailsReturn: "Ritorn: {value}",
-    detailsStay: "Permanensa: {days}",
-    cardRoute: "Trata:",
-    cardOutbound: "Andata:",
-    cardReturn: "Ritorn:",
-    cardStay: "Permanensa:",
-    cardTotal: "Total A/R:",
+      "Found {count} low-cost options sorted by date. ({failed} unavailable airports: {codes})",
+    days: "{count} days",
+    detailsTitle: "Flight details:",
+    detailsRoute: "Route: {from} -> {to}",
+    detailsOutbound: "Outbound: {value}",
+    detailsReturn: "Return: {value}",
+    detailsStay: "Stay: {days}",
+    cardRoute: "Route:",
+    cardOutbound: "Outbound:",
+    cardReturn: "Return:",
+    cardStay: "Stay:",
+    cardTotal: "Round trip:",
+    listDepartureTimeLabel: "departure",
+    listReturnTimeLabel: "return",
+    listTotalPriceLabel: "Round trip",
     fromTurin: "Turin (TRN)",
     legTemplate: "{departure} -> {arrival} (€ {price})",
-    ariaLanguageGroup: "Selession lengua",
-    ariaViewMode: "Visualisassion arzultà",
-  },
-  sc: {
-    pageTitle: "bolos dae Turinu",
-    heroEyebrow: "Chirca tarifas Ryanair",
-    heroTitle: "bolos dae Turinu",
-    heroDescription:
-      "Sa chirca impreat sas API pùblicas de Ryanair e mustrat su prètziu totale de andada e torrada pro sas tratas disponìbiles dae Turinu.",
-    labelDestination: "Aeroportu de destinatzione",
-    labelMonths: "Meses de analisare",
-    labelTargetStay: "Durada obietivu (dies)",
-    labelTolerance: "Tolleràntzia (± dies)",
-    labelMaxPrice: "Ispesa massima A/R (€)",
-    labelViewMode: "Visualizatzione Lista/Schedas",
-    viewList: "Lista",
-    viewCards: "Schedas",
-    buttonSearch: "Chirca bolos",
-    resultsTitle: "Resurtados ordinados pro data",
-    thDeparture: "Partèntzia",
-    thReturn: "Torrada",
-    thDestination: "Destinatzione",
-    thDuration: "Durada",
-    thTotalPrice: "Prètziu totale",
-    destinationAll: "Totus sos aeroportos chi si podent raggiànghere",
-    statusReady: "Prontu.",
-    loadingAirports: "Carrighende sos aeroportos disponìbiles dae Turinu...",
-    loadingPrices: "Recuperende sos prètzios diarios Ryanair...",
-    loadingPricesProgress: "Recuperende sos prètzios... {done}/{total} aeroportos",
-    errorInit: "Faddina in s'inizializatzione de sos aeroportos: {message}",
-    errorInvalidParams: "Paràmetros non vàlidos.",
-    errorNoAirports: "Perunu aeroportu disponìbile dae Turinu.",
-    errorAirportUnavailable: "S'aeroportu seberadu non est disponìbile.",
-    errorNetwork:
-      "Faddina de rete/API: su browser non podet leggere Ryanair. Controlla sa console DevTools (F12) pro CORS o bloccos de rete.",
-    errorSearch: "Faddina durante sa chirca: {message}",
-    errorRoutesRead: "Impossìbile leggere sas rotas dae Turinu ({status})",
-    errorPriceRead: "Faddina prètzios {departure}→{arrival} ({status})",
-    metaAllAirports: "Aeroportos: totus ({count})",
-    metaSingleAirport: "Aeroportu: {airport}",
-    metaDepartToday: "Partèntzia dae oe: {date}",
-    metaMaxSpend: "Ispesa massima A/R: € {max}",
-    statusNoResults: "Perunu bolu intro € {max} cun sos filtros seberados.",
-    statusFound: "Trovadas {count} optziones econòmicas in òrdine de data.",
-    statusFoundWithFailed:
-      "Trovadas {count} optziones econòmicas in òrdine de data. ({failed} aeroportos non disponìbiles: {codes})",
-    days: "{count} dies",
-    detailsTitle: "Detàllios bolos:",
-    detailsRoute: "Trata: {from} -> {to}",
-    detailsOutbound: "Andada: {value}",
-    detailsReturn: "Torrada: {value}",
-    detailsStay: "Permanèntzia: {days}",
-    cardRoute: "Trata:",
-    cardOutbound: "Andada:",
-    cardReturn: "Torrada:",
-    cardStay: "Permanèntzia:",
-    cardTotal: "Totale A/R:",
-    fromTurin: "Turinu (TRN)",
-    legTemplate: "{departure} -> {arrival} (€ {price})",
-    ariaLanguageGroup: "Seletzione limba",
-    ariaViewMode: "Visualizatzione resurtados",
-  },
-  fa: {
-    pageTitle: "پروازها از تورین",
-    heroEyebrow: "جستجوی قیمت رایان‌ایر",
-    heroTitle: "پروازها از تورین",
-    heroDescription:
-      "این جستجو از API عمومی Ryanair استفاده می‌کند و مجموع قیمت رفت‌وبرگشت مسیرهای قابل دسترس از تورین را نمایش می‌دهد.",
-    labelDestination: "فرودگاه مقصد",
-    labelMonths: "ماه‌های بررسی",
-    labelTargetStay: "مدت اقامت هدف (روز)",
-    labelTolerance: "بازه خطا (± روز)",
-    labelMaxPrice: "حداکثر هزینه رفت‌وبرگشت (€)",
-    labelViewMode: "نمایش لیست/کارت",
-    viewList: "لیست",
-    viewCards: "کارت",
-    buttonSearch: "جستجوی پرواز",
-    resultsTitle: "نتایج مرتب‌شده بر اساس تاریخ",
-    thDeparture: "رفت",
-    thReturn: "برگشت",
-    thDestination: "مقصد",
-    thDuration: "مدت",
-    thTotalPrice: "قیمت کل",
-    destinationAll: "همه فرودگاه‌های قابل دسترس",
-    statusReady: "آماده.",
-    loadingAirports: "در حال بارگذاری فرودگاه‌های قابل دسترس از تورین...",
-    loadingPrices: "در حال دریافت قیمت‌های روزانه Ryanair...",
-    loadingPricesProgress: "در حال دریافت قیمت‌ها... {done}/{total} فرودگاه",
-    errorInit: "خطا در مقداردهی اولیه فرودگاه‌ها: {message}",
-    errorInvalidParams: "پارامترها معتبر نیستند.",
-    errorNoAirports: "هیچ فرودگاهی از تورین در دسترس نیست.",
-    errorAirportUnavailable: "فرودگاه انتخاب‌شده در دسترس نیست.",
-    errorNetwork:
-      "خطای شبکه/API: مرورگر نتوانست به Ryanair دسترسی پیدا کند. کنسول DevTools (F12) را برای CORS یا محدودیت شبکه بررسی کنید.",
-    errorSearch: "خطا هنگام جستجو: {message}",
-    errorRoutesRead: "خواندن مسیرهای تورین ممکن نیست ({status})",
-    errorPriceRead: "خطای قیمت {departure}→{arrival} ({status})",
-    metaAllAirports: "فرودگاه‌ها: همه ({count})",
-    metaSingleAirport: "فرودگاه: {airport}",
-    metaDepartToday: "شروع از امروز: {date}",
-    metaMaxSpend: "حداکثر هزینه رفت‌وبرگشت: € {max}",
-    statusNoResults: "هیچ پروازی تا € {max} با فیلترهای انتخاب‌شده پیدا نشد.",
-    statusFound: "{count} گزینه ارزان بر اساس تاریخ پیدا شد.",
-    statusFoundWithFailed:
-      "{count} گزینه ارزان بر اساس تاریخ پیدا شد. ({failed} فرودگاه در دسترس نبود: {codes})",
-    days: "{count} روز",
-    detailsTitle: "جزئیات پرواز:",
-    detailsRoute: "مسیر: {from} -> {to}",
-    detailsOutbound: "رفت: {value}",
-    detailsReturn: "برگشت: {value}",
-    detailsStay: "مدت اقامت: {days}",
-    cardRoute: "مسیر:",
-    cardOutbound: "رفت:",
-    cardReturn: "برگشت:",
-    cardStay: "مدت اقامت:",
-    cardTotal: "جمع رفت‌وبرگشت:",
-    fromTurin: "تورین (TRN)",
-    legTemplate: "{departure} -> {arrival} (€ {price})",
-    ariaLanguageGroup: "انتخاب زبان",
-    ariaViewMode: "حالت نمایش نتایج",
+    shareResults: "share results",
+    shareResultsCopied: "link copied",
+    ariaLanguageGroup: "Language selection",
+    ariaViewMode: "Results view",
   },
 };
 
@@ -268,6 +170,12 @@ const viewModeRowEl = document.querySelector(".view-mode-row");
 const heroEyebrowEl = document.querySelector("#hero-eyebrow");
 const heroTitleEl = document.querySelector("#hero-title");
 const heroDescriptionEl = document.querySelector("#hero-description");
+const ticketOriginLabelEl = document.querySelector("#ticket-origin-label");
+const ticketOriginCityEl = document.querySelector("#ticket-origin-city");
+const ticketDestinationLabelEl = document.querySelector("#ticket-destination-label");
+const ticketDestinationTitleEl = document.querySelector("#ticket-destination-title");
+const ticketDestinationSubtitleEl = document.querySelector("#ticket-destination-subtitle");
+const ticketCaptionEl = document.querySelector("#ticket-caption");
 const labelDestinationEl = document.querySelector("#label-destination");
 const labelMonthsEl = document.querySelector("#label-months");
 const labelTargetStayEl = document.querySelector("#label-target-stay");
@@ -327,16 +235,22 @@ if (!appReady) {
 
 async function initializeApp() {
   const initialFilters = readFiltersFromUrl();
-  document.documentElement.lang = "it";
-  document.documentElement.dir = "ltr";
-  document.body.dataset.lang = "it";
-  currentLang = "it";
-  applyStaticTranslations();
+  setLanguage(initialFilters.lang, { updateUrl: false, rerender: false });
   applyInitialFilters(initialFilters);
 
   form.addEventListener("submit", onSubmit);
 
   shareResultsBtn.addEventListener("click", copyResultsLink);
+
+  for (const button of langButtons) {
+    button.addEventListener("click", () => {
+      const nextLang = normalizeLanguage(button.dataset.lang);
+      if (nextLang === currentLang) {
+        return;
+      }
+      setLanguage(nextLang);
+    });
+  }
 
   for (const input of viewModeInputs) {
     input.addEventListener("change", () => {
@@ -1151,6 +1065,7 @@ function readFiltersFromUrl() {
     tolerance: parseIntegerInRange(params.get(URL_FILTER_KEYS.tolerance), 0, 7),
     maxTotalPrice: parseIntegerInRange(params.get(URL_FILTER_KEYS.maxTotalPrice), 1, 2000),
     view: params.get(URL_FILTER_KEYS.view) === "cards" ? "cards" : "list",
+    lang: normalizeLanguage(params.get(URL_FILTER_KEYS.lang) ?? getBrowserLanguage()),
   };
 }
 
@@ -1179,7 +1094,7 @@ function updateUrlFromCurrentFilters() {
   params.set(URL_FILTER_KEYS.tolerance, stayToleranceInput?.value ?? "1");
   params.set(URL_FILTER_KEYS.maxTotalPrice, maxTotalPriceInput?.value ?? "70");
   params.set(URL_FILTER_KEYS.view, getViewMode());
-  params.delete("lang");
+  params.set(URL_FILTER_KEYS.lang, currentLang);
 
   const query = params.toString();
   const nextUrl = `${window.location.pathname}${query ? `?${query}` : ""}${window.location.hash}`;
@@ -1274,7 +1189,7 @@ function setLanguage(lang, { updateUrl = true, rerender = true } = {}) {
   currentLang = normalizeLanguage(lang);
 
   document.documentElement.lang = currentLang;
-  document.documentElement.dir = currentLang === "fa" ? "rtl" : "ltr";
+  document.documentElement.dir = "ltr";
   document.body.dataset.lang = currentLang;
 
   updateLanguageButtons();
@@ -1307,6 +1222,12 @@ function applyStaticTranslations() {
   setText(heroEyebrowEl, t("heroEyebrow"));
   setText(heroTitleEl, t("heroTitle"));
   setText(heroDescriptionEl, t("heroDescription"));
+  setText(ticketOriginLabelEl, t("ticketOriginLabel"));
+  setText(ticketOriginCityEl, t("ticketOriginCity"));
+  setText(ticketDestinationLabelEl, t("ticketDestinationLabel"));
+  setText(ticketDestinationTitleEl, t("ticketDestinationTitle"));
+  setText(ticketDestinationSubtitleEl, t("ticketDestinationSubtitle"));
+  setText(ticketCaptionEl, t("ticketCaption"));
   setText(labelDestinationEl, t("labelDestination"));
   setText(labelMonthsEl, t("labelMonths"));
   setText(labelTargetStayEl, t("labelTargetStay"));
@@ -1356,38 +1277,23 @@ function setText(element, value) {
 }
 
 function getDateLocale() {
-  if (currentLang === "fa") {
-    return "fa-IR-u-ca-gregory";
-  }
-  return "it-IT";
+  return currentLang === "en" ? "en-GB" : "it-IT";
 }
 
 function getNumberLocale() {
-  if (currentLang === "fa") {
-    return "fa-IR";
-  }
-  return "it-IT";
+  return currentLang === "en" ? "en-GB" : "it-IT";
 }
 
 function getBrowserLanguage() {
   const locale = (navigator.language ?? "it").toLowerCase();
-  if (locale.startsWith("fa")) {
-    return "fa";
-  }
-  if (locale.startsWith("pms")) {
-    return "pms";
-  }
-  if (locale.startsWith("sc")) {
-    return "sc";
+  if (locale.startsWith("en")) {
+    return "en";
   }
   return "it";
 }
 
 function normalizeLanguage(value) {
-  if (value === "fa" || value === "sc" || value === "pms") {
-    return value;
-  }
-  return "it";
+  return value === "en" ? "en" : "it";
 }
 
 function t(key, vars = {}) {

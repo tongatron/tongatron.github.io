@@ -30,11 +30,18 @@
     />
     <link rel="stylesheet" href="./vendor/bootstrap/bootstrap.min.css" />
     <link rel="stylesheet" href="./vendor/bootstrap-icons/bootstrap-icons.css" />
-    <link rel="stylesheet" href="./styles.css?v=20260312-15" />
+    <link rel="stylesheet" href="./styles.css?v=20260312-16" />
   </head>
   <body>
     <main class="container page-shell pb-5">
       <header class="page-header pt-4 pt-lg-5">
+        <div class="top-tools">
+          <div class="lang-switcher" role="group" aria-label="Selezione lingua">
+            <button type="button" class="lang-btn is-active" data-lang="it" aria-label="Italiano">ITA</button>
+            <button type="button" class="lang-btn" data-lang="en" aria-label="English">ENG</button>
+          </div>
+        </div>
+
         <section class="card border-0 shadow-lg hero-panel overflow-hidden">
           <div class="card-body p-4 p-lg-5">
             <div class="row g-4 g-xl-5 align-items-start">
@@ -53,9 +60,9 @@
                     <div class="ticket-stop ticket-stop-card ticket-stop-fixed">
                       <span class="ticket-stop-icon outbound"><i class="bi bi-send-arrow-up" aria-hidden="true"></i></span>
                       <div>
-                        <div class="ticket-stop-label">Partenza</div>
+                        <div class="ticket-stop-label" id="ticket-origin-label">Partenza</div>
                         <div class="ticket-stop-code">TRN</div>
-                        <div class="ticket-stop-text">Torino</div>
+                        <div class="ticket-stop-text" id="ticket-origin-city">Torino</div>
                       </div>
                     </div>
 
@@ -71,9 +78,9 @@
                       <div class="ticket-stop ticket-stop-end ticket-stop-inner">
                         <span class="ticket-stop-icon inbound"><i class="bi bi-geo-alt" aria-hidden="true"></i></span>
                         <div>
-                          <div class="ticket-stop-label">Destinazioni</div>
-                          <div class="ticket-stop-code">Aeroporti</div>
-                          <div class="ticket-stop-text">scegli dove andare</div>
+                          <div class="ticket-stop-label" id="ticket-destination-label">Destinazioni</div>
+                          <div class="ticket-stop-code" id="ticket-destination-title">Aeroporti</div>
+                          <div class="ticket-stop-text" id="ticket-destination-subtitle">scegli dove andare</div>
                         </div>
                       </div>
 
@@ -87,7 +94,7 @@
                     </div>
                   </div>
 
-                  <p class="ticket-caption">
+                  <p class="ticket-caption" id="ticket-caption">
                     Imposta i filtri qui sotto per trovare le combinazioni migliori in pochi secondi.
                   </p>
 
@@ -257,7 +264,7 @@
     </main>
 
     <script src="./vendor/bootstrap/bootstrap.bundle.min.js"></script>
-    <script src="./app.js?v=20260312-05" type="module"></script>
+    <script src="./app.js?v=20260312-06" type="module"></script>
     <script>
       if ("serviceWorker" in navigator) {
         window.addEventListener("load", function registerServiceWorker() {

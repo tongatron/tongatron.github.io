@@ -45,6 +45,56 @@ body {
   position: relative;
 }
 
+.top-tools {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 1rem;
+}
+
+.lang-switcher {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid rgba(7, 53, 144, 0.12);
+  box-shadow: 0 12px 28px rgba(7, 39, 102, 0.1);
+}
+
+.lang-btn {
+  appearance: none;
+  border: 0;
+  border-radius: 999px;
+  padding: 0.58rem 0.95rem;
+  min-width: 3.4rem;
+  background: transparent;
+  color: var(--app-primary);
+  font-weight: 800;
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    background-color 180ms ease,
+    color 180ms ease,
+    box-shadow 180ms ease,
+    transform 180ms ease;
+}
+
+.lang-btn:hover {
+  background: rgba(7, 53, 144, 0.08);
+}
+
+.lang-btn.is-active {
+  background: linear-gradient(135deg, var(--app-primary) 0%, var(--app-primary-2) 100%);
+  color: #ffffff;
+  box-shadow: 0 10px 24px rgba(7, 39, 102, 0.22);
+}
+
+.lang-btn:focus-visible {
+  outline: 2px solid rgba(22, 91, 199, 0.35);
+  outline-offset: 2px;
+}
+
 .hero-badges {
   min-height: 42px;
 }
