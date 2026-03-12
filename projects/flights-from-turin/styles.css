@@ -539,8 +539,14 @@ body {
   padding-bottom: 1rem;
 }
 
+.results-toolbar {
+  align-items: end;
+}
+
 .results-actions {
-  min-width: min(100%, 360px);
+  min-width: min(100%, 320px);
+  display: flex;
+  justify-content: flex-end;
 }
 
 .results-view-toggle {
@@ -584,7 +590,8 @@ body {
 }
 
 .status-pill {
-  max-width: min(100%, 520px);
+  max-width: none;
+  width: 100%;
   padding: 0.9rem 1rem;
   border-radius: 18px;
   background: rgba(7, 53, 144, 0.08);
@@ -989,6 +996,7 @@ body {
 
   .results-actions {
     min-width: 100%;
+    justify-content: stretch;
   }
 
   .results-table thead {

@@ -30,17 +30,11 @@
     />
     <link rel="stylesheet" href="./vendor/bootstrap/bootstrap.min.css" />
     <link rel="stylesheet" href="./vendor/bootstrap-icons/bootstrap-icons.css" />
-    <link rel="stylesheet" href="./styles.css?v=20260312-13" />
+    <link rel="stylesheet" href="./styles.css?v=20260312-15" />
   </head>
   <body>
     <main class="container page-shell pb-5">
       <header class="page-header pt-4 pt-lg-5">
-        <div class="hero-badges d-flex flex-wrap gap-2 mb-3">
-          <span class="hero-badge"><i class="bi bi-send-arrow-up" aria-hidden="true"></i> TRN</span>
-          <span class="hero-badge"><i class="bi bi-arrow-left-right" aria-hidden="true"></i> A/R</span>
-          <span class="hero-badge"><i class="bi bi-link-45deg" aria-hidden="true"></i> URL</span>
-        </div>
-
         <section class="card border-0 shadow-lg hero-panel overflow-hidden">
           <div class="card-body p-4 p-lg-5">
             <div class="row g-4 g-xl-5 align-items-start">
@@ -186,43 +180,45 @@
 
       <section class="card border-0 shadow-lg results-panel mt-4">
         <div class="card-body p-4 p-lg-5">
-          <div class="results-head d-flex justify-content-between align-items-start gap-3 flex-wrap mb-4">
-            <div>
-              <h2 class="results-title d-flex align-items-center gap-2 mb-0">
-                <i class="bi bi-calendar-event" aria-hidden="true"></i>
-                <span id="results-title">Risultati ordinati per data</span>
-              </h2>
+          <div class="results-head mb-4">
+            <h2 class="results-title d-flex align-items-center gap-2 mb-0">
+              <i class="bi bi-calendar-event" aria-hidden="true"></i>
+              <span id="results-title">Risultati ordinati per data</span>
+            </h2>
+          </div>
+
+          <div class="results-toolbar d-flex justify-content-between align-items-end gap-3 flex-wrap mb-3">
+            <div class="results-view-toggle">
+              <div class="form-label filter-label mb-2">
+                <i class="bi bi-grid" aria-hidden="true"></i>
+                <span id="label-view-mode">Visualizza Lista/Schede</span>
+              </div>
+              <div class="view-mode-toggle" role="group" aria-label="Visualizzazione risultati">
+                <span class="view-mode-row" role="radiogroup" aria-label="Visualizzazione risultati">
+                  <input type="radio" class="btn-check" name="view-mode" id="view-mode-list" value="list" checked />
+                  <label class="btn btn-view-mode" for="view-mode-list">
+                    <i class="bi bi-table" aria-hidden="true"></i>
+                    <span id="view-label-list">Lista</span>
+                  </label>
+
+                  <input type="radio" class="btn-check" name="view-mode" id="view-mode-cards" value="cards" />
+                  <label class="btn btn-view-mode" for="view-mode-cards">
+                    <i class="bi bi-grid-3x2-gap" aria-hidden="true"></i>
+                    <span id="view-label-cards">Schede</span>
+                  </label>
+                </span>
+              </div>
             </div>
-            <div class="results-actions d-flex flex-column align-items-stretch align-items-md-end gap-2">
+
+            <div class="results-actions">
               <button type="button" id="share-results-btn" class="btn share-results-btn hidden">
                 <i class="bi bi-share" aria-hidden="true"></i>
                 <span id="share-results-btn-text">condividi risultati</span>
               </button>
-              <p id="status" class="status-pill mb-0">Pronto.</p>
             </div>
           </div>
 
-          <div class="results-view-toggle mb-4">
-            <div class="form-label filter-label mb-2">
-              <i class="bi bi-grid" aria-hidden="true"></i>
-              <span id="label-view-mode">Visualizza Lista/Schede</span>
-            </div>
-            <div class="view-mode-toggle" role="group" aria-label="Visualizzazione risultati">
-              <span class="view-mode-row" role="radiogroup" aria-label="Visualizzazione risultati">
-                <input type="radio" class="btn-check" name="view-mode" id="view-mode-list" value="list" checked />
-                <label class="btn btn-view-mode" for="view-mode-list">
-                  <i class="bi bi-table" aria-hidden="true"></i>
-                  <span id="view-label-list">Lista</span>
-                </label>
-
-                <input type="radio" class="btn-check" name="view-mode" id="view-mode-cards" value="cards" />
-                <label class="btn btn-view-mode" for="view-mode-cards">
-                  <i class="bi bi-grid-3x2-gap" aria-hidden="true"></i>
-                  <span id="view-label-cards">Schede</span>
-                </label>
-              </span>
-            </div>
-          </div>
+          <p id="status" class="status-pill mb-4">Pronto.</p>
 
           <div id="list-view" class="table-wrap table-responsive">
             <table class="table align-middle table-hover mb-0 results-table">
