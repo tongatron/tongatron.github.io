@@ -1,4 +1,4 @@
-const CACHE_VERSION = "ryanair-search-v20260312-37";
+const CACHE_VERSION = "ryanair-search-v20260312-38";
 const APP_SHELL = [
   "./",
   "./index.html",
@@ -42,12 +42,31 @@ self.addEventListener("fetch", (event) => {
     return;
   }
 
+  const requestUrl = new URL(request.url);
+  if (requestUrl.origin !== self.location.origin) {
+    return;
+  }
+
+  if (request.mode === "navigate") {
+    event.respondWith(
+      fetch(request).catch(() =>
+        caches.match("./index.html")
+      )
+    );
+    return;
+  }
+
   event.respondWith(
     caches.match(request).then((cachedResponse) => {
       if (cachedResponse) {
         return cachedResponse;
       }
+
       return fetch(request).then((networkResponse) => {
+        if (!networkResponse || networkResponse.status !== 200) {
+          return networkResponse;
+        }
+
         const clonedResponse = networkResponse.clone();
         caches.open(CACHE_VERSION).then((cache) => {
           cache.put(request, clonedResponse);

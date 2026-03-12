@@ -1,13 +1,27 @@
 {
+  "id": "/projects/ryanair-search/",
   "name": "Ryanair Search",
-  "short_name": "Ryanair Search",
-  "description": "Cerca voli Ryanair andata e ritorno filtrando aeroporto di partenza, destinazione, budget e durata del soggiorno.",
-  "lang": "it-IT",
-  "start_url": "./",
+  "short_name": "Ryanair",
+  "description": "Trova le migliori offerte Ryanair per la tua vacanza. Scegli l'aeroporto di partenza, imposta budget e durata del soggiorno e scopri tutte le destinazioni raggiungibili.",
+  "lang": "it",
+  "dir": "ltr",
+  "start_url": "./?source=pwa",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#eaf1ff",
+  "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
+  "background_color": "#073590",
   "theme_color": "#073590",
+  "categories": ["travel", "utilities", "lifestyle"],
+  "prefer_related_applications": false,
+  "screenshots": [
+    {
+      "src": "./assets/social-preview.png",
+      "sizes": "1200x630",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Anteprima Ryanair Search"
+    }
+  ],
   "icons": [
     {
       "src": "./assets/icon-192.png",
