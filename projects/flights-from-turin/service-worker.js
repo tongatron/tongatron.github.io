@@ -1,4 +1,4 @@
-const CACHE_VERSION = "flights-from-turin-v20260312-1";
+const CACHE_VERSION = "flights-from-turin-v20260312-12";
 const APP_SHELL = [
   "./",
   "./index.html",
@@ -7,14 +7,12 @@ const APP_SHELL = [
   "./vendor/bootstrap-icons/bootstrap-icons.css",
   "./vendor/bootstrap-icons/fonts/bootstrap-icons.woff2?e34853135f9e39acf64315236852cd5a",
   "./vendor/bootstrap-icons/fonts/bootstrap-icons.woff?e34853135f9e39acf64315236852cd5a",
-  "./styles.css?v=20260312-01",
-  "./app.js?v=20260312-01",
+  "./styles.css?v=20260312-11",
+  "./app.js?v=20260312-03",
   "./manifest.webmanifest",
   "./assets/icon.svg",
   "./assets/icon-192.png",
   "./assets/icon-512.png",
-  "./assets/flag-piedmont.svg",
-  "./assets/flag-sardinia.svg",
 ];
 
 self.addEventListener("install", (event) => {
