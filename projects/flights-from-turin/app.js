@@ -797,7 +797,7 @@ function renderListRows(fares) {
             <div class="detail-item">
               <div class="detail-label">
                 <i class="bi bi-send-arrow-up" aria-hidden="true"></i>
-                <span>${t("detailsOutbound")}</span>
+                <span>${t("cardOutbound")}</span>
               </div>
               <div class="detail-value">${formatLegDetails(
                 fare.outboundDate,
@@ -808,7 +808,7 @@ function renderListRows(fares) {
             <div class="detail-item">
               <div class="detail-label">
                 <i class="bi bi-send-arrow-down" aria-hidden="true"></i>
-                <span>${t("detailsReturn")}</span>
+                <span>${t("cardReturn")}</span>
               </div>
               <div class="detail-value">${formatLegDetails(
                 fare.inboundDate,
@@ -819,7 +819,7 @@ function renderListRows(fares) {
             <div class="detail-item detail-item-full">
               <div class="detail-label">
                 <i class="bi bi-calendar3" aria-hidden="true"></i>
-                <span>${t("detailsStay")}</span>
+                <span>${t("cardStay")}</span>
               </div>
               <div class="detail-value">${t("days", { count: fare.tripDays })}</div>
             </div>

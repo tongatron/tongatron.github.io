@@ -1,4 +1,4 @@
-const CACHE_VERSION = "flights-from-turin-v20260312-12";
+const CACHE_VERSION = "flights-from-turin-v20260312-13";
 const APP_SHELL = [
   "./",
   "./index.html",
