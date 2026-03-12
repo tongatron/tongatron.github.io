@@ -7,16 +7,15 @@ const URL_FILTER_KEYS = {
   tolerance: "tol",
   maxTotalPrice: "max",
   view: "view",
-  lang: "lang",
 };
 
 const I18N = {
   it: {
     pageTitle: "voli da Torino",
-    heroEyebrow: "Ryanair Fare Finder",
+    heroEyebrow: "Trova voli Ryanair",
     heroTitle: "voli da Torino",
     heroDescription:
-      "La ricerca usa le API pubbliche Ryanair e mostra il prezzo totale andata+ritorno dalle rotte Ryanair disponibili in partenza da Torino.",
+      "Confronta i voli Ryanair in partenza da Torino, filtra per budget e durata del soggiorno e condividi i risultati con un link.",
     labelDestination: "Aeroporto destinazione",
     labelMonths: "Mesi da analizzare",
     labelTargetStay: "Durata target (giorni)",
@@ -67,6 +66,8 @@ const I18N = {
     cardTotal: "Totale A/R:",
     fromTurin: "Torino (TRN)",
     legTemplate: "{departure} -> {arrival} (€ {price})",
+    shareResults: "condividi risultati",
+    shareResultsCopied: "link copiato",
     ariaLanguageGroup: "Selezione lingua",
     ariaViewMode: "Visualizzazione risultati",
   },
@@ -286,12 +287,15 @@ const statusEl = document.querySelector("#status");
 const metaEl = document.querySelector("#meta");
 const searchBtn = document.querySelector("#search-btn");
 const searchBtnTextEl = document.querySelector("#search-btn-text");
+const shareResultsBtn = document.querySelector("#share-results-btn");
+const shareResultsBtnTextEl = document.querySelector("#share-results-btn-text");
 
 const dailyFareCache = new Map();
 let availableAirports = [];
 let currentResults = [];
 let currentLang = "it";
 let lastRunContext = null;
+let shareResetTimer = null;
 
 const appReady = Boolean(
   form &&
@@ -301,11 +305,11 @@ const appReady = Boolean(
     stayToleranceInput &&
     maxTotalPriceInput &&
     viewModeInputs.length > 0 &&
-    langButtons.length >= 2 &&
     resultsBody &&
     statusEl &&
     metaEl &&
-    searchBtn
+    searchBtn &&
+    shareResultsBtn
 );
 
 if (!appReady) {
@@ -320,10 +324,16 @@ if (!appReady) {
 
 async function initializeApp() {
   const initialFilters = readFiltersFromUrl();
-  setLanguage(initialFilters.lang, { updateUrl: false, rerender: false });
+  document.documentElement.lang = "it";
+  document.documentElement.dir = "ltr";
+  document.body.dataset.lang = "it";
+  currentLang = "it";
+  applyStaticTranslations();
   applyInitialFilters(initialFilters);
 
   form.addEventListener("submit", onSubmit);
+
+  shareResultsBtn.addEventListener("click", copyResultsLink);
 
   for (const input of viewModeInputs) {
     input.addEventListener("change", () => {
@@ -332,21 +342,12 @@ async function initializeApp() {
     });
   }
 
-  for (const button of langButtons) {
-    button.addEventListener("click", () => {
-      const selectedLang = normalizeLanguage(button.dataset.lang);
-      if (selectedLang === currentLang) {
-        return;
-      }
-      setLanguage(selectedLang, { updateUrl: true, rerender: true });
-    });
-  }
-
   setLoading(true, t("loadingAirports"));
 
   try {
     availableAirports = await fetchReachableAirportsFromTurin();
     populateAirportFilter(availableAirports, initialFilters.destinationCode);
+    updateUrlFromCurrentFilters();
     applyViewMode();
     await runSearch({ updateUrl: false });
   } catch (error) {
@@ -408,6 +409,7 @@ async function runSearch({ updateUrl = true } = {}) {
   const returnWindowTo = addDaysIso(dateTo, targetStay + tolerance);
   const inboundMonths = monthsBetween(returnWindowFrom, returnWindowTo);
 
+  setShareButtonVisibility(false);
   setLoading(true, t("loadingPrices"));
   currentResults = [];
   clearResults();
@@ -943,6 +945,7 @@ function clearResults() {
 function setLoading(isLoading, text = "") {
   searchBtn.disabled = isLoading;
   searchBtn.setAttribute("aria-busy", isLoading ? "true" : "false");
+  shareResultsBtn.disabled = isLoading;
   if (isLoading && text) {
     statusEl.classList.remove("error");
     statusEl.textContent = text;
@@ -952,6 +955,7 @@ function setLoading(isLoading, text = "") {
 function setError(message) {
   statusEl.classList.add("error");
   statusEl.textContent = message;
+  setShareButtonVisibility(false);
 }
 
 function renderMeta(context) {
@@ -969,6 +973,7 @@ function renderMeta(context) {
 
 function renderStatus(context) {
   statusEl.classList.remove("error");
+  setShareButtonVisibility(true);
 
   if (context.empty) {
     statusEl.textContent = t("statusNoResults", { max: formatPrice(context.maxTotalPrice) });
@@ -1132,7 +1137,6 @@ function readFiltersFromUrl() {
     tolerance: parseIntegerInRange(params.get(URL_FILTER_KEYS.tolerance), 0, 7),
     maxTotalPrice: parseIntegerInRange(params.get(URL_FILTER_KEYS.maxTotalPrice), 1, 2000),
     view: params.get(URL_FILTER_KEYS.view) === "cards" ? "cards" : "list",
-    lang: normalizeLanguage(params.get(URL_FILTER_KEYS.lang) ?? getBrowserLanguage()),
   };
 }
 
@@ -1161,11 +1165,87 @@ function updateUrlFromCurrentFilters() {
   params.set(URL_FILTER_KEYS.tolerance, stayToleranceInput?.value ?? "1");
   params.set(URL_FILTER_KEYS.maxTotalPrice, maxTotalPriceInput?.value ?? "70");
   params.set(URL_FILTER_KEYS.view, getViewMode());
-  params.set(URL_FILTER_KEYS.lang, currentLang);
+  params.delete("lang");
 
   const query = params.toString();
   const nextUrl = `${window.location.pathname}${query ? `?${query}` : ""}${window.location.hash}`;
   window.history.replaceState(null, "", nextUrl);
+}
+
+function setShareButtonVisibility(isVisible) {
+  if (!shareResultsBtn) {
+    return;
+  }
+
+  shareResultsBtn.classList.toggle("hidden", !isVisible);
+  if (!isVisible) {
+    resetShareButton();
+  }
+}
+
+async function copyResultsLink() {
+  const url = window.location.href;
+
+  try {
+    await copyTextToClipboard(url);
+    showShareCopiedState();
+  } catch (error) {
+    console.error("Impossibile copiare il link dei risultati:", error);
+  }
+}
+
+async function copyTextToClipboard(value) {
+  if (navigator.clipboard?.writeText) {
+    await navigator.clipboard.writeText(value);
+    return;
+  }
+
+  const textArea = document.createElement("textarea");
+  textArea.value = value;
+  textArea.setAttribute("readonly", "");
+  textArea.style.position = "absolute";
+  textArea.style.left = "-9999px";
+  document.body.appendChild(textArea);
+  textArea.select();
+  textArea.setSelectionRange(0, textArea.value.length);
+
+  const success = document.execCommand("copy");
+  document.body.removeChild(textArea);
+
+  if (!success) {
+    throw new Error("copy command failed");
+  }
+}
+
+function showShareCopiedState() {
+  if (!shareResultsBtn) {
+    return;
+  }
+
+  if (shareResetTimer) {
+    window.clearTimeout(shareResetTimer);
+  }
+
+  shareResultsBtn.classList.add("is-copied");
+  setText(shareResultsBtnTextEl, t("shareResultsCopied"));
+
+  shareResetTimer = window.setTimeout(() => {
+    resetShareButton();
+  }, 2200);
+}
+
+function resetShareButton() {
+  if (!shareResultsBtn) {
+    return;
+  }
+
+  if (shareResetTimer) {
+    window.clearTimeout(shareResetTimer);
+    shareResetTimer = null;
+  }
+
+  shareResultsBtn.classList.remove("is-copied");
+  setText(shareResultsBtnTextEl, t("shareResults"));
 }
 
 function parseIntegerInRange(value, min, max) {
@@ -1228,6 +1308,7 @@ function applyStaticTranslations() {
   setText(thDestinationEl, t("thDestination"));
   setText(thDurationEl, t("thDuration"));
   setText(thTotalPriceEl, t("thTotalPrice"));
+  setText(shareResultsBtnTextEl, t("shareResults"));
 
   if (!lastRunContext && !statusEl.classList.contains("error")) {
     statusEl.textContent = t("statusReady");
