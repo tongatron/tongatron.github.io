@@ -64,6 +64,9 @@ const I18N = {
     cardReturn: "Ritorno:",
     cardStay: "Permanenza:",
     cardTotal: "Totale A/R:",
+    listDepartureTimeLabel: "partenza",
+    listReturnTimeLabel: "ritorno",
+    listTotalPriceLabel: "Totale A/R",
     fromTurin: "Torino (TRN)",
     legTemplate: "{departure} -> {arrival} (€ {price})",
     shareResults: "condividi risultati",
@@ -743,7 +746,8 @@ function renderListRows(fares) {
         <div class="flight-cell">
           <span class="cell-icon icon-departure"><i class="bi bi-send-arrow-up" aria-hidden="true"></i></span>
           <div>
-            <div class="fw-semibold">${formatDateTimeWithWeekday(fare.outboundDate)}</div>
+            <div class="fw-semibold cell-date-line">${formatDateWithWeekday(fare.outboundDate)}</div>
+            <div class="cell-subline">${t("listDepartureTimeLabel")}: ${formatTime(fare.outboundDate)}</div>
             <div class="cell-caption">${t("fromTurin")}</div>
           </div>
         </div>
@@ -752,7 +756,8 @@ function renderListRows(fares) {
         <div class="flight-cell">
           <span class="cell-icon icon-return"><i class="bi bi-send-arrow-down" aria-hidden="true"></i></span>
           <div>
-            <div class="fw-semibold">${formatDateTimeWithWeekday(fare.inboundDate)}</div>
+            <div class="fw-semibold cell-date-line">${formatDateWithWeekday(fare.inboundDate)}</div>
+            <div class="cell-subline">${t("listReturnTimeLabel")}: ${formatTime(fare.inboundDate)}</div>
             <div class="cell-caption">${formatDestination(fare)}</div>
           </div>
         </div>
@@ -764,13 +769,14 @@ function renderListRows(fares) {
         </div>
       </td>
       <td>
-        <span class="table-pill">
+        <span class="table-pill table-pill-duration">
           <i class="bi bi-calendar3" aria-hidden="true"></i>
           ${t("days", { count: fare.tripDays })}
         </span>
       </td>
       <td>
-        <span class="table-price">
+        <span class="table-price table-price-total">
+          <span class="price-inline-label">${t("listTotalPriceLabel")}</span>
           <i class="bi bi-currency-euro" aria-hidden="true"></i>
           ${formatPrice(fare.totalPrice)}
         </span>
@@ -866,10 +872,13 @@ function renderCards(fares) {
               </span>
               <h3 class="flight-card-title mt-3 mb-0">${formatDateTimeWithWeekday(fare.outboundDate)}</h3>
             </div>
-            <span class="table-price">
-              <i class="bi bi-currency-euro" aria-hidden="true"></i>
-              ${formatPrice(fare.totalPrice)}
-            </span>
+            <div class="card-total-badge">
+              <div class="card-total-label">${t("cardTotal")}</div>
+              <div class="card-total-value">
+                <i class="bi bi-currency-euro" aria-hidden="true"></i>
+                ${formatPrice(fare.totalPrice)}
+              </div>
+            </div>
           </div>
 
           <div class="flight-timeline mb-3">
@@ -912,10 +921,6 @@ function renderCards(fares) {
             <span class="table-pill">
               <i class="bi bi-geo-alt" aria-hidden="true"></i>
               ${formatDestination(fare)}
-            </span>
-            <span class="table-price">
-              <i class="bi bi-currency-euro" aria-hidden="true"></i>
-              ${t("cardTotal")} ${formatPrice(fare.totalPrice)}
             </span>
           </div>
         </div>
@@ -1043,6 +1048,15 @@ function formatDate(isoDate) {
   return new Intl.DateTimeFormat(getDateLocale(), {
     dateStyle: "medium",
   }).format(parseIsoDate(isoDate));
+}
+
+function formatDateWithWeekday(value) {
+  return new Intl.DateTimeFormat(getDateLocale(), {
+    weekday: "long",
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+  }).format(new Date(value));
 }
 
 function formatDateTimeWithWeekday(value) {

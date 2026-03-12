@@ -697,6 +697,20 @@ body {
   font-size: 0.9rem;
 }
 
+.cell-date-line,
+.cell-subline,
+.table-pill-duration,
+.table-price-total {
+  white-space: nowrap;
+}
+
+.cell-subline {
+  margin-top: 0.15rem;
+  color: var(--app-primary);
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
 .table-pill,
 .table-price,
 .flight-route-badge {
@@ -712,6 +726,57 @@ body {
 
 .table-price i {
   color: #805d00;
+}
+
+.table-pill-duration {
+  display: inline-flex;
+}
+
+.table-price-total {
+  gap: 0.45rem;
+}
+
+.price-inline-label {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--app-primary);
+}
+
+.results-table th:nth-child(4),
+.results-table td:nth-child(4),
+.results-table th:nth-child(5),
+.results-table td:nth-child(5) {
+  width: 1%;
+}
+
+.card-total-badge {
+  min-width: 154px;
+  padding: 0.65rem 0.85rem;
+  border-radius: 18px;
+  background: linear-gradient(135deg, rgba(255, 204, 0, 0.26) 0%, rgba(255, 217, 74, 0.4) 100%);
+  color: #062d7a;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+.card-total-label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.card-total-value {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-top: 0.2rem;
+  font-size: 1.5rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.card-total-value i {
+  color: inherit;
 }
 
 .details-row td {
