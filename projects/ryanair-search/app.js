@@ -1,6 +1,8 @@
 const AIRPORTS_API_BASE = "https://www.ryanair.com/api/views/locate/3/airports";
 const CHEAPEST_PER_DAY_API = "https://www.ryanair.com/api/farfnd/3/oneWayFares";
 const DEFAULT_ORIGIN_COUNTRY = "IT";
+const DEFAULT_ORIGIN_AIRPORT = "TRN";
+const DEFAULT_DESTINATION_SELECTION = "all";
 const URL_FILTER_KEYS = {
   originScope: "scope",
   origin: "from",
@@ -19,7 +21,8 @@ const I18N = {
     pageTitle: "Ryanair Search",
     heroEyebrow: "Trova voli Ryanair",
     heroTitle: "voli Ryanair",
-    heroDescription: "Scegli l'aeroporto di partenza, filtra per budget e durata del soggiorno e trova le migliori offerte.",
+    heroDescription:
+      "Trova le migliori offerte Ryanair per la tua vacanza. Scegli l'aeroporto di partenza, imposta budget e durata del soggiorno e scopri tutte le destinazioni raggiungibili.",
     ticketOriginLabel: "Partenza",
     ticketOriginFallbackText: "seleziona aeroporto",
     ticketDestinationLabel: "Destinazioni",
@@ -51,7 +54,7 @@ const I18N = {
     thDestination: "Destinazione",
     thDuration: "Durata",
     thTotalPrice: "Prezzo totale",
-    destinationAll: "Tutti gli aeroporti raggiungibili",
+    destinationAll: "Tutte le destinazioni",
     destinationNone: "Nessuna destinazione disponibile",
     originNone: "Nessun aeroporto disponibile",
     statusReady: "Pronto.",
@@ -106,7 +109,8 @@ const I18N = {
     pageTitle: "Ryanair Search",
     heroEyebrow: "Find Ryanair flights",
     heroTitle: "Ryanair flights",
-    heroDescription: "Choose a departure airport, filter by budget and trip length, and find the best deals.",
+    heroDescription:
+      "Find the best Ryanair deals for your vacation. Choose your departure airport, set your budget and trip length, and discover all reachable destinations.",
     ticketOriginLabel: "Departure",
     ticketOriginFallbackText: "choose an airport",
     ticketDestinationLabel: "Destinations",
@@ -138,7 +142,7 @@ const I18N = {
     thDestination: "Destination",
     thDuration: "Duration",
     thTotalPrice: "Total price",
-    destinationAll: "All reachable airports",
+    destinationAll: "All destinations",
     destinationNone: "No destinations available",
     originNone: "No airports available",
     statusReady: "Ready.",
@@ -356,8 +360,8 @@ async function initializeApp() {
       airportLookup.set(airport.code, airport);
     }
     refreshAirportControls({
-      preferredOriginCode: initialFilters.originCode,
-      preferredDestinationCode: initialFilters.destinationCode,
+      preferredOriginCode: initialFilters.originCode || DEFAULT_ORIGIN_AIRPORT,
+      preferredDestinationCode: initialFilters.destinationCode || DEFAULT_DESTINATION_SELECTION,
     });
     updateUrlFromCurrentFilters();
     applyViewMode();
@@ -675,9 +679,12 @@ function populateOriginAirportFilter(airports, preferredCode = null) {
 
   const normalizedPreferredCode = preferredCode?.trim().toUpperCase() ?? "";
   const hasPreferred = airports.some((airport) => airport.code === normalizedPreferredCode);
+  const hasDefaultOrigin = airports.some((airport) => airport.code === DEFAULT_ORIGIN_AIRPORT);
 
   if (hasPreferred) {
     originAirportInput.value = normalizedPreferredCode;
+  } else if (hasDefaultOrigin) {
+    originAirportInput.value = DEFAULT_ORIGIN_AIRPORT;
   } else {
     originAirportInput.value = "";
   }
@@ -717,7 +724,7 @@ function populateDestinationFilter(airports, preferredCode = null) {
   const hasPreferred = airports.some((airport) => airport.code === normalizedPreferredCode);
 
   if (!normalizedPreferredCode) {
-    airportFilterInput.value = "";
+    airportFilterInput.value = DEFAULT_DESTINATION_SELECTION;
   } else if (hasPreferred) {
     airportFilterInput.value = normalizedPreferredCode;
   } else if (normalizedPreferredCode === "all") {
