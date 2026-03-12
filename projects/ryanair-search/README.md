@@ -1,4 +1,4 @@
-# Ryanair Flights
+# Ryanair Search
 
 Web app statica per cercare voli Ryanair scegliendo aeroporto di partenza e destinazione, filtrare i risultati per durata del soggiorno e budget totale andata/ritorno, e condividere la ricerca con un link.
 
@@ -41,7 +41,7 @@ Usata per recuperare l'elenco aeroporti Ryanair attivi con `iataCode`, `countryC
 
 - Endpoint reale (IT): [https://www.ryanair.com/api/views/locate/3/airports/it/active](https://www.ryanair.com/api/views/locate/3/airports/it/active)
 - Endpoint reale (EN): [https://www.ryanair.com/api/views/locate/3/airports/en/active](https://www.ryanair.com/api/views/locate/3/airports/en/active)
-- Nel codice: [app.js](/Users/tonga/Documents/GitHub/tongatron.github.io/projects/flights-from-turin/app.js:1)
+- Nel codice: [app.js](/Users/tonga/Documents/GitHub/tongatron.github.io/projects/ryanair-search/app.js:1)
 
 ### 2. Prezzi giornalieri piu economici per tratta
 
@@ -53,7 +53,7 @@ Usata per recuperare i prezzi `cheapestPerDay` mese per mese su una tratta speci
   - `outboundMonthOfDate`
   - `market=it-it`
   - `currency=EUR`
-- Nel codice: [app.js](/Users/tonga/Documents/GitHub/tongatron.github.io/projects/flights-from-turin/app.js:2)
+- Nel codice: [app.js](/Users/tonga/Documents/GitHub/tongatron.github.io/projects/ryanair-search/app.js:2)
 
 ## Funzionamento della ricerca
 
@@ -74,7 +74,7 @@ Aprire `index.html` direttamente con `file://` non e consigliato, perche service
 ### Avvio rapido dalla cartella del progetto
 
 ```bash
-cd /Users/tonga/Documents/GitHub/tongatron.github.io/projects/flights-from-turin
+cd /Users/tonga/Documents/GitHub/tongatron.github.io/projects/ryanair-search
 python3 -m http.server 8080
 ```
 
@@ -91,7 +91,7 @@ python3 -m http.server 8080
 
 Poi apri:
 
-- [http://localhost:8080/projects/flights-from-turin/](http://localhost:8080/projects/flights-from-turin/)
+- [http://localhost:8080/projects/ryanair-search/](http://localhost:8080/projects/ryanair-search/)
 
 ## Note operative
 

@@ -1,7 +1,6 @@
 const AIRPORTS_API_BASE = "https://www.ryanair.com/api/views/locate/3/airports";
 const CHEAPEST_PER_DAY_API = "https://www.ryanair.com/api/farfnd/3/oneWayFares";
 const DEFAULT_ORIGIN_COUNTRY = "IT";
-const DEFAULT_ORIGIN_AIRPORT = "TRN";
 const URL_FILTER_KEYS = {
   originScope: "scope",
   origin: "from",
@@ -17,7 +16,7 @@ const URL_FILTER_KEYS = {
 
 const I18N = {
   it: {
-    pageTitle: "voli Ryanair",
+    pageTitle: "Ryanair Search",
     heroEyebrow: "Trova voli Ryanair",
     heroTitle: "voli Ryanair",
     heroDescription: "Scegli l'aeroporto di partenza, filtra per budget e durata del soggiorno e condividi i risultati con un link.",
@@ -26,7 +25,9 @@ const I18N = {
     ticketDestinationLabel: "Destinazioni",
     ticketDestinationTitle: "Aeroporti",
     ticketDestinationSubtitle: "{count} aeroporti disponibili",
+    ticketDestinationSubtitleEmpty: "seleziona aeroporto di partenza",
     ticketCaption: "Imposta i filtri qui sotto per trovare le combinazioni migliori in pochi secondi.",
+    selectPlaceholder: "Seleziona",
     labelOriginScope: "Partenza da",
     originScopeItaly: "Italia",
     originScopeAll: "Tutti gli aeroporti",
@@ -61,6 +62,8 @@ const I18N = {
     errorInvalidParams: "Parametri non validi.",
     errorNoAirports: "Nessun aeroporto di partenza disponibile.",
     errorNoDestinations: "Nessuna destinazione disponibile per l'aeroporto selezionato.",
+    errorSelectOrigin: "Seleziona un aeroporto di partenza.",
+    errorSelectDestination: "Seleziona un aeroporto di destinazione.",
     errorAirportUnavailable: "Aeroporto selezionato non disponibile.",
     errorNetwork:
       "Errore rete/API: il browser non riesce a leggere Ryanair. Controlla console DevTools (F12) per CORS o blocchi rete.",
@@ -72,6 +75,8 @@ const I18N = {
     metaDestinationSingle: "Destinazione: {airport}",
     metaDepartToday: "Partenza da oggi: {date}",
     metaMaxSpend: "Spesa massima A/R: € {max}",
+    metaSelectionPending: "Seleziona aeroporto di partenza e destinazione per iniziare.",
+    metaSearchPending: "Aggiorna la ricerca per vedere i risultati.",
     statusNoResults: "Nessun volo entro € {max} trovato con i filtri scelti.",
     statusFound: "Trovate {count} opzioni economiche.",
     statusFoundWithFailed:
@@ -93,11 +98,12 @@ const I18N = {
     legTemplate: "{departure} -> {arrival} (€ {price})",
     shareResults: "condividi risultati",
     shareResultsCopied: "link copiato",
+    footerCreditPrefix: "realizzato grazie al modulo open-source",
     ariaLanguageGroup: "Selezione lingua",
     ariaViewMode: "Visualizzazione risultati",
   },
   en: {
-    pageTitle: "Ryanair flights",
+    pageTitle: "Ryanair Search",
     heroEyebrow: "Find Ryanair flights",
     heroTitle: "Ryanair flights",
     heroDescription: "Choose a departure airport, filter by budget and trip length, and share the results with a link.",
@@ -106,7 +112,9 @@ const I18N = {
     ticketDestinationLabel: "Destinations",
     ticketDestinationTitle: "Airports",
     ticketDestinationSubtitle: "{count} airports available",
+    ticketDestinationSubtitleEmpty: "choose a departure airport",
     ticketCaption: "Set the filters below to find the best combinations in a few seconds.",
+    selectPlaceholder: "Select",
     labelOriginScope: "Departure from",
     originScopeItaly: "Italy",
     originScopeAll: "All airports",
@@ -141,6 +149,8 @@ const I18N = {
     errorInvalidParams: "Invalid parameters.",
     errorNoAirports: "No departure airports available.",
     errorNoDestinations: "No destinations available for the selected departure airport.",
+    errorSelectOrigin: "Select a departure airport.",
+    errorSelectDestination: "Select a destination airport.",
     errorAirportUnavailable: "Selected airport is not available.",
     errorNetwork:
       "Network/API error: the browser could not read Ryanair data. Check DevTools (F12) for CORS or network blocking.",
@@ -152,6 +162,8 @@ const I18N = {
     metaDestinationSingle: "Destination: {airport}",
     metaDepartToday: "Departing from today: {date}",
     metaMaxSpend: "Max round-trip budget: € {max}",
+    metaSelectionPending: "Select departure and destination airports to begin.",
+    metaSearchPending: "Update the search to view results.",
     statusNoResults: "No flights under € {max} found with the selected filters.",
     statusFound: "Found {count} low-cost options.",
     statusFoundWithFailed:
@@ -173,6 +185,7 @@ const I18N = {
     legTemplate: "{departure} -> {arrival} (€ {price})",
     shareResults: "share results",
     shareResultsCopied: "link copied",
+    footerCreditPrefix: "built thanks to the open-source module",
     ariaLanguageGroup: "Language selection",
     ariaViewMode: "Results view",
   },
@@ -226,6 +239,7 @@ const thDurationEl = document.querySelector("#th-duration");
 const thTotalPriceEl = document.querySelector("#th-total-price");
 
 const resultsBody = document.querySelector("#results-body");
+const resultsPanelEl = document.querySelector("#results-panel");
 const listViewEl = document.querySelector("#list-view");
 const cardsViewEl = document.querySelector("#cards-view");
 const statusEl = document.querySelector("#status");
@@ -234,6 +248,7 @@ const searchBtn = document.querySelector("#search-btn");
 const searchBtnTextEl = document.querySelector("#search-btn-text");
 const shareResultsBtn = document.querySelector("#share-results-btn");
 const shareResultsBtnTextEl = document.querySelector("#share-results-btn-text");
+const footerCreditPrefixEl = document.querySelector("#footer-credit-prefix");
 
 const dailyFareCache = new Map();
 const airportLookup = new Map();
@@ -243,6 +258,8 @@ let availableAirports = [];
 let currentResults = [];
 let currentLang = "it";
 let lastRunContext = null;
+let lastSearchSelection = null;
+let isSearchInFlight = false;
 let shareResetTimer = null;
 
 const appReady = Boolean(
@@ -256,6 +273,7 @@ const appReady = Boolean(
     maxTotalPriceInput &&
     sortResultsInput &&
     viewModeInputs.length > 0 &&
+    resultsPanelEl &&
     resultsBody &&
     statusEl &&
     metaEl &&
@@ -288,11 +306,18 @@ async function initializeApp() {
       preferredDestinationCode: airportFilterInput?.value ?? "all",
     });
     updateUrlFromCurrentFilters();
+    syncResultsPanelVisibility();
   });
 
   originAirportInput.addEventListener("change", () => {
     refreshDestinationOptions({ preferredDestinationCode: airportFilterInput?.value ?? "all" });
     updateUrlFromCurrentFilters();
+    syncResultsPanelVisibility();
+  });
+
+  airportFilterInput.addEventListener("change", () => {
+    updateUrlFromCurrentFilters();
+    syncResultsPanelVisibility();
   });
 
   sortResultsInput.addEventListener("change", () => {
@@ -318,6 +343,10 @@ async function initializeApp() {
     });
   }
 
+  for (const input of [monthsInput, targetStayInput, stayToleranceInput, maxTotalPriceInput]) {
+    input.addEventListener("change", syncResultsPanelVisibility);
+  }
+
   setLoading(true, t("loadingAirports"));
 
   try {
@@ -332,7 +361,12 @@ async function initializeApp() {
     });
     updateUrlFromCurrentFilters();
     applyViewMode();
-    await runSearch({ updateUrl: false });
+    if (hasActiveSearchSelection(initialFilters)) {
+      await runSearch({ updateUrl: false });
+    } else {
+      renderPendingMeta();
+      syncResultsPanelVisibility();
+    }
   } catch (error) {
     setError(t("errorInit", { message: error.message }));
   } finally {
@@ -352,6 +386,7 @@ async function runSearch({ updateUrl = true } = {}) {
   const tolerance = Number(stayToleranceInput?.value ?? 1);
   const maxTotalPrice = Number(maxTotalPriceInput?.value ?? 70);
   const selectedOriginAirport = getSelectedOriginAirport();
+  const selectedAirportCode = airportFilterInput?.value ?? "";
 
   if (
     Number.isNaN(months) ||
@@ -368,7 +403,7 @@ async function runSearch({ updateUrl = true } = {}) {
   }
 
   if (!selectedOriginAirport) {
-    setError(t("errorNoAirports"));
+    setError(t("errorSelectOrigin"));
     return;
   }
 
@@ -377,7 +412,11 @@ async function runSearch({ updateUrl = true } = {}) {
     return;
   }
 
-  const selectedAirportCode = airportFilterInput?.value ?? "all";
+  if (!selectedAirportCode) {
+    setError(t("errorSelectDestination"));
+    return;
+  }
+
   const airportsToSearch =
     selectedAirportCode === "all"
       ? availableAirports
@@ -391,6 +430,10 @@ async function runSearch({ updateUrl = true } = {}) {
   if (updateUrl) {
     updateUrlFromCurrentFilters();
   }
+
+  lastSearchSelection = getCurrentSearchSelection();
+  isSearchInFlight = true;
+  setResultsPanelVisibility(true);
 
   const dateTo = addDaysIso(addMonthsIso(dateFrom, months), -1);
   const outboundMonths = monthsBetween(dateFrom, dateTo);
@@ -484,6 +527,8 @@ async function runSearch({ updateUrl = true } = {}) {
       setError(t("errorSearch", { message: error.message }));
     }
   } finally {
+    isSearchInFlight = false;
+    syncResultsPanelVisibility();
     setLoading(false);
   }
 }
@@ -608,12 +653,14 @@ function populateOriginAirportFilter(airports, preferredCode = null) {
   originAirports = airports;
   originAirportInput.innerHTML = "";
 
+  const placeholderOption = document.createElement("option");
+  placeholderOption.value = "";
+  placeholderOption.textContent = t("selectPlaceholder");
+  originAirportInput.appendChild(placeholderOption);
+
   if (airports.length === 0) {
-    const option = document.createElement("option");
-    option.value = "";
-    option.textContent = t("originNone");
-    originAirportInput.appendChild(option);
     originAirportInput.disabled = true;
+    originAirportInput.value = "";
     return;
   }
 
@@ -628,14 +675,11 @@ function populateOriginAirportFilter(airports, preferredCode = null) {
 
   const normalizedPreferredCode = preferredCode?.trim().toUpperCase() ?? "";
   const hasPreferred = airports.some((airport) => airport.code === normalizedPreferredCode);
-  const hasDefaultOrigin = airports.some((airport) => airport.code === DEFAULT_ORIGIN_AIRPORT);
 
   if (hasPreferred) {
     originAirportInput.value = normalizedPreferredCode;
-  } else if (hasDefaultOrigin) {
-    originAirportInput.value = DEFAULT_ORIGIN_AIRPORT;
   } else {
-    originAirportInput.value = airports[0].code;
+    originAirportInput.value = "";
   }
 }
 
@@ -647,11 +691,13 @@ function populateDestinationFilter(airports, preferredCode = null) {
   airportFilterInput.innerHTML = "";
   airportFilterInput.disabled = airports.length === 0;
 
+  const placeholderOption = document.createElement("option");
+  placeholderOption.value = "";
+  placeholderOption.textContent = t("selectPlaceholder");
+  airportFilterInput.appendChild(placeholderOption);
+
   if (airports.length === 0) {
-    const option = document.createElement("option");
-    option.value = "";
-    option.textContent = t("destinationNone");
-    airportFilterInput.appendChild(option);
+    airportFilterInput.value = "";
     return;
   }
 
@@ -670,12 +716,14 @@ function populateDestinationFilter(airports, preferredCode = null) {
   const normalizedPreferredCode = preferredCode?.trim().toUpperCase() ?? "";
   const hasPreferred = airports.some((airport) => airport.code === normalizedPreferredCode);
 
-  if (normalizedPreferredCode === "all" || !normalizedPreferredCode) {
-    airportFilterInput.value = "all";
+  if (!normalizedPreferredCode) {
+    airportFilterInput.value = "";
   } else if (hasPreferred) {
     airportFilterInput.value = normalizedPreferredCode;
-  } else {
+  } else if (normalizedPreferredCode === "all") {
     airportFilterInput.value = "all";
+  } else {
+    airportFilterInput.value = "";
   }
 }
 
@@ -1069,6 +1117,7 @@ function setLoading(isLoading, text = "") {
 }
 
 function setError(message) {
+  setResultsPanelVisibility(true);
   statusEl.classList.add("error");
   statusEl.textContent = message;
   setShareButtonVisibility(false);
@@ -1089,6 +1138,13 @@ function renderMeta(context) {
     t("metaDepartToday", { date: formatDate(context.dateFrom) }),
     t("metaMaxSpend", { max: formatPrice(context.maxTotalPrice) }),
   ].join(" • ");
+}
+
+function renderPendingMeta() {
+  const hasRequiredSelection = hasActiveSearchSelection(getCurrentSearchSelection());
+  metaEl.textContent = t(hasRequiredSelection ? "metaSearchPending" : "metaSelectionPending");
+  statusEl.classList.remove("error");
+  statusEl.textContent = t("statusReady");
 }
 
 function renderStatus(context) {
@@ -1333,6 +1389,57 @@ function applyInitialFilters(filters) {
   setViewMode(filters.view);
 }
 
+function hasActiveSearchSelection(filters) {
+  return Boolean(filters.originCode) && Boolean(filters.destinationCode);
+}
+
+function getCurrentSearchSelection() {
+  return {
+    originCode: originAirportInput?.value?.trim().toUpperCase() ?? "",
+    destinationCode: airportFilterInput?.value?.trim().toUpperCase() ?? "",
+    months: monthsInput?.value ?? "",
+    stay: targetStayInput?.value ?? "",
+    tolerance: stayToleranceInput?.value ?? "",
+    maxTotalPrice: maxTotalPriceInput?.value ?? "",
+  };
+}
+
+function matchesSearchSelection(currentSelection, previousSelection) {
+  if (!currentSelection || !previousSelection) {
+    return false;
+  }
+
+  return (
+    currentSelection.originCode === previousSelection.originCode &&
+    currentSelection.destinationCode === previousSelection.destinationCode &&
+    currentSelection.months === previousSelection.months &&
+    currentSelection.stay === previousSelection.stay &&
+    currentSelection.tolerance === previousSelection.tolerance &&
+    currentSelection.maxTotalPrice === previousSelection.maxTotalPrice
+  );
+}
+
+function setResultsPanelVisibility(isVisible) {
+  resultsPanelEl.classList.toggle("hidden", !isVisible);
+}
+
+function syncResultsPanelVisibility() {
+  const currentSelection = getCurrentSearchSelection();
+  const shouldShow =
+    isSearchInFlight ||
+    (hasActiveSearchSelection(currentSelection) &&
+      matchesSearchSelection(currentSelection, lastSearchSelection));
+
+  setResultsPanelVisibility(shouldShow);
+
+  if (!shouldShow) {
+    setShareButtonVisibility(false);
+    if (!statusEl.classList.contains("error")) {
+      renderPendingMeta();
+    }
+  }
+}
+
 function updateUrlFromCurrentFilters() {
   const params = new URLSearchParams(window.location.search);
 
@@ -1392,7 +1499,12 @@ function updateOriginPreview(originAirport) {
 }
 
 function updateDestinationPreview(count) {
-  setText(ticketDestinationSubtitleEl, t("ticketDestinationSubtitle", { count }));
+  setText(
+    ticketDestinationSubtitleEl,
+    getSelectedOriginAirport()
+      ? t("ticketDestinationSubtitle", { count })
+      : t("ticketDestinationSubtitleEmpty")
+  );
 }
 
 function updateResultsHeading() {
@@ -1529,7 +1641,7 @@ function applyStaticTranslations() {
   setText(labelOriginAirportEl, t("labelOriginAirport"));
   setText(ticketDestinationLabelEl, t("ticketDestinationLabel"));
   setText(ticketDestinationTitleEl, t("ticketDestinationTitle"));
-  setText(ticketDestinationSubtitleEl, t("ticketDestinationSubtitle", { count: availableAirports.length }));
+  updateDestinationPreview(availableAirports.length);
   setText(ticketCaptionEl, t("ticketCaption"));
   setText(labelDestinationEl, t("labelDestination"));
   setText(labelMonthsEl, t("labelMonths"));
@@ -1550,9 +1662,10 @@ function applyStaticTranslations() {
   setText(thDurationEl, t("thDuration"));
   setText(thTotalPriceEl, t("thTotalPrice"));
   setText(shareResultsBtnTextEl, t("shareResults"));
+  setText(footerCreditPrefixEl, t("footerCreditPrefix"));
 
   if (!lastRunContext && !statusEl.classList.contains("error")) {
-    statusEl.textContent = t("statusReady");
+    renderPendingMeta();
   }
 
   if (langSwitcherEl) {

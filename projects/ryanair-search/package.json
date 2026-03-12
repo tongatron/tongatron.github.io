@@ -1,7 +1,7 @@
 {
-  "name": "flights-from-turin",
+  "name": "ryanair-search",
   "version": "1.0.0",
-  "description": "Pagina web che mostra, in ordine di data, i voli economici da Torino (`TRN`) verso gli aeroporti Ryanair raggiungibili, con ritorno dopo circa 5 giorni.",
+  "description": "Web app per cercare voli Ryanair andata e ritorno filtrando aeroporto di partenza, destinazione, budget e durata del soggiorno.",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

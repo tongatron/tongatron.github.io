@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>voli Ryanair</title>
+    <title>Ryanair Search</title>
     <meta name="theme-color" content="#073590" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-title" content="Voli Ryanair" />
+    <meta name="apple-mobile-web-app-title" content="Ryanair Search" />
     <link rel="manifest" href="./manifest.webmanifest" />
     <link rel="icon" type="image/svg+xml" href="./assets/icon.svg" />
     <link rel="icon" type="image/png" sizes="192x192" href="./assets/icon-192.png" />
@@ -80,7 +80,9 @@
                         <i class="bi bi-airplane-engines" aria-hidden="true"></i>
                         <span id="label-origin-airport">Aeroporto di partenza</span>
                       </label>
-                      <select id="origin-airport" class="form-select form-select-lg ticket-form-control"></select>
+                      <select id="origin-airport" class="form-select form-select-lg ticket-form-control">
+                        <option value="">Seleziona</option>
+                      </select>
                     </div>
 
                     <div class="ticket-route-line ticket-route-line-search" aria-hidden="true">
@@ -105,8 +107,12 @@
                         <i class="bi bi-geo-alt" aria-hidden="true"></i>
                         <span id="label-destination">Aeroporto destinazione</span>
                       </label>
-                      <select id="airport-filter" class="form-select form-select-lg ticket-form-control">
-                        <option value="all">Tutti gli aeroporti raggiungibili</option>
+                      <select
+                        id="airport-filter"
+                        class="form-select form-select-lg ticket-form-control"
+                        disabled
+                      >
+                        <option value="">Seleziona</option>
                       </select>
                     </div>
                   </div>
@@ -202,7 +208,7 @@
         </section>
       </header>
 
-      <section class="card border-0 shadow-lg results-panel mt-4">
+      <section id="results-panel" class="card border-0 shadow-lg results-panel mt-4 hidden">
         <div class="card-body p-4 p-lg-5">
           <div class="results-head mb-4">
             <h2 class="results-title d-flex align-items-center gap-2 mb-0">
@@ -288,7 +294,7 @@
 
       <footer class="site-footer">
         <p class="site-footer-note mb-2">
-          realizzato grazie al modulo open-source
+          <span id="footer-credit-prefix">realizzato grazie al modulo open-source</span>
           <a
             class="site-footer-link"
             href="https://github.com/cohaolain/ryanair-py"
@@ -305,7 +311,7 @@
     </main>
 
     <script src="./vendor/bootstrap/bootstrap.bundle.min.js"></script>
-    <script src="./app.js?v=20260312-08" type="module"></script>
+    <script src="./app.js?v=20260312-12" type="module"></script>
     <script>
       if ("serviceWorker" in navigator) {
         window.addEventListener("load", function registerServiceWorker() {
