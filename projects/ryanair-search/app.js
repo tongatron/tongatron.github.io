@@ -677,7 +677,7 @@ function populateOriginAirportFilter(airports, preferredCode = null) {
     originAirportInput.appendChild(option);
   }
 
-  const normalizedPreferredCode = preferredCode?.trim().toUpperCase() ?? "";
+  const normalizedPreferredCode = normalizeDestinationCode(preferredCode);
   const hasPreferred = airports.some((airport) => airport.code === normalizedPreferredCode);
   const hasDefaultOrigin = airports.some((airport) => airport.code === DEFAULT_ORIGIN_AIRPORT);
 
@@ -720,7 +720,7 @@ function populateDestinationFilter(airports, preferredCode = null) {
     airportFilterInput.appendChild(option);
   }
 
-  const normalizedPreferredCode = preferredCode?.trim().toUpperCase() ?? "";
+  const normalizedPreferredCode = normalizeDestinationCode(preferredCode);
   const hasPreferred = airports.some((airport) => airport.code === normalizedPreferredCode);
 
   if (!normalizedPreferredCode) {
@@ -1366,7 +1366,7 @@ function readFiltersFromUrl() {
   return {
     originScope: normalizeOriginScope(params.get(URL_FILTER_KEYS.originScope)),
     originCode: params.get(URL_FILTER_KEYS.origin)?.trim().toUpperCase() ?? "",
-    destinationCode: params.get(URL_FILTER_KEYS.destination)?.trim().toUpperCase() ?? "",
+    destinationCode: normalizeDestinationCode(params.get(URL_FILTER_KEYS.destination)),
     months: parseIntegerInRange(params.get(URL_FILTER_KEYS.months), 1, 12),
     stay: parseIntegerInRange(params.get(URL_FILTER_KEYS.stay), 1, 30),
     tolerance: parseIntegerInRange(params.get(URL_FILTER_KEYS.tolerance), 0, 7),
@@ -1403,7 +1403,7 @@ function hasActiveSearchSelection(filters) {
 function getCurrentSearchSelection() {
   return {
     originCode: originAirportInput?.value?.trim().toUpperCase() ?? "",
-    destinationCode: airportFilterInput?.value?.trim().toUpperCase() ?? "",
+    destinationCode: normalizeDestinationCode(airportFilterInput?.value),
     months: monthsInput?.value ?? "",
     stay: targetStayInput?.value ?? "",
     tolerance: stayToleranceInput?.value ?? "",
@@ -1468,6 +1468,15 @@ function updateUrlFromCurrentFilters() {
 
 function normalizeOriginScope(value) {
   return value === "all" ? "all" : "it";
+}
+
+function normalizeDestinationCode(value) {
+  const normalizedValue = value?.trim() ?? "";
+  if (!normalizedValue) {
+    return "";
+  }
+
+  return normalizedValue.toLowerCase() === "all" ? "all" : normalizedValue.toUpperCase();
 }
 
 function getOriginScope() {
