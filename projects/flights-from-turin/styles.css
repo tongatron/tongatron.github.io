@@ -974,6 +974,11 @@ body {
   text-align: center;
 }
 
+.site-footer-note {
+  color: var(--app-muted);
+  font-size: 0.95rem;
+}
+
 .site-footer-link {
   color: var(--app-primary);
   font-weight: 700;
