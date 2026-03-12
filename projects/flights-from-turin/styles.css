@@ -227,7 +227,7 @@ body {
 
 .ticket-search-overview {
   display: grid;
-  grid-template-columns: minmax(240px, 0.78fr) auto minmax(0, 1.22fr);
+  grid-template-columns: minmax(280px, 1fr) auto minmax(280px, 1fr);
   gap: 1rem;
   align-items: stretch;
   margin-bottom: 1rem;
@@ -304,6 +304,10 @@ body {
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
   gap: 0.75rem;
+}
+
+.ticket-route-line-search {
+  align-self: center;
 }
 
 .ticket-route-line > span:not(.ticket-route-badge) {
@@ -593,6 +597,24 @@ body {
   align-items: end;
 }
 
+.results-options {
+  display: flex;
+  flex: 1 1 720px;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: 1rem;
+}
+
+.results-sort-control {
+  flex: 0 1 240px;
+}
+
+.results-sort-select {
+  min-height: 58px;
+  border-radius: 18px;
+  min-width: 0;
+}
+
 .results-actions {
   min-width: min(100%, 320px);
   display: flex;
@@ -600,6 +622,7 @@ body {
 }
 
 .results-view-toggle {
+  flex: 1 1 380px;
   max-width: 430px;
 }
 
@@ -1047,6 +1070,16 @@ body {
   .results-actions {
     min-width: 100%;
     justify-content: stretch;
+  }
+
+  .results-options {
+    width: 100%;
+  }
+
+  .results-sort-control,
+  .results-view-toggle {
+    flex-basis: 100%;
+    max-width: none;
   }
 
   .results-table thead {

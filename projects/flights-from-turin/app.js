@@ -1,66 +1,81 @@
-const ROUTES_API = "https://www.ryanair.com/api/views/locate/searchWidget/routes/it/airport/TRN";
+const AIRPORTS_API_BASE = "https://www.ryanair.com/api/views/locate/3/airports";
 const CHEAPEST_PER_DAY_API = "https://www.ryanair.com/api/farfnd/3/oneWayFares";
+const DEFAULT_ORIGIN_COUNTRY = "IT";
+const DEFAULT_ORIGIN_AIRPORT = "TRN";
 const URL_FILTER_KEYS = {
+  originScope: "scope",
+  origin: "from",
   destination: "dest",
   months: "months",
   stay: "stay",
   tolerance: "tol",
   maxTotalPrice: "max",
+  sort: "sort",
   view: "view",
   lang: "lang",
 };
 
 const I18N = {
   it: {
-    pageTitle: "voli da Torino",
+    pageTitle: "voli Ryanair",
     heroEyebrow: "Trova voli Ryanair",
-    heroTitle: "voli da Torino",
-    heroDescription:
-      "Confronta i voli Ryanair in partenza da Torino, filtra per budget e durata del soggiorno e condividi i risultati con un link.",
+    heroTitle: "voli Ryanair",
+    heroDescription: "Scegli l'aeroporto di partenza, filtra per budget e durata del soggiorno e condividi i risultati con un link.",
     ticketOriginLabel: "Partenza",
-    ticketOriginCity: "Torino",
+    ticketOriginFallbackText: "seleziona aeroporto",
     ticketDestinationLabel: "Destinazioni",
     ticketDestinationTitle: "Aeroporti",
-    ticketDestinationSubtitle: "scegli dove andare",
-    ticketCaption:
-      "Imposta i filtri qui sotto per trovare le combinazioni migliori in pochi secondi.",
+    ticketDestinationSubtitle: "{count} aeroporti disponibili",
+    ticketCaption: "Imposta i filtri qui sotto per trovare le combinazioni migliori in pochi secondi.",
+    labelOriginScope: "Partenza da",
+    originScopeItaly: "Italia",
+    originScopeAll: "Tutti gli aeroporti",
+    labelOriginAirport: "Aeroporto di partenza",
     labelDestination: "Aeroporto destinazione",
     labelMonths: "Mesi da analizzare",
     labelTargetStay: "Durata target (giorni)",
     labelTolerance: "Tolleranza (± giorni)",
     labelMaxPrice: "Spesa massima A/R (€)",
+    labelSortMode: "Ordina per",
+    sortDate: "Data",
+    sortPrice: "Prezzo",
     labelViewMode: "Visualizza Lista/Schede",
     viewList: "Lista",
     viewCards: "Schede",
     buttonSearch: "Cerca voli",
-    resultsTitle: "Risultati ordinati per data",
+    resultsTitleDate: "Risultati ordinati per data",
+    resultsTitlePrice: "Risultati ordinati per prezzo",
     thDeparture: "Partenza",
     thReturn: "Ritorno",
     thDestination: "Destinazione",
     thDuration: "Durata",
     thTotalPrice: "Prezzo totale",
     destinationAll: "Tutti gli aeroporti raggiungibili",
+    destinationNone: "Nessuna destinazione disponibile",
+    originNone: "Nessun aeroporto disponibile",
     statusReady: "Pronto.",
-    loadingAirports: "Carico aeroporti raggiungibili da Torino...",
+    loadingAirports: "Carico aeroporti Ryanair...",
     loadingPrices: "Recupero prezzi giornalieri Ryanair...",
     loadingPricesProgress: "Recupero prezzi Ryanair... {done}/{total} aeroporti",
     errorInit: "Errore inizializzazione aeroporti: {message}",
     errorInvalidParams: "Parametri non validi.",
-    errorNoAirports: "Nessun aeroporto disponibile da Torino.",
+    errorNoAirports: "Nessun aeroporto di partenza disponibile.",
+    errorNoDestinations: "Nessuna destinazione disponibile per l'aeroporto selezionato.",
     errorAirportUnavailable: "Aeroporto selezionato non disponibile.",
     errorNetwork:
       "Errore rete/API: il browser non riesce a leggere Ryanair. Controlla console DevTools (F12) per CORS o blocchi rete.",
     errorSearch: "Errore durante la ricerca: {message}",
-    errorRoutesRead: "Impossibile leggere le rotte da Torino ({status})",
+    errorAirportsRead: "Impossibile leggere l'elenco aeroporti Ryanair ({status})",
     errorPriceRead: "Errore prezzi {departure}→{arrival} ({status})",
-    metaAllAirports: "Aeroporti: tutti ({count})",
-    metaSingleAirport: "Aeroporto: {airport}",
+    metaOriginAirport: "Partenza: {airport}",
+    metaDestinationAll: "Destinazioni: tutte ({count})",
+    metaDestinationSingle: "Destinazione: {airport}",
     metaDepartToday: "Partenza da oggi: {date}",
     metaMaxSpend: "Spesa massima A/R: € {max}",
     statusNoResults: "Nessun volo entro € {max} trovato con i filtri scelti.",
-    statusFound: "Trovate {count} opzioni economiche in ordine di data.",
+    statusFound: "Trovate {count} opzioni economiche.",
     statusFoundWithFailed:
-      "Trovate {count} opzioni economiche in ordine di data. ({failed} aeroporti non disponibili: {codes})",
+      "Trovate {count} opzioni economiche. ({failed} aeroporti non disponibili: {codes})",
     days: "{count} giorni",
     detailsTitle: "Dettagli voli:",
     detailsRoute: "Tratta: {from} -> {to}",
@@ -75,7 +90,6 @@ const I18N = {
     listDepartureTimeLabel: "partenza",
     listReturnTimeLabel: "ritorno",
     listTotalPriceLabel: "Totale A/R",
-    fromTurin: "Torino (TRN)",
     legTemplate: "{departure} -> {arrival} (€ {price})",
     shareResults: "condividi risultati",
     shareResultsCopied: "link copiato",
@@ -83,55 +97,65 @@ const I18N = {
     ariaViewMode: "Visualizzazione risultati",
   },
   en: {
-    pageTitle: "flights from Turin",
+    pageTitle: "Ryanair flights",
     heroEyebrow: "Find Ryanair flights",
-    heroTitle: "flights from Turin",
-    heroDescription:
-      "Compare Ryanair flights departing from Turin, filter by budget and trip length, and share the results with a link.",
+    heroTitle: "Ryanair flights",
+    heroDescription: "Choose a departure airport, filter by budget and trip length, and share the results with a link.",
     ticketOriginLabel: "Departure",
-    ticketOriginCity: "Turin",
+    ticketOriginFallbackText: "choose an airport",
     ticketDestinationLabel: "Destinations",
     ticketDestinationTitle: "Airports",
-    ticketDestinationSubtitle: "choose where to go",
-    ticketCaption:
-      "Set the filters below to find the best combinations in a few seconds.",
+    ticketDestinationSubtitle: "{count} airports available",
+    ticketCaption: "Set the filters below to find the best combinations in a few seconds.",
+    labelOriginScope: "Departure from",
+    originScopeItaly: "Italy",
+    originScopeAll: "All airports",
+    labelOriginAirport: "Departure airport",
     labelDestination: "Destination airport",
     labelMonths: "Months to analyze",
     labelTargetStay: "Target stay (days)",
     labelTolerance: "Tolerance (± days)",
     labelMaxPrice: "Max round-trip budget (€)",
+    labelSortMode: "Sort by",
+    sortDate: "Date",
+    sortPrice: "Price",
     labelViewMode: "View List/Cards",
     viewList: "List",
     viewCards: "Cards",
     buttonSearch: "Search flights",
-    resultsTitle: "Results sorted by date",
+    resultsTitleDate: "Results sorted by date",
+    resultsTitlePrice: "Results sorted by price",
     thDeparture: "Departure",
     thReturn: "Return",
     thDestination: "Destination",
     thDuration: "Duration",
     thTotalPrice: "Total price",
     destinationAll: "All reachable airports",
+    destinationNone: "No destinations available",
+    originNone: "No airports available",
     statusReady: "Ready.",
-    loadingAirports: "Loading airports reachable from Turin...",
+    loadingAirports: "Loading Ryanair airports...",
     loadingPrices: "Loading daily Ryanair fares...",
     loadingPricesProgress: "Loading fares... {done}/{total} airports",
     errorInit: "Airport initialization error: {message}",
     errorInvalidParams: "Invalid parameters.",
-    errorNoAirports: "No airports available from Turin.",
+    errorNoAirports: "No departure airports available.",
+    errorNoDestinations: "No destinations available for the selected departure airport.",
     errorAirportUnavailable: "Selected airport is not available.",
     errorNetwork:
       "Network/API error: the browser could not read Ryanair data. Check DevTools (F12) for CORS or network blocking.",
     errorSearch: "Search error: {message}",
-    errorRoutesRead: "Unable to read routes from Turin ({status})",
+    errorAirportsRead: "Unable to load the Ryanair airport list ({status})",
     errorPriceRead: "Fare error {departure}→{arrival} ({status})",
-    metaAllAirports: "Airports: all ({count})",
-    metaSingleAirport: "Airport: {airport}",
+    metaOriginAirport: "Departure: {airport}",
+    metaDestinationAll: "Destinations: all ({count})",
+    metaDestinationSingle: "Destination: {airport}",
     metaDepartToday: "Departing from today: {date}",
     metaMaxSpend: "Max round-trip budget: € {max}",
     statusNoResults: "No flights under € {max} found with the selected filters.",
-    statusFound: "Found {count} low-cost options sorted by date.",
+    statusFound: "Found {count} low-cost options.",
     statusFoundWithFailed:
-      "Found {count} low-cost options sorted by date. ({failed} unavailable airports: {codes})",
+      "Found {count} low-cost options. ({failed} unavailable airports: {codes})",
     days: "{count} days",
     detailsTitle: "Flight details:",
     detailsRoute: "Route: {from} -> {to}",
@@ -146,7 +170,6 @@ const I18N = {
     listDepartureTimeLabel: "departure",
     listReturnTimeLabel: "return",
     listTotalPriceLabel: "Round trip",
-    fromTurin: "Turin (TRN)",
     legTemplate: "{departure} -> {arrival} (€ {price})",
     shareResults: "share results",
     shareResultsCopied: "link copied",
@@ -156,11 +179,14 @@ const I18N = {
 };
 
 const form = document.querySelector("#search-form");
+const originScopeInput = document.querySelector("#origin-scope");
+const originAirportInput = document.querySelector("#origin-airport");
 const airportFilterInput = document.querySelector("#airport-filter");
 const monthsInput = document.querySelector("#months");
 const targetStayInput = document.querySelector("#target-stay");
 const stayToleranceInput = document.querySelector("#stay-tolerance");
 const maxTotalPriceInput = document.querySelector("#max-total-price");
+const sortResultsInput = document.querySelector("#sort-results");
 const viewModeInputs = document.querySelectorAll('input[name="view-mode"]');
 const langButtons = document.querySelectorAll(".lang-btn");
 const langSwitcherEl = document.querySelector(".lang-switcher");
@@ -170,17 +196,25 @@ const viewModeRowEl = document.querySelector(".view-mode-row");
 const heroEyebrowEl = document.querySelector("#hero-eyebrow");
 const heroTitleEl = document.querySelector("#hero-title");
 const heroDescriptionEl = document.querySelector("#hero-description");
+const ticketOriginCodeEl = document.querySelector("#ticket-origin-code");
 const ticketOriginLabelEl = document.querySelector("#ticket-origin-label");
 const ticketOriginCityEl = document.querySelector("#ticket-origin-city");
 const ticketDestinationLabelEl = document.querySelector("#ticket-destination-label");
 const ticketDestinationTitleEl = document.querySelector("#ticket-destination-title");
 const ticketDestinationSubtitleEl = document.querySelector("#ticket-destination-subtitle");
 const ticketCaptionEl = document.querySelector("#ticket-caption");
+const labelOriginScopeEl = document.querySelector("#label-origin-scope");
+const originScopeItalyEl = document.querySelector("#origin-scope-italy");
+const originScopeAllEl = document.querySelector("#origin-scope-all");
+const labelOriginAirportEl = document.querySelector("#label-origin-airport");
 const labelDestinationEl = document.querySelector("#label-destination");
 const labelMonthsEl = document.querySelector("#label-months");
 const labelTargetStayEl = document.querySelector("#label-target-stay");
 const labelToleranceEl = document.querySelector("#label-tolerance");
 const labelMaxPriceEl = document.querySelector("#label-max-price");
+const labelSortModeEl = document.querySelector("#label-sort-mode");
+const sortOptionDateEl = document.querySelector("#sort-option-date");
+const sortOptionPriceEl = document.querySelector("#sort-option-price");
 const labelViewModeEl = document.querySelector("#label-view-mode");
 const viewLabelListEl = document.querySelector("#view-label-list");
 const viewLabelCardsEl = document.querySelector("#view-label-cards");
@@ -202,6 +236,9 @@ const shareResultsBtn = document.querySelector("#share-results-btn");
 const shareResultsBtnTextEl = document.querySelector("#share-results-btn-text");
 
 const dailyFareCache = new Map();
+const airportLookup = new Map();
+let allAirports = [];
+let originAirports = [];
 let availableAirports = [];
 let currentResults = [];
 let currentLang = "it";
@@ -210,11 +247,14 @@ let shareResetTimer = null;
 
 const appReady = Boolean(
   form &&
+    originScopeInput &&
+    originAirportInput &&
     airportFilterInput &&
     monthsInput &&
     targetStayInput &&
     stayToleranceInput &&
     maxTotalPriceInput &&
+    sortResultsInput &&
     viewModeInputs.length > 0 &&
     resultsBody &&
     statusEl &&
@@ -242,6 +282,25 @@ async function initializeApp() {
 
   shareResultsBtn.addEventListener("click", copyResultsLink);
 
+  originScopeInput.addEventListener("change", () => {
+    refreshAirportControls({
+      preferredOriginCode: originAirportInput?.value ?? "",
+      preferredDestinationCode: airportFilterInput?.value ?? "all",
+    });
+    updateUrlFromCurrentFilters();
+  });
+
+  originAirportInput.addEventListener("change", () => {
+    refreshDestinationOptions({ preferredDestinationCode: airportFilterInput?.value ?? "all" });
+    updateUrlFromCurrentFilters();
+  });
+
+  sortResultsInput.addEventListener("change", () => {
+    updateResultsHeading();
+    renderResults(currentResults);
+    updateUrlFromCurrentFilters();
+  });
+
   for (const button of langButtons) {
     button.addEventListener("click", () => {
       const nextLang = normalizeLanguage(button.dataset.lang);
@@ -262,8 +321,15 @@ async function initializeApp() {
   setLoading(true, t("loadingAirports"));
 
   try {
-    availableAirports = await fetchReachableAirportsFromTurin();
-    populateAirportFilter(availableAirports, initialFilters.destinationCode);
+    allAirports = await fetchAirportCatalog();
+    airportLookup.clear();
+    for (const airport of allAirports) {
+      airportLookup.set(airport.code, airport);
+    }
+    refreshAirportControls({
+      preferredOriginCode: initialFilters.originCode,
+      preferredDestinationCode: initialFilters.destinationCode,
+    });
     updateUrlFromCurrentFilters();
     applyViewMode();
     await runSearch({ updateUrl: false });
@@ -285,6 +351,7 @@ async function runSearch({ updateUrl = true } = {}) {
   const targetStay = Number(targetStayInput?.value ?? 5);
   const tolerance = Number(stayToleranceInput?.value ?? 1);
   const maxTotalPrice = Number(maxTotalPriceInput?.value ?? 70);
+  const selectedOriginAirport = getSelectedOriginAirport();
 
   if (
     Number.isNaN(months) ||
@@ -300,8 +367,13 @@ async function runSearch({ updateUrl = true } = {}) {
     return;
   }
 
-  if (availableAirports.length === 0) {
+  if (!selectedOriginAirport) {
     setError(t("errorNoAirports"));
+    return;
+  }
+
+  if (availableAirports.length === 0) {
+    setError(t("errorNoDestinations"));
     return;
   }
 
@@ -342,7 +414,8 @@ async function runSearch({ updateUrl = true } = {}) {
       async (airport) => {
         try {
           const fares = await buildRoundTripCandidates({
-            airport,
+            originAirport: selectedOriginAirport,
+            destinationAirport: airport,
             dateFrom,
             dateTo,
             targetStay,
@@ -381,6 +454,7 @@ async function runSearch({ updateUrl = true } = {}) {
     }
 
     lastRunContext = {
+      originAirport: selectedOriginAirport,
       selectedAirportCode,
       airportsCount: airportsToSearch.length,
       selectedAirport: airportsToSearch[0] ?? null,
@@ -414,48 +488,172 @@ async function runSearch({ updateUrl = true } = {}) {
   }
 }
 
-async function fetchReachableAirportsFromTurin() {
-  const response = await fetch(ROUTES_API);
+async function fetchAirportCatalog() {
+  const [itResponse, enResponse] = await Promise.all([
+    fetch(buildAirportsApiUrl("it")),
+    fetch(buildAirportsApiUrl("en")),
+  ]);
 
-  if (!response.ok) {
-    throw new Error(t("errorRoutesRead", { status: response.status }));
+  if (!itResponse.ok || !enResponse.ok) {
+    const statuses = [itResponse.status, enResponse.status].filter(Boolean).join("/");
+    throw new Error(t("errorAirportsRead", { status: statuses }));
   }
 
-  const routes = await response.json();
+  const [itAirports, enAirports] = await Promise.all([itResponse.json(), enResponse.json()]);
   const airportsMap = new Map();
 
-  for (const route of routes) {
-    const airport = route?.arrivalAirport;
-    if (!airport?.code || !airport?.name) {
-      continue;
-    }
-
-    const cityName = airport?.city?.name ?? "";
-    const countryName = airport?.country?.name ?? "";
-
-    airportsMap.set(airport.code, {
-      code: airport.code,
-      name: airport.name,
-      cityName,
-      countryName,
-    });
+  for (const airport of itAirports) {
+    mergeAirportIntoCatalog(airportsMap, airport, "it");
   }
 
-  return [...airportsMap.values()].sort((a, b) => {
-    const cityCompare = a.cityName.localeCompare(b.cityName, "it", { sensitivity: "base" });
-    if (cityCompare !== 0) {
-      return cityCompare;
-    }
-    return a.name.localeCompare(b.name, "it", { sensitivity: "base" });
-  });
+  for (const airport of enAirports) {
+    mergeAirportIntoCatalog(airportsMap, airport, "en");
+  }
+
+  return [...airportsMap.values()];
 }
 
-function populateAirportFilter(airports, preferredCode = null) {
+function buildAirportsApiUrl(locale) {
+  const normalizedLocale = locale === "en" ? "en" : "it";
+  return `${AIRPORTS_API_BASE}/${normalizedLocale}/active`;
+}
+
+function mergeAirportIntoCatalog(airportsMap, rawAirport, locale) {
+  const code = rawAirport?.iataCode?.trim().toUpperCase();
+  if (!code) {
+    return;
+  }
+
+  const existing = airportsMap.get(code) ?? {
+    code,
+    names: {},
+    countryCode: "",
+    cityCode: "",
+    routeAirportCodes: [],
+  };
+
+  existing.names[locale] = rawAirport?.name?.trim() || code;
+  existing.countryCode = (rawAirport?.countryCode ?? existing.countryCode).toUpperCase();
+  existing.cityCode = rawAirport?.cityCode ?? existing.cityCode;
+
+  const routeCodes = extractRouteAirportCodes(rawAirport?.routes ?? []);
+  if (routeCodes.length > 0) {
+    existing.routeAirportCodes = [...new Set([...existing.routeAirportCodes, ...routeCodes])];
+  }
+
+  airportsMap.set(code, existing);
+}
+
+function extractRouteAirportCodes(routes) {
+  return routes
+    .filter((route) => typeof route === "string" && route.startsWith("airport:"))
+    .map((route) => route.slice("airport:".length).trim().toUpperCase())
+    .filter(Boolean);
+}
+
+function refreshAirportControls({ preferredOriginCode = null, preferredDestinationCode = null } = {}) {
+  syncOriginScopeWithPreferredOrigin(preferredOriginCode);
+  populateOriginAirportFilter(getOriginAirportsForScope(getOriginScope()), preferredOriginCode);
+  refreshDestinationOptions({ preferredDestinationCode });
+}
+
+function refreshDestinationOptions({ preferredDestinationCode = null } = {}) {
+  const originAirport = getSelectedOriginAirport();
+  updateOriginPreview(originAirport);
+  availableAirports = getReachableDestinations(originAirport);
+  populateDestinationFilter(availableAirports, preferredDestinationCode);
+  updateDestinationPreview(availableAirports.length);
+}
+
+function syncOriginScopeWithPreferredOrigin(preferredOriginCode) {
+  const normalizedPreferredCode = preferredOriginCode?.trim().toUpperCase() ?? "";
+  if (!normalizedPreferredCode) {
+    return;
+  }
+
+  const preferredAirport = getAirportByCode(normalizedPreferredCode);
+  if (preferredAirport && preferredAirport.countryCode !== DEFAULT_ORIGIN_COUNTRY) {
+    originScopeInput.value = "all";
+  }
+}
+
+function getOriginAirportsForScope(scope) {
+  return sortAirports(
+    allAirports.filter((airport) => {
+      if (airport.routeAirportCodes.length === 0) {
+        return false;
+      }
+      if (scope === "all") {
+        return true;
+      }
+      return airport.countryCode === DEFAULT_ORIGIN_COUNTRY;
+    })
+  );
+}
+
+function getReachableDestinations(originAirport) {
+  if (!originAirport) {
+    return [];
+  }
+
+  const routeCodes = new Set(originAirport.routeAirportCodes);
+  return sortAirports(allAirports.filter((airport) => routeCodes.has(airport.code)));
+}
+
+function populateOriginAirportFilter(airports, preferredCode = null) {
+  if (!originAirportInput) {
+    return;
+  }
+
+  originAirports = airports;
+  originAirportInput.innerHTML = "";
+
+  if (airports.length === 0) {
+    const option = document.createElement("option");
+    option.value = "";
+    option.textContent = t("originNone");
+    originAirportInput.appendChild(option);
+    originAirportInput.disabled = true;
+    return;
+  }
+
+  originAirportInput.disabled = false;
+
+  for (const airport of airports) {
+    const option = document.createElement("option");
+    option.value = airport.code;
+    option.textContent = formatAirportFilterLabel(airport);
+    originAirportInput.appendChild(option);
+  }
+
+  const normalizedPreferredCode = preferredCode?.trim().toUpperCase() ?? "";
+  const hasPreferred = airports.some((airport) => airport.code === normalizedPreferredCode);
+  const hasDefaultOrigin = airports.some((airport) => airport.code === DEFAULT_ORIGIN_AIRPORT);
+
+  if (hasPreferred) {
+    originAirportInput.value = normalizedPreferredCode;
+  } else if (hasDefaultOrigin) {
+    originAirportInput.value = DEFAULT_ORIGIN_AIRPORT;
+  } else {
+    originAirportInput.value = airports[0].code;
+  }
+}
+
+function populateDestinationFilter(airports, preferredCode = null) {
   if (!airportFilterInput) {
     return;
   }
 
   airportFilterInput.innerHTML = "";
+  airportFilterInput.disabled = airports.length === 0;
+
+  if (airports.length === 0) {
+    const option = document.createElement("option");
+    option.value = "";
+    option.textContent = t("destinationNone");
+    airportFilterInput.appendChild(option);
+    return;
+  }
 
   const allOption = document.createElement("option");
   allOption.value = "all";
@@ -469,21 +667,21 @@ function populateAirportFilter(airports, preferredCode = null) {
     airportFilterInput.appendChild(option);
   }
 
-  const normalizedPreferredCode = preferredCode?.toUpperCase() ?? "";
+  const normalizedPreferredCode = preferredCode?.trim().toUpperCase() ?? "";
   const hasPreferred = airports.some((airport) => airport.code === normalizedPreferredCode);
-  const hasStansted = airports.some((airport) => airport.code === "STN");
 
-  if (normalizedPreferredCode === "all") {
+  if (normalizedPreferredCode === "all" || !normalizedPreferredCode) {
     airportFilterInput.value = "all";
   } else if (hasPreferred) {
     airportFilterInput.value = normalizedPreferredCode;
   } else {
-    airportFilterInput.value = hasStansted ? "STN" : "all";
+    airportFilterInput.value = "all";
   }
 }
 
 async function buildRoundTripCandidates({
-  airport,
+  originAirport,
+  destinationAirport,
   dateFrom,
   dateTo,
   targetStay,
@@ -491,8 +689,8 @@ async function buildRoundTripCandidates({
   outboundMonths,
   inboundMonths,
 }) {
-  const outboundMap = await fetchDailyFaresForMonths("TRN", airport.code, outboundMonths);
-  const inboundMap = await fetchDailyFaresForMonths(airport.code, "TRN", inboundMonths);
+  const outboundMap = await fetchDailyFaresForMonths(originAirport.code, destinationAirport.code, outboundMonths);
+  const inboundMap = await fetchDailyFaresForMonths(destinationAirport.code, originAirport.code, inboundMonths);
 
   const minStay = Math.max(1, targetStay - tolerance);
   const maxStay = targetStay + tolerance;
@@ -531,13 +729,11 @@ async function buildRoundTripCandidates({
       inboundDate: bestInbound.departureDate,
       inboundArrivalDate: bestInbound.arrivalDate,
       tripDays: bestStay,
+      originCode: originAirport.code,
       outboundPrice: outboundFare.price,
       inboundPrice: bestInbound.price,
       totalPrice: roundCurrency(outboundFare.price + bestInbound.price),
-      airportCode: airport.code,
-      airportName: airport.name,
-      cityName: airport.cityName,
-      countryName: airport.countryName,
+      airportCode: destinationAirport.code,
     });
   }
 
@@ -640,13 +836,14 @@ function pickCheapestByOutboundDate(fares) {
 function renderResults(fares) {
   applyViewMode();
   clearResults();
+  const sortedFares = sortResults(fares);
 
   if (getViewMode() === "cards") {
-    renderCards(fares);
+    renderCards(sortedFares);
     return;
   }
 
-  renderListRows(fares);
+  renderListRows(sortedFares);
 }
 
 function renderListRows(fares) {
@@ -662,7 +859,7 @@ function renderListRows(fares) {
           <div>
             <div class="fw-semibold cell-date-line">${formatDateWithWeekday(fare.outboundDate)}</div>
             <div class="cell-subline">${t("listDepartureTimeLabel")}: ${formatTime(fare.outboundDate)}</div>
-            <div class="cell-caption">${t("fromTurin")}</div>
+            <div class="cell-caption">${formatOrigin(fare)}</div>
           </div>
         </div>
       </td>
@@ -712,7 +909,7 @@ function renderListRows(fares) {
                 <i class="bi bi-arrow-left-right" aria-hidden="true"></i>
                 <span>${t("cardRoute")}</span>
               </div>
-              <div class="detail-value">${t("fromTurin")} → ${formatDestination(fare)}</div>
+              <div class="detail-value">${formatOrigin(fare)} → ${formatDestination(fare)}</div>
             </div>
             <div class="detail-item">
               <div class="detail-label">
@@ -782,7 +979,7 @@ function renderCards(fares) {
             <div>
               <span class="flight-route-badge">
                 <i class="bi bi-arrow-left-right" aria-hidden="true"></i>
-                ${t("fromTurin")} → ${formatDestination(fare)}
+                ${formatOrigin(fare)} → ${formatDestination(fare)}
               </span>
               <h3 class="flight-card-title mt-3 mb-0">${formatDateTimeWithWeekday(fare.outboundDate)}</h3>
             </div>
@@ -878,13 +1075,17 @@ function setError(message) {
 }
 
 function renderMeta(context) {
-  const airportText =
+  const originText = t("metaOriginAirport", {
+    airport: formatAirportLabel(context.originAirport),
+  });
+  const destinationText =
     context.selectedAirportCode === "all"
-      ? t("metaAllAirports", { count: context.airportsCount })
-      : t("metaSingleAirport", { airport: formatAirportLabel(context.selectedAirport) });
+      ? t("metaDestinationAll", { count: context.airportsCount })
+      : t("metaDestinationSingle", { airport: formatAirportLabel(context.selectedAirport) });
 
   metaEl.textContent = [
-    airportText,
+    originText,
+    destinationText,
     t("metaDepartToday", { date: formatDate(context.dateFrom) }),
     t("metaMaxSpend", { max: formatPrice(context.maxTotalPrice) }),
   ].join(" • ");
@@ -1016,20 +1217,26 @@ function formatLegDetails(departureDateTime, arrivalDateTime, price) {
 }
 
 function formatAirportLabel(airport) {
-  const city = airport?.cityName ? `${airport.cityName}` : airport?.name ?? "";
-  return `${city} · ${airport?.code ?? ""}`;
+  if (!airport) {
+    return "";
+  }
+  const airportName = getAirportName(airport);
+  if (!airportName || airportName === airport.code) {
+    return airport.code;
+  }
+  return `${airportName} · ${airport.code}`;
 }
 
 function formatAirportFilterLabel(airport) {
-  const city = airport.cityName ? `${airport.cityName}` : airport.name;
-  return `${city} · ${airport.code}`;
+  return formatAirportLabel(airport);
 }
 
 function formatDestination(fare) {
-  if (fare.cityName && fare.cityName.trim()) {
-    return `${fare.cityName} · ${fare.airportCode}`;
-  }
-  return `${fare.airportName} · ${fare.airportCode}`;
+  return formatAirportLabel(getAirportByCode(fare.airportCode) ?? { code: fare.airportCode, names: {} });
+}
+
+function formatOrigin(fare) {
+  return formatAirportLabel(getAirportByCode(fare.originCode) ?? { code: fare.originCode, names: {} });
 }
 
 function formatPrice(value) {
@@ -1041,6 +1248,41 @@ function formatPrice(value) {
 
 function roundCurrency(value) {
   return Math.round((value + Number.EPSILON) * 100) / 100;
+}
+
+function getSortMode() {
+  return sortResultsInput?.value === "price" ? "price" : "date";
+}
+
+function setSortMode(mode) {
+  if (sortResultsInput) {
+    sortResultsInput.value = mode === "price" ? "price" : "date";
+  }
+}
+
+function sortResults(fares) {
+  return [...fares].sort((a, b) => {
+    if (getSortMode() === "price") {
+      const priceDiff = a.totalPrice - b.totalPrice;
+      if (priceDiff !== 0) {
+        return priceDiff;
+      }
+    }
+
+    const dateDiff = new Date(a.outboundDate) - new Date(b.outboundDate);
+    if (dateDiff !== 0) {
+      return dateDiff;
+    }
+
+    const priceDiff = a.totalPrice - b.totalPrice;
+    if (priceDiff !== 0) {
+      return priceDiff;
+    }
+
+    return formatDestination(a).localeCompare(formatDestination(b), currentLang === "en" ? "en" : "it", {
+      sensitivity: "base",
+    });
+  });
 }
 
 function getViewMode() {
@@ -1059,17 +1301,21 @@ function readFiltersFromUrl() {
   const params = new URLSearchParams(window.location.search);
 
   return {
+    originScope: normalizeOriginScope(params.get(URL_FILTER_KEYS.originScope)),
+    originCode: params.get(URL_FILTER_KEYS.origin)?.trim().toUpperCase() ?? "",
     destinationCode: params.get(URL_FILTER_KEYS.destination)?.trim().toUpperCase() ?? "",
     months: parseIntegerInRange(params.get(URL_FILTER_KEYS.months), 1, 12),
     stay: parseIntegerInRange(params.get(URL_FILTER_KEYS.stay), 1, 30),
     tolerance: parseIntegerInRange(params.get(URL_FILTER_KEYS.tolerance), 0, 7),
     maxTotalPrice: parseIntegerInRange(params.get(URL_FILTER_KEYS.maxTotalPrice), 1, 2000),
+    sort: params.get(URL_FILTER_KEYS.sort) === "price" ? "price" : "date",
     view: params.get(URL_FILTER_KEYS.view) === "cards" ? "cards" : "list",
     lang: normalizeLanguage(params.get(URL_FILTER_KEYS.lang) ?? getBrowserLanguage()),
   };
 }
 
 function applyInitialFilters(filters) {
+  originScopeInput.value = normalizeOriginScope(filters.originScope);
   if (Number.isFinite(filters.months)) {
     monthsInput.value = String(filters.months);
   }
@@ -1082,23 +1328,75 @@ function applyInitialFilters(filters) {
   if (Number.isFinite(filters.maxTotalPrice)) {
     maxTotalPriceInput.value = String(filters.maxTotalPrice);
   }
+  setSortMode(filters.sort);
+  updateResultsHeading();
   setViewMode(filters.view);
 }
 
 function updateUrlFromCurrentFilters() {
   const params = new URLSearchParams(window.location.search);
 
+  params.set(URL_FILTER_KEYS.originScope, getOriginScope());
+  params.set(URL_FILTER_KEYS.origin, originAirportInput?.value ?? "");
   params.set(URL_FILTER_KEYS.destination, airportFilterInput?.value ?? "all");
   params.set(URL_FILTER_KEYS.months, monthsInput?.value ?? "3");
   params.set(URL_FILTER_KEYS.stay, targetStayInput?.value ?? "5");
   params.set(URL_FILTER_KEYS.tolerance, stayToleranceInput?.value ?? "1");
   params.set(URL_FILTER_KEYS.maxTotalPrice, maxTotalPriceInput?.value ?? "70");
+  params.set(URL_FILTER_KEYS.sort, getSortMode());
   params.set(URL_FILTER_KEYS.view, getViewMode());
   params.set(URL_FILTER_KEYS.lang, currentLang);
 
   const query = params.toString();
   const nextUrl = `${window.location.pathname}${query ? `?${query}` : ""}${window.location.hash}`;
   window.history.replaceState(null, "", nextUrl);
+}
+
+function normalizeOriginScope(value) {
+  return value === "all" ? "all" : "it";
+}
+
+function getOriginScope() {
+  return normalizeOriginScope(originScopeInput?.value);
+}
+
+function getSelectedOriginAirport() {
+  const selectedCode = originAirportInput?.value?.trim().toUpperCase() ?? "";
+  return originAirports.find((airport) => airport.code === selectedCode) ?? null;
+}
+
+function getAirportByCode(code) {
+  const normalizedCode = code?.trim().toUpperCase() ?? "";
+  return airportLookup.get(normalizedCode) ?? null;
+}
+
+function getAirportName(airport) {
+  if (!airport) {
+    return "";
+  }
+
+  return airport.names?.[currentLang] ?? airport.names?.it ?? airport.names?.en ?? airport.code;
+}
+
+function sortAirports(airports) {
+  return [...airports].sort((a, b) =>
+    getAirportName(a).localeCompare(getAirportName(b), currentLang === "en" ? "en" : "it", {
+      sensitivity: "base",
+    })
+  );
+}
+
+function updateOriginPreview(originAirport) {
+  setText(ticketOriginCodeEl, originAirport?.code ?? "—");
+  setText(ticketOriginCityEl, originAirport ? getAirportName(originAirport) : t("ticketOriginFallbackText"));
+}
+
+function updateDestinationPreview(count) {
+  setText(ticketDestinationSubtitleEl, t("ticketDestinationSubtitle", { count }));
+}
+
+function updateResultsHeading() {
+  setText(resultsTitleEl, getSortMode() === "price" ? t("resultsTitlePrice") : t("resultsTitleDate"));
 }
 
 function setShareButtonVisibility(isVisible) {
@@ -1195,9 +1493,11 @@ function setLanguage(lang, { updateUrl = true, rerender = true } = {}) {
   updateLanguageButtons();
   applyStaticTranslations();
 
-  if (availableAirports.length > 0) {
-    const selectedCode = airportFilterInput?.value ?? "all";
-    populateAirportFilter(availableAirports, selectedCode);
+  if (allAirports.length > 0) {
+    refreshAirportControls({
+      preferredOriginCode: originAirportInput?.value ?? "",
+      preferredDestinationCode: airportFilterInput?.value ?? "all",
+    });
   }
 
   if (rerender) {
@@ -1223,21 +1523,27 @@ function applyStaticTranslations() {
   setText(heroTitleEl, t("heroTitle"));
   setText(heroDescriptionEl, t("heroDescription"));
   setText(ticketOriginLabelEl, t("ticketOriginLabel"));
-  setText(ticketOriginCityEl, t("ticketOriginCity"));
+  setText(labelOriginScopeEl, t("labelOriginScope"));
+  setText(originScopeItalyEl, t("originScopeItaly"));
+  setText(originScopeAllEl, t("originScopeAll"));
+  setText(labelOriginAirportEl, t("labelOriginAirport"));
   setText(ticketDestinationLabelEl, t("ticketDestinationLabel"));
   setText(ticketDestinationTitleEl, t("ticketDestinationTitle"));
-  setText(ticketDestinationSubtitleEl, t("ticketDestinationSubtitle"));
+  setText(ticketDestinationSubtitleEl, t("ticketDestinationSubtitle", { count: availableAirports.length }));
   setText(ticketCaptionEl, t("ticketCaption"));
   setText(labelDestinationEl, t("labelDestination"));
   setText(labelMonthsEl, t("labelMonths"));
   setText(labelTargetStayEl, t("labelTargetStay"));
   setText(labelToleranceEl, t("labelTolerance"));
   setText(labelMaxPriceEl, t("labelMaxPrice"));
+  setText(labelSortModeEl, t("labelSortMode"));
+  setText(sortOptionDateEl, t("sortDate"));
+  setText(sortOptionPriceEl, t("sortPrice"));
   setText(labelViewModeEl, t("labelViewMode"));
   setText(viewLabelListEl, t("viewList"));
   setText(viewLabelCardsEl, t("viewCards"));
   setText(searchBtnTextEl ?? searchBtn, t("buttonSearch"));
-  setText(resultsTitleEl, t("resultsTitle"));
+  updateResultsHeading();
   setText(thDepartureEl, t("thDeparture"));
   setText(thReturnEl, t("thReturn"));
   setText(thDestinationEl, t("thDestination"));
@@ -1259,6 +1565,10 @@ function applyStaticTranslations() {
 
   if (viewModeToggleEl) {
     viewModeToggleEl.setAttribute("aria-label", t("ariaViewMode"));
+  }
+
+  if (allAirports.length === 0) {
+    updateOriginPreview(null);
   }
 }
 

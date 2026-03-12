@@ -1,10 +1,10 @@
-# Flights from Turin
+# Ryanair Flights
 
-Web app statica per cercare voli Ryanair in partenza da Torino (`TRN`), filtrare i risultati per durata del soggiorno e budget totale andata/ritorno, e condividere la ricerca con un link.
+Web app statica per cercare voli Ryanair scegliendo aeroporto di partenza e destinazione, filtrare i risultati per durata del soggiorno e budget totale andata/ritorno, e condividere la ricerca con un link.
 
 ## Cosa fa
 
-- legge gli aeroporti Ryanair raggiungibili da Torino;
+- legge gli aeroporti Ryanair attivi e permette di filtrare la partenza tra `Italia` e `Tutti gli aeroporti`;
 - scarica i prezzi giornalieri per ogni tratta;
 - combina andata + ritorno scegliendo il rientro piu conveniente entro `durata target ± tolleranza`;
 - filtra i risultati per `spesa massima A/R`;
@@ -35,11 +35,12 @@ Web app statica per cercare voli Ryanair in partenza da Torino (`TRN`), filtrare
 
 L'app usa endpoint pubblici Ryanair non ufficialmente documentati. Sono endpoint comodi per una web app client-side, ma possono cambiare senza preavviso.
 
-### 1. Rotte raggiungibili da Torino
+### 1. Catalogo aeroporti attivi
 
-Usata per recuperare la lista degli aeroporti serviti in partenza da `TRN`.
+Usata per recuperare l'elenco aeroporti Ryanair attivi con `iataCode`, `countryCode` e rotte disponibili.
 
-- Endpoint reale: [https://www.ryanair.com/api/views/locate/searchWidget/routes/it/airport/TRN](https://www.ryanair.com/api/views/locate/searchWidget/routes/it/airport/TRN)
+- Endpoint reale (IT): [https://www.ryanair.com/api/views/locate/3/airports/it/active](https://www.ryanair.com/api/views/locate/3/airports/it/active)
+- Endpoint reale (EN): [https://www.ryanair.com/api/views/locate/3/airports/en/active](https://www.ryanair.com/api/views/locate/3/airports/en/active)
 - Nel codice: [app.js](/Users/tonga/Documents/GitHub/tongatron.github.io/projects/flights-from-turin/app.js:1)
 
 ### 2. Prezzi giornalieri piu economici per tratta
@@ -56,13 +57,15 @@ Usata per recuperare i prezzi `cheapestPerDay` mese per mese su una tratta speci
 
 ## Funzionamento della ricerca
 
-1. l'app scarica tutte le destinazioni raggiungibili da Torino;
-2. per ogni aeroporto selezionato recupera i prezzi giornalieri mese per mese;
-3. costruisce le possibili coppie `andata + ritorno`;
-4. sceglie il ritorno piu economico nella finestra `durata target ± tolleranza`;
-5. calcola il `totale A/R`;
-6. ordina i risultati per data di partenza;
-7. aggiorna l'URL con i filtri correnti.
+1. l'app scarica il catalogo aeroporti Ryanair in italiano e inglese;
+2. filtra gli aeroporti di partenza tra `Italia` e `Tutti gli aeroporti`;
+3. costruisce l'elenco delle destinazioni compatibili con l'aeroporto di partenza selezionato;
+4. per ogni aeroporto di destinazione selezionato recupera i prezzi giornalieri mese per mese;
+5. costruisce le possibili coppie `andata + ritorno`;
+6. sceglie il ritorno piu economico nella finestra `durata target ± tolleranza`;
+7. calcola il `totale A/R`;
+8. ordina i risultati per data di partenza;
+9. aggiorna l'URL con i filtri correnti.
 
 ## Avvio in locale
 

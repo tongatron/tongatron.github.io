@@ -1,7 +1,7 @@
 {
-  "name": "Voli da Torino",
-  "short_name": "Voli TRN",
-  "description": "Trova le opzioni Ryanair andata e ritorno piu economiche in partenza da Torino.",
+  "name": "Voli Ryanair",
+  "short_name": "Voli Ryanair",
+  "description": "Trova le opzioni Ryanair andata e ritorno piu economiche scegliendo aeroporto di partenza e destinazione.",
   "lang": "it-IT",
   "start_url": "./",
   "scope": "./",

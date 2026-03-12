@@ -1,4 +1,4 @@
-const CACHE_VERSION = "flights-from-turin-v20260312-19";
+const CACHE_VERSION = "flights-from-turin-v20260312-21";
 const APP_SHELL = [
   "./",
   "./index.html",
@@ -7,8 +7,8 @@ const APP_SHELL = [
   "./vendor/bootstrap-icons/bootstrap-icons.css",
   "./vendor/bootstrap-icons/fonts/bootstrap-icons.woff2?e34853135f9e39acf64315236852cd5a",
   "./vendor/bootstrap-icons/fonts/bootstrap-icons.woff?e34853135f9e39acf64315236852cd5a",
-  "./styles.css?v=20260312-16",
-  "./app.js?v=20260312-06",
+  "./styles.css?v=20260312-18",
+  "./app.js?v=20260312-08",
   "./manifest.webmanifest",
   "./assets/icon.svg",
   "./assets/icon-192.png",

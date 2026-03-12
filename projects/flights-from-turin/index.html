@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>voli da Torino</title>
+    <title>voli Ryanair</title>
     <meta name="theme-color" content="#073590" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-title" content="Voli TRN" />
+    <meta name="apple-mobile-web-app-title" content="Voli Ryanair" />
     <link rel="manifest" href="./manifest.webmanifest" />
     <link rel="icon" type="image/svg+xml" href="./assets/icon.svg" />
     <link rel="icon" type="image/png" sizes="192x192" href="./assets/icon-192.png" />
@@ -30,7 +30,7 @@
     />
     <link rel="stylesheet" href="./vendor/bootstrap/bootstrap.min.css" />
     <link rel="stylesheet" href="./vendor/bootstrap-icons/bootstrap-icons.css" />
-    <link rel="stylesheet" href="./styles.css?v=20260312-16" />
+    <link rel="stylesheet" href="./styles.css?v=20260312-18" />
   </head>
   <body>
     <main class="container page-shell pb-5">
@@ -47,23 +47,40 @@
             <div class="row g-4 g-xl-5 align-items-start">
               <div class="col-12 col-xl-4">
                 <p class="hero-eyebrow mb-2" id="hero-eyebrow">Trova voli Ryanair</p>
-                <h1 class="hero-title mb-3" id="hero-title">voli da Torino</h1>
+                <h1 class="hero-title mb-3" id="hero-title">voli Ryanair</h1>
                 <p class="hero-description mb-0" id="hero-description">
-                  Confronta i voli Ryanair in partenza da Torino, filtra per budget e durata del
-                  soggiorno e condividi i risultati con un link.
+                  Scegli l'aeroporto di partenza, filtra per budget e durata del soggiorno e
+                  condividi i risultati con un link.
                 </p>
               </div>
 
               <div class="col-12 col-xl-8">
                 <form id="search-form" class="ticket-preview ticket-preview-search">
                   <div class="ticket-search-overview">
-                    <div class="ticket-stop ticket-stop-card ticket-stop-fixed">
-                      <span class="ticket-stop-icon outbound"><i class="bi bi-send-arrow-up" aria-hidden="true"></i></span>
-                      <div>
-                        <div class="ticket-stop-label" id="ticket-origin-label">Partenza</div>
-                        <div class="ticket-stop-code">TRN</div>
-                        <div class="ticket-stop-text" id="ticket-origin-city">Torino</div>
+                    <div class="ticket-stop-card ticket-stop-fixed">
+                      <div class="ticket-stop ticket-stop-inner">
+                        <span class="ticket-stop-icon outbound"><i class="bi bi-send-arrow-up" aria-hidden="true"></i></span>
+                        <div>
+                          <div class="ticket-stop-label" id="ticket-origin-label">Partenza</div>
+                          <div class="ticket-stop-code" id="ticket-origin-code">TRN</div>
+                          <div class="ticket-stop-text" id="ticket-origin-city">Torino</div>
+                        </div>
                       </div>
+
+                      <label for="origin-scope" class="form-label filter-label ticket-field-label mt-3">
+                        <i class="bi bi-globe-europe-africa" aria-hidden="true"></i>
+                        <span id="label-origin-scope">Partenza da</span>
+                      </label>
+                      <select id="origin-scope" class="form-select form-select-lg ticket-form-control">
+                        <option value="it" id="origin-scope-italy">Italia</option>
+                        <option value="all" id="origin-scope-all">Tutti gli aeroporti</option>
+                      </select>
+
+                      <label for="origin-airport" class="form-label filter-label ticket-field-label mt-3">
+                        <i class="bi bi-airplane-engines" aria-hidden="true"></i>
+                        <span id="label-origin-airport">Aeroporto di partenza</span>
+                      </label>
+                      <select id="origin-airport" class="form-select form-select-lg ticket-form-control"></select>
                     </div>
 
                     <div class="ticket-route-line ticket-route-line-search" aria-hidden="true">
@@ -195,25 +212,38 @@
           </div>
 
           <div class="results-toolbar d-flex justify-content-between align-items-end gap-3 flex-wrap mb-3">
-            <div class="results-view-toggle">
-              <div class="form-label filter-label mb-2">
-                <i class="bi bi-grid" aria-hidden="true"></i>
-                <span id="label-view-mode">Visualizza Lista/Schede</span>
+            <div class="results-options">
+              <div class="results-sort-control">
+                <label for="sort-results" class="form-label filter-label mb-2">
+                  <i class="bi bi-arrow-down-up" aria-hidden="true"></i>
+                  <span id="label-sort-mode">Ordina per</span>
+                </label>
+                <select id="sort-results" class="form-select results-sort-select">
+                  <option value="date" id="sort-option-date">Data</option>
+                  <option value="price" id="sort-option-price">Prezzo</option>
+                </select>
               </div>
-              <div class="view-mode-toggle" role="group" aria-label="Visualizzazione risultati">
-                <span class="view-mode-row" role="radiogroup" aria-label="Visualizzazione risultati">
-                  <input type="radio" class="btn-check" name="view-mode" id="view-mode-list" value="list" checked />
-                  <label class="btn btn-view-mode" for="view-mode-list">
-                    <i class="bi bi-table" aria-hidden="true"></i>
-                    <span id="view-label-list">Lista</span>
-                  </label>
 
-                  <input type="radio" class="btn-check" name="view-mode" id="view-mode-cards" value="cards" />
-                  <label class="btn btn-view-mode" for="view-mode-cards">
-                    <i class="bi bi-grid-3x2-gap" aria-hidden="true"></i>
-                    <span id="view-label-cards">Schede</span>
-                  </label>
-                </span>
+              <div class="results-view-toggle">
+                <div class="form-label filter-label mb-2">
+                  <i class="bi bi-grid" aria-hidden="true"></i>
+                  <span id="label-view-mode">Visualizza Lista/Schede</span>
+                </div>
+                <div class="view-mode-toggle" role="group" aria-label="Visualizzazione risultati">
+                  <span class="view-mode-row" role="radiogroup" aria-label="Visualizzazione risultati">
+                    <input type="radio" class="btn-check" name="view-mode" id="view-mode-list" value="list" checked />
+                    <label class="btn btn-view-mode" for="view-mode-list">
+                      <i class="bi bi-table" aria-hidden="true"></i>
+                      <span id="view-label-list">Lista</span>
+                    </label>
+
+                    <input type="radio" class="btn-check" name="view-mode" id="view-mode-cards" value="cards" />
+                    <label class="btn btn-view-mode" for="view-mode-cards">
+                      <i class="bi bi-grid-3x2-gap" aria-hidden="true"></i>
+                      <span id="view-label-cards">Schede</span>
+                    </label>
+                  </span>
+                </div>
               </div>
             </div>
 
@@ -264,7 +294,7 @@
     </main>
 
     <script src="./vendor/bootstrap/bootstrap.bundle.min.js"></script>
-    <script src="./app.js?v=20260312-06" type="module"></script>
+    <script src="./app.js?v=20260312-08" type="module"></script>
     <script>
       if ("serviceWorker" in navigator) {
         window.addEventListener("load", function registerServiceWorker() {
