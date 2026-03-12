@@ -1,4 +1,4 @@
-const CACHE_VERSION = "ryanair-search-v20260312-27";
+const CACHE_VERSION = "ryanair-search-v20260312-31";
 const APP_SHELL = [
   "./",
   "./index.html",
@@ -8,11 +8,12 @@ const APP_SHELL = [
   "./vendor/bootstrap-icons/fonts/bootstrap-icons.woff2?e34853135f9e39acf64315236852cd5a",
   "./vendor/bootstrap-icons/fonts/bootstrap-icons.woff?e34853135f9e39acf64315236852cd5a",
   "./styles.css?v=20260312-19",
-  "./app.js?v=20260312-12",
+  "./app.js?v=20260312-13",
   "./manifest.webmanifest",
   "./assets/icon.svg",
   "./assets/icon-192.png",
   "./assets/icon-512.png",
+  "./assets/social-preview.png",
 ];
 
 self.addEventListener("install", (event) => {
