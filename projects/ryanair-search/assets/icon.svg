@@ -1,29 +1,41 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Voli Torino icon">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Ryanair Search icon">
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#0d5c63" />
-      <stop offset="100%" stop-color="#28a8a8" />
+      <stop offset="0%" stop-color="#072b76" />
+      <stop offset="55%" stop-color="#073590" />
+      <stop offset="100%" stop-color="#1552c4" />
     </linearGradient>
-    <linearGradient id="wing" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%" stop-color="#ffffff" />
-      <stop offset="100%" stop-color="#dff8f7" />
+    <radialGradient id="glow" cx="72%" cy="28%" r="58%">
+      <stop offset="0%" stop-color="#7ea7ff" stop-opacity="0.5" />
+      <stop offset="100%" stop-color="#7ea7ff" stop-opacity="0" />
+    </radialGradient>
+    <linearGradient id="trail" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ffd24a" />
+      <stop offset="100%" stop-color="#ffbf00" />
     </linearGradient>
   </defs>
 
   <rect x="24" y="24" width="464" height="464" rx="104" fill="url(#bg)" />
-  <circle cx="384" cy="128" r="44" fill="#83e7dd" opacity="0.6" />
-  <circle cx="124" cy="388" r="58" fill="#0f7f87" opacity="0.35" />
+  <rect x="24" y="24" width="464" height="464" rx="104" fill="url(#glow)" />
+
+  <circle cx="154" cy="362" r="94" fill="#05245f" opacity="0.28" />
+  <path
+    d="M120 372c12-72 58-126 126-152 20-8 39 20 20 33-46 31-77 72-92 125-5 18-24 28-42 23-10-3-15-16-12-29Z"
+    fill="url(#trail)"
+    opacity="0.95"
+  />
+  <circle cx="282" cy="201" r="18" fill="#ffd24a" />
 
   <path
-    d="M140 340c0-82 52-144 116-144h30v-37c0-18 14-32 32-32s32 14 32 32v37h20c26 0 50 10 68 27l-36 27c-8-8-20-13-32-13h-9l2 119h-56l2-79h-20c-30 0-53 28-53 63z"
-    fill="url(#wing)"
+    d="M263 94c-14 0-26 12-26 26v90l-92 54c-14 8-22 22-22 38v28c0 9 8 16 17 14l97-20v44l-36 23a16 16 0 0 0-7 13v29c0 10 9 17 19 14l43-10 43 10c10 3 19-4 19-14v-29a16 16 0 0 0-7-13l-36-23v-44l97 20c9 2 17-5 17-14v-28c0-16-8-30-22-38l-92-54v-90c0-14-12-26-26-26h-14Z"
+    fill="#ffffff"
   />
   <path
-    d="M292 306 194 406c-12 12-32 12-44 0s-12-32 0-44l100-98z"
-    fill="#f4fffe"
+    d="M256 149h14v194h-14z"
+    fill="#d7e6ff"
   />
   <path
-    d="M338 364a22 22 0 1 1 0-44 22 22 0 0 1 0 44Z"
-    fill="#83e7dd"
+    d="M188 284h136l52 12v8l-64-8h-112l-64 8v-8z"
+    fill="#d7e6ff"
   />
 </svg>

@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title desc">
+  <title id="title">Emojiwood World</title>
+  <desc id="desc">Icona del progetto Emojiwood World con quattro biomi stilizzati.</desc>
+  <defs>
+    <linearGradient id="sky" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#f8fbff"/>
+      <stop offset="1" stop-color="#d9eefe"/>
+    </linearGradient>
+    <linearGradient id="lake" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#8ce8ff"/>
+      <stop offset="1" stop-color="#2d78b7"/>
+    </linearGradient>
+  </defs>
+  <rect width="256" height="256" rx="52" fill="url(#sky)"/>
+  <rect x="20" y="20" width="216" height="216" rx="42" fill="#f6f2e6"/>
+  <path d="M20 20h108v108H20z" fill="#21533c"/>
+  <path d="M128 20h108v108H128z" fill="#2c3d4f"/>
+  <path d="M20 128h108v108H20z" fill="#b8742f"/>
+  <path d="M128 128h108v108H128z" fill="#d8ecf7"/>
+  <circle cx="82" cy="82" r="34" fill="url(#lake)" opacity=".96"/>
+  <circle cx="164" cy="72" r="20" fill="#ffd467"/>
+  <path d="M162 48l6 12 14 2-10 9 2 14-12-7-12 7 3-14-10-9 14-2z" fill="#ffefb0"/>
+  <path d="M70 64l-11 42h22z" fill="#8fe2a8"/>
+  <rect x="66" y="104" width="8" height="18" rx="4" fill="#204b39"/>
+  <rect x="148" y="46" width="38" height="62" rx="8" fill="#e7eef5"/>
+  <rect x="154" y="54" width="10" height="10" rx="3" fill="#8de8ff"/>
+  <rect x="169" y="54" width="10" height="10" rx="3" fill="#ffd4f1"/>
+  <rect x="154" y="70" width="10" height="10" rx="3" fill="#ffd467"/>
+  <rect x="169" y="70" width="10" height="10" rx="3" fill="#9effd2"/>
+  <path d="M68 178c13-24 31-34 56-30-12 11-12 31-2 44-23 5-41 1-54-14-4-4-4-4 0 0z" fill="#f2d18c"/>
+  <path d="M78 184c5 7 15 10 27 9-6-8-6-19 1-28-14 0-24 6-28 19z" fill="#d5994b"/>
+  <circle cx="178" cy="177" r="34" fill="#ffffff" opacity=".92"/>
+  <path d="M178 150v54M151 177h54" stroke="#92d0ef" stroke-width="8" stroke-linecap="round"/>
+  <circle cx="178" cy="177" r="16" fill="#dff5ff"/>
+  <circle cx="110" cy="102" r="10" fill="#fff3a3"/>
+  <circle cx="198" cy="112" r="10" fill="#fff0c1"/>
+  <circle cx="106" cy="206" r="9" fill="#ffe09a"/>
+  <circle cx="146" cy="208" r="9" fill="#fff9df"/>
+</svg>

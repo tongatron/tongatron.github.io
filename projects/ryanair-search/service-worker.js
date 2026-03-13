@@ -1,4 +1,4 @@
-const CACHE_VERSION = "ryanair-search-v20260312-38";
+const CACHE_VERSION = "ryanair-search-v20260312-39";
 const APP_SHELL = [
   "./",
   "./index.html",
@@ -9,10 +9,10 @@ const APP_SHELL = [
   "./vendor/bootstrap-icons/fonts/bootstrap-icons.woff?e34853135f9e39acf64315236852cd5a",
   "./styles.css?v=20260312-19",
   "./app.js?v=20260312-17",
-  "./manifest.webmanifest",
-  "./assets/icon.svg",
-  "./assets/icon-192.png",
-  "./assets/icon-512.png",
+  "./manifest.webmanifest?v=20260312-02",
+  "./assets/icon.svg?v=20260312-02",
+  "./assets/icon-192.png?v=20260312-02",
+  "./assets/icon-512.png?v=20260312-02",
   "./assets/social-preview.png",
 ];
 

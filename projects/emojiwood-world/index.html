@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Emojiwood World</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <section class="intro-card">
+      <p class="eyebrow">Prototipo giocabile</p>
+      <div class="intro-topline">
+        <div>
+          <h1>Emojiwood World</h1>
+          <p class="subtitle">Un mondo top-down enorme con foresta, citta neon, deserto e tundra, tutto costruito con emoji animate.</p>
+        </div>
+        <button id="resetButton" class="reset-button" type="button">Ricomincia</button>
+      </div>
+
+      <div class="status-grid">
+        <div class="status-box">
+          <span class="label">Obiettivo</span>
+          <p id="objectiveText">Raccogli le lucciole magiche e sblocca i biomi successivi.</p>
+        </div>
+        <div class="status-box">
+          <span class="label">Controlli</span>
+          <p>WASD / Frecce per muoverti, <strong>Spazio</strong> o <strong>Invio</strong> per interagire. <strong>Esc</strong> chiude i dialoghi. Su mobile usa i pulsanti touch.</p>
+        </div>
+        <div class="status-box">
+          <span class="label">Segnale</span>
+          <p id="promptText">Segui la bussola dorata: ogni bioma nasconde una missione diversa.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="game-frame">
+      <canvas id="gameCanvas" aria-label="Prototipo videogioco emoji top-down con foresta, citta, deserto e neve"></canvas>
+
+      <div id="dialoguePanel" class="dialogue-panel" hidden>
+        <div class="dialogue-header">
+          <div id="dialogueAvatar" class="dialogue-avatar">🦄</div>
+          <div class="dialogue-meta">
+            <strong id="dialogueName">Personaggio</strong>
+            <span id="dialogueRole">Custode del bioma</span>
+          </div>
+          <div id="dialogueStep" class="dialogue-step">1 / 3</div>
+        </div>
+        <p id="dialogueBody" class="dialogue-body">Dialogo</p>
+        <p id="dialogueHint" class="dialogue-hint">Premi Spazio o Invio per continuare</p>
+      </div>
+
+      <div class="hud-chip score-chip">
+        <span>Missioni</span>
+        <strong id="fireflyCount">0 / 11</strong>
+      </div>
+
+      <div class="hud-chip compass-chip">
+        <span>Bussola</span>
+        <strong id="compassText">Esplora la radura</strong>
+      </div>
+
+      <div class="hud-chip discoveries-chip">
+        <span>Scoperte</span>
+        <strong id="discoveriesText">Nessuna ancora</strong>
+      </div>
+
+      <div class="touch-controls" id="touchControls">
+        <button type="button" class="touch-button" data-control="up">↑</button>
+        <button type="button" class="touch-button" data-control="left">←</button>
+        <button type="button" class="touch-button" data-control="down">↓</button>
+        <button type="button" class="touch-button" data-control="right">→</button>
+        <button type="button" class="touch-button action" data-control="action">✨</button>
+      </div>
+    </section>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>
