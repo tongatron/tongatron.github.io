@@ -3,25 +3,25 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Projects</title>
-  <meta name="description" content="Raccolta dei progetti web e mobile Tongatron: giochi, simulatori, IoT e fabbricazione digitale.">
+  <title>Panel</title>
+  <meta name="description" content="Raccolta dei progetti web e mobile Tongatron: giochi, utility, simulatori e strumenti accessibili dal browser.">
   <!-- SEO + Social -->
-  <meta name="keywords" content="Tongatron, progetti web, web e mobile, giochi, simulatori, IoT, fablab">
+  <meta name="keywords" content="Tongatron, projects, progetti web, web e mobile, giochi, utility, simulatori">
   <meta name="robots" content="index, follow, max-image-preview:large">
   <meta name="author" content="Tongatron">
-  <link rel="canonical" href="https://tongatron.org/projects/index.html">
+  <link rel="canonical" href="https://tongatron.github.io/panel.html">
   <meta property="og:locale" content="it_IT">
   <meta property="og:site_name" content="Tongatron">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Projects">
-  <meta property="og:description" content="Raccolta dei progetti web e mobile Tongatron: giochi, simulatori, IoT e fabbricazione digitale.">
-  <meta property="og:url" content="https://tongatron.org/projects/index.html">
-  <meta property="og:image" content="https://tongatron.org/img/prof2.jpg">
-  <meta property="og:image:alt" content="Tongatron projects preview">
+  <meta property="og:title" content="Panel">
+  <meta property="og:description" content="Raccolta dei progetti web e mobile Tongatron: giochi, utility, simulatori e strumenti accessibili dal browser.">
+  <meta property="og:url" content="https://tongatron.github.io/panel.html">
+  <meta property="og:image" content="https://tongatron.github.io/img/prof2.jpg">
+  <meta property="og:image:alt" content="Tongatron panel preview">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Projects">
-  <meta name="twitter:description" content="Raccolta dei progetti web e mobile Tongatron: giochi, simulatori, IoT e fabbricazione digitale.">
-  <meta name="twitter:image" content="https://tongatron.org/img/prof2.jpg">
+  <meta name="twitter:title" content="Panel">
+  <meta name="twitter:description" content="Raccolta dei progetti web e mobile Tongatron: giochi, utility, simulatori e strumenti accessibili dal browser.">
+  <meta name="twitter:image" content="https://tongatron.github.io/img/prof2.jpg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
@@ -291,63 +291,14 @@
       border-color: var(--accent);
     }
 
-    .iot-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 12px;
-    }
-
-    .iot-card {
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      overflow: hidden;
-      background: var(--panel);
-      display: flex;
-      flex-direction: column;
-    }
-
-    .iot-card img {
-      width: 100%;
-      aspect-ratio: 16 / 10;
-      object-fit: cover;
-      border-bottom: 1px solid var(--line);
-      background: var(--panel-soft);
-    }
-
-    .iot-body {
-      padding: 12px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      flex-grow: 1;
-    }
-
-    .iot-body h4 {
-      margin: 0;
-      font-size: 1.55rem;
-      line-height: 1;
-      font-family: "Chakra Petch", sans-serif;
-      font-weight: 700;
-    }
-
-    .iot-body p {
-      margin: 0;
-      color: var(--muted);
-      line-height: 1.4;
-      font-size: 0.9rem;
-      flex-grow: 1;
-    }
-
     @media (max-width: 1080px) {
       .split { grid-template-columns: 1fr; }
       .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .iot-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
 
     @media (max-width: 680px) {
       .header { flex-direction: column; align-items: flex-start; }
       .grid { grid-template-columns: 1fr; }
-      .iot-grid { grid-template-columns: 1fr; }
       .page { width: min(1280px, 94vw); }
     }
   </style>
@@ -356,10 +307,10 @@
   <div class="page">
     <header class="surface header">
       <div>
-        <p class="eyebrow">Tongatron / Projects</p>
-        <h1>Projects</h1>
+        <p class="eyebrow">Tongatron / Panel</p>
+        <h1>Panel</h1>
       </div>
-      <a class="home-link" href="../index.html">Torna alla home</a>
+      <a class="home-link" href="./index.html">Torna alla home</a>
     </header>
 
     <section class="surface block">
@@ -371,7 +322,7 @@
       <div class="grid" style="margin-top: 14px;">
         <article class="card">
           <div class="card-head">
-            <img src="./Forza4/assets/icons/icon.svg" alt="Icona Connect Four" class="project-icon">
+            <img src="./projects/Forza4/assets/icons/icon.svg" alt="Icona Connect Four" class="project-icon">
             <div class="tag-row">
               <span class="tag">Games</span>
               <span class="tag">Android PWA</span>
@@ -379,12 +330,12 @@
           </div>
           <h4>Connect Four</h4>
           <p>Classico Forza 4 contro CPU con selezione difficolta e nuova partita rapida.</p>
-          <a class="open" href="./Forza4/index.html">apri</a>
+          <a class="open" href="./projects/Forza4/index.html">apri</a>
         </article>
 
         <article class="card">
           <div class="card-head">
-            <img src="./labirinto/icons/icon-192.svg" alt="Icona Maze Game" class="project-icon">
+            <img src="./projects/labirinto/icons/icon-192.svg" alt="Icona Maze Game" class="project-icon">
             <div class="tag-row">
               <span class="tag">Games</span>
               <span class="tag">Android PWA</span>
@@ -392,12 +343,12 @@
           </div>
           <h4>Maze Game</h4>
           <p>Gioco del labirinto con livelli easy/medium/hard, comandi tastiera e controlli touch.</p>
-          <a class="open" href="./labirinto/index.html">apri</a>
+          <a class="open" href="./projects/labirinto/index.html">apri</a>
         </article>
 
         <article class="card">
           <div class="card-head">
-            <img src="./memory/icon-192.png" alt="Icona Memory" class="project-icon">
+            <img src="./projects/memory/icon-192.png" alt="Icona Memory" class="project-icon">
             <div class="tag-row">
               <span class="tag">Games</span>
               <span class="tag">Android PWA</span>
@@ -405,12 +356,12 @@
           </div>
           <h4>Memory</h4>
           <p>Memory card game con timer, conteggio mosse, records locali e diverse dimensioni griglia.</p>
-          <a class="open" href="./memory/index.html">apri</a>
+          <a class="open" href="./projects/memory/index.html">apri</a>
         </article>
 
         <article class="card">
           <div class="card-head">
-            <img src="./simon/icons/icon-192.png" alt="Icona Simon Simulator" class="project-icon">
+            <img src="./projects/simon/icons/icon-192.png" alt="Icona Simon Simulator" class="project-icon">
             <div class="tag-row">
               <span class="tag">Games</span>
               <span class="tag">Android PWA</span>
@@ -418,12 +369,12 @@
           </div>
           <h4>Simon Simulator</h4>
           <p>Versione web del gioco Simon: ripeti la sequenza colori con modalita strict opzionale.</p>
-          <a class="open" href="./simon/index.html">apri</a>
+          <a class="open" href="./projects/simon/index.html">apri</a>
         </article>
 
         <article class="card">
           <div class="card-head">
-            <img src="./emojiwood-world/icon.svg" alt="Icona Emojiwood World" class="project-icon">
+            <img src="./projects/emojiwood-world/icon.svg" alt="Icona Emojiwood World" class="project-icon">
             <div class="tag-row">
               <span class="tag">Games</span>
               <span class="tag">Adventure</span>
@@ -431,12 +382,12 @@
           </div>
           <h4>Emojiwood World</h4>
           <p>Mondo top-down a quattro biomi con missioni collegate, dialoghi con i personaggi, sigilli dei custodi e animazioni emoji.</p>
-          <a class="open" href="./emojiwood-world/index.html">apri</a>
+          <a class="open" href="./projects/emojiwood-world/index.html">apri</a>
         </article>
 
         <article class="card">
           <div class="card-head">
-            <img src="./multi-simulator/icons/icon-192.svg" alt="Icona Multi Web Simulator" class="project-icon">
+            <img src="./projects/multi-simulator/icons/icon-192.svg" alt="Icona Multi Web Simulator" class="project-icon">
             <div class="tag-row">
               <span class="tag">Simulator</span>
               <span class="tag">Music</span>
@@ -445,12 +396,12 @@
           </div>
           <h4>Multi Web Simulator</h4>
           <p>Simulazione web della board open-source MULTI del laboratorio elettroacustico Pangrus.</p>
-          <a class="open" href="./multi-simulator/index.html">apri</a>
+          <a class="open" href="./projects/multi-simulator/index.html">apri</a>
         </article>
 
         <article class="card">
           <div class="card-head">
-            <img src="./roulette/icons/icon-192.svg" alt="Icona Roulette Simulator" class="project-icon">
+            <img src="./projects/roulette/icons/icon-192.svg" alt="Icona Roulette Simulator" class="project-icon">
             <div class="tag-row">
               <span class="tag">Simulator</span>
               <span class="tag">Android PWA</span>
@@ -458,12 +409,12 @@
           </div>
           <h4>Roulette Simulator</h4>
           <p>Simulatore stile casino con ruota animata, puntate multiple, bilancio e storico spin.</p>
-          <a class="open" href="./roulette/index.html">apri</a>
+          <a class="open" href="./projects/roulette/index.html">apri</a>
         </article>
 
         <article class="card">
           <div class="card-head">
-            <img src="./rumorebianco/icons/icon-192.svg" alt="Icona Rumore Bianco" class="project-icon">
+            <img src="./projects/rumorebianco/icons/icon-192.svg" alt="Icona Rumore Bianco" class="project-icon">
             <div class="tag-row">
               <span class="tag">Utility</span>
               <span class="tag">Music</span>
@@ -472,12 +423,12 @@
           </div>
           <h4>Rumore Bianco</h4>
           <p>Generatore audio con parametri regolabili in tempo reale (volume, filtro e controlli sonori).</p>
-          <a class="open" href="./rumorebianco/index.html">apri</a>
+          <a class="open" href="./projects/rumorebianco/index.html">apri</a>
         </article>
 
         <article class="card">
           <div class="card-head">
-            <img src="./qrscanner/icons/icon-192.png" alt="Icona QR Scanner" class="project-icon">
+            <img src="./projects/qrscanner/icons/icon-192.png" alt="Icona QR Scanner" class="project-icon">
             <div class="tag-row">
               <span class="tag">Utility</span>
               <span class="tag">Android PWA</span>
@@ -485,12 +436,12 @@
           </div>
           <h4>QR Scanner</h4>
           <p>Scansiona e genera QR code dal browser, con supporto fotocamera mobile e output testuale rapido.</p>
-          <a class="open" href="./qrscanner/index.html">apri</a>
+          <a class="open" href="./projects/qrscanner/index.html">apri</a>
         </article>
 
         <article class="card">
           <div class="card-head">
-            <img src="./qrscanner/icons/icon-192.png" alt="Icona Utility Farmaci" class="project-icon">
+            <img src="./projects/qrscanner/icons/icon-192.png" alt="Icona Utility Farmaci" class="project-icon">
             <div class="tag-row">
               <span class="tag">Utility</span>
               <span class="tag">Health</span>
@@ -499,12 +450,12 @@
           </div>
           <h4>Diario Farmaci</h4>
           <p>Gestione armadietto, piano terapia e diario assunzioni con backup JSON per uso su piu dispositivi.</p>
-          <a class="open" href="./farmaci/index.html">apri</a>
+          <a class="open" href="./projects/farmaci/index.html">apri</a>
         </article>
 
         <article class="card">
           <div class="card-head">
-            <img src="./chatanalysis/assets/icon.svg" alt="Icona ChatAnalysis" class="project-icon">
+            <img src="./projects/chatanalysis/assets/icon.svg" alt="Icona ChatAnalysis" class="project-icon">
             <div class="tag-row">
               <span class="tag">Utility</span>
               <span class="tag">AI</span>
@@ -512,12 +463,25 @@
           </div>
           <h4>ChatAnalysis</h4>
           <p>Importa chat WhatsApp dal browser e genera metriche, statistiche partecipanti, parole frequenti e sentiment analysis base.</p>
-          <a class="open" href="./chatanalysis/index.html">apri</a>
+          <a class="open" href="./projects/chatanalysis/index.html">apri</a>
         </article>
 
         <article class="card">
           <div class="card-head">
-            <img src="./ryanair-search/assets/icon-192.png" alt="Icona Ryanair Search" class="project-icon">
+            <img src="./projects/alcol-monitor/icon.svg" alt="Icona monitoraggio alcolico" class="project-icon">
+            <div class="tag-row">
+              <span class="tag">Utility</span>
+              <span class="tag">Health</span>
+            </div>
+          </div>
+          <h4>monitoraggio alcolico</h4>
+          <p>Diario web per monitorare il consumo di alcol con calendario, statistiche, note giornaliere e accesso paziente o medico.</p>
+          <a class="open" href="https://alcol-monitor.onrender.com" target="_blank" rel="noopener">apri</a>
+        </article>
+
+        <article class="card">
+          <div class="card-head">
+            <img src="./projects/ryanair-search/assets/icon-192.png" alt="Icona Ryanair Search" class="project-icon">
             <div class="tag-row">
               <span class="tag">Utility</span>
               <span class="tag">Travel</span>
@@ -525,12 +489,12 @@
           </div>
           <h4>Ryanair Search</h4>
           <p>Ricerca voli Ryanair A/R con filtri su partenza, destinazione, budget, durata e link condivisibile dei risultati.</p>
-          <a class="open" href="./ryanair-search/index.html">apri</a>
+          <a class="open" href="./projects/ryanair-search/index.html">apri</a>
         </article>
 
         <article class="card">
           <div class="card-head">
-            <img src="../img/robottino.jpg" alt="Icona Robottino 26" class="project-icon">
+            <img src="./img/robottino.jpg" alt="Icona Robottino 26" class="project-icon">
             <div class="tag-row">
               <span class="tag">Simulator</span>
               <span class="tag">STEM</span>
@@ -538,43 +502,28 @@
           </div>
           <h4>Robottino 26</h4>
           <p>Landing page del progetto con overview, documentazione componenti e simulatore web del piccolo robot con testa rotante.</p>
-          <a class="open" href="./robottino26/index.html">apri</a>
+          <a class="open" href="./projects/robottino26/index.html">apri</a>
         </article>
       </div>
     </section>
 
     <section class="surface block">
       <div class="title-row">
-        <h2>IoT e Fabbricazione Digitale</h2>
+        <h2>Links</h2>
       </div>
-      <p class="desc">Progetti sviluppati in ambito FabLab: robotica educativa, social camera per eventi e hack di prodotto.</p>
+      <p class="desc">Raccolta rapida di riferimenti e servizi personali in formato Markdown.</p>
 
-      <div class="iot-grid" style="margin-top: 14px;">
-        <article class="iot-card">
-          <img src="../img/robottino.jpg" alt="Robottino">
-          <div class="iot-body">
-            <h4>Robottino</h4>
-            <p>Robot educativo STEM open source basato su Arduino, con sensori, luci RGB, display e testa rotante programmabile.</p>
-            <a class="open" href="./robottino/robottino-site/index.html">apri</a>
+      <div class="grid" style="margin-top: 14px;">
+        <article class="card">
+          <div class="card-head">
+            <div class="tag-row">
+              <span class="tag">Markdown</span>
+              <span class="tag">Links</span>
+            </div>
           </div>
-        </article>
-
-        <article class="iot-card">
-          <img src="../img/contact.png" alt="Selfomatic">
-          <div class="iot-body">
-            <h4>Selfomatic</h4>
-            <p>Social camera per eventi con scatto automatico e pubblicazione in tempo reale, pensata per attivazioni e comunicazione live.</p>
-            <a class="open" href="./selfomatic/index.html">apri</a>
-          </div>
-        </article>
-
-        <article class="iot-card">
-          <img src="./IKEA-hack/ikea.jpg" alt="IKEA Hack Nordli">
-          <div class="iot-body">
-            <h4>IKEA Hack Nordli</h4>
-            <p>Progetto FabLab: personalizzazione della cassettiera Nordli con tavolino estraibile realizzato tramite pannello tagliato a laser.</p>
-            <a class="open" href="./IKEA-hack/index.html">apri</a>
-          </div>
+          <h4>links.markdown</h4>
+          <p>File con applicazioni, AI browser, servizi e riferimenti personali.</p>
+          <a class="open" href="./links.markdown">apri</a>
         </article>
       </div>
     </section>
