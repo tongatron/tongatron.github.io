@@ -1,0 +1,27 @@
+{
+  "id": "/projects/emojiwood-world/",
+  "name": "Emojiwood World",
+  "short_name": "Emojiwood",
+  "description": "Gioco top-down esplorativo con foresta, citta neon, deserto e tundra costruiti con emoji animate.",
+  "lang": "it",
+  "start_url": "/projects/emojiwood-world/index.html",
+  "scope": "/projects/emojiwood-world/",
+  "display": "standalone",
+  "background_color": "#081c15",
+  "theme_color": "#081c15",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "/projects/emojiwood-world/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/projects/emojiwood-world/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

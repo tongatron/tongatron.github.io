@@ -381,21 +381,32 @@ h1 {
   .hud-chip {
     min-width: 0;
     max-width: calc(100% - 2rem);
+    padding: 0.72rem 0.82rem;
+    border-radius: 16px;
+  }
+
+  .score-chip {
+    top: calc(1rem + env(safe-area-inset-top, 0px));
+    left: calc(1rem + env(safe-area-inset-left, 0px));
   }
 
   .compass-chip {
-    top: auto;
-    bottom: 1rem;
-    right: 1rem;
+    top: calc(5.2rem + env(safe-area-inset-top, 0px));
+    bottom: auto;
+    left: calc(1rem + env(safe-area-inset-left, 0px));
+    right: auto;
+    max-width: min(17rem, calc(100% - 7rem));
   }
 
   .discoveries-chip {
-    bottom: 6.4rem;
+    bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
+    left: calc(1rem + env(safe-area-inset-left, 0px));
+    max-width: calc(100% - 13.5rem - env(safe-area-inset-left, 0px));
   }
 
   .dialogue-panel {
     width: calc(100% - 1rem);
-    bottom: 5.8rem;
+    bottom: calc(6.6rem + env(safe-area-inset-bottom, 0px));
     padding: 0.9rem 0.95rem;
     border-radius: 20px;
   }
@@ -414,6 +425,54 @@ h1 {
   }
 
   .touch-controls {
-    display: grid;
+    display: block;
+    inset: 0;
+    right: auto;
+    bottom: auto;
+    pointer-events: none;
+  }
+
+  .touch-button {
+    position: absolute;
+    width: 3.9rem;
+    height: 3.9rem;
+    border-radius: 16px;
+    font-size: 1.25rem;
+    pointer-events: auto;
+  }
+
+  .touch-button.action {
+    top: calc(1rem + env(safe-area-inset-top, 0px));
+    right: calc(1rem + env(safe-area-inset-right, 0px));
+    height: 3.9rem;
+    background: linear-gradient(180deg, #f7d36f, #d88d2b);
+  }
+
+  [data-control="up"] {
+    bottom: calc(5.2rem + env(safe-area-inset-bottom, 0px));
+    right: calc(5.2rem + env(safe-area-inset-right, 0px));
+    grid-column: auto;
+    grid-row: auto;
+  }
+
+  [data-control="left"] {
+    bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
+    right: calc(9.4rem + env(safe-area-inset-right, 0px));
+    grid-column: auto;
+    grid-row: auto;
+  }
+
+  [data-control="down"] {
+    bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
+    right: calc(5.2rem + env(safe-area-inset-right, 0px));
+    grid-column: auto;
+    grid-row: auto;
+  }
+
+  [data-control="right"] {
+    bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
+    right: calc(1rem + env(safe-area-inset-right, 0px));
+    grid-column: auto;
+    grid-row: auto;
   }
 }

@@ -131,6 +131,7 @@
   document.addEventListener("keyup", handleKeyChange);
   startButton.addEventListener("click", startGame);
   bindTouchControls();
+  registerServiceWorker();
 
   resizeCanvas();
   updateUI();
@@ -1028,6 +1029,16 @@
     state.input.down = false;
     state.input.left = false;
     state.input.right = false;
+  }
+
+  function registerServiceWorker() {
+    if (!("serviceWorker" in navigator)) {
+      return;
+    }
+
+    window.addEventListener("load", () => {
+      navigator.serviceWorker.register("./service-worker.js").catch(() => {});
+    });
   }
 
   function canNpcGrantSigil(npc) {
