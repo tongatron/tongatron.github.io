@@ -1,4 +1,4 @@
-const CACHE_NAME = 'emojiwood-world-v1';
+const CACHE_NAME = 'emojiwood-world-v2';
 const CORE_ASSETS = [
   '/projects/emojiwood-world/',
   '/projects/emojiwood-world/index.html',
