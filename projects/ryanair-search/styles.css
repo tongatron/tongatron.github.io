@@ -686,6 +686,116 @@ body {
   background: var(--app-panel-strong);
 }
 
+.results-list-shell {
+  overflow: hidden;
+}
+
+.results-list-head {
+  display: none;
+}
+
+.results-list-head-cell {
+  min-width: 0;
+}
+
+.results-list-head-cell-book {
+  margin-left: auto;
+}
+
+.results-list {
+  display: grid;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.results-list-item + .results-list-item {
+  border-top: 0;
+}
+
+.results-list-item {
+  border: 1px solid rgba(25, 40, 52, 0.08);
+  border-radius: 26px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, rgba(246, 250, 255, 0.96) 100%);
+  box-shadow: 0 16px 34px rgba(7, 39, 102, 0.08);
+  overflow: hidden;
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease,
+    border-color 180ms ease;
+}
+
+.results-list-item:hover {
+  transform: translateY(-2px);
+  border-color: rgba(7, 53, 144, 0.14);
+  box-shadow: 0 20px 40px rgba(7, 39, 102, 0.12);
+}
+
+.result-row-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.1fr) minmax(0, 0.95fr) minmax(240px, 0.9fr);
+  gap: 1rem 1.25rem;
+  align-items: center;
+  padding: 1.35rem 1.4rem;
+}
+
+.result-cell {
+  min-width: 0;
+}
+
+.result-cell-departure,
+.result-cell-return,
+.result-cell-destination {
+  min-width: 0;
+  padding: 1rem 1.05rem;
+  border-radius: 22px;
+  background: rgba(248, 251, 255, 0.94);
+  border: 1px solid rgba(7, 53, 144, 0.08);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.75);
+}
+
+.result-cell-controls {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 0.8rem;
+  min-width: 0;
+  padding: 1rem 1.05rem;
+  border-radius: 22px;
+  background: linear-gradient(180deg, rgba(234, 241, 255, 0.95) 0%, rgba(248, 251, 255, 0.98) 100%);
+  border: 1px solid rgba(7, 53, 144, 0.1);
+}
+
+.result-controls-pills {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  width: 100%;
+}
+
+.result-cell-book {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 100%;
+}
+
+.details-panel {
+  padding: 0 1.4rem 1.4rem;
+  border-top: 1px solid rgba(7, 53, 144, 0.08);
+  background: linear-gradient(180deg, rgba(7, 53, 144, 0.03) 0%, rgba(255, 255, 255, 0) 100%);
+}
+
+.result-section-label {
+  margin-bottom: 0.65rem;
+  color: var(--app-muted);
+  font-size: 0.74rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
 .results-table {
   margin: 0;
   --bs-table-bg: transparent;
@@ -734,6 +844,11 @@ body {
   display: flex;
   align-items: flex-start;
   gap: 0.85rem;
+  min-width: 0;
+}
+
+.flight-cell > div {
+  min-width: 0;
 }
 
 .cell-icon {
@@ -784,11 +899,32 @@ body {
   white-space: nowrap;
 }
 
+.cell-date-line {
+  font-size: 1rem;
+}
+
 .cell-subline {
   margin-top: 0.15rem;
   color: var(--app-primary);
   font-size: 0.95rem;
   font-weight: 700;
+}
+
+.cell-price-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-top: 0.65rem;
+  padding: 0.35rem 0.65rem;
+  border-radius: 999px;
+  background: rgba(255, 204, 0, 0.16);
+  color: #805d00;
+  font-size: 0.84rem;
+  font-weight: 800;
+}
+
+.cell-price-chip i {
+  color: inherit;
 }
 
 .table-pill,
@@ -814,6 +950,7 @@ body {
 
 .table-price-total {
   gap: 0.45rem;
+  justify-content: center;
 }
 
 .price-inline-label {
@@ -827,6 +964,12 @@ body {
 .results-table th:nth-child(5),
 .results-table td:nth-child(5) {
   width: 1%;
+}
+
+.results-table th:nth-child(6),
+.results-table td:nth-child(6) {
+  width: 1%;
+  white-space: nowrap;
 }
 
 .card-total-badge {
@@ -865,7 +1008,7 @@ body {
 }
 
 .details-card {
-  margin: 0 0 0.9rem;
+  margin: 1rem 0 0;
   padding: 1.2rem;
   border-radius: 22px;
   background:
@@ -917,6 +1060,51 @@ body {
 .detail-value {
   font-weight: 700;
   line-height: 1.55;
+  overflow-wrap: anywhere;
+}
+
+.details-actions,
+.flight-card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.75rem;
+}
+
+.book-link-btn {
+  min-height: 46px;
+  max-width: 100%;
+  border: 0;
+  border-radius: 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  padding: 0.75rem 1rem;
+  background: linear-gradient(135deg, #ffcc00 0%, #ffd94a 100%);
+  color: #062d7a;
+  font-weight: 800;
+  text-decoration: none;
+  box-shadow: 0 12px 24px rgba(255, 204, 0, 0.22);
+}
+
+.book-link-btn:hover,
+.book-link-btn:focus {
+  color: #05245f;
+  background: linear-gradient(135deg, #f3c000 0%, #ffd326 100%);
+}
+
+.book-link-btn i {
+  color: inherit;
+}
+
+.book-link-btn-inline {
+  min-height: 40px;
+  max-width: 100%;
+  padding: 0.6rem 0.85rem;
+  border-radius: 14px;
+  box-shadow: none;
+  font-size: 0.95rem;
 }
 
 .cards-wrap {
@@ -1005,7 +1193,43 @@ body {
   direction: ltr;
 }
 
+@media (max-width: 1399.98px) {
+  .cell-date-line,
+  .cell-subline,
+  .table-pill-duration,
+  .table-price-total,
+  .cell-caption,
+  .detail-value {
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
+  .table-price-total {
+    display: inline-flex;
+    flex-wrap: wrap;
+  }
+}
+
 @media (max-width: 1199.98px) {
+  .result-row-card {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: start;
+  }
+
+  .result-cell-controls {
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+
+  .result-controls-pills,
+  .result-cell-book {
+    justify-content: flex-start;
+  }
+
+  .result-cell-controls {
+    grid-column: 1 / -1;
+  }
+
   .ticket-search-overview {
     grid-template-columns: 1fr;
   }
@@ -1042,6 +1266,33 @@ body {
 }
 
 @media (max-width: 767.98px) {
+  .result-row-card {
+    grid-template-columns: 1fr;
+  }
+
+  .result-cell-departure,
+  .result-cell-return,
+  .result-cell-destination,
+  .result-cell-controls {
+    grid-column: 1 / -1;
+  }
+
+  .result-cell-controls,
+  .result-controls-pills,
+  .result-cell-book {
+    width: 100%;
+    justify-content: stretch;
+  }
+
+  .result-cell-book {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .result-controls-pills {
+    gap: 0.6rem;
+  }
+
   .page-shell {
     padding-left: 1rem;
     padding-right: 1rem;
@@ -1108,15 +1359,21 @@ body {
     border: 0;
   }
 
-  .results-table tbody tr.result-row {
-    border-bottom: 1px solid rgba(25, 40, 52, 0.08);
-  }
-
-  .details-row td {
-    padding: 0 1rem 1rem;
+  .results-table tbody td:last-child {
+    padding-top: 0.15rem;
   }
 
   .flight-cell {
     gap: 0.7rem;
+  }
+
+  .details-actions,
+  .flight-card-actions {
+    justify-content: stretch;
+  }
+
+  .book-link-btn,
+  .book-link-btn-inline {
+    width: 100%;
   }
 }

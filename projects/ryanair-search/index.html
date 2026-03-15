@@ -62,7 +62,7 @@
     />
     <link rel="stylesheet" href="./vendor/bootstrap/bootstrap.min.css" />
     <link rel="stylesheet" href="./vendor/bootstrap-icons/bootstrap-icons.css" />
-    <link rel="stylesheet" href="./styles.css?v=20260312-19" />
+    <link rel="stylesheet" href="./styles.css?v=20260315-08" />
   </head>
   <body>
     <main class="container page-shell pb-5">
@@ -295,29 +295,28 @@
 
           <p id="status" class="status-pill mb-4">Pronto.</p>
 
-          <div id="list-view" class="table-wrap table-responsive">
-            <table class="table align-middle table-hover mb-0 results-table">
-              <thead>
-                <tr>
-                  <th scope="col">
-                    <span class="table-heading"><i class="bi bi-send-arrow-up" aria-hidden="true"></i><span id="th-departure">Partenza</span></span>
-                  </th>
-                  <th scope="col">
-                    <span class="table-heading"><i class="bi bi-send-arrow-down" aria-hidden="true"></i><span id="th-return">Ritorno</span></span>
-                  </th>
-                  <th scope="col">
-                    <span class="table-heading"><i class="bi bi-geo-alt" aria-hidden="true"></i><span id="th-destination">Destinazione</span></span>
-                  </th>
-                  <th scope="col">
-                    <span class="table-heading"><i class="bi bi-calendar3" aria-hidden="true"></i><span id="th-duration">Durata</span></span>
-                  </th>
-                  <th scope="col">
-                    <span class="table-heading"><i class="bi bi-currency-euro" aria-hidden="true"></i><span id="th-total-price">Prezzo totale</span></span>
-                  </th>
-                </tr>
-              </thead>
-              <tbody id="results-body"></tbody>
-            </table>
+          <div id="list-view" class="table-wrap results-list-shell">
+            <div class="results-list-head" aria-hidden="true">
+              <div class="results-list-head-cell">
+                <span class="table-heading"><i class="bi bi-send-arrow-up" aria-hidden="true"></i><span id="th-departure">Partenza</span></span>
+              </div>
+              <div class="results-list-head-cell">
+                <span class="table-heading"><i class="bi bi-send-arrow-down" aria-hidden="true"></i><span id="th-return">Ritorno</span></span>
+              </div>
+              <div class="results-list-head-cell">
+                <span class="table-heading"><i class="bi bi-geo-alt" aria-hidden="true"></i><span id="th-destination">Destinazione</span></span>
+              </div>
+              <div class="results-list-head-cell">
+                <span class="table-heading"><i class="bi bi-calendar3" aria-hidden="true"></i><span id="th-duration">Durata</span></span>
+              </div>
+              <div class="results-list-head-cell">
+                <span class="table-heading"><i class="bi bi-currency-euro" aria-hidden="true"></i><span id="th-total-price">Prezzo totale</span></span>
+              </div>
+              <div class="results-list-head-cell results-list-head-cell-book">
+                <span class="table-heading"><i class="bi bi-box-arrow-up-right" aria-hidden="true"></i><span id="th-book">Acquista</span></span>
+              </div>
+            </div>
+            <div id="results-body" class="results-list"></div>
           </div>
 
           <div id="cards-view" class="row g-4 cards-wrap hidden"></div>
@@ -343,7 +342,7 @@
     </main>
 
     <script src="./vendor/bootstrap/bootstrap.bundle.min.js"></script>
-    <script src="./app.js?v=20260312-17" type="module"></script>
+    <script src="./app.js?v=20260315-08" type="module"></script>
     <script>
       if ("serviceWorker" in navigator) {
         window.addEventListener("load", function registerServiceWorker() {

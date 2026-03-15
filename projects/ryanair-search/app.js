@@ -1,8 +1,13 @@
 const AIRPORTS_API_BASE = "https://www.ryanair.com/api/views/locate/3/airports";
 const CHEAPEST_PER_DAY_API = "https://www.ryanair.com/api/farfnd/3/oneWayFares";
+const RYANAIR_BOOKING_BASE = "https://www.ryanair.com";
 const DEFAULT_ORIGIN_COUNTRY = "IT";
 const DEFAULT_ORIGIN_AIRPORT = "TRN";
 const DEFAULT_DESTINATION_SELECTION = "all";
+const RYANAIR_BOOKING_PATHS = {
+  it: "/it/it/trip/flights/select",
+  en: "/gb/en/trip/flights/select",
+};
 const URL_FILTER_KEYS = {
   originScope: "scope",
   origin: "from",
@@ -54,6 +59,7 @@ const I18N = {
     thDestination: "Destinazione",
     thDuration: "Durata",
     thTotalPrice: "Prezzo totale",
+    thBook: "Acquista",
     destinationAll: "Tutte le destinazioni",
     destinationNone: "Nessuna destinazione disponibile",
     originNone: "Nessun aeroporto disponibile",
@@ -99,6 +105,8 @@ const I18N = {
     listReturnTimeLabel: "ritorno",
     listTotalPriceLabel: "Totale A/R",
     legTemplate: "{departure} -> {arrival} (€ {price})",
+    bookOnRyanair: "acquista su Ryanair",
+    bookOnRyanairShort: "acquista",
     shareResults: "condividi risultati",
     shareResultsCopied: "link copiato",
     footerCreditPrefix: "realizzato grazie al modulo open-source",
@@ -142,6 +150,7 @@ const I18N = {
     thDestination: "Destination",
     thDuration: "Duration",
     thTotalPrice: "Total price",
+    thBook: "Book",
     destinationAll: "All destinations",
     destinationNone: "No destinations available",
     originNone: "No airports available",
@@ -187,6 +196,8 @@ const I18N = {
     listReturnTimeLabel: "return",
     listTotalPriceLabel: "Round trip",
     legTemplate: "{departure} -> {arrival} (€ {price})",
+    bookOnRyanair: "book on Ryanair",
+    bookOnRyanairShort: "book",
     shareResults: "share results",
     shareResultsCopied: "link copied",
     footerCreditPrefix: "built thanks to the open-source module",
@@ -241,6 +252,7 @@ const thReturnEl = document.querySelector("#th-return");
 const thDestinationEl = document.querySelector("#th-destination");
 const thDurationEl = document.querySelector("#th-duration");
 const thTotalPriceEl = document.querySelector("#th-total-price");
+const thBookEl = document.querySelector("#th-book");
 
 const resultsBody = document.querySelector("#results-body");
 const resultsPanelEl = document.querySelector("#results-panel");
@@ -903,119 +915,73 @@ function renderResults(fares) {
 
 function renderListRows(fares) {
   for (const fare of fares) {
-    const row = document.createElement("tr");
-    row.className = "result-row";
-    row.tabIndex = 0;
-    row.setAttribute("aria-expanded", "false");
+    const bookingUrl = buildRyanairBookingUrl(fare);
+    const item = document.createElement("article");
+    item.className = "results-list-item";
+
+    const row = document.createElement("div");
+    row.className = "result-row-card";
     row.innerHTML = `
-      <td>
+      <div class="result-cell result-cell-departure">
+        <div class="result-section-label">${t("thDeparture")}</div>
         <div class="flight-cell">
           <span class="cell-icon icon-departure"><i class="bi bi-send-arrow-up" aria-hidden="true"></i></span>
           <div>
             <div class="fw-semibold cell-date-line">${formatDateWithWeekday(fare.outboundDate)}</div>
             <div class="cell-subline">${t("listDepartureTimeLabel")}: ${formatTime(fare.outboundDate)}</div>
             <div class="cell-caption">${formatOrigin(fare)}</div>
+            <div class="cell-price-chip">
+              <i class="bi bi-currency-euro" aria-hidden="true"></i>
+              ${formatPrice(fare.outboundPrice)}
+            </div>
           </div>
         </div>
-      </td>
-      <td>
+      </div>
+      <div class="result-cell result-cell-return">
+        <div class="result-section-label">${t("thReturn")}</div>
         <div class="flight-cell">
           <span class="cell-icon icon-return"><i class="bi bi-send-arrow-down" aria-hidden="true"></i></span>
           <div>
             <div class="fw-semibold cell-date-line">${formatDateWithWeekday(fare.inboundDate)}</div>
             <div class="cell-subline">${t("listReturnTimeLabel")}: ${formatTime(fare.inboundDate)}</div>
             <div class="cell-caption">${formatDestination(fare)}</div>
+            <div class="cell-price-chip">
+              <i class="bi bi-currency-euro" aria-hidden="true"></i>
+              ${formatPrice(fare.inboundPrice)}
+            </div>
           </div>
         </div>
-      </td>
-      <td>
+      </div>
+      <div class="result-cell result-cell-destination">
+        <div class="result-section-label">${t("thDestination")}</div>
         <div class="flight-cell">
           <span class="cell-icon icon-destination"><i class="bi bi-geo-alt-fill" aria-hidden="true"></i></span>
           <div class="fw-semibold">${formatDestination(fare)}</div>
         </div>
-      </td>
-      <td>
-        <span class="table-pill table-pill-duration">
-          <i class="bi bi-calendar3" aria-hidden="true"></i>
-          ${t("days", { count: fare.tripDays })}
-        </span>
-      </td>
-      <td>
-        <span class="table-price table-price-total">
-          <span class="price-inline-label">${t("listTotalPriceLabel")}</span>
-          <i class="bi bi-currency-euro" aria-hidden="true"></i>
-          ${formatPrice(fare.totalPrice)}
-        </span>
-      </td>
-    `;
-
-    const detailsRow = document.createElement("tr");
-    detailsRow.className = "details-row hidden";
-    detailsRow.innerHTML = `
-      <td colspan="5">
-        <div class="details-card">
-          <div class="details-title">
-            <i class="bi bi-airplane-engines" aria-hidden="true"></i>
-            <span>${t("detailsTitle")}</span>
-          </div>
-          <div class="details-grid">
-            <div class="detail-item detail-item-full">
-              <div class="detail-label">
-                <i class="bi bi-arrow-left-right" aria-hidden="true"></i>
-                <span>${t("cardRoute")}</span>
-              </div>
-              <div class="detail-value">${formatOrigin(fare)} → ${formatDestination(fare)}</div>
-            </div>
-            <div class="detail-item">
-              <div class="detail-label">
-                <i class="bi bi-send-arrow-up" aria-hidden="true"></i>
-                <span>${t("cardOutbound")}</span>
-              </div>
-              <div class="detail-value">${formatLegDetails(
-                fare.outboundDate,
-                fare.outboundArrivalDate,
-                fare.outboundPrice
-              )}</div>
-            </div>
-            <div class="detail-item">
-              <div class="detail-label">
-                <i class="bi bi-send-arrow-down" aria-hidden="true"></i>
-                <span>${t("cardReturn")}</span>
-              </div>
-              <div class="detail-value">${formatLegDetails(
-                fare.inboundDate,
-                fare.inboundArrivalDate,
-                fare.inboundPrice
-              )}</div>
-            </div>
-            <div class="detail-item detail-item-full">
-              <div class="detail-label">
-                <i class="bi bi-calendar3" aria-hidden="true"></i>
-                <span>${t("cardStay")}</span>
-              </div>
-              <div class="detail-value">${t("days", { count: fare.tripDays })}</div>
-            </div>
-          </div>
+      </div>
+      <div class="result-cell result-cell-controls">
+        <div class="result-controls-pills">
+          <span class="table-pill table-pill-duration">
+            <i class="bi bi-calendar3" aria-hidden="true"></i>
+            ${t("days", { count: fare.tripDays })}
+          </span>
+          <span class="table-price table-price-total">
+            <span class="price-inline-label">${t("listTotalPriceLabel")}</span>
+            <i class="bi bi-currency-euro" aria-hidden="true"></i>
+            ${formatPrice(fare.totalPrice)}
+          </span>
         </div>
-      </td>
+        <div class="result-cell-book">
+          <a class="book-link-btn book-link-btn-inline" href="${bookingUrl}" target="_blank" rel="noopener noreferrer">
+            <i class="bi bi-box-arrow-up-right" aria-hidden="true"></i>
+            <span>${t("bookOnRyanairShort")}</span>
+          </a>
+        </div>
+      </div>
     `;
 
-    const toggleDetails = () => {
-      detailsRow.classList.toggle("hidden");
-      row.classList.toggle("expanded");
-      row.setAttribute("aria-expanded", String(!detailsRow.classList.contains("hidden")));
-    };
-
-    row.addEventListener("click", toggleDetails);
-    row.addEventListener("keydown", (event) => {
-      if (event.key === "Enter" || event.key === " ") {
-        event.preventDefault();
-        toggleDetails();
-      }
-    });
-
-    resultsBody.appendChild(row);
-    resultsBody.appendChild(detailsRow);
+    item.appendChild(row);
+    resultsBody.appendChild(item);
   }
 }
 
@@ -1025,6 +991,7 @@ function renderCards(fares) {
   }
 
   for (const fare of fares) {
+    const bookingUrl = buildRyanairBookingUrl(fare);
     const card = document.createElement("article");
     card.className = "flight-card col-12 col-xl-6";
     card.innerHTML = `
@@ -1088,6 +1055,13 @@ function renderCards(fares) {
               <i class="bi bi-geo-alt" aria-hidden="true"></i>
               ${formatDestination(fare)}
             </span>
+          </div>
+
+          <div class="flight-card-actions mt-4">
+            <a class="book-link-btn" href="${bookingUrl}" target="_blank" rel="noopener noreferrer">
+              <i class="bi bi-box-arrow-up-right" aria-hidden="true"></i>
+              <span>${t("bookOnRyanair")}</span>
+            </a>
           </div>
         </div>
       </div>
@@ -1300,6 +1274,38 @@ function formatDestination(fare) {
 
 function formatOrigin(fare) {
   return formatAirportLabel(getAirportByCode(fare.originCode) ?? { code: fare.originCode, names: {} });
+}
+
+function buildRyanairBookingUrl(fare) {
+  const path = RYANAIR_BOOKING_PATHS[currentLang] ?? RYANAIR_BOOKING_PATHS.it;
+  const outboundDate = fare.outboundDate.slice(0, 10);
+  const inboundDate = fare.inboundDate.slice(0, 10);
+  const params = new URLSearchParams({
+    adults: "1",
+    teens: "0",
+    children: "0",
+    infants: "0",
+    dateOut: outboundDate,
+    dateIn: inboundDate,
+    isConnectedFlight: "false",
+    discount: "0",
+    promoCode: "",
+    isReturn: "true",
+    originIata: fare.originCode,
+    destinationIata: fare.airportCode,
+    tpAdults: "1",
+    tpTeens: "0",
+    tpChildren: "0",
+    tpInfants: "0",
+    tpStartDate: outboundDate,
+    tpEndDate: inboundDate,
+    tpDiscount: "0",
+    tpPromoCode: "",
+    tpOriginIata: fare.originCode,
+    tpDestinationIata: fare.airportCode,
+  });
+
+  return `${RYANAIR_BOOKING_BASE}${path}?${params.toString()}`;
 }
 
 function formatPrice(value) {
@@ -1677,6 +1683,7 @@ function applyStaticTranslations() {
   setText(thDestinationEl, t("thDestination"));
   setText(thDurationEl, t("thDuration"));
   setText(thTotalPriceEl, t("thTotalPrice"));
+  setText(thBookEl, t("thBook"));
   setText(shareResultsBtnTextEl, t("shareResults"));
   setText(footerCreditPrefixEl, t("footerCreditPrefix"));
 
