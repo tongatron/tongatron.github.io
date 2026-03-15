@@ -2,6 +2,7 @@
   const canvas = document.getElementById("gameCanvas");
   const ctx = canvas.getContext("2d");
   const appShell = document.querySelector(".app-shell");
+  const gameFrame = document.querySelector(".game-frame");
 
   const objectiveText = document.getElementById("objectiveText");
   const promptText = document.getElementById("promptText");
@@ -130,6 +131,7 @@
   document.addEventListener("keydown", handleKeyChange);
   document.addEventListener("keyup", handleKeyChange);
   startButton.addEventListener("click", startGame);
+  gameFrame.addEventListener("pointerdown", handleGameFramePointerDown);
   bindTouchControls();
   registerServiceWorker();
 
@@ -832,6 +834,14 @@
     dialogueRole.textContent = npc.role;
     dialogueStep.textContent = `${state.dialogue.pageIndex + 1} / ${state.dialogue.pages.length}`;
     dialogueBody.textContent = page.text;
+    if (usesTouchProgression()) {
+      dialogueHint.textContent = state.dialogue.pageIndex < state.dialogue.pages.length - 1
+        ? "Tocca lo schermo per continuare"
+        : state.dialogue.reward
+          ? "Tocca lo schermo per ricevere la ricompensa"
+          : "Tocca lo schermo per chiudere";
+      return;
+    }
     dialogueHint.textContent = state.dialogue.pageIndex < state.dialogue.pages.length - 1
       ? "Premi Spazio o Invio per continuare"
       : state.dialogue.reward
@@ -1047,7 +1057,7 @@
         window.location.reload();
       });
 
-      navigator.serviceWorker.register("./service-worker.js?v=20260315-04").then((registration) => {
+      navigator.serviceWorker.register("./service-worker.js?v=20260315-05").then((registration) => {
         registration.update();
       }).catch(() => {});
     });
@@ -2182,6 +2192,10 @@
           }
           return;
         }
+        if (state.dialogue.active) {
+          state.actionQueued = true;
+          return;
+        }
         if (control === "action") {
           state.actionQueued = true;
         } else {
@@ -2201,8 +2215,25 @@
     });
   }
 
+  function handleGameFramePointerDown(event) {
+    if (!gameStarted || !state.dialogue.active || !usesTouchProgression()) {
+      return;
+    }
+    if (touchControls.contains(event.target)) {
+      return;
+    }
+    event.preventDefault();
+    state.actionQueued = true;
+  }
+
   function preventInteractionDefaults(event) {
     event.preventDefault();
+  }
+
+  function usesTouchProgression() {
+    return navigator.maxTouchPoints > 0
+      || window.matchMedia("(hover: none)").matches
+      || window.matchMedia("(pointer: coarse)").matches;
   }
 
   function resizeCanvas() {
