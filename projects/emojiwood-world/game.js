@@ -1,13 +1,14 @@
 (function () {
   const canvas = document.getElementById("gameCanvas");
   const ctx = canvas.getContext("2d");
+  const appShell = document.querySelector(".app-shell");
 
   const objectiveText = document.getElementById("objectiveText");
   const promptText = document.getElementById("promptText");
   const progressCount = document.getElementById("fireflyCount");
   const discoveriesText = document.getElementById("discoveriesText");
   const compassText = document.getElementById("compassText");
-  const resetButton = document.getElementById("resetButton");
+  const startButton = document.getElementById("startButton");
   const touchControls = document.getElementById("touchControls");
   const dialoguePanel = document.getElementById("dialoguePanel");
   const dialogueAvatar = document.getElementById("dialogueAvatar");
@@ -52,6 +53,7 @@
 
   const view = { width: 1, height: 1 };
   const rng = mulberry32(1337);
+  let gameStarted = false;
 
   const state = {
     time: 0,
@@ -127,14 +129,18 @@
   window.addEventListener("resize", resizeCanvas);
   document.addEventListener("keydown", handleKeyChange);
   document.addEventListener("keyup", handleKeyChange);
-  resetButton.addEventListener("click", () => window.location.reload());
+  startButton.addEventListener("click", startGame);
   bindTouchControls();
 
   resizeCanvas();
   updateUI();
-  requestAnimationFrame(loop);
+  render();
 
   function loop(now) {
+    if (!gameStarted) {
+      return;
+    }
+
     if (!state.lastFrame) {
       state.lastFrame = now;
     }
@@ -146,6 +152,23 @@
     update(dt);
     render();
     requestAnimationFrame(loop);
+  }
+
+  function startGame() {
+    if (gameStarted) {
+      return;
+    }
+
+    gameStarted = true;
+    appShell.classList.add("playing");
+    clearMovementInput();
+    state.lastFrame = 0;
+
+    requestAnimationFrame(() => {
+      resizeCanvas();
+      render();
+      requestAnimationFrame(loop);
+    });
   }
 
   function update(dt) {
@@ -2087,6 +2110,13 @@
       event.preventDefault();
     }
 
+    if (!gameStarted) {
+      if ((key === " " || event.code === "Space" || key === "enter") && isDown && !event.repeat) {
+        startGame();
+      }
+      return;
+    }
+
     if (key === "arrowup" || key === "w") {
       state.input.up = isDown;
     }
@@ -2115,6 +2145,12 @@
 
       button.addEventListener("pointerdown", (event) => {
         event.preventDefault();
+        if (!gameStarted) {
+          if (control === "action") {
+            startGame();
+          }
+          return;
+        }
         if (control === "action") {
           state.actionQueued = true;
         } else {
