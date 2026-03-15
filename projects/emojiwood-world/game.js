@@ -1047,7 +1047,7 @@
         window.location.reload();
       });
 
-      navigator.serviceWorker.register("./service-worker.js?v=20260315-03").then((registration) => {
+      navigator.serviceWorker.register("./service-worker.js?v=20260315-04").then((registration) => {
         registration.update();
       }).catch(() => {});
     });
@@ -2163,8 +2163,16 @@
   }
 
   function bindTouchControls() {
+    touchControls.addEventListener("contextmenu", preventInteractionDefaults);
+    touchControls.addEventListener("selectstart", preventInteractionDefaults);
+    touchControls.addEventListener("dragstart", preventInteractionDefaults);
+
     touchControls.querySelectorAll("[data-control]").forEach((button) => {
       const control = button.dataset.control;
+      button.setAttribute("draggable", "false");
+      button.addEventListener("contextmenu", preventInteractionDefaults);
+      button.addEventListener("selectstart", preventInteractionDefaults);
+      button.addEventListener("dragstart", preventInteractionDefaults);
 
       button.addEventListener("pointerdown", (event) => {
         event.preventDefault();
@@ -2191,6 +2199,10 @@
       button.addEventListener("pointerleave", release);
       button.addEventListener("pointercancel", release);
     });
+  }
+
+  function preventInteractionDefaults(event) {
+    event.preventDefault();
   }
 
   function resizeCanvas() {

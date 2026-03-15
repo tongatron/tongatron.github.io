@@ -154,6 +154,13 @@ h1 {
   box-shadow: 0 28px 60px rgba(6, 20, 14, 0.36);
 }
 
+.game-frame,
+.game-frame * {
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
+
 .app-shell.playing .game-frame {
   border-radius: 0;
   box-shadow: none;
@@ -312,7 +319,12 @@ h1 {
   font-size: 1.4rem;
   font-weight: 800;
   box-shadow: 0 12px 24px rgba(8, 23, 18, 0.2);
-  touch-action: manipulation;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+  caret-color: transparent;
 }
 
 .touch-button.action {

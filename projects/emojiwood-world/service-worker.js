@@ -1,10 +1,10 @@
-const CACHE_NAME = 'emojiwood-world-v3';
+const CACHE_NAME = 'emojiwood-world-v4';
 const CORE_ASSETS = [
   '/projects/emojiwood-world/',
   '/projects/emojiwood-world/index.html',
-  '/projects/emojiwood-world/styles.css?v=20260315-03',
-  '/projects/emojiwood-world/game.js?v=20260315-03',
-  '/projects/emojiwood-world/manifest.webmanifest?v=20260315-03',
+  '/projects/emojiwood-world/styles.css?v=20260315-04',
+  '/projects/emojiwood-world/game.js?v=20260315-04',
+  '/projects/emojiwood-world/manifest.webmanifest?v=20260315-04',
   '/projects/emojiwood-world/icon.svg',
   '/projects/emojiwood-world/icon-192.png',
   '/projects/emojiwood-world/icon-512.png',
