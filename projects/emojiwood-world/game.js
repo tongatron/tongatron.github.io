@@ -1036,8 +1036,20 @@
       return;
     }
 
+    let refreshed = false;
+
     window.addEventListener("load", () => {
-      navigator.serviceWorker.register("./service-worker.js").catch(() => {});
+      navigator.serviceWorker.addEventListener("controllerchange", () => {
+        if (refreshed) {
+          return;
+        }
+        refreshed = true;
+        window.location.reload();
+      });
+
+      navigator.serviceWorker.register("./service-worker.js?v=20260315-03").then((registration) => {
+        registration.update();
+      }).catch(() => {});
     });
   }
 
