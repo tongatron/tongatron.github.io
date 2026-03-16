@@ -1,0 +1,1184 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tongatron | Hypercade Cabinet Variant</title>
+  <meta name="description" content="Variante Bootstrap estrema della home Tongatron: stessa struttura e contenuti, con grafica ispirata a un cabinato arcade anni 80, neon, marquee e micro-animazioni.">
+  <meta name="keywords" content="Tongatron, sviluppo software, sviluppo web, prototipi interattivi, project management, IoT, fablab, PWA, creative technology">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta name="author" content="Tongatron">
+  <link rel="canonical" href="https://tongatron.org/index-bootstrap-arcade-extreme.html">
+  <meta property="og:locale" content="it_IT">
+  <meta property="og:site_name" content="Tongatron">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Tongatron | Hypercade Cabinet Variant">
+  <meta property="og:description" content="Versione Hypercade della home Tongatron: stesso contenuto, grafica da cabinato arcade, neon e animazioni leggere.">
+  <meta property="og:url" content="https://tongatron.org/index-bootstrap-arcade-extreme.html">
+  <meta property="og:image" content="https://tongatron.org/img/robottino.jpg">
+  <meta property="og:image:alt" content="Anteprima progetto Robottino">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Tongatron | Hypercade Cabinet Variant">
+  <meta name="twitter:description" content="Versione Hypercade della home Tongatron: stesso contenuto, grafica da cabinato arcade, neon e animazioni leggere.">
+  <meta name="twitter:image" content="https://tongatron.org/img/robottino.jpg">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #140021;
+      --bg-soft: #24003b;
+      --panel: rgba(30, 3, 52, 0.92);
+      --panel-soft: rgba(16, 1, 30, 0.94);
+      --line: rgba(33, 246, 255, 0.34);
+      --line-strong: rgba(255, 84, 214, 0.54);
+      --text: #fff7ff;
+      --muted: #dccfff;
+      --accent: #21f6ff;
+      --accent-soft: #ff54d6;
+      --accent-warm: #ffe45c;
+      --accent-green: #8eff63;
+      --shadow: 0 22px 60px rgba(0, 0, 0, 0.46);
+      --glow-cyan: 0 0 0.95rem rgba(33, 246, 255, 0.58);
+      --glow-pink: 0 0 1.15rem rgba(255, 84, 214, 0.54);
+      --glow-gold: 0 0 1rem rgba(255, 228, 92, 0.48);
+      --radius-xl: 2rem;
+      --radius-lg: 1.35rem;
+      --radius-md: 1rem;
+    }
+
+    @keyframes gridSlide {
+      0% { transform: perspective(880px) rotateX(73deg) translateY(0); }
+      100% { transform: perspective(880px) rotateX(73deg) translateY(26px); }
+    }
+
+    @keyframes bulbPulse {
+      0%, 100% { opacity: 0.45; transform: scale(0.92); }
+      50% { opacity: 1; transform: scale(1.12); }
+    }
+
+    @keyframes marqueeSweep {
+      0% { transform: translateX(-120%); }
+      100% { transform: translateX(220%); }
+    }
+
+    @keyframes blinkCoin {
+      0%, 48% { opacity: 1; }
+      50%, 100% { opacity: 0.38; }
+    }
+
+    @keyframes cabinetFloat {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+
+    @keyframes titleFlicker {
+      0%, 18%, 22%, 53%, 57%, 100% { opacity: 1; text-shadow: 0 0 12px rgba(255,84,214,0.42), 0 0 28px rgba(33,246,255,0.18); }
+      20%, 55% { opacity: 0.9; text-shadow: 0 0 8px rgba(255,84,214,0.2), 0 0 18px rgba(33,246,255,0.12); }
+    }
+
+    @keyframes starTwinkle {
+      0%, 100% { opacity: 0.28; }
+      50% { opacity: 0.62; }
+    }
+
+    @keyframes tokenOrbit {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-10px) rotate(8deg); }
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: "Chakra Petch", system-ui, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 50% -10%, rgba(255, 228, 92, 0.22), transparent 20%),
+        radial-gradient(circle at 12% 14%, rgba(255, 84, 214, 0.2), transparent 22%),
+        radial-gradient(circle at 88% 16%, rgba(33, 246, 255, 0.18), transparent 18%),
+        linear-gradient(180deg, #090014 0%, #140021 42%, #1b0633 100%);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      left: -8%;
+      right: -8%;
+      bottom: -16vh;
+      height: 60vh;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(33, 246, 255, 0.28) 2px, transparent 2px),
+        linear-gradient(90deg, rgba(33, 246, 255, 0.28) 2px, transparent 2px);
+      background-size: 100% 52px, 52px 100%;
+      transform: perspective(880px) rotateX(73deg);
+      transform-origin: bottom;
+      opacity: 0.6;
+      animation: gridSlide 4.5s linear infinite;
+      z-index: 0;
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background: repeating-linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.05) 0,
+        rgba(255, 255, 255, 0.05) 2px,
+        transparent 2px,
+        transparent 5px
+      );
+      mix-blend-mode: screen;
+      opacity: 0.14;
+      z-index: 0;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .page-shell {
+      position: relative;
+      z-index: 1;
+    }
+
+    .page-shell::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        radial-gradient(circle at 15% 22%, rgba(255,255,255,0.75) 0 1px, transparent 1.5px),
+        radial-gradient(circle at 78% 12%, rgba(255,255,255,0.78) 0 1px, transparent 1.5px),
+        radial-gradient(circle at 64% 28%, rgba(255,255,255,0.64) 0 1px, transparent 1.5px),
+        radial-gradient(circle at 42% 8%, rgba(255,255,255,0.7) 0 1px, transparent 1.5px),
+        radial-gradient(circle at 90% 34%, rgba(255,255,255,0.68) 0 1px, transparent 1.5px),
+        radial-gradient(circle at 36% 22%, rgba(255,255,255,0.82) 0 1px, transparent 1.5px),
+        radial-gradient(circle at 82% 30%, rgba(255,255,255,0.74) 0 1px, transparent 1.5px);
+      opacity: 0.36;
+      animation: starTwinkle 4.2s ease-in-out infinite;
+      z-index: 0;
+    }
+
+    .page-shell::after {
+      content: "";
+      position: fixed;
+      inset: 1rem;
+      border-radius: 2rem;
+      border: 2px solid rgba(255, 228, 92, 0.22);
+      box-shadow: inset 0 0 0 2px rgba(33,246,255,0.08), inset 0 0 50px rgba(255,84,214,0.08);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .font-display {
+      font-family: "Press Start 2P", "Chakra Petch", sans-serif;
+    }
+
+    .font-mono-tech {
+      font-family: "VT323", ui-monospace, monospace;
+      letter-spacing: 0.08em;
+    }
+
+    .site-navbar {
+      padding-top: 1.25rem;
+    }
+
+    .marquee-shell {
+      position: relative;
+      overflow: hidden;
+      border: 2px solid rgba(255, 228, 92, 0.45);
+      border-radius: 2rem;
+      background: linear-gradient(180deg, rgba(62, 8, 96, 0.96), rgba(31, 3, 52, 0.96));
+      box-shadow: var(--shadow), var(--glow-pink), inset 0 0 26px rgba(255,228,92,0.08);
+      padding: 0.9rem 1rem 1rem;
+      animation: cabinetFloat 4.6s ease-in-out infinite;
+    }
+
+    .marquee-shell::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(110deg, transparent 0%, rgba(255,255,255,0.24) 48%, transparent 52%);
+      opacity: 0.16;
+      animation: marqueeSweep 7s linear infinite;
+      pointer-events: none;
+    }
+
+    .marquee-lights {
+      display: grid;
+      grid-template-columns: repeat(18, minmax(0, 1fr));
+      gap: 0.35rem;
+      margin-bottom: 0.9rem;
+    }
+
+    .marquee-lights span {
+      height: 0.5rem;
+      border-radius: 999px;
+      background: var(--accent-warm);
+      box-shadow: var(--glow-gold);
+      animation: bulbPulse 1.3s ease-in-out infinite;
+    }
+
+    .marquee-lights span:nth-child(3n) {
+      background: var(--accent-soft);
+      box-shadow: var(--glow-pink);
+      animation-delay: 0.18s;
+    }
+
+    .marquee-lights span:nth-child(2n) {
+      background: var(--accent);
+      box-shadow: var(--glow-cyan);
+      animation-delay: 0.34s;
+    }
+
+    .marquee-body {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .insert-coin {
+      color: var(--accent-warm);
+      font-size: 1.25rem;
+      text-transform: uppercase;
+      text-shadow: var(--glow-gold);
+      animation: blinkCoin 1.35s steps(2, end) infinite;
+    }
+
+    .marquee-title {
+      color: var(--text);
+      text-align: center;
+      font-size: clamp(1.05rem, 2vw, 1.55rem);
+      line-height: 1.5;
+      text-shadow: var(--glow-pink), 0 0 24px rgba(33,246,255,0.18);
+    }
+
+    .marquee-subtitle {
+      text-align: center;
+      color: rgba(255, 246, 255, 0.78);
+      font-size: 1.1rem;
+      text-transform: uppercase;
+    }
+
+    .nav-pill {
+      border: 2px solid rgba(33, 246, 255, 0.46);
+      border-radius: 1.5rem;
+      background: linear-gradient(180deg, rgba(28, 3, 48, 0.95), rgba(14, 1, 26, 0.94));
+      box-shadow: var(--shadow), var(--glow-cyan), inset 0 0 24px rgba(255, 84, 214, 0.12);
+      backdrop-filter: blur(12px);
+    }
+
+    .brand-mark {
+      width: 3.15rem;
+      height: 3.15rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 1rem;
+      border: 2px solid rgba(255, 228, 92, 0.58);
+      background: radial-gradient(circle at top, rgba(255, 228, 92, 0.48), rgba(255, 84, 214, 0.24) 56%, rgba(33, 246, 255, 0.16));
+      color: var(--accent-warm);
+      box-shadow: var(--glow-pink), inset 0 0 16px rgba(255,255,255,0.12);
+      animation: cabinetFloat 3.4s ease-in-out infinite;
+    }
+
+    .brand-name {
+      letter-spacing: 0.26em;
+      text-transform: uppercase;
+      font-size: 0.88rem;
+      color: var(--text);
+      text-shadow: 0 0 14px rgba(255, 84, 214, 0.35);
+    }
+
+    .brand-subtitle {
+      color: rgba(255, 246, 255, 0.72);
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      font-size: 0.82rem;
+    }
+
+    .nav-link-modern {
+      color: rgba(255, 246, 255, 0.82);
+      font-size: 1rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: color 180ms ease, text-shadow 180ms ease, transform 180ms ease;
+    }
+
+    .nav-link-modern:hover,
+    .nav-link-modern:focus {
+      color: var(--accent);
+      text-shadow: var(--glow-cyan);
+      transform: translateY(-1px);
+    }
+
+    .section-card,
+    .feature-card,
+    .project-card,
+    .network-card,
+    .contact-card,
+    .hero-panel,
+    .side-panel {
+      border: 2px solid rgba(33, 246, 255, 0.24);
+      border-radius: var(--radius-xl);
+      background: linear-gradient(180deg, rgba(35, 4, 60, 0.95), rgba(21, 2, 38, 0.97));
+      box-shadow: var(--shadow), inset 0 0 0 2px rgba(255, 84, 214, 0.08);
+    }
+
+    .section-card,
+    .feature-card,
+    .project-card,
+    .network-card,
+    .contact-card,
+    .side-panel {
+      position: relative;
+      overflow: hidden;
+      transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+    }
+
+    .section-card:hover,
+    .feature-card:hover,
+    .project-card:hover,
+    .network-card:hover,
+    .contact-card:hover,
+    .side-panel:hover {
+      transform: translateY(-6px);
+      border-color: rgba(255, 84, 214, 0.5);
+      box-shadow: var(--shadow), var(--glow-cyan), inset 0 0 0 2px rgba(255, 84, 214, 0.14);
+    }
+
+    .section-card::before,
+    .feature-card::before,
+    .project-card::before,
+    .network-card::before,
+    .contact-card::before,
+    .hero-panel::before,
+    .side-panel::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      padding: 2px;
+      border-radius: inherit;
+      background: linear-gradient(135deg, rgba(33, 246, 255, 0.72), rgba(255, 84, 214, 0.42), rgba(255, 228, 92, 0.52));
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+    }
+
+    .hero-panel {
+      position: relative;
+      padding: clamp(1.75rem, 3vw, 2.9rem);
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 82% 14%, rgba(255, 228, 92, 0.16), transparent 18%),
+        radial-gradient(circle at 24% 12%, rgba(33, 246, 255, 0.18), transparent 20%),
+        linear-gradient(180deg, rgba(50, 9, 82, 0.96), rgba(19, 2, 36, 0.98));
+    }
+
+    .hero-panel::after {
+      content: "";
+      position: absolute;
+      width: 18rem;
+      height: 18rem;
+      border-radius: 999px;
+      right: -3rem;
+      top: -6rem;
+      background: radial-gradient(circle, rgba(255, 228, 92, 0.86) 0, rgba(255, 84, 214, 0.78) 48%, rgba(255, 84, 214, 0) 72%);
+      opacity: 0.24;
+      filter: blur(6px);
+      pointer-events: none;
+      animation: cabinetFloat 5s ease-in-out infinite;
+    }
+
+    .floating-token {
+      position: absolute;
+      width: 3.5rem;
+      height: 3.5rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 1rem;
+      border: 2px solid rgba(255, 228, 92, 0.45);
+      background: radial-gradient(circle at top, rgba(255,228,92,0.28), rgba(255,84,214,0.14) 55%, rgba(33,246,255,0.12));
+      color: var(--accent-warm);
+      box-shadow: var(--glow-gold), inset 0 0 18px rgba(255,255,255,0.08);
+      pointer-events: none;
+      animation: tokenOrbit 4s ease-in-out infinite;
+      z-index: 1;
+    }
+
+    .token-a { top: 1.25rem; right: 1.4rem; }
+    .token-b { right: 7.5rem; bottom: 1.5rem; animation-delay: 1.2s; color: var(--accent); border-color: rgba(33,246,255,0.46); box-shadow: var(--glow-cyan); }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.72rem 1rem;
+      border-radius: 999px;
+      border: 2px solid rgba(255, 228, 92, 0.48);
+      background: rgba(255, 228, 92, 0.1);
+      color: var(--accent-warm);
+      font-size: 0.96rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      box-shadow: 0 0 1rem rgba(255, 228, 92, 0.18);
+    }
+
+    .hero-title {
+      font-size: clamp(2.35rem, 5.5vw, 4.9rem);
+      line-height: 1.16;
+      letter-spacing: 0.02em;
+      text-shadow: 0 0 24px rgba(255, 84, 214, 0.2);
+      animation: titleFlicker 6s linear infinite;
+    }
+
+    .hero-copy,
+    .section-copy,
+    .card-copy,
+    .project-copy,
+    .metric-copy,
+    .aside-copy {
+      color: var(--muted);
+      line-height: 1.9;
+      font-size: 1.03rem;
+    }
+
+    .hero-hud {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 1.35rem;
+    }
+
+    .hero-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.45rem 0.8rem;
+      border-radius: 999px;
+      border: 2px solid rgba(33,246,255,0.34);
+      background: rgba(33,246,255,0.08);
+      color: var(--accent);
+      font-size: 1rem;
+      text-transform: uppercase;
+      box-shadow: var(--glow-cyan);
+    }
+
+    .metric-tile {
+      border: 2px solid rgba(33, 246, 255, 0.22);
+      border-radius: var(--radius-lg);
+      background: linear-gradient(180deg, rgba(23, 2, 39, 0.95), rgba(39, 8, 66, 0.94));
+      height: 100%;
+      padding: 1.2rem;
+      box-shadow: inset 0 0 28px rgba(33, 246, 255, 0.06);
+      animation: cabinetFloat 5.8s ease-in-out infinite;
+    }
+
+    .metric-number {
+      font-size: 1.95rem;
+      letter-spacing: 0.04em;
+      color: var(--accent);
+      text-shadow: var(--glow-cyan);
+    }
+
+    .btn-accent {
+      --bs-btn-color: #24003b;
+      --bs-btn-bg: var(--accent-warm);
+      --bs-btn-border-color: rgba(255, 228, 92, 0.9);
+      --bs-btn-hover-color: #24003b;
+      --bs-btn-hover-bg: #fff08c;
+      --bs-btn-hover-border-color: #fff08c;
+      --bs-btn-active-color: #24003b;
+      --bs-btn-active-bg: #fff08c;
+      --bs-btn-active-border-color: #fff08c;
+      --bs-btn-padding-x: 1.15rem;
+      --bs-btn-padding-y: 0.82rem;
+      --bs-btn-font-weight: 700;
+      --bs-btn-border-radius: 0.95rem;
+      box-shadow: 0 0 20px rgba(255, 228, 92, 0.26);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      animation: cabinetFloat 3.6s ease-in-out infinite;
+    }
+
+    .btn-ghost {
+      --bs-btn-color: var(--text);
+      --bs-btn-bg: rgba(255,255,255,0.03);
+      --bs-btn-border-color: rgba(255, 84, 214, 0.52);
+      --bs-btn-hover-color: var(--text);
+      --bs-btn-hover-bg: rgba(255, 84, 214, 0.12);
+      --bs-btn-hover-border-color: rgba(255, 84, 214, 0.86);
+      --bs-btn-active-color: var(--text);
+      --bs-btn-active-bg: rgba(255, 84, 214, 0.12);
+      --bs-btn-active-border-color: rgba(255, 84, 214, 0.86);
+      --bs-btn-padding-x: 1.15rem;
+      --bs-btn-padding-y: 0.82rem;
+      --bs-btn-font-weight: 700;
+      --bs-btn-border-radius: 0.95rem;
+      box-shadow: 0 0 18px rgba(255, 84, 214, 0.14);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .btn-accent:hover,
+    .btn-ghost:hover {
+      transform: translateY(-2px);
+    }
+
+    .section-space {
+      padding-top: 4.7rem;
+    }
+
+    .section-label {
+      color: var(--accent);
+      font-size: 1rem;
+      text-transform: uppercase;
+      text-shadow: var(--glow-cyan);
+    }
+
+    .section-title {
+      font-size: clamp(1.9rem, 3vw, 2.9rem);
+      line-height: 1.18;
+      letter-spacing: 0.03em;
+      text-shadow: 0 0 12px rgba(255,84,214,0.18);
+    }
+
+    .feature-card,
+    .project-card,
+    .network-card,
+    .contact-card,
+    .side-panel,
+    .section-card {
+      padding: 1.35rem;
+      height: 100%;
+    }
+
+    .icon-badge {
+      width: 3.3rem;
+      height: 3.3rem;
+      border-radius: 1rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(180deg, rgba(33, 246, 255, 0.18), rgba(255, 84, 214, 0.12));
+      border: 2px solid rgba(33, 246, 255, 0.38);
+      color: var(--accent-warm);
+      box-shadow: var(--glow-cyan);
+    }
+
+    .soft-badge {
+      border-radius: 999px;
+      border: 2px solid rgba(255, 84, 214, 0.34);
+      background: rgba(255, 84, 214, 0.08);
+      color: var(--accent-warm);
+      padding: 0.44rem 0.75rem;
+      font-size: 0.92rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      box-shadow: var(--glow-pink);
+      animation: blinkCoin 2s steps(2, end) infinite;
+    }
+
+    .project-preview {
+      width: 100%;
+      height: 14.5rem;
+      object-fit: cover;
+      border-radius: calc(var(--radius-lg) - 0.15rem);
+      border: 2px solid rgba(255, 84, 214, 0.25);
+      background: rgba(255,255,255,0.03);
+      box-shadow: inset 0 0 18px rgba(255,255,255,0.06);
+      filter: saturate(1.16) contrast(1.06);
+    }
+
+    .project-icon {
+      width: 3.4rem;
+      height: 3.4rem;
+      object-fit: contain;
+      border-radius: 1rem;
+      border: 2px solid rgba(33, 246, 255, 0.34);
+      background: rgba(255,255,255,0.08);
+      padding: 0.38rem;
+      flex-shrink: 0;
+      box-shadow: var(--glow-cyan);
+    }
+
+    .project-tag {
+      border-radius: 999px;
+      border: 2px solid rgba(255, 84, 214, 0.34);
+      background: rgba(255, 84, 214, 0.08);
+      color: var(--accent-warm);
+      font-size: 0.92rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.34rem 0.65rem;
+      box-shadow: var(--glow-pink);
+    }
+
+    .project-shell {
+      border: 2px solid rgba(33, 246, 255, 0.28);
+      border-radius: var(--radius-xl);
+      background: linear-gradient(180deg, rgba(34, 3, 58, 0.92), rgba(19, 2, 35, 0.95));
+      padding: 1.25rem;
+      box-shadow: var(--shadow), inset 0 0 30px rgba(255, 84, 214, 0.08);
+    }
+
+    .stack-list,
+    .link-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .stack-list li,
+    .link-list li {
+      color: var(--muted);
+      padding: 0.95rem 0;
+      border-top: 2px solid rgba(33, 246, 255, 0.14);
+      line-height: 1.8;
+      font-size: 1.02rem;
+    }
+
+    .stack-list li:first-child,
+    .link-list li:first-child {
+      padding-top: 0;
+      border-top: 0;
+    }
+
+    .stack-list strong,
+    .link-list a,
+    .network-card a,
+    .contact-card a,
+    .inline-link {
+      color: var(--accent);
+      text-decoration: none;
+      text-shadow: 0 0 10px rgba(33, 246, 255, 0.22);
+    }
+
+    .stack-list strong {
+      color: var(--accent-warm);
+      text-shadow: 0 0 10px rgba(255, 228, 92, 0.18);
+    }
+
+    .footer-copy {
+      color: var(--muted);
+      border-top: 2px solid rgba(33, 246, 255, 0.16);
+    }
+
+    .navbar-toggler {
+      border: 2px solid rgba(255, 84, 214, 0.32) !important;
+      border-radius: 0.9rem;
+      padding: 0.5rem 0.7rem;
+      box-shadow: var(--glow-pink);
+    }
+
+    .navbar-toggler:focus {
+      box-shadow: var(--glow-cyan);
+    }
+
+    @media (max-width: 991.98px) {
+      .nav-pill,
+      .marquee-shell {
+        border-radius: 1.6rem;
+      }
+
+      .hero-title {
+        font-size: clamp(2rem, 9vw, 3.2rem);
+      }
+
+      .marquee-body {
+        justify-content: center;
+        text-align: center;
+      }
+    }
+
+    @media (max-width: 767.98px) {
+      .page-shell::after {
+        inset: 0.5rem;
+        border-radius: 1rem;
+      }
+
+      .section-space {
+        padding-top: 3.25rem;
+      }
+
+      .hero-panel,
+      .feature-card,
+      .project-card,
+      .network-card,
+      .contact-card,
+      .side-panel,
+      .section-card,
+      .project-shell,
+      .marquee-shell {
+        padding: 1.1rem;
+      }
+
+      .marquee-lights {
+        grid-template-columns: repeat(10, minmax(0, 1fr));
+      }
+
+      .eyebrow,
+      .project-tag,
+      .soft-badge,
+      .section-label,
+      .brand-subtitle,
+      .hero-chip,
+      .insert-coin {
+        font-size: 0.78rem;
+      }
+
+      .brand-name {
+        font-size: 0.8rem;
+      }
+
+      .floating-token {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-shell">
+    <header class="site-navbar container-xxl">
+      <div class="marquee-shell mb-3">
+        <div class="marquee-lights" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+        <div class="marquee-body">
+          <span class="insert-coin font-mono-tech">insert coin</span>
+          <div class="flex-grow-1 text-center px-lg-4">
+            <div class="marquee-title font-display">Tongatron Hypercade</div>
+            <div class="marquee-subtitle font-mono-tech">player one / software studio / stage select</div>
+          </div>
+          <span class="insert-coin font-mono-tech">press start</span>
+        </div>
+      </div>
+      <nav class="navbar navbar-expand-lg navbar-dark nav-pill px-3 px-lg-4 py-3">
+        <a class="navbar-brand d-flex align-items-center gap-3 text-decoration-none text-reset me-0" href="/">
+          <span class="brand-mark">
+            <i class="bi bi-joystick"></i>
+          </span>
+          <span>
+            <span class="brand-name d-block font-display fw-bold">Tongatron</span>
+            <span class="brand-subtitle d-block font-mono-tech">digital product / software / prototyping</span>
+          </span>
+        </a>
+        <button class="navbar-toggler border-0 shadow-none text-light" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Apri navigazione">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse mt-3 mt-lg-0" id="mainNav">
+          <div class="navbar-nav ms-lg-auto align-items-lg-center gap-lg-4">
+            <a class="nav-link-modern" href="#services">Servizi</a>
+            <a class="nav-link-modern" href="#iot">IoT</a>
+            <a class="nav-link-modern" href="#web">Web e Mobile</a>
+            <a class="nav-link-modern" href="#network">Collaborazioni</a>
+            <a class="nav-link-modern" href="#contacts">Contatti</a>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl pb-5">
+      <section class="section-space">
+        <div class="hero-panel">
+          <span class="floating-token token-a" aria-hidden="true"><i class="bi bi-coin"></i></span>
+          <span class="floating-token token-b" aria-hidden="true"><i class="bi bi-lightning-charge-fill"></i></span>
+          <div class="row g-4 g-xl-5 align-items-center">
+            <div class="col-12 col-xl-7">
+              <span class="eyebrow font-mono-tech">Strategy / Delivery / Interactive Systems</span>
+              <h1 class="hero-title font-display fw-bold mt-4 mb-4">Sviluppo software, prodotti digitali e prototipi che arrivano davvero a destinazione.</h1>
+              <p class="hero-copy fs-5 mb-0">
+                Progetto, coordino e sviluppo soluzioni digitali per contesti reali: piattaforme web, applicazioni interattive, strumenti mobile-first, prototipi IoT e percorsi di innovazione con una logica concreta di delivery.
+              </p>
+              <p class="hero-copy mt-3 mb-0">
+                L'impostazione unisce project management, competenze tecniche e cultura maker. Il focus non e sulla tecnologia come vetrina, ma su prodotti leggibili, utili e sostenibili: chiarire il problema, costruire la soluzione giusta, rilasciarla con metodo.
+              </p>
+
+              <div class="hero-hud">
+                <span class="hero-chip font-mono-tech">P1 ready</span>
+                <span class="hero-chip font-mono-tech">1 credit</span>
+                <span class="hero-chip font-mono-tech">boss level: delivery</span>
+              </div>
+
+              <div class="d-flex flex-wrap gap-3 mt-4 pt-2">
+                <a class="btn btn-accent" href="#web">Esplora i progetti digitali</a>
+                <a class="btn btn-ghost" href="#contacts">Contatti e profili</a>
+              </div>
+
+              <div class="row g-3 mt-4">
+                <div class="col-12 col-md-4">
+                  <div class="metric-tile h-100">
+                    <div class="metric-number font-display fw-bold">15+</div>
+                    <div class="metric-copy mt-2">anni di esperienza tra sviluppo, innovazione, formazione e gestione di iniziative complesse.</div>
+                  </div>
+                </div>
+                <div class="col-12 col-md-4">
+                  <div class="metric-tile h-100">
+                    <div class="metric-number font-display fw-bold">Web / Mobile / IoT</div>
+                    <div class="metric-copy mt-2">software, interfacce, PWA, strumenti browser-based e sistemi fisici connessi.</div>
+                  </div>
+                </div>
+                <div class="col-12 col-md-4">
+                  <div class="metric-tile h-100">
+                    <div class="metric-number font-display fw-bold">End-to-end</div>
+                    <div class="metric-copy mt-2">dal concept al rilascio, con validazione, adozione e trasferimento operativo.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12 col-xl-5">
+              <div class="row g-3">
+                <div class="col-12">
+                  <aside class="side-panel h-100">
+                    <div class="d-flex flex-wrap align-items-start justify-content-between gap-3">
+                      <div>
+                        <div class="section-label font-mono-tech">Operating Model</div>
+                        <h2 class="font-display fw-bold h2 mt-3 mb-0">Metodo, esecuzione, rilascio</h2>
+                      </div>
+                      <span class="soft-badge font-mono-tech">active delivery</span>
+                    </div>
+                    <div class="mt-4 d-grid gap-3">
+                      <div class="section-card p-3">
+                        <div class="section-label font-mono-tech">01 / Scope</div>
+                        <div class="aside-copy mt-2">Analisi del contesto, definizione del perimetro, priorita, roadmap e modello di lavoro coerente con il team.</div>
+                      </div>
+                      <div class="section-card p-3">
+                        <div class="section-label font-mono-tech">02 / Build</div>
+                        <div class="aside-copy mt-2">Sviluppo software, interfacce, prototipi e strumenti digitali orientati all'uso reale e non solo alla demo.</div>
+                      </div>
+                      <div class="section-card p-3">
+                        <div class="section-label font-mono-tech">03 / Release</div>
+                        <div class="aside-copy mt-2">Messa online, validazione, documentazione, formazione e passaggio di consegne quando serve autonomia operativa.</div>
+                      </div>
+                    </div>
+                  </aside>
+                </div>
+                <div class="col-12">
+                  <aside class="side-panel h-100">
+                    <div class="section-label font-mono-tech">Focus</div>
+                    <div class="d-flex flex-wrap gap-2 mt-3">
+                      <span class="soft-badge">Web applications</span>
+                      <span class="soft-badge">PWA</span>
+                      <span class="soft-badge">Custom software</span>
+                      <span class="soft-badge">Creative coding</span>
+                      <span class="soft-badge">IoT</span>
+                      <span class="soft-badge">Fabbricazione digitale</span>
+                      <span class="soft-badge">Education</span>
+                      <span class="soft-badge">Event tech</span>
+                    </div>
+                  </aside>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="services" class="section-space">
+        <div class="row align-items-end g-3 mb-4">
+          <div class="col-12 col-lg-7">
+            <div class="section-label font-mono-tech">Capabilities</div>
+            <h2 class="section-title font-display fw-bold mt-3 mb-0">Servizi</h2>
+          </div>
+          <div class="col-12 col-lg-5">
+            <p class="section-copy mb-0 text-lg-end">Un profilo ibrido tra sviluppo, coordinamento e innovazione applicata. Non solo codice: anche struttura, priorita e messa a terra.</p>
+          </div>
+        </div>
+
+        <div class="row g-4">
+          <div class="col-12 col-md-6 col-xl-3">
+            <article class="feature-card">
+              <span class="icon-badge"><i class="bi bi-diagram-3"></i></span>
+              <h3 class="font-display fw-bold h4 mt-4 mb-0">ICT Project Management</h3>
+              <p class="card-copy mt-3 mb-0">Governance di progetti digitali dalla fase iniziale al rilascio, con coordinamento di team multidisciplinari e controllo di tempi, costi e qualità.</p>
+            </article>
+          </div>
+          <div class="col-12 col-md-6 col-xl-3">
+            <article class="feature-card">
+              <span class="icon-badge"><i class="bi bi-stars"></i></span>
+              <h3 class="font-display fw-bold h4 mt-4 mb-0">Innovazione Digitale</h3>
+              <p class="card-copy mt-3 mb-0">Supporto strategico per selezionare soluzioni tecnologiche credibili, semplificare i processi e impostare roadmap sostenibili.</p>
+            </article>
+          </div>
+          <div class="col-12 col-md-6 col-xl-3">
+            <article class="feature-card">
+              <span class="icon-badge"><i class="bi bi-code-slash"></i></span>
+              <h3 class="font-display fw-bold h4 mt-4 mb-0">Progettazione e Sviluppo</h3>
+              <p class="card-copy mt-3 mb-0">Applicazioni web, strumenti custom, interfacce e soluzioni software costruite con un approccio iterativo e orientato ai risultati.</p>
+            </article>
+          </div>
+          <div class="col-12 col-md-6 col-xl-3">
+            <article class="feature-card">
+              <span class="icon-badge"><i class="bi bi-easel2"></i></span>
+              <h3 class="font-display fw-bold h4 mt-4 mb-0">Formazione e Didattica</h3>
+              <p class="card-copy mt-3 mb-0">Percorsi operativi su ICT, coding, robotica e cultura digitale per trasferire competenze immediatamente applicabili.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="iot" class="section-space">
+        <div class="row align-items-end g-3 mb-4">
+          <div class="col-12 col-lg-7">
+            <div class="section-label font-mono-tech">IoT / Fabrication</div>
+            <h2 class="section-title font-display fw-bold mt-3 mb-0">IoT e fabbricazione digitale</h2>
+          </div>
+          <div class="col-12 col-lg-5">
+            <p class="section-copy mb-0 text-lg-end">Una linea di lavoro nata tra FabLab, physical computing, produzione digitale e progetti educativi con una forte componente sperimentale.</p>
+          </div>
+        </div>
+
+        <div class="row g-4 mb-4">
+          <div class="col-12 col-xl-5">
+            <article class="side-panel h-100">
+              <div class="section-label font-mono-tech">Ecosystem</div>
+              <h3 class="font-display fw-bold h3 mt-3 mb-0">FabLab Torino e cultura maker</h3>
+              <p class="card-copy mt-3">Progetti ideati e sviluppati nel contesto di FabLab Torino, tra robotica educativa, prototipazione rapida, elettronica e sperimentazione applicata.</p>
+              <img src="img/fablogo.png" alt="Logo Fablab Torino" class="img-fluid mt-3" style="max-width: 14rem;">
+              <ul class="link-list mt-4">
+                <li><a href="https://github.com/tongatron">github.com/tongatron</a></li>
+                <li><a href="https://hackaday.io/tongatron">hackaday.io/tongatron</a></li>
+                <li><a href="https://fablabtorino.org/">fablabtorino.org</a></li>
+              </ul>
+            </article>
+          </div>
+          <div class="col-12 col-xl-7">
+            <article class="section-card h-100 p-4">
+              <div class="section-label font-mono-tech">Toolchain</div>
+              <ul class="stack-list mt-3">
+                <li><strong>Piattaforme di sviluppo</strong><br>Arduino, Raspberry Pi, sensori, attuatori e integrazioni tra hardware e servizi web.</li>
+                <li><strong>Fabbricazione digitale</strong><br>Stampanti 3D, taglio laser, fresa CNC e workflow di prototipazione rapida per iterare in tempi brevi.</li>
+                <li><strong>Linguaggi e ambienti</strong><br>Arduino Wiring, Python, Processing, JavaScript e strumenti browser-based quando servono interfacce snelle.</li>
+                <li><strong>Contesti di utilizzo</strong><br>Didattica, demo pubbliche, laboratori, installazioni, strumenti sperimentali e progetti open source.</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+
+        <div class="row g-4">
+          <div class="col-12 col-lg-4">
+            <article class="project-card">
+              <img src="img/robottino.jpg" class="project-preview" alt="Progetto Robottino">
+              <div class="d-flex flex-wrap gap-2 mt-3">
+                <span class="project-tag font-mono-tech">open source</span>
+                <span class="project-tag font-mono-tech">stem</span>
+              </div>
+              <h3 class="font-display fw-bold h3 mt-3 mb-0">Robottino</h3>
+              <p class="project-copy mt-3 mb-0">Robot educativo basato su Arduino con display, sensori ambientali, buzzer, luci RGB, ultrasuoni e testa rotante programmabile.</p>
+              <div class="d-flex flex-wrap gap-2 mt-4">
+                <a class="btn btn-accent btn-sm" href="projects/robottino/robottino-site/index.html">Vai al sito</a>
+              </div>
+            </article>
+          </div>
+          <div class="col-12 col-lg-4">
+            <article class="project-card">
+              <img src="img/contact.png" class="project-preview" alt="Progetto Selfomatic">
+              <div class="d-flex flex-wrap gap-2 mt-3">
+                <span class="project-tag font-mono-tech">event tech</span>
+                <span class="project-tag font-mono-tech">realtime</span>
+              </div>
+              <h3 class="font-display fw-bold h3 mt-3 mb-0">Selfomatic</h3>
+              <p class="project-copy mt-3 mb-0">Social camera per eventi con scatto automatico e pubblicazione in tempo reale, pensata per attivazioni, fiere e format live.</p>
+              <div class="d-flex flex-wrap gap-2 mt-4">
+                <a class="btn btn-accent btn-sm" href="projects/selfomatic/index.html">Vai al sito</a>
+              </div>
+            </article>
+          </div>
+          <div class="col-12 col-lg-4">
+            <article class="project-card">
+              <img src="img/ikea.jpg" class="project-preview" alt="Progetto IKEA Hack Nordli">
+              <div class="d-flex flex-wrap gap-2 mt-3">
+                <span class="project-tag font-mono-tech">laser cut</span>
+                <span class="project-tag font-mono-tech">fablab</span>
+              </div>
+              <h3 class="font-display fw-bold h3 mt-3 mb-0">IKEA Hack Nordli</h3>
+              <p class="project-copy mt-3 mb-0">Personalizzazione di una cassettiera IKEA con tavolino estraibile progettato e realizzato tramite lavorazione digitale.</p>
+              <div class="d-flex flex-wrap gap-2 mt-4">
+                <a class="btn btn-accent btn-sm" href="projects/IKEA-hack/index.html">Vai al sito</a>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="web" class="section-space">
+        <div class="row align-items-end g-3 mb-4">
+          <div class="col-12 col-lg-7">
+            <div class="section-label font-mono-tech">Web / Mobile</div>
+            <h2 class="section-title font-display fw-bold mt-3 mb-0">Strumenti digitali, giochi e micro-prodotti browser-based</h2>
+          </div>
+          <div class="col-12 col-lg-5">
+            <p class="section-copy mb-0 text-lg-end">Una selezione di progetti che unisce UI, interazione, logica applicativa e attenzione al contesto d'uso su browser e dispositivi mobili.</p>
+          </div>
+        </div>
+
+        <div class="project-shell">
+          <div class="row g-4">
+            <div class="col-12 col-md-6 col-xl-3">
+              <article class="project-card h-100 p-3">
+                <div class="d-flex justify-content-between align-items-start gap-3">
+                  <img src="projects/ryanair-search/assets/icon-192.png" alt="Icona Ryanair Search" class="project-icon">
+                  <div class="d-flex flex-wrap gap-2 justify-content-end">
+                    <span class="project-tag font-mono-tech">utility</span>
+                    <span class="project-tag font-mono-tech">travel</span>
+                  </div>
+                </div>
+                <h3 class="font-display fw-bold h3 mt-4 mb-0">Ryanair Search</h3>
+                <p class="project-copy mt-3 mb-0">Ricerca voli A/R con filtri su budget, durata, partenza e link condivisibile dei risultati.</p>
+                <a class="btn btn-ghost btn-sm mt-4 align-self-start" href="projects/ryanair-search/index.html">Apri</a>
+              </article>
+            </div>
+            <div class="col-12 col-md-6 col-xl-3">
+              <article class="project-card h-100 p-3">
+                <div class="d-flex justify-content-between align-items-start gap-3">
+                  <img src="projects/Forza4/assets/icons/icon.svg" alt="Icona Connect Four" class="project-icon">
+                  <div class="d-flex flex-wrap gap-2 justify-content-end">
+                    <span class="project-tag font-mono-tech">game</span>
+                    <span class="project-tag font-mono-tech">pwa</span>
+                  </div>
+                </div>
+                <h3 class="font-display fw-bold h3 mt-4 mb-0">Connect Four</h3>
+                <p class="project-copy mt-3 mb-0">Versione web del classico Forza 4 contro CPU con difficolta selezionabile e nuova partita rapida.</p>
+                <a class="btn btn-ghost btn-sm mt-4 align-self-start" href="projects/Forza4/index.html">Apri</a>
+              </article>
+            </div>
+            <div class="col-12 col-md-6 col-xl-3">
+              <article class="project-card h-100 p-3">
+                <div class="d-flex justify-content-between align-items-start gap-3">
+                  <img src="projects/simon/icons/icon-192.png" alt="Icona Simon" class="project-icon">
+                  <div class="d-flex flex-wrap gap-2 justify-content-end">
+                    <span class="project-tag font-mono-tech">game</span>
+                    <span class="project-tag font-mono-tech">pwa</span>
+                  </div>
+                </div>
+                <h3 class="font-display fw-bold h3 mt-4 mb-0">Simon</h3>
+                <p class="project-copy mt-3 mb-0">Sequenze, modalita strict e interazione essenziale in una versione browser del gioco Simon.</p>
+                <a class="btn btn-ghost btn-sm mt-4 align-self-start" href="projects/simon/index.html">Apri</a>
+              </article>
+            </div>
+            <div class="col-12 col-md-6 col-xl-3">
+              <article class="project-card h-100 p-3">
+                <div class="d-flex justify-content-between align-items-start gap-3">
+                  <img src="projects/rumorebianco/icons/icon-192.svg" alt="Icona Rumore Bianco" class="project-icon">
+                  <div class="d-flex flex-wrap gap-2 justify-content-end">
+                    <span class="project-tag font-mono-tech">music</span>
+                    <span class="project-tag font-mono-tech">simulator</span>
+                  </div>
+                </div>
+                <h3 class="font-display fw-bold h3 mt-4 mb-0">Rumore Bianco</h3>
+                <p class="project-copy mt-3 mb-0">Generatore audio regolabile in tempo reale per concentrazione, ambiente e piccoli test sonori direttamente da browser.</p>
+                <a class="btn btn-ghost btn-sm mt-4 align-self-start" href="projects/rumorebianco/index.html">Apri</a>
+              </article>
+            </div>
+          </div>
+          <div class="d-flex justify-content-end mt-4">
+            <a class="btn btn-accent" href="projects/index.html">Esplora tutti i progetti</a>
+          </div>
+        </div>
+      </section>
+
+      <section id="network" class="section-space">
+        <div class="row align-items-end g-3 mb-4">
+          <div class="col-12 col-lg-7">
+            <div class="section-label font-mono-tech">Network</div>
+            <h2 class="section-title font-display fw-bold mt-3 mb-0">Collaborazioni</h2>
+          </div>
+          <div class="col-12 col-lg-5">
+            <p class="section-copy mb-0 text-lg-end">Laboratori, team e realtà con cui ho sviluppato ricerca, consulenza, prototipi, attività formative e progetti digitali.</p>
+          </div>
+        </div>
+
+        <div class="row g-4">
+          <div class="col-12 col-md-6 col-xl-3">
+            <article class="network-card">
+              <h3 class="font-display fw-bold h4 mb-0">FaberSum</h3>
+              <p class="card-copy mt-3 mb-0">Lavorazioni CNC e prototipazione digitale.</p>
+              <a class="inline-link d-inline-flex mt-3" href="http://www.fabersum.it/">fabersum.it</a>
+            </article>
+          </div>
+          <div class="col-12 col-md-6 col-xl-3">
+            <article class="network-card">
+              <h3 class="font-display fw-bold h4 mb-0">Pangrus</h3>
+              <p class="card-copy mt-3 mb-0">Laboratorio di ricerca elettroacustica e sperimentazione sonora.</p>
+              <a class="inline-link d-inline-flex mt-3" href="https://www.peal.space/">peal.space</a>
+            </article>
+          </div>
+          <div class="col-12 col-md-6 col-xl-3">
+            <article class="network-card">
+              <h3 class="font-display fw-bold h4 mb-0">Fablab Torino</h3>
+              <p class="card-copy mt-3 mb-0">Associazione e laboratorio di fabbricazione digitale.</p>
+              <a class="inline-link d-inline-flex mt-3" href="https://fablabtorino.org/">fablabtorino.org</a>
+            </article>
+          </div>
+          <div class="col-12 col-md-6 col-xl-3">
+            <article class="network-card">
+              <h3 class="font-display fw-bold h4 mb-0">LittleEndian</h3>
+              <p class="card-copy mt-3 mb-0">Sviluppo software, sistemi embedded e soluzioni IoT.</p>
+              <a class="inline-link d-inline-flex mt-3" href="https://www.little-endian.it/">little-endian.it</a>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="contacts" class="section-space pb-4">
+        <div class="row align-items-end g-3 mb-4">
+          <div class="col-12 col-lg-7">
+            <div class="section-label font-mono-tech">Contacts</div>
+            <h2 class="section-title font-display fw-bold mt-3 mb-0">Profili e contatti</h2>
+          </div>
+          <div class="col-12 col-lg-5">
+            <p class="section-copy mb-0 text-lg-end">Per consulenze, collaborazione progettuale, sviluppo software, prototipazione o formazione, questi sono i riferimenti pubblici principali.</p>
+          </div>
+        </div>
+
+        <div class="row g-4">
+          <div class="col-12 col-md-4">
+            <article class="contact-card">
+              <div class="section-label font-mono-tech">LinkedIn</div>
+              <div class="h5 mt-3 mb-0"><a href="https://www.linkedin.com/in/giovannibindi/">linkedin.com/in/giovannibindi</a></div>
+            </article>
+          </div>
+          <div class="col-12 col-md-4">
+            <article class="contact-card">
+              <div class="section-label font-mono-tech">X</div>
+              <div class="h5 mt-3 mb-0"><a href="https://x.com/giobindi">x.com/giobindi</a></div>
+            </article>
+          </div>
+          <div class="col-12 col-md-4">
+            <article class="contact-card">
+              <div class="section-label font-mono-tech">Mastodon</div>
+              <div class="h5 mt-3 mb-0"><a href="https://mastodon.social/@tongatron">mastodon.social/@tongatron</a></div>
+            </article>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="container-xxl pb-4">
+      <div class="footer-copy d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3 pt-4">
+        <span>&copy; 2026 Tongatron</span>
+        <a class="inline-link" href="/">Versione principale</a>
+      </div>
+    </footer>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+  <script async src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
+</body>
+</html>
