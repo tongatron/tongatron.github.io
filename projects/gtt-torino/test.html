@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>GTT Torino | In test</title>
+  <meta
+    name="description"
+    content="Pagina di accesso al progetto GTT Torino in test. Il prototipo completo richiede backend locale per dati realtime e posizioni dei mezzi."
+  >
+  <style>
+    :root {
+      --bg: #0c1118;
+      --panel: rgba(18, 26, 39, 0.92);
+      --line: rgba(255, 255, 255, 0.12);
+      --text: #f3f6fb;
+      --muted: #aeb9cc;
+      --accent: #fb923c;
+      --accent-strong: #17345e;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Titillium Web", system-ui, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(251, 146, 60, 0.14), transparent 22%),
+        radial-gradient(circle at bottom right, rgba(96, 165, 250, 0.12), transparent 28%),
+        linear-gradient(180deg, #06080c 0%, #0c1118 100%);
+      display: grid;
+      place-items: center;
+      padding: 1.5rem;
+    }
+
+    .shell {
+      width: min(760px, 100%);
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      background: var(--panel);
+      box-shadow: 0 24px 70px rgba(0, 0, 0, 0.35);
+      padding: clamp(1.4rem, 4vw, 2.4rem);
+    }
+
+    .eyebrow {
+      margin: 0 0 0.8rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      line-height: 0.98;
+      letter-spacing: -0.05em;
+    }
+
+    p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: 1.04rem;
+    }
+
+    .stack {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 2rem;
+      padding: 0.25rem 0.75rem;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--line);
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .callout {
+      border-radius: 20px;
+      border: 1px solid rgba(251, 146, 60, 0.24);
+      background: rgba(251, 146, 60, 0.08);
+      padding: 1rem 1.1rem;
+    }
+
+    .callout strong {
+      color: #ffd3ad;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      margin-top: 0.3rem;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 46px;
+      padding: 0.7rem 1.1rem;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      text-decoration: none;
+      color: var(--text);
+      font-weight: 700;
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .button.primary {
+      background: var(--accent-strong);
+      border-color: transparent;
+    }
+
+    code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 0.95em;
+      color: #fff2e5;
+    }
+  </style>
+</head>
+<body>
+  <main class="shell stack">
+    <p class="eyebrow">Tongatron / Progetto in test</p>
+    <h1>GTT Torino</h1>
+
+    <div class="tag-row">
+      <span class="tag">Transit</span>
+      <span class="tag">Realtime</span>
+      <span class="tag">In test</span>
+    </div>
+
+    <p>
+      Prototipo per consultare fermate GTT, linee selezionate e mezzi live su mappa.
+      La versione completa non e ancora pubblicata su panel in modalita standalone
+      perche richiede un backend locale per feed GTFS realtime e posizioni veicoli.
+    </p>
+
+    <div class="callout">
+      <strong>Stato attuale:</strong> il progetto e in test. Per provarlo davvero serve
+      eseguirlo in locale dalla cartella <code>projects/gtt-torino</code> con server API attivo.
+    </div>
+
+    <div class="actions">
+      <a class="button primary" href="../../panel.html">Torna al panel</a>
+      <a class="button" href="./README.md">Apri README</a>
+    </div>
+  </main>
+</body>
+</html>

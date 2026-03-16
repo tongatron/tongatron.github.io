@@ -1,0 +1,54 @@
+:root {
+  font-family:
+    'Space Grotesk',
+    'Avenir Next',
+    'Segoe UI',
+    sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  color: #132238;
+  background:
+    radial-gradient(circle at top left, rgba(251, 146, 60, 0.2), transparent 32%),
+    radial-gradient(circle at top right, rgba(14, 116, 144, 0.16), transparent 28%),
+    linear-gradient(180deg, #f9f3e8 0%, #f2ede5 52%, #eef3f6 100%);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  min-height: 100vh;
+}
+
+body {
+  margin: 0;
+  color: #132238;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(19, 34, 56, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(19, 34, 56, 0.035) 1px, transparent 1px);
+  background-size: 32px 32px;
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.65), transparent 85%);
+  pointer-events: none;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+a {
+  color: inherit;
+}
