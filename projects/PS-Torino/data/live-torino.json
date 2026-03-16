@@ -1,0 +1,138 @@
+{
+  "source": "github-actions",
+  "sourceLabel": "Snapshot live (GitHub Actions)",
+  "fetchedAt": "2026-03-16T22:29:11.916Z",
+  "hospitals": [
+    {
+      "id": "molinette",
+      "name": "AOU Citta della Salute e della Scienza - Molinette",
+      "address": "Corso Bramante 88, Torino",
+      "mapUrl": "https://www.google.com/maps/search/?api=1&query=Corso%20Bramante%2088%2C%20Torino",
+      "rosso": 0,
+      "giallo": 0,
+      "arancione": 0,
+      "verde": 19,
+      "azzurro": 6,
+      "bianco": 0,
+      "total": 25,
+      "updatedAt": "2026-03-16T22:29:11.916Z",
+      "hasData": true,
+      "meta": {
+        "fetchedFrom": "https://listeps.cittadellasalute.to.it/gtotal.php?id=01090101",
+        "inVisit": {
+          "rosso": 4,
+          "giallo": 0,
+          "arancione": 0,
+          "verde": 12,
+          "azzurro": 25,
+          "bianco": 0
+        }
+      }
+    },
+    {
+      "id": "cto",
+      "name": "CTO Torino",
+      "address": "Via Zuretti 29, Torino",
+      "mapUrl": "https://www.google.com/maps/search/?api=1&query=Via%20Zuretti%2029%2C%20Torino",
+      "rosso": 0,
+      "giallo": 0,
+      "arancione": 0,
+      "verde": 5,
+      "azzurro": 0,
+      "bianco": 5,
+      "total": 10,
+      "updatedAt": "2026-03-16T22:29:11.916Z",
+      "hasData": true,
+      "meta": {
+        "fetchedFrom": "https://listeps.cittadellasalute.to.it/gtotal.php?id=01090201",
+        "inVisit": {
+          "rosso": 0,
+          "giallo": 0,
+          "arancione": 0,
+          "verde": 3,
+          "azzurro": 12,
+          "bianco": 0
+        }
+      }
+    },
+    {
+      "id": "sant-anna",
+      "name": "Ospedale Sant'Anna",
+      "address": "Corso Spezia 60, Torino",
+      "mapUrl": "https://www.google.com/maps/search/?api=1&query=Corso%20Spezia%2060%2C%20Torino",
+      "rosso": 0,
+      "giallo": 0,
+      "arancione": 0,
+      "verde": 0,
+      "azzurro": 2,
+      "bianco": 0,
+      "total": 2,
+      "updatedAt": "2026-03-16T22:29:11.916Z",
+      "hasData": true,
+      "meta": {
+        "fetchedFrom": "https://listeps.cittadellasalute.to.it/gtotal.php?id=01090301",
+        "inVisit": {
+          "rosso": 0,
+          "giallo": 0,
+          "arancione": 0,
+          "verde": 0,
+          "azzurro": 0,
+          "bianco": 0
+        }
+      }
+    },
+    {
+      "id": "regina-margherita",
+      "name": "Ospedale Regina Margherita",
+      "address": "Piazza Polonia 94, Torino",
+      "mapUrl": "https://www.google.com/maps/search/?api=1&query=Piazza%20Polonia%2094%2C%20Torino",
+      "rosso": 0,
+      "giallo": 0,
+      "arancione": 0,
+      "verde": 3,
+      "azzurro": 9,
+      "bianco": 0,
+      "total": 12,
+      "updatedAt": "2026-03-16T22:29:11.916Z",
+      "hasData": true,
+      "meta": {
+        "fetchedFrom": "https://listeps.cittadellasalute.to.it/gtotal.php?id=01090302",
+        "inVisit": {
+          "rosso": 0,
+          "giallo": 0,
+          "arancione": 0,
+          "verde": 3,
+          "azzurro": 7,
+          "bianco": 0
+        }
+      }
+    },
+    {
+      "id": "mauriziano",
+      "name": "Ospedale Mauriziano Umberto I",
+      "address": "Largo Filippo Turati 62, Torino",
+      "mapUrl": "https://www.google.com/maps/search/?api=1&query=Largo%20Filippo%20Turati%2062%2C%20Torino",
+      "rosso": 0,
+      "giallo": 0,
+      "arancione": 0,
+      "verde": 4,
+      "azzurro": 0,
+      "bianco": 1,
+      "total": 5,
+      "updatedAt": "2026-03-16T23:20:04+01:00",
+      "hasData": true,
+      "meta": {
+        "fetchedFrom": "https://www.mauriziano.it/i-nostri-servizi/pazienti-in-attesa-presso-pronto-soccorso",
+        "inVisit": {
+          "rosso": 1,
+          "giallo": 0,
+          "arancione": 28,
+          "verde": 11,
+          "azzurro": 14,
+          "bianco": 11
+        }
+      }
+    }
+  ],
+  "failures": []
+}

@@ -251,6 +251,34 @@ interface StopArrivalsResponse {
   arrivals: ArrivalApiRecord[]
 }
 
+interface LineVehicleApiRecord {
+  tripId: string
+  vehicleId: string | null
+  vehicleLabel: string | null
+  lineCode: string
+  routeId: string
+  routeName: string
+  headsign: string | null
+  mode: VehicleMode
+  modeLabel: string
+  routeColor: string | null
+  routeTextColor: string | null
+  latitude: number
+  longitude: number
+  bearing: number | null
+  speedMetersPerSecond: number | null
+  timestamp: string | null
+}
+
+interface LineVehiclesResponse {
+  fetchedAt: string
+  feedTimestamp: string | null
+  stale: boolean
+  warnings: string[]
+  line: string
+  vehicles: LineVehicleApiRecord[]
+}
+
 interface NearbyStopsResponse {
   fetchedAt: string
   userLocation: {
@@ -1386,6 +1414,92 @@ app.get('/api/arrivals', async (request, response, next) => {
       stop: stopToApiRecord(stop),
       relatedStops,
       arrivals,
+    }
+
+    response.setHeader('Cache-Control', 'no-store')
+    response.json(payload)
+  } catch (error) {
+    next(error)
+  }
+})
+
+app.get('/api/vehicles', async (request, response, next) => {
+  try {
+    const rawLine = String(request.query.line ?? '').trim()
+    if (!rawLine) {
+      response.status(400).json({ error: 'line is required.' })
+      return
+    }
+
+    const normalizedLine = rawLine.toUpperCase()
+    const staticData = await getStaticGtfsData()
+    const { snapshot, stale, warnings } = await getVehiclePositionSnapshot()
+    const vehiclesByKey = new Map<string, LineVehicleApiRecord>()
+
+    for (const [tripId, position] of snapshot.positionsByTripId) {
+      const tripRecord = staticData.tripsById.get(tripId)
+      if (!tripRecord) {
+        continue
+      }
+
+      const routeRecord = staticData.routesById.get(tripRecord.routeId)
+      if (!routeRecord) {
+        continue
+      }
+
+      const { mode, label } = resolveRouteMode(routeRecord.routeTypeRaw)
+      if (!SUPPORTED_SURFACE_MODES.has(mode)) {
+        continue
+      }
+
+      if (routeRecord.routeShortName.toUpperCase() !== normalizedLine) {
+        continue
+      }
+
+      const vehicleKey = position.vehicleId ?? tripId
+      if (vehiclesByKey.has(vehicleKey)) {
+        continue
+      }
+
+      vehiclesByKey.set(vehicleKey, {
+        tripId,
+        vehicleId: position.vehicleId,
+        vehicleLabel: position.vehicleLabel,
+        lineCode: routeRecord.routeShortName,
+        routeId: routeRecord.routeId,
+        routeName: routeRecord.routeLongName,
+        headsign: tripRecord.headsign,
+        mode,
+        modeLabel: label,
+        routeColor: routeRecord.routeColor,
+        routeTextColor: routeRecord.routeTextColor,
+        latitude: position.latitude,
+        longitude: position.longitude,
+        bearing: position.bearing,
+        speedMetersPerSecond: position.speedMetersPerSecond,
+        timestamp: position.timestamp,
+      })
+    }
+
+    const vehicles = Array.from(vehiclesByKey.values()).sort((left, right) => {
+      const lineCodeComparison = compareLineCodes(left.lineCode, right.lineCode)
+      if (lineCodeComparison !== 0) {
+        return lineCodeComparison
+      }
+
+      return (left.vehicleLabel ?? left.tripId).localeCompare(
+        right.vehicleLabel ?? right.tripId,
+        'it',
+      )
+    })
+
+    const payload: LineVehiclesResponse = {
+      fetchedAt: new Date().toISOString(),
+      feedTimestamp: snapshot.feedTimestamp,
+      stale,
+      warnings,
+      line: rawLine,
+      vehicles,
     }
 
     response.setHeader('Cache-Control', 'no-store')

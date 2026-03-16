@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0f172a" />
+  <meta name="description" content="Liste di attesa dei Pronto Soccorso di Torino" />
+  <title>PS Torino</title>
+
+  <link rel="manifest" href="./manifest.webmanifest" />
+  <link rel="stylesheet" href="./styles.css" />
+  <link rel="apple-touch-icon" href="./icons/icon-192.png" />
+</head>
+<body>
+  <header class="app-header">
+    <div>
+      <p class="eyebrow">PWA · Torino</p>
+      <h1>Pronto Soccorso Torino</h1>
+      <p class="subtitle">Situazione indicativa delle attese nei PS dell'area torinese.</p>
+    </div>
+    <button id="refreshBtn" class="btn" type="button">Aggiorna</button>
+  </header>
+
+  <section class="notice warning">
+    <strong>Avvertenza:</strong>
+    i dati sono indicativi e possono non essere aggiornati in tempo reale. In caso di emergenza chiama il 112.
+  </section>
+
+  <section id="runtimeNotice" class="notice info" hidden></section>
+
+  <noscript class="notice error">
+    Questa applicazione richiede JavaScript per mostrare gli aggiornamenti.
+  </noscript>
+
+  <section class="toolbar">
+    <label>
+      Ordina per
+      <select id="sortSelect">
+        <option value="total">Totale attese</option>
+        <option value="name">Nome</option>
+        <option value="red">Codice rosso</option>
+        <option value="yellow">Codice giallo/arancione</option>
+        <option value="green">Codice verde/azzurro</option>
+      </select>
+    </label>
+
+    <label class="toggle-row">
+      <input type="checkbox" id="onlyOpenNow" />
+      <span>Mostra solo strutture con dati disponibili</span>
+    </label>
+  </section>
+
+  <section class="meta-grid">
+    <div class="meta-card">
+      <span class="meta-label">Ultimo aggiornamento</span>
+      <strong id="lastUpdated">—</strong>
+    </div>
+    <div class="meta-card">
+      <span class="meta-label">Fonte</span>
+      <strong id="sourceLabel">—</strong>
+    </div>
+    <div class="meta-card">
+      <span class="meta-label">Stato</span>
+      <strong id="statusLabel">In attesa</strong>
+    </div>
+  </section>
+
+  <main>
+    <section id="hospitalList" class="hospital-list" aria-live="polite"></section>
+  </main>
+
+  <template id="hospitalCardTpl">
+    <article class="card">
+      <div class="card-head">
+        <div>
+          <h2 class="hospital-name"></h2>
+          <p class="hospital-address"></p>
+        </div>
+        <div class="pill hospital-total"></div>
+      </div>
+
+      <div class="codes-grid">
+        <div class="code-box red">
+          <span>Rosso</span>
+          <strong class="value-red">0</strong>
+        </div>
+        <div class="code-box yellow">
+          <span>Giallo / Arancione</span>
+          <strong class="value-yellow">0</strong>
+        </div>
+        <div class="code-box green">
+          <span>Verde / Azzurro</span>
+          <strong class="value-green">0</strong>
+        </div>
+        <div class="code-box white">
+          <span>Bianco</span>
+          <strong class="value-white">0</strong>
+        </div>
+      </div>
+
+      <div class="card-footer">
+        <span class="updated-at"></span>
+        <a class="map-link" target="_blank" rel="noopener noreferrer">Apri mappa</a>
+      </div>
+    </article>
+  </template>
+
+  <script id="mockData" type="application/json">
+    {
+      "fetchedAt": "2026-03-16T18:30:00+01:00",
+      "hospitals": [
+        {
+          "id": "molinette",
+          "name": "AOU Citta della Salute e della Scienza - Molinette",
+          "address": "Corso Bramante 88, Torino",
+          "rosso": 1,
+          "giallo": 6,
+          "verde": 18,
+          "bianco": 4,
+          "updatedAt": "2026-03-16T18:30:00+01:00"
+        },
+        {
+          "id": "cto",
+          "name": "CTO Torino",
+          "address": "Via Zuretti 29, Torino",
+          "rosso": 0,
+          "giallo": 4,
+          "verde": 12,
+          "bianco": 3,
+          "updatedAt": "2026-03-16T18:30:00+01:00"
+        },
+        {
+          "id": "san-giovanni-bosco",
+          "name": "Ospedale San Giovanni Bosco",
+          "address": "Piazza del Donatore di Sangue 3, Torino",
+          "rosso": 0,
+          "giallo": 8,
+          "verde": 20,
+          "bianco": 5,
+          "updatedAt": "2026-03-16T18:30:00+01:00"
+        },
+        {
+          "id": "rivoli",
+          "name": "Ospedale di Rivoli",
+          "address": "Via Rivalta 29, Rivoli",
+          "updatedAt": "2026-03-16T18:30:00+01:00"
+        }
+      ]
+    }
+  </script>
+
+  <script defer src="./config.js"></script>
+  <script defer src="./storage.js"></script>
+  <script defer src="./api.js"></script>
+  <script defer src="./app.js"></script>
+</body>
+</html>

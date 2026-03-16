@@ -1,0 +1,41 @@
+{
+  "fetchedAt": "2026-03-16T18:30:00+01:00",
+  "hospitals": [
+    {
+      "id": "molinette",
+      "name": "AOU Citta della Salute e della Scienza - Molinette",
+      "address": "Corso Bramante 88, Torino",
+      "rosso": 1,
+      "giallo": 6,
+      "verde": 18,
+      "bianco": 4,
+      "updatedAt": "2026-03-16T18:30:00+01:00"
+    },
+    {
+      "id": "cto",
+      "name": "CTO Torino",
+      "address": "Via Zuretti 29, Torino",
+      "rosso": 0,
+      "giallo": 4,
+      "verde": 12,
+      "bianco": 3,
+      "updatedAt": "2026-03-16T18:30:00+01:00"
+    },
+    {
+      "id": "san-giovanni-bosco",
+      "name": "Ospedale San Giovanni Bosco",
+      "address": "Piazza del Donatore di Sangue 3, Torino",
+      "rosso": 0,
+      "giallo": 8,
+      "verde": 20,
+      "bianco": 5,
+      "updatedAt": "2026-03-16T18:30:00+01:00"
+    },
+    {
+      "id": "rivoli",
+      "name": "Ospedale di Rivoli",
+      "address": "Via Rivalta 29, Rivoli",
+      "updatedAt": "2026-03-16T18:30:00+01:00"
+    }
+  ]
+}

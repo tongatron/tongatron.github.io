@@ -1,28 +1,11 @@
 import { useEffect, useMemo, useRef } from 'react'
-import { CircleMarker, MapContainer, Marker, Popup, TileLayer, useMap } from 'react-leaflet'
-import { divIcon, type DivIcon } from 'leaflet'
-import type {
-  ArrivalRecord,
-  FocusLocation,
-  StopRecord,
-  StopServiceRecord,
-  VehicleMode,
-} from '../types'
+import { divIcon, latLngBounds, type DivIcon } from 'leaflet'
+import { MapContainer, Marker, Popup, TileLayer, useMap } from 'react-leaflet'
+import type { LineVehicleRecord } from '../types'
 
 const TURIN_CENTER: [number, number] = [45.0703, 7.6869]
 const DEFAULT_ZOOM = 13
-const LINE_CODE_COLLATOR = new Intl.Collator('it', {
-  numeric: true,
-  sensitivity: 'base',
-})
-const MODE_SORT_ORDER: Record<VehicleMode, number> = {
-  tram: 0,
-  bus: 1,
-  trolleybus: 2,
-  metro: 3,
-  rail: 4,
-  other: 5,
-}
+const FIT_PADDING: [number, number] = [44, 44]
 
 function escapeHtml(value: string): string {
   return value
@@ -33,23 +16,9 @@ function escapeHtml(value: string): string {
     .replaceAll("'", '&#39;')
 }
 
-function createStopIcon(stop: StopRecord, isSelected: boolean): DivIcon {
-  return divIcon({
-    className: 'stop-marker-shell',
-    iconSize: isSelected ? [66, 34] : [58, 30],
-    iconAnchor: isSelected ? [33, 17] : [29, 15],
-    popupAnchor: [0, -18],
-    html: `
-      <div class="stop-marker ${isSelected ? 'is-selected' : ''}">
-        <span>${escapeHtml(stop.stopCode)}</span>
-      </div>
-    `,
-  })
-}
-
-function createVehicleIcon(arrival: ArrivalRecord): DivIcon {
-  const backgroundColor = arrival.routeColor ?? '#d97706'
-  const textColor = arrival.routeTextColor ?? '#ffffff'
+function createVehicleIcon(vehicle: LineVehicleRecord): DivIcon {
+  const backgroundColor = vehicle.routeColor ?? '#d97706'
+  const textColor = vehicle.routeTextColor ?? '#ffffff'
 
   return divIcon({
     className: 'vehicle-marker-shell',
@@ -61,103 +30,95 @@ function createVehicleIcon(arrival: ArrivalRecord): DivIcon {
         class="vehicle-marker"
         style="background:${escapeHtml(backgroundColor)};color:${escapeHtml(textColor)}"
       >
-        <span>${escapeHtml(arrival.lineCode)}</span>
+        <span>${escapeHtml(vehicle.lineCode)}</span>
       </div>
     `,
   })
 }
 
-function formatStopServices(services: StopServiceRecord[]): string {
-  const groupedServices = new Map<string, string[]>()
-
-  const sortedServices = [...services].sort((left, right) => {
-    const modeOrderDifference = MODE_SORT_ORDER[left.mode] - MODE_SORT_ORDER[right.mode]
-    if (modeOrderDifference !== 0) {
-      return modeOrderDifference
-    }
-
-    return LINE_CODE_COLLATOR.compare(left.lineCode, right.lineCode)
-  })
-
-  for (const service of sortedServices.slice(0, 8)) {
-    const currentLineCodes = groupedServices.get(service.modeLabel) ?? []
-    currentLineCodes.push(service.lineCode)
-    groupedServices.set(service.modeLabel, currentLineCodes)
+function formatPopupTime(value: string | null): string {
+  if (!value) {
+    return 'Aggiornamento non disponibile'
   }
 
-  return Array.from(groupedServices.entries())
-    .map(([modeLabel, lineCodes]) => `${modeLabel}: ${lineCodes.join(', ')}`)
-    .join(' · ')
+  return new Intl.DateTimeFormat('it-IT', {
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+  }).format(new Date(value))
 }
 
-function FocusOnTarget({
-  selectedStop,
-  focusLocation,
+function formatPopupSpeed(value: number | null): string {
+  if (typeof value !== 'number') {
+    return 'Velocita non disponibile'
+  }
+
+  return `${Math.round(value * 3.6)} km/h`
+}
+
+function FitMapToVehicles({
+  vehicleMarkers,
 }: {
-  selectedStop: StopRecord | null
-  focusLocation: FocusLocation | null
+  vehicleMarkers: LineVehicleRecord[]
 }) {
   const map = useMap()
-  const lastFocusKey = useRef<string | null>(null)
+  const lastBoundsKeyRef = useRef<string | null>(null)
 
   useEffect(() => {
-    const focusKey = selectedStop
-      ? `stop:${selectedStop.stopCode}`
-      : focusLocation
-        ? `${focusLocation.kind}:${focusLocation.latitude.toFixed(5)}:${focusLocation.longitude.toFixed(5)}`
-        : null
-
-    if (!focusKey || focusKey === lastFocusKey.current) {
+    if (vehicleMarkers.length === 0) {
+      lastBoundsKeyRef.current = null
+      map.setView(TURIN_CENTER, DEFAULT_ZOOM)
       return
     }
 
-    lastFocusKey.current = focusKey
-
-    if (selectedStop) {
-      map.flyTo([selectedStop.latitude, selectedStop.longitude], Math.max(map.getZoom(), 15), {
-        duration: 0.65,
+    const boundsKey = vehicleMarkers
+      .map((vehicle) => {
+        return `${vehicle.vehicleId ?? vehicle.tripId}:${vehicle.latitude.toFixed(4)}:${vehicle.longitude.toFixed(4)}`
       })
+      .sort()
+      .join('|')
+
+    if (boundsKey === lastBoundsKeyRef.current) {
       return
     }
 
-    if (focusLocation) {
-      map.flyTo([focusLocation.latitude, focusLocation.longitude], 15, {
-        duration: 0.65,
-      })
+    lastBoundsKeyRef.current = boundsKey
+
+    if (vehicleMarkers.length === 1) {
+      const [vehicle] = vehicleMarkers
+      map.flyTo([vehicle.latitude, vehicle.longitude], 14, { duration: 0.65 })
+      return
     }
-  }, [focusLocation, map, selectedStop])
+
+    const bounds = latLngBounds(
+      vehicleMarkers.map((vehicle) => [vehicle.latitude, vehicle.longitude] as [number, number]),
+    )
+
+    map.fitBounds(bounds, {
+      padding: FIT_PADDING,
+      maxZoom: 15,
+      animate: true,
+      duration: 0.65,
+    })
+  }, [map, vehicleMarkers])
 
   return null
 }
 
 interface MapViewProps {
-  selectedStop: StopRecord | null
-  nearbyStops: StopRecord[]
-  vehicleArrivals: ArrivalRecord[]
-  focusLocation: FocusLocation | null
-  onSelectStop: (stopCode: string) => void
+  lineLabel: string | null
+  vehicleMarkers: LineVehicleRecord[]
 }
 
-export function MapView({
-  selectedStop,
-  nearbyStops,
-  vehicleArrivals,
-  focusLocation,
-  onSelectStop,
-}: MapViewProps) {
-  const visibleStops = useMemo(() => {
-    const stopsByCode = new Map<string, StopRecord>()
-
-    for (const stop of nearbyStops) {
-      stopsByCode.set(stop.stopCode, stop)
-    }
-
-    if (selectedStop) {
-      stopsByCode.set(selectedStop.stopCode, selectedStop)
-    }
-
-    return Array.from(stopsByCode.values())
-  }, [nearbyStops, selectedStop])
+export function MapView({ lineLabel, vehicleMarkers }: MapViewProps) {
+  const sortedVehicles = useMemo(() => {
+    return [...vehicleMarkers].sort((left, right) => {
+      return (left.vehicleLabel ?? left.tripId).localeCompare(
+        right.vehicleLabel ?? right.tripId,
+        'it',
+      )
+    })
+  }, [vehicleMarkers])
 
   return (
     <MapContainer
@@ -168,85 +129,36 @@ export function MapView({
     >
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/">CARTO</a>'
-        url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
+        url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
       />
 
-      <FocusOnTarget selectedStop={selectedStop} focusLocation={focusLocation} />
+      <FitMapToVehicles vehicleMarkers={sortedVehicles} />
 
-      {focusLocation ? (
-        <CircleMarker
-          center={[focusLocation.latitude, focusLocation.longitude]}
-          radius={11}
-          pathOptions={{
-            color: focusLocation.kind === 'user' ? '#1d4ed8' : '#c2410c',
-            fillColor: focusLocation.kind === 'user' ? '#60a5fa' : '#fb923c',
-            fillOpacity: 0.28,
-            weight: 2,
-          }}
-        >
-          <Popup>
-            <div className="popup-content">
-              <strong>
-                {focusLocation.kind === 'user'
-                  ? 'La tua posizione'
-                  : 'Indirizzo cercato'}
-              </strong>
-              <span>{focusLocation.label}</span>
-            </div>
-          </Popup>
-        </CircleMarker>
-      ) : null}
-
-      {visibleStops.map((stop) => (
+      {sortedVehicles.map((vehicle) => (
         <Marker
-          key={stop.stopCode}
-          position={[stop.latitude, stop.longitude]}
-          icon={createStopIcon(stop, stop.stopCode === selectedStop?.stopCode)}
-          eventHandlers={{
-            click: () => onSelectStop(stop.stopCode),
-          }}
+          key={vehicle.vehicleId ?? vehicle.tripId}
+          position={[vehicle.latitude, vehicle.longitude]}
+          icon={createVehicleIcon(vehicle)}
+          zIndexOffset={700}
         >
           <Popup>
             <div className="popup-content">
               <strong>
-                Fermata {stop.stopCode} · {stop.stopName}
+                {vehicle.modeLabel} {vehicle.lineCode}
               </strong>
-              {stop.stopDescription ? <span>{stop.stopDescription}</span> : null}
-              {stop.distanceMeters !== undefined ? (
-                <span>{stop.distanceMeters} m dalla tua posizione</span>
-              ) : null}
-              {stop.services.length ? (
-                <span>Linee: {formatStopServices(stop.services)}</span>
-              ) : null}
+              <span>{vehicle.headsign ?? vehicle.routeName}</span>
+              <span>
+                {vehicle.vehicleLabel
+                  ? `Mezzo ${vehicle.vehicleLabel}`
+                  : 'Veicolo GTT'}
+              </span>
+              <span>{formatPopupSpeed(vehicle.speedMetersPerSecond)}</span>
+              <span>{formatPopupTime(vehicle.timestamp)}</span>
+              {lineLabel ? <span>Linea richiesta: {lineLabel}</span> : null}
             </div>
           </Popup>
         </Marker>
       ))}
-
-      {vehicleArrivals.map((arrival) => {
-        if (!arrival.vehiclePosition) {
-          return null
-        }
-
-        return (
-          <Marker
-            key={`${arrival.tripId}:${arrival.predictedArrival}`}
-            position={[arrival.vehiclePosition.latitude, arrival.vehiclePosition.longitude]}
-            icon={createVehicleIcon(arrival)}
-          >
-            <Popup>
-              <div className="popup-content">
-                <strong>
-                  {arrival.modeLabel} {arrival.lineCode}
-                  {arrival.vehicleLabel ? ` · Mezzo ${arrival.vehicleLabel}` : ''}
-                </strong>
-                <span>{arrival.headsign ?? arrival.routeName}</span>
-                <span>Passaggio previsto: {new Date(arrival.predictedArrival).toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit' })}</span>
-              </div>
-            </Popup>
-          </Marker>
-        )
-      })}
     </MapContainer>
   )
 }

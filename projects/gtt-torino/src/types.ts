@@ -63,6 +63,34 @@ export interface StopArrivalsResponse {
   arrivals: ArrivalRecord[]
 }
 
+export interface LineVehicleRecord {
+  tripId: string
+  vehicleId: string | null
+  vehicleLabel: string | null
+  lineCode: string
+  routeId: string
+  routeName: string
+  headsign: string | null
+  mode: VehicleMode
+  modeLabel: string
+  routeColor: string | null
+  routeTextColor: string | null
+  latitude: number
+  longitude: number
+  bearing: number | null
+  speedMetersPerSecond: number | null
+  timestamp: string | null
+}
+
+export interface LineVehiclesResponse {
+  fetchedAt: string
+  feedTimestamp: string | null
+  stale: boolean
+  warnings: string[]
+  line: string
+  vehicles: LineVehicleRecord[]
+}
+
 export interface NearbyStopsResponse {
   fetchedAt: string
   userLocation: {
