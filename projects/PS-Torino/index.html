@@ -95,6 +95,7 @@
             <select id="sortSelect">
               <option value="total">Totale attese</option>
               <option value="name">Nome</option>
+              <option value="distance">Distanza da me</option>
               <option value="red">Codice rosso</option>
               <option value="orange">Codice arancione</option>
               <option value="green">Codice verde</option>
@@ -102,8 +103,10 @@
             </select>
           </label>
 
+          <button id="locationBtn" class="btn toolbar-btn location-btn" type="button">Usa posizione</button>
+
           <label class="toggle-row">
-            <input type="checkbox" id="onlyOpenNow" />
+            <input type="checkbox" id="onlyOpenNow" checked />
             <span>Mostra solo strutture con dati live</span>
           </label>
         </section>
@@ -138,6 +141,7 @@
 
         <div class="hospital-meta">
           <span class="data-status"></span>
+          <span class="distance-label" hidden></span>
           <span class="updated-at"></span>
           <a class="map-link" target="_blank" rel="noopener noreferrer">Mostra mappa</a>
         </div>

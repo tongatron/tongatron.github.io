@@ -6,102 +6,142 @@
     {
       id: "molinette",
       name: "AOU Citta della Salute e della Scienza - Molinette",
-      address: "Corso Bramante 88, Torino"
+      address: "Corso Bramante 88, Torino",
+      latitude: 45.039468,
+      longitude: 7.674409
     },
     {
       id: "cto",
       name: "CTO Torino",
-      address: "Via Zuretti 29, Torino"
+      address: "Via Zuretti 29, Torino",
+      latitude: 45.033682,
+      longitude: 7.673996
     },
     {
       id: "sant-anna",
       name: "Ospedale Sant'Anna",
-      address: "Corso Spezia 60, Torino"
+      address: "Corso Spezia 60, Torino",
+      latitude: 45.036144,
+      longitude: 7.67402
     },
     {
       id: "regina-margherita",
       name: "Ospedale Regina Margherita",
-      address: "Piazza Polonia 94, Torino"
+      address: "Piazza Polonia 94, Torino",
+      latitude: 45.034666,
+      longitude: 7.674901
     },
     {
       id: "mauriziano",
       name: "Ospedale Mauriziano Umberto I",
-      address: "Largo Filippo Turati 62, Torino"
+      address: "Largo Filippo Turati 62, Torino",
+      latitude: 45.05168,
+      longitude: 7.665596
     },
     {
       id: "maria-vittoria",
       name: "Ospedale Maria Vittoria",
-      address: "Via Cibrario 72, Torino"
+      address: "Via Cibrario 72, Torino",
+      latitude: 45.081927,
+      longitude: 7.656633
     },
     {
       id: "martini",
       name: "Ospedale Martini",
-      address: "Via Tofane 71, Torino"
+      address: "Via Tofane 71, Torino",
+      latitude: 45.06709,
+      longitude: 7.628532
     },
     {
       id: "oftalmico",
       name: "Ospedale Oftalmico",
-      address: "Via Filippo Juvarra 19, Torino"
+      address: "Via Filippo Juvarra 19, Torino",
+      latitude: 45.074562,
+      longitude: 7.670831
     },
     {
       id: "san-giovanni-bosco",
       name: "Ospedale San Giovanni Bosco",
-      address: "Piazza del Donatore di Sangue 3, Torino"
+      address: "Piazza del Donatore di Sangue 3, Torino",
+      latitude: 45.097766,
+      longitude: 7.700378
     },
     {
       id: "san-luigi-orbassano",
       name: "AOU San Luigi Gonzaga di Orbassano",
-      address: "Regione Gonzole 10, Orbassano"
+      address: "Regione Gonzole 10, Orbassano",
+      latitude: 45.02922,
+      longitude: 7.555669
     },
     {
       id: "rivoli",
       name: "Ospedale di Rivoli",
-      address: "Rivoli, TO"
+      address: "Rivoli, TO",
+      latitude: 45.061008,
+      longitude: 7.51872
     },
     {
       id: "pinerolo",
       name: "Ospedale Edoardo Agnelli di Pinerolo",
-      address: "Pinerolo, TO"
+      address: "Pinerolo, TO",
+      latitude: 44.882703,
+      longitude: 7.319632
     },
     {
       id: "susa",
       name: "Ospedale di Susa",
-      address: "Susa, TO"
+      address: "Susa, TO",
+      latitude: 45.13746,
+      longitude: 7.050801
     },
     {
       id: "moncalieri",
       name: "Ospedale Santa Croce di Moncalieri",
-      address: "Moncalieri, TO"
+      address: "Moncalieri, TO",
+      latitude: 45.001835,
+      longitude: 7.689941
     },
     {
       id: "chieri",
       name: "Ospedale Maggiore di Chieri",
-      address: "Chieri, TO"
+      address: "Chieri, TO",
+      latitude: 45.010629,
+      longitude: 7.823663
     },
     {
       id: "carmagnola",
       name: "Ospedale San Lorenzo di Carmagnola",
-      address: "Carmagnola, TO"
+      address: "Carmagnola, TO",
+      latitude: 44.846806,
+      longitude: 7.716566
     },
     {
       id: "chivasso",
       name: "Ospedale di Chivasso",
-      address: "Chivasso, TO"
+      address: "Chivasso, TO",
+      latitude: 45.19072,
+      longitude: 7.89432
     },
     {
       id: "cirie",
       name: "Ospedale di Cirie",
-      address: "Cirie, TO"
+      address: "Cirie, TO",
+      latitude: 45.234122,
+      longitude: 7.596507
     },
     {
       id: "ivrea",
       name: "Ospedale di Ivrea",
-      address: "Ivrea, TO"
+      address: "Ivrea, TO",
+      latitude: 45.467174,
+      longitude: 7.872281
     },
     {
       id: "cuorgne",
       name: "Ospedale di Cuorgne",
-      address: "Cuorgne, TO"
+      address: "Cuorgne, TO",
+      latitude: 45.386865,
+      longitude: 7.649899
     }
   ];
 
@@ -226,6 +266,8 @@
     const blue = resolveBlue(item);
     const white = pickNumber(item, ["white", "bianco"]);
     const total = pickNumber(item, ["total", "totale"]);
+    const latitude = pickNumber(item, ["latitude", "lat", "latitudine"]);
+    const longitude = pickNumber(item, ["longitude", "lng", "lon", "longitudine"]);
     const name = item.name || item.nome || item.descrizione || (catalogHospital ? catalogHospital.name : "Struttura");
     const address = item.address || item.indirizzo || (catalogHospital ? catalogHospital.address : "Indirizzo non disponibile");
     const hasData = typeof item.hasData === "boolean" ? item.hasData : hasExplicitData(item);
@@ -247,6 +289,8 @@
       total: total === null
         ? (red === null ? 0 : red) + (orange === null ? 0 : orange) + (green === null ? 0 : green) + (blue === null ? 0 : blue) + (white === null ? 0 : white)
         : total,
+      latitude: latitude === null ? (catalogHospital ? catalogHospital.latitude || null : null) : latitude,
+      longitude: longitude === null ? (catalogHospital ? catalogHospital.longitude || null : null) : longitude,
       updatedAt: item.updatedAt || item.aggiornato_alle || item.updated_at || null,
       hasData,
       meta: item.meta || {}
@@ -266,6 +310,8 @@
       blue: 0,
       white: 0,
       total: 0,
+      latitude: hospital.latitude || null,
+      longitude: hospital.longitude || null,
       updatedAt: null,
       hasData: false,
       meta: {
