@@ -1,4 +1,4 @@
-const CACHE_NAME = "ps-torino-v3";
+const CACHE_NAME = "ps-torino-v4";
 const APP_SHELL_URL = new URL("./index.html", self.location.href).toString();
 const LIVE_SNAPSHOT_URL = new URL("./data/live-torino.json", self.location.href).toString();
 const ASSETS = [

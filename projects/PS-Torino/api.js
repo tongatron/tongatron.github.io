@@ -2,15 +2,134 @@
   const namespace = global.PSTorino || (global.PSTorino = {});
   const { APP_CONFIG } = namespace;
 
-  function buildFallbackId(item) {
-    const seed = String(
-      item.id || item.slug || item.name || item.nome || item.address || item.indirizzo || "struttura"
-    );
+  const HOSPITAL_CATALOG = [
+    {
+      id: "molinette",
+      name: "AOU Citta della Salute e della Scienza - Molinette",
+      address: "Corso Bramante 88, Torino"
+    },
+    {
+      id: "cto",
+      name: "CTO Torino",
+      address: "Via Zuretti 29, Torino"
+    },
+    {
+      id: "sant-anna",
+      name: "Ospedale Sant'Anna",
+      address: "Corso Spezia 60, Torino"
+    },
+    {
+      id: "regina-margherita",
+      name: "Ospedale Regina Margherita",
+      address: "Piazza Polonia 94, Torino"
+    },
+    {
+      id: "mauriziano",
+      name: "Ospedale Mauriziano Umberto I",
+      address: "Largo Filippo Turati 62, Torino"
+    },
+    {
+      id: "maria-vittoria",
+      name: "Ospedale Maria Vittoria",
+      address: "Via Cibrario 72, Torino"
+    },
+    {
+      id: "martini",
+      name: "Ospedale Martini",
+      address: "Via Tofane 71, Torino"
+    },
+    {
+      id: "oftalmico",
+      name: "Ospedale Oftalmico",
+      address: "Via Filippo Juvarra 19, Torino"
+    },
+    {
+      id: "san-giovanni-bosco",
+      name: "Ospedale San Giovanni Bosco",
+      address: "Piazza del Donatore di Sangue 3, Torino"
+    },
+    {
+      id: "san-luigi-orbassano",
+      name: "AOU San Luigi Gonzaga di Orbassano",
+      address: "Regione Gonzole 10, Orbassano"
+    },
+    {
+      id: "rivoli",
+      name: "Ospedale di Rivoli",
+      address: "Rivoli, TO"
+    },
+    {
+      id: "pinerolo",
+      name: "Ospedale Edoardo Agnelli di Pinerolo",
+      address: "Pinerolo, TO"
+    },
+    {
+      id: "susa",
+      name: "Ospedale di Susa",
+      address: "Susa, TO"
+    },
+    {
+      id: "moncalieri",
+      name: "Ospedale Santa Croce di Moncalieri",
+      address: "Moncalieri, TO"
+    },
+    {
+      id: "chieri",
+      name: "Ospedale Maggiore di Chieri",
+      address: "Chieri, TO"
+    },
+    {
+      id: "carmagnola",
+      name: "Ospedale San Lorenzo di Carmagnola",
+      address: "Carmagnola, TO"
+    },
+    {
+      id: "chivasso",
+      name: "Ospedale di Chivasso",
+      address: "Chivasso, TO"
+    },
+    {
+      id: "cirie",
+      name: "Ospedale di Cirie",
+      address: "Cirie, TO"
+    },
+    {
+      id: "ivrea",
+      name: "Ospedale di Ivrea",
+      address: "Ivrea, TO"
+    },
+    {
+      id: "cuorgne",
+      name: "Ospedale di Cuorgne",
+      address: "Cuorgne, TO"
+    }
+  ];
 
-    return seed
+  const HOSPITAL_CATALOG_KEYS = new Map();
+
+  for (const hospital of HOSPITAL_CATALOG) {
+    HOSPITAL_CATALOG_KEYS.set(buildCatalogKey(hospital.id), hospital);
+    HOSPITAL_CATALOG_KEYS.set(buildCatalogKey(hospital.name), hospital);
+  }
+
+  function buildCatalogKey(value) {
+    const normalizedValue = String(value || "");
+    const canNormalize = typeof normalizedValue.normalize === "function";
+
+    return (canNormalize ? normalizedValue.normalize("NFD") : normalizedValue)
+      .replace(/[\u0300-\u036f]/g, "")
       .toLowerCase()
       .replace(/[^a-z0-9]+/g, "-")
-      .replace(/^-+|-+$/g, "") || `struttura-${Date.now()}`;
+      .replace(/^-+|-+$/g, "");
+  }
+
+  function buildFallbackId(item) {
+    const seed = String(
+      item.id || item.slug || item.codice || item.name || item.nome || item.descrizione || item.address || item.indirizzo || "struttura"
+    );
+    const fallbackId = buildCatalogKey(seed);
+
+    return fallbackId || `struttura-${Date.now()}`;
   }
 
   function pickNumber(item, keys) {
@@ -29,6 +148,11 @@
     }
 
     return null;
+  }
+
+  function buildMapUrl(name, address) {
+    const query = [name, address].filter(Boolean).join(", ") || address || name || "Pronto Soccorso Torino";
+    return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
   }
 
   function resolveYellow(item) {
@@ -74,22 +198,48 @@
     ]) !== null;
   }
 
+  function resolveCatalogHospital(item, fallbackId) {
+    const keys = [
+      item.id,
+      item.slug,
+      item.codice,
+      item.name,
+      item.nome,
+      item.descrizione,
+      fallbackId
+    ];
+
+    for (const key of keys) {
+      const catalogKey = buildCatalogKey(key);
+
+      if (catalogKey && HOSPITAL_CATALOG_KEYS.has(catalogKey)) {
+        return HOSPITAL_CATALOG_KEYS.get(catalogKey);
+      }
+    }
+
+    return null;
+  }
+
   function normalizeHospital(item) {
+    const fallbackId = buildFallbackId(item);
+    const catalogHospital = resolveCatalogHospital(item, fallbackId);
     const red = pickNumber(item, ["red", "rosso"]);
     const yellow = resolveYellow(item);
     const green = resolveGreen(item);
     const white = pickNumber(item, ["white", "bianco"]);
     const total = pickNumber(item, ["total", "totale"]);
-    const address = item.address || item.indirizzo || "Indirizzo non disponibile";
+    const name = item.name || item.nome || item.descrizione || (catalogHospital ? catalogHospital.name : "Struttura");
+    const address = item.address || item.indirizzo || (catalogHospital ? catalogHospital.address : "Indirizzo non disponibile");
+    const hasData = typeof item.hasData === "boolean" ? item.hasData : hasExplicitData(item);
 
     return {
-      id: buildFallbackId(item),
-      name: item.name || item.nome || "Struttura",
-      address,
+      id: catalogHospital ? catalogHospital.id : fallbackId,
+      name: catalogHospital ? catalogHospital.name : name,
+      address: catalogHospital ? catalogHospital.address : address,
       mapUrl:
         item.mapUrl ||
         item.mappa ||
-        `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`,
+        buildMapUrl(catalogHospital ? catalogHospital.name : name, catalogHospital ? catalogHospital.address : address),
       red: red === null ? 0 : red,
       yellow: yellow === null ? 0 : yellow,
       green: green === null ? 0 : green,
@@ -98,8 +248,47 @@
         ? (red === null ? 0 : red) + (yellow === null ? 0 : yellow) + (green === null ? 0 : green) + (white === null ? 0 : white)
         : total,
       updatedAt: item.updatedAt || item.aggiornato_alle || item.updated_at || null,
-      hasData: hasExplicitData(item)
+      hasData
     };
+  }
+
+  function createCatalogPlaceholder(hospital) {
+    return {
+      id: hospital.id,
+      name: hospital.name,
+      address: hospital.address,
+      mapUrl: buildMapUrl(hospital.name, hospital.address),
+      red: 0,
+      yellow: 0,
+      green: 0,
+      white: 0,
+      total: 0,
+      updatedAt: null,
+      hasData: false
+    };
+  }
+
+  function mergeHospitalsWithCatalog(hospitals) {
+    const mergedHospitals = HOSPITAL_CATALOG.map(createCatalogPlaceholder);
+    const mergedIndex = new Map();
+    const extras = [];
+
+    for (let index = 0; index < mergedHospitals.length; index += 1) {
+      mergedIndex.set(mergedHospitals[index].id, index);
+    }
+
+    for (const hospital of hospitals) {
+      if (mergedIndex.has(hospital.id)) {
+        mergedHospitals[mergedIndex.get(hospital.id)] = hospital;
+        continue;
+      }
+
+      extras.push(hospital);
+    }
+
+    return mergedHospitals.concat(
+      extras.sort((left, right) => left.name.localeCompare(right.name, "it"))
+    );
   }
 
   function extractHospitalArray(payload) {
@@ -172,6 +361,19 @@
     }
   }
 
+  function normalizeSnapshot(payload, fallbackSource, fallbackSourceLabel) {
+    const hospitals = extractHospitalArray(payload).map(normalizeHospital);
+
+    return {
+      source: payload && payload.source ? payload.source : fallbackSource,
+      sourceLabel: payload && payload.sourceLabel ? payload.sourceLabel : fallbackSourceLabel,
+      fetchedAt: resolveFetchedAt(payload),
+      hospitals: mergeHospitalsWithCatalog(hospitals)
+    };
+  }
+
+  namespace.normalizeSnapshotPayload = normalizeSnapshot;
+
   namespace.fetchTorinoHospitals = async function fetchTorinoHospitals() {
     const apiBaseUrl = ensureConfiguredApi();
     const url = `${apiBaseUrl}/${APP_CONFIG.region}/${APP_CONFIG.province}`;
@@ -187,14 +389,7 @@
     }
 
     const payload = await res.json();
-    const hospitals = extractHospitalArray(payload);
-
-    return {
-      source: "api",
-      sourceLabel: "API remota",
-      fetchedAt: resolveFetchedAt(payload),
-      hospitals: hospitals.map(normalizeHospital)
-    };
+    return normalizeSnapshot(payload, "api", "API remota");
   };
 
   namespace.fetchPublishedSnapshot = async function fetchPublishedSnapshot() {
@@ -211,18 +406,7 @@
     }
 
     const payload = await res.json();
-    const hospitals = extractHospitalArray(payload);
-
-    if (!hospitals.length) {
-      throw new Error("Snapshot live vuoto");
-    }
-
-    return {
-      source: "live-snapshot",
-      sourceLabel: payload.sourceLabel || "Snapshot live",
-      fetchedAt: resolveFetchedAt(payload),
-      hospitals: hospitals.map(normalizeHospital)
-    };
+    return normalizeSnapshot(payload, "live-snapshot", "Snapshot live");
   };
 
   namespace.fetchMockHospitals = async function fetchMockHospitals() {
@@ -233,12 +417,7 @@
         throw new Error("Mock embedded non disponibile");
       }
 
-      return {
-        source: "mock",
-        sourceLabel: "Mock locale",
-        fetchedAt: resolveFetchedAt(embeddedPayload),
-        hospitals: extractHospitalArray(embeddedPayload).map(normalizeHospital)
-      };
+      return normalizeSnapshot(embeddedPayload, "mock", "Mock locale");
     }
 
     try {
@@ -250,13 +429,7 @@
       }
 
       const payload = await res.json();
-
-      return {
-        source: "mock",
-        sourceLabel: "Mock locale",
-        fetchedAt: resolveFetchedAt(payload),
-        hospitals: extractHospitalArray(payload).map(normalizeHospital)
-      };
+      return normalizeSnapshot(payload, "mock", "Mock locale");
     } catch (error) {
       const embeddedPayload = readEmbeddedMock();
 
@@ -264,12 +437,7 @@
         throw error;
       }
 
-      return {
-        source: "mock",
-        sourceLabel: "Mock embedded",
-        fetchedAt: resolveFetchedAt(embeddedPayload),
-        hospitals: extractHospitalArray(embeddedPayload).map(normalizeHospital)
-      };
+      return normalizeSnapshot(embeddedPayload, "mock", "Mock embedded");
     }
   };
 })(window);

@@ -5,6 +5,7 @@ PWA statica pensata per GitHub Pages, pubblicata sotto `projects/PS-Torino/`.
 ## Stato attuale
 
 La PWA ora usa come sorgente primaria `data/live-torino.json`, generato da uno scraper e aggiornato da GitHub Actions.
+Il frontend completa sempre la lista con un catalogo locale dei principali presidi dell'area torinese, cosi la UI puo mostrare anche le strutture senza feed live disponibile.
 
 Ordine di fallback del frontend:
 
@@ -67,6 +68,8 @@ data/live-torino.json
   - [Sant'Anna](https://listeps.cittadellasalute.to.it/gtotal.php?id=01090301)
   - [Regina Margherita](https://listeps.cittadellasalute.to.it/gtotal.php?id=01090302)
 - Mauriziano, pagina ufficiale renderizzata server-side: [Pazienti in attesa presso Pronto Soccorso](https://www.mauriziano.it/i-nostri-servizi/pazienti-in-attesa-presso-pronto-soccorso)
+- ASL Citta di Torino, frontend pubblico con API usata dal sito: [prontosoccorso.aslcittaditorino.it](https://prontosoccorso.aslcittaditorino.it/)
+- San Luigi Gonzaga di Orbassano, endpoint AJAX pubblico usato dal sito Drupal: [dea-status/ajax-callback](https://www.sanluigi.piemonte.it/dea-status/ajax-callback?url=api/deaStatus)
 
 ## Workflow GitHub Actions
 

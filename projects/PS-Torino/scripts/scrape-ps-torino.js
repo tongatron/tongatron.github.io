@@ -1,12 +1,13 @@
 #!/usr/bin/env node
 
 const fs = require("node:fs/promises");
+const https = require("node:https");
 const path = require("node:path");
 const { TextDecoder } = require("node:util");
 
 const OUTPUT_PATH = path.join(__dirname, "..", "data", "live-torino.json");
 const TIMEZONE = "Europe/Rome";
-const USER_AGENT = "ps-torino-snapshot/0.2 (+https://tongatron.github.io/projects/PS-Torino/)";
+const USER_AGENT = "ps-torino-snapshot/0.3 (+https://tongatron.github.io/projects/PS-Torino/)";
 const LATIN1_DECODER = new TextDecoder("latin1");
 
 const CITTADELLA_SOURCES = [
@@ -43,8 +44,68 @@ const MAURIZIANO_SOURCE = {
   url: "https://www.mauriziano.it/i-nostri-servizi/pazienti-in-attesa-presso-pronto-soccorso"
 };
 
-function buildMapUrl(address) {
-  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`;
+const ASL_CITTA_SOURCE = {
+  baseUrl: process.env.PS_TORINO_ASL_CITTA_BASE_URL || "https://prontosoccorso.aslcittaditorino.it",
+  clientId: process.env.PS_TORINO_ASL_CITTA_CLIENT_ID || "jhisps",
+  clientPassword: process.env.PS_TORINO_ASL_CITTA_CLIENT_PASSWORD || "Sincos38",
+  username: process.env.PS_TORINO_ASL_CITTA_USERNAME || "aziendaact",
+  password: process.env.PS_TORINO_ASL_CITTA_PASSWORD || "jh!sPsClient"
+};
+
+const ASL_CITTA_HOSPITALS = [
+  {
+    id: "maria-vittoria",
+    code: "01000300",
+    name: "Ospedale Maria Vittoria",
+    address: "Via Cibrario 72, Torino"
+  },
+  {
+    id: "martini",
+    code: "01000700",
+    name: "Ospedale Martini",
+    address: "Via Tofane 71, Torino"
+  },
+  {
+    id: "oftalmico",
+    code: "01001000",
+    name: "Ospedale Oftalmico",
+    address: "Via Filippo Juvarra 19, Torino"
+  },
+  {
+    id: "san-giovanni-bosco",
+    code: "01001100",
+    name: "Ospedale San Giovanni Bosco",
+    address: "Piazza del Donatore di Sangue 3, Torino"
+  }
+];
+
+const SAN_LUIGI_SOURCE = {
+  id: "san-luigi-orbassano",
+  name: "AOU San Luigi Gonzaga di Orbassano",
+  address: "Regione Gonzole 10, Orbassano",
+  url: "https://www.sanluigi.piemonte.it/dea-status/ajax-callback?url=api/deaStatus"
+};
+
+const HOSPITAL_ORDER = [
+  "molinette",
+  "cto",
+  "sant-anna",
+  "regina-margherita",
+  "mauriziano",
+  "maria-vittoria",
+  "martini",
+  "oftalmico",
+  "san-giovanni-bosco",
+  "san-luigi-orbassano"
+];
+
+const ASL_CITTA_HOSPITALS_BY_CODE = new Map(
+  ASL_CITTA_HOSPITALS.map((hospital) => [hospital.code, hospital])
+);
+
+function buildMapUrl(address, name) {
+  const query = [name, address].filter(Boolean).join(", ") || address || name || "Pronto Soccorso Torino";
+  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
 }
 
 function createTimeoutSignal(timeoutMs) {
@@ -103,6 +164,59 @@ async function fetchHtml(url) {
   }
 }
 
+function requestWithHttps(url, options) {
+  return new Promise((resolve, reject) => {
+    const targetUrl = new URL(url);
+    const request = https.request({
+      protocol: targetUrl.protocol,
+      hostname: targetUrl.hostname,
+      port: targetUrl.port || undefined,
+      path: `${targetUrl.pathname}${targetUrl.search}`,
+      method: options && options.method ? options.method : "GET",
+      headers: {
+        "User-Agent": USER_AGENT,
+        ...(options && options.headers ? options.headers : {})
+      },
+      rejectUnauthorized: options && options.rejectUnauthorized === false ? false : true
+    }, (response) => {
+      const chunks = [];
+
+      response.on("data", (chunk) => {
+        chunks.push(chunk);
+      });
+
+      response.on("end", () => {
+        const body = Buffer.concat(chunks);
+        const statusCode = response.statusCode || 0;
+
+        if (statusCode < 200 || statusCode >= 300) {
+          const bodyPreview = body.toString("utf8").slice(0, 200).trim();
+          reject(new Error(`HTTP ${statusCode}${bodyPreview ? `: ${bodyPreview}` : ""}`));
+          return;
+        }
+
+        resolve(body);
+      });
+    });
+
+    request.on("error", reject);
+    request.setTimeout(15000, () => {
+      request.destroy(new Error("Timeout"));
+    });
+
+    if (options && options.body) {
+      request.write(options.body);
+    }
+
+    request.end();
+  });
+}
+
+async function requestJsonWithHttps(url, options) {
+  const responseBody = await requestWithHttps(url, options);
+  return JSON.parse(responseBody.toString("utf8"));
+}
+
 function toNumber(value) {
   const parsedValue = Number(value);
   return Number.isFinite(parsedValue) ? parsedValue : 0;
@@ -115,6 +229,14 @@ function stripTags(value) {
     .replace(/&nbsp;/gi, " ")
     .replace(/\s+/g, " ")
     .trim();
+}
+
+function normalizeIsoOffset(value) {
+  if (!value) {
+    return null;
+  }
+
+  return String(value).replace(/([+-]\d{2})(\d{2})$/, "$1:$2");
 }
 
 function parseItalianLocalTimestamp(value) {
@@ -157,6 +279,18 @@ function parseItalianLocalTimestamp(value) {
   return value;
 }
 
+function buildUnavailableRecord(baseRecord, updatedAt, metadata) {
+  return {
+    id: baseRecord.id,
+    name: baseRecord.name,
+    address: baseRecord.address,
+    mapUrl: buildMapUrl(baseRecord.address, baseRecord.name),
+    updatedAt: updatedAt || null,
+    hasData: false,
+    meta: metadata || {}
+  };
+}
+
 function buildHospitalRecord(baseRecord, counts, updatedAt, metadata) {
   const red = toNumber(counts.rosso);
   const yellow = toNumber(counts.giallo) + toNumber(counts.arancione);
@@ -167,7 +301,7 @@ function buildHospitalRecord(baseRecord, counts, updatedAt, metadata) {
     id: baseRecord.id,
     name: baseRecord.name,
     address: baseRecord.address,
-    mapUrl: buildMapUrl(baseRecord.address),
+    mapUrl: buildMapUrl(baseRecord.address, baseRecord.name),
     rosso: red,
     giallo: toNumber(counts.giallo),
     arancione: toNumber(counts.arancione),
@@ -177,7 +311,7 @@ function buildHospitalRecord(baseRecord, counts, updatedAt, metadata) {
     total: red + yellow + green + white,
     updatedAt,
     hasData: true,
-    meta: metadata
+    meta: metadata || {}
   };
 }
 
@@ -290,15 +424,193 @@ async function scrapeMaurizianoSource() {
   );
 }
 
+async function fetchAslCittaAccessToken() {
+  const authHeader = `Basic ${Buffer.from(`${ASL_CITTA_SOURCE.clientId}:${ASL_CITTA_SOURCE.clientPassword}`).toString("base64")}`;
+  const body = new URLSearchParams({
+    username: ASL_CITTA_SOURCE.username,
+    password: ASL_CITTA_SOURCE.password,
+    grant_type: "password"
+  }).toString();
+
+  const payload = await requestJsonWithHttps(`${ASL_CITTA_SOURCE.baseUrl}/oauth/token`, {
+    method: "POST",
+    headers: {
+      Authorization: authHeader,
+      "Content-Type": "application/x-www-form-urlencoded",
+      Accept: "application/json"
+    },
+    body,
+    rejectUnauthorized: false
+  });
+
+  if (!payload || !payload.access_token) {
+    throw new Error("Token ASL Citta di Torino non disponibile");
+  }
+
+  return payload.access_token;
+}
+
+function normalizeAslCittaStructure(structure) {
+  const knownHospital = ASL_CITTA_HOSPITALS_BY_CODE.get(String(structure.codice || ""));
+  const baseRecord = knownHospital || {
+    id: String(structure.nome || structure.descrizione || structure.codice || "asl-citta"),
+    name: structure.descrizione || structure.nome || "Struttura ASL Citta di Torino",
+    address: structure.indirizzo || "Torino"
+  };
+  const rilevazione = structure.rilevazione || {};
+  const countRows = Array.isArray(rilevazione.rilevazioni) ? rilevazione.rilevazioni : [];
+  const counts = {
+    rosso: 0,
+    giallo: 0,
+    arancione: 0,
+    verde: 0,
+    azzurro: 0,
+    bianco: 0
+  };
+  const inVisit = {
+    rosso: 0,
+    giallo: 0,
+    arancione: 0,
+    verde: 0,
+    azzurro: 0,
+    bianco: 0
+  };
+  const meanWaitMinutes = {
+    rosso: 0,
+    giallo: 0,
+    arancione: 0,
+    verde: 0,
+    azzurro: 0,
+    bianco: 0
+  };
+  const codeMap = {
+    1: "rosso",
+    2: "arancione",
+    3: "azzurro",
+    4: "verde",
+    5: "bianco"
+  };
+
+  for (const row of countRows) {
+    const priorityCode = Number(row && row.codicePriorita ? row.codicePriorita.codice : null);
+    const colorKey = codeMap[priorityCode];
+
+    if (!colorKey) {
+      continue;
+    }
+
+    counts[colorKey] = toNumber(row.pazientiInLista);
+    inVisit[colorKey] = toNumber(row.pazientiInVisita);
+    meanWaitMinutes[colorKey] = toNumber(row.tempoMedioAttesa);
+  }
+
+  if (!countRows.length) {
+    return buildUnavailableRecord(baseRecord, normalizeIsoOffset(rilevazione.dataOra), {
+      fetchedFrom: `${ASL_CITTA_SOURCE.baseUrl}/api/strutture/`,
+      reason: "Rilevazione assente"
+    });
+  }
+
+  return buildHospitalRecord(baseRecord, counts, normalizeIsoOffset(rilevazione.dataOra), {
+    fetchedFrom: `${ASL_CITTA_SOURCE.baseUrl}/api/strutture/`,
+    ambulanzeInArrivo: toNumber(rilevazione.ambulanzeInArrivo),
+    inVisit,
+    meanWaitMinutes
+  });
+}
+
+async function scrapeAslCittaSources() {
+  const accessToken = await fetchAslCittaAccessToken();
+  const payload = await requestJsonWithHttps(`${ASL_CITTA_SOURCE.baseUrl}/api/strutture/`, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      Accept: "application/json"
+    },
+    rejectUnauthorized: false
+  });
+
+  if (!Array.isArray(payload)) {
+    throw new Error("Payload ASL Citta di Torino non valido");
+  }
+
+  return payload
+    .filter((structure) => (
+      structure &&
+      structure.attivo !== false &&
+      ASL_CITTA_HOSPITALS_BY_CODE.has(String(structure.codice || ""))
+    ))
+    .map(normalizeAslCittaStructure);
+}
+
+function extractSanLuigiRows(html) {
+  const rowMatches = html.match(/<tr class="(rosso|arancione|azzurro|verde|bianco)"[\s\S]*?<\/tr>/gi) || [];
+  const counts = {
+    rosso: 0,
+    giallo: 0,
+    arancione: 0,
+    verde: 0,
+    azzurro: 0,
+    bianco: 0
+  };
+  const inVisit = {
+    rosso: 0,
+    giallo: 0,
+    arancione: 0,
+    verde: 0,
+    azzurro: 0,
+    bianco: 0
+  };
+
+  for (const rowHtml of rowMatches) {
+    const colorMatch = rowHtml.match(/<tr class="([^"]+)"/i);
+    const attesaMatch = rowHtml.match(/<td class="attesa">[\s\S]*?<span>([^<]*)<\/span>/i);
+    const visitaMatch = rowHtml.match(/<td class="visita">[\s\S]*?<span>([^<]*)<\/span>/i);
+    const colorKey = colorMatch ? colorMatch[1].trim().toLowerCase() : null;
+
+    if (!colorKey || !(colorKey in counts)) {
+      continue;
+    }
+
+    counts[colorKey] = toNumber(attesaMatch ? stripTags(attesaMatch[1]) : 0);
+    inVisit[colorKey] = toNumber(visitaMatch ? stripTags(visitaMatch[1]) : 0);
+  }
+
+  return { counts, inVisit };
+}
+
+async function scrapeSanLuigiSource(fetchedAt) {
+  const html = await fetchHtml(SAN_LUIGI_SOURCE.url);
+  const { counts, inVisit } = extractSanLuigiRows(html);
+
+  return buildHospitalRecord(SAN_LUIGI_SOURCE, counts, fetchedAt, {
+    fetchedFrom: SAN_LUIGI_SOURCE.url,
+    inVisit
+  });
+}
+
+function sortHospitals(hospitals) {
+  const orderIndex = new Map(HOSPITAL_ORDER.map((id, index) => [id, index]));
+
+  return [...hospitals].sort((left, right) => {
+    const leftOrder = orderIndex.has(left.id) ? orderIndex.get(left.id) : Number.MAX_SAFE_INTEGER;
+    const rightOrder = orderIndex.has(right.id) ? orderIndex.get(right.id) : Number.MAX_SAFE_INTEGER;
+
+    if (leftOrder !== rightOrder) {
+      return leftOrder - rightOrder;
+    }
+
+    return left.name.localeCompare(right.name, "it");
+  });
+}
+
 async function main() {
   const fetchedAt = new Date().toISOString();
-  const hospitals = [];
+  const hospitalsById = new Map();
   const failures = [];
-
   const scrapingTasks = [
     ...CITTADELLA_SOURCES.map((source) =>
       scrapeCittadellaSource(source, fetchedAt)
-        .then((hospital) => ({ hospital }))
+        .then((hospital) => ({ hospitals: [hospital] }))
         .catch((error) => ({
           failure: {
             id: source.id,
@@ -308,11 +620,29 @@ async function main() {
         }))
     ),
     scrapeMaurizianoSource()
-      .then((hospital) => ({ hospital }))
+      .then((hospital) => ({ hospitals: [hospital] }))
       .catch((error) => ({
         failure: {
           id: MAURIZIANO_SOURCE.id,
           source: MAURIZIANO_SOURCE.url,
+          message: error.message
+        }
+      })),
+    scrapeAslCittaSources()
+      .then((hospitals) => ({ hospitals }))
+      .catch((error) => ({
+        failure: {
+          id: "asl-citta-di-torino",
+          source: `${ASL_CITTA_SOURCE.baseUrl}/api/strutture/`,
+          message: error.message
+        }
+      })),
+    scrapeSanLuigiSource(fetchedAt)
+      .then((hospital) => ({ hospitals: [hospital] }))
+      .catch((error) => ({
+        failure: {
+          id: SAN_LUIGI_SOURCE.id,
+          source: SAN_LUIGI_SOURCE.url,
           message: error.message
         }
       }))
@@ -321,13 +651,18 @@ async function main() {
   const scrapingResults = await Promise.all(scrapingTasks);
 
   for (const result of scrapingResults) {
-    if (result.hospital) {
-      hospitals.push(result.hospital);
+    if (result.hospitals) {
+      for (const hospital of result.hospitals) {
+        hospitalsById.set(hospital.id, hospital);
+      }
+
       continue;
     }
 
     failures.push(result.failure);
   }
+
+  const hospitals = sortHospitals(Array.from(hospitalsById.values()));
 
   if (!hospitals.length) {
     throw new Error("Nessuna sorgente live disponibile");

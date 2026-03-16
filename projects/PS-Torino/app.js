@@ -6,6 +6,7 @@
     fetchMockHospitals,
     loadLastSync,
     loadSnapshot,
+    normalizeSnapshotPayload,
     saveSnapshot,
     isApiConfigured
   } = namespace;
@@ -84,6 +85,20 @@
     return snapshot && snapshot.source === "mock" ? "Cache locale (mock)" : "Cache locale";
   }
 
+  function getCachedSnapshot() {
+    const cachedSnapshot = loadSnapshot();
+
+    if (!cachedSnapshot) {
+      return null;
+    }
+
+    return normalizeSnapshotPayload(
+      cachedSnapshot,
+      "cache",
+      getCacheSourceLabel(cachedSnapshot)
+    );
+  }
+
   function getCountLabel(hospital, key) {
     return hospital.hasData ? String(hospital[key]) : "—";
   }
@@ -143,17 +158,13 @@
   }
 
   function hydrateFromCache() {
-    const cachedSnapshot = loadSnapshot();
+    const cachedSnapshot = getCachedSnapshot();
 
     if (!cachedSnapshot) {
       return false;
     }
 
-    render({
-      ...cachedSnapshot,
-      source: "cache",
-      sourceLabel: getCacheSourceLabel(cachedSnapshot)
-    });
+    render(cachedSnapshot);
     setStatus(navigator.onLine ? "Snapshot locale" : "Offline / cache");
     return true;
   }
@@ -196,14 +207,10 @@
         setRuntimeNotice("Snapshot live non disponibile: visualizzo cache o dati mock finche non aggiorni il file generato o configuri APP_CONFIG.apiBaseUrl.");
       }
 
-      const cachedSnapshot = loadSnapshot();
+      const cachedSnapshot = getCachedSnapshot();
 
       if (cachedSnapshot) {
-        render({
-          ...cachedSnapshot,
-          source: "cache",
-          sourceLabel: getCacheSourceLabel(cachedSnapshot)
-        });
+        render(cachedSnapshot);
         setStatus("Offline / cache");
         return;
       }

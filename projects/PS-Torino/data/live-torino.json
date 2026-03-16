@@ -1,21 +1,21 @@
 {
   "source": "github-actions",
   "sourceLabel": "Snapshot live (GitHub Actions)",
-  "fetchedAt": "2026-03-16T22:29:11.916Z",
+  "fetchedAt": "2026-03-16T22:47:24.337Z",
   "hospitals": [
     {
       "id": "molinette",
       "name": "AOU Citta della Salute e della Scienza - Molinette",
       "address": "Corso Bramante 88, Torino",
-      "mapUrl": "https://www.google.com/maps/search/?api=1&query=Corso%20Bramante%2088%2C%20Torino",
+      "mapUrl": "https://www.google.com/maps/search/?api=1&query=AOU%20Citta%20della%20Salute%20e%20della%20Scienza%20-%20Molinette%2C%20Corso%20Bramante%2088%2C%20Torino",
       "rosso": 0,
       "giallo": 0,
       "arancione": 0,
-      "verde": 19,
-      "azzurro": 6,
+      "verde": 13,
+      "azzurro": 7,
       "bianco": 0,
-      "total": 25,
-      "updatedAt": "2026-03-16T22:29:11.916Z",
+      "total": 20,
+      "updatedAt": "2026-03-16T22:47:24.337Z",
       "hasData": true,
       "meta": {
         "fetchedFrom": "https://listeps.cittadellasalute.to.it/gtotal.php?id=01090101",
@@ -23,8 +23,8 @@
           "rosso": 4,
           "giallo": 0,
           "arancione": 0,
-          "verde": 12,
-          "azzurro": 25,
+          "verde": 16,
+          "azzurro": 26,
           "bianco": 0
         }
       }
@@ -33,15 +33,15 @@
       "id": "cto",
       "name": "CTO Torino",
       "address": "Via Zuretti 29, Torino",
-      "mapUrl": "https://www.google.com/maps/search/?api=1&query=Via%20Zuretti%2029%2C%20Torino",
+      "mapUrl": "https://www.google.com/maps/search/?api=1&query=CTO%20Torino%2C%20Via%20Zuretti%2029%2C%20Torino",
       "rosso": 0,
       "giallo": 0,
       "arancione": 0,
-      "verde": 5,
+      "verde": 2,
       "azzurro": 0,
       "bianco": 5,
-      "total": 10,
-      "updatedAt": "2026-03-16T22:29:11.916Z",
+      "total": 7,
+      "updatedAt": "2026-03-16T22:47:24.337Z",
       "hasData": true,
       "meta": {
         "fetchedFrom": "https://listeps.cittadellasalute.to.it/gtotal.php?id=01090201",
@@ -49,8 +49,8 @@
           "rosso": 0,
           "giallo": 0,
           "arancione": 0,
-          "verde": 3,
-          "azzurro": 12,
+          "verde": 5,
+          "azzurro": 11,
           "bianco": 0
         }
       }
@@ -59,15 +59,15 @@
       "id": "sant-anna",
       "name": "Ospedale Sant'Anna",
       "address": "Corso Spezia 60, Torino",
-      "mapUrl": "https://www.google.com/maps/search/?api=1&query=Corso%20Spezia%2060%2C%20Torino",
+      "mapUrl": "https://www.google.com/maps/search/?api=1&query=Ospedale%20Sant'Anna%2C%20Corso%20Spezia%2060%2C%20Torino",
       "rosso": 0,
       "giallo": 0,
       "arancione": 0,
       "verde": 0,
       "azzurro": 2,
-      "bianco": 0,
-      "total": 2,
-      "updatedAt": "2026-03-16T22:29:11.916Z",
+      "bianco": 1,
+      "total": 3,
+      "updatedAt": "2026-03-16T22:47:24.337Z",
       "hasData": true,
       "meta": {
         "fetchedFrom": "https://listeps.cittadellasalute.to.it/gtotal.php?id=01090301",
@@ -85,15 +85,15 @@
       "id": "regina-margherita",
       "name": "Ospedale Regina Margherita",
       "address": "Piazza Polonia 94, Torino",
-      "mapUrl": "https://www.google.com/maps/search/?api=1&query=Piazza%20Polonia%2094%2C%20Torino",
+      "mapUrl": "https://www.google.com/maps/search/?api=1&query=Ospedale%20Regina%20Margherita%2C%20Piazza%20Polonia%2094%2C%20Torino",
       "rosso": 0,
       "giallo": 0,
       "arancione": 0,
       "verde": 3,
-      "azzurro": 9,
+      "azzurro": 8,
       "bianco": 0,
-      "total": 12,
-      "updatedAt": "2026-03-16T22:29:11.916Z",
+      "total": 11,
+      "updatedAt": "2026-03-16T22:47:24.337Z",
       "hasData": true,
       "meta": {
         "fetchedFrom": "https://listeps.cittadellasalute.to.it/gtotal.php?id=01090302",
@@ -102,7 +102,7 @@
           "giallo": 0,
           "arancione": 0,
           "verde": 3,
-          "azzurro": 7,
+          "azzurro": 8,
           "bianco": 0
         }
       }
@@ -111,15 +111,15 @@
       "id": "mauriziano",
       "name": "Ospedale Mauriziano Umberto I",
       "address": "Largo Filippo Turati 62, Torino",
-      "mapUrl": "https://www.google.com/maps/search/?api=1&query=Largo%20Filippo%20Turati%2062%2C%20Torino",
+      "mapUrl": "https://www.google.com/maps/search/?api=1&query=Ospedale%20Mauriziano%20Umberto%20I%2C%20Largo%20Filippo%20Turati%2062%2C%20Torino",
       "rosso": 0,
       "giallo": 0,
       "arancione": 0,
-      "verde": 4,
+      "verde": 3,
       "azzurro": 0,
       "bianco": 1,
-      "total": 5,
-      "updatedAt": "2026-03-16T23:20:04+01:00",
+      "total": 4,
+      "updatedAt": "2026-03-16T23:40:03+01:00",
       "hasData": true,
       "meta": {
         "fetchedFrom": "https://www.mauriziano.it/i-nostri-servizi/pazienti-in-attesa-presso-pronto-soccorso",
@@ -127,9 +127,175 @@
           "rosso": 1,
           "giallo": 0,
           "arancione": 28,
-          "verde": 11,
+          "verde": 12,
           "azzurro": 14,
           "bianco": 11
+        }
+      }
+    },
+    {
+      "id": "maria-vittoria",
+      "name": "Ospedale Maria Vittoria",
+      "address": "Via Cibrario 72, Torino",
+      "mapUrl": "https://www.google.com/maps/search/?api=1&query=Ospedale%20Maria%20Vittoria%2C%20Via%20Cibrario%2072%2C%20Torino",
+      "rosso": 0,
+      "giallo": 0,
+      "arancione": 2,
+      "verde": 1,
+      "azzurro": 6,
+      "bianco": 3,
+      "total": 12,
+      "updatedAt": "2026-03-16T22:45:07.451+00:00",
+      "hasData": true,
+      "meta": {
+        "fetchedFrom": "https://prontosoccorso.aslcittaditorino.it/api/strutture/",
+        "ambulanzeInArrivo": 0,
+        "inVisit": {
+          "rosso": 5,
+          "giallo": 0,
+          "arancione": 34,
+          "verde": 19,
+          "azzurro": 16,
+          "bianco": 7
+        },
+        "meanWaitMinutes": {
+          "rosso": 0,
+          "giallo": 0,
+          "arancione": 20,
+          "verde": 10,
+          "azzurro": 60,
+          "bianco": 30
+        }
+      }
+    },
+    {
+      "id": "martini",
+      "name": "Ospedale Martini",
+      "address": "Via Tofane 71, Torino",
+      "mapUrl": "https://www.google.com/maps/search/?api=1&query=Ospedale%20Martini%2C%20Via%20Tofane%2071%2C%20Torino",
+      "rosso": 0,
+      "giallo": 0,
+      "arancione": 0,
+      "verde": 7,
+      "azzurro": 0,
+      "bianco": 1,
+      "total": 8,
+      "updatedAt": "2026-03-16T22:45:07.634+00:00",
+      "hasData": true,
+      "meta": {
+        "fetchedFrom": "https://prontosoccorso.aslcittaditorino.it/api/strutture/",
+        "ambulanzeInArrivo": 0,
+        "inVisit": {
+          "rosso": 5,
+          "giallo": 0,
+          "arancione": 18,
+          "verde": 32,
+          "azzurro": 13,
+          "bianco": 4
+        },
+        "meanWaitMinutes": {
+          "rosso": 0,
+          "giallo": 0,
+          "arancione": 0,
+          "verde": 70,
+          "azzurro": 0,
+          "bianco": 10
+        }
+      }
+    },
+    {
+      "id": "oftalmico",
+      "name": "Ospedale Oftalmico",
+      "address": "Via Filippo Juvarra 19, Torino",
+      "mapUrl": "https://www.google.com/maps/search/?api=1&query=Ospedale%20Oftalmico%2C%20Via%20Filippo%20Juvarra%2019%2C%20Torino",
+      "rosso": 0,
+      "giallo": 0,
+      "arancione": 0,
+      "verde": 0,
+      "azzurro": 0,
+      "bianco": 0,
+      "total": 0,
+      "updatedAt": "2026-03-16T22:45:07.739+00:00",
+      "hasData": true,
+      "meta": {
+        "fetchedFrom": "https://prontosoccorso.aslcittaditorino.it/api/strutture/",
+        "ambulanzeInArrivo": 0,
+        "inVisit": {
+          "rosso": 0,
+          "giallo": 0,
+          "arancione": 0,
+          "verde": 0,
+          "azzurro": 0,
+          "bianco": 0
+        },
+        "meanWaitMinutes": {
+          "rosso": 0,
+          "giallo": 0,
+          "arancione": 0,
+          "verde": 0,
+          "azzurro": 0,
+          "bianco": 0
+        }
+      }
+    },
+    {
+      "id": "san-giovanni-bosco",
+      "name": "Ospedale San Giovanni Bosco",
+      "address": "Piazza del Donatore di Sangue 3, Torino",
+      "mapUrl": "https://www.google.com/maps/search/?api=1&query=Ospedale%20San%20Giovanni%20Bosco%2C%20Piazza%20del%20Donatore%20di%20Sangue%203%2C%20Torino",
+      "rosso": 0,
+      "giallo": 0,
+      "arancione": 0,
+      "verde": 8,
+      "azzurro": 0,
+      "bianco": 0,
+      "total": 8,
+      "updatedAt": "2026-03-16T22:45:00.075+00:00",
+      "hasData": true,
+      "meta": {
+        "fetchedFrom": "https://prontosoccorso.aslcittaditorino.it/api/strutture/",
+        "ambulanzeInArrivo": 0,
+        "inVisit": {
+          "rosso": 6,
+          "giallo": 0,
+          "arancione": 13,
+          "verde": 31,
+          "azzurro": 11,
+          "bianco": 3
+        },
+        "meanWaitMinutes": {
+          "rosso": 0,
+          "giallo": 0,
+          "arancione": 0,
+          "verde": 80,
+          "azzurro": 0,
+          "bianco": 0
+        }
+      }
+    },
+    {
+      "id": "san-luigi-orbassano",
+      "name": "AOU San Luigi Gonzaga di Orbassano",
+      "address": "Regione Gonzole 10, Orbassano",
+      "mapUrl": "https://www.google.com/maps/search/?api=1&query=AOU%20San%20Luigi%20Gonzaga%20di%20Orbassano%2C%20Regione%20Gonzole%2010%2C%20Orbassano",
+      "rosso": 0,
+      "giallo": 0,
+      "arancione": 0,
+      "verde": 3,
+      "azzurro": 1,
+      "bianco": 2,
+      "total": 6,
+      "updatedAt": "2026-03-16T22:47:24.337Z",
+      "hasData": true,
+      "meta": {
+        "fetchedFrom": "https://www.sanluigi.piemonte.it/dea-status/ajax-callback?url=api/deaStatus",
+        "inVisit": {
+          "rosso": 5,
+          "giallo": 0,
+          "arancione": 20,
+          "verde": 14,
+          "azzurro": 14,
+          "bianco": 2
         }
       }
     }
