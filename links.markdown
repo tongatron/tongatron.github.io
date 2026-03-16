@@ -45,3 +45,7 @@ https://mobilitydata.github.io
 **Analisi sito**
 
 https://dashboard.simpleanalytics.com/tongatron.github.io
+
+**Gestione Domini**
+
+https://www.squarespace.com
