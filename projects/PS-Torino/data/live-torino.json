@@ -1,7 +1,7 @@
 {
   "source": "github-actions",
   "sourceLabel": "Snapshot live (GitHub Actions)",
-  "fetchedAt": "2026-03-16T23:08:29.859Z",
+  "fetchedAt": "2026-03-16T23:14:08.234Z",
   "hospitals": [
     {
       "id": "molinette",
@@ -15,7 +15,7 @@
       "azzurro": 6,
       "bianco": 0,
       "total": 15,
-      "updatedAt": "2026-03-16T23:08:29.859Z",
+      "updatedAt": "2026-03-16T23:14:08.234Z",
       "hasData": true,
       "meta": {
         "fetchedFrom": "https://listeps.cittadellasalute.to.it/gtotal.php?id=01090101",
@@ -24,7 +24,7 @@
           "giallo": 0,
           "arancione": 0,
           "verde": 19,
-          "azzurro": 26,
+          "azzurro": 25,
           "bianco": 0
         }
       }
@@ -41,7 +41,7 @@
       "azzurro": 0,
       "bianco": 4,
       "total": 4,
-      "updatedAt": "2026-03-16T23:08:29.859Z",
+      "updatedAt": "2026-03-16T23:14:08.234Z",
       "hasData": true,
       "meta": {
         "fetchedFrom": "https://listeps.cittadellasalute.to.it/gtotal.php?id=01090201",
@@ -50,7 +50,7 @@
           "giallo": 0,
           "arancione": 0,
           "verde": 6,
-          "azzurro": 9,
+          "azzurro": 8,
           "bianco": 0
         }
       }
@@ -67,7 +67,7 @@
       "azzurro": 2,
       "bianco": 1,
       "total": 3,
-      "updatedAt": "2026-03-16T23:08:29.859Z",
+      "updatedAt": "2026-03-16T23:14:08.234Z",
       "hasData": true,
       "meta": {
         "fetchedFrom": "https://listeps.cittadellasalute.to.it/gtotal.php?id=01090301",
@@ -89,11 +89,11 @@
       "rosso": 0,
       "giallo": 0,
       "arancione": 0,
-      "verde": 2,
-      "azzurro": 8,
+      "verde": 3,
+      "azzurro": 7,
       "bianco": 0,
       "total": 10,
-      "updatedAt": "2026-03-16T23:08:29.859Z",
+      "updatedAt": "2026-03-16T23:14:08.234Z",
       "hasData": true,
       "meta": {
         "fetchedFrom": "https://listeps.cittadellasalute.to.it/gtotal.php?id=01090302",
@@ -102,7 +102,7 @@
           "giallo": 0,
           "arancione": 0,
           "verde": 3,
-          "azzurro": 6,
+          "azzurro": 7,
           "bianco": 0
         }
       }
@@ -119,7 +119,7 @@
       "azzurro": 1,
       "bianco": 0,
       "total": 4,
-      "updatedAt": "2026-03-17T00:00:14+01:00",
+      "updatedAt": "2026-03-17T00:10:04+01:00",
       "hasData": true,
       "meta": {
         "fetchedFrom": "https://www.mauriziano.it/i-nostri-servizi/pazienti-in-attesa-presso-pronto-soccorso",
@@ -140,31 +140,31 @@
       "mapUrl": "https://www.google.com/maps/search/?api=1&query=Ospedale%20Maria%20Vittoria%2C%20Via%20Cibrario%2072%2C%20Torino",
       "rosso": 0,
       "giallo": 0,
-      "arancione": 1,
+      "arancione": 2,
       "verde": 2,
-      "azzurro": 6,
-      "bianco": 2,
-      "total": 11,
-      "updatedAt": "2026-03-16T23:05:00.428+00:00",
+      "azzurro": 5,
+      "bianco": 1,
+      "total": 10,
+      "updatedAt": "2026-03-16T23:10:00.427+00:00",
       "hasData": true,
       "meta": {
         "fetchedFrom": "https://prontosoccorso.aslcittaditorino.it/api/strutture/",
-        "ambulanzeInArrivo": 1,
+        "ambulanzeInArrivo": 0,
         "inVisit": {
           "rosso": 5,
           "giallo": 0,
-          "arancione": 32,
-          "verde": 20,
+          "arancione": 33,
+          "verde": 18,
           "azzurro": 16,
-          "bianco": 6
+          "bianco": 5
         },
         "meanWaitMinutes": {
           "rosso": 0,
           "giallo": 0,
-          "arancione": 10,
+          "arancione": 20,
           "verde": 20,
-          "azzurro": 60,
-          "bianco": 20
+          "azzurro": 50,
+          "bianco": 10
         }
       }
     },
@@ -176,11 +176,11 @@
       "rosso": 0,
       "giallo": 0,
       "arancione": 0,
-      "verde": 3,
+      "verde": 1,
       "azzurro": 0,
-      "bianco": 1,
-      "total": 4,
-      "updatedAt": "2026-03-16T23:05:00.519+00:00",
+      "bianco": 0,
+      "total": 1,
+      "updatedAt": "2026-03-16T23:10:00.535+00:00",
       "hasData": true,
       "meta": {
         "fetchedFrom": "https://prontosoccorso.aslcittaditorino.it/api/strutture/",
@@ -189,7 +189,7 @@
           "rosso": 5,
           "giallo": 0,
           "arancione": 18,
-          "verde": 30,
+          "verde": 29,
           "azzurro": 13,
           "bianco": 3
         },
@@ -197,9 +197,9 @@
           "rosso": 0,
           "giallo": 0,
           "arancione": 0,
-          "verde": 30,
+          "verde": 10,
           "azzurro": 0,
-          "bianco": 10
+          "bianco": 0
         }
       }
     },
@@ -215,7 +215,7 @@
       "azzurro": 0,
       "bianco": 0,
       "total": 0,
-      "updatedAt": "2026-03-16T23:05:00.607+00:00",
+      "updatedAt": "2026-03-16T23:10:00.658+00:00",
       "hasData": true,
       "meta": {
         "fetchedFrom": "https://prontosoccorso.aslcittaditorino.it/api/strutture/",
@@ -250,7 +250,7 @@
       "azzurro": 0,
       "bianco": 0,
       "total": 8,
-      "updatedAt": "2026-03-16T23:05:00.074+00:00",
+      "updatedAt": "2026-03-16T23:10:00.151+00:00",
       "hasData": true,
       "meta": {
         "fetchedFrom": "https://prontosoccorso.aslcittaditorino.it/api/strutture/",
@@ -283,9 +283,9 @@
       "arancione": 0,
       "verde": 5,
       "azzurro": 0,
-      "bianco": 2,
-      "total": 7,
-      "updatedAt": "2026-03-16T23:08:29.859Z",
+      "bianco": 1,
+      "total": 6,
+      "updatedAt": "2026-03-16T23:14:08.234Z",
       "hasData": true,
       "meta": {
         "fetchedFrom": "https://www.sanluigi.piemonte.it/dea-status/ajax-callback?url=api/deaStatus",
@@ -293,9 +293,9 @@
           "rosso": 5,
           "giallo": 0,
           "arancione": 19,
-          "verde": 14,
+          "verde": 13,
           "azzurro": 14,
-          "bianco": 2
+          "bianco": 3
         }
       }
     }
