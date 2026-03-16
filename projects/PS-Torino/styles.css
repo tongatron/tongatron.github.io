@@ -450,6 +450,39 @@ select {
   min-height: 1.25rem;
 }
 
+.data-status {
+  display: inline-flex;
+  align-items: center;
+  min-height: 26px;
+  padding: 0 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.06);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.data-status.live {
+  border-color: rgba(89, 196, 84, 0.28);
+  background: rgba(89, 196, 84, 0.14);
+  color: #b8efb6;
+}
+
+.data-status.stale {
+  border-color: rgba(243, 207, 69, 0.34);
+  background: rgba(243, 207, 69, 0.12);
+  color: #ffe58d;
+}
+
+.data-status.catalog {
+  border-color: rgba(167, 174, 169, 0.22);
+  background: rgba(167, 174, 169, 0.12);
+  color: #d9dfdb;
+}
+
 .updated-at,
 .map-link {
   font-size: 0.82rem;

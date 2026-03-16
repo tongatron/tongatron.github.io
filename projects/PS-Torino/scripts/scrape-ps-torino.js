@@ -7,8 +7,15 @@ const { TextDecoder } = require("node:util");
 
 const OUTPUT_PATH = path.join(__dirname, "..", "data", "live-torino.json");
 const TIMEZONE = "Europe/Rome";
-const USER_AGENT = "ps-torino-snapshot/0.3 (+https://tongatron.github.io/projects/PS-Torino/)";
+const REQUEST_TIMEOUT_MS = 30000;
+const USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36";
 const LATIN1_DECODER = new TextDecoder("latin1");
+const COMMON_HEADERS = {
+  "Accept-Language": "it-IT,it;q=0.9,en;q=0.8",
+  "Cache-Control": "no-cache",
+  Pragma: "no-cache",
+  "User-Agent": USER_AGENT
+};
 
 const CITTADELLA_SOURCES = [
   {
@@ -102,6 +109,11 @@ const HOSPITAL_ORDER = [
 const ASL_CITTA_HOSPITALS_BY_CODE = new Map(
   ASL_CITTA_HOSPITALS.map((hospital) => [hospital.code, hospital])
 );
+const FAILURE_FALLBACK_IDS = {
+  mauriziano: ["mauriziano"],
+  "asl-citta-di-torino": ["maria-vittoria", "martini", "oftalmico", "san-giovanni-bosco"],
+  "san-luigi-orbassano": ["san-luigi-orbassano"]
+};
 
 function buildMapUrl(address, name) {
   const query = [name, address].filter(Boolean).join(", ") || address || name || "Pronto Soccorso Torino";
@@ -120,13 +132,13 @@ function createTimeoutSignal(timeoutMs) {
 }
 
 async function fetchJson(url) {
-  const timeout = createTimeoutSignal(15000);
+  const timeout = createTimeoutSignal(REQUEST_TIMEOUT_MS);
 
   try {
     const response = await fetch(url, {
       headers: {
         Accept: "application/json",
-        "User-Agent": USER_AGENT
+        ...COMMON_HEADERS
       },
       signal: timeout.signal
     });
@@ -142,13 +154,13 @@ async function fetchJson(url) {
 }
 
 async function fetchHtml(url) {
-  const timeout = createTimeoutSignal(15000);
+  const timeout = createTimeoutSignal(REQUEST_TIMEOUT_MS);
 
   try {
     const response = await fetch(url, {
       headers: {
         Accept: "text/html,application/xhtml+xml",
-        "User-Agent": USER_AGENT
+        ...COMMON_HEADERS
       },
       signal: timeout.signal
     });
@@ -174,7 +186,7 @@ function requestWithHttps(url, options) {
       path: `${targetUrl.pathname}${targetUrl.search}`,
       method: options && options.method ? options.method : "GET",
       headers: {
-        "User-Agent": USER_AGENT,
+        ...COMMON_HEADERS,
         ...(options && options.headers ? options.headers : {})
       },
       rejectUnauthorized: options && options.rejectUnauthorized === false ? false : true
@@ -200,7 +212,7 @@ function requestWithHttps(url, options) {
     });
 
     request.on("error", reject);
-    request.setTimeout(15000, () => {
+    request.setTimeout(REQUEST_TIMEOUT_MS, () => {
       request.destroy(new Error("Timeout"));
     });
 
@@ -603,8 +615,44 @@ function sortHospitals(hospitals) {
   });
 }
 
+async function loadExistingSnapshot() {
+  try {
+    const rawSnapshot = await fs.readFile(OUTPUT_PATH, "utf8");
+    const snapshot = JSON.parse(rawSnapshot);
+
+    if (!snapshot || !Array.isArray(snapshot.hospitals)) {
+      return null;
+    }
+
+    return snapshot;
+  } catch (error) {
+    return null;
+  }
+}
+
+function buildStaleHospitalRecord(hospital, failure, snapshotTimestamp) {
+  const nextMeta = {
+    ...(hospital.meta || {}),
+    stale: true,
+    staleReason: failure.message,
+    staleSource: failure.source,
+    carriedForwardFromSnapshot: snapshotTimestamp || null
+  };
+
+  return {
+    ...hospital,
+    meta: nextMeta
+  };
+}
+
 async function main() {
   const fetchedAt = new Date().toISOString();
+  const previousSnapshot = await loadExistingSnapshot();
+  const previousHospitalsById = new Map(
+    previousSnapshot && Array.isArray(previousSnapshot.hospitals)
+      ? previousSnapshot.hospitals.map((hospital) => [hospital.id, hospital])
+      : []
+  );
   const hospitalsById = new Map();
   const failures = [];
   const scrapingTasks = [
@@ -660,6 +708,27 @@ async function main() {
     }
 
     failures.push(result.failure);
+  }
+
+  for (const failure of failures) {
+    const fallbackIds = FAILURE_FALLBACK_IDS[failure.id] || [failure.id];
+
+    for (const hospitalId of fallbackIds) {
+      if (hospitalsById.has(hospitalId)) {
+        continue;
+      }
+
+      const previousHospital = previousHospitalsById.get(hospitalId);
+
+      if (!previousHospital) {
+        continue;
+      }
+
+      hospitalsById.set(
+        hospitalId,
+        buildStaleHospitalRecord(previousHospital, failure, previousSnapshot ? previousSnapshot.fetchedAt : null)
+      );
+    }
   }
 
   const hospitals = sortHospitals(Array.from(hospitalsById.values()));

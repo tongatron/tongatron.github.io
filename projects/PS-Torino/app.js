@@ -130,12 +130,47 @@
 
   function updateSummary(snapshot, visibleHospitals) {
     const allHospitals = snapshot && Array.isArray(snapshot.hospitals) ? snapshot.hospitals : [];
-    const liveHospitals = allHospitals.filter((hospital) => hospital.hasData).length;
+    const freshLiveHospitals = allHospitals.filter((hospital) => hospital.hasData && !(hospital.meta && hospital.meta.stale)).length;
+    const staleHospitals = allHospitals.filter((hospital) => hospital.hasData && hospital.meta && hospital.meta.stale).length;
+    const catalogHospitals = allHospitals.filter((hospital) => !hospital.hasData).length;
+    const coverageParts = [`${freshLiveHospitals} live`];
+
+    if (staleHospitals) {
+      coverageParts.push(`${staleHospitals} snapshot`);
+    }
+
+    coverageParts.push(`${catalogHospitals} catalogo`);
 
     lastUpdatedEl.textContent = formatDate(snapshot && snapshot.fetchedAt ? snapshot.fetchedAt : loadLastSync());
     sourceLabelEl.textContent = snapshot && snapshot.sourceLabel ? snapshot.sourceLabel : "—";
     visibleCountEl.textContent = `${visibleHospitals.length} / ${allHospitals.length}`;
-    coverageLabelEl.textContent = `${liveHospitals} live · ${allHospitals.length - liveHospitals} catalogo`;
+    coverageLabelEl.textContent = coverageParts.join(" · ");
+  }
+
+  function getHospitalStatus(hospital) {
+    if (!hospital.hasData) {
+      return {
+        label: "Catalogo",
+        className: "catalog",
+        title: "Struttura presente nel catalogo, senza feed dati disponibile."
+      };
+    }
+
+    if (hospital.meta && hospital.meta.stale) {
+      return {
+        label: "Ultimo snapshot",
+        className: "stale",
+        title: hospital.meta.staleReason
+          ? `Dato recuperato dall'ultimo snapshot valido. Ultimo errore sorgente: ${hospital.meta.staleReason}.`
+          : "Dato recuperato dall'ultimo snapshot valido."
+      };
+    }
+
+    return {
+      label: "Dato live",
+      className: "live",
+      title: "Dato letto dalla sorgente live corrente."
+    };
   }
 
   function render(snapshot) {
@@ -179,6 +214,11 @@
       node.querySelector(".value-blue").textContent = getCountLabel(hospital, "blue");
       node.querySelector(".value-white").textContent = getCountLabel(hospital, "white");
       node.querySelector(".updated-at").textContent = `Agg.: ${formatDate(hospital.updatedAt || snapshot.fetchedAt)}`;
+      const statusConfig = getHospitalStatus(hospital);
+      const statusEl = node.querySelector(".data-status");
+      statusEl.textContent = statusConfig.label;
+      statusEl.classList.add(statusConfig.className);
+      statusEl.title = statusConfig.title;
 
       const totalValueEl = node.querySelector(".hospital-total-value");
       const totalLabelEl = node.querySelector(".hospital-total-label");

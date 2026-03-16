@@ -248,7 +248,8 @@
         ? (red === null ? 0 : red) + (orange === null ? 0 : orange) + (green === null ? 0 : green) + (blue === null ? 0 : blue) + (white === null ? 0 : white)
         : total,
       updatedAt: item.updatedAt || item.aggiornato_alle || item.updated_at || null,
-      hasData
+      hasData,
+      meta: item.meta || {}
     };
   }
 
@@ -266,7 +267,10 @@
       white: 0,
       total: 0,
       updatedAt: null,
-      hasData: false
+      hasData: false,
+      meta: {
+        catalogOnly: true
+      }
     };
   }
 
