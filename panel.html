@@ -193,20 +193,26 @@
       min-height: 44px;
       padding: 0.62rem 1.2rem;
       border-radius: 0.55rem;
-      border: 1px solid rgba(255, 255, 255, 0.16);
+      border: 2px solid rgba(255, 255, 255, 0.26);
       color: var(--text);
-      background: transparent;
+      background: rgba(255, 255, 255, 0.02);
       font-weight: 700;
       font-size: 1rem;
       text-decoration: none;
-      transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+      box-shadow: none;
+      transition:
+        background-color 0.22s ease,
+        border-color 0.22s ease,
+        color 0.22s ease,
+        transform 0.22s ease;
     }
 
     .btn-ghost:hover,
     .btn-ghost:focus {
-      background: #f5f5f5;
-      color: #050505;
-      border-color: #f5f5f5;
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text);
+      border-color: rgba(255, 255, 255, 0.42);
+      transform: translateY(-1px);
     }
 
     .section-heading {

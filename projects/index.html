@@ -175,20 +175,26 @@
       min-height: 44px;
       padding: 0.62rem 1.2rem;
       border-radius: 0.55rem;
-      border: 1px solid rgba(255, 255, 255, 0.16);
+      border: 2px solid rgba(255, 255, 255, 0.26);
       color: var(--text);
-      background: transparent;
+      background: rgba(255, 255, 255, 0.02);
       font-weight: 700;
       font-size: 1rem;
       text-decoration: none;
-      transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+      box-shadow: none;
+      transition:
+        background-color 0.22s ease,
+        border-color 0.22s ease,
+        color 0.22s ease,
+        transform 0.22s ease;
     }
 
     .btn-ghost:hover,
     .btn-ghost:focus {
-      background: #f5f5f5;
-      color: #050505;
-      border-color: #f5f5f5;
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text);
+      border-color: rgba(255, 255, 255, 0.42);
+      transform: translateY(-1px);
     }
 
     .cards-grid {
@@ -475,16 +481,6 @@
           <h3>QR Scanner</h3>
           <p>Scansiona e genera QR code dal browser, con supporto fotocamera mobile e output testuale rapido.</p>
           <a class="btn-ghost" href="./qrscanner/index.html">apri</a>
-        </article>
-
-        <article class="project-card">
-          <div class="project-head">
-            <img src="./qrscanner/icons/icon-192.png" alt="Icona Diario Farmaci" class="project-icon">
-            <div class="tag-row"><span class="tag">Utility</span><span class="tag">Health</span><span class="tag">Android PWA</span></div>
-          </div>
-          <h3>Diario Farmaci</h3>
-          <p>Gestione armadietto, piano terapia e diario assunzioni con backup JSON per uso su piu dispositivi.</p>
-          <a class="btn-ghost" href="./farmaci/index.html">apri</a>
         </article>
 
         <article class="project-card">
