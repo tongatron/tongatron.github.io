@@ -155,30 +155,25 @@
     return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
   }
 
-  function resolveYellow(item) {
-    const yellow = pickNumber(item, ["yellow"]);
+  function resolveOrange(item) {
+    const orange = pickNumber(item, ["orange", "arancione"]);
 
-    if (yellow !== null) {
-      return yellow;
+    if (orange !== null) {
+      return orange;
     }
 
-    const giallo = pickNumber(item, ["giallo"]);
-    const arancione = pickNumber(item, ["arancione"]);
-
-    return (giallo === null ? 0 : giallo) + (arancione === null ? 0 : arancione);
+    const yellow = pickNumber(item, ["yellow", "giallo"]);
+    return yellow === null ? 0 : yellow;
   }
 
   function resolveGreen(item) {
-    const green = pickNumber(item, ["green"]);
+    const green = pickNumber(item, ["green", "verde"]);
+    return green === null ? 0 : green;
+  }
 
-    if (green !== null) {
-      return green;
-    }
-
-    const verde = pickNumber(item, ["verde"]);
-    const azzurro = pickNumber(item, ["azzurro"]);
-
-    return (verde === null ? 0 : verde) + (azzurro === null ? 0 : azzurro);
+  function resolveBlue(item) {
+    const blue = pickNumber(item, ["blue", "azzurro"]);
+    return blue === null ? 0 : blue;
   }
 
   function hasExplicitData(item) {
@@ -189,9 +184,11 @@
       "rosso",
       "yellow",
       "giallo",
+      "orange",
       "arancione",
       "green",
       "verde",
+      "blue",
       "azzurro",
       "white",
       "bianco"
@@ -224,8 +221,9 @@
     const fallbackId = buildFallbackId(item);
     const catalogHospital = resolveCatalogHospital(item, fallbackId);
     const red = pickNumber(item, ["red", "rosso"]);
-    const yellow = resolveYellow(item);
+    const orange = resolveOrange(item);
     const green = resolveGreen(item);
+    const blue = resolveBlue(item);
     const white = pickNumber(item, ["white", "bianco"]);
     const total = pickNumber(item, ["total", "totale"]);
     const name = item.name || item.nome || item.descrizione || (catalogHospital ? catalogHospital.name : "Struttura");
@@ -241,11 +239,13 @@
         item.mappa ||
         buildMapUrl(catalogHospital ? catalogHospital.name : name, catalogHospital ? catalogHospital.address : address),
       red: red === null ? 0 : red,
-      yellow: yellow === null ? 0 : yellow,
+      orange: orange === null ? 0 : orange,
+      yellow: orange === null ? 0 : orange,
       green: green === null ? 0 : green,
+      blue: blue === null ? 0 : blue,
       white: white === null ? 0 : white,
       total: total === null
-        ? (red === null ? 0 : red) + (yellow === null ? 0 : yellow) + (green === null ? 0 : green) + (white === null ? 0 : white)
+        ? (red === null ? 0 : red) + (orange === null ? 0 : orange) + (green === null ? 0 : green) + (blue === null ? 0 : blue) + (white === null ? 0 : white)
         : total,
       updatedAt: item.updatedAt || item.aggiornato_alle || item.updated_at || null,
       hasData
@@ -259,8 +259,10 @@
       address: hospital.address,
       mapUrl: buildMapUrl(hospital.name, hospital.address),
       red: 0,
+      orange: 0,
       yellow: 0,
       green: 0,
+      blue: 0,
       white: 0,
       total: 0,
       updatedAt: null,

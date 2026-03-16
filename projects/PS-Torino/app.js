@@ -14,11 +14,14 @@
   const listEl = document.getElementById("hospitalList");
   const tpl = document.getElementById("hospitalCardTpl");
   const refreshBtn = document.getElementById("refreshBtn");
+  const searchInput = document.getElementById("searchInput");
   const sortSelect = document.getElementById("sortSelect");
   const onlyOpenNow = document.getElementById("onlyOpenNow");
   const lastUpdatedEl = document.getElementById("lastUpdated");
   const sourceLabelEl = document.getElementById("sourceLabel");
   const statusLabelEl = document.getElementById("statusLabel");
+  const visibleCountEl = document.getElementById("visibleCount");
+  const coverageLabelEl = document.getElementById("coverageLabel");
   const runtimeNoticeEl = document.getElementById("runtimeNotice");
 
   let currentSnapshot = null;
@@ -40,26 +43,58 @@
     }).format(date);
   }
 
+  function normalizeText(value) {
+    const source = String(value || "");
+    const canNormalize = typeof source.normalize === "function";
+
+    return (canNormalize ? source.normalize("NFD") : source)
+      .replace(/[\u0300-\u036f]/g, "")
+      .toLowerCase()
+      .trim();
+  }
+
   function sortHospitals(hospitals, mode) {
     const items = [...hospitals];
 
     if (mode === "name") {
-      return items.sort((a, b) => a.name.localeCompare(b.name, "it"));
+      return items.sort((left, right) => left.name.localeCompare(right.name, "it"));
     }
 
     if (mode === "red") {
-      return items.sort((a, b) => b.red - a.red);
+      return items.sort((left, right) => right.red - left.red);
     }
 
-    if (mode === "yellow") {
-      return items.sort((a, b) => b.yellow - a.yellow);
+    if (mode === "orange") {
+      return items.sort((left, right) => right.orange - left.orange);
     }
 
     if (mode === "green") {
-      return items.sort((a, b) => b.green - a.green);
+      return items.sort((left, right) => right.green - left.green);
     }
 
-    return items.sort((a, b) => b.total - a.total);
+    if (mode === "blue") {
+      return items.sort((left, right) => right.blue - left.blue);
+    }
+
+    return items.sort((left, right) => right.total - left.total);
+  }
+
+  function getCacheSourceLabel(snapshot) {
+    return snapshot && snapshot.source === "mock" ? "Cache locale (mock)" : "Cache locale";
+  }
+
+  function getCachedSnapshot() {
+    const cachedSnapshot = loadSnapshot();
+
+    if (!cachedSnapshot) {
+      return null;
+    }
+
+    return normalizeSnapshotPayload(
+      cachedSnapshot,
+      "cache",
+      getCacheSourceLabel(cachedSnapshot)
+    );
   }
 
   function setStatus(text) {
@@ -81,26 +116,26 @@
     listEl.setAttribute("aria-busy", String(isLoading));
   }
 
-  function getCacheSourceLabel(snapshot) {
-    return snapshot && snapshot.source === "mock" ? "Cache locale (mock)" : "Cache locale";
-  }
-
-  function getCachedSnapshot() {
-    const cachedSnapshot = loadSnapshot();
-
-    if (!cachedSnapshot) {
-      return null;
-    }
-
-    return normalizeSnapshotPayload(
-      cachedSnapshot,
-      "cache",
-      getCacheSourceLabel(cachedSnapshot)
-    );
-  }
-
   function getCountLabel(hospital, key) {
     return hospital.hasData ? String(hospital[key]) : "—";
+  }
+
+  function matchesSearch(hospital, query) {
+    if (!query) {
+      return true;
+    }
+
+    return normalizeText(`${hospital.name} ${hospital.address}`).includes(query);
+  }
+
+  function updateSummary(snapshot, visibleHospitals) {
+    const allHospitals = snapshot && Array.isArray(snapshot.hospitals) ? snapshot.hospitals : [];
+    const liveHospitals = allHospitals.filter((hospital) => hospital.hasData).length;
+
+    lastUpdatedEl.textContent = formatDate(snapshot && snapshot.fetchedAt ? snapshot.fetchedAt : loadLastSync());
+    sourceLabelEl.textContent = snapshot && snapshot.sourceLabel ? snapshot.sourceLabel : "—";
+    visibleCountEl.textContent = `${visibleHospitals.length} / ${allHospitals.length}`;
+    coverageLabelEl.textContent = `${liveHospitals} live · ${allHospitals.length - liveHospitals} catalogo`;
   }
 
   function render(snapshot) {
@@ -113,14 +148,20 @@
       hospitals = hospitals.filter((hospital) => hospital.hasData);
     }
 
+    const searchQuery = normalizeText(searchInput.value);
+    hospitals = hospitals.filter((hospital) => matchesSearch(hospital, searchQuery));
     hospitals = sortHospitals(hospitals, sortSelect.value);
 
+    updateSummary(snapshot, hospitals);
+
     if (!hospitals.length) {
-      listEl.innerHTML = onlyOpenNow.checked
-        ? '<div class="empty-state">Nessuna struttura con dati disponibili.</div>'
-        : '<div class="empty-state">Nessun dato disponibile.</div>';
-      lastUpdatedEl.textContent = formatDate(snapshot && snapshot.fetchedAt ? snapshot.fetchedAt : loadLastSync());
-      sourceLabelEl.textContent = snapshot && snapshot.sourceLabel ? snapshot.sourceLabel : "—";
+      const emptyMessage = searchQuery
+        ? "Nessuna struttura corrisponde alla ricerca."
+        : onlyOpenNow.checked
+          ? "Nessuna struttura con dati live disponibili."
+          : "Nessun dato disponibile.";
+
+      listEl.innerHTML = `<div class="empty-state">${emptyMessage}</div>`;
       return;
     }
 
@@ -128,33 +169,34 @@
 
     for (const hospital of hospitals) {
       const node = tpl.content.cloneNode(true);
-      const article = node.querySelector(".card");
+      const row = node.querySelector(".hospital-row");
 
       node.querySelector(".hospital-name").textContent = hospital.name;
       node.querySelector(".hospital-address").textContent = hospital.address;
-      node.querySelector(".hospital-total").textContent = hospital.hasData
-        ? `${hospital.total} in attesa`
-        : "Dato non disponibile";
       node.querySelector(".value-red").textContent = getCountLabel(hospital, "red");
-      node.querySelector(".value-yellow").textContent = getCountLabel(hospital, "yellow");
+      node.querySelector(".value-orange").textContent = getCountLabel(hospital, "orange");
       node.querySelector(".value-green").textContent = getCountLabel(hospital, "green");
+      node.querySelector(".value-blue").textContent = getCountLabel(hospital, "blue");
       node.querySelector(".value-white").textContent = getCountLabel(hospital, "white");
       node.querySelector(".updated-at").textContent = `Agg.: ${formatDate(hospital.updatedAt || snapshot.fetchedAt)}`;
+
+      const totalValueEl = node.querySelector(".hospital-total-value");
+      const totalLabelEl = node.querySelector(".hospital-total-label");
+      totalValueEl.textContent = hospital.hasData ? String(hospital.total) : "—";
+      totalLabelEl.textContent = hospital.hasData ? "in attesa" : "senza dato";
 
       const mapLink = node.querySelector(".map-link");
       mapLink.href = hospital.mapUrl;
       mapLink.setAttribute("aria-label", `Apri ${hospital.name} in mappa`);
 
       if (!hospital.hasData) {
-        article.classList.add("is-unavailable");
+        row.classList.add("is-unavailable");
       }
 
       fragment.appendChild(node);
     }
 
     listEl.appendChild(fragment);
-    lastUpdatedEl.textContent = formatDate(snapshot.fetchedAt || loadLastSync());
-    sourceLabelEl.textContent = snapshot.sourceLabel || snapshot.source || "cache";
   }
 
   function hydrateFromCache() {
@@ -227,11 +269,13 @@
       } else if (apiConfigured) {
         setRuntimeNotice("Backend live non raggiungibile: sto mostrando i dati mock locali.");
       }
-    } catch (mockError) {
-      console.error(mockError);
+    } catch (error) {
+      console.error(error);
       listEl.innerHTML = '<div class="empty-state">Impossibile caricare i dati.</div>';
       sourceLabelEl.textContent = "—";
       lastUpdatedEl.textContent = formatDate(loadLastSync());
+      visibleCountEl.textContent = "—";
+      coverageLabelEl.textContent = "—";
       setStatus("Errore");
       setRuntimeNotice("Il bootstrap JavaScript e terminato, ma non e stato possibile caricare ne API, ne cache, ne mock.");
     } finally {
@@ -239,16 +283,17 @@
     }
   }
 
-  refreshBtn.addEventListener("click", () => {
-    loadData();
+  refreshBtn.addEventListener("click", loadData);
+  searchInput.addEventListener("input", () => {
+    if (currentSnapshot) {
+      render(currentSnapshot);
+    }
   });
-
   sortSelect.addEventListener("change", () => {
     if (currentSnapshot) {
       render(currentSnapshot);
     }
   });
-
   onlyOpenNow.addEventListener("change", () => {
     if (currentSnapshot) {
       render(currentSnapshot);

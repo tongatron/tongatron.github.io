@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#0f172a" />
+  <meta name="theme-color" content="#202625" />
   <meta name="description" content="Liste di attesa dei Pronto Soccorso di Torino" />
   <title>PS Torino</title>
 
@@ -12,95 +12,171 @@
   <link rel="apple-touch-icon" href="./icons/icon-192.png" />
 </head>
 <body>
-  <header class="app-header">
-    <div>
+  <div class="page-shell">
+    <header class="app-header">
       <p class="eyebrow">PWA · Torino</p>
-      <h1>Pronto Soccorso Torino</h1>
-      <p class="subtitle">Situazione indicativa delle attese nei PS dell'area torinese.</p>
-    </div>
-    <button id="refreshBtn" class="btn" type="button">Aggiorna</button>
-  </header>
+      <p class="project-note">Snapshot statico installabile con cache offline dell'ultimo aggiornamento disponibile.</p>
+    </header>
 
-  <section class="notice warning">
-    <strong>Avvertenza:</strong>
-    i dati sono indicativi e possono non essere aggiornati in tempo reale. In caso di emergenza chiama il 112.
-  </section>
+    <section class="notice warning">
+      <strong>Avvertenza:</strong>
+      i dati sono indicativi e possono non essere aggiornati in tempo reale. In caso di emergenza chiama il 112.
+    </section>
 
-  <section id="runtimeNotice" class="notice info" hidden></section>
+    <section id="runtimeNotice" class="notice info" hidden></section>
 
-  <noscript class="notice error">
-    Questa applicazione richiede JavaScript per mostrare gli aggiornamenti.
-  </noscript>
+    <noscript class="notice error">
+      Questa applicazione richiede JavaScript per mostrare gli aggiornamenti.
+    </noscript>
 
-  <section class="toolbar">
-    <label>
-      Ordina per
-      <select id="sortSelect">
-        <option value="total">Totale attese</option>
-        <option value="name">Nome</option>
-        <option value="red">Codice rosso</option>
-        <option value="yellow">Codice giallo/arancione</option>
-        <option value="green">Codice verde/azzurro</option>
-      </select>
-    </label>
+    <main class="dashboard">
+      <section class="board">
+        <div class="board-top">
+          <div class="board-title">
+            <div class="title-mark" aria-hidden="true">PS</div>
+            <div>
+              <p class="board-kicker">Area torinese</p>
+              <h1>Pronto Soccorso <span>Adulti</span></h1>
+              <p class="subtitle">Vista rapida delle attese nei principali presidi della citta e della provincia.</p>
+            </div>
+          </div>
 
-    <label class="toggle-row">
-      <input type="checkbox" id="onlyOpenNow" />
-      <span>Mostra solo strutture con dati disponibili</span>
-    </label>
-  </section>
+          <div class="board-actions">
+            <a
+              class="tag-link"
+              href="https://tongatron.github.io/panel"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              TEST
+            </a>
 
-  <section class="meta-grid">
-    <div class="meta-card">
-      <span class="meta-label">Ultimo aggiornamento</span>
-      <strong id="lastUpdated">—</strong>
-    </div>
-    <div class="meta-card">
-      <span class="meta-label">Fonte</span>
-      <strong id="sourceLabel">—</strong>
-    </div>
-    <div class="meta-card">
-      <span class="meta-label">Stato</span>
-      <strong id="statusLabel">In attesa</strong>
-    </div>
-  </section>
+            <label class="search-field" for="searchInput">
+              <span class="search-label">Cerca presidio</span>
+              <span class="search-input-wrap">
+                <svg class="search-icon" viewBox="0 0 24 24" aria-hidden="true">
+                  <circle cx="11" cy="11" r="6.5"></circle>
+                  <path d="M16.2 16.2L21 21"></path>
+                </svg>
+                <input id="searchInput" type="search" placeholder="Molinette, Mauriziano, Orbassano..." autocomplete="off" />
+              </span>
+            </label>
 
-  <main>
-    <section id="hospitalList" class="hospital-list" aria-live="polite"></section>
-  </main>
+            <button id="refreshBtn" class="btn" type="button">Aggiorna</button>
+          </div>
+        </div>
+
+        <section class="meta-grid">
+          <div class="meta-card">
+            <span class="meta-label">Ultimo aggiornamento</span>
+            <strong id="lastUpdated">—</strong>
+          </div>
+          <div class="meta-card">
+            <span class="meta-label">Fonte</span>
+            <strong id="sourceLabel">—</strong>
+          </div>
+          <div class="meta-card">
+            <span class="meta-label">Stato</span>
+            <strong id="statusLabel">In attesa</strong>
+          </div>
+          <div class="meta-card">
+            <span class="meta-label">Strutture visibili</span>
+            <strong id="visibleCount">—</strong>
+          </div>
+          <div class="meta-card">
+            <span class="meta-label">Copertura live</span>
+            <strong id="coverageLabel">—</strong>
+          </div>
+        </section>
+
+        <section class="toolbar">
+          <label class="field">
+            <span>Ordina per</span>
+            <select id="sortSelect">
+              <option value="total">Totale attese</option>
+              <option value="name">Nome</option>
+              <option value="red">Codice rosso</option>
+              <option value="orange">Codice arancione</option>
+              <option value="green">Codice verde</option>
+              <option value="blue">Codice azzurro</option>
+            </select>
+          </label>
+
+          <label class="toggle-row">
+            <input type="checkbox" id="onlyOpenNow" />
+            <span>Mostra solo strutture con dati live</span>
+          </label>
+        </section>
+
+        <section class="table-shell">
+          <div class="table-head" aria-hidden="true">
+            <div class="head-cell head-presidio">Presidio</div>
+            <div class="head-cell">Rosso in attesa</div>
+            <div class="head-cell">Arancione in attesa</div>
+            <div class="head-cell">Verde in attesa</div>
+            <div class="head-cell">Azzurro in attesa</div>
+            <div class="head-cell">Bianco in attesa</div>
+            <div class="head-cell head-total">Totali</div>
+          </div>
+
+          <section id="hospitalList" class="hospital-list" aria-live="polite"></section>
+        </section>
+      </section>
+    </main>
+  </div>
 
   <template id="hospitalCardTpl">
-    <article class="card">
-      <div class="card-head">
-        <div>
-          <h2 class="hospital-name"></h2>
-          <p class="hospital-address"></p>
+    <article class="hospital-row">
+      <div class="hospital-cell" data-label="Presidio">
+        <div class="hospital-chip">
+          <span class="hospital-icon" aria-hidden="true">i</span>
+          <div class="hospital-copy">
+            <h2 class="hospital-name"></h2>
+            <p class="hospital-address"></p>
+          </div>
         </div>
-        <div class="pill hospital-total"></div>
+
+        <div class="hospital-meta">
+          <span class="updated-at"></span>
+          <a class="map-link" target="_blank" rel="noopener noreferrer">Mostra mappa</a>
+        </div>
       </div>
 
-      <div class="codes-grid">
-        <div class="code-box red">
-          <span>Rosso</span>
+      <div class="metric-cell" data-label="Rosso in attesa">
+        <div class="metric-pill red">
           <strong class="value-red">0</strong>
         </div>
-        <div class="code-box yellow">
-          <span>Giallo / Arancione</span>
-          <strong class="value-yellow">0</strong>
+      </div>
+
+      <div class="metric-cell" data-label="Arancione in attesa">
+        <div class="metric-pill orange">
+          <strong class="value-orange">0</strong>
         </div>
-        <div class="code-box green">
-          <span>Verde / Azzurro</span>
+      </div>
+
+      <div class="metric-cell" data-label="Verde in attesa">
+        <div class="metric-pill green">
           <strong class="value-green">0</strong>
         </div>
-        <div class="code-box white">
-          <span>Bianco</span>
+      </div>
+
+      <div class="metric-cell" data-label="Azzurro in attesa">
+        <div class="metric-pill blue">
+          <strong class="value-blue">0</strong>
+        </div>
+      </div>
+
+      <div class="metric-cell" data-label="Bianco in attesa">
+        <div class="metric-pill white">
           <strong class="value-white">0</strong>
         </div>
       </div>
 
-      <div class="card-footer">
-        <span class="updated-at"></span>
-        <a class="map-link" target="_blank" rel="noopener noreferrer">Apri mappa</a>
+      <div class="metric-cell total-cell" data-label="Totali">
+        <div class="total-pill hospital-total">
+          <strong class="hospital-total-value">0</strong>
+          <span class="hospital-total-label">in attesa</span>
+        </div>
       </div>
     </article>
   </template>
@@ -114,35 +190,43 @@
           "name": "AOU Citta della Salute e della Scienza - Molinette",
           "address": "Corso Bramante 88, Torino",
           "rosso": 1,
-          "giallo": 6,
-          "verde": 18,
-          "bianco": 4,
-          "updatedAt": "2026-03-16T18:30:00+01:00"
-        },
-        {
-          "id": "cto",
-          "name": "CTO Torino",
-          "address": "Via Zuretti 29, Torino",
-          "rosso": 0,
-          "giallo": 4,
+          "arancione": 2,
           "verde": 12,
-          "bianco": 3,
+          "azzurro": 6,
+          "bianco": 1,
           "updatedAt": "2026-03-16T18:30:00+01:00"
         },
         {
-          "id": "san-giovanni-bosco",
-          "name": "Ospedale San Giovanni Bosco",
-          "address": "Piazza del Donatore di Sangue 3, Torino",
+          "id": "regina-margherita",
+          "name": "Ospedale Regina Margherita",
+          "address": "Piazza Polonia 94, Torino",
           "rosso": 0,
-          "giallo": 8,
-          "verde": 20,
-          "bianco": 5,
+          "arancione": 0,
+          "verde": 3,
+          "azzurro": 8,
+          "bianco": 0,
           "updatedAt": "2026-03-16T18:30:00+01:00"
         },
         {
-          "id": "rivoli",
-          "name": "Ospedale di Rivoli",
-          "address": "Via Rivalta 29, Rivoli",
+          "id": "mauriziano",
+          "name": "Ospedale Mauriziano Umberto I",
+          "address": "Largo Filippo Turati 62, Torino",
+          "rosso": 0,
+          "arancione": 1,
+          "verde": 3,
+          "azzurro": 1,
+          "bianco": 0,
+          "updatedAt": "2026-03-16T18:30:00+01:00"
+        },
+        {
+          "id": "san-luigi-orbassano",
+          "name": "AOU San Luigi Gonzaga di Orbassano",
+          "address": "Regione Gonzole 10, Orbassano",
+          "rosso": 0,
+          "arancione": 0,
+          "verde": 3,
+          "azzurro": 1,
+          "bianco": 2,
           "updatedAt": "2026-03-16T18:30:00+01:00"
         }
       ]
