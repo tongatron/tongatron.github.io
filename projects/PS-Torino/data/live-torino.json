@@ -1,7 +1,7 @@
 {
   "source": "github-actions",
   "sourceLabel": "Snapshot live (GitHub Actions)",
-  "fetchedAt": "2026-03-16T22:54:51.925Z",
+  "fetchedAt": "2026-03-16T23:07:42.168Z",
   "hospitals": [
     {
       "id": "molinette",
@@ -11,11 +11,11 @@
       "rosso": 0,
       "giallo": 0,
       "arancione": 0,
-      "verde": 12,
+      "verde": 9,
       "azzurro": 6,
       "bianco": 0,
-      "total": 18,
-      "updatedAt": "2026-03-16T22:54:51.925Z",
+      "total": 15,
+      "updatedAt": "2026-03-16T23:07:42.168Z",
       "hasData": true,
       "meta": {
         "fetchedFrom": "https://listeps.cittadellasalute.to.it/gtotal.php?id=01090101",
@@ -23,8 +23,8 @@
           "rosso": 4,
           "giallo": 0,
           "arancione": 0,
-          "verde": 17,
-          "azzurro": 27,
+          "verde": 19,
+          "azzurro": 26,
           "bianco": 0
         }
       }
@@ -39,9 +39,9 @@
       "arancione": 0,
       "verde": 0,
       "azzurro": 0,
-      "bianco": 5,
-      "total": 5,
-      "updatedAt": "2026-03-16T22:54:51.925Z",
+      "bianco": 4,
+      "total": 4,
+      "updatedAt": "2026-03-16T23:07:42.168Z",
       "hasData": true,
       "meta": {
         "fetchedFrom": "https://listeps.cittadellasalute.to.it/gtotal.php?id=01090201",
@@ -49,7 +49,7 @@
           "rosso": 0,
           "giallo": 0,
           "arancione": 0,
-          "verde": 7,
+          "verde": 6,
           "azzurro": 9,
           "bianco": 0
         }
@@ -67,7 +67,7 @@
       "azzurro": 2,
       "bianco": 1,
       "total": 3,
-      "updatedAt": "2026-03-16T22:54:51.925Z",
+      "updatedAt": "2026-03-16T23:07:42.168Z",
       "hasData": true,
       "meta": {
         "fetchedFrom": "https://listeps.cittadellasalute.to.it/gtotal.php?id=01090301",
@@ -89,11 +89,11 @@
       "rosso": 0,
       "giallo": 0,
       "arancione": 0,
-      "verde": 3,
+      "verde": 2,
       "azzurro": 8,
       "bianco": 0,
-      "total": 11,
-      "updatedAt": "2026-03-16T22:54:51.925Z",
+      "total": 10,
+      "updatedAt": "2026-03-16T23:07:42.168Z",
       "hasData": true,
       "meta": {
         "fetchedFrom": "https://listeps.cittadellasalute.to.it/gtotal.php?id=01090302",
@@ -101,8 +101,8 @@
           "rosso": 0,
           "giallo": 0,
           "arancione": 0,
-          "verde": 2,
-          "azzurro": 8,
+          "verde": 3,
+          "azzurro": 6,
           "bianco": 0
         }
       }
@@ -115,11 +115,11 @@
       "rosso": 0,
       "giallo": 0,
       "arancione": 0,
-      "verde": 4,
-      "azzurro": 1,
+      "verde": 5,
+      "azzurro": 0,
       "bianco": 2,
       "total": 7,
-      "updatedAt": "2026-03-16T22:54:51.925Z",
+      "updatedAt": "2026-03-16T23:07:42.168Z",
       "hasData": true,
       "meta": {
         "fetchedFrom": "https://www.sanluigi.piemonte.it/dea-status/ajax-callback?url=api/deaStatus",
