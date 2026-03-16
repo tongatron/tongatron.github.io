@@ -1,9 +1,7 @@
 const DEFAULT_STORAGE_KEY = "farmaci_app_data_v2";
 const STORAGE_KEY = resolveStorageKey(DEFAULT_STORAGE_KEY);
 const BLOCK_ORDER = ["Mattina", "Pranzo", "Pomeriggio", "Sera", "Notte"];
-const CATEGORY_VALUES = ["psicofarmaci", "pressione", "colesterolo", "altro"];
 const ARCHIVE_RETENTION_DAYS = 180;
-const IMPORT_KEY = `${STORAGE_KEY}_import_armadietto_2026_02_27`;
 const PRE_IMPORT_BACKUP_KEY = `${STORAGE_KEY}_pre_import_backup_v1`;
 const DIARY_PREVIOUS_DAY_UNTIL_HOUR = 5;
 const DIARY_VIEW_MODE_KEY = `${STORAGE_KEY}_diary_view_mode`;
@@ -12,23 +10,11 @@ const CABINET_LAYOUT_MODE_KEY = `${STORAGE_KEY}_cabinet_layout_mode`;
 const THERAPY_LAYOUT_MODE_KEY = `${STORAGE_KEY}_therapy_layout_mode`;
 const DIARY_LAYOUT_MODE_KEY = `${STORAGE_KEY}_diary_layout_mode`;
 const APP_VERSION = "v2.6.3";
-const IMPORT_ITEMS = [
-  { name: "VENLAFAXINA", dosage: "225 mg" },
-  { name: "DEPAKIN", dosage: "500 mg" },
-  { name: "RAMIPRIL", dosage: "225 mg" },
-  { name: "ATORVASTATINA", dosage: "20 mg" },
-  { name: "ACIDO FOLICO", dosage: "5 mg" },
-  { name: "FENOFIBRATO", dosage: "145 mg" },
-  { name: "TAVOR", dosage: "2,5 mg" },
-  { name: "TRITTICO", dosage: "150 mg" },
-  { name: "XANAX", dosage: "1 mg" }
-];
 const PAGE = document.body.dataset.page;
 const state = loadState();
 const today = getLocalIsoDate();
 
 autoArchiveOldLogs();
-importCabinetItemsOnce();
 activateNav();
 registerPwa();
 renderVersionBadge();
@@ -64,20 +50,8 @@ function initCabinetPage() {
   const formWrap = document.getElementById("cabinet-form-wrap");
   const openFormBtn = document.getElementById("cabinet-open-form");
   const closeFormBtn = document.getElementById("cabinet-cancel-form");
-  const categorySelect = document.getElementById("cab-category");
-  const categoryOtherWrap = document.getElementById("cab-category-other-wrap");
-  const categoryOtherInput = document.getElementById("cab-category-other");
   const viewModeSelect = document.getElementById("cabinet-view-mode");
-  if (
-    !form ||
-    !list ||
-    !formWrap ||
-    !openFormBtn ||
-    !closeFormBtn ||
-    !categorySelect ||
-    !categoryOtherWrap ||
-    !categoryOtherInput
-  ) {
+  if (!form || !list || !formWrap || !openFormBtn || !closeFormBtn) {
     return;
   }
 
@@ -96,7 +70,6 @@ function initCabinetPage() {
     openFormBtn.textContent = isOpen ? "Chiudi nuovo medicinale" : "Nuovo Medicinale";
     if (!isOpen) {
       form.reset();
-      toggleOtherCategoryField(categorySelect, categoryOtherWrap, categoryOtherInput);
     }
   };
 
@@ -120,27 +93,13 @@ function initCabinetPage() {
     });
   }
 
-  categorySelect.addEventListener("change", () => {
-    toggleOtherCategoryField(categorySelect, categoryOtherWrap, categoryOtherInput);
-  });
-  toggleOtherCategoryField(categorySelect, categoryOtherWrap, categoryOtherInput);
-
   form.addEventListener("submit", (event) => {
     event.preventDefault();
     const name = document.getElementById("cab-name").value.trim();
     const dosage = document.getElementById("cab-dose").value.trim();
     const quantity = Number(document.getElementById("cab-qty").value);
-    const category = normalizeCategory(categorySelect.value);
-    const categoryOther =
-      category === "altro" ? categoryOtherInput.value.replace(/\s+/g, " ").trim() : "";
 
-    if (
-      !name ||
-      !dosage ||
-      !Number.isFinite(quantity) ||
-      quantity < 1 ||
-      (category === "altro" && !categoryOther)
-    ) {
+    if (!name || !dosage || !Number.isFinite(quantity) || quantity < 1) {
       return;
     }
 
@@ -148,13 +107,10 @@ function initCabinetPage() {
       id: createId(),
       name,
       dosage,
-      quantity,
-      category,
-      categoryOther
+      quantity
     });
 
     form.reset();
-    toggleOtherCategoryField(categorySelect, categoryOtherWrap, categoryOtherInput);
     setFormOpen(false);
     saveState();
     renderCabinet();
@@ -176,7 +132,6 @@ function renderCabinetList(listEl, layoutMode = "list") {
   listEl.innerHTML = "";
   state.cabinet.forEach((med) => {
     const plannedCount = state.therapy.filter((entry) => entry.medId === med.id).length;
-    const categoryTag = formatCategoryTag(med);
     const card = document.createElement("article");
     card.className = "item";
     card.innerHTML = `
@@ -186,7 +141,6 @@ function renderCabinetList(listEl, layoutMode = "list") {
           <p class="meta">${escapeHtml(med.dosage)}</p>
           <p class="meta">${plannedCount} voci in terapia</p>
           <div class="tag-row">
-            <span class="tag tag-cat ${escapeHtml(categoryTag.className)}">${escapeHtml(categoryTag.label)}</span>
             <span class="tag">${med.quantity} disponibili</span>
           </div>
         </div>
@@ -426,7 +380,6 @@ function renderTherapyPage({ listEl, filterWrapEl, medSelectEl, uiState, onReren
     const listInside = card.querySelector(".therapy-block-list");
 
     blockItems.forEach(({ entry, med }) => {
-      const categoryTag = formatCategoryTag(med);
       const row = document.createElement("div");
       row.className = "therapy-entry";
       row.innerHTML =
@@ -434,9 +387,6 @@ function renderTherapyPage({ listEl, filterWrapEl, medSelectEl, uiState, onReren
         '<h4 class="item-title">' + escapeHtml(med.name) + '</h4>' +
         '<p class="meta">' + escapeHtml(med.dosage) + ' • ' + entry.quantity + ' unità</p>' +
         (entry.time ? ('<p class="meta">' + formatTime(entry.time) + '</p>') : '') +
-        '<div class="tag-row">' +
-        '<span class="tag tag-cat ' + escapeHtml(categoryTag.className) + '">' + escapeHtml(categoryTag.label) + '</span>' +
-        '</div>' +
         '</div>' +
         '<div class="actions therapy-actions">' +
         '<button class="secondary btn-compact" type="button" data-edit="' + entry.id + '">Modifica</button>' +
@@ -466,7 +416,6 @@ function renderTherapyListView({ listEl, sorted, onRerender }) {
   listEl.innerHTML = "";
 
   sorted.forEach(({ entry, med }) => {
-    const categoryTag = formatCategoryTag(med);
     const row = document.createElement("article");
     row.className = "item therapy-flat-item block-" + blockToClassName(entry.block);
     row.innerHTML =
@@ -477,9 +426,6 @@ function renderTherapyListView({ listEl, sorted, onRerender }) {
       '</div>' +
       '<h3 class="item-title">' + escapeHtml(med.name) + '</h3>' +
       '<p class="meta">' + escapeHtml(med.dosage) + ' • ' + entry.quantity + ' unità</p>' +
-      '<div class="tag-row">' +
-      '<span class="tag tag-cat ' + escapeHtml(categoryTag.className) + '">' + escapeHtml(categoryTag.label) + '</span>' +
-      '</div>' +
       '</div>' +
       '<div class="actions therapy-actions">' +
       '<button class="secondary btn-compact" type="button" data-edit="' + entry.id + '">Modifica</button>' +
@@ -532,18 +478,16 @@ function printTherapyPlanPdf() {
     const blockItems = grouped.get(blockName) || [];
     tableRows += `
       <tr class="print-block-row">
-        <td colspan="5">${escapeHtml(blockName)} (${blockItems.length})</td>
+        <td colspan="4">${escapeHtml(blockName)} (${blockItems.length})</td>
       </tr>
     `;
     blockItems.forEach(({ entry, med }) => {
-      const category = formatCategoryTag(med).label;
       tableRows += `
         <tr>
           <td>${escapeHtml(med.name)}</td>
           <td>${escapeHtml(med.dosage)}</td>
           <td>${entry.quantity}</td>
           <td>${entry.time ? escapeHtml(formatTime(entry.time)) : "-"}</td>
-          <td>${escapeHtml(category)}</td>
         </tr>
       `;
     });
@@ -582,10 +526,9 @@ function printTherapyPlanPdf() {
     <thead>
       <tr>
         <th style="width:33%">Farmaco</th>
-        <th style="width:16%">Dosaggio</th>
-        <th style="width:12%">Unità</th>
-        <th style="width:16%">Orario</th>
-        <th style="width:23%">Categoria</th>
+        <th style="width:25%">Dosaggio</th>
+        <th style="width:18%">Unità</th>
+        <th style="width:24%">Orario</th>
       </tr>
     </thead>
     <tbody>${tableRows}</tbody>
@@ -1094,7 +1037,6 @@ function renderDiary(listEl, summaryEl, filters) {
       const status = entry.takenLog?.[selectedDate] || "";
       const isTaken = status === "yes";
       const summaryLine = [
-        formatCategoryTag(med).label,
         entry.time ? formatTime(entry.time) : "",
         `${entry.quantity} unità`,
         med.dosage
@@ -1329,7 +1271,7 @@ function populateMedicineSelect(selectEl) {
   state.cabinet.forEach((med) => {
     const option = document.createElement("option");
     option.value = med.id;
-    option.textContent = `${med.name} (${med.dosage}) - ${formatCategory(med)}`;
+    option.textContent = `${med.name} (${med.dosage})`;
     selectEl.append(option);
   });
   selectEl.value = state.cabinet.some((med) => med.id === selected) ? selected : "";
@@ -1401,17 +1343,11 @@ function sanitizeState(raw) {
 
   const cabinet = sourceCabinet
     .map((item) => {
-      const category = normalizeCategory(item?.category);
       return {
         id: item?.id || createId(),
         name: String(item?.name || item?.medicineName || item?.farmaco || "").trim(),
         dosage: String(item?.dosage || item?.dose || item?.posology || "").trim(),
-        quantity: toNonNegativeInt(item?.quantity ?? item?.qty ?? item?.stock),
-        category,
-        categoryOther:
-          category === "altro"
-            ? String(item?.categoryOther || item?.categoryDetail || "").replace(/\s+/g, " ").trim()
-            : ""
+        quantity: toNonNegativeInt(item?.quantity ?? item?.qty ?? item?.stock)
       };
     })
     .filter((item) => item.name && item.dosage);
@@ -1600,36 +1536,6 @@ function toPositiveInt(value, fallback = 1) {
 
 function saveState() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-}
-
-function importCabinetItemsOnce() {
-  try {
-    if (localStorage.getItem(IMPORT_KEY) === "done") return;
-
-    let added = 0;
-    IMPORT_ITEMS.forEach((item) => {
-      const exists = state.cabinet.some(
-        (med) =>
-          normalizeText(med.name) === normalizeText(item.name) &&
-          normalizeText(med.dosage) === normalizeText(item.dosage)
-      );
-      if (exists) return;
-      state.cabinet.push({
-        id: createId(),
-        name: item.name,
-        dosage: item.dosage,
-        quantity: 0,
-        category: "",
-        categoryOther: ""
-      });
-      added += 1;
-    });
-
-    if (added > 0) saveState();
-    localStorage.setItem(IMPORT_KEY, "done");
-  } catch {
-    // Ignore storage errors and continue with normal app behavior.
-  }
 }
 
 function autoArchiveOldLogs() {
@@ -1999,8 +1905,6 @@ function toIsoDate(year, monthZeroBased, day) {
 function renderCabinetEditForm(container, med, listEl) {
   const safeName = escapeHtml(med.name);
   const safeDosage = escapeHtml(med.dosage);
-  const selectedCategory = normalizeCategory(med.category);
-  const safeCategoryOther = escapeHtml(med.categoryOther || "");
   container.innerHTML = `
     <form class="form-grid edit-form" data-edit-form>
       <div>
@@ -2017,20 +1921,6 @@ function renderCabinetEditForm(container, med, listEl) {
           <input name="quantity" type="number" min="0" required value="${med.quantity}" />
         </div>
       </div>
-      <div>
-        <label>Categoria (facoltativa)</label>
-        <select name="category">
-          <option value="" ${selectedCategory === "" ? "selected" : ""}>Nessuna</option>
-          <option value="psicofarmaci" ${selectedCategory === "psicofarmaci" ? "selected" : ""}>Psicofarmaci</option>
-          <option value="pressione" ${selectedCategory === "pressione" ? "selected" : ""}>Pressione</option>
-          <option value="colesterolo" ${selectedCategory === "colesterolo" ? "selected" : ""}>Colesterolo</option>
-          <option value="altro" ${selectedCategory === "altro" ? "selected" : ""}>Altro (specifica)</option>
-        </select>
-      </div>
-      <div class="${selectedCategory === "altro" ? "" : "hidden"}" data-edit-other-wrap>
-        <label>Specifica categoria</label>
-        <input name="categoryOther" value="${safeCategoryOther}" />
-      </div>
       <div class="actions">
         <button type="submit">Salva</button>
         <button type="button" class="delete" data-delete-med-edit>Elimina</button>
@@ -2042,42 +1932,19 @@ function renderCabinetEditForm(container, med, listEl) {
   const form = container.querySelector("[data-edit-form]");
   if (!form) return;
 
-  const categorySelect = form.elements.category;
-  const otherWrap = form.querySelector("[data-edit-other-wrap]");
-  const otherInput = form.elements.categoryOther;
-  if (categorySelect && otherWrap && otherInput) {
-    categorySelect.addEventListener("change", () => {
-      toggleOtherCategoryField(categorySelect, otherWrap, otherInput);
-    });
-    toggleOtherCategoryField(categorySelect, otherWrap, otherInput);
-  }
-
   form.addEventListener("submit", (event) => {
     event.preventDefault();
     const name = String(form.elements.name.value || "").replace(/\s+/g, " ").trim();
     const dosage = String(form.elements.dosage.value || "").replace(/\s+/g, " ").trim();
     const quantity = Number(form.elements.quantity.value);
-    const category = normalizeCategory(form.elements.category.value);
-    const categoryOther =
-      category === "altro"
-        ? String(form.elements.categoryOther.value || "").replace(/\s+/g, " ").trim()
-        : "";
 
-    if (
-      !name ||
-      !dosage ||
-      !Number.isFinite(quantity) ||
-      quantity < 0 ||
-      (category === "altro" && !categoryOther)
-    ) {
+    if (!name || !dosage || !Number.isFinite(quantity) || quantity < 0) {
       return;
     }
 
     med.name = name;
     med.dosage = dosage;
     med.quantity = quantity;
-    med.category = category;
-    med.categoryOther = categoryOther;
     saveState();
     renderCabinetList(listEl, listEl.classList.contains("layout-matrix") ? "matrix" : "list");
   });
@@ -2110,12 +1977,6 @@ function renderCabinetEditForm(container, med, listEl) {
 }
 
 function renderTherapyEditForm(container, entry, onRerender) {
-  const currentMed = state.cabinet.find((med) => med.id === entry.medId);
-  const currentCategory = normalizeCategory(currentMed?.category);
-  const currentCategoryOther =
-    currentCategory === "altro"
-      ? String(currentMed?.categoryOther || "").replace(/\s+/g, " ").trim()
-      : "";
   const optionsHtml = state.cabinet
     .map((med) => {
       const selected = med.id === entry.medId ? "selected" : "";
@@ -2151,20 +2012,6 @@ function renderTherapyEditForm(container, entry, onRerender) {
           <input name="quantity" type="number" min="1" required value="${entry.quantity}" />
         </div>
       </div>
-      <div>
-        <label>Categoria farmaco (facoltativa)</label>
-        <select name="category">
-          <option value="" ${currentCategory === "" ? "selected" : ""}>Nessuna</option>
-          <option value="psicofarmaci" ${currentCategory === "psicofarmaci" ? "selected" : ""}>Psicofarmaci</option>
-          <option value="pressione" ${currentCategory === "pressione" ? "selected" : ""}>Pressione</option>
-          <option value="colesterolo" ${currentCategory === "colesterolo" ? "selected" : ""}>Colesterolo</option>
-          <option value="altro" ${currentCategory === "altro" ? "selected" : ""}>Altro (specifica)</option>
-        </select>
-      </div>
-      <div class="${currentCategory === "altro" ? "" : "hidden"}" data-therapy-other-wrap>
-        <label>Specifica categoria</label>
-        <input name="categoryOther" value="${escapeHtml(currentCategoryOther)}" />
-      </div>
       <div class="actions">
         <button type="submit">Salva</button>
         <button type="button" class="delete" data-delete-therapy-edit>Elimina</button>
@@ -2175,36 +2022,6 @@ function renderTherapyEditForm(container, entry, onRerender) {
 
   const form = container.querySelector("[data-edit-therapy-form]");
   if (!form) return;
-  const medSelect = form.elements.medId;
-  const categorySelect = form.elements.category;
-  const otherWrap = form.querySelector("[data-therapy-other-wrap]");
-  const otherInput = form.elements.categoryOther;
-
-  const syncCategoryFromSelectedMed = () => {
-    const medId = String(medSelect?.value || "");
-    const selectedMed = state.cabinet.find((med) => med.id === medId);
-    const category = normalizeCategory(selectedMed?.category);
-    const categoryOther =
-      category === "altro"
-        ? String(selectedMed?.categoryOther || "").replace(/\s+/g, " ").trim()
-        : "";
-    if (categorySelect) categorySelect.value = category;
-    if (otherInput) otherInput.value = categoryOther;
-    toggleOtherCategoryField(categorySelect, otherWrap, otherInput);
-  };
-
-  if (categorySelect && otherWrap && otherInput) {
-    categorySelect.addEventListener("change", () => {
-      toggleOtherCategoryField(categorySelect, otherWrap, otherInput);
-    });
-    toggleOtherCategoryField(categorySelect, otherWrap, otherInput);
-  }
-
-  if (medSelect) {
-    medSelect.addEventListener("change", () => {
-      syncCategoryFromSelectedMed();
-    });
-  }
 
   form.addEventListener("submit", (event) => {
     event.preventDefault();
@@ -2212,19 +2029,8 @@ function renderTherapyEditForm(container, entry, onRerender) {
     const block = String(form.elements.block.value || "");
     const time = String(form.elements.time.value || "").trim();
     const quantity = Number(form.elements.quantity.value);
-    const category = normalizeCategory(form.elements.category.value);
-    const categoryOther =
-      category === "altro"
-        ? String(form.elements.categoryOther.value || "").replace(/\s+/g, " ").trim()
-        : "";
 
-    if (
-      !medId ||
-      !BLOCK_ORDER.includes(block) ||
-      !Number.isFinite(quantity) ||
-      quantity < 1 ||
-      (category === "altro" && !categoryOther)
-    ) {
+    if (!medId || !BLOCK_ORDER.includes(block) || !Number.isFinite(quantity) || quantity < 1) {
       return;
     }
 
@@ -2232,11 +2038,6 @@ function renderTherapyEditForm(container, entry, onRerender) {
     entry.block = block;
     entry.time = time;
     entry.quantity = quantity;
-    const med = state.cabinet.find((item) => item.id === medId);
-    if (med) {
-      med.category = category;
-      med.categoryOther = categoryOther;
-    }
     saveState();
     onRerender();
   });
@@ -2257,40 +2058,4 @@ function renderTherapyEditForm(container, entry, onRerender) {
       container.innerHTML = "";
     });
   }
-}
-
-function normalizeCategory(value) {
-  const normalized = String(value || "")
-    .replace(/\s+/g, " ")
-    .trim()
-    .toLowerCase();
-  return CATEGORY_VALUES.includes(normalized) ? normalized : "";
-}
-
-function formatCategory(med) {
-  const category = normalizeCategory(med.category);
-  if (!category) return "Categoria: non specificata";
-  if (category === "psicofarmaci") return "Categoria: psicofarmaci";
-  if (category === "pressione") return "Categoria: pressione";
-  if (category === "colesterolo") return "Categoria: colesterolo";
-  const other = String(med.categoryOther || "").replace(/\s+/g, " ").trim();
-  return other ? `Categoria: ${other}` : "Categoria: altro";
-}
-
-function formatCategoryTag(med) {
-  const category = normalizeCategory(med.category);
-  if (!category) return { label: "Senza categoria", className: "altro" };
-  if (category === "psicofarmaci") return { label: "Psicofarmaci", className: "psicofarmaci" };
-  if (category === "pressione") return { label: "Pressione", className: "pressione" };
-  if (category === "colesterolo") return { label: "Colesterolo", className: "colesterolo" };
-  const other = String(med.categoryOther || "").replace(/\s+/g, " ").trim();
-  return { label: other || "Altro", className: "altro" };
-}
-
-function toggleOtherCategoryField(selectEl, wrapEl, inputEl) {
-  if (!selectEl || !wrapEl || !inputEl) return;
-  const isOther = normalizeCategory(selectEl.value) === "altro";
-  wrapEl.classList.toggle("hidden", !isOther);
-  inputEl.required = isOther;
-  if (!isOther) inputEl.value = "";
 }

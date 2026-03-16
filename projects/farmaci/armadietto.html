@@ -53,7 +53,7 @@
           <form id="cabinet-form" class="form-grid">
             <div>
               <label for="cab-name">Nome medicinale</label>
-              <input id="cab-name" required placeholder="Es. Tachipirina" />
+              <input id="cab-name" required placeholder="Es. Medicinale A" />
             </div>
             <div class="row">
               <div>
@@ -64,20 +64,6 @@
                 <label for="cab-qty">N. nella confezione</label>
                 <input id="cab-qty" type="number" min="1" required placeholder="Es. 20" />
               </div>
-            </div>
-            <div>
-              <label for="cab-category">Categoria (facoltativa)</label>
-              <select id="cab-category">
-                <option value="">Nessuna</option>
-                <option value="psicofarmaci">Psicofarmaci</option>
-                <option value="pressione">Pressione</option>
-                <option value="colesterolo">Colesterolo</option>
-                <option value="altro">Altro (specifica)</option>
-              </select>
-            </div>
-            <div id="cab-category-other-wrap" class="hidden">
-              <label for="cab-category-other">Specifica categoria</label>
-              <input id="cab-category-other" placeholder="Es. Antidolorifici" />
             </div>
             <div class="actions">
               <button type="submit">Aggiungi</button>

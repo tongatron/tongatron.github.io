@@ -203,30 +203,6 @@ button.secondary {
   margin-top: 2px;
 }
 
-.tag-cat {
-  font-weight: 600;
-}
-
-.tag-cat.psicofarmaci {
-  background: #f3eefe;
-  color: #5b477b;
-}
-
-.tag-cat.pressione {
-  background: #e8f2ff;
-  color: #2a5fa4;
-}
-
-.tag-cat.colesterolo {
-  background: #f9f2e5;
-  color: #7b5b2c;
-}
-
-.tag-cat.altro {
-  background: #edf1f5;
-  color: #4f6271;
-}
-
 .status {
   display: flex;
   gap: 8px;
