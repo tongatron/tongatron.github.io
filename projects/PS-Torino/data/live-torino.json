@@ -1,7 +1,7 @@
 {
   "source": "github-actions",
   "sourceLabel": "Snapshot live (GitHub Actions)",
-  "fetchedAt": "2026-03-17T08:01:42.269Z",
+  "fetchedAt": "2026-03-17T08:30:52.964Z",
   "hospitals": [
     {
       "id": "molinette",
@@ -11,21 +11,21 @@
       "rosso": 0,
       "giallo": 0,
       "arancione": 0,
-      "verde": 6,
+      "verde": 5,
       "azzurro": 1,
       "bianco": 2,
-      "total": 9,
-      "updatedAt": "2026-03-17T08:01:42.269Z",
+      "total": 8,
+      "updatedAt": "2026-03-17T08:30:52.964Z",
       "hasData": true,
       "meta": {
         "fetchedFrom": "https://listeps.cittadellasalute.to.it/gtotal.php?id=01090101",
         "inVisit": {
-          "rosso": 5,
+          "rosso": 4,
           "giallo": 0,
           "arancione": 0,
-          "verde": 20,
+          "verde": 24,
           "azzurro": 30,
-          "bianco": 1
+          "bianco": 2
         }
       }
     },
@@ -37,11 +37,11 @@
       "rosso": 0,
       "giallo": 0,
       "arancione": 0,
-      "verde": 2,
+      "verde": 3,
       "azzurro": 0,
-      "bianco": 3,
-      "total": 5,
-      "updatedAt": "2026-03-17T08:01:42.269Z",
+      "bianco": 4,
+      "total": 7,
+      "updatedAt": "2026-03-17T08:30:52.964Z",
       "hasData": true,
       "meta": {
         "fetchedFrom": "https://listeps.cittadellasalute.to.it/gtotal.php?id=01090201",
@@ -49,7 +49,7 @@
           "rosso": 0,
           "giallo": 0,
           "arancione": 0,
-          "verde": 1,
+          "verde": 4,
           "azzurro": 3,
           "bianco": 3
         }
@@ -64,10 +64,10 @@
       "giallo": 0,
       "arancione": 0,
       "verde": 0,
-      "azzurro": 0,
+      "azzurro": 2,
       "bianco": 0,
-      "total": 0,
-      "updatedAt": "2026-03-17T08:01:42.269Z",
+      "total": 2,
+      "updatedAt": "2026-03-17T08:30:52.964Z",
       "hasData": true,
       "meta": {
         "fetchedFrom": "https://listeps.cittadellasalute.to.it/gtotal.php?id=01090301",
@@ -89,11 +89,11 @@
       "rosso": 0,
       "giallo": 0,
       "arancione": 0,
-      "verde": 3,
-      "azzurro": 0,
+      "verde": 2,
+      "azzurro": 2,
       "bianco": 1,
-      "total": 4,
-      "updatedAt": "2026-03-17T08:01:42.269Z",
+      "total": 5,
+      "updatedAt": "2026-03-17T08:30:52.964Z",
       "hasData": true,
       "meta": {
         "fetchedFrom": "https://listeps.cittadellasalute.to.it/gtotal.php?id=01090302",
@@ -102,7 +102,7 @@
           "giallo": 0,
           "arancione": 0,
           "verde": 6,
-          "azzurro": 9,
+          "azzurro": 10,
           "bianco": 0
         }
       }
@@ -114,27 +114,23 @@
       "mapUrl": "https://www.google.com/maps/search/?api=1&query=Ospedale%20Mauriziano%20Umberto%20I%2C%20Largo%20Filippo%20Turati%2062%2C%20Torino",
       "rosso": 0,
       "giallo": 0,
-      "arancione": 0,
-      "verde": 1,
-      "azzurro": 0,
-      "bianco": 0,
-      "total": 1,
-      "updatedAt": "2026-03-17T07:00:03+01:00",
+      "arancione": 1,
+      "verde": 7,
+      "azzurro": 2,
+      "bianco": 3,
+      "total": 13,
+      "updatedAt": "2026-03-17T09:30:04+01:00",
       "hasData": true,
       "meta": {
         "fetchedFrom": "https://www.mauriziano.it/i-nostri-servizi/pazienti-in-attesa-presso-pronto-soccorso",
         "inVisit": {
           "rosso": 0,
           "giallo": 0,
-          "arancione": 27,
-          "verde": 9,
-          "azzurro": 15,
-          "bianco": 12
-        },
-        "stale": true,
-        "staleReason": "HTTP 403",
-        "staleSource": "https://www.mauriziano.it/i-nostri-servizi/pazienti-in-attesa-presso-pronto-soccorso",
-        "carriedForwardFromSnapshot": "2026-03-17T07:36:57.382Z"
+          "arancione": 29,
+          "verde": 16,
+          "azzurro": 18,
+          "bianco": 3
+        }
       }
     },
     {
@@ -173,7 +169,7 @@
         "stale": true,
         "staleReason": "Timeout",
         "staleSource": "https://prontosoccorso.aslcittaditorino.it/api/strutture/",
-        "carriedForwardFromSnapshot": "2026-03-17T07:36:57.382Z"
+        "carriedForwardFromSnapshot": "2026-03-17T08:01:42.269Z"
       }
     },
     {
@@ -212,7 +208,7 @@
         "stale": true,
         "staleReason": "Timeout",
         "staleSource": "https://prontosoccorso.aslcittaditorino.it/api/strutture/",
-        "carriedForwardFromSnapshot": "2026-03-17T07:36:57.382Z"
+        "carriedForwardFromSnapshot": "2026-03-17T08:01:42.269Z"
       }
     },
     {
@@ -251,7 +247,7 @@
         "stale": true,
         "staleReason": "Timeout",
         "staleSource": "https://prontosoccorso.aslcittaditorino.it/api/strutture/",
-        "carriedForwardFromSnapshot": "2026-03-17T07:36:57.382Z"
+        "carriedForwardFromSnapshot": "2026-03-17T08:01:42.269Z"
       }
     },
     {
@@ -290,7 +286,7 @@
         "stale": true,
         "staleReason": "Timeout",
         "staleSource": "https://prontosoccorso.aslcittaditorino.it/api/strutture/",
-        "carriedForwardFromSnapshot": "2026-03-17T07:36:57.382Z"
+        "carriedForwardFromSnapshot": "2026-03-17T08:01:42.269Z"
       }
     },
     {
@@ -301,31 +297,26 @@
       "rosso": 0,
       "giallo": 0,
       "arancione": 0,
-      "verde": 4,
+      "verde": 9,
       "azzurro": 0,
-      "bianco": 2,
-      "total": 6,
-      "updatedAt": "2026-03-17T08:01:42.269Z",
+      "bianco": 1,
+      "total": 10,
+      "updatedAt": "2026-03-17T08:30:52.964Z",
       "hasData": true,
       "meta": {
         "fetchedFrom": "https://www.sanluigi.piemonte.it/dea-status/ajax-callback?url=api/deaStatus",
         "inVisit": {
           "rosso": 5,
           "giallo": 0,
-          "arancione": 18,
+          "arancione": 19,
           "verde": 17,
           "azzurro": 13,
-          "bianco": 2
+          "bianco": 3
         }
       }
     }
   ],
   "failures": [
-    {
-      "id": "mauriziano",
-      "source": "https://www.mauriziano.it/i-nostri-servizi/pazienti-in-attesa-presso-pronto-soccorso",
-      "message": "HTTP 403"
-    },
     {
       "id": "asl-citta-di-torino",
       "source": "https://prontosoccorso.aslcittaditorino.it/api/strutture/",
