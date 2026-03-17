@@ -1,0 +1,75 @@
+{
+  "name": "PWA Test App",
+  "short_name": "PWA Test",
+  "description": "App di test per Bubblewrap / Trusted Web Activity",
+  "start_url": "/projects/pwa-test/",
+  "scope": "/projects/pwa-test/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f0f4ff",
+  "theme_color": "#2255CC",
+  "lang": "it",
+  "icons": [
+    {
+      "src": "/projects/pwa-test/icons/icon-72.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/projects/pwa-test/icons/icon-96.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/projects/pwa-test/icons/icon-128.png",
+      "sizes": "128x128",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/projects/pwa-test/icons/icon-144.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/projects/pwa-test/icons/icon-152.png",
+      "sizes": "152x152",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/projects/pwa-test/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/projects/pwa-test/icons/icon-384.png",
+      "sizes": "384x384",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/projects/pwa-test/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/projects/pwa-test/icons/screenshot.png",
+      "sizes": "540x720",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Schermata principale"
+    }
+  ],
+  "categories": [
+    "utilities"
+  ],
+  "prefer_related_applications": false
+}
