@@ -1,7 +1,7 @@
 {
   "source": "github-actions",
   "sourceLabel": "Snapshot live (GitHub Actions)",
-  "fetchedAt": "2026-03-17T00:53:41.122Z",
+  "fetchedAt": "2026-03-17T01:33:29.144Z",
   "hospitals": [
     {
       "id": "molinette",
@@ -26,7 +26,11 @@
           "verde": 14,
           "azzurro": 26,
           "bianco": 0
-        }
+        },
+        "stale": true,
+        "staleReason": "fetch failed",
+        "staleSource": "https://listeps.cittadellasalute.to.it/gtotal.php?id=01090101",
+        "carriedForwardFromSnapshot": "2026-03-17T00:53:41.122Z"
       }
     },
     {
@@ -52,7 +56,11 @@
           "verde": 2,
           "azzurro": 3,
           "bianco": 3
-        }
+        },
+        "stale": true,
+        "staleReason": "fetch failed",
+        "staleSource": "https://listeps.cittadellasalute.to.it/gtotal.php?id=01090201",
+        "carriedForwardFromSnapshot": "2026-03-17T00:53:41.122Z"
       }
     },
     {
@@ -78,7 +86,11 @@
           "verde": 0,
           "azzurro": 0,
           "bianco": 0
-        }
+        },
+        "stale": true,
+        "staleReason": "fetch failed",
+        "staleSource": "https://listeps.cittadellasalute.to.it/gtotal.php?id=01090301",
+        "carriedForwardFromSnapshot": "2026-03-17T00:53:41.122Z"
       }
     },
     {
@@ -104,7 +116,11 @@
           "verde": 4,
           "azzurro": 7,
           "bianco": 0
-        }
+        },
+        "stale": true,
+        "staleReason": "fetch failed",
+        "staleSource": "https://listeps.cittadellasalute.to.it/gtotal.php?id=01090302",
+        "carriedForwardFromSnapshot": "2026-03-17T00:53:41.122Z"
       }
     },
     {
@@ -132,9 +148,9 @@
           "bianco": 11
         },
         "stale": true,
-        "staleReason": "HTTP 403",
+        "staleReason": "fetch failed",
         "staleSource": "https://www.mauriziano.it/i-nostri-servizi/pazienti-in-attesa-presso-pronto-soccorso",
-        "carriedForwardFromSnapshot": "2026-03-17T00:16:56.408Z"
+        "carriedForwardFromSnapshot": "2026-03-17T00:53:41.122Z"
       }
     },
     {
@@ -173,7 +189,7 @@
         "stale": true,
         "staleReason": "Timeout",
         "staleSource": "https://prontosoccorso.aslcittaditorino.it/api/strutture/",
-        "carriedForwardFromSnapshot": "2026-03-17T00:16:56.408Z"
+        "carriedForwardFromSnapshot": "2026-03-17T00:53:41.122Z"
       }
     },
     {
@@ -212,7 +228,7 @@
         "stale": true,
         "staleReason": "Timeout",
         "staleSource": "https://prontosoccorso.aslcittaditorino.it/api/strutture/",
-        "carriedForwardFromSnapshot": "2026-03-17T00:16:56.408Z"
+        "carriedForwardFromSnapshot": "2026-03-17T00:53:41.122Z"
       }
     },
     {
@@ -251,7 +267,7 @@
         "stale": true,
         "staleReason": "Timeout",
         "staleSource": "https://prontosoccorso.aslcittaditorino.it/api/strutture/",
-        "carriedForwardFromSnapshot": "2026-03-17T00:16:56.408Z"
+        "carriedForwardFromSnapshot": "2026-03-17T00:53:41.122Z"
       }
     },
     {
@@ -290,7 +306,7 @@
         "stale": true,
         "staleReason": "Timeout",
         "staleSource": "https://prontosoccorso.aslcittaditorino.it/api/strutture/",
-        "carriedForwardFromSnapshot": "2026-03-17T00:16:56.408Z"
+        "carriedForwardFromSnapshot": "2026-03-17T00:53:41.122Z"
       }
     },
     {
@@ -316,20 +332,49 @@
           "verde": 12,
           "azzurro": 13,
           "bianco": 3
-        }
+        },
+        "stale": true,
+        "staleReason": "fetch failed",
+        "staleSource": "https://www.sanluigi.piemonte.it/dea-status/ajax-callback?url=api/deaStatus",
+        "carriedForwardFromSnapshot": "2026-03-17T00:53:41.122Z"
       }
     }
   ],
   "failures": [
     {
+      "id": "molinette",
+      "source": "https://listeps.cittadellasalute.to.it/gtotal.php?id=01090101",
+      "message": "fetch failed"
+    },
+    {
+      "id": "cto",
+      "source": "https://listeps.cittadellasalute.to.it/gtotal.php?id=01090201",
+      "message": "fetch failed"
+    },
+    {
+      "id": "sant-anna",
+      "source": "https://listeps.cittadellasalute.to.it/gtotal.php?id=01090301",
+      "message": "fetch failed"
+    },
+    {
+      "id": "regina-margherita",
+      "source": "https://listeps.cittadellasalute.to.it/gtotal.php?id=01090302",
+      "message": "fetch failed"
+    },
+    {
       "id": "mauriziano",
       "source": "https://www.mauriziano.it/i-nostri-servizi/pazienti-in-attesa-presso-pronto-soccorso",
-      "message": "HTTP 403"
+      "message": "fetch failed"
     },
     {
       "id": "asl-citta-di-torino",
       "source": "https://prontosoccorso.aslcittaditorino.it/api/strutture/",
       "message": "Timeout"
+    },
+    {
+      "id": "san-luigi-orbassano",
+      "source": "https://www.sanluigi.piemonte.it/dea-status/ajax-callback?url=api/deaStatus",
+      "message": "fetch failed"
     }
   ]
 }
