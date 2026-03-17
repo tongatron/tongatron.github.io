@@ -1,7 +1,7 @@
 {
   "source": "github-actions",
   "sourceLabel": "Snapshot live (GitHub Actions)",
-  "fetchedAt": "2026-03-17T06:38:40.442Z",
+  "fetchedAt": "2026-03-17T07:07:46.440Z",
   "hospitals": [
     {
       "id": "molinette",
@@ -11,11 +11,11 @@
       "rosso": 0,
       "giallo": 0,
       "arancione": 0,
-      "verde": 3,
-      "azzurro": 2,
-      "bianco": 0,
-      "total": 5,
-      "updatedAt": "2026-03-17T06:38:40.442Z",
+      "verde": 6,
+      "azzurro": 3,
+      "bianco": 1,
+      "total": 10,
+      "updatedAt": "2026-03-17T07:07:46.440Z",
       "hasData": true,
       "meta": {
         "fetchedFrom": "https://listeps.cittadellasalute.to.it/gtotal.php?id=01090101",
@@ -39,9 +39,9 @@
       "arancione": 0,
       "verde": 1,
       "azzurro": 0,
-      "bianco": 1,
-      "total": 2,
-      "updatedAt": "2026-03-17T06:38:40.442Z",
+      "bianco": 2,
+      "total": 3,
+      "updatedAt": "2026-03-17T07:07:46.440Z",
       "hasData": true,
       "meta": {
         "fetchedFrom": "https://listeps.cittadellasalute.to.it/gtotal.php?id=01090201",
@@ -64,10 +64,10 @@
       "giallo": 0,
       "arancione": 0,
       "verde": 0,
-      "azzurro": 1,
-      "bianco": 0,
+      "azzurro": 0,
+      "bianco": 1,
       "total": 1,
-      "updatedAt": "2026-03-17T06:38:40.442Z",
+      "updatedAt": "2026-03-17T07:07:46.440Z",
       "hasData": true,
       "meta": {
         "fetchedFrom": "https://listeps.cittadellasalute.to.it/gtotal.php?id=01090301",
@@ -90,10 +90,10 @@
       "giallo": 0,
       "arancione": 0,
       "verde": 0,
-      "azzurro": 0,
+      "azzurro": 1,
       "bianco": 0,
-      "total": 0,
-      "updatedAt": "2026-03-17T06:38:40.442Z",
+      "total": 1,
+      "updatedAt": "2026-03-17T07:07:46.440Z",
       "hasData": true,
       "meta": {
         "fetchedFrom": "https://listeps.cittadellasalute.to.it/gtotal.php?id=01090302",
@@ -101,7 +101,7 @@
           "rosso": 0,
           "giallo": 0,
           "arancione": 0,
-          "verde": 6,
+          "verde": 5,
           "azzurro": 6,
           "bianco": 0
         }
@@ -134,7 +134,7 @@
         "stale": true,
         "staleReason": "HTTP 403",
         "staleSource": "https://www.mauriziano.it/i-nostri-servizi/pazienti-in-attesa-presso-pronto-soccorso",
-        "carriedForwardFromSnapshot": "2026-03-17T06:05:53.331Z"
+        "carriedForwardFromSnapshot": "2026-03-17T06:38:40.442Z"
       }
     },
     {
@@ -173,7 +173,7 @@
         "stale": true,
         "staleReason": "Timeout",
         "staleSource": "https://prontosoccorso.aslcittaditorino.it/api/strutture/",
-        "carriedForwardFromSnapshot": "2026-03-17T06:05:53.331Z"
+        "carriedForwardFromSnapshot": "2026-03-17T06:38:40.442Z"
       }
     },
     {
@@ -212,7 +212,7 @@
         "stale": true,
         "staleReason": "Timeout",
         "staleSource": "https://prontosoccorso.aslcittaditorino.it/api/strutture/",
-        "carriedForwardFromSnapshot": "2026-03-17T06:05:53.331Z"
+        "carriedForwardFromSnapshot": "2026-03-17T06:38:40.442Z"
       }
     },
     {
@@ -251,7 +251,7 @@
         "stale": true,
         "staleReason": "Timeout",
         "staleSource": "https://prontosoccorso.aslcittaditorino.it/api/strutture/",
-        "carriedForwardFromSnapshot": "2026-03-17T06:05:53.331Z"
+        "carriedForwardFromSnapshot": "2026-03-17T06:38:40.442Z"
       }
     },
     {
@@ -290,7 +290,7 @@
         "stale": true,
         "staleReason": "Timeout",
         "staleSource": "https://prontosoccorso.aslcittaditorino.it/api/strutture/",
-        "carriedForwardFromSnapshot": "2026-03-17T06:05:53.331Z"
+        "carriedForwardFromSnapshot": "2026-03-17T06:38:40.442Z"
       }
     },
     {
@@ -301,11 +301,11 @@
       "rosso": 0,
       "giallo": 0,
       "arancione": 0,
-      "verde": 2,
-      "azzurro": 0,
+      "verde": 3,
+      "azzurro": 1,
       "bianco": 1,
-      "total": 3,
-      "updatedAt": "2026-03-17T06:38:40.442Z",
+      "total": 5,
+      "updatedAt": "2026-03-17T07:07:46.440Z",
       "hasData": true,
       "meta": {
         "fetchedFrom": "https://www.sanluigi.piemonte.it/dea-status/ajax-callback?url=api/deaStatus",
