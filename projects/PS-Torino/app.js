@@ -16,8 +16,6 @@
   const refreshBtn = document.getElementById("refreshBtn");
   const searchInput = document.getElementById("searchInput");
   const sortSelect = document.getElementById("sortSelect");
-  const showLiveData = document.getElementById("showLiveData");
-  const showSnapshotData = document.getElementById("showSnapshotData");
   const lastUpdatedEl = document.getElementById("lastUpdated");
   const sourceLabelEl = document.getElementById("sourceLabel");
   const statusLabelEl = document.getElementById("statusLabel");
@@ -170,18 +168,6 @@
     return normalizeText(`${hospital.name} ${hospital.address}`).includes(query);
   }
 
-  function matchesDataStateFilters(hospital) {
-    if (!hospital.hasData) {
-      return false;
-    }
-
-    if (hospital.meta && hospital.meta.stale) {
-      return showSnapshotData.checked;
-    }
-
-    return showLiveData.checked;
-  }
-
   function updateSummary(snapshot, visibleHospitals) {
     const allHospitals = snapshot && Array.isArray(snapshot.hospitals) ? snapshot.hospitals : [];
     const freshLiveHospitals = allHospitals.filter((hospital) => hospital.hasData && !(hospital.meta && hospital.meta.stale)).length;
@@ -260,9 +246,8 @@
     currentSnapshot = snapshot;
     listEl.innerHTML = "";
 
-    let hospitals = snapshot && Array.isArray(snapshot.hospitals) ? snapshot.hospitals : [];
-
-    hospitals = hospitals.filter((hospital) => matchesDataStateFilters(hospital));
+    let hospitals = (snapshot && Array.isArray(snapshot.hospitals) ? snapshot.hospitals : [])
+      .filter((hospital) => hospital.hasData);
 
     const searchQuery = normalizeText(searchInput.value);
     hospitals = hospitals.filter((hospital) => matchesSearch(hospital, searchQuery));
@@ -273,9 +258,7 @@
     if (!hospitals.length) {
       const emptyMessage = searchQuery
         ? "Nessuna struttura corrisponde alla ricerca."
-        : !showLiveData.checked && !showSnapshotData.checked
-          ? "Attiva almeno un filtro tra Dato live e Ultimo snapshot."
-          : "Nessuna struttura corrisponde ai filtri selezionati.";
+        : "Nessuna struttura con dati disponibili.";
 
       listEl.innerHTML = `<div class="empty-state">${emptyMessage}</div>`;
       return;
@@ -430,16 +413,6 @@
     }
   });
   sortSelect.addEventListener("change", () => {
-    if (currentSnapshot) {
-      render(currentSnapshot);
-    }
-  });
-  showLiveData.addEventListener("change", () => {
-    if (currentSnapshot) {
-      render(currentSnapshot);
-    }
-  });
-  showSnapshotData.addEventListener("change", () => {
     if (currentSnapshot) {
       render(currentSnapshot);
     }

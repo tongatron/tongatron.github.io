@@ -320,65 +320,6 @@ select {
   padding: 0 14px;
 }
 
-.status-filter-group {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-
-.status-filter-chip {
-  position: relative;
-  display: inline-flex;
-}
-
-.status-filter-chip input {
-  position: absolute;
-  opacity: 0;
-  pointer-events: none;
-}
-
-.status-filter-chip span {
-  display: inline-flex;
-  align-items: center;
-  min-height: 42px;
-  padding: 0 14px;
-  border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  background: rgba(255, 255, 255, 0.04);
-  color: #d8dfdb;
-  font-size: 0.82rem;
-  font-weight: 800;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition:
-    border-color 0.18s ease,
-    background-color 0.18s ease,
-    color 0.18s ease,
-    transform 0.18s ease;
-}
-
-.status-filter-chip span:hover {
-  transform: translateY(-1px);
-}
-
-.status-filter-chip.live input:checked + span {
-  border-color: rgba(89, 196, 84, 0.32);
-  background: rgba(89, 196, 84, 0.16);
-  color: #d2f5cf;
-}
-
-.status-filter-chip.stale input:checked + span {
-  border-color: rgba(243, 207, 69, 0.34);
-  background: rgba(243, 207, 69, 0.14);
-  color: #ffe58d;
-}
-
-.status-filter-chip input:not(:checked) + span {
-  opacity: 0.74;
-}
-
 .table-shell {
   border-top: 1px solid var(--row-line);
 }
