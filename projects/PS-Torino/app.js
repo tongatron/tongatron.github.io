@@ -42,6 +42,20 @@
     }).format(date);
   }
 
+  function isOlderThanOneHour(value) {
+    if (!value) {
+      return false;
+    }
+
+    const date = new Date(value);
+
+    if (Number.isNaN(date.getTime())) {
+      return false;
+    }
+
+    return Date.now() - date.getTime() > 60 * 60 * 1000;
+  }
+
   function normalizeText(value) {
     const source = String(value || "");
     const canNormalize = typeof source.normalize === "function";
@@ -234,9 +248,12 @@
       return {
         updatedLabel: "Dato non disponibile",
         snapshotLabel: "",
-        isStale: false
+        isStale: false,
+        isOld: false
       };
     }
+
+    const dataTimestamp = hospital.updatedAt || (snapshot && snapshot.fetchedAt) || null;
 
     if (hospital.meta && hospital.meta.stale) {
       const carriedForwardAt =
@@ -245,16 +262,18 @@
         null;
 
       return {
-        updatedLabel: `Dato: ${formatDate(hospital.updatedAt)}`,
-        snapshotLabel: carriedForwardAt ? `Snapshot: ${formatDate(carriedForwardAt)}` : "",
-        isStale: true
+        updatedLabel: `Aggiornato alle ${formatDate(hospital.updatedAt)}`,
+        snapshotLabel: carriedForwardAt ? `Snapshot alle ${formatDate(carriedForwardAt)}` : "",
+        isStale: true,
+        isOld: isOlderThanOneHour(dataTimestamp)
       };
     }
 
     return {
-      updatedLabel: `Agg.: ${formatDate(hospital.updatedAt || (snapshot && snapshot.fetchedAt))}`,
+      updatedLabel: `Aggiornato alle ${formatDate(dataTimestamp)}`,
       snapshotLabel: "",
-      isStale: false
+      isStale: false,
+      isOld: isOlderThanOneHour(dataTimestamp)
     };
   }
 
@@ -316,6 +335,7 @@
       updatedAtEl.textContent = timingConfig.updatedLabel;
       updatedAtEl.classList.toggle("is-live", hospital.hasData && !timingConfig.isStale);
       updatedAtEl.classList.toggle("is-stale", timingConfig.isStale);
+      updatedAtEl.classList.toggle("is-old", timingConfig.isOld);
       snapshotAtEl.hidden = !timingConfig.snapshotLabel;
       snapshotAtEl.textContent = timingConfig.snapshotLabel;
 
