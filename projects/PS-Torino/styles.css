@@ -484,8 +484,14 @@ select {
 }
 
 .updated-at,
+.snapshot-at,
 .map-link {
   font-size: 0.82rem;
+}
+
+.updated-at.is-stale,
+.snapshot-at {
+  color: #d6dbd8;
 }
 
 .map-link {

@@ -53,30 +53,59 @@
       .trim();
   }
 
-  function sortHospitals(hospitals, mode) {
-    const items = [...hospitals];
+  function getHospitalPriority(hospital) {
+    if (!hospital.hasData) {
+      return 2;
+    }
 
+    if (hospital.meta && hospital.meta.stale) {
+      return 1;
+    }
+
+    return 0;
+  }
+
+  function compareBySelectedMode(left, right, mode) {
     if (mode === "name") {
-      return items.sort((left, right) => left.name.localeCompare(right.name, "it"));
+      return left.name.localeCompare(right.name, "it");
     }
 
     if (mode === "red") {
-      return items.sort((left, right) => right.red - left.red);
+      return right.red - left.red;
     }
 
     if (mode === "orange") {
-      return items.sort((left, right) => right.orange - left.orange);
+      return right.orange - left.orange;
     }
 
     if (mode === "green") {
-      return items.sort((left, right) => right.green - left.green);
+      return right.green - left.green;
     }
 
     if (mode === "blue") {
-      return items.sort((left, right) => right.blue - left.blue);
+      return right.blue - left.blue;
     }
 
-    return items.sort((left, right) => right.total - left.total);
+    return right.total - left.total;
+  }
+
+  function sortHospitals(hospitals, mode) {
+    const items = [...hospitals];
+    return items.sort((left, right) => {
+      const priorityDelta = getHospitalPriority(left) - getHospitalPriority(right);
+
+      if (priorityDelta !== 0) {
+        return priorityDelta;
+      }
+
+      const modeDelta = compareBySelectedMode(left, right, mode);
+
+      if (modeDelta !== 0) {
+        return modeDelta;
+      }
+
+      return left.name.localeCompare(right.name, "it");
+    });
   }
 
   function getCacheSourceLabel(snapshot) {
@@ -173,6 +202,35 @@
     };
   }
 
+  function getHospitalTimeMeta(hospital, snapshot) {
+    if (!hospital.hasData) {
+      return {
+        updatedLabel: "Dato non disponibile",
+        snapshotLabel: "",
+        isStale: false
+      };
+    }
+
+    if (hospital.meta && hospital.meta.stale) {
+      const carriedForwardAt =
+        (hospital.meta && hospital.meta.carriedForwardFromSnapshot) ||
+        (snapshot && snapshot.fetchedAt) ||
+        null;
+
+      return {
+        updatedLabel: `Dato: ${formatDate(hospital.updatedAt)}`,
+        snapshotLabel: carriedForwardAt ? `Snapshot: ${formatDate(carriedForwardAt)}` : "",
+        isStale: true
+      };
+    }
+
+    return {
+      updatedLabel: `Agg.: ${formatDate(hospital.updatedAt || (snapshot && snapshot.fetchedAt))}`,
+      snapshotLabel: "",
+      isStale: false
+    };
+  }
+
   function render(snapshot) {
     currentSnapshot = snapshot;
     listEl.innerHTML = "";
@@ -213,12 +271,19 @@
       node.querySelector(".value-green").textContent = getCountLabel(hospital, "green");
       node.querySelector(".value-blue").textContent = getCountLabel(hospital, "blue");
       node.querySelector(".value-white").textContent = getCountLabel(hospital, "white");
-      node.querySelector(".updated-at").textContent = `Agg.: ${formatDate(hospital.updatedAt || snapshot.fetchedAt)}`;
       const statusConfig = getHospitalStatus(hospital);
       const statusEl = node.querySelector(".data-status");
+      const timingConfig = getHospitalTimeMeta(hospital, snapshot);
+      const updatedAtEl = node.querySelector(".updated-at");
+      const snapshotAtEl = node.querySelector(".snapshot-at");
+
       statusEl.textContent = statusConfig.label;
       statusEl.classList.add(statusConfig.className);
       statusEl.title = statusConfig.title;
+      updatedAtEl.textContent = timingConfig.updatedLabel;
+      updatedAtEl.classList.toggle("is-stale", timingConfig.isStale);
+      snapshotAtEl.hidden = !timingConfig.snapshotLabel;
+      snapshotAtEl.textContent = timingConfig.snapshotLabel;
 
       const totalValueEl = node.querySelector(".hospital-total-value");
       const totalLabelEl = node.querySelector(".hospital-total-label");
