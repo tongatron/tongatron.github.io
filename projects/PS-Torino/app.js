@@ -16,6 +16,8 @@
   const refreshBtn = document.getElementById("refreshBtn");
   const searchInput = document.getElementById("searchInput");
   const sortSelect = document.getElementById("sortSelect");
+  const showLiveData = document.getElementById("showLiveData");
+  const showSnapshotData = document.getElementById("showSnapshotData");
   const onlyOpenNow = document.getElementById("onlyOpenNow");
   const lastUpdatedEl = document.getElementById("lastUpdated");
   const sourceLabelEl = document.getElementById("sourceLabel");
@@ -169,6 +171,18 @@
     return normalizeText(`${hospital.name} ${hospital.address}`).includes(query);
   }
 
+  function matchesDataStateFilters(hospital) {
+    if (!hospital.hasData) {
+      return !onlyOpenNow.checked;
+    }
+
+    if (hospital.meta && hospital.meta.stale) {
+      return showSnapshotData.checked;
+    }
+
+    return showLiveData.checked;
+  }
+
   function updateSummary(snapshot, visibleHospitals) {
     const allHospitals = snapshot && Array.isArray(snapshot.hospitals) ? snapshot.hospitals : [];
     const freshLiveHospitals = allHospitals.filter((hospital) => hospital.hasData && !(hospital.meta && hospital.meta.stale)).length;
@@ -253,6 +267,8 @@
       hospitals = hospitals.filter((hospital) => hospital.hasData);
     }
 
+    hospitals = hospitals.filter((hospital) => matchesDataStateFilters(hospital));
+
     const searchQuery = normalizeText(searchInput.value);
     hospitals = hospitals.filter((hospital) => matchesSearch(hospital, searchQuery));
     hospitals = sortHospitals(hospitals, sortSelect.value);
@@ -262,8 +278,10 @@
     if (!hospitals.length) {
       const emptyMessage = searchQuery
         ? "Nessuna struttura corrisponde alla ricerca."
+        : !showLiveData.checked && !showSnapshotData.checked
+          ? "Attiva almeno un filtro tra Dato live e Ultimo snapshot."
         : onlyOpenNow.checked
-          ? "Nessuna struttura con dati live disponibili."
+          ? "Nessuna struttura corrisponde ai filtri selezionati."
           : "Nessun dato disponibile.";
 
       listEl.innerHTML = `<div class="empty-state">${emptyMessage}</div>`;
@@ -419,6 +437,16 @@
     }
   });
   sortSelect.addEventListener("change", () => {
+    if (currentSnapshot) {
+      render(currentSnapshot);
+    }
+  });
+  showLiveData.addEventListener("change", () => {
+    if (currentSnapshot) {
+      render(currentSnapshot);
+    }
+  });
+  showSnapshotData.addEventListener("change", () => {
     if (currentSnapshot) {
       render(currentSnapshot);
     }

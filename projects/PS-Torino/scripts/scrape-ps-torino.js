@@ -8,6 +8,8 @@ const { TextDecoder } = require("node:util");
 const OUTPUT_PATH = path.join(__dirname, "..", "data", "live-torino.json");
 const TIMEZONE = "Europe/Rome";
 const REQUEST_TIMEOUT_MS = 30000;
+const RETRY_ATTEMPTS = 3;
+const RETRY_DELAY_MS = 1500;
 const USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36";
 const LATIN1_DECODER = new TextDecoder("latin1");
 const COMMON_HEADERS = {
@@ -174,6 +176,32 @@ async function fetchHtml(url) {
   } finally {
     timeout.dispose();
   }
+}
+
+function sleep(delayMs) {
+  return new Promise((resolve) => {
+    setTimeout(resolve, delayMs);
+  });
+}
+
+async function withRetry(label, task, attempts = RETRY_ATTEMPTS) {
+  let lastError = null;
+
+  for (let attempt = 1; attempt <= attempts; attempt += 1) {
+    try {
+      return await task();
+    } catch (error) {
+      lastError = error;
+
+      if (attempt >= attempts) {
+        break;
+      }
+
+      await sleep(RETRY_DELAY_MS * attempt);
+    }
+  }
+
+  throw new Error(`${label}: ${lastError && lastError.message ? lastError.message : "errore sconosciuto"}`);
 }
 
 function requestWithHttps(url, options) {
@@ -657,7 +685,7 @@ async function main() {
   const failures = [];
   const scrapingTasks = [
     ...CITTADELLA_SOURCES.map((source) =>
-      scrapeCittadellaSource(source, fetchedAt)
+      withRetry(`Cittadella ${source.id}`, () => scrapeCittadellaSource(source, fetchedAt))
         .then((hospital) => ({ hospitals: [hospital] }))
         .catch((error) => ({
           failure: {
@@ -667,7 +695,7 @@ async function main() {
           }
         }))
     ),
-    scrapeMaurizianoSource()
+    withRetry("Mauriziano", () => scrapeMaurizianoSource())
       .then((hospital) => ({ hospitals: [hospital] }))
       .catch((error) => ({
         failure: {
@@ -676,7 +704,7 @@ async function main() {
           message: error.message
         }
       })),
-    scrapeAslCittaSources()
+    withRetry("ASL Citta di Torino", () => scrapeAslCittaSources())
       .then((hospitals) => ({ hospitals }))
       .catch((error) => ({
         failure: {
@@ -685,7 +713,7 @@ async function main() {
           message: error.message
         }
       })),
-    scrapeSanLuigiSource(fetchedAt)
+    withRetry("San Luigi", () => scrapeSanLuigiSource(fetchedAt))
       .then((hospital) => ({ hospitals: [hospital] }))
       .catch((error) => ({
         failure: {
