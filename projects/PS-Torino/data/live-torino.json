@@ -1,7 +1,7 @@
 {
   "source": "github-actions",
   "sourceLabel": "Snapshot live (GitHub Actions)",
-  "fetchedAt": "2026-03-18T15:27:08.249Z",
+  "fetchedAt": "2026-03-18T15:54:33.584Z",
   "hospitals": [
     {
       "id": "molinette",
@@ -11,11 +11,11 @@
       "rosso": 0,
       "giallo": 0,
       "arancione": 0,
-      "verde": 9,
-      "azzurro": 1,
-      "bianco": 0,
+      "verde": 6,
+      "azzurro": 3,
+      "bianco": 1,
       "total": 10,
-      "updatedAt": "2026-03-18T15:27:08.249Z",
+      "updatedAt": "2026-03-18T15:54:33.584Z",
       "hasData": true,
       "meta": {
         "fetchedFrom": "https://listeps.cittadellasalute.to.it/gtotal.php?id=01090101",
@@ -23,9 +23,9 @@
           "rosso": 0,
           "giallo": 0,
           "arancione": 0,
-          "verde": 21,
-          "azzurro": 21,
-          "bianco": 2
+          "verde": 23,
+          "azzurro": 19,
+          "bianco": 1
         }
       }
     },
@@ -37,11 +37,11 @@
       "rosso": 0,
       "giallo": 0,
       "arancione": 0,
-      "verde": 5,
-      "azzurro": 3,
+      "verde": 6,
+      "azzurro": 4,
       "bianco": 5,
-      "total": 13,
-      "updatedAt": "2026-03-18T15:27:08.249Z",
+      "total": 15,
+      "updatedAt": "2026-03-18T15:54:33.584Z",
       "hasData": true,
       "meta": {
         "fetchedFrom": "https://listeps.cittadellasalute.to.it/gtotal.php?id=01090201",
@@ -49,9 +49,9 @@
           "rosso": 0,
           "giallo": 0,
           "arancione": 0,
-          "verde": 10,
-          "azzurro": 5,
-          "bianco": 6
+          "verde": 9,
+          "azzurro": 4,
+          "bianco": 4
         }
       }
     },
@@ -64,10 +64,10 @@
       "giallo": 0,
       "arancione": 0,
       "verde": 0,
-      "azzurro": 1,
+      "azzurro": 0,
       "bianco": 2,
-      "total": 3,
-      "updatedAt": "2026-03-18T15:27:08.249Z",
+      "total": 2,
+      "updatedAt": "2026-03-18T15:54:33.584Z",
       "hasData": true,
       "meta": {
         "fetchedFrom": "https://listeps.cittadellasalute.to.it/gtotal.php?id=01090301",
@@ -75,8 +75,8 @@
           "rosso": 0,
           "giallo": 0,
           "arancione": 0,
-          "verde": 3,
-          "azzurro": 0,
+          "verde": 2,
+          "azzurro": 1,
           "bianco": 0
         }
       }
@@ -89,11 +89,11 @@
       "rosso": 0,
       "giallo": 0,
       "arancione": 0,
-      "verde": 2,
-      "azzurro": 4,
+      "verde": 4,
+      "azzurro": 8,
       "bianco": 0,
-      "total": 6,
-      "updatedAt": "2026-03-18T15:27:08.249Z",
+      "total": 12,
+      "updatedAt": "2026-03-18T15:54:33.584Z",
       "hasData": true,
       "meta": {
         "fetchedFrom": "https://listeps.cittadellasalute.to.it/gtotal.php?id=01090302",
@@ -101,8 +101,8 @@
           "rosso": 2,
           "giallo": 0,
           "arancione": 0,
-          "verde": 2,
-          "azzurro": 13,
+          "verde": 0,
+          "azzurro": 10,
           "bianco": 0
         }
       }
@@ -117,9 +117,9 @@
       "arancione": 0,
       "verde": 15,
       "azzurro": 2,
-      "bianco": 1,
-      "total": 18,
-      "updatedAt": "2026-03-18T16:20:04+01:00",
+      "bianco": 2,
+      "total": 19,
+      "updatedAt": "2026-03-18T16:50:03+01:00",
       "hasData": true,
       "meta": {
         "fetchedFrom": "https://www.mauriziano.it/i-nostri-servizi/pazienti-in-attesa-presso-pronto-soccorso",
@@ -128,7 +128,7 @@
           "giallo": 0,
           "arancione": 22,
           "verde": 23,
-          "azzurro": 18,
+          "azzurro": 16,
           "bianco": 3
         }
       }
@@ -169,7 +169,7 @@
         "stale": true,
         "staleReason": "Timeout",
         "staleSource": "https://prontosoccorso.aslcittaditorino.it/api/strutture/",
-        "carriedForwardFromSnapshot": "2026-03-18T14:54:28.642Z"
+        "carriedForwardFromSnapshot": "2026-03-18T15:27:08.249Z"
       }
     },
     {
@@ -208,7 +208,7 @@
         "stale": true,
         "staleReason": "Timeout",
         "staleSource": "https://prontosoccorso.aslcittaditorino.it/api/strutture/",
-        "carriedForwardFromSnapshot": "2026-03-18T14:54:28.642Z"
+        "carriedForwardFromSnapshot": "2026-03-18T15:27:08.249Z"
       }
     },
     {
@@ -247,7 +247,7 @@
         "stale": true,
         "staleReason": "Timeout",
         "staleSource": "https://prontosoccorso.aslcittaditorino.it/api/strutture/",
-        "carriedForwardFromSnapshot": "2026-03-18T14:54:28.642Z"
+        "carriedForwardFromSnapshot": "2026-03-18T15:27:08.249Z"
       }
     },
     {
@@ -286,7 +286,7 @@
         "stale": true,
         "staleReason": "Timeout",
         "staleSource": "https://prontosoccorso.aslcittaditorino.it/api/strutture/",
-        "carriedForwardFromSnapshot": "2026-03-18T14:54:28.642Z"
+        "carriedForwardFromSnapshot": "2026-03-18T15:27:08.249Z"
       }
     },
     {
@@ -294,22 +294,22 @@
       "name": "AOU San Luigi Gonzaga di Orbassano",
       "address": "Regione Gonzole 10, Orbassano",
       "mapUrl": "https://www.google.com/maps/search/?api=1&query=AOU%20San%20Luigi%20Gonzaga%20di%20Orbassano%2C%20Regione%20Gonzole%2010%2C%20Orbassano",
-      "rosso": 0,
+      "rosso": 1,
       "giallo": 0,
       "arancione": 1,
-      "verde": 4,
-      "azzurro": 3,
+      "verde": 8,
+      "azzurro": 2,
       "bianco": 0,
-      "total": 8,
-      "updatedAt": "2026-03-18T15:27:08.249Z",
+      "total": 12,
+      "updatedAt": "2026-03-18T15:54:33.584Z",
       "hasData": true,
       "meta": {
         "fetchedFrom": "https://www.sanluigi.piemonte.it/dea-status/ajax-callback?url=api/deaStatus",
         "inVisit": {
           "rosso": 3,
           "giallo": 0,
-          "arancione": 18,
-          "verde": 15,
+          "arancione": 19,
+          "verde": 11,
           "azzurro": 15,
           "bianco": 1
         }
