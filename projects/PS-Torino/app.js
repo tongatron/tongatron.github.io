@@ -65,6 +65,18 @@
     return 0;
   }
 
+  function getPriorityLabel(priority) {
+    if (priority === 0) {
+      return "Dato live";
+    }
+
+    if (priority === 1) {
+      return "Ultimo snapshot";
+    }
+
+    return "Catalogo";
+  }
+
   function compareBySelectedMode(left, right, mode) {
     if (mode === "name") {
       return left.name.localeCompare(right.name, "it");
@@ -259,8 +271,19 @@
     }
 
     const fragment = document.createDocumentFragment();
+    let previousPriority = null;
 
     for (const hospital of hospitals) {
+      const hospitalPriority = getHospitalPriority(hospital);
+
+      if (hospitalPriority !== previousPriority) {
+        const divider = document.createElement("div");
+        divider.className = `hospital-group-divider group-${hospitalPriority}`;
+        divider.textContent = getPriorityLabel(hospitalPriority);
+        fragment.appendChild(divider);
+        previousPriority = hospitalPriority;
+      }
+
       const node = tpl.content.cloneNode(true);
       const row = node.querySelector(".hospital-row");
 
@@ -281,6 +304,7 @@
       statusEl.classList.add(statusConfig.className);
       statusEl.title = statusConfig.title;
       updatedAtEl.textContent = timingConfig.updatedLabel;
+      updatedAtEl.classList.toggle("is-live", hospital.hasData && !timingConfig.isStale);
       updatedAtEl.classList.toggle("is-stale", timingConfig.isStale);
       snapshotAtEl.hidden = !timingConfig.snapshotLabel;
       snapshotAtEl.textContent = timingConfig.snapshotLabel;
