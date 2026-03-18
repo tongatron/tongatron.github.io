@@ -1,7 +1,7 @@
 {
   "source": "github-actions",
   "sourceLabel": "Snapshot live (GitHub Actions)",
-  "fetchedAt": "2026-03-18T05:16:38.200Z",
+  "fetchedAt": "2026-03-18T05:51:36.631Z",
   "hospitals": [
     {
       "id": "molinette",
@@ -15,7 +15,7 @@
       "azzurro": 0,
       "bianco": 2,
       "total": 3,
-      "updatedAt": "2026-03-18T05:16:38.200Z",
+      "updatedAt": "2026-03-18T05:51:36.631Z",
       "hasData": true,
       "meta": {
         "fetchedFrom": "https://listeps.cittadellasalute.to.it/gtotal.php?id=01090101",
@@ -23,8 +23,8 @@
           "rosso": 3,
           "giallo": 0,
           "arancione": 0,
-          "verde": 8,
-          "azzurro": 19,
+          "verde": 7,
+          "azzurro": 20,
           "bianco": 1
         }
       }
@@ -41,7 +41,7 @@
       "azzurro": 0,
       "bianco": 1,
       "total": 1,
-      "updatedAt": "2026-03-18T05:16:38.200Z",
+      "updatedAt": "2026-03-18T05:51:36.631Z",
       "hasData": true,
       "meta": {
         "fetchedFrom": "https://listeps.cittadellasalute.to.it/gtotal.php?id=01090201",
@@ -67,7 +67,7 @@
       "azzurro": 0,
       "bianco": 0,
       "total": 0,
-      "updatedAt": "2026-03-18T05:16:38.200Z",
+      "updatedAt": "2026-03-18T05:51:36.631Z",
       "hasData": true,
       "meta": {
         "fetchedFrom": "https://listeps.cittadellasalute.to.it/gtotal.php?id=01090301",
@@ -93,7 +93,7 @@
       "azzurro": 1,
       "bianco": 0,
       "total": 1,
-      "updatedAt": "2026-03-18T05:16:38.200Z",
+      "updatedAt": "2026-03-18T05:51:36.631Z",
       "hasData": true,
       "meta": {
         "fetchedFrom": "https://listeps.cittadellasalute.to.it/gtotal.php?id=01090302",
@@ -102,7 +102,7 @@
           "giallo": 0,
           "arancione": 0,
           "verde": 0,
-          "azzurro": 6,
+          "azzurro": 7,
           "bianco": 0
         }
       }
@@ -134,7 +134,7 @@
         "stale": true,
         "staleReason": "HTTP 403",
         "staleSource": "https://www.mauriziano.it/i-nostri-servizi/pazienti-in-attesa-presso-pronto-soccorso",
-        "carriedForwardFromSnapshot": "2026-03-18T04:31:29.416Z"
+        "carriedForwardFromSnapshot": "2026-03-18T05:16:38.200Z"
       }
     },
     {
@@ -173,7 +173,7 @@
         "stale": true,
         "staleReason": "Timeout",
         "staleSource": "https://prontosoccorso.aslcittaditorino.it/api/strutture/",
-        "carriedForwardFromSnapshot": "2026-03-18T04:31:29.416Z"
+        "carriedForwardFromSnapshot": "2026-03-18T05:16:38.200Z"
       }
     },
     {
@@ -212,7 +212,7 @@
         "stale": true,
         "staleReason": "Timeout",
         "staleSource": "https://prontosoccorso.aslcittaditorino.it/api/strutture/",
-        "carriedForwardFromSnapshot": "2026-03-18T04:31:29.416Z"
+        "carriedForwardFromSnapshot": "2026-03-18T05:16:38.200Z"
       }
     },
     {
@@ -251,7 +251,7 @@
         "stale": true,
         "staleReason": "Timeout",
         "staleSource": "https://prontosoccorso.aslcittaditorino.it/api/strutture/",
-        "carriedForwardFromSnapshot": "2026-03-18T04:31:29.416Z"
+        "carriedForwardFromSnapshot": "2026-03-18T05:16:38.200Z"
       }
     },
     {
@@ -290,7 +290,7 @@
         "stale": true,
         "staleReason": "Timeout",
         "staleSource": "https://prontosoccorso.aslcittaditorino.it/api/strutture/",
-        "carriedForwardFromSnapshot": "2026-03-18T04:31:29.416Z"
+        "carriedForwardFromSnapshot": "2026-03-18T05:16:38.200Z"
       }
     },
     {
@@ -301,11 +301,11 @@
       "rosso": 0,
       "giallo": 0,
       "arancione": 0,
-      "verde": 1,
+      "verde": 0,
       "azzurro": 0,
       "bianco": 0,
-      "total": 1,
-      "updatedAt": "2026-03-18T05:16:38.200Z",
+      "total": 0,
+      "updatedAt": "2026-03-18T05:51:36.631Z",
       "hasData": true,
       "meta": {
         "fetchedFrom": "https://www.sanluigi.piemonte.it/dea-status/ajax-callback?url=api/deaStatus",
@@ -313,8 +313,8 @@
           "rosso": 4,
           "giallo": 0,
           "arancione": 18,
-          "verde": 12,
-          "azzurro": 14,
+          "verde": 13,
+          "azzurro": 12,
           "bianco": 1
         }
       }
