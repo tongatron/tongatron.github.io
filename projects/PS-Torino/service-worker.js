@@ -1,6 +1,16 @@
-const CACHE_NAME = "ps-torino-v6";
+const CACHE_NAME = "ps-torino-v7";
 const APP_SHELL_URL = new URL("./index.html", self.location.href).toString();
 const LIVE_SNAPSHOT_URL = new URL("./data/live-torino.json", self.location.href).toString();
+const NETWORK_FIRST_URLS = new Set([
+  APP_SHELL_URL,
+  new URL("./styles.css", self.location.href).toString(),
+  new URL("./app.js", self.location.href).toString(),
+  new URL("./api.js", self.location.href).toString(),
+  new URL("./storage.js", self.location.href).toString(),
+  new URL("./config.js", self.location.href).toString(),
+  new URL("./manifest.webmanifest", self.location.href).toString(),
+  LIVE_SNAPSHOT_URL
+]);
 const ASSETS = [
   "./",
   "./index.html",
@@ -36,6 +46,15 @@ self.addEventListener("fetch", (event) => {
   const { request } = event;
   const url = new URL(request.url);
 
+  const updateCache = (networkResponse) => {
+    if (networkResponse.ok && networkResponse.type === "basic") {
+      const responseClone = networkResponse.clone();
+      caches.open(CACHE_NAME).then((cache) => cache.put(request, responseClone));
+    }
+
+    return networkResponse;
+  };
+
   if (request.method !== "GET") {
     return;
   }
@@ -51,16 +70,11 @@ self.addEventListener("fetch", (event) => {
     return;
   }
 
-  if (url.href === LIVE_SNAPSHOT_URL) {
+  if (NETWORK_FIRST_URLS.has(url.href)) {
     event.respondWith(
-      fetch(request).then((networkResponse) => {
-        if (networkResponse.ok && networkResponse.type === "basic") {
-          const responseClone = networkResponse.clone();
-          caches.open(CACHE_NAME).then((cache) => cache.put(request, responseClone));
-        }
-
-        return networkResponse;
-      }).catch(() => caches.match(request))
+      fetch(request)
+        .then(updateCache)
+        .catch(() => caches.match(request))
     );
     return;
   }
@@ -71,14 +85,7 @@ self.addEventListener("fetch", (event) => {
         return cachedResponse;
       }
 
-      return fetch(request).then((networkResponse) => {
-        if (networkResponse.ok && networkResponse.type === "basic") {
-          const responseClone = networkResponse.clone();
-          caches.open(CACHE_NAME).then((cache) => cache.put(request, responseClone));
-        }
-
-        return networkResponse;
-      });
+      return fetch(request).then(updateCache);
     })
   );
 });
