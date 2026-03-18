@@ -320,32 +320,11 @@ select {
   padding: 0 14px;
 }
 
-.toggle-row {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding: 12px 14px;
-  border-radius: 14px;
-  background: rgba(39, 45, 44, 0.92);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.toggle-row input {
-  inline-size: 18px;
-  block-size: 18px;
-  accent-color: var(--gold);
-}
-
 .status-filter-group {
   display: flex;
   align-items: center;
   gap: 10px;
   flex-wrap: wrap;
-}
-
-.status-filter-label {
-  font-size: 0.84rem;
-  color: var(--muted);
 }
 
 .status-filter-chip {

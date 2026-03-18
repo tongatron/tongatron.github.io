@@ -18,7 +18,6 @@
   const sortSelect = document.getElementById("sortSelect");
   const showLiveData = document.getElementById("showLiveData");
   const showSnapshotData = document.getElementById("showSnapshotData");
-  const onlyOpenNow = document.getElementById("onlyOpenNow");
   const lastUpdatedEl = document.getElementById("lastUpdated");
   const sourceLabelEl = document.getElementById("sourceLabel");
   const statusLabelEl = document.getElementById("statusLabel");
@@ -173,7 +172,7 @@
 
   function matchesDataStateFilters(hospital) {
     if (!hospital.hasData) {
-      return !onlyOpenNow.checked;
+      return false;
     }
 
     if (hospital.meta && hospital.meta.stale) {
@@ -263,10 +262,6 @@
 
     let hospitals = snapshot && Array.isArray(snapshot.hospitals) ? snapshot.hospitals : [];
 
-    if (onlyOpenNow.checked) {
-      hospitals = hospitals.filter((hospital) => hospital.hasData);
-    }
-
     hospitals = hospitals.filter((hospital) => matchesDataStateFilters(hospital));
 
     const searchQuery = normalizeText(searchInput.value);
@@ -280,9 +275,7 @@
         ? "Nessuna struttura corrisponde alla ricerca."
         : !showLiveData.checked && !showSnapshotData.checked
           ? "Attiva almeno un filtro tra Dato live e Ultimo snapshot."
-        : onlyOpenNow.checked
-          ? "Nessuna struttura corrisponde ai filtri selezionati."
-          : "Nessun dato disponibile.";
+          : "Nessuna struttura corrisponde ai filtri selezionati.";
 
       listEl.innerHTML = `<div class="empty-state">${emptyMessage}</div>`;
       return;
@@ -447,11 +440,6 @@
     }
   });
   showSnapshotData.addEventListener("change", () => {
-    if (currentSnapshot) {
-      render(currentSnapshot);
-    }
-  });
-  onlyOpenNow.addEventListener("change", () => {
     if (currentSnapshot) {
       render(currentSnapshot);
     }
