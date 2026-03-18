@@ -1,7 +1,11 @@
 {
   "source": "github-actions",
   "sourceLabel": "Snapshot live (GitHub Actions)",
+<<<<<<< HEAD
   "fetchedAt": "2026-03-18T22:23:50.946Z",
+=======
+  "fetchedAt": "2026-03-18T22:24:37.234Z",
+>>>>>>> b15ea147231a279ba43e028c406dd17ced7d6a9a
   "hospitals": [
     {
       "id": "molinette",
@@ -15,7 +19,11 @@
       "azzurro": 0,
       "bianco": 0,
       "total": 3,
+<<<<<<< HEAD
       "updatedAt": "2026-03-18T22:23:50.946Z",
+=======
+      "updatedAt": "2026-03-18T22:24:37.234Z",
+>>>>>>> b15ea147231a279ba43e028c406dd17ced7d6a9a
       "hasData": true,
       "meta": {
         "fetchedFrom": "https://listeps.cittadellasalute.to.it/gtotal.php?id=01090101",
@@ -41,7 +49,11 @@
       "azzurro": 0,
       "bianco": 0,
       "total": 3,
+<<<<<<< HEAD
       "updatedAt": "2026-03-18T22:23:50.946Z",
+=======
+      "updatedAt": "2026-03-18T22:24:37.234Z",
+>>>>>>> b15ea147231a279ba43e028c406dd17ced7d6a9a
       "hasData": true,
       "meta": {
         "fetchedFrom": "https://listeps.cittadellasalute.to.it/gtotal.php?id=01090201",
@@ -67,7 +79,11 @@
       "azzurro": 1,
       "bianco": 2,
       "total": 5,
+<<<<<<< HEAD
       "updatedAt": "2026-03-18T22:23:50.946Z",
+=======
+      "updatedAt": "2026-03-18T22:24:37.234Z",
+>>>>>>> b15ea147231a279ba43e028c406dd17ced7d6a9a
       "hasData": true,
       "meta": {
         "fetchedFrom": "https://listeps.cittadellasalute.to.it/gtotal.php?id=01090301",
@@ -93,7 +109,11 @@
       "azzurro": 2,
       "bianco": 0,
       "total": 7,
+<<<<<<< HEAD
       "updatedAt": "2026-03-18T22:23:50.946Z",
+=======
+      "updatedAt": "2026-03-18T22:24:37.234Z",
+>>>>>>> b15ea147231a279ba43e028c406dd17ced7d6a9a
       "hasData": true,
       "meta": {
         "fetchedFrom": "https://listeps.cittadellasalute.to.it/gtotal.php?id=01090302",
@@ -161,11 +181,23 @@
         "meanWaitMinutes": {
           "rosso": 0,
           "giallo": 0,
+<<<<<<< HEAD
           "arancione": 10,
           "verde": 130,
           "azzurro": 20,
           "bianco": 0
         }
+=======
+          "arancione": 20,
+          "verde": 20,
+          "azzurro": 50,
+          "bianco": 10
+        },
+        "stale": true,
+        "staleReason": "Timeout",
+        "staleSource": "https://prontosoccorso.aslcittaditorino.it/api/strutture/",
+        "carriedForwardFromSnapshot": "2026-03-18T22:07:33.343Z"
+>>>>>>> b15ea147231a279ba43e028c406dd17ced7d6a9a
       }
     },
     {
@@ -197,10 +229,21 @@
           "rosso": 0,
           "giallo": 0,
           "arancione": 0,
+<<<<<<< HEAD
           "verde": 40,
           "azzurro": 50,
           "bianco": 20
         }
+=======
+          "verde": 10,
+          "azzurro": 0,
+          "bianco": 0
+        },
+        "stale": true,
+        "staleReason": "Timeout",
+        "staleSource": "https://prontosoccorso.aslcittaditorino.it/api/strutture/",
+        "carriedForwardFromSnapshot": "2026-03-18T22:07:33.343Z"
+>>>>>>> b15ea147231a279ba43e028c406dd17ced7d6a9a
       }
     },
     {
@@ -235,7 +278,15 @@
           "verde": 0,
           "azzurro": 0,
           "bianco": 0
+<<<<<<< HEAD
         }
+=======
+        },
+        "stale": true,
+        "staleReason": "Timeout",
+        "staleSource": "https://prontosoccorso.aslcittaditorino.it/api/strutture/",
+        "carriedForwardFromSnapshot": "2026-03-18T22:07:33.343Z"
+>>>>>>> b15ea147231a279ba43e028c406dd17ced7d6a9a
       }
     },
     {
@@ -267,10 +318,21 @@
           "rosso": 0,
           "giallo": 0,
           "arancione": 0,
+<<<<<<< HEAD
           "verde": 20,
           "azzurro": 20,
           "bianco": 30
         }
+=======
+          "verde": 80,
+          "azzurro": 0,
+          "bianco": 0
+        },
+        "stale": true,
+        "staleReason": "Timeout",
+        "staleSource": "https://prontosoccorso.aslcittaditorino.it/api/strutture/",
+        "carriedForwardFromSnapshot": "2026-03-18T22:07:33.343Z"
+>>>>>>> b15ea147231a279ba43e028c406dd17ced7d6a9a
       }
     },
     {
@@ -285,7 +347,11 @@
       "azzurro": 0,
       "bianco": 0,
       "total": 0,
+<<<<<<< HEAD
       "updatedAt": "2026-03-18T22:23:50.946Z",
+=======
+      "updatedAt": "2026-03-18T22:24:37.234Z",
+>>>>>>> b15ea147231a279ba43e028c406dd17ced7d6a9a
       "hasData": true,
       "meta": {
         "fetchedFrom": "https://www.sanluigi.piemonte.it/dea-status/ajax-callback?url=api/deaStatus",
