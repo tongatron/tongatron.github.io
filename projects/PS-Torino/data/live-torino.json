@@ -1,7 +1,7 @@
 {
   "source": "github-actions",
   "sourceLabel": "Snapshot live (GitHub Actions)",
-  "fetchedAt": "2026-03-18T21:11:08.359Z",
+  "fetchedAt": "2026-03-18T21:26:14.353Z",
   "hospitals": [
     {
       "id": "molinette",
@@ -11,11 +11,11 @@
       "rosso": 0,
       "giallo": 0,
       "arancione": 0,
-      "verde": 5,
-      "azzurro": 2,
+      "verde": 4,
+      "azzurro": 1,
       "bianco": 0,
-      "total": 7,
-      "updatedAt": "2026-03-18T21:11:08.359Z",
+      "total": 5,
+      "updatedAt": "2026-03-18T21:26:14.353Z",
       "hasData": true,
       "meta": {
         "fetchedFrom": "https://listeps.cittadellasalute.to.it/gtotal.php?id=01090101",
@@ -23,8 +23,8 @@
           "rosso": 2,
           "giallo": 0,
           "arancione": 0,
-          "verde": 14,
-          "azzurro": 18,
+          "verde": 15,
+          "azzurro": 19,
           "bianco": 0
         }
       }
@@ -37,11 +37,11 @@
       "rosso": 0,
       "giallo": 0,
       "arancione": 0,
-      "verde": 3,
+      "verde": 1,
       "azzurro": 1,
       "bianco": 0,
-      "total": 4,
-      "updatedAt": "2026-03-18T21:11:08.359Z",
+      "total": 2,
+      "updatedAt": "2026-03-18T21:26:14.353Z",
       "hasData": true,
       "meta": {
         "fetchedFrom": "https://listeps.cittadellasalute.to.it/gtotal.php?id=01090201",
@@ -49,9 +49,9 @@
           "rosso": 0,
           "giallo": 0,
           "arancione": 0,
-          "verde": 9,
-          "azzurro": 7,
-          "bianco": 2
+          "verde": 10,
+          "azzurro": 8,
+          "bianco": 0
         }
       }
     },
@@ -63,11 +63,11 @@
       "rosso": 0,
       "giallo": 0,
       "arancione": 0,
-      "verde": 4,
+      "verde": 3,
       "azzurro": 1,
-      "bianco": 1,
+      "bianco": 2,
       "total": 6,
-      "updatedAt": "2026-03-18T21:11:08.359Z",
+      "updatedAt": "2026-03-18T21:26:14.353Z",
       "hasData": true,
       "meta": {
         "fetchedFrom": "https://listeps.cittadellasalute.to.it/gtotal.php?id=01090301",
@@ -89,11 +89,11 @@
       "rosso": 0,
       "giallo": 0,
       "arancione": 0,
-      "verde": 7,
+      "verde": 8,
       "azzurro": 3,
       "bianco": 0,
-      "total": 10,
-      "updatedAt": "2026-03-18T21:11:08.359Z",
+      "total": 11,
+      "updatedAt": "2026-03-18T21:26:14.353Z",
       "hasData": true,
       "meta": {
         "fetchedFrom": "https://listeps.cittadellasalute.to.it/gtotal.php?id=01090302",
@@ -134,7 +134,7 @@
         "stale": true,
         "staleReason": "HTTP 403",
         "staleSource": "https://www.mauriziano.it/i-nostri-servizi/pazienti-in-attesa-presso-pronto-soccorso",
-        "carriedForwardFromSnapshot": "2026-03-18T20:45:25.593Z"
+        "carriedForwardFromSnapshot": "2026-03-18T21:11:08.359Z"
       }
     },
     {
@@ -173,7 +173,7 @@
         "stale": true,
         "staleReason": "Timeout",
         "staleSource": "https://prontosoccorso.aslcittaditorino.it/api/strutture/",
-        "carriedForwardFromSnapshot": "2026-03-18T20:45:25.593Z"
+        "carriedForwardFromSnapshot": "2026-03-18T21:11:08.359Z"
       }
     },
     {
@@ -212,7 +212,7 @@
         "stale": true,
         "staleReason": "Timeout",
         "staleSource": "https://prontosoccorso.aslcittaditorino.it/api/strutture/",
-        "carriedForwardFromSnapshot": "2026-03-18T20:45:25.593Z"
+        "carriedForwardFromSnapshot": "2026-03-18T21:11:08.359Z"
       }
     },
     {
@@ -251,7 +251,7 @@
         "stale": true,
         "staleReason": "Timeout",
         "staleSource": "https://prontosoccorso.aslcittaditorino.it/api/strutture/",
-        "carriedForwardFromSnapshot": "2026-03-18T20:45:25.593Z"
+        "carriedForwardFromSnapshot": "2026-03-18T21:11:08.359Z"
       }
     },
     {
@@ -290,7 +290,7 @@
         "stale": true,
         "staleReason": "Timeout",
         "staleSource": "https://prontosoccorso.aslcittaditorino.it/api/strutture/",
-        "carriedForwardFromSnapshot": "2026-03-18T20:45:25.593Z"
+        "carriedForwardFromSnapshot": "2026-03-18T21:11:08.359Z"
       }
     },
     {
@@ -301,19 +301,19 @@
       "rosso": 1,
       "giallo": 0,
       "arancione": 0,
-      "verde": 4,
-      "azzurro": 1,
+      "verde": 3,
+      "azzurro": 2,
       "bianco": 0,
       "total": 6,
-      "updatedAt": "2026-03-18T21:11:08.359Z",
+      "updatedAt": "2026-03-18T21:26:14.353Z",
       "hasData": true,
       "meta": {
         "fetchedFrom": "https://www.sanluigi.piemonte.it/dea-status/ajax-callback?url=api/deaStatus",
         "inVisit": {
           "rosso": 2,
           "giallo": 0,
-          "arancione": 16,
-          "verde": 9,
+          "arancione": 17,
+          "verde": 10,
           "azzurro": 14,
           "bianco": 1
         }
