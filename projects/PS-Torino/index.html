@@ -7,6 +7,9 @@
   <meta name="description" content="Liste di attesa dei Pronto Soccorso di Torino" />
   <title>PS Torino</title>
 
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@400;600;700&display=swap" rel="stylesheet" />
   <link rel="manifest" href="./manifest.webmanifest" />
   <link rel="stylesheet" href="./styles.css" />
   <link rel="apple-touch-icon" href="./icons/icon-192.png" />
@@ -51,60 +54,9 @@
               TEST
             </a>
 
-            <label class="search-field" for="searchInput">
-              <span class="search-label">Cerca presidio</span>
-              <span class="search-input-wrap">
-                <svg class="search-icon" viewBox="0 0 24 24" aria-hidden="true">
-                  <circle cx="11" cy="11" r="6.5"></circle>
-                  <path d="M16.2 16.2L21 21"></path>
-                </svg>
-                <input id="searchInput" type="search" placeholder="Molinette, Mauriziano, Orbassano..." autocomplete="off" />
-              </span>
-            </label>
-
             <button id="refreshBtn" class="btn" type="button">Aggiorna</button>
           </div>
         </div>
-
-        <section class="meta-grid">
-          <div class="meta-card">
-            <span class="meta-label">Ultimo aggiornamento</span>
-            <strong id="lastUpdated">—</strong>
-          </div>
-          <div class="meta-card">
-            <span class="meta-label">Fonte</span>
-            <strong id="sourceLabel">—</strong>
-          </div>
-          <div class="meta-card">
-            <span class="meta-label">Stato</span>
-            <strong id="statusLabel">In attesa</strong>
-          </div>
-          <div class="meta-card">
-            <span class="meta-label">Strutture visibili</span>
-            <strong id="visibleCount">—</strong>
-          </div>
-          <div class="meta-card">
-            <span class="meta-label">Copertura live</span>
-            <strong id="coverageLabel">—</strong>
-          </div>
-        </section>
-
-        <section class="toolbar">
-          <label class="field">
-            <span>Ordina per</span>
-            <select id="sortSelect">
-              <option value="total">Totale attese</option>
-              <option value="name">Nome</option>
-              <option value="distance">Distanza da me</option>
-              <option value="red">Codice rosso</option>
-              <option value="orange">Codice arancione</option>
-              <option value="green">Codice verde</option>
-              <option value="blue">Codice azzurro</option>
-            </select>
-          </label>
-
-          <button id="locationBtn" class="btn toolbar-btn location-btn" type="button">Usa posizione</button>
-        </section>
 
         <section class="table-shell">
           <div class="table-head" aria-hidden="true">

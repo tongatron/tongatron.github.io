@@ -138,7 +138,9 @@
   }
 
   function setStatus(text) {
-    statusLabelEl.textContent = text;
+    if (statusLabelEl) {
+      statusLabelEl.textContent = text;
+    }
   }
 
   function setRuntimeNotice(text) {
@@ -151,8 +153,11 @@
   }
 
   function setLoading(isLoading) {
-    refreshBtn.disabled = isLoading;
-    refreshBtn.textContent = isLoading ? "Aggiorno..." : "Aggiorna";
+    if (refreshBtn) {
+      refreshBtn.disabled = isLoading;
+      refreshBtn.textContent = isLoading ? "Aggiorno..." : "Aggiorna";
+    }
+
     listEl.setAttribute("aria-busy", String(isLoading));
   }
 
@@ -181,10 +186,21 @@
 
     coverageParts.push(`${catalogHospitals} catalogo`);
 
-    lastUpdatedEl.textContent = formatDate(snapshot && snapshot.fetchedAt ? snapshot.fetchedAt : loadLastSync());
-    sourceLabelEl.textContent = snapshot && snapshot.sourceLabel ? snapshot.sourceLabel : "—";
-    visibleCountEl.textContent = `${visibleHospitals.length} / ${allHospitals.length}`;
-    coverageLabelEl.textContent = coverageParts.join(" · ");
+    if (lastUpdatedEl) {
+      lastUpdatedEl.textContent = formatDate(snapshot && snapshot.fetchedAt ? snapshot.fetchedAt : loadLastSync());
+    }
+
+    if (sourceLabelEl) {
+      sourceLabelEl.textContent = snapshot && snapshot.sourceLabel ? snapshot.sourceLabel : "—";
+    }
+
+    if (visibleCountEl) {
+      visibleCountEl.textContent = `${visibleHospitals.length} / ${allHospitals.length}`;
+    }
+
+    if (coverageLabelEl) {
+      coverageLabelEl.textContent = coverageParts.join(" · ");
+    }
   }
 
   function getHospitalStatus(hospital) {
@@ -249,9 +265,9 @@
     let hospitals = (snapshot && Array.isArray(snapshot.hospitals) ? snapshot.hospitals : [])
       .filter((hospital) => hospital.hasData);
 
-    const searchQuery = normalizeText(searchInput.value);
+    const searchQuery = normalizeText(searchInput ? searchInput.value : "");
     hospitals = hospitals.filter((hospital) => matchesSearch(hospital, searchQuery));
-    hospitals = sortHospitals(hospitals, sortSelect.value);
+    hospitals = sortHospitals(hospitals, sortSelect ? sortSelect.value : "total");
 
     updateSummary(snapshot, hospitals);
 
@@ -395,10 +411,23 @@
     } catch (error) {
       console.error(error);
       listEl.innerHTML = '<div class="empty-state">Impossibile caricare i dati.</div>';
-      sourceLabelEl.textContent = "—";
-      lastUpdatedEl.textContent = formatDate(loadLastSync());
-      visibleCountEl.textContent = "—";
-      coverageLabelEl.textContent = "—";
+
+      if (sourceLabelEl) {
+        sourceLabelEl.textContent = "—";
+      }
+
+      if (lastUpdatedEl) {
+        lastUpdatedEl.textContent = formatDate(loadLastSync());
+      }
+
+      if (visibleCountEl) {
+        visibleCountEl.textContent = "—";
+      }
+
+      if (coverageLabelEl) {
+        coverageLabelEl.textContent = "—";
+      }
+
       setStatus("Errore");
       setRuntimeNotice("Il bootstrap JavaScript e terminato, ma non e stato possibile caricare ne API, ne cache, ne mock.");
     } finally {
@@ -406,17 +435,25 @@
     }
   }
 
-  refreshBtn.addEventListener("click", loadData);
-  searchInput.addEventListener("input", () => {
-    if (currentSnapshot) {
-      render(currentSnapshot);
-    }
-  });
-  sortSelect.addEventListener("change", () => {
-    if (currentSnapshot) {
-      render(currentSnapshot);
-    }
-  });
+  if (refreshBtn) {
+    refreshBtn.addEventListener("click", loadData);
+  }
+
+  if (searchInput) {
+    searchInput.addEventListener("input", () => {
+      if (currentSnapshot) {
+        render(currentSnapshot);
+      }
+    });
+  }
+
+  if (sortSelect) {
+    sortSelect.addEventListener("change", () => {
+      if (currentSnapshot) {
+        render(currentSnapshot);
+      }
+    });
+  }
 
   global.addEventListener("offline", () => {
     if (currentSnapshot) {

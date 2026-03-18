@@ -31,7 +31,7 @@ body {
 
 body {
   min-height: 100vh;
-  font-family: "Avenir Next", Avenir, "Segoe UI", sans-serif;
+  font-family: "Titillium Web", "Segoe UI", sans-serif;
   color: var(--text);
   background:
     radial-gradient(circle at top center, rgba(255, 255, 255, 0.08), transparent 18rem),
@@ -159,7 +159,6 @@ h1 span {
   justify-content: flex-end;
   gap: 14px;
   flex-wrap: wrap;
-  min-width: min(42vw, 530px);
 }
 
 .tag-link {
@@ -191,38 +190,6 @@ h1 span {
   border-color: rgba(243, 207, 69, 0.7);
 }
 
-.search-field {
-  min-width: min(100%, 420px);
-  display: grid;
-  gap: 8px;
-}
-
-.search-label {
-  font-size: 0.84rem;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: var(--muted);
-}
-
-.search-input-wrap {
-  position: relative;
-  display: flex;
-  align-items: center;
-}
-
-.search-icon {
-  position: absolute;
-  left: 16px;
-  width: 24px;
-  height: 24px;
-  fill: none;
-  stroke: #c6ceca;
-  stroke-width: 2;
-  stroke-linecap: round;
-}
-
-input[type="search"],
-select,
 .btn {
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 14px;
@@ -231,19 +198,6 @@ select,
   font: inherit;
 }
 
-input[type="search"] {
-  width: 100%;
-  min-height: 66px;
-  padding: 0 18px 0 52px;
-  outline: none;
-}
-
-input[type="search"]::placeholder {
-  color: rgba(223, 227, 224, 0.52);
-}
-
-input[type="search"]:focus,
-select:focus,
 .btn:focus-visible {
   border-color: rgba(243, 207, 69, 0.55);
   outline: none;
@@ -266,58 +220,6 @@ select:focus,
 .btn:disabled {
   cursor: progress;
   opacity: 0.7;
-}
-
-.meta-grid {
-  display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 12px;
-  padding: 0 28px 18px;
-}
-
-.meta-card {
-  padding: 16px 18px;
-  border-radius: 18px;
-  background: rgba(39, 45, 44, 0.95);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  display: grid;
-  gap: 6px;
-  min-height: 88px;
-}
-
-.meta-label {
-  font-size: 0.8rem;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-}
-
-.meta-card strong {
-  font-size: 1.06rem;
-  line-height: 1.2;
-}
-
-.toolbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 14px;
-  flex-wrap: wrap;
-  padding: 0 28px 18px;
-}
-
-.field {
-  display: grid;
-  gap: 8px;
-}
-
-.field span {
-  font-size: 0.84rem;
-  color: var(--muted);
-}
-
-select {
-  min-height: 46px;
-  padding: 0 14px;
 }
 
 .table-shell {
