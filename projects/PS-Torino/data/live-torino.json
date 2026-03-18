@@ -1,11 +1,7 @@
 {
   "source": "github-actions",
   "sourceLabel": "Snapshot live (GitHub Actions)",
-<<<<<<< HEAD
-  "fetchedAt": "2026-03-18T22:23:50.946Z",
-=======
-  "fetchedAt": "2026-03-18T22:24:37.234Z",
->>>>>>> b15ea147231a279ba43e028c406dd17ced7d6a9a
+  "fetchedAt": "2026-03-18T22:32:09.242Z",
   "hospitals": [
     {
       "id": "molinette",
@@ -15,20 +11,16 @@
       "rosso": 0,
       "giallo": 0,
       "arancione": 0,
-      "verde": 3,
+      "verde": 2,
       "azzurro": 0,
       "bianco": 0,
-      "total": 3,
-<<<<<<< HEAD
-      "updatedAt": "2026-03-18T22:23:50.946Z",
-=======
-      "updatedAt": "2026-03-18T22:24:37.234Z",
->>>>>>> b15ea147231a279ba43e028c406dd17ced7d6a9a
+      "total": 2,
+      "updatedAt": "2026-03-18T22:32:09.242Z",
       "hasData": true,
       "meta": {
         "fetchedFrom": "https://listeps.cittadellasalute.to.it/gtotal.php?id=01090101",
         "inVisit": {
-          "rosso": 2,
+          "rosso": 1,
           "giallo": 0,
           "arancione": 0,
           "verde": 16,
@@ -45,15 +37,11 @@
       "rosso": 0,
       "giallo": 0,
       "arancione": 0,
-      "verde": 3,
+      "verde": 4,
       "azzurro": 0,
       "bianco": 0,
-      "total": 3,
-<<<<<<< HEAD
-      "updatedAt": "2026-03-18T22:23:50.946Z",
-=======
-      "updatedAt": "2026-03-18T22:24:37.234Z",
->>>>>>> b15ea147231a279ba43e028c406dd17ced7d6a9a
+      "total": 4,
+      "updatedAt": "2026-03-18T22:32:09.242Z",
       "hasData": true,
       "meta": {
         "fetchedFrom": "https://listeps.cittadellasalute.to.it/gtotal.php?id=01090201",
@@ -61,8 +49,8 @@
           "rosso": 0,
           "giallo": 0,
           "arancione": 0,
-          "verde": 8,
-          "azzurro": 5,
+          "verde": 7,
+          "azzurro": 3,
           "bianco": 0
         }
       }
@@ -76,14 +64,10 @@
       "giallo": 0,
       "arancione": 0,
       "verde": 2,
-      "azzurro": 1,
+      "azzurro": 0,
       "bianco": 2,
-      "total": 5,
-<<<<<<< HEAD
-      "updatedAt": "2026-03-18T22:23:50.946Z",
-=======
-      "updatedAt": "2026-03-18T22:24:37.234Z",
->>>>>>> b15ea147231a279ba43e028c406dd17ced7d6a9a
+      "total": 4,
+      "updatedAt": "2026-03-18T22:32:09.242Z",
       "hasData": true,
       "meta": {
         "fetchedFrom": "https://listeps.cittadellasalute.to.it/gtotal.php?id=01090301",
@@ -92,7 +76,7 @@
           "giallo": 0,
           "arancione": 0,
           "verde": 0,
-          "azzurro": 0,
+          "azzurro": 1,
           "bianco": 0
         }
       }
@@ -105,15 +89,11 @@
       "rosso": 0,
       "giallo": 0,
       "arancione": 0,
-      "verde": 5,
-      "azzurro": 2,
+      "verde": 2,
+      "azzurro": 3,
       "bianco": 0,
-      "total": 7,
-<<<<<<< HEAD
-      "updatedAt": "2026-03-18T22:23:50.946Z",
-=======
-      "updatedAt": "2026-03-18T22:24:37.234Z",
->>>>>>> b15ea147231a279ba43e028c406dd17ced7d6a9a
+      "total": 5,
+      "updatedAt": "2026-03-18T22:32:09.242Z",
       "hasData": true,
       "meta": {
         "fetchedFrom": "https://listeps.cittadellasalute.to.it/gtotal.php?id=01090302",
@@ -134,19 +114,19 @@
       "mapUrl": "https://www.google.com/maps/search/?api=1&query=Ospedale%20Mauriziano%20Umberto%20I%2C%20Largo%20Filippo%20Turati%2062%2C%20Torino",
       "rosso": 0,
       "giallo": 0,
-      "arancione": 1,
+      "arancione": 0,
       "verde": 13,
       "azzurro": 1,
       "bianco": 2,
-      "total": 17,
-      "updatedAt": "2026-03-18T23:20:04+01:00",
+      "total": 16,
+      "updatedAt": "2026-03-18T23:30:04+01:00",
       "hasData": true,
       "meta": {
         "fetchedFrom": "https://www.mauriziano.it/i-nostri-servizi/pazienti-in-attesa-presso-pronto-soccorso",
         "inVisit": {
           "rosso": 0,
           "giallo": 0,
-          "arancione": 24,
+          "arancione": 25,
           "verde": 20,
           "azzurro": 21,
           "bianco": 6
@@ -165,7 +145,7 @@
       "azzurro": 2,
       "bianco": 0,
       "total": 16,
-      "updatedAt": "2026-03-18T22:20:01.221+00:00",
+      "updatedAt": "2026-03-18T22:30:04.795+00:00",
       "hasData": true,
       "meta": {
         "fetchedFrom": "https://prontosoccorso.aslcittaditorino.it/api/strutture/",
@@ -174,30 +154,18 @@
           "rosso": 6,
           "giallo": 0,
           "arancione": 30,
-          "verde": 32,
-          "azzurro": 16,
+          "verde": 29,
+          "azzurro": 15,
           "bianco": 1
         },
         "meanWaitMinutes": {
           "rosso": 0,
           "giallo": 0,
-<<<<<<< HEAD
           "arancione": 10,
           "verde": 130,
           "azzurro": 20,
           "bianco": 0
         }
-=======
-          "arancione": 20,
-          "verde": 20,
-          "azzurro": 50,
-          "bianco": 10
-        },
-        "stale": true,
-        "staleReason": "Timeout",
-        "staleSource": "https://prontosoccorso.aslcittaditorino.it/api/strutture/",
-        "carriedForwardFromSnapshot": "2026-03-18T22:07:33.343Z"
->>>>>>> b15ea147231a279ba43e028c406dd17ced7d6a9a
       }
     },
     {
@@ -208,11 +176,11 @@
       "rosso": 0,
       "giallo": 0,
       "arancione": 0,
-      "verde": 4,
-      "azzurro": 5,
-      "bianco": 2,
-      "total": 11,
-      "updatedAt": "2026-03-18T22:20:01.349+00:00",
+      "verde": 5,
+      "azzurro": 3,
+      "bianco": 1,
+      "total": 9,
+      "updatedAt": "2026-03-18T22:30:05.286+00:00",
       "hasData": true,
       "meta": {
         "fetchedFrom": "https://prontosoccorso.aslcittaditorino.it/api/strutture/",
@@ -220,30 +188,19 @@
         "inVisit": {
           "rosso": 4,
           "giallo": 0,
-          "arancione": 19,
-          "verde": 25,
+          "arancione": 18,
+          "verde": 27,
           "azzurro": 17,
-          "bianco": 4
+          "bianco": 3
         },
         "meanWaitMinutes": {
           "rosso": 0,
           "giallo": 0,
           "arancione": 0,
-<<<<<<< HEAD
-          "verde": 40,
-          "azzurro": 50,
-          "bianco": 20
+          "verde": 50,
+          "azzurro": 30,
+          "bianco": 10
         }
-=======
-          "verde": 10,
-          "azzurro": 0,
-          "bianco": 0
-        },
-        "stale": true,
-        "staleReason": "Timeout",
-        "staleSource": "https://prontosoccorso.aslcittaditorino.it/api/strutture/",
-        "carriedForwardFromSnapshot": "2026-03-18T22:07:33.343Z"
->>>>>>> b15ea147231a279ba43e028c406dd17ced7d6a9a
       }
     },
     {
@@ -258,7 +215,7 @@
       "azzurro": 0,
       "bianco": 0,
       "total": 0,
-      "updatedAt": "2026-03-18T22:20:01.530+00:00",
+      "updatedAt": "2026-03-18T22:30:06.142+00:00",
       "hasData": true,
       "meta": {
         "fetchedFrom": "https://prontosoccorso.aslcittaditorino.it/api/strutture/",
@@ -278,15 +235,7 @@
           "verde": 0,
           "azzurro": 0,
           "bianco": 0
-<<<<<<< HEAD
         }
-=======
-        },
-        "stale": true,
-        "staleReason": "Timeout",
-        "staleSource": "https://prontosoccorso.aslcittaditorino.it/api/strutture/",
-        "carriedForwardFromSnapshot": "2026-03-18T22:07:33.343Z"
->>>>>>> b15ea147231a279ba43e028c406dd17ced7d6a9a
       }
     },
     {
@@ -297,11 +246,11 @@
       "rosso": 0,
       "giallo": 0,
       "arancione": 0,
-      "verde": 2,
-      "azzurro": 2,
+      "verde": 1,
+      "azzurro": 1,
       "bianco": 3,
-      "total": 7,
-      "updatedAt": "2026-03-18T22:20:00.889+00:00",
+      "total": 5,
+      "updatedAt": "2026-03-18T22:30:00.482+00:00",
       "hasData": true,
       "meta": {
         "fetchedFrom": "https://prontosoccorso.aslcittaditorino.it/api/strutture/",
@@ -312,27 +261,16 @@
           "arancione": 19,
           "verde": 18,
           "azzurro": 16,
-          "bianco": 7
+          "bianco": 6
         },
         "meanWaitMinutes": {
           "rosso": 0,
           "giallo": 0,
           "arancione": 0,
-<<<<<<< HEAD
-          "verde": 20,
-          "azzurro": 20,
+          "verde": 10,
+          "azzurro": 10,
           "bianco": 30
         }
-=======
-          "verde": 80,
-          "azzurro": 0,
-          "bianco": 0
-        },
-        "stale": true,
-        "staleReason": "Timeout",
-        "staleSource": "https://prontosoccorso.aslcittaditorino.it/api/strutture/",
-        "carriedForwardFromSnapshot": "2026-03-18T22:07:33.343Z"
->>>>>>> b15ea147231a279ba43e028c406dd17ced7d6a9a
       }
     },
     {
@@ -347,11 +285,7 @@
       "azzurro": 0,
       "bianco": 0,
       "total": 0,
-<<<<<<< HEAD
-      "updatedAt": "2026-03-18T22:23:50.946Z",
-=======
-      "updatedAt": "2026-03-18T22:24:37.234Z",
->>>>>>> b15ea147231a279ba43e028c406dd17ced7d6a9a
+      "updatedAt": "2026-03-18T22:32:09.242Z",
       "hasData": true,
       "meta": {
         "fetchedFrom": "https://www.sanluigi.piemonte.it/dea-status/ajax-callback?url=api/deaStatus",
