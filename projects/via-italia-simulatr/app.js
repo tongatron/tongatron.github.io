@@ -22,6 +22,13 @@ const fallbackRoute = [
   [45.5678106, 8.0537744]
 ];
 
+const italyBounds = [
+  [36.55, 6.35],
+  [47.2, 18.8]
+];
+
+const italyGeoJsonUrl = "https://inmagik.github.io/world-countries/countries/ITA.geojson";
+
 const scenicSpots = [
   {
     index: 0,
@@ -240,7 +247,9 @@ const state = {
   routeLine: null,
   playerMarker: null,
   finishMarker: null,
-  npcMarkers: new Map()
+  npcMarkers: new Map(),
+  italyMaskLayer: null,
+  italyOutlineLayer: null
 };
 
 const elements = {
@@ -273,7 +282,11 @@ const elements = {
 function createMap() {
   state.map = L.map("map", {
     zoomControl: false,
-    scrollWheelZoom: true
+    scrollWheelZoom: true,
+    worldCopyJump: false,
+    maxBounds: italyBounds,
+    maxBoundsViscosity: 1,
+    minZoom: 6
   });
 
   L.control
@@ -284,6 +297,9 @@ function createMap() {
 
   L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
     maxZoom: 19,
+    minZoom: 6,
+    bounds: italyBounds,
+    noWrap: true,
     attribution: "&copy; OpenStreetMap contributors"
   }).addTo(state.map);
 
@@ -333,6 +349,7 @@ function drawRoute() {
   });
 
   drawNpcMarkers();
+  bringGameplayLayersToFront();
 }
 
 function drawNpcMarkers() {
@@ -393,6 +410,117 @@ function updateNpcMarkers() {
   });
 }
 
+function bringGameplayLayersToFront() {
+  if (state.routeLine) {
+    state.routeLine.bringToFront();
+  }
+
+  if (state.playerMarker) {
+    state.playerMarker.setZIndexOffset(1200);
+  }
+
+  if (state.finishMarker) {
+    state.finishMarker.setZIndexOffset(900);
+  }
+
+  state.npcMarkers.forEach((marker) => {
+    marker.setZIndexOffset(1000);
+  });
+}
+
+function clearItalyFrame() {
+  if (state.italyMaskLayer) {
+    state.italyMaskLayer.remove();
+    state.italyMaskLayer = null;
+  }
+
+  if (state.italyOutlineLayer) {
+    state.italyOutlineLayer.remove();
+    state.italyOutlineLayer = null;
+  }
+}
+
+function buildItalyRings(feature) {
+  const geometry = feature.geometry;
+
+  if (geometry.type === "Polygon") {
+    return [geometry.coordinates[0].map(([lon, lat]) => [lat, lon])];
+  }
+
+  if (geometry.type === "MultiPolygon") {
+    return geometry.coordinates.map((polygon) =>
+      polygon[0].map(([lon, lat]) => [lat, lon])
+    );
+  }
+
+  throw new Error("Geometria Italia non supportata");
+}
+
+function drawItalyFrame(geojson) {
+  clearItalyFrame();
+
+  const feature = geojson.features?.[0] ?? geojson;
+  const italyRings = buildItalyRings(feature);
+  const worldRing = [
+    [90, -180],
+    [90, 180],
+    [-90, 180],
+    [-90, -180]
+  ];
+
+  state.italyMaskLayer = L.polygon([worldRing, ...italyRings], {
+    stroke: false,
+    fillColor: "#071018",
+    fillOpacity: 0.46,
+    interactive: false
+  }).addTo(state.map);
+
+  state.italyOutlineLayer = L.geoJSON(feature, {
+    style: {
+      color: "#f2d0a5",
+      weight: 2,
+      opacity: 0.95,
+      fillOpacity: 0
+    },
+    interactive: false
+  }).addTo(state.map);
+
+  if (state.italyOutlineLayer.bringToFront) {
+    state.italyOutlineLayer.bringToFront();
+  }
+
+  bringGameplayLayersToFront();
+}
+
+function drawItalyFallbackFrame() {
+  clearItalyFrame();
+
+  state.italyOutlineLayer = L.rectangle(italyBounds, {
+    color: "#f2d0a5",
+    weight: 2,
+    opacity: 0.9,
+    fillOpacity: 0,
+    interactive: false
+  }).addTo(state.map);
+
+  bringGameplayLayersToFront();
+}
+
+async function initItalyFrame() {
+  try {
+    const response = await fetch(italyGeoJsonUrl);
+
+    if (!response.ok) {
+      throw new Error("Contorni Italia non disponibili");
+    }
+
+    const italyGeoJson = await response.json();
+    drawItalyFrame(italyGeoJson);
+  } catch (error) {
+    drawItalyFallbackFrame();
+  }
+}
+
 function findScenicSpot(index) {
   let current = scenicSpots[0];
 
@@ -431,6 +559,7 @@ function renderCast() {
 
   elements.castList.innerHTML = characters
     .map((character) => {
+      const travelIndex = getCharacterIndex(character);
       const stateClass = state.visited.has(character.id)
         ? "cast-state cast-state--done"
         : activeId === character.id
@@ -441,16 +570,30 @@ function renderCast() {
         ? "Incontrato"
         : activeId === character.id
           ? "Qui ora"
-          : `Tappa ${getCharacterIndex(character) + 1}`;
+          : `Tappa ${travelIndex + 1}`;
+
+      const jumpLabel = activeId === character.id
+        ? "Dialogo aperto"
+        : state.playerIndex === travelIndex
+          ? "Sei gia qui"
+          : "Vai a questa tappa";
 
       return `
-        <li class="cast-item">
+        <li>
+          <button
+            class="cast-item"
+            type="button"
+            data-character-id="${character.id}"
+            ${activeId ? "disabled" : ""}
+          >
           <div class="cast-avatar">${character.initials}</div>
-          <div>
+          <div class="cast-meta">
             <p class="cast-name">${character.name}</p>
             <p class="cast-role">${character.role}</p>
+            <span class="cast-jump">${jumpLabel}</span>
           </div>
           <span class="${stateClass}">${stateLabel}</span>
+          </button>
         </li>
       `;
     })
@@ -567,6 +710,24 @@ function movePlayer(delta) {
   }
 
   state.playerIndex = nextIndex;
+  panToPlayer();
+  render();
+  maybeTriggerEncounter();
+}
+
+function jumpToCharacter(characterId) {
+  if (state.activeDialogue) {
+    return;
+  }
+
+  const character = characters.find((entry) => entry.id === characterId);
+
+  if (!character) {
+    return;
+  }
+
+  stopAutoWalk();
+  state.playerIndex = getCharacterIndex(character);
   panToPlayer();
   render();
   maybeTriggerEncounter();
@@ -717,6 +878,16 @@ function attachEvents() {
     applyOption(Number(trigger.dataset.optionIndex));
   });
 
+  elements.castList.addEventListener("click", (event) => {
+    const trigger = event.target.closest("[data-character-id]");
+
+    if (!trigger) {
+      return;
+    }
+
+    jumpToCharacter(trigger.dataset.characterId);
+  });
+
   window.addEventListener("keydown", (event) => {
     if (event.key === "ArrowRight") {
       movePlayer(1);
@@ -738,6 +909,7 @@ function init() {
   attachEvents();
   render();
   maybeTriggerEncounter();
+  initItalyFrame();
   initRoute();
 }
 

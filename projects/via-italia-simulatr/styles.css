@@ -276,10 +276,49 @@ button {
   grid-template-columns: auto 1fr auto;
   gap: 14px;
   align-items: center;
+  width: 100%;
   padding: 14px;
   border-radius: var(--radius-lg);
   background: rgba(255, 255, 255, 0.7);
   border: 1px solid rgba(24, 33, 42, 0.06);
+  text-align: left;
+}
+
+button.cast-item {
+  cursor: pointer;
+  transition:
+    transform 140ms ease,
+    box-shadow 140ms ease,
+    border-color 140ms ease,
+    background 140ms ease;
+}
+
+button.cast-item:hover,
+button.cast-item:focus-visible {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 24px rgba(28, 42, 54, 0.12);
+  border-color: rgba(180, 88, 61, 0.32);
+  background: rgba(255, 250, 245, 0.95);
+}
+
+button.cast-item:disabled {
+  cursor: default;
+  transform: none;
+  box-shadow: none;
+  opacity: 0.72;
+}
+
+.cast-meta {
+  display: grid;
+  gap: 4px;
+}
+
+.cast-jump {
+  display: block;
+  font-size: 0.76rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(24, 33, 42, 0.5);
 }
 
 .cast-avatar,
@@ -409,6 +448,7 @@ button {
   border-radius: 24px;
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.12);
+  background: #0f1821;
 }
 
 .player-pin,
