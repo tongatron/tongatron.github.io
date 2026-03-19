@@ -255,6 +255,8 @@ const elements = {
   endingCopy: document.querySelector("#ending-copy"),
   stepBack: document.querySelector("#step-back"),
   stepForward: document.querySelector("#step-forward"),
+  stepBackMobile: document.querySelector("#step-back-mobile"),
+  stepForwardMobile: document.querySelector("#step-forward-mobile"),
   restartGame: document.querySelector("#restart-game")
 };
 
@@ -429,6 +431,8 @@ function updateStatus() {
   elements.stepBack.disabled = state.playerIndex === 0 || Boolean(state.activeDialogue);
   elements.stepForward.disabled =
     state.playerIndex === state.route.length - 1 || Boolean(state.activeDialogue);
+  elements.stepBackMobile.disabled = elements.stepBack.disabled;
+  elements.stepForwardMobile.disabled = elements.stepForward.disabled;
 }
 
 function renderCast() {
@@ -687,6 +691,8 @@ async function initRoute() {
 function attachEvents() {
   elements.stepBack.addEventListener("click", () => movePlayer(-1));
   elements.stepForward.addEventListener("click", () => movePlayer(1));
+  elements.stepBackMobile.addEventListener("click", () => movePlayer(-1));
+  elements.stepForwardMobile.addEventListener("click", () => movePlayer(1));
   elements.dialogueContinue.addEventListener("click", closeDialogue);
   elements.restartGame.addEventListener("click", restartGame);
 

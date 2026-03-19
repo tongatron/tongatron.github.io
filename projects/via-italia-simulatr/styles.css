@@ -137,6 +137,20 @@ button {
   color: var(--terracotta-deep);
 }
 
+.panel-tag {
+  display: inline-flex;
+  width: fit-content;
+  margin: 0 0 12px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(24, 33, 42, 0.06);
+  color: rgba(24, 33, 42, 0.68);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
 .status-strip {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -234,6 +248,11 @@ button {
   display: flex;
   gap: 12px;
   margin-top: 16px;
+}
+
+.mobile-map-controls {
+  display: none;
+  gap: 10px;
 }
 
 .move-button,
@@ -464,6 +483,7 @@ button.cast-item:disabled {
 
 .map-topline {
   color: #f8efe1;
+  align-items: center;
 }
 
 .map-topline .eyebrow {
@@ -589,20 +609,9 @@ button.cast-item:disabled {
     border-radius: 26px;
   }
 
-  .hero {
-    display: grid;
-    gap: 8px;
-  }
-
   .hero h1 {
     font-size: clamp(1.7rem, 8vw, 2.35rem);
     line-height: 0.98;
-  }
-
-  .hero-copy {
-    max-width: none;
-    font-size: 0.95rem;
-    line-height: 1.45;
   }
 
   .journey-card,
@@ -633,17 +642,20 @@ button.cast-item:disabled {
   .journey-heading,
   .cast-heading,
   .map-topline,
-  .progress-meta,
-  .controls {
+  .progress-meta {
     flex-direction: column;
   }
 
-  .controls {
+  .controls--desktop {
+    display: none;
+  }
+
+  .mobile-map-controls {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .controls .move-button,
+  .mobile-map-controls .move-button,
   .dialogue-card .move-button {
     width: 100%;
   }
@@ -700,6 +712,10 @@ button.cast-item:disabled {
   }
 
   .controls {
+    grid-template-columns: 1fr;
+  }
+
+  .mobile-map-controls {
     grid-template-columns: 1fr;
   }
 

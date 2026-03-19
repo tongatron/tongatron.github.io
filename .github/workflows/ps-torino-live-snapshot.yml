@@ -43,7 +43,21 @@ jobs:
         run: npx --prefix projects/PS-Torino playwright install --with-deps chromium
 
       - name: Generate live snapshot
-        run: node projects/PS-Torino/scripts/scrape-ps-torino.js
+        run: |
+          mkdir -p projects/PS-Torino/test-results
+          set -o pipefail
+          node projects/PS-Torino/scripts/scrape-ps-torino.js 2>&1 | tee projects/PS-Torino/test-results/snapshot-run.log
+
+      - name: Upload snapshot diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ps-torino-snapshot-debug-${{ github.run_number }}
+          path: |
+            projects/PS-Torino/test-results/**
+            projects/PS-Torino/data/live-torino.json
+          if-no-files-found: warn
+          retention-days: 7
 
       - name: Detect changes
         id: detect_changes

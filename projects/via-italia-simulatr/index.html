@@ -6,7 +6,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0"
     />
-    <title>Via Italia Simulatr</title>
+    <title>Via Italia Simulator</title>
     <meta
       name="description"
       content="Gioco narrativo ambientato su Via Italia a Biella con mappa OpenStreetMap e dialoghi con personaggi ispirati alla storia biellese."
@@ -31,15 +31,11 @@
         <div class="story-glow"></div>
 
         <header class="hero">
-          <p class="eyebrow">Mappa aperta, passeggiata narrativa</p>
-          <h1>Via Italia Simulatr</h1>
-          <p class="hero-copy">
-            Cammina lungo Via Italia a Biella e fermati a parlare con i
-            personaggi lungo la strada.
-          </p>
+          <h1>Via Italia Simulator</h1>
         </header>
 
         <section class="journey-card">
+          <p class="panel-tag">Via Italia Simulator</p>
           <div class="journey-heading">
             <div>
               <p class="eyebrow">Via Italia</p>
@@ -61,7 +57,7 @@
             </div>
           </div>
 
-          <div class="controls">
+          <div class="controls controls--desktop">
             <button id="step-back" class="move-button" type="button">
               Indietro
             </button>
@@ -78,6 +74,7 @@
         </section>
 
         <section class="cast-card">
+          <p class="panel-tag">Via Italia Simulator</p>
           <div class="cast-heading">
             <div>
               <p class="eyebrow">Incontri</p>
@@ -93,6 +90,7 @@
         </section>
 
         <section id="dialogue-panel" class="dialogue-card is-hidden" aria-live="polite" tabindex="-1">
+          <p class="panel-tag">Via Italia Simulator</p>
           <div class="dialogue-shell">
             <div class="dialogue-avatar" id="dialogue-avatar">🚶</div>
             <div class="dialogue-copy">
@@ -108,6 +106,7 @@
         </section>
 
         <section id="ending-panel" class="ending-card is-hidden">
+          <p class="panel-tag">Via Italia Simulator</p>
           <p class="eyebrow">Finale</p>
           <h2 id="ending-title">Hai finito la passeggiata</h2>
           <p id="ending-copy" class="journey-copy"></p>
@@ -126,15 +125,18 @@
         <div class="map-frame">
           <div class="map-topline">
             <div>
-              <p class="eyebrow">Open maps</p>
-              <h2>Via Italia, Biella</h2>
+              <h2>Via Italia Simulator</h2>
             </div>
-            <p class="map-note">
-              Solo il percorso di Via Italia, senza vista ampia sul resto della
-              mappa.
-            </p>
           </div>
           <div id="map" class="map-canvas" aria-label="Mappa di Via Italia a Biella"></div>
+          <div class="mobile-map-controls">
+            <button id="step-back-mobile" class="move-button" type="button">
+              Indietro
+            </button>
+            <button id="step-forward-mobile" class="move-button move-button--accent" type="button">
+              Avanti
+            </button>
+          </div>
         </div>
       </section>
     </div>

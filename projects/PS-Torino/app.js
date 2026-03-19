@@ -297,11 +297,11 @@
 
       return {
         updatedLabel: `Aggiornato ${formatRelativeTime(dataTimestamp)}`,
-        snapshotLabel: carriedForwardAt ? `Snapshot ${formatRelativeTime(carriedForwardAt)}` : "",
+        snapshotLabel: carriedForwardAt ? "Feed live non disponibile" : "",
         isStale: true,
         isSnapshotOld: isOlderThanMinutes(carriedForwardAt, 30),
         updatedTitle: dataTimestamp ? `Ultimo dato ospedale: ${formatDate(dataTimestamp)}` : "",
-        snapshotTitle: carriedForwardAt ? `Recuperato da snapshot delle ${formatDate(carriedForwardAt)}` : ""
+        snapshotTitle: carriedForwardAt ? `Dato recuperato da snapshot delle ${formatDate(carriedForwardAt)}` : ""
       };
     }
 

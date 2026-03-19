@@ -6,6 +6,8 @@ const path = require("node:path");
 const { TextDecoder } = require("node:util");
 
 const OUTPUT_PATH = path.join(__dirname, "..", "data", "live-torino.json");
+const DIAGNOSTICS_DIR = path.join(__dirname, "..", "test-results");
+const DIAGNOSTICS_PATH = path.join(DIAGNOSTICS_DIR, "snapshot-diagnostics.json");
 const TIMEZONE = "Europe/Rome";
 const REQUEST_TIMEOUT_MS = 30000;
 const RETRY_ATTEMPTS = 3;
@@ -126,6 +128,68 @@ const FAILURE_FALLBACK_IDS = {
   "asl-citta-di-torino": ["maria-vittoria", "martini", "oftalmico", "san-giovanni-bosco"],
   "san-luigi-orbassano": ["san-luigi-orbassano"]
 };
+const RUN_CONTEXT = {
+  startedAt: new Date().toISOString(),
+  stage: "bootstrap",
+  stages: [],
+  previousSnapshotFetchedAt: null,
+  failures: [],
+  hospitalIds: [],
+  outputPath: OUTPUT_PATH,
+  diagnosticsPath: DIAGNOSTICS_PATH,
+  runtime: {
+    node: process.version,
+    platform: process.platform,
+    arch: process.arch,
+    cwd: process.cwd(),
+    ci: Boolean(process.env.CI),
+    githubRunId: process.env.GITHUB_RUN_ID || null,
+    githubRunNumber: process.env.GITHUB_RUN_NUMBER || null,
+    githubWorkflow: process.env.GITHUB_WORKFLOW || null
+  }
+};
+
+function setRunStage(stage, details) {
+  RUN_CONTEXT.stage = stage;
+  RUN_CONTEXT.stages.push({
+    stage,
+    at: new Date().toISOString(),
+    details: details || null
+  });
+}
+
+function serializeError(error) {
+  if (!error) {
+    return null;
+  }
+
+  return {
+    name: error.name || "Error",
+    message: error.message || String(error),
+    stack: error.stack || null,
+    cause: error.cause ? serializeError(error.cause) : null
+  };
+}
+
+async function writeDiagnostics(status, error) {
+  const payload = {
+    status,
+    startedAt: RUN_CONTEXT.startedAt,
+    completedAt: new Date().toISOString(),
+    stage: RUN_CONTEXT.stage,
+    stages: RUN_CONTEXT.stages,
+    previousSnapshotFetchedAt: RUN_CONTEXT.previousSnapshotFetchedAt,
+    failures: RUN_CONTEXT.failures,
+    hospitalIds: RUN_CONTEXT.hospitalIds,
+    outputPath: RUN_CONTEXT.outputPath,
+    runtime: RUN_CONTEXT.runtime,
+    error: serializeError(error)
+  };
+
+  await fs.mkdir(DIAGNOSTICS_DIR, { recursive: true });
+  await fs.writeFile(DIAGNOSTICS_PATH, `${JSON.stringify(payload, null, 2)}\n`);
+  return payload;
+}
 
 function buildMapUrl(address, name) {
   const query = [name, address].filter(Boolean).join(", ") || address || name || "Pronto Soccorso Torino";
@@ -826,8 +890,12 @@ function buildStaleHospitalRecord(hospital, failure, snapshotTimestamp) {
 }
 
 async function main() {
+  setRunStage("load-previous-snapshot");
   const fetchedAt = new Date().toISOString();
   const previousSnapshot = await loadExistingSnapshot();
+  RUN_CONTEXT.previousSnapshotFetchedAt = previousSnapshot && previousSnapshot.fetchedAt
+    ? previousSnapshot.fetchedAt
+    : null;
   const previousHospitalsById = new Map(
     previousSnapshot && Array.isArray(previousSnapshot.hospitals)
       ? previousSnapshot.hospitals.map((hospital) => [hospital.id, hospital])
@@ -835,6 +903,9 @@ async function main() {
   );
   const hospitalsById = new Map();
   const failures = [];
+  setRunStage("start-scraping", {
+    previousSnapshotHospitals: previousHospitalsById.size
+  });
   const scrapingTasks = [
     ...CITTADELLA_SOURCES.map((source) =>
       withRetry(`Cittadella ${source.id}`, () => scrapeCittadellaSource(source, fetchedAt))
@@ -877,6 +948,7 @@ async function main() {
   ];
 
   const scrapingResults = await Promise.all(scrapingTasks);
+  setRunStage("collect-results");
 
   for (const result of scrapingResults) {
     if (result.hospitals) {
@@ -889,6 +961,11 @@ async function main() {
 
     failures.push(result.failure);
   }
+
+  RUN_CONTEXT.failures = failures;
+  setRunStage("merge-fallbacks", {
+    failureCount: failures.length
+  });
 
   for (const failure of failures) {
     const fallbackIds = FAILURE_FALLBACK_IDS[failure.id] || [failure.id];
@@ -912,6 +989,7 @@ async function main() {
   }
 
   const hospitals = sortHospitals(Array.from(hospitalsById.values()));
+  RUN_CONTEXT.hospitalIds = hospitals.map((hospital) => hospital.id);
 
   if (!hospitals.length) {
     throw new Error("Nessuna sorgente live disponibile");
@@ -925,7 +1003,13 @@ async function main() {
     failures
   };
 
+  setRunStage("write-output", {
+    hospitalCount: hospitals.length,
+    failureCount: failures.length
+  });
   await fs.writeFile(OUTPUT_PATH, `${JSON.stringify(snapshot, null, 2)}\n`);
+  setRunStage("completed");
+  await writeDiagnostics("success", null);
 
   process.stdout.write(`Salvato ${OUTPUT_PATH} con ${hospitals.length} strutture live.\n`);
 
@@ -934,7 +1018,14 @@ async function main() {
   }
 }
 
-main().catch((error) => {
+main().catch(async (error) => {
+  try {
+    await writeDiagnostics("failure", error);
+    process.stderr.write(`Diagnostica salvata in ${DIAGNOSTICS_PATH}\n`);
+  } catch (diagnosticsError) {
+    process.stderr.write(`Impossibile salvare la diagnostica: ${diagnosticsError.stack || diagnosticsError.message}\n`);
+  }
+
   process.stderr.write(`${error.stack || error.message}\n`);
   process.exitCode = 1;
 });
