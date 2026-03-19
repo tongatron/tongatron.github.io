@@ -229,47 +229,70 @@ const barMagnino = {
   emoji: "☕",
   coordinate: [45.5657926, 8.0548834],
   blurb:
-    "Sei davanti al Bar Magnino. Entra e trovi i personaggi gia incontrati lungo la via insieme ai clienti abituali del locale."
+    "Sei davanti al Bar Magnino. Dentro trovi una ripresa dall'alto del locale: personaggi incontrati, il barista e nuove missioni per continuare la passeggiata."
 };
 
-const barRegulars = [
+const bartender = {
+  id: "barista",
+  emoji: "☕",
+  name: "Nadia Magnino",
+  role: "Barista e regista del locale"
+};
+
+const barAmbientGuests = [
   {
-    emoji: "🧣",
-    name: "Teresa",
-    role: "cliente del primo espresso",
-    line: "Tiene il cappotto sulle spalle e commenta ogni novita della via come fosse un bollettino del quartiere."
+    emoji: "📰",
+    name: "lettore del giornale",
+    copy: "Occupa sempre il tavolo vicino alla vetrina."
   },
   {
-    emoji: "🎓",
-    name: "Nico",
-    role: "studente in pausa lunga",
-    line: "Ha il quaderno aperto sul tavolo e usa il rumore del bar come colonna sonora per studiare."
+    emoji: "🥐",
+    name: "colazione lenta",
+    copy: "Difende cappuccino e brioche con calma olimpica."
   },
   {
-    emoji: "📷",
-    name: "Lia",
-    role: "visitatrice curiosa",
-    line: "Fotografa bicchieri, insegna e portici: dice che Biella rende bene quando sembra vissuta davvero."
+    emoji: "💼",
+    name: "pausa ufficio",
+    copy: "Tiene un occhio sull'orologio e uno sul bancone."
   },
   {
-    emoji: "🧶",
-    name: "Bruno",
-    role: "cliente del bancone",
-    line: "Parla di tessuti e ordini piccoli, convinto che una citta si capisca meglio davanti a un caffe."
+    emoji: "🎧",
+    name: "cliente silenzioso",
+    copy: "Resta in cuffia ma non si perde nulla del locale."
   }
 ];
 
 const barCharacterLines = {
   ferrero:
-    "Si siede come se il tavolino fosse una piccola sala di rappresentanza e studia ogni cornice della stanza.",
+    "Dal tavolo d'angolo osserva il locale come fosse una piccola sala di rappresentanza, studiando porte e prospettive.",
   sella:
-    "Ha gia spostato mentalmente sedie e tavolini per rendere il flusso del locale piu efficiente.",
+    "Dall'alto della pianta del bar ti indica subito dove migliorare i flussi tra ingresso, bancone e tavoli.",
   pistoletto:
-    "Guarda il riflesso delle tazzine e trasforma il bancone in una piccola installazione partecipata.",
+    "Guarda il movimento circolare dei tavoli come se il locale fosse gia un'opera partecipata.",
   zegna:
-    "Sfiora tende e tappezzerie come fossero campioni di tessuto e parla di qualita senza alzare la voce.",
+    "Legge tappezzerie, sedute e ritmo di sala come un tessuto ben costruito.",
   ada:
-    "Ha lasciato un libro aperto accanto allo zucchero e ascolta tutti con l'aria di chi conosce gia il finale."
+    "Ha un libro aperto vicino alla tazzina e ascolta il bar con l'attenzione di chi sa riconoscere le vere storie."
+};
+
+const barActorLayout = {
+  bartender: {
+    left: "84%",
+    top: "18%"
+  },
+  encountered: [
+    { left: "22%", top: "22%" },
+    { left: "49%", top: "24%" },
+    { left: "24%", top: "58%" },
+    { left: "54%", top: "58%" },
+    { left: "76%", top: "46%" }
+  ],
+  ambient: [
+    { left: "16%", top: "39%" },
+    { left: "42%", top: "71%" },
+    { left: "70%", top: "25%" },
+    { left: "78%", top: "67%" }
+  ]
 };
 
 const state = {
@@ -278,6 +301,9 @@ const state = {
   playerIndex: 0,
   isMoving: false,
   isBarOpen: false,
+  barConversation: bartender.id,
+  barMission: null,
+  completedBarMissions: [],
   visited: new Set(),
   activeDialogue: null,
   lastOutcome: "",
@@ -313,9 +339,15 @@ const elements = {
   barEntry: document.querySelector("#bar-entry"),
   enterBar: document.querySelector("#enter-bar"),
   barScene: document.querySelector("#bar-scene"),
-  barStageVisitors: document.querySelector("#bar-stage-visitors"),
-  barMetCharacters: document.querySelector("#bar-met-characters"),
-  barRegulars: document.querySelector("#bar-regulars"),
+  barFloorActors: document.querySelector("#bar-floor-actors"),
+  barFloorAmbient: document.querySelector("#bar-floor-ambient"),
+  barDialogueAvatar: document.querySelector("#bar-dialogue-avatar"),
+  barDialogueName: document.querySelector("#bar-dialogue-name"),
+  barDialogueRole: document.querySelector("#bar-dialogue-role"),
+  barDialogueText: document.querySelector("#bar-dialogue-text"),
+  barDialogueActions: document.querySelector("#bar-dialogue-actions"),
+  barMissionStatus: document.querySelector("#bar-mission-status"),
+  barMissionLog: document.querySelector("#bar-mission-log"),
   leaveBar: document.querySelector("#leave-bar")
 };
 
@@ -466,6 +498,10 @@ function drawNpcMarkers() {
   state.npcMarkers.clear();
 
   characters.forEach((character) => {
+    if (state.visited.has(character.id)) {
+      return;
+    }
+
     const marker = L.marker(state.route[getCharacterIndex(character)], {
       icon: buildNpcIcon(character)
     }).addTo(state.map);
@@ -539,9 +575,30 @@ function updateNpcMarkers() {
   characters.forEach((character) => {
     const marker = state.npcMarkers.get(character.id);
 
+    if (state.visited.has(character.id)) {
+      if (marker) {
+        marker.remove();
+        state.npcMarkers.delete(character.id);
+      }
+      return;
+    }
+
     if (marker) {
       marker.setIcon(buildNpcIcon(character));
+      return;
     }
+
+    const nextMarker = L.marker(state.route[getCharacterIndex(character)], {
+      icon: buildNpcIcon(character)
+    }).addTo(state.map);
+
+    nextMarker.bindTooltip(character.name, {
+      direction: "top",
+      offset: [0, -12]
+    });
+
+    nextMarker.setZIndexOffset(1000);
+    state.npcMarkers.set(character.id, nextMarker);
   });
 }
 
@@ -681,15 +738,194 @@ function renderDialogue() {
   }
 }
 
-function getEncounteredBarGuests() {
-  return characters
-    .filter((character) => state.visited.has(character.id))
-    .map((character) => ({
-      emoji: character.emoji,
-      name: character.name,
-      role: character.role,
-      line: barCharacterLines[character.id]
-    }));
+function getEncounteredBarCharacters() {
+  return characters.filter((character) => state.visited.has(character.id));
+}
+
+function getUnvisitedCharacters() {
+  return characters.filter((character) => !state.visited.has(character.id));
+}
+
+function getNextBarMissionOffer() {
+  const remainingCharacters = getUnvisitedCharacters();
+
+  if (!remainingCharacters.length) {
+    return null;
+  }
+
+  if (state.completedBarMissions.length === 0) {
+    const target = remainingCharacters[0];
+
+    return {
+      kind: "specific",
+      title: "Prima commissione",
+      description: `Esci dal Magnino, trova ${target.name} lungo Via Italia e poi torna a raccontarmi com'e andata.`,
+      targetIds: [target.id],
+      reward: "Espresso della casa"
+    };
+  }
+
+  if (state.completedBarMissions.length === 1 && remainingCharacters.length > 1) {
+    const requiredCount = Math.min(2, remainingCharacters.length);
+
+    return {
+      kind: "count",
+      title: "Giro dei tavoli",
+      description: `Portami ${requiredCount} storie nuove: incontra altri ${requiredCount} personaggi e poi rientra al bar.`,
+      requiredCount,
+      baselineVisited: state.visited.size,
+      reward: "Toast del Magnino"
+    };
+  }
+
+  return {
+    kind: "all",
+    title: "Chiusura del turno",
+    description: "Completa la passeggiata, incontra tutti i volti rimasti e poi torna qui per il resoconto finale.",
+    reward: "Aperitivo della casa"
+  };
+}
+
+function getBarMissionProgress(mission) {
+  if (!mission) {
+    return null;
+  }
+
+  if (mission.kind === "specific") {
+    const target = characters.find((character) => character.id === mission.targetIds[0]);
+    const complete = Boolean(target) && state.visited.has(target.id);
+
+    return {
+      complete,
+      progressLabel: complete
+        ? `${target.name} e gia stato incontrato.`
+        : `Ti manca ancora ${target.name}.`
+    };
+  }
+
+  if (mission.kind === "count") {
+    const gathered = Math.max(state.visited.size - mission.baselineVisited, 0);
+    const remaining = Math.max(mission.requiredCount - gathered, 0);
+
+    return {
+      complete: remaining === 0,
+      progressLabel:
+        remaining === 0
+          ? `Hai raccolto ${mission.requiredCount} storie nuove.`
+          : `Te ne mancano ancora ${remaining}.`
+    };
+  }
+
+  const remainingCharacters = getUnvisitedCharacters();
+
+  return {
+    complete: remainingCharacters.length === 0,
+    progressLabel:
+      remainingCharacters.length === 0
+        ? "Il giro di Via Italia e completo."
+        : `Mancano ancora ${remainingCharacters.length} incontri.`
+  };
+}
+
+function getResolvedBarConversationId(encounteredCharacters) {
+  if (state.barConversation === bartender.id) {
+    return bartender.id;
+  }
+
+  const selectedCharacter = encounteredCharacters.find(
+    (character) => character.id === state.barConversation
+  );
+
+  return selectedCharacter ? selectedCharacter.id : bartender.id;
+}
+
+function getBarCharacterHint() {
+  if (!state.barMission) {
+    return "Qui dentro le voci della via sembrano tutte piu leggibili.";
+  }
+
+  const progress = getBarMissionProgress(state.barMission);
+  return `Ti ricorda anche la missione del bancone: ${progress.progressLabel}`;
+}
+
+function getBartenderDialogue() {
+  if (state.barMission) {
+    const progress = getBarMissionProgress(state.barMission);
+
+    if (progress.complete) {
+      return {
+        emoji: bartender.emoji,
+        name: bartender.name,
+        role: bartender.role,
+        text: `Nadia controlla la lavagna e annuisce. La missione "${state.barMission.title}" e pronta per essere consegnata. Ricompensa: ${state.barMission.reward}.`,
+        actions: [
+          {
+            id: "deliver-mission",
+            label: "Consegna missione",
+            accent: true
+          }
+        ]
+      };
+    }
+
+    return {
+      emoji: bartender.emoji,
+      name: bartender.name,
+      role: bartender.role,
+      text: `Dal bancone ti richiama all'ordine: "${state.barMission.title}". ${state.barMission.description} ${progress.progressLabel}`,
+      actions: []
+    };
+  }
+
+  const nextMission = getNextBarMissionOffer();
+
+  if (nextMission) {
+    return {
+      emoji: bartender.emoji,
+      name: bartender.name,
+      role: bartender.role,
+      text: `Nadia ti squadra dall'alto del bancone e ti propone una commissione: "${nextMission.title}". ${nextMission.description} Ricompensa: ${nextMission.reward}.`,
+      actions: [
+        {
+          id: "accept-mission",
+          label: "Accetta missione",
+          accent: true
+        }
+      ]
+    };
+  }
+
+  return {
+    emoji: bartender.emoji,
+    name: bartender.name,
+    role: bartender.role,
+    text: "Il bancone e tranquillo: hai gia riportato abbastanza storie dentro il Magnino. Per stasera il turno puo dirsi chiuso.",
+    actions: []
+  };
+}
+
+function getBarCharacterDialogue(characterId) {
+  const character = characters.find((entry) => entry.id === characterId);
+
+  if (!character) {
+    return getBartenderDialogue();
+  }
+
+  return {
+    emoji: character.emoji,
+    name: character.name,
+    role: `${character.role} al Magnino`,
+    text: `${barCharacterLines[character.id]} ${getBarCharacterHint()}`,
+    actions: []
+  };
+}
+
+function getBarDialoguePayload(selectedId) {
+  if (selectedId === bartender.id) {
+    return getBartenderDialogue();
+  }
+
+  return getBarCharacterDialogue(selectedId);
 }
 
 function renderBarEntry() {
@@ -704,55 +940,128 @@ function renderBarScene() {
     return;
   }
 
-  const encounteredGuests = getEncounteredBarGuests();
-  const stageGuests = [...encounteredGuests, ...barRegulars];
+  const encounteredCharacters = getEncounteredBarCharacters();
+  const selectedId = getResolvedBarConversationId(encounteredCharacters);
+  const interactiveActors = [
+    {
+      id: bartender.id,
+      emoji: bartender.emoji,
+      name: bartender.name,
+      role: bartender.role,
+      left: barActorLayout.bartender.left,
+      top: barActorLayout.bartender.top
+    },
+    ...encounteredCharacters.map((character, index) => {
+      const slot = barActorLayout.encountered[index % barActorLayout.encountered.length];
 
-  elements.barStageVisitors.innerHTML = stageGuests
+      return {
+        id: character.id,
+        emoji: character.emoji,
+        name: character.name,
+        role: character.role,
+        left: slot.left,
+        top: slot.top
+      };
+    })
+  ];
+
+  elements.barFloorActors.innerHTML = interactiveActors
     .map(
-      (guest) => `
-        <div class="bar-stage__guest">
-          <span class="bar-stage__guest-emoji">${guest.emoji}</span>
-          <span class="bar-stage__guest-name">${guest.name}</span>
-        </div>
+      (actor) => `
+        <button
+          class="bar-floor__actor${selectedId === actor.id ? " is-selected" : ""}"
+          type="button"
+          data-bar-actor-id="${actor.id}"
+          style="left:${actor.left}; top:${actor.top};"
+        >
+          <span class="bar-floor__actor-emoji">${actor.emoji}</span>
+          <span class="bar-floor__actor-label">${actor.name}</span>
+        </button>
       `
     )
     .join("");
 
-  elements.barMetCharacters.innerHTML = encounteredGuests.length
-    ? encounteredGuests
+  elements.barFloorAmbient.innerHTML = barAmbientGuests
+    .map((guest, index) => {
+      const slot = barActorLayout.ambient[index % barActorLayout.ambient.length];
+
+      return `
+        <div class="bar-floor__ambient-guest" style="left:${slot.left}; top:${slot.top};">
+          <span class="bar-floor__ambient-emoji">${guest.emoji}</span>
+          <span class="bar-floor__ambient-label">${guest.name}</span>
+        </div>
+      `;
+    })
+    .join("");
+
+  const dialogue = getBarDialoguePayload(selectedId);
+  elements.barDialogueAvatar.textContent = dialogue.emoji;
+  elements.barDialogueName.textContent = dialogue.name;
+  elements.barDialogueRole.textContent = dialogue.role;
+  elements.barDialogueText.textContent = dialogue.text;
+  elements.barDialogueActions.innerHTML = dialogue.actions
+    .map(
+      (action) => `
+        <button
+          class="move-button${action.accent ? " move-button--accent" : ""}"
+          type="button"
+          data-bar-action="${action.id}"
+        >
+          ${action.label}
+        </button>
+      `
+    )
+    .join("");
+
+  if (state.barMission) {
+    const progress = getBarMissionProgress(state.barMission);
+
+    elements.barMissionStatus.innerHTML = `
+      <article class="bar-mission-card">
+        <p class="bar-mission-card__eyebrow">Missione attiva</p>
+        <h4>${state.barMission.title}</h4>
+        <p>${state.barMission.description}</p>
+        <p class="bar-mission-card__progress">${progress.progressLabel}</p>
+        <span class="bar-mission-card__reward">Ricompensa: ${state.barMission.reward}</span>
+      </article>
+    `;
+  } else {
+    const offeredMission = getNextBarMissionOffer();
+
+    elements.barMissionStatus.innerHTML = offeredMission
+      ? `
+          <article class="bar-mission-card bar-mission-card--available">
+            <p class="bar-mission-card__eyebrow">Disponibile al bancone</p>
+            <h4>${offeredMission.title}</h4>
+            <p>${offeredMission.description}</p>
+            <span class="bar-mission-card__reward">Ricompensa: ${offeredMission.reward}</span>
+          </article>
+        `
+      : `
+          <article class="bar-mission-card bar-mission-card--quiet">
+            <p class="bar-mission-card__eyebrow">Nessuna missione aperta</p>
+            <h4>Turno completo</h4>
+            <p>Hai gia chiuso tutte le commissioni del Magnino. Il bar puo godersi il traffico della via.</p>
+          </article>
+        `;
+  }
+
+  elements.barMissionLog.innerHTML = state.completedBarMissions.length
+    ? state.completedBarMissions
       .map(
-        (guest) => `
-          <article class="bar-guest-card">
-            <div class="bar-guest-card__avatar">${guest.emoji}</div>
-            <div>
-              <p class="bar-guest-card__name">${guest.name}</p>
-              <p class="bar-guest-card__role">${guest.role}</p>
-              <p class="bar-guest-card__line">${guest.line}</p>
-            </div>
+        (mission) => `
+          <article class="bar-mission-log__item">
+            <p class="bar-mission-log__title">${mission.title}</p>
+            <p class="bar-mission-log__reward">Consegnata: ${mission.reward}</p>
           </article>
         `
       )
       .join("")
     : `
-        <div class="bar-empty">
-          Per ora al Magnino trovi solo gli avventori abituali. Continua la passeggiata e torna qui dopo qualche incontro.
+        <div class="bar-mission-log__empty">
+          Nessuna missione consegnata per ora. Parla con il barista per iniziare.
         </div>
       `;
-
-  elements.barRegulars.innerHTML = barRegulars
-    .map(
-      (guest) => `
-        <article class="bar-guest-card bar-guest-card--regular">
-          <div class="bar-guest-card__avatar">${guest.emoji}</div>
-          <div>
-            <p class="bar-guest-card__name">${guest.name}</p>
-            <p class="bar-guest-card__role">${guest.role}</p>
-            <p class="bar-guest-card__line">${guest.line}</p>
-          </div>
-        </article>
-      `
-    )
-    .join("");
 
   elements.barScene.classList.remove("is-hidden");
 }
@@ -811,9 +1120,68 @@ function openBarScene() {
     return;
   }
 
+  state.barConversation = bartender.id;
   state.isBarOpen = true;
   render();
   window.requestAnimationFrame(revealBarScene);
+}
+
+function selectBarActor(actorId) {
+  if (actorId !== bartender.id && !state.visited.has(actorId)) {
+    return;
+  }
+
+  state.barConversation = actorId;
+  render();
+}
+
+function acceptBarMission() {
+  if (state.barMission) {
+    return;
+  }
+
+  const offeredMission = getNextBarMissionOffer();
+
+  if (!offeredMission) {
+    return;
+  }
+
+  state.barMission = { ...offeredMission };
+  state.barConversation = bartender.id;
+  render();
+}
+
+function deliverBarMission() {
+  if (!state.barMission) {
+    return;
+  }
+
+  const progress = getBarMissionProgress(state.barMission);
+
+  if (!progress || !progress.complete) {
+    return;
+  }
+
+  state.completedBarMissions = [
+    ...state.completedBarMissions,
+    {
+      title: state.barMission.title,
+      reward: state.barMission.reward
+    }
+  ];
+  state.barMission = null;
+  state.barConversation = bartender.id;
+  render();
+}
+
+function handleBarAction(actionId) {
+  if (actionId === "accept-mission") {
+    acceptBarMission();
+  }
+
+  if (actionId === "deliver-mission") {
+    deliverBarMission();
+  }
 }
 
 function closeBarScene() {
@@ -981,6 +1349,9 @@ function restartGame() {
   state.playerIndex = 0;
   state.isMoving = false;
   state.isBarOpen = false;
+  state.barConversation = bartender.id;
+  state.barMission = null;
+  state.completedBarMissions = [];
   state.visited = new Set();
   state.activeDialogue = null;
   state.lastOutcome = "";
@@ -1043,6 +1414,24 @@ function attachEvents() {
   elements.stepForwardMobile.addEventListener("click", () => movePlayer(1));
   elements.enterBar.addEventListener("click", openBarScene);
   elements.leaveBar.addEventListener("click", closeBarScene);
+  elements.barFloorActors.addEventListener("click", (event) => {
+    const trigger = event.target.closest("[data-bar-actor-id]");
+
+    if (!trigger) {
+      return;
+    }
+
+    selectBarActor(trigger.dataset.barActorId);
+  });
+  elements.barDialogueActions.addEventListener("click", (event) => {
+    const trigger = event.target.closest("[data-bar-action]");
+
+    if (!trigger) {
+      return;
+    }
+
+    handleBarAction(trigger.dataset.barAction);
+  });
   elements.dialogueContinue.addEventListener("click", closeDialogue);
   elements.restartGame.addEventListener("click", restartGame);
 
