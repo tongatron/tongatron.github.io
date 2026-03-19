@@ -10,6 +10,12 @@ const TIMEZONE = "Europe/Rome";
 const REQUEST_TIMEOUT_MS = 30000;
 const RETRY_ATTEMPTS = 3;
 const RETRY_DELAY_MS = 1500;
+const ASL_REQUEST_TIMEOUT_MS = 45000;
+const ASL_RETRY_ATTEMPTS = 5;
+const ASL_RETRY_DELAY_MS = 3000;
+const ASL_SECOND_PASS_TIMEOUT_MS = 60000;
+const ASL_SECOND_PASS_ATTEMPTS = 2;
+const ASL_SECOND_PASS_DELAY_MS = 8000;
 const USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36";
 const LATIN1_DECODER = new TextDecoder("latin1");
 const COMMON_HEADERS = {
@@ -184,7 +190,15 @@ function sleep(delayMs) {
   });
 }
 
-async function withRetry(label, task, attempts = RETRY_ATTEMPTS) {
+async function withRetry(label, task, options = {}) {
+  const attempts = typeof options === "number"
+    ? options
+    : options && Number.isFinite(options.attempts)
+      ? options.attempts
+      : RETRY_ATTEMPTS;
+  const baseDelayMs = options && Number.isFinite(options.baseDelayMs)
+    ? options.baseDelayMs
+    : RETRY_DELAY_MS;
   let lastError = null;
 
   for (let attempt = 1; attempt <= attempts; attempt += 1) {
@@ -197,7 +211,7 @@ async function withRetry(label, task, attempts = RETRY_ATTEMPTS) {
         break;
       }
 
-      await sleep(RETRY_DELAY_MS * attempt);
+      await sleep(baseDelayMs * attempt);
     }
   }
 
@@ -205,6 +219,10 @@ async function withRetry(label, task, attempts = RETRY_ATTEMPTS) {
 }
 
 function requestWithHttps(url, options) {
+  const timeoutMs = options && Number.isFinite(options.timeoutMs)
+    ? options.timeoutMs
+    : REQUEST_TIMEOUT_MS;
+
   return new Promise((resolve, reject) => {
     const targetUrl = new URL(url);
     const request = https.request({
@@ -240,7 +258,7 @@ function requestWithHttps(url, options) {
     });
 
     request.on("error", reject);
-    request.setTimeout(REQUEST_TIMEOUT_MS, () => {
+    request.setTimeout(timeoutMs, () => {
       request.destroy(new Error("Timeout"));
     });
 
@@ -464,7 +482,7 @@ async function scrapeMaurizianoSource() {
   );
 }
 
-async function fetchAslCittaAccessToken() {
+async function fetchAslCittaAccessToken(timeoutMs = ASL_REQUEST_TIMEOUT_MS) {
   const authHeader = `Basic ${Buffer.from(`${ASL_CITTA_SOURCE.clientId}:${ASL_CITTA_SOURCE.clientPassword}`).toString("base64")}`;
   const body = new URLSearchParams({
     username: ASL_CITTA_SOURCE.username,
@@ -480,7 +498,8 @@ async function fetchAslCittaAccessToken() {
       Accept: "application/json"
     },
     body,
-    rejectUnauthorized: false
+    rejectUnauthorized: false,
+    timeoutMs
   });
 
   if (!payload || !payload.access_token) {
@@ -559,14 +578,15 @@ function normalizeAslCittaStructure(structure) {
   });
 }
 
-async function scrapeAslCittaSources() {
-  const accessToken = await fetchAslCittaAccessToken();
+async function scrapeAslCittaSources(timeoutMs = ASL_REQUEST_TIMEOUT_MS) {
+  const accessToken = await fetchAslCittaAccessToken(timeoutMs);
   const payload = await requestJsonWithHttps(`${ASL_CITTA_SOURCE.baseUrl}/api/strutture/`, {
     headers: {
       Authorization: `Bearer ${accessToken}`,
       Accept: "application/json"
     },
-    rejectUnauthorized: false
+    rejectUnauthorized: false,
+    timeoutMs
   });
 
   if (!Array.isArray(payload)) {
@@ -580,6 +600,25 @@ async function scrapeAslCittaSources() {
       ASL_CITTA_HOSPITALS_BY_CODE.has(String(structure.codice || ""))
     ))
     .map(normalizeAslCittaStructure);
+}
+
+async function scrapeAslCittaSourcesWithRecovery() {
+  try {
+    return await withRetry("ASL Citta di Torino", () => scrapeAslCittaSources(ASL_REQUEST_TIMEOUT_MS), {
+      attempts: ASL_RETRY_ATTEMPTS,
+      baseDelayMs: ASL_RETRY_DELAY_MS
+    });
+  } catch (firstError) {
+    process.stdout.write("ASL Citta di Torino: primo ciclo di tentativi fallito, avvio un secondo pass dedicato.\n");
+    await sleep(ASL_SECOND_PASS_DELAY_MS);
+
+    return withRetry("ASL Citta di Torino", () => scrapeAslCittaSources(ASL_SECOND_PASS_TIMEOUT_MS), {
+      attempts: ASL_SECOND_PASS_ATTEMPTS,
+      baseDelayMs: ASL_SECOND_PASS_DELAY_MS
+    }).catch((secondError) => {
+      throw new Error(secondError && secondError.message ? secondError.message : firstError.message);
+    });
+  }
 }
 
 function extractSanLuigiRows(html) {
@@ -704,7 +743,7 @@ async function main() {
           message: error.message
         }
       })),
-    withRetry("ASL Citta di Torino", () => scrapeAslCittaSources())
+    scrapeAslCittaSourcesWithRecovery()
       .then((hospitals) => ({ hospitals }))
       .catch((error) => ({
         failure: {
