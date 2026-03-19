@@ -1,7 +1,7 @@
 {
   "source": "github-actions",
   "sourceLabel": "Snapshot live (GitHub Actions)",
-  "fetchedAt": "2026-03-19T17:21:08.252Z",
+  "fetchedAt": "2026-03-19T21:11:07.854Z",
   "hospitals": [
     {
       "id": "molinette",
@@ -12,19 +12,19 @@
       "giallo": 0,
       "arancione": 0,
       "verde": 17,
-      "azzurro": 6,
-      "bianco": 2,
-      "total": 25,
-      "updatedAt": "2026-03-19T17:21:08.252Z",
+      "azzurro": 4,
+      "bianco": 1,
+      "total": 22,
+      "updatedAt": "2026-03-19T21:11:07.854Z",
       "hasData": true,
       "meta": {
         "fetchedFrom": "https://listeps.cittadellasalute.to.it/gtotal.php?id=01090101",
         "inVisit": {
-          "rosso": 0,
+          "rosso": 1,
           "giallo": 0,
           "arancione": 0,
-          "verde": 13,
-          "azzurro": 11,
+          "verde": 16,
+          "azzurro": 15,
           "bianco": 0
         }
       }
@@ -37,11 +37,11 @@
       "rosso": 0,
       "giallo": 0,
       "arancione": 0,
-      "verde": 8,
-      "azzurro": 3,
-      "bianco": 2,
-      "total": 13,
-      "updatedAt": "2026-03-19T17:21:08.252Z",
+      "verde": 1,
+      "azzurro": 0,
+      "bianco": 0,
+      "total": 1,
+      "updatedAt": "2026-03-19T21:11:07.854Z",
       "hasData": true,
       "meta": {
         "fetchedFrom": "https://listeps.cittadellasalute.to.it/gtotal.php?id=01090201",
@@ -49,8 +49,8 @@
           "rosso": 0,
           "giallo": 0,
           "arancione": 0,
-          "verde": 5,
-          "azzurro": 7,
+          "verde": 2,
+          "azzurro": 2,
           "bianco": 1
         }
       }
@@ -63,11 +63,11 @@
       "rosso": 0,
       "giallo": 0,
       "arancione": 0,
-      "verde": 3,
-      "azzurro": 4,
+      "verde": 1,
+      "azzurro": 1,
       "bianco": 0,
-      "total": 7,
-      "updatedAt": "2026-03-19T17:21:08.252Z",
+      "total": 2,
+      "updatedAt": "2026-03-19T21:11:07.854Z",
       "hasData": true,
       "meta": {
         "fetchedFrom": "https://listeps.cittadellasalute.to.it/gtotal.php?id=01090301",
@@ -76,7 +76,7 @@
           "giallo": 0,
           "arancione": 0,
           "verde": 0,
-          "azzurro": 3,
+          "azzurro": 1,
           "bianco": 0
         }
       }
@@ -89,11 +89,11 @@
       "rosso": 0,
       "giallo": 0,
       "arancione": 0,
-      "verde": 0,
-      "azzurro": 6,
+      "verde": 3,
+      "azzurro": 3,
       "bianco": 0,
       "total": 6,
-      "updatedAt": "2026-03-19T17:21:08.252Z",
+      "updatedAt": "2026-03-19T21:11:07.854Z",
       "hasData": true,
       "meta": {
         "fetchedFrom": "https://listeps.cittadellasalute.to.it/gtotal.php?id=01090302",
@@ -101,8 +101,8 @@
           "rosso": 1,
           "giallo": 0,
           "arancione": 0,
-          "verde": 3,
-          "azzurro": 12,
+          "verde": 1,
+          "azzurro": 8,
           "bianco": 0
         }
       }
@@ -130,7 +130,11 @@
           "verde": 20,
           "azzurro": 24,
           "bianco": 1
-        }
+        },
+        "stale": true,
+        "staleReason": "Mauriziano: HTTP 403",
+        "staleSource": "https://www.mauriziano.it/i-nostri-servizi/pazienti-in-attesa-presso-pronto-soccorso",
+        "carriedForwardFromSnapshot": "2026-03-19T17:21:08.252Z"
       }
     },
     {
@@ -167,9 +171,9 @@
           "bianco": 0
         },
         "stale": true,
-        "staleReason": "ASL Citta di Torino: Timeout",
-        "staleSource": "https://prontosoccorso.aslcittaditorino.it/api/strutture/",
-        "carriedForwardFromSnapshot": "2026-03-19T16:47:46.983Z"
+        "staleReason": "API: ASL Citta di Torino: Timeout; browser: ASL Citta di Torino browser: page.goto: Timeout 75000ms exceeded.\nCall log:\n  - navigating to \"https://prontosoccorso.aslcittaditorino.it/situazione\", waiting until \"domcontentloaded\"\n",
+        "staleSource": "https://prontosoccorso.aslcittaditorino.it/api/strutture/ ; fallback https://prontosoccorso.aslcittaditorino.it/situazione",
+        "carriedForwardFromSnapshot": "2026-03-19T17:21:08.252Z"
       }
     },
     {
@@ -206,9 +210,9 @@
           "bianco": 10
         },
         "stale": true,
-        "staleReason": "ASL Citta di Torino: Timeout",
-        "staleSource": "https://prontosoccorso.aslcittaditorino.it/api/strutture/",
-        "carriedForwardFromSnapshot": "2026-03-19T16:47:46.983Z"
+        "staleReason": "API: ASL Citta di Torino: Timeout; browser: ASL Citta di Torino browser: page.goto: Timeout 75000ms exceeded.\nCall log:\n  - navigating to \"https://prontosoccorso.aslcittaditorino.it/situazione\", waiting until \"domcontentloaded\"\n",
+        "staleSource": "https://prontosoccorso.aslcittaditorino.it/api/strutture/ ; fallback https://prontosoccorso.aslcittaditorino.it/situazione",
+        "carriedForwardFromSnapshot": "2026-03-19T17:21:08.252Z"
       }
     },
     {
@@ -245,9 +249,9 @@
           "bianco": 0
         },
         "stale": true,
-        "staleReason": "ASL Citta di Torino: Timeout",
-        "staleSource": "https://prontosoccorso.aslcittaditorino.it/api/strutture/",
-        "carriedForwardFromSnapshot": "2026-03-19T16:47:46.983Z"
+        "staleReason": "API: ASL Citta di Torino: Timeout; browser: ASL Citta di Torino browser: page.goto: Timeout 75000ms exceeded.\nCall log:\n  - navigating to \"https://prontosoccorso.aslcittaditorino.it/situazione\", waiting until \"domcontentloaded\"\n",
+        "staleSource": "https://prontosoccorso.aslcittaditorino.it/api/strutture/ ; fallback https://prontosoccorso.aslcittaditorino.it/situazione",
+        "carriedForwardFromSnapshot": "2026-03-19T17:21:08.252Z"
       }
     },
     {
@@ -284,9 +288,9 @@
           "bianco": 30
         },
         "stale": true,
-        "staleReason": "ASL Citta di Torino: Timeout",
-        "staleSource": "https://prontosoccorso.aslcittaditorino.it/api/strutture/",
-        "carriedForwardFromSnapshot": "2026-03-19T16:47:46.983Z"
+        "staleReason": "API: ASL Citta di Torino: Timeout; browser: ASL Citta di Torino browser: page.goto: Timeout 75000ms exceeded.\nCall log:\n  - navigating to \"https://prontosoccorso.aslcittaditorino.it/situazione\", waiting until \"domcontentloaded\"\n",
+        "staleSource": "https://prontosoccorso.aslcittaditorino.it/api/strutture/ ; fallback https://prontosoccorso.aslcittaditorino.it/situazione",
+        "carriedForwardFromSnapshot": "2026-03-19T17:21:08.252Z"
       }
     },
     {
@@ -296,21 +300,21 @@
       "mapUrl": "https://www.google.com/maps/search/?api=1&query=AOU%20San%20Luigi%20Gonzaga%20di%20Orbassano%2C%20Regione%20Gonzole%2010%2C%20Orbassano",
       "rosso": 0,
       "giallo": 0,
-      "arancione": 0,
-      "verde": 5,
-      "azzurro": 1,
+      "arancione": 1,
+      "verde": 8,
+      "azzurro": 0,
       "bianco": 0,
-      "total": 6,
-      "updatedAt": "2026-03-19T17:21:08.252Z",
+      "total": 9,
+      "updatedAt": "2026-03-19T21:11:07.854Z",
       "hasData": true,
       "meta": {
         "fetchedFrom": "https://www.sanluigi.piemonte.it/dea-status/ajax-callback?url=api/deaStatus",
         "inVisit": {
-          "rosso": 3,
+          "rosso": 4,
           "giallo": 0,
-          "arancione": 13,
-          "verde": 17,
-          "azzurro": 6,
+          "arancione": 14,
+          "verde": 8,
+          "azzurro": 10,
           "bianco": 2
         }
       }
@@ -318,9 +322,14 @@
   ],
   "failures": [
     {
+      "id": "mauriziano",
+      "source": "https://www.mauriziano.it/i-nostri-servizi/pazienti-in-attesa-presso-pronto-soccorso",
+      "message": "Mauriziano: HTTP 403"
+    },
+    {
       "id": "asl-citta-di-torino",
-      "source": "https://prontosoccorso.aslcittaditorino.it/api/strutture/",
-      "message": "ASL Citta di Torino: Timeout"
+      "source": "https://prontosoccorso.aslcittaditorino.it/api/strutture/ ; fallback https://prontosoccorso.aslcittaditorino.it/situazione",
+      "message": "API: ASL Citta di Torino: Timeout; browser: ASL Citta di Torino browser: page.goto: Timeout 75000ms exceeded.\nCall log:\n  - navigating to \"https://prontosoccorso.aslcittaditorino.it/situazione\", waiting until \"domcontentloaded\"\n"
     }
   ]
 }
