@@ -5,11 +5,15 @@ This folder contains a simple static version of the site that can be updated fro
 ## What to edit
 
 1. `content/site.json`
-   Update labels, intro texts, footer text, and links.
+   Update labels, intro texts, footer text, links, and the display order of the
+   home visuals.
 2. `content/projects.json`
-   Add, remove, or reorder rows in the project table.
+   Add, remove, or reorder rows in the project table, including optional row
+   images.
 3. `assets/uploads/home-01.jpg` to `home-04.jpg`
    Replace these files to update the home page visuals.
+4. `assets/uploads/projects/`
+   Optional image files for the works table rows.
 
 ## Public URLs
 
@@ -23,10 +27,20 @@ The page `./editable/admin/` provides a graphical editor for texts, links,
 project rows, and home images.
 
 - It saves drafts in the browser.
+- On the local Node server it can also write directly to disk.
 - It exports `site.json`, `projects.json`, and replacement image files.
 - It does not publish to GitHub automatically, so the exported files still need
   to be uploaded to the repository.
 - It is not truly protected on GitHub Pages. Anyone with the URL can open it.
+- It lets you set the display order of the home visuals.
+- It lets you attach one image to each row in the works table.
+
+## Local save flow
+
+1. Run `npm start`
+2. Open `http://localhost:4173/editable/admin/`
+3. Click `Save to disk`
+4. Commit and push the changed files
 
 ## GitHub-friendly workflow
 

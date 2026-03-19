@@ -59,7 +59,13 @@ function renderHome(siteData, projectData, siteJsonUrl) {
     return Number.isNaN(year) ? latest : Math.max(latest, year);
   }, 0);
 
-  const imageCards = siteData.homeImages
+  const orderedHomeImages = [...siteData.homeImages].sort((left, right) => {
+    const leftOrder = Number.parseInt(left.order ?? 0, 10);
+    const rightOrder = Number.parseInt(right.order ?? 0, 10);
+    return leftOrder - rightOrder;
+  });
+
+  const imageCards = orderedHomeImages
     .map((image, index) => {
       const classes = index === 0 ? "image-card featured" : "image-card";
       const caption = image.caption ? `<div class="image-meta"><strong>${image.caption}</strong>${image.note ? `<span>${image.note}</span>` : ""}</div>` : "";
@@ -127,9 +133,13 @@ function renderWorks(siteData, projectData) {
       const projectCell = row.link
         ? `<a class="project-link" href="${row.link}" target="_blank" rel="noreferrer">${row.project}</a>`
         : row.project;
+      const imageCell = row.image
+        ? `<img class="project-thumb" src="${new URL(row.image, resolveContentUrl("projects.json")).href}" alt="${row.imageAlt || row.project}" />`
+        : `<div class="project-thumb project-thumb-empty" aria-hidden="true"></div>`;
 
       return `
         <tr>
+          <td data-label="${projectData.columns.image || "Image"}">${imageCell}</td>
           <td data-label="${projectData.columns.client}">${row.client}</td>
           <td data-label="${projectData.columns.project}">${projectCell}</td>
           <td data-label="${projectData.columns.result}">${row.result}</td>
@@ -149,14 +159,6 @@ function renderWorks(siteData, projectData) {
             <h1 class="works-title">${site.worksHeadline}</h1>
             <p class="body-copy">${site.worksIntro}</p>
           </article>
-          <aside class="note-card" data-reveal data-delay="2">
-            <p class="eyebrow">${site.linksEyebrow}</p>
-            <p class="table-copy">${site.worksNote}</p>
-            <div class="chip-row">
-              <a class="chip-link" href="${resolveProjectUrl(site.links.booking)}">${site.labels.booking}</a>
-              <a class="chip-link" href="${resolveProjectUrl(site.links.home)}">${site.labels.home}</a>
-            </div>
-          </aside>
         </section>
 
         <section class="table-panel" data-reveal data-delay="2">
@@ -166,6 +168,7 @@ function renderWorks(siteData, projectData) {
             <table>
               <thead>
                 <tr>
+                  <th>${projectData.columns.image || "Image"}</th>
                   <th>${projectData.columns.client}</th>
                   <th>${projectData.columns.project}</th>
                   <th>${projectData.columns.result}</th>

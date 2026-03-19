@@ -260,6 +260,10 @@ img {
   grid-template-columns: minmax(0, 1.1fr) minmax(300px, 0.9fr);
 }
 
+.works-header {
+  grid-template-columns: 1fr;
+}
+
 .glass-panel,
 .table-panel,
 .note-card {
@@ -282,6 +286,20 @@ img {
 .table-wrap {
   overflow-x: auto;
   margin-top: 20px;
+}
+
+.project-thumb {
+  width: 88px;
+  min-width: 88px;
+  height: 62px;
+  border-radius: 12px;
+  object-fit: cover;
+  background: rgba(32, 27, 24, 0.08);
+}
+
+.project-thumb-empty {
+  background:
+    linear-gradient(135deg, rgba(32, 27, 24, 0.05), rgba(32, 27, 24, 0.11));
 }
 
 table {
@@ -453,5 +471,11 @@ body.is-ready [data-delay="3"] {
     letter-spacing: 0.12em;
     text-transform: uppercase;
     margin-bottom: 4px;
+  }
+
+  .project-thumb {
+    width: 100%;
+    max-width: 220px;
+    height: 140px;
   }
 }

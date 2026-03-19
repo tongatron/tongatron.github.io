@@ -230,6 +230,19 @@ code {
   object-fit: cover;
 }
 
+.image-preview-empty {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 18px;
+  text-align: center;
+  color: var(--muted);
+  background:
+    linear-gradient(135deg, rgba(33, 27, 23, 0.05), rgba(33, 27, 23, 0.1));
+}
+
 .image-meta {
   display: flex;
   align-items: center;
@@ -268,6 +281,25 @@ code {
   border: 1px solid var(--line);
   border-radius: 12px;
   background: rgba(255, 255, 255, 0.86);
+}
+
+.table-image-cell {
+  display: grid;
+  gap: 8px;
+  width: 180px;
+}
+
+.table-image-preview {
+  width: 100%;
+  height: 108px;
+  border-radius: 14px;
+  object-fit: cover;
+  background: rgba(33, 27, 23, 0.08);
+}
+
+.table-image-empty {
+  background:
+    linear-gradient(135deg, rgba(33, 27, 23, 0.05), rgba(33, 27, 23, 0.11));
 }
 
 .row-actions {
@@ -317,6 +349,15 @@ code {
 
 .primary-button:hover {
   background: var(--accent-strong);
+}
+
+.is-disabled,
+.primary-button:disabled,
+.secondary-button:disabled,
+.ghost-button:disabled {
+  opacity: 0.48;
+  cursor: not-allowed;
+  transform: none;
 }
 
 .secondary-button,

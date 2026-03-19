@@ -33,24 +33,28 @@
   },
   "homeImages": [
     {
+      "order": 1,
       "src": "../assets/uploads/home-01.jpg",
       "alt": "Atmospheric exterior rendering with layered terraces.",
       "caption": "Home image 01",
       "note": "Replace this file to update the first home visual."
     },
     {
+      "order": 2,
       "src": "../assets/uploads/home-02.jpg",
       "alt": "Soft architectural rendering of a residential building.",
       "caption": "Home image 02",
       "note": "Replace this file to update the second home visual."
     },
     {
+      "order": 3,
       "src": "../assets/uploads/home-03.jpg",
       "alt": "Large interior illustration with construction vehicles.",
       "caption": "Home image 03",
       "note": "Replace this file to update the third home visual."
     },
     {
+      "order": 4,
       "src": "../assets/uploads/home-04.jpg",
       "alt": "Printed architecture boards shown in a soft studio setup.",
       "caption": "Home image 04",
