@@ -519,10 +519,17 @@
 
     .project-link-arrow::after,
     .web-project-open::after {
-      content: "\2197";
-      font-size: 0.98em;
+      content: "\f1c5";
+      display: inline-block;
+      font-family: bootstrap-icons;
+      font-style: normal;
+      font-weight: 400;
+      font-variant: normal;
+      text-transform: none;
+      font-size: 0.9em;
       line-height: 1;
-      transform: translateY(-0.08em);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
       transition: transform 0.22s ease;
     }
 
@@ -538,7 +545,7 @@
     .project-link-arrow:focus::after,
     .web-project-open:hover::after,
     .web-project-open:focus::after {
-      transform: translate(2px, -2px);
+      transform: translateX(3px);
     }
 
     .btn-outline-primary,
