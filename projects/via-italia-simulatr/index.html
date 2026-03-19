@@ -34,46 +34,27 @@
           <p class="eyebrow">Mappa aperta, passeggiata narrativa</p>
           <h1>Via Italia Simulatr</h1>
           <p class="hero-copy">
-            Cammina lungo Via Italia a Biella, incontra figure politiche e
-            culturali ispirate alla storia locale e scegli il tono della tua
-            citta: piu civica, piu creativa o piu intraprendente.
+            Cammina lungo Via Italia a Biella e fermati a parlare con i
+            personaggi lungo la strada.
           </p>
         </header>
-
-        <section class="status-strip" aria-label="Statistiche di gioco">
-          <article class="stat-card">
-            <span class="stat-label">Civismo</span>
-            <strong id="stat-civismo" class="stat-value">0</strong>
-          </article>
-          <article class="stat-card">
-            <span class="stat-label">Cultura</span>
-            <strong id="stat-cultura" class="stat-value">0</strong>
-          </article>
-          <article class="stat-card">
-            <span class="stat-label">Intraprendenza</span>
-            <strong id="stat-intraprendenza" class="stat-value">0</strong>
-          </article>
-        </section>
 
         <section class="journey-card">
           <div class="journey-heading">
             <div>
-              <p class="eyebrow">Passeggiata</p>
-              <h2 id="location-title">Porta del percorso</h2>
+              <p class="eyebrow">Via Italia</p>
+              <h2 id="location-title">Inizio della passeggiata</h2>
             </div>
-            <button id="autoplay-toggle" class="ghost-button" type="button">
-              Auto-walk
-            </button>
           </div>
 
           <p id="location-copy" class="journey-copy">
-            Parti dal primo tratto della via e lasciati guidare dai dialoghi.
+            Muoviti lungo la via oppure clicca un nome negli incontri per
+            trasportarti subito li.
           </p>
 
           <div class="progress-block">
             <div class="progress-meta">
               <span id="progress-step">Tappa 1 / 1</span>
-              <span id="source-pill" class="source-pill">Percorso OSM locale</span>
             </div>
             <div class="progress-rail" aria-hidden="true">
               <div id="progress-fill" class="progress-fill"></div>
@@ -90,8 +71,9 @@
           </div>
 
           <p class="help-text">
-            Usa i pulsanti o le frecce destra e sinistra. I dialoghi bloccano il
-            cammino finche non scegli una risposta.
+            Usa i pulsanti o le frecce destra e sinistra. Dalla lista
+            <strong>Chi c'e lungo la via</strong> puoi saltare direttamente a un
+            personaggio.
           </p>
         </section>
 
@@ -104,15 +86,15 @@
             <span id="encounter-counter" class="encounter-counter">0 / 0</span>
           </div>
           <p class="help-text">
-            Clicca un incontro per spostarti direttamente a quel punto della
-            via.
+            Leggi un nome e cliccalo: ti trasporti subito in quel punto di Via
+            Italia.
           </p>
           <ul id="cast-list" class="cast-list"></ul>
         </section>
 
         <section id="dialogue-panel" class="dialogue-card is-hidden" aria-live="polite">
           <div class="dialogue-shell">
-            <div class="dialogue-avatar" id="dialogue-avatar">VI</div>
+            <div class="dialogue-avatar" id="dialogue-avatar">🚶</div>
             <div class="dialogue-copy">
               <p id="dialogue-role" class="dialogue-role">Incontro</p>
               <h2 id="dialogue-name">Personaggio</h2>
@@ -148,8 +130,8 @@
               <h2>Via Italia, Biella</h2>
             </div>
             <p class="map-note">
-              La vista resta limitata all'Italia, con confini evidenziati e
-              percorso locale su base OpenStreetMap.
+              Solo il percorso di Via Italia, senza vista ampia sul resto della
+              mappa.
             </p>
           </div>
           <div id="map" class="map-canvas" aria-label="Mappa di Via Italia a Biella"></div>

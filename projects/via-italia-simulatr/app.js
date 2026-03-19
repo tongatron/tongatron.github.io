@@ -22,13 +22,6 @@ const fallbackRoute = [
   [45.5678106, 8.0537744]
 ];
 
-const italyBounds = [
-  [36.55, 6.35],
-  [47.2, 18.8]
-];
-
-const italyGeoJsonUrl = "https://inmagik.github.io/world-countries/countries/ITA.geojson";
-
 const scenicSpots = [
   {
     index: 0,
@@ -233,34 +226,21 @@ const characters = [
 const state = {
   map: null,
   route: [...fallbackRoute],
-  routeSource: "Percorso OSM locale",
   playerIndex: 0,
-  stats: {
-    civismo: 0,
-    cultura: 0,
-    intraprendenza: 0
-  },
   visited: new Set(),
   activeDialogue: null,
   lastOutcome: "",
-  autoWalkTimer: null,
   routeLine: null,
   playerMarker: null,
   finishMarker: null,
-  npcMarkers: new Map(),
-  italyMaskLayer: null,
-  italyOutlineLayer: null
+  npcMarkers: new Map()
 };
 
 const elements = {
-  statCivismo: document.querySelector("#stat-civismo"),
-  statCultura: document.querySelector("#stat-cultura"),
-  statIntraprendenza: document.querySelector("#stat-intraprendenza"),
   locationTitle: document.querySelector("#location-title"),
   locationCopy: document.querySelector("#location-copy"),
   progressStep: document.querySelector("#progress-step"),
   progressFill: document.querySelector("#progress-fill"),
-  sourcePill: document.querySelector("#source-pill"),
   castList: document.querySelector("#cast-list"),
   encounterCounter: document.querySelector("#encounter-counter"),
   dialoguePanel: document.querySelector("#dialogue-panel"),
@@ -273,7 +253,6 @@ const elements = {
   endingPanel: document.querySelector("#ending-panel"),
   endingTitle: document.querySelector("#ending-title"),
   endingCopy: document.querySelector("#ending-copy"),
-  autoplayToggle: document.querySelector("#autoplay-toggle"),
   stepBack: document.querySelector("#step-back"),
   stepForward: document.querySelector("#step-forward"),
   restartGame: document.querySelector("#restart-game")
@@ -284,9 +263,9 @@ function createMap() {
     zoomControl: false,
     scrollWheelZoom: true,
     worldCopyJump: false,
-    maxBounds: italyBounds,
     maxBoundsViscosity: 1,
-    minZoom: 6
+    center: fallbackRoute[0],
+    zoom: 16
   });
 
   L.control
@@ -297,9 +276,6 @@ function createMap() {
 
   L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
     maxZoom: 19,
-    minZoom: 6,
-    bounds: italyBounds,
-    noWrap: true,
     attribution: "&copy; OpenStreetMap contributors"
   }).addTo(state.map);
 
@@ -329,9 +305,9 @@ function drawRoute() {
   state.playerMarker = L.marker(state.route[state.playerIndex], {
     icon: L.divIcon({
       className: "",
-      html: '<div class="player-pin" aria-hidden="true"></div>',
-      iconSize: [22, 22],
-      iconAnchor: [11, 11]
+      html: '<div class="player-pin" aria-hidden="true">🚶</div>',
+      iconSize: [38, 38],
+      iconAnchor: [19, 19]
     })
   }).addTo(state.map);
 
@@ -345,8 +321,10 @@ function drawRoute() {
   }).addTo(state.map);
 
   state.map.fitBounds(state.routeLine.getBounds(), {
-    padding: [36, 36]
+    padding: [36, 36],
+    maxZoom: 18
   });
+  state.map.setMaxBounds(state.routeLine.getBounds().pad(1.2));
 
   drawNpcMarkers();
   bringGameplayLayersToFront();
@@ -428,99 +406,6 @@ function bringGameplayLayersToFront() {
   });
 }
 
-function clearItalyFrame() {
-  if (state.italyMaskLayer) {
-    state.italyMaskLayer.remove();
-    state.italyMaskLayer = null;
-  }
-
-  if (state.italyOutlineLayer) {
-    state.italyOutlineLayer.remove();
-    state.italyOutlineLayer = null;
-  }
-}
-
-function buildItalyRings(feature) {
-  const geometry = feature.geometry;
-
-  if (geometry.type === "Polygon") {
-    return [geometry.coordinates[0].map(([lon, lat]) => [lat, lon])];
-  }
-
-  if (geometry.type === "MultiPolygon") {
-    return geometry.coordinates.map((polygon) =>
-      polygon[0].map(([lon, lat]) => [lat, lon])
-    );
-  }
-
-  throw new Error("Geometria Italia non supportata");
-}
-
-function drawItalyFrame(geojson) {
-  clearItalyFrame();
-
-  const feature = geojson.features?.[0] ?? geojson;
-  const italyRings = buildItalyRings(feature);
-  const worldRing = [
-    [90, -180],
-    [90, 180],
-    [-90, 180],
-    [-90, -180]
-  ];
-
-  state.italyMaskLayer = L.polygon([worldRing, ...italyRings], {
-    stroke: false,
-    fillColor: "#071018",
-    fillOpacity: 0.46,
-    interactive: false
-  }).addTo(state.map);
-
-  state.italyOutlineLayer = L.geoJSON(feature, {
-    style: {
-      color: "#f2d0a5",
-      weight: 2,
-      opacity: 0.95,
-      fillOpacity: 0
-    },
-    interactive: false
-  }).addTo(state.map);
-
-  if (state.italyOutlineLayer.bringToFront) {
-    state.italyOutlineLayer.bringToFront();
-  }
-
-  bringGameplayLayersToFront();
-}
-
-function drawItalyFallbackFrame() {
-  clearItalyFrame();
-
-  state.italyOutlineLayer = L.rectangle(italyBounds, {
-    color: "#f2d0a5",
-    weight: 2,
-    opacity: 0.9,
-    fillOpacity: 0,
-    interactive: false
-  }).addTo(state.map);
-
-  bringGameplayLayersToFront();
-}
-
-async function initItalyFrame() {
-  try {
-    const response = await fetch(italyGeoJsonUrl);
-
-    if (!response.ok) {
-      throw new Error("Contorni Italia non disponibili");
-    }
-
-    const italyGeoJson = await response.json();
-    drawItalyFrame(italyGeoJson);
-  } catch (error) {
-    drawItalyFallbackFrame();
-  }
-}
-
 function findScenicSpot(index) {
   let current = scenicSpots[0];
 
@@ -534,23 +419,15 @@ function findScenicSpot(index) {
 }
 
 function updateStatus() {
-  elements.statCivismo.textContent = state.stats.civismo;
-  elements.statCultura.textContent = state.stats.cultura;
-  elements.statIntraprendenza.textContent = state.stats.intraprendenza;
-
   const scenicSpot = findScenicSpot(state.playerIndex);
   elements.locationTitle.textContent = scenicSpot.title;
   elements.locationCopy.textContent = scenicSpot.copy;
   elements.progressStep.textContent = `Tappa ${state.playerIndex + 1} / ${state.route.length}`;
   elements.progressFill.style.width = `${(state.playerIndex / (state.route.length - 1)) * 100}%`;
-  elements.sourcePill.textContent = state.routeSource;
   elements.encounterCounter.textContent = `${state.visited.size} / ${characters.length}`;
 
-  elements.autoplayToggle.textContent = state.autoWalkTimer ? "Stop auto-walk" : "Auto-walk";
   elements.stepBack.disabled = state.playerIndex === 0 || Boolean(state.activeDialogue);
   elements.stepForward.disabled =
-    state.playerIndex === state.route.length - 1 || Boolean(state.activeDialogue);
-  elements.autoplayToggle.disabled =
     state.playerIndex === state.route.length - 1 || Boolean(state.activeDialogue);
 }
 
@@ -633,27 +510,16 @@ function renderDialogue() {
 }
 
 function renderEnding() {
-  const completed = state.playerIndex === state.route.length - 1 && state.visited.size === characters.length;
+  const completed = state.visited.size === characters.length;
 
   if (!completed) {
     elements.endingPanel.classList.add("is-hidden");
     return;
   }
 
-  const ranking = Object.entries(state.stats).sort((left, right) => right[1] - left[1]);
-  const topStat = ranking[0][0];
-
-  const endings = {
-    civismo:
-      "La tua Via Italia finale e una strada ospitale e leggibile: piu sedute, piu occasioni condivise, piu attenzione a chi la attraversa ogni giorno.",
-    cultura:
-      "La tua Via Italia finale e una galleria urbana diffusa: botteghe, facciate e cortili diventano pretesti per arte, memoria e nuove letture della citta.",
-    intraprendenza:
-      "La tua Via Italia finale e un laboratorio produttivo a cielo aperto: piccole imprese, collaborazione e manifattura visibile tengono accesa la via."
-  };
-
-  elements.endingTitle.textContent = "Hai completato Via Italia Simulatr";
-  elements.endingCopy.textContent = endings[topStat];
+  elements.endingTitle.textContent = "Hai incontrato tutti lungo Via Italia";
+  elements.endingCopy.textContent =
+    "Puoi continuare a muoverti sulla via oppure cliccare di nuovo i nomi per tornare subito ai personaggi.";
   elements.endingPanel.classList.remove("is-hidden");
 }
 
@@ -679,14 +545,9 @@ function maybeTriggerEncounter() {
   );
 
   if (!character) {
-    if (state.playerIndex === state.route.length - 1 && state.visited.size !== characters.length) {
-      elements.locationCopy.textContent =
-        "Sei arrivato in fondo, ma ti manca ancora qualche incontro. Torna indietro sulla via per chiudere tutti i dialoghi.";
-    }
     return;
   }
 
-  stopAutoWalk();
   state.activeDialogue = {
     character,
     selectedOption: null
@@ -726,7 +587,6 @@ function jumpToCharacter(characterId) {
     return;
   }
 
-  stopAutoWalk();
   state.playerIndex = getCharacterIndex(character);
   panToPlayer();
   render();
@@ -740,10 +600,6 @@ function applyOption(optionIndex) {
 
   const option = state.activeDialogue.character.options[optionIndex];
 
-  Object.entries(option.effect).forEach(([key, value]) => {
-    state.stats[key] += value;
-  });
-
   state.visited.add(state.activeDialogue.character.id);
   state.lastOutcome = option.result;
   state.activeDialogue.selectedOption = optionIndex;
@@ -756,55 +612,8 @@ function closeDialogue() {
   render();
 }
 
-function startAutoWalk() {
-  if (state.autoWalkTimer || state.activeDialogue) {
-    return;
-  }
-
-  state.autoWalkTimer = window.setInterval(() => {
-    if (state.playerIndex >= state.route.length - 1) {
-      stopAutoWalk();
-      render();
-      return;
-    }
-
-    movePlayer(1);
-
-    if (state.activeDialogue) {
-      stopAutoWalk();
-    }
-  }, 1200);
-
-  render();
-}
-
-function stopAutoWalk() {
-  if (!state.autoWalkTimer) {
-    return;
-  }
-
-  window.clearInterval(state.autoWalkTimer);
-  state.autoWalkTimer = null;
-  render();
-}
-
-function toggleAutoWalk() {
-  if (state.autoWalkTimer) {
-    stopAutoWalk();
-    return;
-  }
-
-  startAutoWalk();
-}
-
 function restartGame() {
-  stopAutoWalk();
   state.playerIndex = 0;
-  state.stats = {
-    civismo: 0,
-    cultura: 0,
-    intraprendenza: 0
-  };
   state.visited = new Set();
   state.activeDialogue = null;
   state.lastOutcome = "";
@@ -850,12 +659,10 @@ async function initRoute() {
   try {
     const liveRoute = await loadLiveRoute();
     state.route = liveRoute;
-    state.routeSource = "Geometria OSM live";
     drawRoute();
     render();
   } catch (error) {
     state.route = [...fallbackRoute];
-    state.routeSource = "Percorso OSM locale";
     drawRoute();
     render();
   }
@@ -864,7 +671,6 @@ async function initRoute() {
 function attachEvents() {
   elements.stepBack.addEventListener("click", () => movePlayer(-1));
   elements.stepForward.addEventListener("click", () => movePlayer(1));
-  elements.autoplayToggle.addEventListener("click", toggleAutoWalk);
   elements.dialogueContinue.addEventListener("click", closeDialogue);
   elements.restartGame.addEventListener("click", restartGame);
 
@@ -896,11 +702,6 @@ function attachEvents() {
     if (event.key === "ArrowLeft") {
       movePlayer(-1);
     }
-
-    if (event.key.toLowerCase() === " " && !state.activeDialogue) {
-      event.preventDefault();
-      toggleAutoWalk();
-    }
   });
 }
 
@@ -909,7 +710,6 @@ function init() {
   attachEvents();
   render();
   maybeTriggerEncounter();
-  initItalyFrame();
   initRoute();
 }
 
