@@ -42,7 +42,7 @@
     }).format(date);
   }
 
-  function isOlderThanOneHour(value) {
+  function isOlderThanMinutes(value, minutes) {
     if (!value) {
       return false;
     }
@@ -53,7 +53,39 @@
       return false;
     }
 
-    return Date.now() - date.getTime() > 60 * 60 * 1000;
+    return Date.now() - date.getTime() > minutes * 60 * 1000;
+  }
+
+  function formatRelativeTime(value) {
+    if (!value) {
+      return "—";
+    }
+
+    const date = new Date(value);
+
+    if (Number.isNaN(date.getTime())) {
+      return formatDate(value);
+    }
+
+    const diffMs = Math.max(0, Date.now() - date.getTime());
+    const diffMinutes = Math.floor(diffMs / (60 * 1000));
+
+    if (diffMinutes < 1) {
+      return "meno di 1 minuto fa";
+    }
+
+    if (diffMinutes < 60) {
+      return `${diffMinutes} ${diffMinutes === 1 ? "minuto" : "minuti"} fa`;
+    }
+
+    const diffHours = Math.floor(diffMinutes / 60);
+
+    if (diffHours < 24) {
+      return `${diffHours} ${diffHours === 1 ? "ora" : "ore"} fa`;
+    }
+
+    const diffDays = Math.floor(diffHours / 24);
+    return `${diffDays} ${diffDays === 1 ? "giorno" : "giorni"} fa`;
   }
 
   function normalizeText(value) {
@@ -249,7 +281,9 @@
         updatedLabel: "Dato non disponibile",
         snapshotLabel: "",
         isStale: false,
-        isOld: false
+        isSnapshotOld: false,
+        updatedTitle: "",
+        snapshotTitle: ""
       };
     }
 
@@ -262,18 +296,22 @@
         null;
 
       return {
-        updatedLabel: `Dato ospedale alle ${formatDate(hospital.updatedAt)}`,
-        snapshotLabel: carriedForwardAt ? `Recuperato da snapshot delle ${formatDate(carriedForwardAt)}` : "",
+        updatedLabel: `Aggiornato ${formatRelativeTime(dataTimestamp)}`,
+        snapshotLabel: carriedForwardAt ? `Snapshot ${formatRelativeTime(carriedForwardAt)}` : "",
         isStale: true,
-        isOld: isOlderThanOneHour(dataTimestamp)
+        isSnapshotOld: isOlderThanMinutes(carriedForwardAt, 30),
+        updatedTitle: dataTimestamp ? `Ultimo dato ospedale: ${formatDate(dataTimestamp)}` : "",
+        snapshotTitle: carriedForwardAt ? `Recuperato da snapshot delle ${formatDate(carriedForwardAt)}` : ""
       };
     }
 
     return {
-      updatedLabel: `Aggiornato alle ${formatDate(dataTimestamp)}`,
+      updatedLabel: `Aggiornato ${formatRelativeTime(dataTimestamp)}`,
       snapshotLabel: "",
       isStale: false,
-      isOld: isOlderThanOneHour(dataTimestamp)
+      isSnapshotOld: false,
+      updatedTitle: dataTimestamp ? `Ultimo aggiornamento: ${formatDate(dataTimestamp)}` : "",
+      snapshotTitle: ""
     };
   }
 
@@ -333,11 +371,14 @@
       statusEl.classList.add(statusConfig.className);
       statusEl.title = statusConfig.title;
       updatedAtEl.textContent = timingConfig.updatedLabel;
+      updatedAtEl.title = timingConfig.updatedTitle;
       updatedAtEl.classList.toggle("is-live", hospital.hasData && !timingConfig.isStale);
       updatedAtEl.classList.toggle("is-stale", timingConfig.isStale);
-      updatedAtEl.classList.toggle("is-old", timingConfig.isOld);
+      updatedAtEl.classList.remove("is-old");
       snapshotAtEl.hidden = !timingConfig.snapshotLabel;
       snapshotAtEl.textContent = timingConfig.snapshotLabel;
+      snapshotAtEl.title = timingConfig.snapshotTitle;
+      snapshotAtEl.classList.toggle("is-old", timingConfig.isSnapshotOld);
 
       const totalValueEl = node.querySelector(".hospital-total-value");
       const totalLabelEl = node.querySelector(".hospital-total-label");
