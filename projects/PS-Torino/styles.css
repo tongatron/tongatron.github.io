@@ -263,11 +263,13 @@ h1 span {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 16px 28px 10px;
+  margin-top: 8px;
+  padding: 18px 28px 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
   color: #f1f4ef;
-  font-size: 0.84rem;
+  font-size: 0.86rem;
   font-weight: 800;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
 }
 
@@ -275,15 +277,15 @@ h1 span {
   content: "";
   flex: 1;
   height: 1px;
-  background: linear-gradient(90deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.02));
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0.03));
 }
 
 .hospital-group-divider.group-0 {
-  color: #bbefb6;
+  color: #c5f6bf;
 }
 
 .hospital-group-divider.group-1 {
-  color: #ffe58d;
+  color: #ffe89f;
 }
 
 .hospital-group-divider.group-2 {

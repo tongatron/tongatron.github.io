@@ -80,14 +80,14 @@
 
   function getPriorityLabel(priority) {
     if (priority === 0) {
-      return "Dato live";
+      return "DATI LIVE";
     }
 
     if (priority === 1) {
-      return "Ultimo snapshot";
+      return "ULTIMO SNAPSHOT";
     }
 
-    return "Catalogo";
+    return "CATALOGO";
   }
 
   function compareBySelectedMode(left, right, mode) {
@@ -262,8 +262,8 @@
         null;
 
       return {
-        updatedLabel: `Aggiornato alle ${formatDate(hospital.updatedAt)}`,
-        snapshotLabel: carriedForwardAt ? `Snapshot alle ${formatDate(carriedForwardAt)}` : "",
+        updatedLabel: `Dato ospedale alle ${formatDate(hospital.updatedAt)}`,
+        snapshotLabel: carriedForwardAt ? `Recuperato da snapshot delle ${formatDate(carriedForwardAt)}` : "",
         isStale: true,
         isOld: isOlderThanOneHour(dataTimestamp)
       };
