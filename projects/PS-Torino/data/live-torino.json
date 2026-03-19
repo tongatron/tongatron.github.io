@@ -1,7 +1,7 @@
 {
   "source": "github-actions",
   "sourceLabel": "Snapshot live (GitHub Actions)",
-  "fetchedAt": "2026-03-19T05:52:50.535Z",
+  "fetchedAt": "2026-03-19T06:20:04.521Z",
   "hospitals": [
     {
       "id": "molinette",
@@ -11,11 +11,11 @@
       "rosso": 0,
       "giallo": 0,
       "arancione": 0,
-      "verde": 3,
-      "azzurro": 1,
+      "verde": 5,
+      "azzurro": 2,
       "bianco": 0,
-      "total": 4,
-      "updatedAt": "2026-03-19T05:52:50.535Z",
+      "total": 7,
+      "updatedAt": "2026-03-19T06:20:04.521Z",
       "hasData": true,
       "meta": {
         "fetchedFrom": "https://listeps.cittadellasalute.to.it/gtotal.php?id=01090101",
@@ -23,7 +23,7 @@
           "rosso": 1,
           "giallo": 0,
           "arancione": 0,
-          "verde": 9,
+          "verde": 10,
           "azzurro": 18,
           "bianco": 0
         }
@@ -37,11 +37,11 @@
       "rosso": 0,
       "giallo": 0,
       "arancione": 0,
-      "verde": 0,
+      "verde": 2,
       "azzurro": 0,
       "bianco": 0,
-      "total": 0,
-      "updatedAt": "2026-03-19T05:52:50.535Z",
+      "total": 2,
+      "updatedAt": "2026-03-19T06:20:04.521Z",
       "hasData": true,
       "meta": {
         "fetchedFrom": "https://listeps.cittadellasalute.to.it/gtotal.php?id=01090201",
@@ -67,7 +67,7 @@
       "azzurro": 0,
       "bianco": 0,
       "total": 0,
-      "updatedAt": "2026-03-19T05:52:50.535Z",
+      "updatedAt": "2026-03-19T06:20:04.521Z",
       "hasData": true,
       "meta": {
         "fetchedFrom": "https://listeps.cittadellasalute.to.it/gtotal.php?id=01090301",
@@ -93,7 +93,7 @@
       "azzurro": 0,
       "bianco": 0,
       "total": 0,
-      "updatedAt": "2026-03-19T05:52:50.535Z",
+      "updatedAt": "2026-03-19T06:20:04.521Z",
       "hasData": true,
       "meta": {
         "fetchedFrom": "https://listeps.cittadellasalute.to.it/gtotal.php?id=01090302",
@@ -102,7 +102,7 @@
           "giallo": 0,
           "arancione": 0,
           "verde": 0,
-          "azzurro": 8,
+          "azzurro": 7,
           "bianco": 0
         }
       }
@@ -134,7 +134,7 @@
         "stale": true,
         "staleReason": "Mauriziano: HTTP 403",
         "staleSource": "https://www.mauriziano.it/i-nostri-servizi/pazienti-in-attesa-presso-pronto-soccorso",
-        "carriedForwardFromSnapshot": "2026-03-19T05:29:07.438Z"
+        "carriedForwardFromSnapshot": "2026-03-19T05:52:50.535Z"
       }
     },
     {
@@ -173,7 +173,7 @@
         "stale": true,
         "staleReason": "ASL Citta di Torino: Timeout",
         "staleSource": "https://prontosoccorso.aslcittaditorino.it/api/strutture/",
-        "carriedForwardFromSnapshot": "2026-03-19T05:29:07.438Z"
+        "carriedForwardFromSnapshot": "2026-03-19T05:52:50.535Z"
       }
     },
     {
@@ -212,7 +212,7 @@
         "stale": true,
         "staleReason": "ASL Citta di Torino: Timeout",
         "staleSource": "https://prontosoccorso.aslcittaditorino.it/api/strutture/",
-        "carriedForwardFromSnapshot": "2026-03-19T05:29:07.438Z"
+        "carriedForwardFromSnapshot": "2026-03-19T05:52:50.535Z"
       }
     },
     {
@@ -251,7 +251,7 @@
         "stale": true,
         "staleReason": "ASL Citta di Torino: Timeout",
         "staleSource": "https://prontosoccorso.aslcittaditorino.it/api/strutture/",
-        "carriedForwardFromSnapshot": "2026-03-19T05:29:07.438Z"
+        "carriedForwardFromSnapshot": "2026-03-19T05:52:50.535Z"
       }
     },
     {
@@ -290,7 +290,7 @@
         "stale": true,
         "staleReason": "ASL Citta di Torino: Timeout",
         "staleSource": "https://prontosoccorso.aslcittaditorino.it/api/strutture/",
-        "carriedForwardFromSnapshot": "2026-03-19T05:29:07.438Z"
+        "carriedForwardFromSnapshot": "2026-03-19T05:52:50.535Z"
       }
     },
     {
@@ -305,7 +305,7 @@
       "azzurro": 0,
       "bianco": 0,
       "total": 0,
-      "updatedAt": "2026-03-19T05:52:50.535Z",
+      "updatedAt": "2026-03-19T06:20:04.521Z",
       "hasData": true,
       "meta": {
         "fetchedFrom": "https://www.sanluigi.piemonte.it/dea-status/ajax-callback?url=api/deaStatus",
@@ -313,7 +313,7 @@
           "rosso": 3,
           "giallo": 0,
           "arancione": 17,
-          "verde": 9,
+          "verde": 8,
           "azzurro": 13,
           "bianco": 1
         }
