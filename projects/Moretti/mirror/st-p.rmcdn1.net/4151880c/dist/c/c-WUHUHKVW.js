@@ -1,1 +1,1 @@
-import{a,b}from"https://st-p.rmcdn1.net/4151880c/dist/c/c-C4F6LFOV.js";import"https://st-p.rmcdn1.net/4151880c/dist/c/c-YAWH3OHD.js";import"https://st-p.rmcdn1.net/4151880c/dist/c/c-4UNIREAB.js";import"https://st-p.rmcdn1.net/4151880c/dist/c/c-SCWYZJNQ.js";import"https://st-p.rmcdn1.net/4151880c/dist/c/c-NKV6RTLL.js";b();export{a as getWebVitals};
+import{a,b}from"./c-C4F6LFOV.js";import"./c-YAWH3OHD.js";import"./c-4UNIREAB.js";import"./c-SCWYZJNQ.js";import"./c-NKV6RTLL.js";b();export{a as getWebVitals};

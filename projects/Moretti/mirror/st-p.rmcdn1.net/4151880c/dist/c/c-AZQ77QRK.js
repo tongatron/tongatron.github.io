@@ -1,4 +1,4 @@
-import{a as t,b as a}from"https://st-p.rmcdn1.net/4151880c/dist/c/c-Q2S27UIZ.js";import{a as e}from"https://st-p.rmcdn1.net/4151880c/dist/c/c-NKV6RTLL.js";var l,r=e(()=>{"use strict";a();l={"template-constructor-block-twitter-type_tweet":t`
+import{a as t,b as a}from"./c-Q2S27UIZ.js";import{a as e}from"./c-NKV6RTLL.js";var l,r=e(()=>{"use strict";a();l={"template-constructor-block-twitter-type_tweet":t`
 	<a href="https://twitter.com/share" class="twitter-share-button" data-url="<%-url%>" data-lang="en" data-size="<%=large_button ? 'large' : 'medium'%>" data-text="<%- typeof text !== 'undefined' ? text : ''%>">Tweet</a>
 	<div class="overlay"></div>
 `,"template-constructor-block-twitter-type_follow":t`

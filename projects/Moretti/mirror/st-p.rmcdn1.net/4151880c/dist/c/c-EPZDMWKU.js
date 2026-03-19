@@ -1,4 +1,4 @@
-import{a as i,b as m}from"https://st-p.rmcdn1.net/4151880c/dist/c/c-Q2S27UIZ.js";import{a as g}from"https://st-p.rmcdn1.net/4151880c/dist/c/c-UEOFDAP5.js";import{b as s,c as y}from"https://st-p.rmcdn1.net/4151880c/dist/c/c-4UNIREAB.js";import{a as h}from"https://st-p.rmcdn1.net/4151880c/dist/c/c-PJTTHMMS.js";import{b as d}from"https://st-p.rmcdn1.net/4151880c/dist/c/c-7JMBK7IY.js";import{a,d as r}from"https://st-p.rmcdn1.net/4151880c/dist/c/c-NKV6RTLL.js";var c,n=a(()=>{"use strict";m();c={"template-common-alert":i`
+import{a as i,b as m}from"./c-Q2S27UIZ.js";import{a as g}from"./c-UEOFDAP5.js";import{b as s,c as y}from"./c-4UNIREAB.js";import{a as h}from"./c-PJTTHMMS.js";import{b as d}from"./c-7JMBK7IY.js";import{a,d as r}from"./c-NKV6RTLL.js";var c,n=a(()=>{"use strict";m();c={"template-common-alert":i`
 	<%
 		var categories = {
 			'type-duplicate':				'category-upgrade',

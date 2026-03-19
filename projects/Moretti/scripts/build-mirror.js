@@ -571,6 +571,18 @@ async function rewriteMirrorTextFiles() {
   }
 }
 
+async function syncDocsToProjectRoot() {
+  const entries = await fs.readdir(OUTPUT_DIR, { withFileTypes: true });
+
+  for (const entry of entries) {
+    const sourcePath = path.join(OUTPUT_DIR, entry.name);
+    const targetPath = path.join(ROOT, entry.name);
+
+    await fs.rm(targetPath, { recursive: true, force: true });
+    await fs.cp(sourcePath, targetPath, { recursive: true });
+  }
+}
+
 async function buildFonts(assetsToMirror) {
   const [webtypeCss, typetodayCss, googleCss] = await Promise.all([
     fetchText(`${ORIGIN}/api/fonts/webtype/css`),
@@ -664,6 +676,8 @@ async function build() {
       rewritePageHtml(page.html, page),
     );
   }
+
+  await syncDocsToProjectRoot();
 
   console.log(
     `Static mirror ready in ${OUTPUT_DIR}. Mirrored ${assetsToMirror.size} assets across ${PAGE_DEFS.length} pages.`,

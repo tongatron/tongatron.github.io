@@ -1,4 +1,4 @@
-import{a as d,b as e}from"https://st-p.rmcdn1.net/4151880c/dist/c/c-Q2S27UIZ.js";e();var a={"template-viewer-widget-background":d`
+import{a as d,b as e}from"./c-Q2S27UIZ.js";e();var a={"template-viewer-widget-background":d`
 	<div class="rmwidget widget-background" style="background-color: #<%=data.color%>">
 
         <% if (data.selectedType == 'picture') { %>
