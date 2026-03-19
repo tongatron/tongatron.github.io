@@ -379,6 +379,53 @@
     return new Date().toISOString();
   }
 
+  function createTimeoutSignal(timeoutMs) {
+    if (typeof AbortController !== "function") {
+      return {
+        signal: undefined,
+        cleanup() {}
+      };
+    }
+
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
+
+    return {
+      signal: controller.signal,
+      cleanup() {
+        clearTimeout(timeoutId);
+      }
+    };
+  }
+
+  async function fetchJsonWithTimeout(url, options) {
+    const timeout = createTimeoutSignal(
+      options && options.timeoutMs ? options.timeoutMs : 7000
+    );
+
+    try {
+      const response = await fetch(url, {
+        cache: options && options.cache ? options.cache : "no-store",
+        headers: options && options.headers ? options.headers : { Accept: "application/json" },
+        signal: timeout.signal
+      });
+
+      if (!response.ok) {
+        throw new Error(`${options && options.errorLabel ? options.errorLabel : "Errore fetch"}: ${response.status}`);
+      }
+
+      return response.json();
+    } catch (error) {
+      if (error && error.name === "AbortError") {
+        throw new Error(`${options && options.timeoutLabel ? options.timeoutLabel : "Timeout richiesta"}`);
+      }
+
+      throw error;
+    } finally {
+      timeout.cleanup();
+    }
+  }
+
   function ensureConfiguredApi() {
     const apiBaseUrl = APP_CONFIG.apiBaseUrl ? APP_CONFIG.apiBaseUrl.trim() : "";
 
@@ -429,35 +476,27 @@
   namespace.fetchTorinoHospitals = async function fetchTorinoHospitals() {
     const apiBaseUrl = ensureConfiguredApi();
     const url = `${apiBaseUrl}/${APP_CONFIG.region}/${APP_CONFIG.province}`;
-    const res = await fetch(url, {
-      cache: "no-store",
+    const payload = await fetchJsonWithTimeout(url, {
+      errorLabel: "Errore API",
+      timeoutLabel: "Timeout API",
       headers: {
         Accept: "application/json"
       }
     });
 
-    if (!res.ok) {
-      throw new Error(`Errore API: ${res.status}`);
-    }
-
-    const payload = await res.json();
     return normalizeSnapshot(payload, "api", "API remota");
   };
 
   namespace.fetchPublishedSnapshot = async function fetchPublishedSnapshot() {
     const liveSnapshotUrl = new URL(APP_CONFIG.liveSnapshotPath, global.location.href).toString();
-    const res = await fetch(liveSnapshotUrl, {
-      cache: "no-store",
+    const payload = await fetchJsonWithTimeout(liveSnapshotUrl, {
+      errorLabel: "Errore snapshot live",
+      timeoutLabel: "Timeout snapshot live",
       headers: {
         Accept: "application/json"
       }
     });
 
-    if (!res.ok) {
-      throw new Error(`Errore snapshot live: ${res.status}`);
-    }
-
-    const payload = await res.json();
     return normalizeSnapshot(payload, "live-snapshot", "Snapshot live");
   };
 
@@ -474,13 +513,15 @@
 
     try {
       const mockUrl = new URL(APP_CONFIG.fallbackMockPath, global.location.href).toString();
-      const res = await fetch(mockUrl);
+      const payload = await fetchJsonWithTimeout(mockUrl, {
+        cache: "default",
+        errorLabel: "Errore mock",
+        timeoutLabel: "Timeout mock",
+        headers: {
+          Accept: "application/json"
+        }
+      });
 
-      if (!res.ok) {
-        throw new Error(`Errore mock: ${res.status}`);
-      }
-
-      const payload = await res.json();
       return normalizeSnapshot(payload, "mock", "Mock locale");
     } catch (error) {
       const embeddedPayload = readEmbeddedMock();

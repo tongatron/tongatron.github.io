@@ -1,6 +1,7 @@
-const CACHE_NAME = "ps-torino-v7";
+const CACHE_NAME = "ps-torino-v9";
 const APP_SHELL_URL = new URL("./index.html", self.location.href).toString();
 const LIVE_SNAPSHOT_URL = new URL("./data/live-torino.json", self.location.href).toString();
+const NETWORK_TIMEOUT_MS = 4000;
 const NETWORK_FIRST_URLS = new Set([
   APP_SHELL_URL,
   new URL("./styles.css", self.location.href).toString(),
@@ -46,6 +47,24 @@ self.addEventListener("fetch", (event) => {
   const { request } = event;
   const url = new URL(request.url);
 
+  const fetchWithTimeout = (requestToFetch, timeoutMs = NETWORK_TIMEOUT_MS) => (
+    new Promise((resolve, reject) => {
+      const timeoutId = setTimeout(() => {
+        reject(new Error("Network timeout"));
+      }, timeoutMs);
+
+      fetch(requestToFetch)
+        .then((response) => {
+          clearTimeout(timeoutId);
+          resolve(response);
+        })
+        .catch((error) => {
+          clearTimeout(timeoutId);
+          reject(error);
+        });
+    })
+  );
+
   const updateCache = (networkResponse) => {
     if (networkResponse.ok && networkResponse.type === "basic") {
       const responseClone = networkResponse.clone();
@@ -65,14 +84,14 @@ self.addEventListener("fetch", (event) => {
 
   if (request.mode === "navigate") {
     event.respondWith(
-      fetch(request).catch(() => caches.match(APP_SHELL_URL))
+      fetchWithTimeout(request).catch(() => caches.match(APP_SHELL_URL))
     );
     return;
   }
 
   if (NETWORK_FIRST_URLS.has(url.href)) {
     event.respondWith(
-      fetch(request)
+      fetchWithTimeout(request)
         .then(updateCache)
         .catch(() => caches.match(request))
     );
