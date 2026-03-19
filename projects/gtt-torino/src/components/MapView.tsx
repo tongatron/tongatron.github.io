@@ -16,21 +16,46 @@ function escapeHtml(value: string): string {
     .replaceAll("'", '&#39;')
 }
 
+function normalizeBearing(value: number | null): number | null {
+  if (typeof value !== 'number' || !Number.isFinite(value)) {
+    return null
+  }
+
+  return ((value % 360) + 360) % 360
+}
+
 function createVehicleIcon(vehicle: LineVehicleRecord): DivIcon {
   const backgroundColor = vehicle.routeColor ?? '#d97706'
   const textColor = vehicle.routeTextColor ?? '#ffffff'
+  const bearing = normalizeBearing(vehicle.bearing)
+  const markerClasses = ['vehicle-marker-wrap']
+
+  if (bearing !== null) {
+    markerClasses.push('has-bearing')
+  } else {
+    markerClasses.push('is-static')
+  }
 
   return divIcon({
     className: 'vehicle-marker-shell',
-    iconSize: [42, 42],
-    iconAnchor: [21, 21],
-    popupAnchor: [0, -18],
+    iconSize: [54, 62],
+    iconAnchor: [27, 31],
+    popupAnchor: [0, -26],
     html: `
       <div
-        class="vehicle-marker"
-        style="background:${escapeHtml(backgroundColor)};color:${escapeHtml(textColor)}"
+        class="${markerClasses.join(' ')}"
+        style="--marker-accent:${escapeHtml(backgroundColor)};--bearing:${bearing ?? 0}deg;"
       >
-        <span>${escapeHtml(vehicle.lineCode)}</span>
+        <span class="vehicle-pulse" aria-hidden="true"></span>
+        <span class="vehicle-direction-anchor" aria-hidden="true">
+          <span class="vehicle-direction-arrow"></span>
+        </span>
+        <div
+          class="vehicle-marker"
+          style="background:${escapeHtml(backgroundColor)};color:${escapeHtml(textColor)}"
+        >
+          <span>${escapeHtml(vehicle.lineCode)}</span>
+        </div>
       </div>
     `,
   })
@@ -54,6 +79,15 @@ function formatPopupSpeed(value: number | null): string {
   }
 
   return `${Math.round(value * 3.6)} km/h`
+}
+
+function formatPopupBearing(value: number | null): string {
+  const bearing = normalizeBearing(value)
+  if (bearing === null) {
+    return 'Direzione non disponibile'
+  }
+
+  return `Direzione ${Math.round(bearing)}°`
 }
 
 function FitMapToVehicles({
@@ -153,6 +187,7 @@ export function MapView({ lineLabel, vehicleMarkers }: MapViewProps) {
                   : 'Veicolo GTT'}
               </span>
               <span>{formatPopupSpeed(vehicle.speedMetersPerSecond)}</span>
+              <span>{formatPopupBearing(vehicle.bearing)}</span>
               <span>{formatPopupTime(vehicle.timestamp)}</span>
               {lineLabel ? <span>Linea richiesta: {lineLabel}</span> : null}
             </div>

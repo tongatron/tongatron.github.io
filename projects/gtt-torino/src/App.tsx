@@ -14,6 +14,14 @@ import './App.css'
 const POLL_INTERVAL_MS = 15_000
 const LAST_LINE_STORAGE_KEY = 'torino-line-radar:last-line'
 
+interface BeforeInstallPromptEvent extends Event {
+  prompt: () => Promise<void>
+  userChoice: Promise<{
+    outcome: 'accepted' | 'dismissed'
+    platform: string
+  }>
+}
+
 function formatFeedAge(value: string | null): string {
   if (!value) {
     return 'timestamp non disponibile'
@@ -70,6 +78,10 @@ function App() {
   const [loadingVehicles, setLoadingVehicles] = useState(false)
   const [refreshingVehicles, setRefreshingVehicles] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [installPromptEvent, setInstallPromptEvent] =
+    useState<BeforeInstallPromptEvent | null>(null)
+  const [installingApp, setInstallingApp] = useState(false)
+  const [isStandalone, setIsStandalone] = useState(false)
   const hasLoadedVehiclesRef = useRef(false)
   const hasRestoredLineRef = useRef(false)
 
@@ -172,6 +184,59 @@ function App() {
     }
   }, [loadVehicles, selectedLine])
 
+  useEffect(() => {
+    const displayModeQuery = window.matchMedia('(display-mode: standalone)')
+
+    const handleDisplayModeChange = (event: MediaQueryListEvent) => {
+      setIsStandalone(event.matches)
+    }
+
+    const handleBeforeInstallPrompt = (event: Event) => {
+      const installEvent = event as BeforeInstallPromptEvent
+      installEvent.preventDefault()
+      setInstallPromptEvent(installEvent)
+    }
+
+    const handleAppInstalled = () => {
+      setInstallPromptEvent(null)
+      setInstallingApp(false)
+      setIsStandalone(true)
+    }
+
+    setIsStandalone(displayModeQuery.matches)
+
+    displayModeQuery.addEventListener('change', handleDisplayModeChange)
+    window.addEventListener(
+      'beforeinstallprompt',
+      handleBeforeInstallPrompt as EventListener,
+    )
+    window.addEventListener('appinstalled', handleAppInstalled)
+
+    return () => {
+      displayModeQuery.removeEventListener('change', handleDisplayModeChange)
+      window.removeEventListener(
+        'beforeinstallprompt',
+        handleBeforeInstallPrompt as EventListener,
+      )
+      window.removeEventListener('appinstalled', handleAppInstalled)
+    }
+  }, [])
+
+  const handleInstallApp = useCallback(async () => {
+    if (!installPromptEvent) {
+      return
+    }
+
+    try {
+      setInstallingApp(true)
+      await installPromptEvent.prompt()
+      await installPromptEvent.userChoice
+    } finally {
+      setInstallingApp(false)
+      setInstallPromptEvent(null)
+    }
+  }, [installPromptEvent])
+
   const visibleVehicles = useMemo(
     () => vehiclesResponse?.vehicles ?? [],
     [vehiclesResponse],
@@ -223,6 +288,19 @@ function App() {
             <span className="mode-badge">
               Aggiornato {formatFeedAge(vehiclesResponse.feedTimestamp)}
             </span>
+          ) : null}
+          {isStandalone ? <span className="mode-badge">PWA installata</span> : null}
+          {installPromptEvent && !isStandalone ? (
+            <button
+              className="secondary-button install-button"
+              type="button"
+              onClick={() => {
+                void handleInstallApp()
+              }}
+              disabled={installingApp}
+            >
+              {installingApp ? 'Installazione...' : 'Installa app'}
+            </button>
           ) : null}
         </div>
 
