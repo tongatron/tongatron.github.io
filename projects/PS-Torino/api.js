@@ -146,10 +146,16 @@
   ];
 
   const HOSPITAL_CATALOG_KEYS = new Map();
+  const HOSPITAL_CATALOG_ALIASES = {
+    sanluigigonzaga: "san-luigi-orbassano",
+    "san-luigi-gonzaga": "san-luigi-orbassano",
+    "st-anna": "regina-margherita"
+  };
 
   for (const hospital of HOSPITAL_CATALOG) {
     HOSPITAL_CATALOG_KEYS.set(buildCatalogKey(hospital.id), hospital);
     HOSPITAL_CATALOG_KEYS.set(buildCatalogKey(hospital.name), hospital);
+    HOSPITAL_CATALOG_KEYS.set(buildCatalogKey(hospital.address), hospital);
   }
 
   function buildCatalogKey(value) {
@@ -165,7 +171,7 @@
 
   function buildFallbackId(item) {
     const seed = String(
-      item.id || item.slug || item.codice || item.name || item.nome || item.descrizione || item.address || item.indirizzo || "struttura"
+      item.id || item.key || item.slug || item.codice || item.name || item.nome || item.descrizione || item.address || item.indirizzo || "struttura"
     );
     const fallbackId = buildCatalogKey(seed);
 
@@ -238,16 +244,23 @@
   function resolveCatalogHospital(item, fallbackId) {
     const keys = [
       item.id,
+      item.key,
       item.slug,
       item.codice,
       item.name,
       item.nome,
       item.descrizione,
+      item.address,
+      item.indirizzo,
       fallbackId
     ];
 
     for (const key of keys) {
       const catalogKey = buildCatalogKey(key);
+
+      if (catalogKey && HOSPITAL_CATALOG_ALIASES[catalogKey]) {
+        return HOSPITAL_CATALOG_KEYS.get(HOSPITAL_CATALOG_ALIASES[catalogKey]) || null;
+      }
 
       if (catalogKey && HOSPITAL_CATALOG_KEYS.has(catalogKey)) {
         return HOSPITAL_CATALOG_KEYS.get(catalogKey);
@@ -255,6 +268,52 @@
     }
 
     return null;
+  }
+
+  function isProntoSoccorsoLivePayload(payload) {
+    return Boolean(
+      payload &&
+      Array.isArray(payload.data) &&
+      payload.websocket &&
+      payload.tableSettings
+    );
+  }
+
+  function normalizeProntoSoccorsoLiveHospital(item, fetchedAt) {
+    const hospitalData = item && item.data && item.data.data ? item.data.data : {};
+    const fallbackId = buildFallbackId(item);
+
+    return {
+      id: item.id || item.key || fallbackId,
+      key: item.key || fallbackId,
+      slug: item.key || fallbackId,
+      nome: item.nome || item.descrizione || fallbackId,
+      descrizione: item.descrizione || item.nome || fallbackId,
+      indirizzo: item.indirizzo || "",
+      google_maps: item.google_maps || "",
+      lat: item.coords && item.coords.lat ? item.coords.lat : null,
+      lng: item.coords && item.coords.lng ? item.coords.lng : null,
+      red: hospitalData.rosso && hospitalData.rosso.value !== undefined ? hospitalData.rosso.value : 0,
+      rosso: hospitalData.rosso && hospitalData.rosso.value !== undefined ? hospitalData.rosso.value : 0,
+      orange: hospitalData.arancione && hospitalData.arancione.value !== undefined ? hospitalData.arancione.value : 0,
+      arancione: hospitalData.arancione && hospitalData.arancione.value !== undefined ? hospitalData.arancione.value : 0,
+      green: hospitalData.verde && hospitalData.verde.value !== undefined ? hospitalData.verde.value : 0,
+      verde: hospitalData.verde && hospitalData.verde.value !== undefined ? hospitalData.verde.value : 0,
+      blue: hospitalData.azzurro && hospitalData.azzurro.value !== undefined ? hospitalData.azzurro.value : 0,
+      azzurro: hospitalData.azzurro && hospitalData.azzurro.value !== undefined ? hospitalData.azzurro.value : 0,
+      white: hospitalData.bianco && hospitalData.bianco.value !== undefined ? hospitalData.bianco.value : 0,
+      bianco: hospitalData.bianco && hospitalData.bianco.value !== undefined ? hospitalData.bianco.value : 0,
+      total: hospitalData.totali && hospitalData.totali.value !== undefined ? hospitalData.totali.value : 0,
+      totale: hospitalData.totali && hospitalData.totali.value !== undefined ? hospitalData.totali.value : 0,
+      updatedAt: fetchedAt,
+      hasData: Boolean(item && item.data && item.data.data),
+      meta: {
+        source: "prontosoccorso.live",
+        remoteKey: item.key || null,
+        rawExtra: hospitalData.extra || null,
+        rawTotalsExtra: hospitalData.totali && hospitalData.totali.extra ? hospitalData.totali.extra : null
+      }
+    };
   }
 
   function normalizeHospital(item) {
@@ -279,6 +338,7 @@
       mapUrl:
         item.mapUrl ||
         item.mappa ||
+        item.google_maps ||
         buildMapUrl(catalogHospital ? catalogHospital.name : name, catalogHospital ? catalogHospital.address : address),
       red: red === null ? 0 : red,
       orange: orange === null ? 0 : orange,
@@ -461,17 +521,75 @@
   }
 
   function normalizeSnapshot(payload, fallbackSource, fallbackSourceLabel) {
-    const hospitals = extractHospitalArray(payload).map(normalizeHospital);
+    const fetchedAt = resolveFetchedAt(payload);
+    const rawHospitals = extractHospitalArray(payload);
+    const hospitals = (isProntoSoccorsoLivePayload(payload)
+      ? rawHospitals
+        .filter(function filterAdults(item) {
+          return item && item.adulti !== false;
+        })
+        .map(function mapProntoSoccorsoLive(item) {
+          return normalizeHospital(normalizeProntoSoccorsoLiveHospital(item, fetchedAt));
+        })
+      : rawHospitals.map(normalizeHospital)
+    );
 
     return {
       source: payload && payload.source ? payload.source : fallbackSource,
       sourceLabel: payload && payload.sourceLabel ? payload.sourceLabel : fallbackSourceLabel,
-      fetchedAt: resolveFetchedAt(payload),
+      fetchedAt,
       hospitals: mergeHospitalsWithCatalog(hospitals)
     };
   }
 
   namespace.normalizeSnapshotPayload = normalizeSnapshot;
+
+  namespace.mergeSnapshotSources = function mergeSnapshotSources(primarySnapshot, fallbackSnapshot) {
+    if (!primarySnapshot) {
+      return fallbackSnapshot || null;
+    }
+
+    if (!fallbackSnapshot || !Array.isArray(fallbackSnapshot.hospitals)) {
+      return primarySnapshot;
+    }
+
+    const fallbackIndex = new Map();
+    let supplementedHospitals = 0;
+    const primaryHospitals = Array.isArray(primarySnapshot.hospitals) ? primarySnapshot.hospitals : [];
+
+    fallbackSnapshot.hospitals.forEach(function indexFallbackHospital(hospital) {
+      fallbackIndex.set(hospital.id, hospital);
+    });
+
+    const hospitals = primaryHospitals.map(function mergeHospital(primaryHospital) {
+      if (primaryHospital && primaryHospital.hasData) {
+        return primaryHospital;
+      }
+
+      const fallbackHospital = fallbackIndex.get(primaryHospital.id);
+
+      if (fallbackHospital && fallbackHospital.hasData) {
+        supplementedHospitals += 1;
+        return fallbackHospital;
+      }
+
+      return primaryHospital;
+    });
+
+    return {
+      source: primarySnapshot.source,
+      sourceLabel: supplementedHospitals > 0
+        ? `${primarySnapshot.sourceLabel} + ${fallbackSnapshot.sourceLabel || "Snapshot live"}`
+        : primarySnapshot.sourceLabel,
+      fetchedAt: primarySnapshot.fetchedAt || fallbackSnapshot.fetchedAt,
+      hospitals,
+      meta: {
+        supplementedHospitals,
+        primarySource: primarySnapshot.source || null,
+        fallbackSource: fallbackSnapshot.source || null
+      }
+    };
+  };
 
   namespace.fetchTorinoHospitals = async function fetchTorinoHospitals() {
     const apiBaseUrl = ensureConfiguredApi();
@@ -484,7 +602,7 @@
       }
     });
 
-    return normalizeSnapshot(payload, "api", "API remota");
+    return normalizeSnapshot(payload, "api", "API prontosoccorso.live");
   };
 
   namespace.fetchPublishedSnapshot = async function fetchPublishedSnapshot() {

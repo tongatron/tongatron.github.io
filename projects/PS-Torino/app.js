@@ -6,6 +6,7 @@
     fetchMockHospitals,
     loadLastSync,
     loadSnapshot,
+    mergeSnapshotSources,
     normalizeSnapshotPayload,
     saveSnapshot,
     isApiConfigured
@@ -415,12 +416,20 @@
       const apiConfigured = isApiConfigured();
       const canReadPublishedSnapshot = global.location.protocol !== "file:";
 
-      if (canReadPublishedSnapshot) {
+      if (apiConfigured) {
         try {
-          const liveSnapshot = await fetchPublishedSnapshot();
-          saveSnapshot(liveSnapshot);
-          render(liveSnapshot);
-          setStatus("Snapshot live");
+          const publishedSnapshotPromise = canReadPublishedSnapshot
+            ? fetchPublishedSnapshot().catch((error) => {
+              console.error(error);
+              return null;
+            })
+            : Promise.resolve(null);
+          const apiSnapshot = await fetchTorinoHospitals();
+          const publishedSnapshot = await publishedSnapshotPromise;
+          const snapshot = mergeSnapshotSources(apiSnapshot, publishedSnapshot);
+          saveSnapshot(snapshot);
+          render(snapshot);
+          setStatus("Online");
           setRuntimeNotice("");
           return;
         } catch (error) {
@@ -428,12 +437,12 @@
         }
       }
 
-      if (apiConfigured) {
+      if (canReadPublishedSnapshot) {
         try {
-          const snapshot = await fetchTorinoHospitals();
-          saveSnapshot(snapshot);
-          render(snapshot);
-          setStatus("Online");
+          const liveSnapshot = await fetchPublishedSnapshot();
+          saveSnapshot(liveSnapshot);
+          render(liveSnapshot);
+          setStatus("Snapshot live");
           setRuntimeNotice("");
           return;
         } catch (error) {

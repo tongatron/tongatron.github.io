@@ -2,8 +2,8 @@
   const namespace = global.PSTorino || (global.PSTorino = {});
 
   namespace.APP_CONFIG = {
-    // GitHub Pages non puo eseguire Laravel/PHP: qui va l'URL HTTPS di un backend esterno gia deployato.
-    apiBaseUrl: "",
+    // Backend pubblico primario per i dati live.
+    apiBaseUrl: "https://api.prontosoccorso.live/api",
     region: "piemonte",
     province: "torino",
     cacheKey: "ps-torino:last-snapshot",
