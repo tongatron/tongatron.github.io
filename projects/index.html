@@ -201,34 +201,37 @@
       display: inline-flex;
       align-items: center;
       align-self: flex-start;
-      gap: 0.38rem;
+      gap: 0.34rem;
       margin-top: auto;
       padding: 0;
       border: 0;
       background: transparent;
       color: var(--accent);
-      font-size: 1rem;
+      font-size: 0.96rem;
       font-weight: 700;
       line-height: 1.2;
+      letter-spacing: 0.02em;
+      white-space: nowrap;
       transition: color 0.22s ease, gap 0.22s ease;
     }
 
     .project-link-arrow::after {
-      content: "\2192";
-      font-size: 1.08em;
+      content: "\2197";
+      font-size: 0.98em;
       line-height: 1;
+      transform: translateY(-0.08em);
       transition: transform 0.22s ease;
     }
 
     .project-link-arrow:hover,
     .project-link-arrow:focus {
       color: var(--text);
-      gap: 0.52rem;
+      gap: 0.44rem;
     }
 
     .project-link-arrow:hover::after,
     .project-link-arrow:focus::after {
-      transform: translateX(3px);
+      transform: translate(2px, -2px);
     }
 
     .cards-grid {
@@ -434,7 +437,7 @@
           </div>
           <h3>Connect Four</h3>
           <p>Classico Forza 4 contro CPU con selezione difficolta e nuova partita rapida.</p>
-          <a class="project-link-arrow" href="./Forza4/index.html">Apri</a>
+          <a class="project-link-arrow" href="./Forza4/index.html" target="_blank" rel="noopener">Apri</a>
         </article>
 
         <article class="project-card">
@@ -444,7 +447,7 @@
           </div>
           <h3>Maze Game</h3>
           <p>Gioco del labirinto con livelli easy/medium/hard, comandi tastiera e controlli touch.</p>
-          <a class="project-link-arrow" href="./labirinto/index.html">Apri</a>
+          <a class="project-link-arrow" href="./labirinto/index.html" target="_blank" rel="noopener">Apri</a>
         </article>
 
         <article class="project-card">
@@ -454,7 +457,7 @@
           </div>
           <h3>Memory</h3>
           <p>Memory card game con timer, conteggio mosse, records locali e diverse dimensioni griglia.</p>
-          <a class="project-link-arrow" href="./memory/index.html">Apri</a>
+          <a class="project-link-arrow" href="./memory/index.html" target="_blank" rel="noopener">Apri</a>
         </article>
 
         <article class="project-card">
@@ -464,7 +467,7 @@
           </div>
           <h3>Simon Simulator</h3>
           <p>Versione web del gioco Simon: ripeti la sequenza colori con modalita strict opzionale.</p>
-          <a class="project-link-arrow" href="./simon/index.html">Apri</a>
+          <a class="project-link-arrow" href="./simon/index.html" target="_blank" rel="noopener">Apri</a>
         </article>
 
         <article class="project-card">
@@ -474,7 +477,7 @@
           </div>
           <h3>Emojiwood World</h3>
           <p>Mondo top-down a quattro biomi con missioni collegate, dialoghi con i personaggi, sigilli dei custodi e animazioni emoji.</p>
-          <a class="project-link-arrow" href="./emojiwood-world/index.html">Apri</a>
+          <a class="project-link-arrow" href="./emojiwood-world/index.html" target="_blank" rel="noopener">Apri</a>
         </article>
 
         <article class="project-card">
@@ -484,7 +487,7 @@
           </div>
           <h3>Multi Web Simulator</h3>
           <p>Simulazione web della board open-source MULTI del laboratorio elettroacustico Pangrus.</p>
-          <a class="project-link-arrow" href="./multi-simulator/index.html">Apri</a>
+          <a class="project-link-arrow" href="./multi-simulator/index.html" target="_blank" rel="noopener">Apri</a>
         </article>
 
         <article class="project-card">
@@ -494,7 +497,7 @@
           </div>
           <h3>Roulette Simulator</h3>
           <p>Simulatore stile casino con ruota animata, puntate multiple, bilancio e storico spin.</p>
-          <a class="project-link-arrow" href="./roulette/index.html">Apri</a>
+          <a class="project-link-arrow" href="./roulette/index.html" target="_blank" rel="noopener">Apri</a>
         </article>
 
         <article class="project-card">
@@ -504,7 +507,7 @@
           </div>
           <h3>Rumore Bianco</h3>
           <p>Generatore audio con parametri regolabili in tempo reale (volume, filtro e controlli sonori).</p>
-          <a class="project-link-arrow" href="./rumorebianco/index.html">Apri</a>
+          <a class="project-link-arrow" href="./rumorebianco/index.html" target="_blank" rel="noopener">Apri</a>
         </article>
 
         <article class="project-card">
@@ -514,7 +517,7 @@
           </div>
           <h3>QR Scanner</h3>
           <p>Scansiona e genera QR code dal browser, con supporto fotocamera mobile e output testuale rapido.</p>
-          <a class="project-link-arrow" href="./qrscanner/index.html">Apri</a>
+          <a class="project-link-arrow" href="./qrscanner/index.html" target="_blank" rel="noopener">Apri</a>
         </article>
 
         <article class="project-card">
@@ -524,7 +527,7 @@
           </div>
           <h3>PS Torino</h3>
           <p>PWA per consultare le attese dei Pronto Soccorso dell'area torinese con snapshot live, cache offline e fallback locale.</p>
-          <a class="project-link-arrow" href="./PS-Torino/index.html">Apri</a>
+          <a class="project-link-arrow" href="./PS-Torino/index.html" target="_blank" rel="noopener">Apri</a>
         </article>
 
         <article class="project-card">
@@ -534,7 +537,7 @@
           </div>
           <h3>ChatAnalysis</h3>
           <p>Importa chat WhatsApp dal browser e genera metriche, statistiche partecipanti, parole frequenti e sentiment analysis base.</p>
-          <a class="project-link-arrow" href="./chatanalysis/index.html">Apri</a>
+          <a class="project-link-arrow" href="./chatanalysis/index.html" target="_blank" rel="noopener">Apri</a>
         </article>
 
         <article class="project-card">
@@ -544,7 +547,7 @@
           </div>
           <h3>Ryanair Search</h3>
           <p>Ricerca voli Ryanair A/R con filtri su partenza, destinazione, budget, durata e link condivisibile dei risultati.</p>
-          <a class="project-link-arrow" href="./ryanair-search/index.html">Apri</a>
+          <a class="project-link-arrow" href="./ryanair-search/index.html" target="_blank" rel="noopener">Apri</a>
         </article>
 
         <article class="project-card">
@@ -554,7 +557,7 @@
           </div>
           <h3>Robottino 26</h3>
           <p>Landing page del progetto con overview, documentazione componenti e simulatore web del piccolo robot con testa rotante.</p>
-          <a class="project-link-arrow" href="./robottino26/index.html">Apri</a>
+          <a class="project-link-arrow" href="./robottino26/index.html" target="_blank" rel="noopener">Apri</a>
         </article>
       </div>
     </section>
@@ -569,21 +572,21 @@
           <img src="../img/robottino.jpg" alt="Robottino">
           <h3>Robottino</h3>
           <p>Robot educativo STEM open source basato su Arduino, con sensori, luci RGB, display e testa rotante programmabile.</p>
-          <a class="project-link-arrow" href="./robottino/robottino-site/index.html">Apri</a>
+          <a class="project-link-arrow" href="./robottino/robottino-site/index.html" target="_blank" rel="noopener">Apri</a>
         </article>
 
         <article class="iot-card">
           <img src="../img/contact.jpg" alt="Selfomatic">
           <h3>Selfomatic</h3>
           <p>Social camera per eventi con scatto automatico e pubblicazione in tempo reale, pensata per attivazioni e comunicazione live.</p>
-          <a class="project-link-arrow" href="./selfomatic/index.html">Apri</a>
+          <a class="project-link-arrow" href="./selfomatic/index.html" target="_blank" rel="noopener">Apri</a>
         </article>
 
         <article class="iot-card">
           <img src="./IKEA-hack/ikea.jpg" alt="IKEA Hack Nordli">
           <h3>IKEA Hack Nordli</h3>
           <p>Progetto FabLab: personalizzazione della cassettiera Nordli con tavolino estraibile realizzato tramite pannello tagliato a laser.</p>
-          <a class="project-link-arrow" href="./IKEA-hack/index.html">Apri</a>
+          <a class="project-link-arrow" href="./IKEA-hack/index.html" target="_blank" rel="noopener">Apri</a>
         </article>
       </div>
     </section>
