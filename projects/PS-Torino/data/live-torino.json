@@ -1,7 +1,7 @@
 {
   "source": "github-actions",
   "sourceLabel": "Snapshot live (GitHub Actions)",
-  "fetchedAt": "2026-03-19T06:47:04.224Z",
+  "fetchedAt": "2026-03-19T07:20:49.379Z",
   "hospitals": [
     {
       "id": "molinette",
@@ -11,11 +11,11 @@
       "rosso": 0,
       "giallo": 0,
       "arancione": 0,
-      "verde": 5,
+      "verde": 6,
       "azzurro": 2,
-      "bianco": 0,
-      "total": 7,
-      "updatedAt": "2026-03-19T06:47:04.224Z",
+      "bianco": 4,
+      "total": 12,
+      "updatedAt": "2026-03-19T07:20:49.379Z",
       "hasData": true,
       "meta": {
         "fetchedFrom": "https://listeps.cittadellasalute.to.it/gtotal.php?id=01090101",
@@ -24,7 +24,7 @@
           "giallo": 0,
           "arancione": 0,
           "verde": 10,
-          "azzurro": 18,
+          "azzurro": 19,
           "bianco": 0
         }
       }
@@ -37,11 +37,11 @@
       "rosso": 0,
       "giallo": 0,
       "arancione": 0,
-      "verde": 2,
-      "azzurro": 1,
-      "bianco": 0,
-      "total": 3,
-      "updatedAt": "2026-03-19T06:47:04.224Z",
+      "verde": 3,
+      "azzurro": 0,
+      "bianco": 1,
+      "total": 4,
+      "updatedAt": "2026-03-19T07:20:49.379Z",
       "hasData": true,
       "meta": {
         "fetchedFrom": "https://listeps.cittadellasalute.to.it/gtotal.php?id=01090201",
@@ -49,8 +49,8 @@
           "rosso": 0,
           "giallo": 0,
           "arancione": 0,
-          "verde": 2,
-          "azzurro": 0,
+          "verde": 4,
+          "azzurro": 1,
           "bianco": 0
         }
       }
@@ -64,10 +64,10 @@
       "giallo": 0,
       "arancione": 0,
       "verde": 0,
-      "azzurro": 0,
+      "azzurro": 1,
       "bianco": 0,
-      "total": 0,
-      "updatedAt": "2026-03-19T06:47:04.224Z",
+      "total": 1,
+      "updatedAt": "2026-03-19T07:20:49.379Z",
       "hasData": true,
       "meta": {
         "fetchedFrom": "https://listeps.cittadellasalute.to.it/gtotal.php?id=01090301",
@@ -93,7 +93,7 @@
       "azzurro": 0,
       "bianco": 0,
       "total": 0,
-      "updatedAt": "2026-03-19T06:47:04.224Z",
+      "updatedAt": "2026-03-19T07:20:49.379Z",
       "hasData": true,
       "meta": {
         "fetchedFrom": "https://listeps.cittadellasalute.to.it/gtotal.php?id=01090302",
@@ -115,26 +115,22 @@
       "rosso": 0,
       "giallo": 0,
       "arancione": 0,
-      "verde": 3,
+      "verde": 6,
       "azzurro": 0,
-      "bianco": 0,
-      "total": 3,
-      "updatedAt": "2026-03-19T04:00:03+01:00",
+      "bianco": 1,
+      "total": 7,
+      "updatedAt": "2026-03-19T08:20:04+01:00",
       "hasData": true,
       "meta": {
         "fetchedFrom": "https://www.mauriziano.it/i-nostri-servizi/pazienti-in-attesa-presso-pronto-soccorso",
         "inVisit": {
           "rosso": 0,
           "giallo": 0,
-          "arancione": 24,
-          "verde": 18,
-          "azzurro": 22,
-          "bianco": 7
-        },
-        "stale": true,
-        "staleReason": "Mauriziano: HTTP 403",
-        "staleSource": "https://www.mauriziano.it/i-nostri-servizi/pazienti-in-attesa-presso-pronto-soccorso",
-        "carriedForwardFromSnapshot": "2026-03-19T06:20:04.521Z"
+          "arancione": 22,
+          "verde": 21,
+          "azzurro": 23,
+          "bianco": 0
+        }
       }
     },
     {
@@ -173,7 +169,7 @@
         "stale": true,
         "staleReason": "ASL Citta di Torino: Timeout",
         "staleSource": "https://prontosoccorso.aslcittaditorino.it/api/strutture/",
-        "carriedForwardFromSnapshot": "2026-03-19T06:20:04.521Z"
+        "carriedForwardFromSnapshot": "2026-03-19T06:47:04.224Z"
       }
     },
     {
@@ -212,7 +208,7 @@
         "stale": true,
         "staleReason": "ASL Citta di Torino: Timeout",
         "staleSource": "https://prontosoccorso.aslcittaditorino.it/api/strutture/",
-        "carriedForwardFromSnapshot": "2026-03-19T06:20:04.521Z"
+        "carriedForwardFromSnapshot": "2026-03-19T06:47:04.224Z"
       }
     },
     {
@@ -251,7 +247,7 @@
         "stale": true,
         "staleReason": "ASL Citta di Torino: Timeout",
         "staleSource": "https://prontosoccorso.aslcittaditorino.it/api/strutture/",
-        "carriedForwardFromSnapshot": "2026-03-19T06:20:04.521Z"
+        "carriedForwardFromSnapshot": "2026-03-19T06:47:04.224Z"
       }
     },
     {
@@ -290,7 +286,7 @@
         "stale": true,
         "staleReason": "ASL Citta di Torino: Timeout",
         "staleSource": "https://prontosoccorso.aslcittaditorino.it/api/strutture/",
-        "carriedForwardFromSnapshot": "2026-03-19T06:20:04.521Z"
+        "carriedForwardFromSnapshot": "2026-03-19T06:47:04.224Z"
       }
     },
     {
@@ -302,10 +298,10 @@
       "giallo": 0,
       "arancione": 0,
       "verde": 1,
-      "azzurro": 1,
+      "azzurro": 0,
       "bianco": 0,
-      "total": 2,
-      "updatedAt": "2026-03-19T06:47:04.224Z",
+      "total": 1,
+      "updatedAt": "2026-03-19T07:20:49.379Z",
       "hasData": true,
       "meta": {
         "fetchedFrom": "https://www.sanluigi.piemonte.it/dea-status/ajax-callback?url=api/deaStatus",
@@ -313,19 +309,14 @@
           "rosso": 3,
           "giallo": 0,
           "arancione": 17,
-          "verde": 8,
-          "azzurro": 13,
+          "verde": 10,
+          "azzurro": 15,
           "bianco": 1
         }
       }
     }
   ],
   "failures": [
-    {
-      "id": "mauriziano",
-      "source": "https://www.mauriziano.it/i-nostri-servizi/pazienti-in-attesa-presso-pronto-soccorso",
-      "message": "Mauriziano: HTTP 403"
-    },
     {
       "id": "asl-citta-di-torino",
       "source": "https://prontosoccorso.aslcittaditorino.it/api/strutture/",
