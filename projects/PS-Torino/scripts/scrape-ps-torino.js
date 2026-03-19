@@ -123,6 +123,17 @@ const HOSPITAL_ORDER = [
 const ASL_CITTA_HOSPITALS_BY_CODE = new Map(
   ASL_CITTA_HOSPITALS.map((hospital) => [hospital.code, hospital])
 );
+const ASL_CITTA_HOSPITALS_BY_DOM_LABEL = new Map(
+  ASL_CITTA_HOSPITALS.flatMap((hospital) => {
+    const labels = [hospital.name];
+
+    if (hospital.name.startsWith("Ospedale ")) {
+      labels.push(hospital.name.replace(/^Ospedale\s+/i, ""));
+    }
+
+    return labels.map((label) => [normalizeLabelKey(label), hospital]);
+  })
+);
 const FAILURE_FALLBACK_IDS = {
   mauriziano: ["mauriziano"],
   "asl-citta-di-torino": ["maria-vittoria", "martini", "oftalmico", "san-giovanni-bosco"],
@@ -194,6 +205,15 @@ async function writeDiagnostics(status, error) {
 function buildMapUrl(address, name) {
   const query = [name, address].filter(Boolean).join(", ") || address || name || "Pronto Soccorso Torino";
   return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
+}
+
+function normalizeLabelKey(value) {
+  return String(value || "")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, " ")
+    .trim();
 }
 
 function createTimeoutSignal(timeoutMs) {
@@ -363,6 +383,44 @@ function normalizeIsoOffset(value) {
   }
 
   return String(value).replace(/([+-]\d{2})(\d{2})$/, "$1:$2");
+}
+
+function parseRelativeAslUpdate(value) {
+  const text = String(value || "").toLowerCase().trim();
+
+  if (!text) {
+    return null;
+  }
+
+  const now = Date.now();
+
+  if (text.includes("meno di") || text.includes("adesso")) {
+    return new Date(now).toISOString();
+  }
+
+  const minuteMatch = text.match(/(\d+)\s+minut/i);
+
+  if (minuteMatch) {
+    return new Date(now - Number(minuteMatch[1]) * 60 * 1000).toISOString();
+  }
+
+  const hourMatch = text.match(/(\d+)\s+or/i);
+
+  if (hourMatch) {
+    return new Date(now - Number(hourMatch[1]) * 60 * 60 * 1000).toISOString();
+  }
+
+  const dayMatch = text.match(/(\d+)\s+giorn/i);
+
+  if (dayMatch) {
+    return new Date(now - Number(dayMatch[1]) * 24 * 60 * 60 * 1000).toISOString();
+  }
+
+  if (text.includes("un'ora") || text.includes("una ora")) {
+    return new Date(now - 60 * 60 * 1000).toISOString();
+  }
+
+  return null;
 }
 
 function parseItalianLocalTimestamp(value) {
@@ -691,6 +749,69 @@ function loadPlaywright() {
   }
 }
 
+function mapAslBrowserCardToHospital(card, sourceUrl) {
+  const knownHospital = ASL_CITTA_HOSPITALS_BY_DOM_LABEL.get(normalizeLabelKey(card.luogo || card.name || ""));
+
+  if (!knownHospital) {
+    return null;
+  }
+
+  const values = Array.isArray(card.rilevazioni) ? card.rilevazioni.map(toNumber) : [];
+
+  if (values.length < 10) {
+    throw new Error(`Card ASL incompleta per ${knownHospital.name}`);
+  }
+
+  const counts = {
+    bianco: values[5],
+    verde: values[6],
+    azzurro: values[7],
+    arancione: values[8],
+    rosso: values[9]
+  };
+  const inVisit = {
+    bianco: values[0],
+    verde: values[1],
+    azzurro: values[2],
+    arancione: values[3],
+    rosso: values[4]
+  };
+
+  return buildHospitalRecord(knownHospital, counts, parseRelativeAslUpdate(card.update), {
+    fetchedFrom: sourceUrl,
+    inVisit,
+    browserDomFallback: true,
+    browserDomUpdateLabel: card.update || null
+  });
+}
+
+async function scrapeAslCittaSourcesFromSituazioneDom(page, timeoutMs) {
+  await page.waitForSelector("app-situazione mat-card", {
+    timeout: timeoutMs
+  });
+
+  const cards = await page.locator("app-situazione mat-card").evaluateAll((elements) => (
+    elements.map((card) => ({
+      luogo: card.querySelector(".luogo") ? card.querySelector(".luogo").textContent.trim() : null,
+      name: card.querySelector(".p-col-9.p-grid .p-col-12")
+        ? card.querySelector(".p-col-9.p-grid .p-col-12").textContent.trim()
+        : null,
+      update: card.querySelector(".aggiornamento") ? card.querySelector(".aggiornamento").textContent.trim() : null,
+      rilevazioni: Array.from(card.querySelectorAll(".mat-expansion-panel-body .rilevazione")).map((item) => item.textContent.trim())
+    }))
+  ));
+
+  const hospitals = cards
+    .map((card) => mapAslBrowserCardToHospital(card, `${ASL_CITTA_SOURCE.baseUrl}/situazione (DOM)`))
+    .filter(Boolean);
+
+  if (!hospitals.length) {
+    throw new Error("Nessuna card ASL valida trovata nel DOM di /situazione");
+  }
+
+  return hospitals;
+}
+
 async function scrapeAslCittaSourcesFromSituazioneBrowser(timeoutMs = ASL_BROWSER_TIMEOUT_MS) {
   const { chromium } = loadPlaywright();
   const browser = await chromium.launch({
@@ -727,7 +848,7 @@ async function scrapeAslCittaSourcesFromSituazioneBrowser(timeoutMs = ASL_BROWSE
       isAslSituazioneResponse(response.url())
     ), {
       timeout: timeoutMs
-    });
+    }).catch(() => null);
 
     await page.goto(`${ASL_CITTA_SOURCE.baseUrl}/situazione`, {
       waitUntil: "domcontentloaded",
@@ -736,12 +857,17 @@ async function scrapeAslCittaSourcesFromSituazioneBrowser(timeoutMs = ASL_BROWSE
 
     const response = await responsePromise;
 
-    if (!response.ok()) {
-      throw new Error(`HTTP ${response.status()} su ${response.url()}`);
+    if (response) {
+      if (!response.ok()) {
+        throw new Error(`HTTP ${response.status()} su ${response.url()}`);
+      }
+
+      const payload = await response.json();
+      return normalizeAslCittaPayload(payload, `${ASL_CITTA_SOURCE.baseUrl}/situazione -> ${response.url()}`);
     }
 
-    const payload = await response.json();
-    return normalizeAslCittaPayload(payload, `${ASL_CITTA_SOURCE.baseUrl}/situazione -> ${response.url()}`);
+    process.stdout.write("ASL Citta di Torino: nessuna risposta /strutture/ intercettata dal browser, provo il parsing del DOM.\n");
+    return scrapeAslCittaSourcesFromSituazioneDom(page, timeoutMs);
   } finally {
     await browser.close();
   }
