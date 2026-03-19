@@ -15,6 +15,18 @@ This folder contains a simple static version of the site that can be updated fro
 
 - `./editable/`
 - `./editable/behindtheshadow/`
+- `./editable/admin/`
+
+## Admin panel
+
+The page `./editable/admin/` provides a graphical editor for texts, links,
+project rows, and home images.
+
+- It saves drafts in the browser.
+- It exports `site.json`, `projects.json`, and replacement image files.
+- It does not publish to GitHub automatically, so the exported files still need
+  to be uploaded to the repository.
+- It is not truly protected on GitHub Pages. Anyone with the URL can open it.
 
 ## GitHub-friendly workflow
 
