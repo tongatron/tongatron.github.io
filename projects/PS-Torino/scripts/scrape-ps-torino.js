@@ -749,6 +749,14 @@ function loadPlaywright() {
   }
 }
 
+function isTimeoutError(error) {
+  if (!error) {
+    return false;
+  }
+
+  return error.name === "TimeoutError" || String(error.message || "").includes("Timeout");
+}
+
 function mapAslBrowserCardToHospital(card, sourceUrl) {
   const knownHospital = ASL_CITTA_HOSPITALS_BY_DOM_LABEL.get(normalizeLabelKey(card.luogo || card.name || ""));
 
@@ -850,10 +858,42 @@ async function scrapeAslCittaSourcesFromSituazioneBrowser(timeoutMs = ASL_BROWSE
       timeout: timeoutMs
     }).catch(() => null);
 
-    await page.goto(`${ASL_CITTA_SOURCE.baseUrl}/situazione`, {
-      waitUntil: "domcontentloaded",
-      timeout: timeoutMs
-    });
+    let navigationError = null;
+
+    try {
+      await page.goto(`${ASL_CITTA_SOURCE.baseUrl}/situazione`, {
+        // We only need the initial document to start watching the app boot;
+        // waiting for domcontentloaded is too strict on slow GH runners.
+        waitUntil: "commit",
+        timeout: timeoutMs
+      });
+
+      await page.waitForLoadState("domcontentloaded", {
+        timeout: Math.min(timeoutMs, 15000)
+      }).catch((error) => {
+        if (isTimeoutError(error)) {
+          process.stdout.write("ASL Citta di Torino: domcontentloaded non raggiunto in tempo, continuo con response o DOM parziale.\n");
+          return null;
+        }
+
+        throw error;
+      });
+    } catch (error) {
+      if (!isTimeoutError(error)) {
+        throw error;
+      }
+
+      navigationError = error;
+      process.stdout.write("ASL Citta di Torino: page.goto in timeout, provo comunque response o parsing del DOM.\n");
+    }
+
+    if (navigationError) {
+      try {
+        return await scrapeAslCittaSourcesFromSituazioneDom(page, Math.min(timeoutMs, 15000));
+      } catch (domError) {
+        process.stdout.write(`ASL Citta di Torino: parsing DOM dopo timeout page.goto non riuscito (${domError.message}).\n`);
+      }
+    }
 
     const response = await responsePromise;
 
@@ -867,7 +907,13 @@ async function scrapeAslCittaSourcesFromSituazioneBrowser(timeoutMs = ASL_BROWSE
     }
 
     process.stdout.write("ASL Citta di Torino: nessuna risposta /strutture/ intercettata dal browser, provo il parsing del DOM.\n");
-    return scrapeAslCittaSourcesFromSituazioneDom(page, timeoutMs);
+    return scrapeAslCittaSourcesFromSituazioneDom(page, Math.min(timeoutMs, 15000)).catch((domError) => {
+      if (navigationError) {
+        throw new Error(`${navigationError.message}; DOM: ${domError.message}`);
+      }
+
+      throw domError;
+    });
   } finally {
     await browser.close();
   }
