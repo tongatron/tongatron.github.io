@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <title>Via Italia Simulatr</title>
+    <meta
+      name="description"
+      content="Gioco narrativo ambientato su Via Italia a Biella con mappa OpenStreetMap e dialoghi con personaggi ispirati alla storia biellese."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;700&family=Manrope:wght@400;500;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <section class="story-panel">
+        <div class="story-glow"></div>
+
+        <header class="hero">
+          <p class="eyebrow">Mappa aperta, passeggiata narrativa</p>
+          <h1>Via Italia Simulatr</h1>
+          <p class="hero-copy">
+            Cammina lungo Via Italia a Biella, incontra figure politiche e
+            culturali ispirate alla storia locale e scegli il tono della tua
+            citta: piu civica, piu creativa o piu intraprendente.
+          </p>
+        </header>
+
+        <section class="status-strip" aria-label="Statistiche di gioco">
+          <article class="stat-card">
+            <span class="stat-label">Civismo</span>
+            <strong id="stat-civismo" class="stat-value">0</strong>
+          </article>
+          <article class="stat-card">
+            <span class="stat-label">Cultura</span>
+            <strong id="stat-cultura" class="stat-value">0</strong>
+          </article>
+          <article class="stat-card">
+            <span class="stat-label">Intraprendenza</span>
+            <strong id="stat-intraprendenza" class="stat-value">0</strong>
+          </article>
+        </section>
+
+        <section class="journey-card">
+          <div class="journey-heading">
+            <div>
+              <p class="eyebrow">Passeggiata</p>
+              <h2 id="location-title">Porta del percorso</h2>
+            </div>
+            <button id="autoplay-toggle" class="ghost-button" type="button">
+              Auto-walk
+            </button>
+          </div>
+
+          <p id="location-copy" class="journey-copy">
+            Parti dal primo tratto della via e lasciati guidare dai dialoghi.
+          </p>
+
+          <div class="progress-block">
+            <div class="progress-meta">
+              <span id="progress-step">Tappa 1 / 1</span>
+              <span id="source-pill" class="source-pill">Percorso OSM locale</span>
+            </div>
+            <div class="progress-rail" aria-hidden="true">
+              <div id="progress-fill" class="progress-fill"></div>
+            </div>
+          </div>
+
+          <div class="controls">
+            <button id="step-back" class="move-button" type="button">
+              Indietro
+            </button>
+            <button id="step-forward" class="move-button move-button--accent" type="button">
+              Avanti
+            </button>
+          </div>
+
+          <p class="help-text">
+            Usa i pulsanti o le frecce destra e sinistra. I dialoghi bloccano il
+            cammino finche non scegli una risposta.
+          </p>
+        </section>
+
+        <section class="cast-card">
+          <div class="cast-heading">
+            <div>
+              <p class="eyebrow">Incontri</p>
+              <h2>Chi c'e lungo la via</h2>
+            </div>
+            <span id="encounter-counter" class="encounter-counter">0 / 0</span>
+          </div>
+          <ul id="cast-list" class="cast-list"></ul>
+        </section>
+
+        <section id="dialogue-panel" class="dialogue-card is-hidden" aria-live="polite">
+          <div class="dialogue-shell">
+            <div class="dialogue-avatar" id="dialogue-avatar">VI</div>
+            <div class="dialogue-copy">
+              <p id="dialogue-role" class="dialogue-role">Incontro</p>
+              <h2 id="dialogue-name">Personaggio</h2>
+              <p id="dialogue-text" class="dialogue-text"></p>
+            </div>
+          </div>
+          <div id="dialogue-options" class="dialogue-options"></div>
+          <button id="dialogue-continue" class="move-button move-button--accent is-hidden" type="button">
+            Continua la passeggiata
+          </button>
+        </section>
+
+        <section id="ending-panel" class="ending-card is-hidden">
+          <p class="eyebrow">Finale</p>
+          <h2 id="ending-title">Hai finito la passeggiata</h2>
+          <p id="ending-copy" class="journey-copy"></p>
+          <button id="restart-game" class="move-button move-button--accent" type="button">
+            Ricomincia
+          </button>
+        </section>
+
+        <footer class="footer-note">
+          Incontri immaginari ispirati alla storia biellese. Mappa e tiles:
+          OpenStreetMap.
+        </footer>
+      </section>
+
+      <section class="map-panel">
+        <div class="map-frame">
+          <div class="map-topline">
+            <div>
+              <p class="eyebrow">Open maps</p>
+              <h2>Via Italia, Biella</h2>
+            </div>
+            <p class="map-note">
+              Il tracciato prova a caricarsi da Overpass; se non risponde, usa un
+              fallback locale basato su dati OSM.
+            </p>
+          </div>
+          <div id="map" class="map-canvas" aria-label="Mappa di Via Italia a Biella"></div>
+        </div>
+      </section>
+    </div>
+
+    <script
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+      crossorigin=""
+    ></script>
+    <script src="./app.js"></script>
+  </body>
+</html>
