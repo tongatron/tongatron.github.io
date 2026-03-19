@@ -58,7 +58,7 @@ const scenicSpots = [
 const characters = [
   {
     id: "ferrero",
-    initials: "SF",
+    emoji: "🏛️",
     name: "Sebastiano Ferrero",
     role: "Uomo di stato e mecenate",
     index: 3,
@@ -91,7 +91,7 @@ const characters = [
   },
   {
     id: "sella",
-    initials: "QS",
+    emoji: "⛰️",
     name: "Quintino Sella",
     role: "Politico, tecnico, alpinista",
     index: 7,
@@ -124,7 +124,7 @@ const characters = [
   },
   {
     id: "pistoletto",
-    initials: "MP",
+    emoji: "🎨",
     name: "Michelangelo Pistoletto",
     role: "Artista",
     index: 11,
@@ -157,7 +157,7 @@ const characters = [
   },
   {
     id: "zegna",
-    initials: "EZ",
+    emoji: "🧵",
     name: "Ermenegildo Zegna",
     role: "Imprenditore",
     index: 15,
@@ -190,7 +190,7 @@ const characters = [
   },
   {
     id: "ada",
-    initials: "AB",
+    emoji: "📚",
     name: "Ada B., libraia immaginaria",
     role: "Voce quotidiana della via",
     index: 19,
@@ -372,7 +372,7 @@ function buildNpcIcon(character) {
 
   return L.divIcon({
     className: "",
-    html: `<div class="npc-pin${visitedClass}" aria-hidden="true">${character.initials}</div>`,
+    html: `<div class="npc-pin${visitedClass}" aria-hidden="true">${character.emoji}</div>`,
     iconSize: [36, 36],
     iconAnchor: [18, 18]
   });
@@ -463,7 +463,7 @@ function renderCast() {
             data-character-id="${character.id}"
             ${activeId ? "disabled" : ""}
           >
-          <div class="cast-avatar">${character.initials}</div>
+          <div class="cast-avatar">${character.emoji}</div>
           <div class="cast-meta">
             <p class="cast-name">${character.name}</p>
             <p class="cast-role">${character.role}</p>
@@ -485,7 +485,7 @@ function renderDialogue() {
 
   const { character, selectedOption } = state.activeDialogue;
   elements.dialoguePanel.classList.remove("is-hidden");
-  elements.dialogueAvatar.textContent = character.initials;
+  elements.dialogueAvatar.textContent = character.emoji;
   elements.dialogueRole.textContent = character.role;
   elements.dialogueName.textContent = character.name;
 
@@ -531,6 +531,20 @@ function render() {
   updateNpcMarkers();
 }
 
+function revealDialogue() {
+  if (elements.dialoguePanel.classList.contains("is-hidden")) {
+    return;
+  }
+
+  elements.dialoguePanel.scrollIntoView({
+    behavior: "smooth",
+    block: "nearest"
+  });
+  elements.dialoguePanel.focus({
+    preventScroll: true
+  });
+}
+
 function panToPlayer() {
   state.playerMarker.setLatLng(state.route[state.playerIndex]);
   state.map.panTo(state.route[state.playerIndex], {
@@ -554,6 +568,7 @@ function maybeTriggerEncounter() {
   };
 
   render();
+  window.requestAnimationFrame(revealDialogue);
 }
 
 function movePlayer(delta) {
@@ -604,6 +619,7 @@ function applyOption(optionIndex) {
   state.lastOutcome = option.result;
   state.activeDialogue.selectedOption = optionIndex;
   render();
+  window.requestAnimationFrame(revealDialogue);
 }
 
 function closeDialogue() {
