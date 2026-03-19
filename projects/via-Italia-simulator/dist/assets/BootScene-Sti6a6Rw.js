@@ -1,0 +1,1 @@
+import{i as e}from"./index-DZjTMcwV.js";import{t}from"./phaser-BQIkxI0w.js";var n=e(t(),1),r=class extends n.default.Scene{constructor(){super(`boot`)}create(){this.scene.start(`street`)}};export{r as BootScene};
