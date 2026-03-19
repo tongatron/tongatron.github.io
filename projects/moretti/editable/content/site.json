@@ -1,0 +1,60 @@
+{
+  "site": {
+    "title": "Riviera Moretti",
+    "homeEyebrow": "Editable edition",
+    "homeHeadline": "Painterly atmospheres for architecture.",
+    "homeIntro": "Riviera Moretti is an independent studio based in Vienna, specialising in art-directed illustrations for concept-driven architecture, competitions, and pitch entries.",
+    "homeSecondaryText": "This version keeps the mood of the original site, but the content now lives in a couple of simple JSON files and a small image folder that can be updated directly on GitHub.",
+    "worksEyebrow": "Selected work",
+    "worksHeadline": "Behind the shadow",
+    "worksIntro": "A concise, editable list of projects. Add rows, change results, update years, and attach project links without touching the layout.",
+    "worksNote": "Use this page for the public-facing project table. The original mirror remains available as an archive, while this version is easier to maintain.",
+    "projectsEyebrow": "Project table",
+    "projectsTitle": "A few selected projects",
+    "projectsIntro": "Replace the four sample images on the home page and edit the rows in the table to keep the site current without touching any Readymag data.",
+    "linksEyebrow": "Useful links",
+    "footerText": "(c) 2026 Riviera Moretti. All rights reserved.",
+    "links": {
+      "home": "editable/",
+      "works": "editable/behindtheshadow/",
+      "booking": "booking/",
+      "legal": "legal/",
+      "archive": ""
+    },
+    "labels": {
+      "home": "Home",
+      "works": "Behind the shadow",
+      "booking": "Book your images",
+      "legal": "Legal Notice",
+      "archive": "Mirror archive",
+      "projectCount": "Projects in the editable list",
+      "latestYear": "Most recent year"
+    }
+  },
+  "homeImages": [
+    {
+      "src": "../assets/uploads/home-01.jpg",
+      "alt": "Atmospheric exterior rendering with layered terraces.",
+      "caption": "Home image 01",
+      "note": "Replace this file to update the first home visual."
+    },
+    {
+      "src": "../assets/uploads/home-02.jpg",
+      "alt": "Soft architectural rendering of a residential building.",
+      "caption": "Home image 02",
+      "note": "Replace this file to update the second home visual."
+    },
+    {
+      "src": "../assets/uploads/home-03.jpg",
+      "alt": "Large interior illustration with construction vehicles.",
+      "caption": "Home image 03",
+      "note": "Replace this file to update the third home visual."
+    },
+    {
+      "src": "../assets/uploads/home-04.jpg",
+      "alt": "Printed architecture boards shown in a soft studio setup.",
+      "caption": "Home image 04",
+      "note": "Replace this file to update the fourth home visual."
+    }
+  ]
+}

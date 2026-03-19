@@ -1,0 +1,150 @@
+{
+  "columns": {
+    "client": "Client / Architect",
+    "project": "Project",
+    "result": "Result",
+    "year": "Year"
+  },
+  "rows": [
+    {
+      "client": "Karl und Bremhorst Architekten",
+      "project": "Haus Maria Jakobi, Vienna (AT)",
+      "result": "Winner",
+      "year": "2025",
+      "link": ""
+    },
+    {
+      "client": "Karl und Bremhorst Architekten",
+      "project": "Heidehof - Hauser zum Leben, Vienna (AT)",
+      "result": "Winner",
+      "year": "2025",
+      "link": ""
+    },
+    {
+      "client": "Karl und Bremhorst Architekten",
+      "project": "Henry Dunant Volksschule, Vienna (AT)",
+      "result": "Honorable Mention",
+      "year": "2025",
+      "link": ""
+    },
+    {
+      "client": "Karl und Bremhorst Architekten",
+      "project": "Bildungscampus Mira-Lobe-Weg 4, Vienna (AT)",
+      "result": "3rd Place",
+      "year": "2025",
+      "link": ""
+    },
+    {
+      "client": "Karl und Bremhorst Architekten",
+      "project": "Volksschule Neilreichgasse, Vienna (AT)",
+      "result": "Winner",
+      "year": "2025",
+      "link": ""
+    },
+    {
+      "client": "Karl und Bremhorst Architekten",
+      "project": "Schmelz Ambulance Service, Vienna (AT)",
+      "result": "2nd Place",
+      "year": "2025",
+      "link": ""
+    },
+    {
+      "client": "Karl und Bremhorst Architekten",
+      "project": "ALZ Logistic Centre, Wels (AT)",
+      "result": "Winner",
+      "year": "2024",
+      "link": ""
+    },
+    {
+      "client": "Wolfgang Weidinger + Barbara Schwab",
+      "project": "Neubau des Berufsschulinternats, Attnang (AT)",
+      "result": "Honorable Mention",
+      "year": "2024",
+      "link": ""
+    },
+    {
+      "client": "Wolfgang Weidinger",
+      "project": "Nationalparkschule, Illmitz (AT)",
+      "result": "2nd Place",
+      "year": "2024",
+      "link": ""
+    },
+    {
+      "client": "Karl und Bremhorst Architekten",
+      "project": "Bildungscampus Hausfeldnord, Vienna (AT)",
+      "result": "Finalist",
+      "year": "2024",
+      "link": ""
+    },
+    {
+      "client": "Wolfgang Weidinger + Barbara Schwab",
+      "project": "Benedekt Kaserne, Bruckneudorf (AT)",
+      "result": "2nd Place",
+      "year": "2024",
+      "link": ""
+    },
+    {
+      "client": "Wolfgang Weidinger + Barbara Schwab",
+      "project": "Domplatz, Innsbruck (AT)",
+      "result": "Honorable Mention",
+      "year": "2023",
+      "link": ""
+    },
+    {
+      "client": "Wolfgang Weidinger + Barbara Schwab",
+      "project": "HTL Campus, Hollabrunn (AT)",
+      "result": "3rd Place",
+      "year": "2023",
+      "link": ""
+    },
+    {
+      "client": "Karl und Bremhorst Architekten",
+      "project": "Bildungscampus Nordwestbahnhof, 1200 Vienna (AT)",
+      "result": "2nd Place",
+      "year": "2023",
+      "link": ""
+    },
+    {
+      "client": "Carboni Melis",
+      "project": "New School Caravaggio, Sinnai (IT)",
+      "result": "2nd Place",
+      "year": "2022",
+      "link": ""
+    },
+    {
+      "client": "Feld72",
+      "project": "Maria Rast Wiesen, Appiano sulla Strada del Vino (IT)",
+      "result": "Winner",
+      "year": "2022",
+      "link": ""
+    },
+    {
+      "client": "Karl und Bremhorst Architekten",
+      "project": "City Hall, Villach (AT)",
+      "result": "Winner",
+      "year": "2021",
+      "link": ""
+    },
+    {
+      "client": "BWM Designers and Architects",
+      "project": "Schloss-Hotel Mautern, Linz (AT)",
+      "result": "2nd Place",
+      "year": "2021",
+      "link": ""
+    },
+    {
+      "client": "BWM Designers and Architects",
+      "project": "Housing project - Apollogasse 16-18, 1070 Vienna (AT)",
+      "result": "2nd Place",
+      "year": "2020",
+      "link": ""
+    },
+    {
+      "client": "HERTL Architekten",
+      "project": "Raiffeisen Bank: Offices and Living, Leonding (AT)",
+      "result": "Winner",
+      "year": "2020",
+      "link": ""
+    }
+  ]
+}
