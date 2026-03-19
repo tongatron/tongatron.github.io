@@ -498,11 +498,45 @@
       flex-grow: 1;
     }
 
+    .project-link-arrow,
     .web-project-open {
-      align-self: stretch;
-      width: 100%;
-      border-radius: 0.55rem;
-      justify-content: center;
+      display: inline-flex;
+      align-items: center;
+      align-self: flex-start;
+      gap: 0.38rem;
+      margin-top: auto;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      color: var(--accent-soft);
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+      line-height: 1.2;
+      transition: color 0.22s ease, gap 0.22s ease;
+    }
+
+    .project-link-arrow::after,
+    .web-project-open::after {
+      content: "\2192";
+      font-size: 1.08em;
+      line-height: 1;
+      transition: transform 0.22s ease;
+    }
+
+    .project-link-arrow:hover,
+    .project-link-arrow:focus,
+    .web-project-open:hover,
+    .web-project-open:focus {
+      color: var(--text);
+      gap: 0.52rem;
+    }
+
+    .project-link-arrow:hover::after,
+    .project-link-arrow:focus::after,
+    .web-project-open:hover::after,
+    .web-project-open:focus::after {
+      transform: translateX(3px);
     }
 
     .btn-outline-primary,
@@ -845,7 +879,7 @@
             <div class="card-body">
               <h3 class="h5 card-title">Robottino</h3>
               <p class="card-text">Robot educativo STEM open source. Basato su Arduino, integra display, sensori ambientali, buzzer, luci RGB, sensore ultrasonico e testa rotante programmabile.</p>
-              <a class="btn btn-outline-primary btn-sm" href="projects/robottino/robottino-site/index.html">vai al sito</a>
+              <a class="project-link-arrow" href="projects/robottino/robottino-site/index.html">Vai al sito</a>
             </div>
           </article>
         </div>
@@ -855,7 +889,7 @@
             <div class="card-body">
               <h3 class="h5 card-title">Selfomatic</h3>
               <p class="card-text">Social camera per eventi con scatto automatico e pubblicazione in tempo reale. Una soluzione efficace per attivazioni, fiere e comunicazione live.</p>
-              <a class="btn btn-outline-primary btn-sm" href="projects/selfomatic/index.html">vai al sito</a>
+              <a class="project-link-arrow" href="projects/selfomatic/index.html">Vai al sito</a>
             </div>
           </article>
         </div>
@@ -865,7 +899,7 @@
             <div class="card-body">
               <h3 class="h5 card-title">IKEA Hack Nordli</h3>
               <p class="card-text">Progetto FabLab: personalizzazione della cassettiera IKEA Nordli con tavolino estraibile realizzato tramite pannello tagliato a laser.</p>
-              <a class="btn btn-outline-primary btn-sm" href="projects/IKEA-hack/index.html">vai al sito</a>
+              <a class="project-link-arrow" href="projects/IKEA-hack/index.html">Vai al sito</a>
             </div>
           </article>
         </div>
@@ -887,7 +921,7 @@
             </div>
             <h4 class="h2 fw-bold">Ryanair Search</h4>
             <p>Ricerca voli Ryanair A/R con filtri su partenza, destinazione, budget, durata e link condivisibile dei risultati.</p>
-            <a class="btn btn-outline-primary web-project-open" href="projects/ryanair-search/index.html">apri</a>
+            <a class="web-project-open" href="projects/ryanair-search/index.html">Apri</a>
           </article>
 
           <article class="web-project-card">
@@ -900,7 +934,7 @@
             </div>
             <h4 class="h2 fw-bold">Connect Four</h4>
             <p>Classico Forza 4 contro CPU con selezione difficolta e nuova partita rapida.</p>
-            <a class="btn btn-outline-primary web-project-open" href="projects/Forza4/index.html">apri</a>
+            <a class="web-project-open" href="projects/Forza4/index.html">Apri</a>
           </article>
 
           <article class="web-project-card">
@@ -913,7 +947,7 @@
             </div>
             <h4 class="h2 fw-bold">Simon</h4>
             <p>Versione web del gioco Simon: ripeti la sequenza colori con modalita strict opzionale.</p>
-            <a class="btn btn-outline-primary web-project-open" href="projects/simon/index.html">apri</a>
+            <a class="web-project-open" href="projects/simon/index.html">Apri</a>
           </article>
 
           <article class="web-project-card">
@@ -927,7 +961,7 @@
             </div>
             <h4 class="h2 fw-bold">Rumore Bianco</h4>
             <p>Generatore audio con parametri regolabili in tempo reale (volume, filtro e controlli sonori).</p>
-            <a class="btn btn-outline-primary web-project-open" href="projects/rumorebianco/index.html">apri</a>
+            <a class="web-project-open" href="projects/rumorebianco/index.html">Apri</a>
           </article>
         </div>
         <div class="mt-3 text-end">

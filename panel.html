@@ -215,6 +215,40 @@
       transform: translateY(-1px);
     }
 
+    .project-link-arrow {
+      display: inline-flex;
+      align-items: center;
+      align-self: flex-start;
+      gap: 0.38rem;
+      margin-top: auto;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      color: var(--accent);
+      font-size: 1rem;
+      font-weight: 700;
+      line-height: 1.2;
+      transition: color 0.22s ease, gap 0.22s ease;
+    }
+
+    .project-link-arrow::after {
+      content: "\2192";
+      font-size: 1.08em;
+      line-height: 1;
+      transition: transform 0.22s ease;
+    }
+
+    .project-link-arrow:hover,
+    .project-link-arrow:focus {
+      color: var(--text);
+      gap: 0.52rem;
+    }
+
+    .project-link-arrow:hover::after,
+    .project-link-arrow:focus::after {
+      transform: translateX(3px);
+    }
+
     .section-heading {
       margin-bottom: 1.15rem;
     }
@@ -333,11 +367,6 @@
       margin-top: 1.15rem;
     }
 
-    .card .btn-ghost {
-      width: 100%;
-      justify-content: center;
-    }
-
     .projects-panel[data-view="list"] .cards-grid {
       grid-template-columns: 1fr;
       gap: 0;
@@ -392,10 +421,8 @@
       max-width: 72ch;
     }
 
-    .projects-panel[data-view="list"] .card .btn-ghost {
+    .projects-panel[data-view="list"] .card .project-link-arrow {
       grid-area: action;
-      width: auto;
-      min-width: 112px;
       align-self: center;
       justify-self: end;
     }
@@ -431,9 +458,8 @@
         gap: 0.5rem;
       }
 
-      .projects-panel[data-view="list"] .card .btn-ghost {
-        width: 100%;
-        justify-self: stretch;
+      .projects-panel[data-view="list"] .card .project-link-arrow {
+        justify-self: start;
       }
 
       .links-grid {
@@ -483,7 +509,7 @@
           </div>
           <h3>Connect Four</h3>
           <p>Classico Forza 4 contro CPU con selezione difficolta e nuova partita rapida.</p>
-          <a class="btn-ghost" href="./projects/Forza4/index.html">apri</a>
+          <a class="project-link-arrow" href="./projects/Forza4/index.html">Apri</a>
         </article>
 
         <article class="card">
@@ -493,7 +519,7 @@
           </div>
           <h3>Maze Game</h3>
           <p>Gioco del labirinto con livelli easy/medium/hard, comandi tastiera e controlli touch.</p>
-          <a class="btn-ghost" href="./projects/labirinto/index.html">apri</a>
+          <a class="project-link-arrow" href="./projects/labirinto/index.html">Apri</a>
         </article>
 
         <article class="card">
@@ -503,7 +529,7 @@
           </div>
           <h3>Memory</h3>
           <p>Memory card game con timer, conteggio mosse, records locali e diverse dimensioni griglia.</p>
-          <a class="btn-ghost" href="./projects/memory/index.html">apri</a>
+          <a class="project-link-arrow" href="./projects/memory/index.html">Apri</a>
         </article>
 
         <article class="card">
@@ -513,7 +539,7 @@
           </div>
           <h3>Simon Simulator</h3>
           <p>Versione web del gioco Simon: ripeti la sequenza colori con modalita strict opzionale.</p>
-          <a class="btn-ghost" href="./projects/simon/index.html">apri</a>
+          <a class="project-link-arrow" href="./projects/simon/index.html">Apri</a>
         </article>
 
         <article class="card">
@@ -523,7 +549,7 @@
           </div>
           <h3>Emojiwood World</h3>
           <p>Mondo top-down a quattro biomi con missioni collegate, dialoghi con i personaggi, sigilli dei custodi e animazioni emoji.</p>
-          <a class="btn-ghost" href="./projects/emojiwood-world/index.html">apri</a>
+          <a class="project-link-arrow" href="./projects/emojiwood-world/index.html">Apri</a>
         </article>
 
         <article class="card">
@@ -533,7 +559,7 @@
           </div>
           <h3>Multi Web Simulator</h3>
           <p>Simulazione web della board open-source MULTI del laboratorio elettroacustico Pangrus.</p>
-          <a class="btn-ghost" href="./projects/multi-simulator/index.html">apri</a>
+          <a class="project-link-arrow" href="./projects/multi-simulator/index.html">Apri</a>
         </article>
 
         <article class="card">
@@ -543,7 +569,7 @@
           </div>
           <h3>Roulette Simulator</h3>
           <p>Simulatore stile casino con ruota animata, puntate multiple, bilancio e storico spin.</p>
-          <a class="btn-ghost" href="./projects/roulette/index.html">apri</a>
+          <a class="project-link-arrow" href="./projects/roulette/index.html">Apri</a>
         </article>
 
         <article class="card">
@@ -553,7 +579,7 @@
           </div>
           <h3>Via Italia Simulator</h3>
           <p>Gioco narrativo ambientato a Biella con mappa OpenStreetMap, incontri lungo la via e dialoghi ispirati alla storia locale.</p>
-          <a class="btn-ghost" href="./projects/via-italia-simulatr/index.html">apri</a>
+          <a class="project-link-arrow" href="./projects/via-italia-simulatr/index.html">Apri</a>
         </article>
 
         <article class="card">
@@ -563,7 +589,7 @@
           </div>
           <h3>Rumore Bianco</h3>
           <p>Generatore audio con parametri regolabili in tempo reale (volume, filtro e controlli sonori).</p>
-          <a class="btn-ghost" href="./projects/rumorebianco/index.html">apri</a>
+          <a class="project-link-arrow" href="./projects/rumorebianco/index.html">Apri</a>
         </article>
 
         <article class="card">
@@ -573,7 +599,7 @@
           </div>
           <h3>QR Scanner</h3>
           <p>Scansiona e genera QR code dal browser, con supporto fotocamera mobile e output testuale rapido.</p>
-          <a class="btn-ghost" href="./projects/qrscanner/index.html">apri</a>
+          <a class="project-link-arrow" href="./projects/qrscanner/index.html">Apri</a>
         </article>
 
         <article class="card">
@@ -583,7 +609,7 @@
           </div>
           <h3>Diario Farmaci</h3>
           <p>Gestione armadietto, piano terapia e diario assunzioni con backup JSON per uso su piu dispositivi.</p>
-          <a class="btn-ghost" href="./projects/farmaci/index.html">apri</a>
+          <a class="project-link-arrow" href="./projects/farmaci/index.html">Apri</a>
         </article>
 
         <article class="card">
@@ -593,7 +619,7 @@
           </div>
           <h3>PS Torino</h3>
           <p>PWA per consultare le attese dei Pronto Soccorso dell'area torinese con snapshot live, cache offline e fallback locale.</p>
-          <a class="btn-ghost" href="./projects/PS-Torino/index.html">apri</a>
+          <a class="project-link-arrow" href="./projects/PS-Torino/index.html">Apri</a>
         </article>
 
         <article class="card">
@@ -603,7 +629,7 @@
           </div>
           <h3>ChatAnalysis</h3>
           <p>Importa chat WhatsApp dal browser e genera metriche, statistiche partecipanti, parole frequenti e sentiment analysis base.</p>
-          <a class="btn-ghost" href="./projects/chatanalysis/index.html">apri</a>
+          <a class="project-link-arrow" href="./projects/chatanalysis/index.html">Apri</a>
         </article>
 
         <article class="card">
@@ -613,7 +639,7 @@
           </div>
           <h3>Monitoraggio alcolico</h3>
           <p>Diario web per monitorare il consumo di alcol con calendario, statistiche, note giornaliere e accesso paziente o medico.</p>
-          <a class="btn-ghost" href="https://alcol-monitor.onrender.com" target="_blank" rel="noopener">apri</a>
+          <a class="project-link-arrow" href="https://alcol-monitor.onrender.com" target="_blank" rel="noopener">Apri</a>
         </article>
 
         <article class="card">
@@ -623,7 +649,7 @@
           </div>
           <h3>Ryanair Search</h3>
           <p>Ricerca voli Ryanair A/R con filtri su partenza, destinazione, budget, durata e link condivisibile dei risultati.</p>
-          <a class="btn-ghost" href="./projects/ryanair-search/index.html">apri</a>
+          <a class="project-link-arrow" href="./projects/ryanair-search/index.html">Apri</a>
         </article>
 
         <article class="card">
@@ -633,7 +659,7 @@
           </div>
           <h3>GTT Torino</h3>
           <p>Radar realtime per fermate e linee GTT di Torino. Progetto in test: la versione completa richiede backend locale per feed e posizioni mezzi.</p>
-          <a class="btn-ghost" href="https://tongatron.org/projects/gtt-torino/app/">apri</a>
+          <a class="project-link-arrow" href="https://tongatron.org/projects/gtt-torino/app/">Apri</a>
         </article>
 
         <article class="card">
@@ -643,7 +669,7 @@
           </div>
           <h3>Robottino 26</h3>
           <p>Landing page del progetto con overview, documentazione componenti e simulatore web del piccolo robot con testa rotante.</p>
-          <a class="btn-ghost" href="./projects/robottino26/index.html">apri</a>
+          <a class="project-link-arrow" href="./projects/robottino26/index.html">Apri</a>
         </article>
       </div>
     </section>
