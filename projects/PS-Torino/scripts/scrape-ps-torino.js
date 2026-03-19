@@ -16,6 +16,9 @@ const ASL_RETRY_DELAY_MS = 3000;
 const ASL_SECOND_PASS_TIMEOUT_MS = 60000;
 const ASL_SECOND_PASS_ATTEMPTS = 2;
 const ASL_SECOND_PASS_DELAY_MS = 8000;
+const ASL_BROWSER_TIMEOUT_MS = 75000;
+const ASL_BROWSER_RETRY_ATTEMPTS = 2;
+const ASL_BROWSER_RETRY_DELAY_MS = 5000;
 const USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36";
 const LATIN1_DECODER = new TextDecoder("latin1");
 const COMMON_HEADERS = {
@@ -66,6 +69,7 @@ const ASL_CITTA_SOURCE = {
   username: process.env.PS_TORINO_ASL_CITTA_USERNAME || "aziendaact",
   password: process.env.PS_TORINO_ASL_CITTA_PASSWORD || "jh!sPsClient"
 };
+const FORCE_ASL_BROWSER_FALLBACK = process.env.PS_TORINO_ASL_CITTA_FORCE_BROWSER_FALLBACK === "1";
 
 const ASL_CITTA_HOSPITALS = [
   {
@@ -509,7 +513,7 @@ async function fetchAslCittaAccessToken(timeoutMs = ASL_REQUEST_TIMEOUT_MS) {
   return payload.access_token;
 }
 
-function normalizeAslCittaStructure(structure) {
+function normalizeAslCittaStructure(structure, sourceUrl) {
   const knownHospital = ASL_CITTA_HOSPITALS_BY_CODE.get(String(structure.codice || ""));
   const baseRecord = knownHospital || {
     id: String(structure.nome || structure.descrizione || structure.codice || "asl-citta"),
@@ -565,17 +569,31 @@ function normalizeAslCittaStructure(structure) {
 
   if (!countRows.length) {
     return buildUnavailableRecord(baseRecord, normalizeIsoOffset(rilevazione.dataOra), {
-      fetchedFrom: `${ASL_CITTA_SOURCE.baseUrl}/api/strutture/`,
+      fetchedFrom: sourceUrl,
       reason: "Rilevazione assente"
     });
   }
 
   return buildHospitalRecord(baseRecord, counts, normalizeIsoOffset(rilevazione.dataOra), {
-    fetchedFrom: `${ASL_CITTA_SOURCE.baseUrl}/api/strutture/`,
+    fetchedFrom: sourceUrl,
     ambulanzeInArrivo: toNumber(rilevazione.ambulanzeInArrivo),
     inVisit,
     meanWaitMinutes
   });
+}
+
+function normalizeAslCittaPayload(payload, sourceUrl) {
+  if (!Array.isArray(payload)) {
+    throw new Error("Payload ASL Citta di Torino non valido");
+  }
+
+  return payload
+    .filter((structure) => (
+      structure &&
+      structure.attivo !== false &&
+      ASL_CITTA_HOSPITALS_BY_CODE.has(String(structure.codice || ""))
+    ))
+    .map((structure) => normalizeAslCittaStructure(structure, sourceUrl));
 }
 
 async function scrapeAslCittaSources(timeoutMs = ASL_REQUEST_TIMEOUT_MS) {
@@ -589,36 +607,131 @@ async function scrapeAslCittaSources(timeoutMs = ASL_REQUEST_TIMEOUT_MS) {
     timeoutMs
   });
 
-  if (!Array.isArray(payload)) {
-    throw new Error("Payload ASL Citta di Torino non valido");
-  }
+  return normalizeAslCittaPayload(payload, `${ASL_CITTA_SOURCE.baseUrl}/api/strutture/`);
+}
 
-  return payload
-    .filter((structure) => (
-      structure &&
-      structure.attivo !== false &&
-      ASL_CITTA_HOSPITALS_BY_CODE.has(String(structure.codice || ""))
-    ))
-    .map(normalizeAslCittaStructure);
+function isAslSituazioneResponse(url) {
+  try {
+    const parsedUrl = new URL(url);
+    return /\/strutture\/?$/.test(parsedUrl.pathname);
+  } catch (error) {
+    return false;
+  }
+}
+
+function loadPlaywright() {
+  try {
+    return require("playwright");
+  } catch (error) {
+    throw new Error("Fallback browser non disponibile: installa le dipendenze Playwright prima di eseguire lo scraper");
+  }
+}
+
+async function scrapeAslCittaSourcesFromSituazioneBrowser(timeoutMs = ASL_BROWSER_TIMEOUT_MS) {
+  const { chromium } = loadPlaywright();
+  const browser = await chromium.launch({
+    headless: true
+  });
+
+  try {
+    const context = await browser.newContext({
+      ignoreHTTPSErrors: true,
+      locale: "it-IT",
+      timezoneId: TIMEZONE,
+      userAgent: USER_AGENT,
+      extraHTTPHeaders: {
+        "Accept-Language": COMMON_HEADERS["Accept-Language"],
+        "Cache-Control": "no-cache",
+        Pragma: "no-cache"
+      }
+    });
+    const page = await context.newPage();
+
+    await page.route("**/*", async (route) => {
+      const resourceType = route.request().resourceType();
+
+      if (resourceType === "image" || resourceType === "media" || resourceType === "font") {
+        await route.abort();
+        return;
+      }
+
+      await route.continue();
+    });
+
+    const responsePromise = page.waitForResponse((response) => (
+      response.request().method() === "GET" &&
+      isAslSituazioneResponse(response.url())
+    ), {
+      timeout: timeoutMs
+    });
+
+    await page.goto(`${ASL_CITTA_SOURCE.baseUrl}/situazione`, {
+      waitUntil: "domcontentloaded",
+      timeout: timeoutMs
+    });
+
+    const response = await responsePromise;
+
+    if (!response.ok()) {
+      throw new Error(`HTTP ${response.status()} su ${response.url()}`);
+    }
+
+    const payload = await response.json();
+    return normalizeAslCittaPayload(payload, `${ASL_CITTA_SOURCE.baseUrl}/situazione -> ${response.url()}`);
+  } finally {
+    await browser.close();
+  }
 }
 
 async function scrapeAslCittaSourcesWithRecovery() {
+  if (FORCE_ASL_BROWSER_FALLBACK) {
+    process.stdout.write("ASL Citta di Torino: fallback browser forzato tramite variabile d'ambiente.\n");
+    return withRetry(
+      "ASL Citta di Torino browser",
+      () => scrapeAslCittaSourcesFromSituazioneBrowser(ASL_BROWSER_TIMEOUT_MS),
+      {
+        attempts: ASL_BROWSER_RETRY_ATTEMPTS,
+        baseDelayMs: ASL_BROWSER_RETRY_DELAY_MS
+      }
+    );
+  }
+
+  let apiError = null;
+
   try {
     return await withRetry("ASL Citta di Torino", () => scrapeAslCittaSources(ASL_REQUEST_TIMEOUT_MS), {
       attempts: ASL_RETRY_ATTEMPTS,
       baseDelayMs: ASL_RETRY_DELAY_MS
     });
   } catch (firstError) {
+    apiError = firstError;
     process.stdout.write("ASL Citta di Torino: primo ciclo di tentativi fallito, avvio un secondo pass dedicato.\n");
     await sleep(ASL_SECOND_PASS_DELAY_MS);
+  }
 
-    return withRetry("ASL Citta di Torino", () => scrapeAslCittaSources(ASL_SECOND_PASS_TIMEOUT_MS), {
+  try {
+    return await withRetry("ASL Citta di Torino", () => scrapeAslCittaSources(ASL_SECOND_PASS_TIMEOUT_MS), {
       attempts: ASL_SECOND_PASS_ATTEMPTS,
       baseDelayMs: ASL_SECOND_PASS_DELAY_MS
-    }).catch((secondError) => {
-      throw new Error(secondError && secondError.message ? secondError.message : firstError.message);
     });
+  } catch (secondError) {
+    apiError = secondError && secondError.message ? secondError : apiError;
+    process.stdout.write("ASL Citta di Torino: API non disponibile, provo il fallback browser su /situazione.\n");
   }
+
+  return withRetry(
+    "ASL Citta di Torino browser",
+    () => scrapeAslCittaSourcesFromSituazioneBrowser(ASL_BROWSER_TIMEOUT_MS),
+    {
+      attempts: ASL_BROWSER_RETRY_ATTEMPTS,
+      baseDelayMs: ASL_BROWSER_RETRY_DELAY_MS
+    }
+  ).catch((browserError) => {
+    const apiMessage = apiError && apiError.message ? apiError.message : "errore API sconosciuto";
+    const browserMessage = browserError && browserError.message ? browserError.message : "errore browser sconosciuto";
+    throw new Error(`API: ${apiMessage}; browser: ${browserMessage}`);
+  }
+  );
 }
 
 function extractSanLuigiRows(html) {
@@ -748,7 +861,7 @@ async function main() {
       .catch((error) => ({
         failure: {
           id: "asl-citta-di-torino",
-          source: `${ASL_CITTA_SOURCE.baseUrl}/api/strutture/`,
+          source: `${ASL_CITTA_SOURCE.baseUrl}/api/strutture/ ; fallback ${ASL_CITTA_SOURCE.baseUrl}/situazione`,
           message: error.message
         }
       })),

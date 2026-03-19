@@ -25,6 +25,22 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "20"
+          cache: "npm"
+          cache-dependency-path: projects/PS-Torino/package-lock.json
+
+      - name: Cache Playwright browsers
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ hashFiles('projects/PS-Torino/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-playwright-
+
+      - name: Install scraper dependencies
+        run: npm ci --prefix projects/PS-Torino
+
+      - name: Install Chromium for browser fallback
+        run: npx --prefix projects/PS-Torino playwright install --with-deps chromium
 
       - name: Generate live snapshot
         run: node projects/PS-Torino/scripts/scrape-ps-torino.js

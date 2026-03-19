@@ -1,0 +1,12 @@
+{
+  "name": "ps-torino-tools",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Utility di scraping e snapshot per PS Torino",
+  "scripts": {
+    "snapshot": "node scripts/scrape-ps-torino.js"
+  },
+  "dependencies": {
+    "playwright": "^1.53.0"
+  }
+}
