@@ -59,6 +59,13 @@
       "alt": "Printed architecture boards shown in a soft studio setup.",
       "caption": "Home image 04",
       "note": "Replace this file to update the fourth home visual."
+    },
+    {
+      "src": "../assets/uploads/home-05.jpg",
+      "order": 5,
+      "alt": "saasad",
+      "caption": "",
+      "note": ""
     }
   ]
 }
