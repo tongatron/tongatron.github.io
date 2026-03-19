@@ -1,1 +1,0 @@
-import{a as r}from"./c-FZEFWGM2.js";import{k as m}from"./c-KJUOHZOF.js";import{D as o,F as t}from"./c-GLVKEI6A.js";import{d as c}from"./c-NKV6RTLL.js";var n=c(m());t();function i(e){let p=document.getElementById("root");n.default.hydrate(o(e,{...r()}),p)}export{i as a};
