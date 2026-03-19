@@ -403,8 +403,7 @@ h1 span {
 }
 
 .updated-at,
-.snapshot-at,
-.map-link {
+.snapshot-at {
   font-size: 0.82rem;
 }
 
@@ -451,15 +450,6 @@ h1 span {
   border-radius: 999px;
   border: 1px solid rgba(255, 255, 255, 0.08);
   background: rgba(255, 255, 255, 0.03);
-}
-
-.map-link {
-  color: #cfe7df;
-  text-decoration: none;
-}
-
-.map-link:hover {
-  text-decoration: underline;
 }
 
 .metric-cell {

@@ -344,10 +344,6 @@
       totalValueEl.textContent = hospital.hasData ? String(hospital.total) : "—";
       totalLabelEl.textContent = hospital.hasData ? "in attesa" : "senza dato";
 
-      const mapLink = node.querySelector(".map-link");
-      mapLink.href = hospital.mapUrl;
-      mapLink.setAttribute("aria-label", `Apri ${hospital.name} in mappa`);
-
       if (!hospital.hasData) {
         row.classList.add("is-unavailable");
       }

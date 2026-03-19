@@ -1,12 +1,12 @@
 {
-  "name": "PS Torino",
-  "short_name": "PS Torino",
+  "name": "Pronto Soccorso Torino Adulti",
+  "short_name": "PS Torino Adulti",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
   "background_color": "#4c5258",
   "theme_color": "#202625",
-  "description": "PWA per visualizzare le attese dei Pronto Soccorso di Torino.",
+  "description": "PWA per visualizzare le attese dei Pronto Soccorso adulti di Torino.",
   "icons": [
     {
       "src": "./icons/icon-192.png",
