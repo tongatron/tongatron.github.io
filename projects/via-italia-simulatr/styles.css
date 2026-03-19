@@ -514,26 +514,245 @@ button.cast-item:disabled {
 }
 
 .player-pin {
+  --spark-drift-x: -8px;
   position: relative;
-  width: 38px;
-  height: 38px;
-  display: grid;
-  place-items: center;
-  border-radius: 18px;
-  border: 2px solid rgba(255, 248, 242, 0.92);
-  background: rgba(180, 88, 61, 0.92);
-  box-shadow: 0 8px 20px rgba(24, 33, 42, 0.22);
-  font-size: 20px;
-  line-height: 1;
+  width: 64px;
+  height: 78px;
+  transform-origin: center bottom;
+  filter: drop-shadow(0 16px 24px rgba(24, 33, 42, 0.22));
+  animation: playerIdle 2.2s ease-in-out infinite;
+}
+
+.player-pin--left {
+  --spark-drift-x: 8px;
+}
+
+.player-pin::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 34px;
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(24, 33, 42, 0.2);
+  transform: translateX(-50%);
+  transform-origin: center;
+  animation: playerShadow 2.2s ease-in-out infinite;
 }
 
 .player-pin::after {
   content: "";
   position: absolute;
-  inset: -8px;
-  border-radius: inherit;
-  border: 1px solid rgba(180, 88, 61, 0.34);
+  left: 50%;
+  bottom: 6px;
+  width: 54px;
+  height: 54px;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 180, 106, 0.42);
+  transform: translateX(-50%);
   animation: pulse 2.4s infinite;
+}
+
+.player-pin__label {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  z-index: 3;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: #fff8f2;
+  color: var(--terracotta-deep);
+  font-size: 0.64rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+}
+
+.player-pin__spark {
+  position: absolute;
+  top: 12px;
+  width: 7px;
+  height: 7px;
+  border-radius: 2px;
+  background: #ffe39c;
+  box-shadow: 0 0 10px rgba(255, 227, 156, 0.8);
+  opacity: 0;
+}
+
+.player-pin__spark--one {
+  left: 8px;
+}
+
+.player-pin__spark--two {
+  left: 18px;
+  top: 24px;
+}
+
+.player-pin__sprite-shell {
+  --player-facing: 1;
+  position: absolute;
+  left: 50%;
+  bottom: 8px;
+  width: 48px;
+  height: 60px;
+  transform: translateX(-50%) scaleX(var(--player-facing));
+  transform-origin: center bottom;
+}
+
+.player-pin--left .player-pin__sprite-shell {
+  --player-facing: -1;
+}
+
+.player-sprite {
+  position: relative;
+  width: 48px;
+  height: 60px;
+}
+
+.player-sprite__head {
+  position: absolute;
+  top: 4px;
+  left: 13px;
+  width: 22px;
+  height: 22px;
+  border-radius: 8px;
+  border: 2px solid rgba(24, 33, 42, 0.12);
+  background: linear-gradient(180deg, #ffdcb7, #f2b98e);
+}
+
+.player-sprite__head::before {
+  content: "";
+  position: absolute;
+  top: -5px;
+  left: -2px;
+  width: 20px;
+  height: 9px;
+  border-radius: 8px 8px 4px 4px;
+  background: #18212a;
+  box-shadow: 10px 2px 0 -1px #263544;
+}
+
+.player-sprite__visor {
+  position: absolute;
+  top: 12px;
+  left: 14px;
+  width: 20px;
+  height: 7px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #1a2d3a, #52758c);
+  box-shadow: 0 0 0 2px rgba(255, 248, 242, 0.22);
+}
+
+.player-sprite__body {
+  position: absolute;
+  top: 24px;
+  left: 13px;
+  width: 22px;
+  height: 18px;
+  border-radius: 8px 8px 6px 6px;
+  background: linear-gradient(180deg, #ffb46a, #b4583d);
+}
+
+.player-sprite__body::before {
+  content: "";
+  position: absolute;
+  top: 2px;
+  right: -4px;
+  width: 8px;
+  height: 12px;
+  border-radius: 4px;
+  background: #d06d4a;
+}
+
+.player-sprite__arm,
+.player-sprite__leg {
+  position: absolute;
+  transform-origin: top center;
+}
+
+.player-sprite__arm {
+  top: 27px;
+  width: 7px;
+  height: 16px;
+  border-radius: 999px;
+  background: #f0b688;
+}
+
+.player-sprite__arm--left {
+  left: 8px;
+  transform: rotate(16deg);
+}
+
+.player-sprite__arm--right {
+  right: 8px;
+  transform: rotate(-16deg);
+}
+
+.player-sprite__leg {
+  top: 40px;
+  width: 8px;
+  height: 18px;
+  border-radius: 999px;
+  background: #263544;
+}
+
+.player-sprite__leg::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: -1px;
+  width: 12px;
+  height: 6px;
+  border-radius: 999px;
+  background: #f8efe1;
+}
+
+.player-sprite__leg--left {
+  left: 13px;
+}
+
+.player-sprite__leg--right {
+  right: 13px;
+}
+
+.player-pin--walking {
+  animation: none;
+}
+
+.player-pin--walking::before {
+  animation: playerShadowRun 180ms ease-in-out infinite;
+}
+
+.player-pin--walking .player-pin__spark {
+  opacity: 1;
+}
+
+.player-pin--walking .player-pin__spark--one {
+  animation: sparkleTrail 420ms linear infinite;
+}
+
+.player-pin--walking .player-pin__spark--two {
+  animation: sparkleTrail 420ms linear infinite 0.18s;
+}
+
+.player-pin--walking .player-pin__sprite-shell {
+  animation: playerStride 180ms ease-in-out infinite;
+}
+
+.player-pin--walking .player-sprite__arm--left {
+  animation: armSwingLeft 180ms ease-in-out infinite;
+}
+
+.player-pin--walking .player-sprite__arm--right {
+  animation: armSwingRight 180ms ease-in-out infinite;
+}
+
+.player-pin--walking .player-sprite__leg--left {
+  animation: legSwingLeft 180ms ease-in-out infinite;
+}
+
+.player-pin--walking .player-sprite__leg--right {
+  animation: legSwingRight 180ms ease-in-out infinite;
 }
 
 .npc-pin {
@@ -557,16 +776,114 @@ button.cast-item:disabled {
 
 @keyframes pulse {
   0% {
-    transform: scale(0.92);
+    transform: translateX(-50%) scale(0.92);
     opacity: 0.8;
   }
   70% {
-    transform: scale(1.25);
+    transform: translateX(-50%) scale(1.25);
     opacity: 0;
   }
   100% {
-    transform: scale(1.25);
+    transform: translateX(-50%) scale(1.25);
     opacity: 0;
+  }
+}
+
+@keyframes playerIdle {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-2deg);
+  }
+  50% {
+    transform: translateY(-3px) rotate(2deg);
+  }
+}
+
+@keyframes playerShadow {
+  0%,
+  100% {
+    opacity: 0.28;
+    transform: translateX(-50%) scaleX(0.92);
+  }
+  50% {
+    opacity: 0.18;
+    transform: translateX(-50%) scaleX(0.82);
+  }
+}
+
+@keyframes playerStride {
+  0%,
+  100% {
+    transform: translateX(-50%) scaleX(var(--player-facing)) translateY(-2px);
+  }
+  50% {
+    transform: translateX(-50%) scaleX(var(--player-facing)) translateY(2px);
+  }
+}
+
+@keyframes playerShadowRun {
+  0%,
+  100% {
+    opacity: 0.22;
+    transform: translateX(-50%) scaleX(0.88);
+  }
+  50% {
+    opacity: 0.3;
+    transform: translateX(-50%) scaleX(1);
+  }
+}
+
+@keyframes legSwingLeft {
+  0%,
+  100% {
+    transform: rotate(18deg);
+  }
+  50% {
+    transform: rotate(-18deg);
+  }
+}
+
+@keyframes legSwingRight {
+  0%,
+  100% {
+    transform: rotate(-18deg);
+  }
+  50% {
+    transform: rotate(18deg);
+  }
+}
+
+@keyframes armSwingLeft {
+  0%,
+  100% {
+    transform: rotate(-18deg);
+  }
+  50% {
+    transform: rotate(18deg);
+  }
+}
+
+@keyframes armSwingRight {
+  0%,
+  100% {
+    transform: rotate(18deg);
+  }
+  50% {
+    transform: rotate(-18deg);
+  }
+}
+
+@keyframes sparkleTrail {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) scale(0.8);
+  }
+  30% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--spark-drift-x), -10px) scale(0.2);
   }
 }
 
@@ -623,13 +940,22 @@ button.cast-item:disabled {
   }
 
   .map-frame {
-    min-height: min(54vh, 420px);
+    height: calc(100dvh - 28px);
+    min-height: calc(100dvh - 28px);
+    max-height: calc(100dvh - 28px);
+    aspect-ratio: auto;
     padding: 12px;
-    gap: 12px;
+    gap: 10px;
     border-radius: 26px;
   }
 
+  .map-topline h2 {
+    font-size: clamp(1.2rem, 5vw, 1.5rem);
+  }
+
   .map-canvas {
+    min-height: 0;
+    height: 100%;
     border-radius: 18px;
   }
 
@@ -708,7 +1034,9 @@ button.cast-item:disabled {
   }
 
   .map-frame {
-    min-height: min(50vh, 360px);
+    height: calc(100dvh - 20px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+    min-height: calc(100dvh - 20px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+    max-height: calc(100dvh - 20px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
   }
 
   .controls {

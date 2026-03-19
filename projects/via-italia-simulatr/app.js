@@ -227,6 +227,8 @@ const state = {
   map: null,
   route: [...fallbackRoute],
   playerIndex: 0,
+  playerFacing: 1,
+  isMoving: false,
   visited: new Set(),
   activeDialogue: null,
   lastOutcome: "",
@@ -305,12 +307,7 @@ function drawRoute() {
   }).addTo(state.map);
 
   state.playerMarker = L.marker(state.route[state.playerIndex], {
-    icon: L.divIcon({
-      className: "",
-      html: '<div class="player-pin" aria-hidden="true">🚶</div>',
-      iconSize: [38, 38],
-      iconAnchor: [19, 19]
-    })
+    icon: buildPlayerIcon()
   }).addTo(state.map);
 
   state.finishMarker = L.marker(state.route[state.route.length - 1], {
@@ -330,6 +327,44 @@ function drawRoute() {
 
   drawNpcMarkers();
   bringGameplayLayersToFront();
+}
+
+function buildPlayerIcon() {
+  const walkingClass = state.isMoving ? " player-pin--walking" : "";
+  const facingClass = state.playerFacing < 0 ? " player-pin--left" : " player-pin--right";
+
+  return L.divIcon({
+    className: "",
+    html: `
+      <div class="player-pin${walkingClass}${facingClass}" aria-hidden="true">
+        <span class="player-pin__label">TU</span>
+        <span class="player-pin__spark player-pin__spark--one"></span>
+        <span class="player-pin__spark player-pin__spark--two"></span>
+        <span class="player-pin__sprite-shell">
+          <span class="player-sprite">
+            <span class="player-sprite__head"></span>
+            <span class="player-sprite__visor"></span>
+            <span class="player-sprite__body"></span>
+            <span class="player-sprite__arm player-sprite__arm--left"></span>
+            <span class="player-sprite__arm player-sprite__arm--right"></span>
+            <span class="player-sprite__leg player-sprite__leg--left"></span>
+            <span class="player-sprite__leg player-sprite__leg--right"></span>
+          </span>
+        </span>
+      </div>
+    `,
+    iconSize: [64, 78],
+    iconAnchor: [32, 72]
+  });
+}
+
+function refreshPlayerMarkerIcon() {
+  if (!state.playerMarker) {
+    return;
+  }
+
+  state.playerMarker.setIcon(buildPlayerIcon());
+  state.playerMarker.setZIndexOffset(1200);
 }
 
 function drawNpcMarkers() {
@@ -428,15 +463,17 @@ function updateStatus() {
   elements.progressFill.style.width = `${(state.playerIndex / (state.route.length - 1)) * 100}%`;
   elements.encounterCounter.textContent = `${state.visited.size} / ${characters.length}`;
 
-  elements.stepBack.disabled = state.playerIndex === 0 || Boolean(state.activeDialogue);
+  elements.stepBack.disabled =
+    state.playerIndex === 0 || Boolean(state.activeDialogue) || state.isMoving;
   elements.stepForward.disabled =
-    state.playerIndex === state.route.length - 1 || Boolean(state.activeDialogue);
+    state.playerIndex === state.route.length - 1 || Boolean(state.activeDialogue) || state.isMoving;
   elements.stepBackMobile.disabled = elements.stepBack.disabled;
   elements.stepForwardMobile.disabled = elements.stepForward.disabled;
 }
 
 function renderCast() {
   const activeId = state.activeDialogue ? state.activeDialogue.character.id : null;
+  const interactionLocked = Boolean(activeId) || state.isMoving;
 
   elements.castList.innerHTML = characters
     .map((character) => {
@@ -462,11 +499,11 @@ function renderCast() {
       return `
         <li>
           <button
-            class="cast-item"
-            type="button"
-            data-character-id="${character.id}"
-            ${activeId ? "disabled" : ""}
-          >
+              class="cast-item"
+              type="button"
+              data-character-id="${character.id}"
+              ${interactionLocked ? "disabled" : ""}
+            >
           <div class="cast-avatar">${character.emoji}</div>
           <div class="cast-meta">
             <p class="cast-name">${character.name}</p>
@@ -557,6 +594,73 @@ function panToPlayer() {
   });
 }
 
+function easeOutCubic(progress) {
+  return 1 - (1 - progress) ** 3;
+}
+
+function interpolatePoint(startPoint, endPoint, progress) {
+  return [
+    startPoint[0] + (endPoint[0] - startPoint[0]) * progress,
+    startPoint[1] + (endPoint[1] - startPoint[1]) * progress
+  ];
+}
+
+function animateMarkerBetween(startPoint, endPoint, duration) {
+  return new Promise((resolve) => {
+    const startTime = window.performance.now();
+
+    function step(currentTime) {
+      const elapsed = currentTime - startTime;
+      const rawProgress = Math.min(elapsed / duration, 1);
+      const easedProgress = easeOutCubic(rawProgress);
+
+      state.playerMarker.setLatLng(interpolatePoint(startPoint, endPoint, easedProgress));
+
+      if (rawProgress < 1) {
+        window.requestAnimationFrame(step);
+        return;
+      }
+
+      resolve();
+    }
+
+    window.requestAnimationFrame(step);
+  });
+}
+
+async function travelPlayerTo(nextIndex, { animate = true } = {}) {
+  const startIndex = state.playerIndex;
+
+  if (nextIndex === startIndex) {
+    return;
+  }
+
+  const startPoint = state.route[startIndex];
+  const endPoint = state.route[nextIndex];
+
+  state.isMoving = true;
+  state.playerFacing = nextIndex < startIndex ? -1 : 1;
+  refreshPlayerMarkerIcon();
+  render();
+
+  state.map.panTo(endPoint, {
+    animate: true,
+    duration: animate ? 0.45 : 0.3
+  });
+
+  if (animate) {
+    const duration = Math.min(480, 230 + Math.abs(nextIndex - startIndex) * 90);
+    await animateMarkerBetween(startPoint, endPoint, duration);
+  } else {
+    state.playerMarker.setLatLng(endPoint);
+  }
+
+  state.playerIndex = nextIndex;
+  state.isMoving = false;
+  refreshPlayerMarkerIcon();
+  render();
+}
+
 function maybeTriggerEncounter() {
   const character = characters.find(
     (entry) => getCharacterIndex(entry) === state.playerIndex && !state.visited.has(entry.id)
@@ -575,8 +679,8 @@ function maybeTriggerEncounter() {
   window.requestAnimationFrame(revealDialogue);
 }
 
-function movePlayer(delta) {
-  if (state.activeDialogue) {
+async function movePlayer(delta) {
+  if (state.activeDialogue || state.isMoving) {
     return;
   }
 
@@ -589,14 +693,12 @@ function movePlayer(delta) {
     return;
   }
 
-  state.playerIndex = nextIndex;
-  panToPlayer();
-  render();
+  await travelPlayerTo(nextIndex);
   maybeTriggerEncounter();
 }
 
-function jumpToCharacter(characterId) {
-  if (state.activeDialogue) {
+async function jumpToCharacter(characterId) {
+  if (state.activeDialogue || state.isMoving) {
     return;
   }
 
@@ -606,9 +708,9 @@ function jumpToCharacter(characterId) {
     return;
   }
 
-  state.playerIndex = getCharacterIndex(character);
-  panToPlayer();
-  render();
+  await travelPlayerTo(getCharacterIndex(character), {
+    animate: false
+  });
   maybeTriggerEncounter();
 }
 
@@ -634,9 +736,12 @@ function closeDialogue() {
 
 function restartGame() {
   state.playerIndex = 0;
+  state.playerFacing = 1;
+  state.isMoving = false;
   state.visited = new Set();
   state.activeDialogue = null;
   state.lastOutcome = "";
+  refreshPlayerMarkerIcon();
   panToPlayer();
   render();
   maybeTriggerEncounter();
