@@ -71,6 +71,19 @@
             <strong>Chi c'e lungo la via</strong> puoi saltare direttamente a un
             personaggio.
           </p>
+          <div id="bar-entry" class="location-action is-hidden">
+            <div>
+              <p class="location-action__eyebrow">Via Italia 21</p>
+              <p class="location-action__title">Bar Magnino</p>
+              <p class="location-action__copy">
+                Entra nel bar per vedere chi hai gia incontrato lungo la via e
+                gli altri clienti del momento.
+              </p>
+            </div>
+            <button id="enter-bar" class="move-button move-button--accent" type="button">
+              Entra al Bar Magnino
+            </button>
+          </div>
         </section>
 
         <section class="cast-card">
@@ -140,6 +153,59 @@
         </div>
       </section>
     </div>
+
+    <section id="bar-scene" class="bar-scene is-hidden" aria-modal="true" role="dialog" tabindex="-1">
+      <div class="bar-scene__panel">
+        <div class="bar-scene__header">
+          <div>
+            <p class="panel-tag panel-tag--dark">Via Italia 21</p>
+            <h2>Bar Magnino</h2>
+            <p class="bar-scene__lede">
+              Dentro il bar ritrovi i volti gia incrociati su Via Italia, insieme
+              ai clienti abituali della serata.
+            </p>
+          </div>
+          <button id="leave-bar" class="ghost-button bar-scene__close" type="button">
+            Torna sulla via
+          </button>
+        </div>
+
+        <div class="bar-stage" aria-hidden="true">
+          <div class="bar-stage__lights">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+          <div class="bar-stage__sign">Bar Magnino</div>
+          <div class="bar-stage__shelves">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+          <div id="bar-stage-visitors" class="bar-stage__visitors"></div>
+          <div class="bar-stage__counter"></div>
+          <div class="bar-stage__stools">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </div>
+
+        <div class="bar-grid">
+          <section class="bar-card">
+            <p class="eyebrow">Personaggi incontrati</p>
+            <h3>Compagnia della via</h3>
+            <div id="bar-met-characters" class="bar-guest-list"></div>
+          </section>
+
+          <section class="bar-card">
+            <p class="eyebrow">Clienti del bar</p>
+            <h3>Tavoli gia occupati</h3>
+            <div id="bar-regulars" class="bar-guest-list"></div>
+          </section>
+        </div>
+      </div>
+    </section>
 
     <script
       src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"

@@ -223,17 +223,67 @@ const characters = [
   }
 ];
 
+const barMagnino = {
+  name: "Bar Magnino",
+  address: "Via Italia 21",
+  emoji: "☕",
+  coordinate: [45.5657926, 8.0548834],
+  blurb:
+    "Sei davanti al Bar Magnino. Entra e trovi i personaggi gia incontrati lungo la via insieme ai clienti abituali del locale."
+};
+
+const barRegulars = [
+  {
+    emoji: "🧣",
+    name: "Teresa",
+    role: "cliente del primo espresso",
+    line: "Tiene il cappotto sulle spalle e commenta ogni novita della via come fosse un bollettino del quartiere."
+  },
+  {
+    emoji: "🎓",
+    name: "Nico",
+    role: "studente in pausa lunga",
+    line: "Ha il quaderno aperto sul tavolo e usa il rumore del bar come colonna sonora per studiare."
+  },
+  {
+    emoji: "📷",
+    name: "Lia",
+    role: "visitatrice curiosa",
+    line: "Fotografa bicchieri, insegna e portici: dice che Biella rende bene quando sembra vissuta davvero."
+  },
+  {
+    emoji: "🧶",
+    name: "Bruno",
+    role: "cliente del bancone",
+    line: "Parla di tessuti e ordini piccoli, convinto che una citta si capisca meglio davanti a un caffe."
+  }
+];
+
+const barCharacterLines = {
+  ferrero:
+    "Si siede come se il tavolino fosse una piccola sala di rappresentanza e studia ogni cornice della stanza.",
+  sella:
+    "Ha gia spostato mentalmente sedie e tavolini per rendere il flusso del locale piu efficiente.",
+  pistoletto:
+    "Guarda il riflesso delle tazzine e trasforma il bancone in una piccola installazione partecipata.",
+  zegna:
+    "Sfiora tende e tappezzerie come fossero campioni di tessuto e parla di qualita senza alzare la voce.",
+  ada:
+    "Ha lasciato un libro aperto accanto allo zucchero e ascolta tutti con l'aria di chi conosce gia il finale."
+};
+
 const state = {
   map: null,
   route: [...fallbackRoute],
   playerIndex: 0,
-  playerFacing: 1,
   isMoving: false,
+  isBarOpen: false,
   visited: new Set(),
   activeDialogue: null,
   lastOutcome: "",
   routeLine: null,
   playerMarker: null,
+  barMarker: null,
   finishMarker: null,
   npcMarkers: new Map()
 };
@@ -259,7 +309,14 @@ const elements = {
   stepForward: document.querySelector("#step-forward"),
   stepBackMobile: document.querySelector("#step-back-mobile"),
   stepForwardMobile: document.querySelector("#step-forward-mobile"),
-  restartGame: document.querySelector("#restart-game")
+  restartGame: document.querySelector("#restart-game"),
+  barEntry: document.querySelector("#bar-entry"),
+  enterBar: document.querySelector("#enter-bar"),
+  barScene: document.querySelector("#bar-scene"),
+  barStageVisitors: document.querySelector("#bar-stage-visitors"),
+  barMetCharacters: document.querySelector("#bar-met-characters"),
+  barRegulars: document.querySelector("#bar-regulars"),
+  leaveBar: document.querySelector("#leave-bar")
 };
 
 function createMap() {
@@ -295,6 +352,10 @@ function drawRoute() {
     state.playerMarker.remove();
   }
 
+  if (state.barMarker) {
+    state.barMarker.remove();
+  }
+
   if (state.finishMarker) {
     state.finishMarker.remove();
   }
@@ -309,6 +370,29 @@ function drawRoute() {
   state.playerMarker = L.marker(state.route[state.playerIndex], {
     icon: buildPlayerIcon()
   }).addTo(state.map);
+
+  state.barMarker = L.marker(state.route[getBarIndex()], {
+    icon: buildBarIcon()
+  }).addTo(state.map);
+  state.barMarker.bindTooltip(`${barMagnino.name} • ${barMagnino.address}`, {
+    direction: "top",
+    offset: [0, -12]
+  });
+  state.barMarker.on("click", async () => {
+    if (state.isMoving || state.activeDialogue || state.isBarOpen) {
+      return;
+    }
+
+    if (!isAtBar()) {
+      await travelPlayerTo(getBarIndex(), {
+        animate: false
+      });
+    }
+
+    if (canEnterBar()) {
+      openBarScene();
+    }
+  });
 
   state.finishMarker = L.marker(state.route[state.route.length - 1], {
     icon: L.divIcon({
@@ -331,30 +415,28 @@ function drawRoute() {
 
 function buildPlayerIcon() {
   const walkingClass = state.isMoving ? " player-pin--walking" : "";
-  const facingClass = state.playerFacing < 0 ? " player-pin--left" : " player-pin--right";
 
   return L.divIcon({
     className: "",
     html: `
-      <div class="player-pin${walkingClass}${facingClass}" aria-hidden="true">
+      <div class="player-pin${walkingClass}" aria-hidden="true">
+        <span class="player-pin__emoji">😎</span>
         <span class="player-pin__label">TU</span>
-        <span class="player-pin__spark player-pin__spark--one"></span>
-        <span class="player-pin__spark player-pin__spark--two"></span>
-        <span class="player-pin__sprite-shell">
-          <span class="player-sprite">
-            <span class="player-sprite__head"></span>
-            <span class="player-sprite__visor"></span>
-            <span class="player-sprite__body"></span>
-            <span class="player-sprite__arm player-sprite__arm--left"></span>
-            <span class="player-sprite__arm player-sprite__arm--right"></span>
-            <span class="player-sprite__leg player-sprite__leg--left"></span>
-            <span class="player-sprite__leg player-sprite__leg--right"></span>
-          </span>
-        </span>
       </div>
     `,
-    iconSize: [64, 78],
-    iconAnchor: [32, 72]
+    iconSize: [56, 64],
+    iconAnchor: [28, 58]
+  });
+}
+
+function buildBarIcon() {
+  const activeClass = isAtBar() ? " bar-pin--active" : "";
+
+  return L.divIcon({
+    className: "",
+    html: `<div class="bar-pin${activeClass}" aria-hidden="true">${barMagnino.emoji}</div>`,
+    iconSize: [40, 40],
+    iconAnchor: [20, 20]
   });
 }
 
@@ -365,6 +447,15 @@ function refreshPlayerMarkerIcon() {
 
   state.playerMarker.setIcon(buildPlayerIcon());
   state.playerMarker.setZIndexOffset(1200);
+}
+
+function refreshBarMarkerIcon() {
+  if (!state.barMarker) {
+    return;
+  }
+
+  state.barMarker.setIcon(buildBarIcon());
+  state.barMarker.setZIndexOffset(1050);
 }
 
 function drawNpcMarkers() {
@@ -404,6 +495,35 @@ function getScaledIndex(index) {
   return Math.min(Math.max(scaledIndex, 0), routeSpan);
 }
 
+function findNearestRouteIndex(targetPoint) {
+  let bestIndex = 0;
+  let bestDistance = Number.POSITIVE_INFINITY;
+
+  state.route.forEach((point, index) => {
+    const distance =
+      (point[0] - targetPoint[0]) ** 2 + (point[1] - targetPoint[1]) ** 2;
+
+    if (distance < bestDistance) {
+      bestDistance = distance;
+      bestIndex = index;
+    }
+  });
+
+  return bestIndex;
+}
+
+function getBarIndex() {
+  return findNearestRouteIndex(barMagnino.coordinate);
+}
+
+function isAtBar() {
+  return state.playerIndex === getBarIndex();
+}
+
+function canEnterBar() {
+  return isAtBar() && !state.activeDialogue && !state.isMoving;
+}
+
 function buildNpcIcon(character) {
   const visitedClass = state.visited.has(character.id) ? " npc-pin--visited" : "";
 
@@ -434,6 +554,10 @@ function bringGameplayLayersToFront() {
     state.playerMarker.setZIndexOffset(1200);
   }
 
+  if (state.barMarker) {
+    state.barMarker.setZIndexOffset(1050);
+  }
+
   if (state.finishMarker) {
     state.finishMarker.setZIndexOffset(900);
   }
@@ -457,23 +581,30 @@ function findScenicSpot(index) {
 
 function updateStatus() {
   const scenicSpot = findScenicSpot(state.playerIndex);
-  elements.locationTitle.textContent = scenicSpot.title;
-  elements.locationCopy.textContent = scenicSpot.copy;
+  const atBar = isAtBar();
+
+  elements.locationTitle.textContent = atBar
+    ? `${barMagnino.name}, ${barMagnino.address}`
+    : scenicSpot.title;
+  elements.locationCopy.textContent = atBar ? barMagnino.blurb : scenicSpot.copy;
   elements.progressStep.textContent = `Tappa ${state.playerIndex + 1} / ${state.route.length}`;
   elements.progressFill.style.width = `${(state.playerIndex / (state.route.length - 1)) * 100}%`;
   elements.encounterCounter.textContent = `${state.visited.size} / ${characters.length}`;
 
   elements.stepBack.disabled =
-    state.playerIndex === 0 || Boolean(state.activeDialogue) || state.isMoving;
+    state.playerIndex === 0 || Boolean(state.activeDialogue) || state.isMoving || state.isBarOpen;
   elements.stepForward.disabled =
-    state.playerIndex === state.route.length - 1 || Boolean(state.activeDialogue) || state.isMoving;
+    state.playerIndex === state.route.length - 1 ||
+    Boolean(state.activeDialogue) ||
+    state.isMoving ||
+    state.isBarOpen;
   elements.stepBackMobile.disabled = elements.stepBack.disabled;
   elements.stepForwardMobile.disabled = elements.stepForward.disabled;
 }
 
 function renderCast() {
   const activeId = state.activeDialogue ? state.activeDialogue.character.id : null;
-  const interactionLocked = Boolean(activeId) || state.isMoving;
+  const interactionLocked = Boolean(activeId) || state.isMoving || state.isBarOpen;
 
   elements.castList.innerHTML = characters
     .map((character) => {
@@ -550,6 +681,82 @@ function renderDialogue() {
   }
 }
 
+function getEncounteredBarGuests() {
+  return characters
+    .filter((character) => state.visited.has(character.id))
+    .map((character) => ({
+      emoji: character.emoji,
+      name: character.name,
+      role: character.role,
+      line: barCharacterLines[character.id]
+    }));
+}
+
+function renderBarEntry() {
+  elements.barEntry.classList.toggle("is-hidden", !canEnterBar() || state.isBarOpen);
+}
+
+function renderBarScene() {
+  document.body.classList.toggle("scene-open", state.isBarOpen);
+
+  if (!state.isBarOpen) {
+    elements.barScene.classList.add("is-hidden");
+    return;
+  }
+
+  const encounteredGuests = getEncounteredBarGuests();
+  const stageGuests = [...encounteredGuests, ...barRegulars];
+
+  elements.barStageVisitors.innerHTML = stageGuests
+    .map(
+      (guest) => `
+        <div class="bar-stage__guest">
+          <span class="bar-stage__guest-emoji">${guest.emoji}</span>
+          <span class="bar-stage__guest-name">${guest.name}</span>
+        </div>
+      `
+    )
+    .join("");
+
+  elements.barMetCharacters.innerHTML = encounteredGuests.length
+    ? encounteredGuests
+      .map(
+        (guest) => `
+          <article class="bar-guest-card">
+            <div class="bar-guest-card__avatar">${guest.emoji}</div>
+            <div>
+              <p class="bar-guest-card__name">${guest.name}</p>
+              <p class="bar-guest-card__role">${guest.role}</p>
+              <p class="bar-guest-card__line">${guest.line}</p>
+            </div>
+          </article>
+        `
+      )
+      .join("")
+    : `
+        <div class="bar-empty">
+          Per ora al Magnino trovi solo gli avventori abituali. Continua la passeggiata e torna qui dopo qualche incontro.
+        </div>
+      `;
+
+  elements.barRegulars.innerHTML = barRegulars
+    .map(
+      (guest) => `
+        <article class="bar-guest-card bar-guest-card--regular">
+          <div class="bar-guest-card__avatar">${guest.emoji}</div>
+          <div>
+            <p class="bar-guest-card__name">${guest.name}</p>
+            <p class="bar-guest-card__role">${guest.role}</p>
+            <p class="bar-guest-card__line">${guest.line}</p>
+          </div>
+        </article>
+      `
+    )
+    .join("");
+
+  elements.barScene.classList.remove("is-hidden");
+}
+
 function renderEnding() {
   const completed = state.visited.size === characters.length;
 
@@ -568,8 +775,11 @@ function render() {
   updateStatus();
   renderCast();
   renderDialogue();
+  renderBarEntry();
+  renderBarScene();
   renderEnding();
   updateNpcMarkers();
+  refreshBarMarkerIcon();
 }
 
 function revealDialogue() {
@@ -583,6 +793,40 @@ function revealDialogue() {
   });
   elements.dialoguePanel.focus({
     preventScroll: true
+  });
+}
+
+function revealBarScene() {
+  if (elements.barScene.classList.contains("is-hidden")) {
+    return;
+  }
+
+  elements.barScene.focus({
+    preventScroll: true
+  });
+}
+
+function openBarScene() {
+  if (!canEnterBar() || state.isBarOpen) {
+    return;
+  }
+
+  state.isBarOpen = true;
+  render();
+  window.requestAnimationFrame(revealBarScene);
+}
+
+function closeBarScene() {
+  if (!state.isBarOpen) {
+    return;
+  }
+
+  state.isBarOpen = false;
+  render();
+  window.requestAnimationFrame(() => {
+    elements.enterBar.focus({
+      preventScroll: true
+    });
   });
 }
 
@@ -639,7 +883,6 @@ async function travelPlayerTo(nextIndex, { animate = true } = {}) {
   const endPoint = state.route[nextIndex];
 
   state.isMoving = true;
-  state.playerFacing = nextIndex < startIndex ? -1 : 1;
   refreshPlayerMarkerIcon();
   render();
 
@@ -680,7 +923,7 @@ function maybeTriggerEncounter() {
 }
 
 async function movePlayer(delta) {
-  if (state.activeDialogue || state.isMoving) {
+  if (state.activeDialogue || state.isMoving || state.isBarOpen) {
     return;
   }
 
@@ -698,7 +941,7 @@ async function movePlayer(delta) {
 }
 
 async function jumpToCharacter(characterId) {
-  if (state.activeDialogue || state.isMoving) {
+  if (state.activeDialogue || state.isMoving || state.isBarOpen) {
     return;
   }
 
@@ -736,8 +979,8 @@ function closeDialogue() {
 
 function restartGame() {
   state.playerIndex = 0;
-  state.playerFacing = 1;
   state.isMoving = false;
+  state.isBarOpen = false;
   state.visited = new Set();
   state.activeDialogue = null;
   state.lastOutcome = "";
@@ -798,6 +1041,8 @@ function attachEvents() {
   elements.stepForward.addEventListener("click", () => movePlayer(1));
   elements.stepBackMobile.addEventListener("click", () => movePlayer(-1));
   elements.stepForwardMobile.addEventListener("click", () => movePlayer(1));
+  elements.enterBar.addEventListener("click", openBarScene);
+  elements.leaveBar.addEventListener("click", closeBarScene);
   elements.dialogueContinue.addEventListener("click", closeDialogue);
   elements.restartGame.addEventListener("click", restartGame);
 
@@ -822,6 +1067,15 @@ function attachEvents() {
   });
 
   window.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && state.isBarOpen) {
+      closeBarScene();
+      return;
+    }
+
+    if (state.isBarOpen) {
+      return;
+    }
+
     if (event.key === "ArrowRight") {
       movePlayer(1);
     }
