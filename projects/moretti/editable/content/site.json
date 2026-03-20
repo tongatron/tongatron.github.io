@@ -36,36 +36,46 @@
       "order": 1,
       "src": "../assets/uploads/home-01.jpg",
       "alt": "Atmospheric exterior rendering with layered terraces.",
-      "caption": "Home image 01",
-      "note": "Replace this file to update the first home visual."
+      "client": "Karl und Bremhorst Architekten",
+      "project": "Haus Maria Jakobi, Vienna (AT)",
+      "year": "2025",
+      "result": "Winner"
     },
     {
       "order": 2,
       "src": "../assets/uploads/home-02.jpg",
       "alt": "Soft architectural rendering of a residential building.",
-      "caption": "Home image 02",
-      "note": "Replace this file to update the second home visual."
+      "client": "Karl und Bremhorst Architekten",
+      "project": "Heidehof - Hauser zum Leben, Vienna (AT)",
+      "year": "2025",
+      "result": "Winner"
     },
     {
       "order": 3,
       "src": "../assets/uploads/home-03.jpg",
       "alt": "Large interior illustration with construction vehicles.",
-      "caption": "Home image 03",
-      "note": "Replace this file to update the third home visual."
+      "client": "Karl und Bremhorst Architekten",
+      "project": "Henry Dunant Volksschule, Vienna (AT)",
+      "year": "2025",
+      "result": "Honorable Mention"
     },
     {
       "order": 4,
       "src": "../assets/uploads/home-04.jpg",
       "alt": "Printed architecture boards shown in a soft studio setup.",
-      "caption": "Home image 04",
-      "note": "Replace this file to update the fourth home visual."
+      "client": "Karl und Bremhorst Architekten",
+      "project": "Bildungscampus Mira-Lobe-Weg 4, Vienna (AT)",
+      "year": "2025",
+      "result": "3rd Place"
     },
     {
-      "src": "../assets/uploads/home-05.jpg",
       "order": 5,
-      "alt": "saasad",
-      "caption": "",
-      "note": ""
+      "src": "../assets/uploads/home-05.jpg",
+      "alt": "Competition rendering of a school project surrounded by trees.",
+      "client": "Karl und Bremhorst Architekten",
+      "project": "Volksschule Neilreichgasse, Vienna (AT)",
+      "year": "2025",
+      "result": "Winner"
     }
   ]
 }

@@ -5,13 +5,13 @@ This folder contains a simple static version of the site that can be updated fro
 ## What to edit
 
 1. `content/site.json`
-   Update labels, intro texts, footer text, links, and the display order of the
-   home visuals.
+   Update labels, intro texts, footer text, links, and the full home slider:
+   image order, client, project, year, and result text shown under each image.
 2. `content/projects.json`
    Add, remove, or reorder rows in the project table, including optional row
    images.
-3. `assets/uploads/home-01.jpg` to `home-04.jpg`
-   Replace these files to update the home page visuals.
+3. `assets/uploads/home-*.jpg`
+   Replace or add these files to update the home page visuals.
 4. `assets/uploads/projects/`
    Optional image files for the works table rows.
 
@@ -33,6 +33,8 @@ project rows, and home images.
   to be uploaded to the repository.
 - It is not truly protected on GitHub Pages. Anyone with the URL can open it.
 - It lets you set the display order of the home visuals.
+- It lets you edit the text shown under each home image.
+- It lets you add new home images to the slider.
 - It lets you attach one image to each row in the works table.
 
 ## Local save flow

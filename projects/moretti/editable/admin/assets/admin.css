@@ -217,6 +217,12 @@ code {
   background: var(--panel);
 }
 
+.image-card-fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
 .image-preview {
   aspect-ratio: 4 / 3;
   border-radius: 18px;
@@ -410,7 +416,8 @@ code {
   }
 
   .field-grid,
-  .field-grid-compact {
+  .field-grid-compact,
+  .image-card-fields {
     grid-template-columns: 1fr;
   }
 }

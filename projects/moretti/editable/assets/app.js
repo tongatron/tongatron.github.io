@@ -51,6 +51,91 @@ function createFooter(site) {
   `;
 }
 
+function formatHomeProjectLine(image) {
+  return [image.project, image.year].filter(Boolean).join(" ");
+}
+
+function setupHomeSlider() {
+  const slider = document.querySelector("[data-home-slider]");
+  if (!slider) {
+    return;
+  }
+
+  const slides = [...slider.querySelectorAll("[data-home-slide]")];
+  const dots = [...slider.querySelectorAll("[data-home-dot]")];
+  const previousButton = slider.querySelector("[data-home-prev]");
+  const nextButton = slider.querySelector("[data-home-next]");
+
+  if (!slides.length) {
+    return;
+  }
+
+  let activeIndex = slides.findIndex((slide) => slide.classList.contains("is-active"));
+  let autoplayId = null;
+  if (activeIndex < 0) {
+    activeIndex = 0;
+  }
+
+  function updateActiveSlide(nextIndex) {
+    activeIndex = (nextIndex + slides.length) % slides.length;
+    slides.forEach((slide, index) => {
+      const isActive = index === activeIndex;
+      slide.classList.toggle("is-active", isActive);
+      slide.setAttribute("aria-hidden", isActive ? "false" : "true");
+    });
+    dots.forEach((dot, index) => {
+      dot.classList.toggle("is-active", index === activeIndex);
+      dot.setAttribute("aria-pressed", index === activeIndex ? "true" : "false");
+    });
+  }
+
+  function stopAutoplay() {
+    if (autoplayId) {
+      window.clearInterval(autoplayId);
+      autoplayId = null;
+    }
+  }
+
+  function startAutoplay() {
+    stopAutoplay();
+    if (slides.length < 2) {
+      return;
+    }
+    autoplayId = window.setInterval(() => {
+      updateActiveSlide(activeIndex + 1);
+    }, 4800);
+  }
+
+  previousButton?.addEventListener("click", () => {
+    updateActiveSlide(activeIndex - 1);
+    startAutoplay();
+  });
+
+  nextButton?.addEventListener("click", () => {
+    updateActiveSlide(activeIndex + 1);
+    startAutoplay();
+  });
+
+  dots.forEach((dot) => {
+    dot.addEventListener("click", () => {
+      updateActiveSlide(Number.parseInt(dot.dataset.homeDot, 10) || 0);
+      startAutoplay();
+    });
+  });
+
+  slider.addEventListener("mouseenter", stopAutoplay);
+  slider.addEventListener("mouseleave", startAutoplay);
+  slider.addEventListener("focusin", stopAutoplay);
+  slider.addEventListener("focusout", (event) => {
+    if (!slider.contains(event.relatedTarget)) {
+      startAutoplay();
+    }
+  });
+
+  updateActiveSlide(activeIndex);
+  startAutoplay();
+}
+
 function renderHome(siteData, projectData, siteJsonUrl) {
   const site = siteData.site;
   const projectCount = projectData.rows.length;
@@ -65,18 +150,45 @@ function renderHome(siteData, projectData, siteJsonUrl) {
     return leftOrder - rightOrder;
   });
 
-  const imageCards = orderedHomeImages
+  const visibleHomeImages = orderedHomeImages.filter((image) => image.src);
+
+  const slides = visibleHomeImages
     .map((image, index) => {
-      const classes = index === 0 ? "image-card featured" : "image-card";
-      const caption = image.caption ? `<div class="image-meta"><strong>${image.caption}</strong>${image.note ? `<span>${image.note}</span>` : ""}</div>` : "";
+      const projectLine = formatHomeProjectLine(image);
       return `
-        <figure class="${classes}" data-reveal data-delay="${Math.min(index + 1, 3)}">
-          <img src="${new URL(image.src, siteJsonUrl).href}" alt="${image.alt}" />
-          ${caption}
-        </figure>
+        <article class="home-slide${index === 0 ? " is-active" : ""}" data-home-slide="${index}" aria-hidden="${index === 0 ? "false" : "true"}">
+          <figure class="home-slide-media">
+            <img src="${new URL(image.src, siteJsonUrl).href}" alt="${image.alt}" />
+          </figure>
+          <div class="home-slide-copy">
+            ${image.client ? `<strong class="home-slide-client">${image.client}</strong>` : ""}
+            ${projectLine ? `<p class="home-slide-project">${projectLine}</p>` : ""}
+            ${image.result ? `<p class="home-slide-result">${image.result}</p>` : ""}
+          </div>
+        </article>
       `;
     })
     .join("");
+
+  const sliderControls =
+    visibleHomeImages.length > 1
+      ? `
+        <div class="home-slider-controls">
+          <div class="slider-nav">
+            <button type="button" class="slider-button" data-home-prev aria-label="Previous image">Prev</button>
+            <button type="button" class="slider-button" data-home-next aria-label="Next image">Next</button>
+          </div>
+          <div class="slider-dots" aria-label="Home visuals navigation">
+            ${visibleHomeImages
+              .map(
+                (_, index) =>
+                  `<button type="button" class="slider-dot${index === 0 ? " is-active" : ""}" data-home-dot="${index}" aria-label="Go to image ${index + 1}" aria-pressed="${index === 0 ? "true" : "false"}"></button>`,
+              )
+              .join("")}
+          </div>
+        </div>
+      `
+      : "";
 
   appNode.innerHTML = `
     <div class="site">
@@ -98,8 +210,13 @@ function renderHome(siteData, projectData, siteJsonUrl) {
               </div>
             </div>
           </article>
-          <section class="hero-visuals">
-            ${imageCards}
+          <section class="hero-visuals" data-reveal data-delay="2">
+            <div class="home-slider" data-home-slider>
+              <div class="home-slider-stage">
+                ${slides}
+              </div>
+              ${sliderControls}
+            </div>
           </section>
         </section>
 
@@ -124,6 +241,8 @@ function renderHome(siteData, projectData, siteJsonUrl) {
       ${createFooter(site)}
     </div>
   `;
+
+  setupHomeSlider();
 }
 
 function renderWorks(siteData, projectData) {

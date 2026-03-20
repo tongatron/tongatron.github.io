@@ -236,11 +236,17 @@ function ensureHomeImages() {
     if (!("alt" in nextImage)) {
       nextImage.alt = "";
     }
-    if (!("caption" in nextImage)) {
-      nextImage.caption = "";
+    if (!("client" in nextImage)) {
+      nextImage.client = nextImage.caption || "";
     }
-    if (!("note" in nextImage)) {
-      nextImage.note = "";
+    if (!("project" in nextImage)) {
+      nextImage.project = nextImage.note || "";
+    }
+    if (!("year" in nextImage)) {
+      nextImage.year = "";
+    }
+    if (!("result" in nextImage)) {
+      nextImage.result = "";
     }
     return nextImage;
   });
@@ -250,6 +256,27 @@ function normalizeHomeImageOrder() {
   state.siteData.homeImages.forEach((image, index) => {
     image.order = index + 1;
   });
+}
+
+function sortHomeImagesByOrder() {
+  const combined = state.siteData.homeImages.map((image, index) => ({
+    image,
+    fileState: state.imageFiles[index],
+    index,
+  }));
+
+  combined.sort((left, right) => {
+    const leftOrder = Number.parseInt(left.image.order ?? left.index + 1, 10) || left.index + 1;
+    const rightOrder = Number.parseInt(right.image.order ?? right.index + 1, 10) || right.index + 1;
+    if (leftOrder !== rightOrder) {
+      return leftOrder - rightOrder;
+    }
+    return left.index - right.index;
+  });
+
+  state.siteData.homeImages = combined.map((entry) => entry.image);
+  state.imageFiles = combined.map((entry) => entry.fileState);
+  normalizeHomeImageOrder();
 }
 
 function renderImages() {
@@ -286,13 +313,23 @@ function renderImages() {
             <label for="order-${index}">Display order</label>
             <input id="order-${index}" data-image-text="${index}" data-key="order" type="number" value="${escapeHtml(image.order ?? index + 1)}" />
           </div>
-          <div class="field">
-            <label for="caption-${index}">Caption</label>
-            <input id="caption-${index}" data-image-text="${index}" data-key="caption" type="text" value="${escapeHtml(image.caption || "")}" />
-          </div>
-          <div class="field">
-            <label for="note-${index}">Note</label>
-            <textarea id="note-${index}" data-image-text="${index}" data-key="note">${escapeHtml(image.note || "")}</textarea>
+          <div class="image-card-fields">
+            <div class="field">
+              <label for="client-${index}">Client / Architect</label>
+              <input id="client-${index}" data-image-text="${index}" data-key="client" type="text" value="${escapeHtml(image.client || "")}" />
+            </div>
+            <div class="field">
+              <label for="year-${index}">Year</label>
+              <input id="year-${index}" data-image-text="${index}" data-key="year" type="text" value="${escapeHtml(image.year || "")}" />
+            </div>
+            <div class="field field-full">
+              <label for="project-${index}">Project</label>
+              <input id="project-${index}" data-image-text="${index}" data-key="project" type="text" value="${escapeHtml(image.project || "")}" />
+            </div>
+            <div class="field field-full">
+              <label for="result-${index}">Result / Label</label>
+              <input id="result-${index}" data-image-text="${index}" data-key="result" type="text" value="${escapeHtml(image.result || "")}" />
+            </div>
           </div>
         </article>
       `;
@@ -367,6 +404,11 @@ function attachImageTextHandlers() {
       const index = Number.parseInt(target.dataset.imageText, 10);
       const key = target.dataset.key;
       state.siteData.homeImages[index][key] = key === "order" ? Number.parseInt(target.value || "0", 10) || 0 : target.value;
+      if (key === "order") {
+        sortHomeImagesByOrder();
+        renderImages();
+        attachImageHandlers();
+      }
       persistDraft();
     });
   });
@@ -735,8 +777,10 @@ function addHomeImage() {
     src: `../assets/uploads/${nextHomeImageFileName()}`,
     order: index + 1,
     alt: "",
-    caption: "",
-    note: "",
+    client: "",
+    project: "",
+    year: "",
+    result: "",
   });
   state.imageFiles.push({
     previewUrl: "",
