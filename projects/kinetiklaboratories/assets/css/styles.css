@@ -1,0 +1,418 @@
+:root {
+  --kl-ink: #56564b;
+  --kl-olive: #94a197;
+  --kl-olive-deep: #79877b;
+  --kl-muted: #7e8a80;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0 0 40px;
+  font: normal normal 16px "Inconsolata", monospace;
+  color: var(--kl-ink);
+  background: #ffffff;
+}
+
+a {
+  text-decoration: none;
+  color: var(--kl-olive);
+}
+
+a:hover {
+  text-decoration: underline;
+  color: var(--kl-ink);
+}
+
+.site-shell {
+  width: 100%;
+}
+
+.banner-frame {
+  display: block;
+  background: #050505;
+}
+
+.banner-frame img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.top-nav {
+  background: var(--kl-olive);
+}
+
+.top-nav .navbar-toggler {
+  margin: 0.75rem 1rem;
+  border-color: rgba(255, 255, 255, 0.65);
+}
+
+.top-nav .navbar-nav {
+  width: 100%;
+}
+
+.top-nav .nav-link {
+  padding: 0.75rem 1.15rem;
+  border-right: 1px solid rgba(255, 255, 255, 0.75);
+  color: #ffffff;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.top-nav .nav-link:hover,
+.top-nav .nav-link:focus {
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+}
+
+.top-nav .nav-link.active {
+  background: rgba(255, 255, 255, 0.22);
+}
+
+.content-wrap {
+  padding: 30px clamp(24px, 2.8vw, 42px) 0;
+}
+
+.page-heading {
+  margin-bottom: 2rem;
+}
+
+.section-title {
+  font-family: "Rajdhani", sans-serif;
+  line-height: 0.95;
+  text-transform: uppercase;
+  font-size: clamp(2.1rem, 4vw, 3.4rem);
+  margin-bottom: 1rem;
+}
+
+.lead-copy {
+  font-size: 1.06rem;
+  line-height: 1.65;
+  margin-bottom: 0;
+}
+
+.hero-image {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.page-secondary {
+  color: var(--kl-muted);
+  font-size: 0.98rem;
+  line-height: 1.6;
+}
+
+.protean-layout {
+  padding-top: 6px;
+}
+
+.protean-copy {
+  font-size: 1.08rem;
+  line-height: 1.6;
+}
+
+.protean-copy p {
+  margin-bottom: 0.45rem;
+  text-align: left;
+}
+
+.protean-openmark {
+  display: block;
+  width: min(100%, 220px);
+  margin-left: auto;
+}
+
+.protean-shot-row {
+  margin-top: 0.75rem;
+}
+
+.protean-shot {
+  display: block;
+  width: 100%;
+  max-width: 640px;
+}
+
+.protean-module {
+  margin-top: 3rem;
+}
+
+.protean-module-title {
+  margin: 0 0 0.6rem;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+}
+
+.protean-diagram {
+  display: block;
+  width: min(100%, 640px);
+  margin-left: auto;
+}
+
+.protean-media {
+  margin-top: 3rem;
+}
+
+.dao-layout {
+  padding-top: 1rem;
+}
+
+.dao-hero-image {
+  display: block;
+  width: min(100%, 400px);
+}
+
+.dao-copy {
+  font-size: 1.06rem;
+  line-height: 1.55;
+}
+
+.dao-copy p {
+  margin-bottom: 0.55rem;
+  text-align: left;
+}
+
+.dao-copy strong {
+  font-weight: 700;
+}
+
+.dao-section {
+  margin-top: 4rem;
+}
+
+.dao-pattern-lead {
+  margin-top: 1.5rem;
+}
+
+.dao-pattern-row {
+  margin-top: 1.25rem;
+}
+
+.dao-pattern-image {
+  display: block;
+  width: min(100%, 370px);
+}
+
+.dao-media {
+  max-width: 640px;
+  margin-top: 3rem;
+}
+
+.morphing-layout {
+  padding-top: 1rem;
+}
+
+.morphing-hero {
+  display: block;
+  width: min(100%, 400px);
+}
+
+.morphing-copy {
+  font-size: 1.06rem;
+  line-height: 1.55;
+}
+
+.morphing-copy p {
+  margin-bottom: 0.55rem;
+  text-align: left;
+}
+
+.morphing-copy strong {
+  font-weight: 700;
+}
+
+.morphing-media {
+  max-width: 500px;
+  margin-top: 4rem;
+  margin-left: auto;
+}
+
+.illogic-layout {
+  padding-top: 1rem;
+}
+
+.illogic-hero {
+  display: block;
+  width: min(100%, 400px);
+}
+
+.illogic-copy {
+  font-size: 1.06rem;
+  line-height: 1.55;
+}
+
+.illogic-copy p {
+  margin-bottom: 0.55rem;
+  text-align: left;
+}
+
+.illogic-copy strong {
+  font-weight: 700;
+}
+
+.illogic-module {
+  margin-top: 3.75rem;
+}
+
+.illogic-panel {
+  display: block;
+  width: min(100%, 340px);
+}
+
+.illogic-soundcloud {
+  margin-top: 2.5rem;
+  max-width: 1420px;
+}
+
+.illogic-youtube {
+  margin-top: 1.75rem;
+  max-width: 1140px;
+}
+
+.xmatrix-layout {
+  padding-top: 1rem;
+}
+
+.xmatrix-hero {
+  display: block;
+  width: min(100%, 400px);
+}
+
+.xmatrix-copy {
+  font-size: 1.06rem;
+  line-height: 1.55;
+}
+
+.xmatrix-copy p {
+  margin-bottom: 0.55rem;
+  text-align: left;
+}
+
+.xmatrix-copy strong {
+  font-weight: 700;
+}
+
+.xmatrix-media {
+  max-width: 500px;
+  margin-top: 4rem;
+  margin-left: auto;
+}
+
+.legacy-content {
+  font-size: 1.06rem;
+  line-height: 1.72;
+}
+
+.legacy-content h3,
+.legacy-content h4 {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  font-family: "Rajdhani", sans-serif;
+  font-size: 2rem;
+  line-height: 1.05;
+  text-transform: uppercase;
+}
+
+.legacy-content figure,
+.legacy-content .article-figure {
+  margin: 1.5rem 0;
+  text-align: center;
+}
+
+.legacy-content .legacy-block,
+.legacy-content p,
+.legacy-content li {
+  text-align: justify;
+}
+
+.legacy-content .legacy-block {
+  margin-bottom: 1.1rem;
+}
+
+.legacy-content img {
+  max-width: 100%;
+  height: auto;
+}
+
+.legacy-image {
+  display: inline-block;
+}
+
+.embed-shell {
+  margin: 1.75rem 0;
+}
+
+.embed-shell iframe {
+  width: 100%;
+  min-height: 360px;
+  border: 0;
+  display: block;
+}
+
+.soundcloud-shell iframe {
+  min-height: 320px;
+}
+
+.site-footer {
+  display: none;
+}
+
+@media (max-width: 1199.98px) {
+  .top-nav .nav-link {
+    border-right: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.18);
+  }
+}
+
+@media (max-width: 767.98px) {
+  body {
+    padding: 0 0 24px;
+  }
+
+  .content-wrap {
+    padding: 24px 20px 0;
+  }
+
+  .embed-shell iframe {
+    min-height: 240px;
+  }
+
+  .protean-openmark,
+  .protean-diagram,
+  .dao-pattern-image {
+    margin-left: 0;
+  }
+
+  .protean-module {
+    margin-top: 2.2rem;
+  }
+
+  .dao-section {
+    margin-top: 2.5rem;
+  }
+
+  .morphing-media {
+    margin-top: 2.5rem;
+    margin-left: 0;
+  }
+
+  .illogic-module {
+    margin-top: 2.5rem;
+  }
+
+  .xmatrix-media {
+    margin-top: 2.5rem;
+    margin-left: 0;
+  }
+}
