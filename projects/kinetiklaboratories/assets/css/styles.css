@@ -55,6 +55,10 @@ a:hover {
   width: 100%;
 }
 
+.top-nav .nav-item {
+  min-width: 0;
+}
+
 .top-nav .nav-link {
   padding: 0.75rem 1.15rem;
   border-right: 1px solid rgba(255, 255, 255, 0.75);
@@ -530,6 +534,42 @@ a:hover {
   .top-nav .nav-link {
     border-right: 0;
     border-top: 1px solid rgba(255, 255, 255, 0.18);
+  }
+}
+
+@media (min-width: 1200px) {
+  .top-nav .navbar-collapse {
+    width: 100%;
+  }
+
+  .top-nav .navbar-nav {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    width: 100%;
+  }
+
+  .top-nav .nav-item {
+    flex: 0 0 auto;
+    min-width: 0;
+  }
+
+  .top-nav .nav-item:first-child .nav-link {
+    border-left: 1px solid rgba(255, 255, 255, 0.75);
+  }
+
+  .top-nav .nav-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    min-height: 3.55rem;
+    padding: 0.72rem 1.2rem;
+    font-size: clamp(0.78rem, 0.22vw + 0.62rem, 1rem);
+    line-height: 1;
+    letter-spacing: 0;
+    text-align: center;
+    white-space: nowrap;
   }
 }
 
