@@ -1,87 +1,78 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://tongatron.github.io/</loc>
+    <loc>https://tongatron.org/</loc>
   </url>
   <url>
-    <loc>https://tongatron.github.io/index-en.html</loc>
+    <loc>https://tongatron.org/index-en.html</loc>
   </url>
   <url>
-    <loc>https://tongatron.github.io/panel.html</loc>
+    <loc>https://tongatron.org/panel.html</loc>
   </url>
   <url>
-    <loc>https://tongatron.github.io/projects/</loc>
+    <loc>https://tongatron.org/projects/index.html</loc>
   </url>
   <url>
-    <loc>https://tongatron.github.io/projects/IKEA-hack/</loc>
+    <loc>https://tongatron.org/projects/IKEA-hack/index.html</loc>
   </url>
   <url>
-    <loc>https://tongatron.github.io/projects/PS-Torino/</loc>
+    <loc>https://tongatron.org/projects/PS-Torino/index.html</loc>
   </url>
   <url>
-    <loc>https://tongatron.github.io/projects/chatanalysis/</loc>
+    <loc>https://tongatron.org/projects/chatanalysis/index.html</loc>
   </url>
   <url>
-    <loc>https://tongatron.github.io/projects/emojiwood-world/</loc>
+    <loc>https://tongatron.org/projects/emojiwood-world/index.html</loc>
   </url>
   <url>
-    <loc>https://tongatron.github.io/projects/farmaci/</loc>
+    <loc>https://tongatron.org/projects/farmaci/index.html</loc>
   </url>
   <url>
-    <loc>https://tongatron.github.io/projects/farmaci/armadietto.html</loc>
+    <loc>https://tongatron.org/projects/forza4/index.html</loc>
   </url>
   <url>
-    <loc>https://tongatron.github.io/projects/farmaci/diario.html</loc>
+    <loc>https://tongatron.org/projects/gtt-torino/app/</loc>
   </url>
   <url>
-    <loc>https://tongatron.github.io/projects/farmaci/terapia.html</loc>
+    <loc>https://tongatron.org/projects/impiccato/index.html</loc>
   </url>
   <url>
-    <loc>https://tongatron.github.io/projects/farmaci/todo.html</loc>
+    <loc>https://tongatron.org/projects/labirinto/index.html</loc>
   </url>
   <url>
-    <loc>https://tongatron.github.io/projects/forza4/</loc>
+    <loc>https://tongatron.org/projects/magazzinoweb/index.html</loc>
   </url>
   <url>
-    <loc>https://tongatron.github.io/projects/gtt-torino/</loc>
+    <loc>https://tongatron.org/projects/memory/index.html</loc>
   </url>
   <url>
-    <loc>https://tongatron.github.io/projects/impiccato/</loc>
+    <loc>https://tongatron.org/projects/multi-simulator/index.html</loc>
   </url>
   <url>
-    <loc>https://tongatron.github.io/projects/labirinto/</loc>
+    <loc>https://tongatron.org/projects/qrscanner/index.html</loc>
   </url>
   <url>
-    <loc>https://tongatron.github.io/projects/magazzinoweb/</loc>
+    <loc>https://tongatron.org/projects/robottino/robottino-site/index.html</loc>
   </url>
   <url>
-    <loc>https://tongatron.github.io/projects/memory/</loc>
+    <loc>https://tongatron.org/projects/robottino26/index.html</loc>
   </url>
   <url>
-    <loc>https://tongatron.github.io/projects/multi-simulator/</loc>
+    <loc>https://tongatron.org/projects/roulette/index.html</loc>
   </url>
   <url>
-    <loc>https://tongatron.github.io/projects/qrscanner/</loc>
+    <loc>https://tongatron.org/projects/rumorebianco/index.html</loc>
   </url>
   <url>
-    <loc>https://tongatron.github.io/projects/robottino/robottino-site/</loc>
+    <loc>https://tongatron.org/projects/ryanair-search/index.html</loc>
   </url>
   <url>
-    <loc>https://tongatron.github.io/projects/robottino26/</loc>
+    <loc>https://tongatron.org/projects/selfomatic/index.html</loc>
   </url>
   <url>
-    <loc>https://tongatron.github.io/projects/roulette/</loc>
+    <loc>https://tongatron.org/projects/simon/index.html</loc>
   </url>
   <url>
-    <loc>https://tongatron.github.io/projects/rumorebianco/</loc>
-  </url>
-  <url>
-    <loc>https://tongatron.github.io/projects/ryanair-search/</loc>
-  </url>
-  <url>
-    <loc>https://tongatron.github.io/projects/selfomatic/</loc>
-  </url>
-  <url>
-    <loc>https://tongatron.github.io/projects/simon/</loc>
+    <loc>https://tongatron.org/projects/via-italia-simulatr/index.html</loc>
   </url>
 </urlset>
