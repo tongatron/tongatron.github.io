@@ -377,6 +377,164 @@ a:hover {
   margin-left: auto;
 }
 
+.gort-layout {
+  padding-top: 1rem;
+}
+
+.gort-hero {
+  display: block;
+  width: min(100%, 400px);
+}
+
+.gort-copy {
+  font-size: 1.06rem;
+  line-height: 1.55;
+}
+
+.gort-copy p {
+  margin-bottom: 0.55rem;
+  text-align: left;
+}
+
+.gort-copy strong {
+  font-weight: 700;
+}
+
+.gort-media {
+  max-width: 500px;
+  margin-top: 4rem;
+  margin-left: auto;
+}
+
+.drjekyll-layout {
+  padding-top: 1rem;
+}
+
+.drjekyll-hero {
+  display: block;
+  width: min(100%, 400px);
+}
+
+.drjekyll-copy {
+  font-size: 1.06rem;
+  line-height: 1.55;
+}
+
+.drjekyll-copy p {
+  margin-bottom: 0.55rem;
+  text-align: left;
+}
+
+.drjekyll-copy strong {
+  font-weight: 700;
+}
+
+.drjekyll-media {
+  max-width: 500px;
+  margin-top: 4rem;
+  margin-left: auto;
+}
+
+.hng-layout {
+  padding-top: 0.5rem;
+}
+
+.hng-copy {
+  font-size: 1.06rem;
+  line-height: 1.55;
+}
+
+.hng-copy p {
+  margin-bottom: 0.55rem;
+  text-align: left;
+}
+
+.hng-openmark {
+  display: block;
+  width: min(100%, 220px);
+  margin-left: auto;
+}
+
+.hng-device {
+  display: block;
+  width: min(100%, 400px);
+}
+
+.hng-section {
+  margin-top: 3.5rem;
+}
+
+.hng-schematic {
+  display: block;
+  width: 100%;
+  max-width: 980px;
+  margin: 0 auto;
+}
+
+.hng-print-image {
+  display: block;
+  width: min(100%, 400px);
+}
+
+.hng-video {
+  max-width: 640px;
+  margin-top: 2.5rem;
+  margin-left: auto;
+}
+
+.motbox-layout {
+  padding-top: 1rem;
+}
+
+.motbox-hero {
+  display: block;
+  width: min(100%, 420px);
+}
+
+.motbox-copy {
+  font-size: 1.06rem;
+  line-height: 1.55;
+}
+
+.motbox-copy p {
+  margin-bottom: 0.55rem;
+  text-align: left;
+}
+
+.motbox-copy strong {
+  font-weight: 700;
+}
+
+.motbox-media {
+  max-width: 500px;
+  margin-top: 4rem;
+  margin-left: auto;
+}
+
+.contact-layout {
+  padding-top: 0.25rem;
+}
+
+.contact-copy {
+  max-width: 1480px;
+  font-size: 1.06rem;
+  line-height: 1.55;
+}
+
+.contact-copy p {
+  margin: 0 0 1.9rem;
+  text-align: left;
+}
+
+.contact-copy strong {
+  font-weight: 700;
+}
+
+.contact-soundcloud {
+  max-width: 1480px;
+  margin-top: 2.4rem;
+}
+
 .legacy-content {
   font-size: 1.06rem;
   line-height: 1.72;
@@ -482,6 +640,38 @@ a:hover {
   .xmatrix-media {
     margin-top: 2.5rem;
     margin-left: 0;
+  }
+
+  .gort-media {
+    margin-top: 2.5rem;
+    margin-left: 0;
+  }
+
+  .drjekyll-media {
+    margin-top: 2.5rem;
+    margin-left: 0;
+  }
+
+  .hng-openmark,
+  .hng-video {
+    margin-left: 0;
+  }
+
+  .hng-section {
+    margin-top: 2.4rem;
+  }
+
+  .motbox-media {
+    margin-top: 2.5rem;
+    margin-left: 0;
+  }
+
+  .contact-copy p {
+    margin-bottom: 1.35rem;
+  }
+
+  .contact-soundcloud {
+    margin-top: 1.75rem;
   }
 }
 """.strip()
@@ -1070,6 +1260,221 @@ def build_xmatrix_page(item: dict, banner_path: str, favicon_path: str) -> str:
     )
 
 
+def build_gort_page(item: dict, banner_path: str, favicon_path: str) -> str:
+    content = """
+<section class="gort-layout">
+  <div class="row g-5 align-items-start">
+    <div class="col-lg-4">
+      <img class="gort-hero" src="assets/images/gort-the-robot/GORT_LOGO.png" alt="Gort the Robot step pulse generator">
+    </div>
+    <div class="col-lg-8">
+      <div class="gort-copy">
+        <p><strong>Production year: 2013</strong></p>
+        <p><strong>Gort the Robot</strong> is constituted by four frequency controlled oscillators, combined through pseudo ring modulator circuits.</p>
+        <p>The square wave oscillators can run freely (Stop Mode) or alternatively gated by the 16 steps internal sequencer (Activate Mode). In the latter case each step generates different oscillators combinations and therefore different sounds, varying in tone and timbre.</p>
+        <p>Using the SYNC IN jack you can synchronize Gort's steps with pulses coming from external sequencers or drum machines.</p>
+        <p class="mb-0">Gort must be supplied with an external power supply, providing 9vDC on 2.1mm barrel jack, negative tip.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="gort-media">
+    <div class="embed-shell ratio ratio-16x9">
+      <iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="allowfullscreen" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" src="https://www.youtube.com/embed/videoseries?list=PLE_5u8yUTKkCkcPx-4EeWBJRfwco6VDO8" title="gort-the-robot media player"></iframe>
+    </div>
+  </div>
+</section>
+""".strip()
+
+    return base_template(
+        title=f"Kinetik Laboratories | {item['title']}",
+        description=item["excerpt"],
+        active_slug=item["slug"],
+        banner_path=banner_path,
+        favicon_path=favicon_path,
+        content=content,
+    )
+
+
+def build_drjekyll_page(item: dict, banner_path: str, favicon_path: str) -> str:
+    content = """
+<section class="drjekyll-layout">
+  <div class="row g-5 align-items-start">
+    <div class="col-lg-4">
+      <img class="drjekyll-hero" src="assets/images/dr-jekyll-mr-hyde/DrJ-MrH_LOGO.png" alt="Dr.Jekyll and Mr.Hyde dual nature generator">
+    </div>
+    <div class="col-lg-8">
+      <div class="drjekyll-copy">
+        <p><strong>Production year: 2013</strong></p>
+        <p><strong>Dr.Jekyll &amp; Mr.Hyde</strong> is a generator suffering from dissociative identity disorder.</p>
+        <p>J&amp;H is formed by two distinct mixable circuit voices, the Jekyll's one is warm, firm and comforting, the other is harsh, noisy and sometimes unpredictable: the Hyde side.</p>
+        <p>Each voice has three oscillators with respecting FREQUENCY control.</p>
+        <p>The MIXER potentiometer controls the voices mix output level on a 1/4&quot; jack.</p>
+        <p>The control panel includes a On-Off switch with corresponding led. The whole is powered by an external power supply, providing 9vDC on 2.1mm barrel jack, negative tip.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="drjekyll-media">
+    <div class="embed-shell ratio ratio-16x9">
+      <iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="allowfullscreen" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" src="https://www.youtube.com/embed/bga3k1PX0rQ" title="dr-jekyll-mr-hyde media player"></iframe>
+    </div>
+  </div>
+</section>
+""".strip()
+
+    return base_template(
+        title=f"Kinetik Laboratories | {item['title']}",
+        description=item["excerpt"],
+        active_slug=item["slug"],
+        banner_path=banner_path,
+        favicon_path=favicon_path,
+        content=content,
+    )
+
+
+def build_harsh_noise_page(item: dict, banner_path: str, favicon_path: str) -> str:
+    content = """
+<section class="hng-layout">
+  <div class="row g-4 align-items-start">
+    <div class="col-lg-9">
+      <div class="hng-copy">
+        <p>We produced the Harsh Noise Generator from 2012 to 2014. Since we still receive requests for this little generator, here you find the documentation to build it by yourself. The design is made publicly available so that anyone can study, modify, distribute, make, and sell the hardware based on that design.</p>
+      </div>
+    </div>
+    <div class="col-lg-3">
+      <img class="hng-openmark" src="assets/images/harsh-noise-generator/open.png" alt="Open source hardware">
+    </div>
+  </div>
+
+  <div class="row g-5 align-items-start hng-section">
+    <div class="col-lg-4">
+      <img class="hng-device" src="assets/images/harsh-noise-generator/HNG.PNG" alt="Harsh Noise Generator">
+    </div>
+    <div class="col-lg-8">
+      <div class="hng-copy">
+        <p><strong>HNG</strong> is a minimal noise generator, ideal sound source for your effect chain. It has two operating modes. In the first operation mode the frequency of two oscillators varies randomly around the value set with the knobs named FREQUENCY.</p>
+        <p>Turning the unit on with the knobs rotated fully clockwise you access the second operation mode. Noise and silence are alternated with intervals that vary randomly around the value set with the DENSITY knob.</p>
+        <p class="mb-0">The INTENSITY knob adjust the noise energy.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="hng-section">
+    <img class="hng-schematic" src="assets/images/harsh-noise-generator/HNG_Schematic.gif" alt="Harsh Noise Generator schematic">
+  </div>
+
+  <div class="hng-copy hng-section">
+    <p>The circuit is powered with 9V DC. The LM7805, with capacitors C1 and C2, generate a stable 5V for the rest of the circuit.</p>
+    <p>The potentiometers are used as a voltage divider and connected to the pins 2 and 3 of the ATtiny chip. The potentiometer value is not critical, you can use any value available.</p>
+    <p>The main IC is a ATtiny45 or ATtiny85, a high-performance, low-power Atmel 8-bit microcontroller.</p>
+    <p>To program the ATtiny85 chip use an <a href="https://docs.arduino.cc/built-in-examples/arduino-isp/ArduinoISP" target="_blank" rel="noreferrer">Arduino board programmed as ISP</a>. You'll need a breadboard, some piece of wire and an Arduino board. <a href="https://highlowtech.org/?p=1695" target="_blank" rel="noreferrer">Here you can find the instructions to program the ATtiny.</a></p>
+    <p class="mb-0">Output is from pin 6 and goes to your output jack through a 220 Ohm resistor and a 1uF capacitor. The output pin is also connected to a LED that blinks according to the sound you hear.</p>
+  </div>
+
+  <div class="row g-4 align-items-start hng-section">
+    <div class="col-lg-4">
+      <img class="hng-print-image mb-4" src="assets/images/harsh-noise-generator/HNG_Copper.gif" alt="Harsh Noise Generator copper layout">
+      <img class="hng-print-image" src="assets/images/harsh-noise-generator/HNG_Silk.gif" alt="Harsh Noise Generator silk layout">
+    </div>
+    <div class="col-lg-8">
+      <div class="hng-copy">
+        <p>Here's the images to be printed if you use press and peel method.</p>
+        <p>Print it at 90 dpi to obtain the right dimensions.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="row g-4 align-items-start hng-section">
+    <div class="col-lg-7">
+      <div class="hng-copy">
+        <p><a href="https://drive.google.com/file/d/1yqpwl1PmZY55qOJNY_TNLl4INDX8xt6O" target="_blank" rel="noreferrer">Here you can download</a> all the documentation, the gerber files and the software needed to program the ATtiny85.</p>
+        <p class="mb-0">Enjoy the build!</p>
+      </div>
+    </div>
+    <div class="col-lg-5">
+      <div class="hng-video">
+        <div class="embed-shell ratio ratio-16x9">
+          <iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="allowfullscreen" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" src="https://www.youtube.com/embed/8j6fl3iGA0w" title="harsh-noise-generator media player"></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+""".strip()
+
+    return base_template(
+        title=f"Kinetik Laboratories | {item['title']}",
+        description=item["excerpt"],
+        active_slug=item["slug"],
+        banner_path=banner_path,
+        favicon_path=favicon_path,
+        content=content,
+    )
+
+
+def build_motbox_page(item: dict, banner_path: str, favicon_path: str) -> str:
+    content = """
+<section class="motbox-layout">
+  <div class="row g-5 align-items-start">
+    <div class="col-lg-4">
+      <img class="motbox-hero" src="assets/images/mot-box/Mot-Box.png" alt="Mot-Box sound generator">
+    </div>
+    <div class="col-lg-8">
+      <div class="motbox-copy">
+        <p><strong>Production year: 2009</strong></p>
+        <p><strong>Mot-Box</strong> is a sound generator, with four audio oscillators, two lfos and two 1/4&quot; jack inputs, available to connect external analog gear. All in a rugged box, with cherry wood side plates. It produces sounds varying from drones to helter-skelter noises.</p>
+        <p>The Mot-Box is based on an original, copyrighted design by Arthur Harrison, which is used by his permission. The original cacophonator article is on Art's Theremin Page: <a href="https://www.theremin.us/Circuit_Library/cacophonator.html" target="_blank" rel="noreferrer">theremin.us/Circuit_Library/cacophonator.html</a></p>
+        <p class="mb-0">Build your own!</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="motbox-media">
+    <div class="embed-shell ratio ratio-16x9">
+      <iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="allowfullscreen" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" src="https://www.youtube.com/embed/N2agf9q16y8" title="mot-box media player"></iframe>
+    </div>
+  </div>
+</section>
+""".strip()
+
+    return base_template(
+        title=f"Kinetik Laboratories | {item['title']}",
+        description=item["excerpt"],
+        active_slug=item["slug"],
+        banner_path=banner_path,
+        favicon_path=favicon_path,
+        content=content,
+    )
+
+
+def build_contact_page(item: dict, banner_path: str, favicon_path: str) -> str:
+    content = """
+<section class="contact-layout">
+  <div class="contact-copy">
+    <p>We do not produce our device anymore, but we will be happy to get in touch with you for any info.</p>
+    <p>Write us : <strong><a href="mailto:kinetik.laboratories@gmail.com">kinetik.laboratories@gmail.com</a></strong></p>
+    <p class="mb-0">Follow us on <strong><a href="https://www.instagram.com/kinetiklaboratories/" target="_blank" rel="noreferrer">Instagram</a></strong></p>
+  </div>
+
+  <div class="contact-soundcloud">
+    <div class="embed-shell soundcloud-shell">
+      <iframe allow="autoplay" loading="lazy" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/125716379&amp;color=7a9387&amp;auto_play=false&amp;show_artwork=true" title="contact audio player"></iframe>
+    </div>
+  </div>
+</section>
+""".strip()
+
+    return base_template(
+        title=f"Kinetik Laboratories | {item['title']}",
+        description=item["excerpt"],
+        active_slug=item["slug"],
+        banner_path=banner_path,
+        favicon_path=favicon_path,
+        content=content,
+    )
+
+
 def build_page(item: dict, banner_path: str, favicon_path: str) -> str:
     if item["slug"] == "protean":
         return build_protean_page(item, banner_path, favicon_path)
@@ -1081,6 +1486,16 @@ def build_page(item: dict, banner_path: str, favicon_path: str) -> str:
         return build_ill_logic_page(item, banner_path, favicon_path)
     if item["slug"] == "xmatrix":
         return build_xmatrix_page(item, banner_path, favicon_path)
+    if item["slug"] == "gort-the-robot":
+        return build_gort_page(item, banner_path, favicon_path)
+    if item["slug"] == "dr-jekyll-mr-hyde":
+        return build_drjekyll_page(item, banner_path, favicon_path)
+    if item["slug"] == "harsh-noise-generator":
+        return build_harsh_noise_page(item, banner_path, favicon_path)
+    if item["slug"] == "mot-box":
+        return build_motbox_page(item, banner_path, favicon_path)
+    if item["slug"] == "contact":
+        return build_contact_page(item, banner_path, favicon_path)
 
     intro_column = "col-12"
     hero_media = ""

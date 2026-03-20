@@ -309,6 +309,164 @@ a:hover {
   margin-left: auto;
 }
 
+.gort-layout {
+  padding-top: 1rem;
+}
+
+.gort-hero {
+  display: block;
+  width: min(100%, 400px);
+}
+
+.gort-copy {
+  font-size: 1.06rem;
+  line-height: 1.55;
+}
+
+.gort-copy p {
+  margin-bottom: 0.55rem;
+  text-align: left;
+}
+
+.gort-copy strong {
+  font-weight: 700;
+}
+
+.gort-media {
+  max-width: 500px;
+  margin-top: 4rem;
+  margin-left: auto;
+}
+
+.drjekyll-layout {
+  padding-top: 1rem;
+}
+
+.drjekyll-hero {
+  display: block;
+  width: min(100%, 400px);
+}
+
+.drjekyll-copy {
+  font-size: 1.06rem;
+  line-height: 1.55;
+}
+
+.drjekyll-copy p {
+  margin-bottom: 0.55rem;
+  text-align: left;
+}
+
+.drjekyll-copy strong {
+  font-weight: 700;
+}
+
+.drjekyll-media {
+  max-width: 500px;
+  margin-top: 4rem;
+  margin-left: auto;
+}
+
+.hng-layout {
+  padding-top: 0.5rem;
+}
+
+.hng-copy {
+  font-size: 1.06rem;
+  line-height: 1.55;
+}
+
+.hng-copy p {
+  margin-bottom: 0.55rem;
+  text-align: left;
+}
+
+.hng-openmark {
+  display: block;
+  width: min(100%, 220px);
+  margin-left: auto;
+}
+
+.hng-device {
+  display: block;
+  width: min(100%, 400px);
+}
+
+.hng-section {
+  margin-top: 3.5rem;
+}
+
+.hng-schematic {
+  display: block;
+  width: 100%;
+  max-width: 980px;
+  margin: 0 auto;
+}
+
+.hng-print-image {
+  display: block;
+  width: min(100%, 400px);
+}
+
+.hng-video {
+  max-width: 640px;
+  margin-top: 2.5rem;
+  margin-left: auto;
+}
+
+.motbox-layout {
+  padding-top: 1rem;
+}
+
+.motbox-hero {
+  display: block;
+  width: min(100%, 420px);
+}
+
+.motbox-copy {
+  font-size: 1.06rem;
+  line-height: 1.55;
+}
+
+.motbox-copy p {
+  margin-bottom: 0.55rem;
+  text-align: left;
+}
+
+.motbox-copy strong {
+  font-weight: 700;
+}
+
+.motbox-media {
+  max-width: 500px;
+  margin-top: 4rem;
+  margin-left: auto;
+}
+
+.contact-layout {
+  padding-top: 0.25rem;
+}
+
+.contact-copy {
+  max-width: 1480px;
+  font-size: 1.06rem;
+  line-height: 1.55;
+}
+
+.contact-copy p {
+  margin: 0 0 1.9rem;
+  text-align: left;
+}
+
+.contact-copy strong {
+  font-weight: 700;
+}
+
+.contact-soundcloud {
+  max-width: 1480px;
+  margin-top: 2.4rem;
+}
+
 .legacy-content {
   font-size: 1.06rem;
   line-height: 1.72;
@@ -414,5 +572,37 @@ a:hover {
   .xmatrix-media {
     margin-top: 2.5rem;
     margin-left: 0;
+  }
+
+  .gort-media {
+    margin-top: 2.5rem;
+    margin-left: 0;
+  }
+
+  .drjekyll-media {
+    margin-top: 2.5rem;
+    margin-left: 0;
+  }
+
+  .hng-openmark,
+  .hng-video {
+    margin-left: 0;
+  }
+
+  .hng-section {
+    margin-top: 2.4rem;
+  }
+
+  .motbox-media {
+    margin-top: 2.5rem;
+    margin-left: 0;
+  }
+
+  .contact-copy p {
+    margin-bottom: 1.35rem;
+  }
+
+  .contact-soundcloud {
+    margin-top: 1.75rem;
   }
 }

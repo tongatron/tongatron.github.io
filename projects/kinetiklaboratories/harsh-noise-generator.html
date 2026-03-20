@@ -30,77 +30,71 @@
 </nav>
     </header>
     <main class="content-wrap container-xxl">
-      <section class="page-heading">
+      <section class="hng-layout">
   <div class="row g-4 align-items-start">
-    <div class="col-lg-7">
-      <h1 class="section-title">HARSH NOISE GENERATOR</h1>
-      <p class="lead-copy">We produced the Harsh Noise Generator from 2012 to 2014. Since we still receive requests for this little generator, here you find the documentation to build it by yourself. The design is made publicly available so that anyone can study, modify, distribute, make, and…</p>
+    <div class="col-lg-9">
+      <div class="hng-copy">
+        <p>We produced the Harsh Noise Generator from 2012 to 2014. Since we still receive requests for this little generator, here you find the documentation to build it by yourself. The design is made publicly available so that anyone can study, modify, distribute, make, and sell the hardware based on that design.</p>
+      </div>
     </div>
-    <div class="col-lg-5"><img class="hero-image" src="assets/images/harsh-noise-generator/HNG.PNG" alt="HARSH NOISE GENERATOR cover"></div>
+    <div class="col-lg-3">
+      <img class="hng-openmark" src="assets/images/harsh-noise-generator/open.png" alt="Open source hardware">
+    </div>
   </div>
-</section>
 
-<section class="legacy-content">
-  <figure class="article-figure">
-<a href="assets/images/harsh-noise-generator/open.png" rel="noreferrer" target="_blank"><img alt="HARSH NOISE GENERATOR illustration" class="img-fluid legacy-image" loading="lazy" src="assets/images/harsh-noise-generator/open.png"/></a></figure>
-<div class="legacy-block">
-We produced the Harsh Noise Generator from 2012 to 2014. Since we still receive requests for this little generator, here you find the documentation to build it by yourself. The design is made publicly available so that anyone can study, modify, distribute, make, and sell the hardware based on that design.
-</div>
-<br/>
-<figure class="article-figure">
-<a href="assets/images/harsh-noise-generator/HNG.PNG" rel="noreferrer" target="_blank"><img alt="HARSH NOISE GENERATOR illustration" class="img-fluid legacy-image" loading="lazy" src="assets/images/harsh-noise-generator/HNG.PNG"/></a></figure>
-<div class="legacy-block">
-<br/>
-<br/>
-<b>HNG</b> is a minimal noise generator, ideal sound source for your effect chain.
-It has two operating modes. In the first operation mode the frequency of two oscillators varies randomly around the value set with the knobs 
-named FREQUENCY.<br/>
-Turning the unit on with the knobs rotated fully clockwise you access the second operation mode. Noise and silence 
-are alternated with intervals that vary randomly around the value set with the DENSITY knob.<br/>
-The INTENSITY knob adjust the noise energy.<br/>
-<br/></div>
-<br/>
-<br/>
-<figure class="article-figure">
-<a href="assets/images/harsh-noise-generator/HNG_Schematic.gif" rel="noreferrer" target="_blank">
-<img alt="HARSH NOISE GENERATOR illustration" class="img-fluid legacy-image" loading="lazy" src="assets/images/harsh-noise-generator/HNG_Schematic.gif"/></a></figure>
-<figure class="article-figure">
-The circuit is powered with 9V DC. The LM7805, with capacitors C1 and C2, generate a stable 5V for the rest of the circuit. 
+  <div class="row g-5 align-items-start hng-section">
+    <div class="col-lg-4">
+      <img class="hng-device" src="assets/images/harsh-noise-generator/HNG.PNG" alt="Harsh Noise Generator">
+    </div>
+    <div class="col-lg-8">
+      <div class="hng-copy">
+        <p><strong>HNG</strong> is a minimal noise generator, ideal sound source for your effect chain. It has two operating modes. In the first operation mode the frequency of two oscillators varies randomly around the value set with the knobs named FREQUENCY.</p>
+        <p>Turning the unit on with the knobs rotated fully clockwise you access the second operation mode. Noise and silence are alternated with intervals that vary randomly around the value set with the DENSITY knob.</p>
+        <p class="mb-0">The INTENSITY knob adjust the noise energy.</p>
+      </div>
+    </div>
+  </div>
 
-</figure>
-<figure class="article-figure">
-The potentiometers are used as a voltage divider and connected to the pins 2 and 3 of the ATtiny chip. The potentiometer value is not critical, you can use any value available.
-</figure>
-<figure class="article-figure">
-The main IC is a ATtiny45 or ATtiny85, a high-performance, low-power Atmel 8-bit microcontroller.
-</figure>
-<figure class="article-figure">
-To program the ATtiny85 chip use an <a class="content-link" href="https://www.arduino.cc/en/Tutorial/ArduinoISP" rel="noreferrer" target="_blank">Arduino board programmed as ISP</a>. You'll need a breadboard, some piece of wire and an Arduino board.
-<a class="content-link" href="http://highlowtech.org/?p=1695" rel="noreferrer" target="_blank">Here </a>you can find the instructions to program the ATtiny. 
-</figure>
-<figure class="article-figure">
-Output is from pin 6 and goes to your output jack through a 220 Ohm resistor and a 1uF capacitor. The output pin is also connected to a LED that blinks according to the sound you hear.
-</figure>
+  <div class="hng-section">
+    <img class="hng-schematic" src="assets/images/harsh-noise-generator/HNG_Schematic.gif" alt="Harsh Noise Generator schematic">
+  </div>
 
-<br/>
-<div class="legacy-block">
-<a href="assets/images/harsh-noise-generator/HNG_Copper.gif" rel="noreferrer" target="_blank"><img alt="HARSH NOISE GENERATOR illustration" class="img-fluid legacy-image" loading="lazy" src="assets/images/harsh-noise-generator/HNG_Copper.gif"/></a>
-<a href="assets/images/harsh-noise-generator/HNG_Silk.gif" rel="noreferrer" target="_blank"><img alt="HARSH NOISE GENERATOR illustration" class="img-fluid legacy-image" loading="lazy" src="assets/images/harsh-noise-generator/HNG_Silk.gif"/></a>
-</div>
-<div class="legacy-block">
-Here's the images to be printed if you use press and peel method. 
-<br/>
-Print it at 90 dpi to obtain the right dimensions.</div>
+  <div class="hng-copy hng-section">
+    <p>The circuit is powered with 9V DC. The LM7805, with capacitors C1 and C2, generate a stable 5V for the rest of the circuit.</p>
+    <p>The potentiometers are used as a voltage divider and connected to the pins 2 and 3 of the ATtiny chip. The potentiometer value is not critical, you can use any value available.</p>
+    <p>The main IC is a ATtiny45 or ATtiny85, a high-performance, low-power Atmel 8-bit microcontroller.</p>
+    <p>To program the ATtiny85 chip use an <a href="https://docs.arduino.cc/built-in-examples/arduino-isp/ArduinoISP" target="_blank" rel="noreferrer">Arduino board programmed as ISP</a>. You'll need a breadboard, some piece of wire and an Arduino board. <a href="https://highlowtech.org/?p=1695" target="_blank" rel="noreferrer">Here you can find the instructions to program the ATtiny.</a></p>
+    <p class="mb-0">Output is from pin 6 and goes to your output jack through a 220 Ohm resistor and a 1uF capacitor. The output pin is also connected to a LED that blinks according to the sound you hear.</p>
+  </div>
 
-<div class="legacy-block">
-<a class="content-link" href="https://drive.google.com/file/d/1yqpwl1PmZY55qOJNY_TNLl4INDX8xt6O" rel="noreferrer" target="_blank">Here </a>you can download all the documentation, the gerber files and the software needed to program the ATtiny85.
-<br/>
-Enjoy the build! 
-</div>
-<br/>
-<br/>
-<div class="legacy-block">
-<div class="embed-shell ratio ratio-16x9 legacy-block"><iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="allowfullscreen" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" src="https://www.youtube.com/embed/8j6fl3iGA0w" title="harsh-noise-generator media player"></iframe></div></div>
+  <div class="row g-4 align-items-start hng-section">
+    <div class="col-lg-4">
+      <img class="hng-print-image mb-4" src="assets/images/harsh-noise-generator/HNG_Copper.gif" alt="Harsh Noise Generator copper layout">
+      <img class="hng-print-image" src="assets/images/harsh-noise-generator/HNG_Silk.gif" alt="Harsh Noise Generator silk layout">
+    </div>
+    <div class="col-lg-8">
+      <div class="hng-copy">
+        <p>Here's the images to be printed if you use press and peel method.</p>
+        <p>Print it at 90 dpi to obtain the right dimensions.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="row g-4 align-items-start hng-section">
+    <div class="col-lg-7">
+      <div class="hng-copy">
+        <p><a href="https://drive.google.com/file/d/1yqpwl1PmZY55qOJNY_TNLl4INDX8xt6O" target="_blank" rel="noreferrer">Here you can download</a> all the documentation, the gerber files and the software needed to program the ATtiny85.</p>
+        <p class="mb-0">Enjoy the build!</p>
+      </div>
+    </div>
+    <div class="col-lg-5">
+      <div class="hng-video">
+        <div class="embed-shell ratio ratio-16x9">
+          <iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="allowfullscreen" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" src="https://www.youtube.com/embed/8j6fl3iGA0w" title="harsh-noise-generator media player"></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
     </main>
     <footer class="site-footer"></footer>
