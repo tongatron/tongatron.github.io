@@ -21,6 +21,13 @@
   <meta name="twitter:title" content="Panel | Tongatron">
   <meta name="twitter:description" content="Raccolta di progetti web, utility, simulatori e link operativi Tongatron.">
   <meta name="twitter:image" content="https://tongatron.org/img/robottino.jpg">
+  <meta name="theme-color" content="#050505">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Tongatron">
+  <link rel="manifest" href="./panel.webmanifest">
+  <link rel="apple-touch-icon" href="./img/panel-apple-touch-icon.png">
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -486,6 +493,7 @@
         <span class="brand-title">tongatron</span>
       </a>
       <div class="header-actions">
+        <button class="btn-ghost d-none" type="button" id="install-panel-app">Installa app</button>
         <a class="btn-ghost" href="./index.html">Torna alla home</a>
       </div>
     </div>
@@ -741,6 +749,52 @@
         button.addEventListener('click', () => applyView(button.dataset.viewTarget));
       });
     });
+
+    const installButton = document.getElementById('install-panel-app');
+    let deferredInstallPrompt = null;
+
+    const isStandalone = () =>
+      window.matchMedia('(display-mode: standalone)').matches ||
+      window.navigator.standalone === true;
+
+    const updateInstallButton = () => {
+      if (!installButton) return;
+      if (deferredInstallPrompt && !isStandalone()) {
+        installButton.classList.remove('d-none');
+      } else {
+        installButton.classList.add('d-none');
+      }
+    };
+
+    window.addEventListener('beforeinstallprompt', (event) => {
+      event.preventDefault();
+      deferredInstallPrompt = event;
+      updateInstallButton();
+    });
+
+    window.addEventListener('appinstalled', () => {
+      deferredInstallPrompt = null;
+      updateInstallButton();
+    });
+
+    installButton?.addEventListener('click', async () => {
+      if (!deferredInstallPrompt) return;
+      installButton.disabled = true;
+      try {
+        await deferredInstallPrompt.prompt();
+        await deferredInstallPrompt.userChoice;
+      } finally {
+        deferredInstallPrompt = null;
+        installButton.disabled = false;
+        updateInstallButton();
+      }
+    });
+
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./panel-sw.js').catch(() => {});
+      });
+    }
   </script>
 </body>
 </html>
