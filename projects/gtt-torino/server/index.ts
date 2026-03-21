@@ -953,6 +953,10 @@ function parseCsvRows(file: Uint8Array): Array<Record<string, string>> {
   }) as Array<Record<string, string>>
 }
 
+function stripCsvCell(value: string | undefined): string {
+  return (value ?? '').trim().replace(/^"(.*)"$/, '$1')
+}
+
 function buildRoutesById(rows: Array<Record<string, string>>): Map<string, RouteRecord> {
   const routesById = new Map<string, RouteRecord>()
 
@@ -1020,7 +1024,7 @@ function parseRelevantShapePoints(
   )
     .replace(/^\uFEFF/, '')
     .replace(/\r$/, '')
-  const headers = headerLine.split(',')
+  const headers = headerLine.split(',').map(stripCsvCell)
   const shapeIdIndex = headers.indexOf('shape_id')
   const latitudeIndex = headers.indexOf('shape_pt_lat')
   const longitudeIndex = headers.indexOf('shape_pt_lon')
@@ -1049,8 +1053,8 @@ function parseRelevantShapePoints(
       continue
     }
 
-    const columns = row.split(',')
-    const shapeId = columns[shapeIdIndex]?.trim()
+    const columns = row.split(',').map(stripCsvCell)
+    const shapeId = columns[shapeIdIndex]
     if (!shapeId || !relevantShapeIds.has(shapeId)) {
       continue
     }
