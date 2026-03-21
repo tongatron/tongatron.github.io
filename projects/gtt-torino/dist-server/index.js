@@ -53,6 +53,14 @@ const staticCache = {
     expiresAt: 0,
     promise: null,
 };
+const staticRoutesTripsCache = {
+    data: {
+        routesById: new Map(),
+        tripsById: new Map(),
+    },
+    expiresAt: 0,
+    promise: null,
+};
 const realtimeCache = {
     data: null,
     expiresAt: 0,
@@ -329,7 +337,7 @@ function getLinePathPointsForTrip(tripRecord, staticData) {
             return normalizePathPoints(shapePoints);
         }
     }
-    const stopPoints = staticData.tripStopPointsByTripId.get(tripRecord.tripId);
+    const stopPoints = staticData.tripStopPointsByTripId?.get(tripRecord.tripId);
     if (stopPoints && stopPoints.length >= 2) {
         return normalizePathPoints(stopPoints);
     }
@@ -417,6 +425,178 @@ async function getFeedMessageType() {
     }
     return feedMessageTypePromise;
 }
+async function fetchStaticGtfsArchive() {
+    const response = await fetch(STATIC_GTFS_URL, {
+        signal: AbortSignal.timeout(20_000),
+    });
+    if (!response.ok) {
+        throw new Error(`Static GTFS request failed with ${response.status}`);
+    }
+    return unzipSync(new Uint8Array(await response.arrayBuffer()));
+}
+function parseCsvRows(file) {
+    return parse(strFromU8(file), {
+        bom: true,
+        columns: true,
+        skip_empty_lines: true,
+    });
+}
+function stripCsvCell(value) {
+    return (value ?? '').trim().replace(/^"(.*)"$/, '$1');
+}
+function buildRoutesById(rows) {
+    const routesById = new Map();
+    for (const row of rows) {
+        const routeId = row.route_id?.trim();
+        if (!routeId) {
+            continue;
+        }
+        routesById.set(routeId, {
+            routeId,
+            routeShortName: row.route_short_name?.trim() || routeId,
+            routeLongName: row.route_long_name?.trim() || routeId,
+            routeTypeRaw: row.route_type?.trim() || '',
+            routeColor: normalizeColor(row.route_color),
+            routeTextColor: normalizeColor(row.route_text_color),
+        });
+    }
+    return routesById;
+}
+function buildTripsById(rows) {
+    const tripsById = new Map();
+    for (const row of rows) {
+        const tripId = row.trip_id?.trim();
+        const routeId = row.route_id?.trim();
+        const serviceId = row.service_id?.trim();
+        if (!tripId || !routeId || !serviceId) {
+            continue;
+        }
+        const directionIdRaw = row.direction_id?.trim();
+        const shapeId = row.shape_id?.trim() || null;
+        tripsById.set(tripId, {
+            tripId,
+            routeId,
+            serviceId,
+            headsign: row.trip_headsign?.trim() || null,
+            directionId: directionIdRaw && directionIdRaw.length > 0
+                ? Number.parseInt(directionIdRaw, 10)
+                : null,
+            shapeId,
+        });
+    }
+    return tripsById;
+}
+function parseRelevantShapePoints(shapesFile, relevantShapeIds) {
+    const shapesById = new Map();
+    if (!shapesFile || relevantShapeIds.size === 0) {
+        return shapesById;
+    }
+    const text = strFromU8(shapesFile);
+    const firstNewlineIndex = text.indexOf('\n');
+    const headerLine = (firstNewlineIndex === -1 ? text : text.slice(0, firstNewlineIndex))
+        .replace(/^\uFEFF/, '')
+        .replace(/\r$/, '');
+    const headers = headerLine.split(',').map(stripCsvCell);
+    const shapeIdIndex = headers.indexOf('shape_id');
+    const latitudeIndex = headers.indexOf('shape_pt_lat');
+    const longitudeIndex = headers.indexOf('shape_pt_lon');
+    const sequenceIndex = headers.indexOf('shape_pt_sequence');
+    if (shapeIdIndex === -1 ||
+        latitudeIndex === -1 ||
+        longitudeIndex === -1 ||
+        sequenceIndex === -1) {
+        return shapesById;
+    }
+    let lineStart = firstNewlineIndex === -1 ? text.length : firstNewlineIndex + 1;
+    while (lineStart < text.length) {
+        let lineEnd = text.indexOf('\n', lineStart);
+        if (lineEnd === -1) {
+            lineEnd = text.length;
+        }
+        const row = text.slice(lineStart, lineEnd).replace(/\r$/, '');
+        lineStart = lineEnd + 1;
+        if (!row) {
+            continue;
+        }
+        const columns = row.split(',').map(stripCsvCell);
+        const shapeId = columns[shapeIdIndex];
+        if (!shapeId || !relevantShapeIds.has(shapeId)) {
+            continue;
+        }
+        const latitude = Number.parseFloat(columns[latitudeIndex] ?? '');
+        const longitude = Number.parseFloat(columns[longitudeIndex] ?? '');
+        const sequence = Number.parseInt(columns[sequenceIndex] ?? '', 10);
+        if (Number.isNaN(latitude) ||
+            Number.isNaN(longitude) ||
+            Number.isNaN(sequence)) {
+            continue;
+        }
+        const points = shapesById.get(shapeId) ?? [];
+        points.push({
+            sequence,
+            latitude,
+            longitude,
+        });
+        shapesById.set(shapeId, points);
+    }
+    for (const points of shapesById.values()) {
+        points.sort((left, right) => left.sequence - right.sequence);
+    }
+    return shapesById;
+}
+async function getStaticRoutesTripsData() {
+    if (Date.now() < staticRoutesTripsCache.expiresAt) {
+        return staticRoutesTripsCache.data;
+    }
+    if (staticRoutesTripsCache.promise) {
+        return staticRoutesTripsCache.promise;
+    }
+    staticRoutesTripsCache.promise = (async () => {
+        const archive = await fetchStaticGtfsArchive();
+        const routesText = archive['routes.txt'];
+        const tripsText = archive['trips.txt'];
+        if (!routesText || !tripsText) {
+            throw new Error('Static GTFS archive is missing route metadata files.');
+        }
+        const data = {
+            routesById: buildRoutesById(parseCsvRows(routesText)),
+            tripsById: buildTripsById(parseCsvRows(tripsText)),
+        };
+        staticRoutesTripsCache.data = data;
+        staticRoutesTripsCache.expiresAt = Date.now() + STATIC_CACHE_TTL_MS;
+        return data;
+    })();
+    try {
+        return await staticRoutesTripsCache.promise;
+    }
+    finally {
+        staticRoutesTripsCache.promise = null;
+    }
+}
+async function getLinePathsStaticData(normalizedLine) {
+    const metadata = await getStaticRoutesTripsData();
+    const relevantShapeIds = new Set();
+    for (const tripRecord of metadata.tripsById.values()) {
+        const routeRecord = metadata.routesById.get(tripRecord.routeId);
+        if (!routeRecord) {
+            continue;
+        }
+        const { mode } = resolveRouteMode(routeRecord.routeTypeRaw);
+        if (!SUPPORTED_SURFACE_MODES.has(mode)) {
+            continue;
+        }
+        if (routeRecord.routeShortName.toUpperCase() === normalizedLine &&
+            tripRecord.shapeId) {
+            relevantShapeIds.add(tripRecord.shapeId);
+        }
+    }
+    const archive = await fetchStaticGtfsArchive();
+    return {
+        routesById: metadata.routesById,
+        tripsById: metadata.tripsById,
+        shapesById: parseRelevantShapePoints(archive['shapes.txt'], relevantShapeIds),
+    };
+}
 async function getStaticGtfsData() {
     if (Date.now() < staticCache.expiresAt) {
         return staticCache.data;
@@ -425,13 +605,7 @@ async function getStaticGtfsData() {
         return staticCache.promise;
     }
     staticCache.promise = (async () => {
-        const response = await fetch(STATIC_GTFS_URL, {
-            signal: AbortSignal.timeout(20_000),
-        });
-        if (!response.ok) {
-            throw new Error(`Static GTFS request failed with ${response.status}`);
-        }
-        const archive = unzipSync(new Uint8Array(await response.arrayBuffer()));
+        const archive = await fetchStaticGtfsArchive();
         const routesText = archive['routes.txt'];
         const tripsText = archive['trips.txt'];
         const stopsText = archive['stops.txt'];
@@ -442,47 +616,15 @@ async function getStaticGtfsData() {
         if (!routesText || !tripsText || !stopsText || !stopTimesText || !calendarText) {
             throw new Error('Static GTFS archive is missing required GTFS files.');
         }
-        const routesRows = parse(strFromU8(routesText), {
-            bom: true,
-            columns: true,
-            skip_empty_lines: true,
-        });
-        const tripsRows = parse(strFromU8(tripsText), {
-            bom: true,
-            columns: true,
-            skip_empty_lines: true,
-        });
-        const stopsRows = parse(strFromU8(stopsText), {
-            bom: true,
-            columns: true,
-            skip_empty_lines: true,
-        });
-        const stopTimesRows = parse(strFromU8(stopTimesText), {
-            bom: true,
-            columns: true,
-            skip_empty_lines: true,
-        });
-        const shapesRows = shapesText
-            ? parse(strFromU8(shapesText), {
-                bom: true,
-                columns: true,
-                skip_empty_lines: true,
-            })
-            : [];
-        const calendarRows = parse(strFromU8(calendarText), {
-            bom: true,
-            columns: true,
-            skip_empty_lines: true,
-        });
+        const stopsRows = parseCsvRows(stopsText);
+        const stopTimesRows = parseCsvRows(stopTimesText);
+        const shapesRows = shapesText ? parseCsvRows(shapesText) : [];
+        const calendarRows = parseCsvRows(calendarText);
         const calendarDatesRows = calendarDatesText
-            ? parse(strFromU8(calendarDatesText), {
-                bom: true,
-                columns: true,
-                skip_empty_lines: true,
-            })
+            ? parseCsvRows(calendarDatesText)
             : [];
-        const routesById = new Map();
-        const tripsById = new Map();
+        const routesById = buildRoutesById(parseCsvRows(routesText));
+        const tripsById = buildTripsById(parseCsvRows(tripsText));
         const stopsById = new Map();
         const stopsByCode = new Map();
         const shapesById = new Map();
@@ -490,40 +632,6 @@ async function getStaticGtfsData() {
         const stopSchedulesByStopId = new Map();
         const calendarsByServiceId = new Map();
         const calendarDateExceptionsByServiceId = new Map();
-        for (const row of routesRows) {
-            const routeId = row.route_id?.trim();
-            if (!routeId) {
-                continue;
-            }
-            routesById.set(routeId, {
-                routeId,
-                routeShortName: row.route_short_name?.trim() || routeId,
-                routeLongName: row.route_long_name?.trim() || routeId,
-                routeTypeRaw: row.route_type?.trim() || '',
-                routeColor: normalizeColor(row.route_color),
-                routeTextColor: normalizeColor(row.route_text_color),
-            });
-        }
-        for (const row of tripsRows) {
-            const tripId = row.trip_id?.trim();
-            const routeId = row.route_id?.trim();
-            const serviceId = row.service_id?.trim();
-            if (!tripId || !routeId || !serviceId) {
-                continue;
-            }
-            const directionIdRaw = row.direction_id?.trim();
-            const shapeId = row.shape_id?.trim() || null;
-            tripsById.set(tripId, {
-                tripId,
-                routeId,
-                serviceId,
-                headsign: row.trip_headsign?.trim() || null,
-                directionId: directionIdRaw && directionIdRaw.length > 0
-                    ? Number.parseInt(directionIdRaw, 10)
-                    : null,
-                shapeId,
-            });
-        }
         for (const row of shapesRows) {
             const shapeId = row.shape_id?.trim();
             const sequenceRaw = row.shape_pt_sequence?.trim();
@@ -1010,7 +1118,7 @@ app.get('/api/stops/nearby', async (request, response, next) => {
 });
 app.get('/api/lines', async (_request, response, next) => {
     try {
-        const staticData = await getStaticGtfsData();
+        const staticData = await getStaticRoutesTripsData();
         const payload = {
             fetchedAt: new Date().toISOString(),
             lines: buildLineCatalog(staticData),
@@ -1146,7 +1254,7 @@ app.get('/api/vehicles', async (request, response, next) => {
             return;
         }
         const normalizedLine = rawLine.toUpperCase();
-        const staticData = await getStaticGtfsData();
+        const staticData = await getStaticRoutesTripsData();
         const { snapshot, stale, warnings } = await getVehiclePositionSnapshot();
         const vehiclesByKey = new Map();
         for (const [tripId, position] of snapshot.positionsByTripId) {
@@ -1218,7 +1326,7 @@ app.get('/api/line-paths', async (request, response, next) => {
             return;
         }
         const normalizedLine = rawLine.toUpperCase();
-        const staticData = await getStaticGtfsData();
+        const staticData = await getLinePathsStaticData(normalizedLine);
         const payload = {
             fetchedAt: new Date().toISOString(),
             line: rawLine,
@@ -1242,7 +1350,7 @@ app.use((error, _request, response, next) => {
     const message = error instanceof Error ? error.message : 'Unexpected server error';
     response.status(500).json({ error: message });
 });
-app.listen(PORT, () => {
-    console.log(`Transit server listening on http://localhost:${PORT}`);
+app.listen(PORT, '0.0.0.0', () => {
+    console.log(`Transit server listening on http://0.0.0.0:${PORT}`);
 });
 //# sourceMappingURL=index.js.map
