@@ -100,6 +100,29 @@ export interface NearbyStopsResponse {
   stops: StopRecord[]
 }
 
+export interface LinePathPointRecord {
+  latitude: number
+  longitude: number
+}
+
+export interface LinePathRecord {
+  pathId: string
+  lineCode: string
+  headsign: string | null
+  directionId: number | null
+  mode: VehicleMode
+  modeLabel: string
+  routeColor: string | null
+  routeTextColor: string | null
+  points: LinePathPointRecord[]
+}
+
+export interface LinePathsResponse {
+  fetchedAt: string
+  line: string
+  paths: LinePathRecord[]
+}
+
 export interface AddressSearchResponse {
   query: string
   displayName: string

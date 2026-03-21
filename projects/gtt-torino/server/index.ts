@@ -105,12 +105,25 @@ interface TripRecord {
   serviceId: string
   headsign: string | null
   directionId: number | null
+  shapeId: string | null
 }
 
 interface StopServiceRecord {
   lineCode: string
   mode: VehicleMode
   modeLabel: string
+}
+
+interface ShapePointRecord {
+  sequence: number
+  latitude: number
+  longitude: number
+}
+
+interface OrderedPathPointRecord {
+  sequence: number
+  latitude: number
+  longitude: number
 }
 
 interface StopRecord {
@@ -144,6 +157,8 @@ interface StaticGtfsData {
   tripsById: Map<string, TripRecord>
   stopsById: Map<string, StopRecord>
   stopsByCode: Map<string, StopRecord>
+  shapesById: Map<string, ShapePointRecord[]>
+  tripStopPointsByTripId: Map<string, OrderedPathPointRecord[]>
   stopSchedulesByStopId: Map<string, StopScheduleRecord[]>
   calendarsByServiceId: Map<string, ServiceCalendarRecord>
   calendarDateExceptionsByServiceId: Map<string, Map<string, boolean>>
@@ -288,6 +303,40 @@ interface NearbyStopsResponse {
   stops: StopApiRecord[]
 }
 
+interface LinePathPointApiRecord {
+  latitude: number
+  longitude: number
+}
+
+interface LinePathApiRecord {
+  pathId: string
+  lineCode: string
+  headsign: string | null
+  directionId: number | null
+  mode: VehicleMode
+  modeLabel: string
+  routeColor: string | null
+  routeTextColor: string | null
+  points: LinePathPointApiRecord[]
+}
+
+interface LinePathsResponse {
+  fetchedAt: string
+  line: string
+  paths: LinePathApiRecord[]
+}
+
+interface StopsBoundsResponse {
+  fetchedAt: string
+  bounds: {
+    north: number
+    south: number
+    east: number
+    west: number
+  }
+  stops: StopApiRecord[]
+}
+
 interface AddressSearchApiResponse {
   query: string
   displayName: string
@@ -324,6 +373,8 @@ const staticCache: StaticCacheEntry = {
     tripsById: new Map(),
     stopsById: new Map(),
     stopsByCode: new Map(),
+    shapesById: new Map(),
+    tripStopPointsByTripId: new Map(),
     stopSchedulesByStopId: new Map(),
     calendarsByServiceId: new Map(),
     calendarDateExceptionsByServiceId: new Map(),
@@ -616,6 +667,144 @@ function stopToApiRecord(
   }
 }
 
+function normalizePathPoints(
+  points: Array<ShapePointRecord | OrderedPathPointRecord>,
+): LinePathPointApiRecord[] {
+  const normalized: LinePathPointApiRecord[] = []
+
+  for (const point of [...points].sort((left, right) => left.sequence - right.sequence)) {
+    if (!Number.isFinite(point.latitude) || !Number.isFinite(point.longitude)) {
+      continue
+    }
+
+    const lastPoint = normalized.at(-1)
+    if (
+      lastPoint &&
+      lastPoint.latitude === point.latitude &&
+      lastPoint.longitude === point.longitude
+    ) {
+      continue
+    }
+
+    normalized.push({
+      latitude: point.latitude,
+      longitude: point.longitude,
+    })
+  }
+
+  return normalized
+}
+
+function buildFallbackPathKey(
+  routeId: string,
+  directionId: number | null,
+  headsign: string | null,
+  points: LinePathPointApiRecord[],
+): string {
+  const firstPoint = points[0]
+  const lastPoint = points.at(-1)
+
+  return [
+    routeId,
+    directionId ?? 'na',
+    headsign ?? 'na',
+    points.length,
+    firstPoint ? `${firstPoint.latitude.toFixed(5)}:${firstPoint.longitude.toFixed(5)}` : 'none',
+    lastPoint ? `${lastPoint.latitude.toFixed(5)}:${lastPoint.longitude.toFixed(5)}` : 'none',
+  ].join('|')
+}
+
+function getLinePathPointsForTrip(
+  tripRecord: TripRecord,
+  staticData: StaticGtfsData,
+): LinePathPointApiRecord[] {
+  if (tripRecord.shapeId) {
+    const shapePoints = staticData.shapesById.get(tripRecord.shapeId)
+    if (shapePoints && shapePoints.length >= 2) {
+      return normalizePathPoints(shapePoints)
+    }
+  }
+
+  const stopPoints = staticData.tripStopPointsByTripId.get(tripRecord.tripId)
+  if (stopPoints && stopPoints.length >= 2) {
+    return normalizePathPoints(stopPoints)
+  }
+
+  return []
+}
+
+function buildLinePaths(
+  normalizedLine: string,
+  staticData: StaticGtfsData,
+): LinePathApiRecord[] {
+  const pathsByKey = new Map<string, LinePathApiRecord>()
+
+  for (const tripRecord of staticData.tripsById.values()) {
+    const routeRecord = staticData.routesById.get(tripRecord.routeId)
+    if (!routeRecord) {
+      continue
+    }
+
+    const { mode, label } = resolveRouteMode(routeRecord.routeTypeRaw)
+    if (!SUPPORTED_SURFACE_MODES.has(mode)) {
+      continue
+    }
+
+    if (routeRecord.routeShortName.toUpperCase() !== normalizedLine) {
+      continue
+    }
+
+    const points = getLinePathPointsForTrip(tripRecord, staticData)
+    if (points.length < 2) {
+      continue
+    }
+
+    const pathKey = tripRecord.shapeId
+      ? `shape:${tripRecord.shapeId}`
+      : buildFallbackPathKey(
+          routeRecord.routeId,
+          tripRecord.directionId,
+          tripRecord.headsign,
+          points,
+        )
+    const candidatePath: LinePathApiRecord = {
+      pathId: pathKey,
+      lineCode: routeRecord.routeShortName,
+      headsign: tripRecord.headsign,
+      directionId: tripRecord.directionId,
+      mode,
+      modeLabel: label,
+      routeColor: routeRecord.routeColor,
+      routeTextColor: routeRecord.routeTextColor,
+      points,
+    }
+    const currentPath = pathsByKey.get(pathKey)
+
+    if (!currentPath || candidatePath.points.length > currentPath.points.length) {
+      pathsByKey.set(pathKey, candidatePath)
+    }
+  }
+
+  return Array.from(pathsByKey.values())
+    .sort((left, right) => {
+      const directionDifference = (left.directionId ?? 9) - (right.directionId ?? 9)
+      if (directionDifference !== 0) {
+        return directionDifference
+      }
+
+      const headsignComparison = (left.headsign ?? '').localeCompare(
+        right.headsign ?? '',
+        'it',
+      )
+      if (headsignComparison !== 0) {
+        return headsignComparison
+      }
+
+      return right.points.length - left.points.length
+    })
+    .slice(0, 8)
+}
+
 function getRelatedStops(stop: StopRecord, staticData: StaticGtfsData): StopApiRecord[] {
   return Array.from(staticData.stopsById.values())
     .filter(
@@ -683,6 +872,7 @@ async function getStaticGtfsData(): Promise<StaticGtfsData> {
     const tripsText = archive['trips.txt']
     const stopsText = archive['stops.txt']
     const stopTimesText = archive['stop_times.txt']
+    const shapesText = archive['shapes.txt']
     const calendarText = archive['calendar.txt']
     const calendarDatesText = archive['calendar_dates.txt']
 
@@ -716,6 +906,14 @@ async function getStaticGtfsData(): Promise<StaticGtfsData> {
       skip_empty_lines: true,
     }) as Array<Record<string, string>>
 
+    const shapesRows = shapesText
+      ? (parse(strFromU8(shapesText), {
+          bom: true,
+          columns: true,
+          skip_empty_lines: true,
+        }) as Array<Record<string, string>>)
+      : []
+
     const calendarRows = parse(strFromU8(calendarText), {
       bom: true,
       columns: true,
@@ -734,6 +932,8 @@ async function getStaticGtfsData(): Promise<StaticGtfsData> {
     const tripsById = new Map<string, TripRecord>()
     const stopsById = new Map<string, StopRecord>()
     const stopsByCode = new Map<string, StopRecord>()
+    const shapesById = new Map<string, ShapePointRecord[]>()
+    const tripStopPointsByTripId = new Map<string, OrderedPathPointRecord[]>()
     const stopSchedulesByStopId = new Map<string, StopScheduleRecord[]>()
     const calendarsByServiceId = new Map<string, ServiceCalendarRecord>()
     const calendarDateExceptionsByServiceId = new Map<string, Map<string, boolean>>()
@@ -763,6 +963,7 @@ async function getStaticGtfsData(): Promise<StaticGtfsData> {
       }
 
       const directionIdRaw = row.direction_id?.trim()
+      const shapeId = row.shape_id?.trim() || null
       tripsById.set(tripId, {
         tripId,
         routeId,
@@ -772,7 +973,32 @@ async function getStaticGtfsData(): Promise<StaticGtfsData> {
           directionIdRaw && directionIdRaw.length > 0
             ? Number.parseInt(directionIdRaw, 10)
             : null,
+        shapeId,
       })
+    }
+
+    for (const row of shapesRows) {
+      const shapeId = row.shape_id?.trim()
+      const sequenceRaw = row.shape_pt_sequence?.trim()
+      const latitude = row.shape_pt_lat ? Number.parseFloat(row.shape_pt_lat) : Number.NaN
+      const longitude = row.shape_pt_lon ? Number.parseFloat(row.shape_pt_lon) : Number.NaN
+
+      if (!shapeId || !sequenceRaw || Number.isNaN(latitude) || Number.isNaN(longitude)) {
+        continue
+      }
+
+      const sequence = Number.parseInt(sequenceRaw, 10)
+      if (Number.isNaN(sequence)) {
+        continue
+      }
+
+      const points = shapesById.get(shapeId) ?? []
+      points.push({
+        sequence,
+        latitude,
+        longitude,
+      })
+      shapesById.set(shapeId, points)
     }
 
     for (const row of calendarRows) {
@@ -883,6 +1109,14 @@ async function getStaticGtfsData(): Promise<StaticGtfsData> {
 
       const stopRecord = stopsById.get(stopId)
       if (stopRecord) {
+        const tripPathPoints = tripStopPointsByTripId.get(tripId) ?? []
+        tripPathPoints.push({
+          sequence: stopSequence,
+          latitude: stopRecord.latitude,
+          longitude: stopRecord.longitude,
+        })
+        tripStopPointsByTripId.set(tripId, tripPathPoints)
+
         stopRecord.modes.add(mode)
         stopRecord.lines.add(routeRecord.routeShortName)
         stopRecord.services.set(buildStopServiceKey(routeRecord.routeShortName, mode), {
@@ -893,11 +1127,21 @@ async function getStaticGtfsData(): Promise<StaticGtfsData> {
       }
     }
 
+    for (const points of shapesById.values()) {
+      points.sort((left, right) => left.sequence - right.sequence)
+    }
+
+    for (const points of tripStopPointsByTripId.values()) {
+      points.sort((left, right) => left.sequence - right.sequence)
+    }
+
     const data: StaticGtfsData = {
       routesById,
       tripsById,
       stopsById,
       stopsByCode,
+      shapesById,
+      tripStopPointsByTripId,
       stopSchedulesByStopId,
       calendarsByServiceId,
       calendarDateExceptionsByServiceId,
@@ -1246,6 +1490,7 @@ function buildArrivalRecord(
 }
 
 const app = express()
+const DEFAULT_BOUNDS_LIMIT = 220
 
 app.get('/api/health', (_request, response) => {
   response.json({ ok: true })
@@ -1312,6 +1557,72 @@ app.get('/api/stops/nearby', async (request, response, next) => {
       userLocation: {
         latitude,
         longitude,
+      },
+      stops,
+    }
+
+    response.setHeader('Cache-Control', 'no-store')
+    response.json(payload)
+  } catch (error) {
+    next(error)
+  }
+})
+
+app.get('/api/stops/bounds', async (request, response, next) => {
+  try {
+    const north = Number.parseFloat(String(request.query.north ?? ''))
+    const south = Number.parseFloat(String(request.query.south ?? ''))
+    const east = Number.parseFloat(String(request.query.east ?? ''))
+    const west = Number.parseFloat(String(request.query.west ?? ''))
+    const limit = Number.parseInt(
+      String(request.query.limit ?? DEFAULT_BOUNDS_LIMIT),
+      10,
+    )
+
+    if ([north, south, east, west].some((value) => Number.isNaN(value))) {
+      response
+        .status(400)
+        .json({ error: 'north, south, east and west are required.' })
+      return
+    }
+
+    const minLatitude = Math.min(north, south)
+    const maxLatitude = Math.max(north, south)
+    const minLongitude = Math.min(east, west)
+    const maxLongitude = Math.max(east, west)
+    const centerLatitude = (minLatitude + maxLatitude) / 2
+    const centerLongitude = (minLongitude + maxLongitude) / 2
+
+    const staticData = await getStaticGtfsData()
+    const stops = Array.from(staticData.stopsById.values())
+      .filter(
+        (stop) =>
+          stop.lines.size > 0 &&
+          stop.latitude >= minLatitude &&
+          stop.latitude <= maxLatitude &&
+          stop.longitude >= minLongitude &&
+          stop.longitude <= maxLongitude,
+      )
+      .map((stop) => ({
+        stop,
+        distanceMeters: metersBetween(
+          centerLatitude,
+          centerLongitude,
+          stop.latitude,
+          stop.longitude,
+        ),
+      }))
+      .sort((left, right) => left.distanceMeters - right.distanceMeters)
+      .slice(0, limit)
+      .map((candidate) => stopToApiRecord(candidate.stop, candidate.distanceMeters))
+
+    const payload: StopsBoundsResponse = {
+      fetchedAt: new Date().toISOString(),
+      bounds: {
+        north,
+        south,
+        east,
+        west,
       },
       stops,
     }
@@ -1500,6 +1811,29 @@ app.get('/api/vehicles', async (request, response, next) => {
       warnings,
       line: rawLine,
       vehicles,
+    }
+
+    response.setHeader('Cache-Control', 'no-store')
+    response.json(payload)
+  } catch (error) {
+    next(error)
+  }
+})
+
+app.get('/api/line-paths', async (request, response, next) => {
+  try {
+    const rawLine = String(request.query.line ?? '').trim()
+    if (!rawLine) {
+      response.status(400).json({ error: 'line is required.' })
+      return
+    }
+
+    const normalizedLine = rawLine.toUpperCase()
+    const staticData = await getStaticGtfsData()
+    const payload: LinePathsResponse = {
+      fetchedAt: new Date().toISOString(),
+      line: rawLine,
+      paths: buildLinePaths(normalizedLine, staticData),
     }
 
     response.setHeader('Cache-Control', 'no-store')

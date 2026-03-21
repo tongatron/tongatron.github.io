@@ -12,6 +12,7 @@ import type {
   AddressSearchResponse,
   ArrivalRecord,
   FocusLocation,
+  LinePathsResponse,
   LineVehicleRecord,
   LineVehiclesResponse,
   NearbyStopsResponse,
@@ -24,7 +25,7 @@ import './App.css'
 
 const POLL_INTERVAL_MS = 15_000
 const LAST_LINE_STORAGE_KEY = 'torino-line-radar:last-line'
-const DEFAULT_STOPS_RADIUS_METERS = 1200
+const DEFAULT_STOPS_RADIUS_METERS = 1400
 const DEFAULT_STOPS_LIMIT = 20
 const TURIN_CENTER = {
   latitude: 45.0703,
@@ -49,12 +50,12 @@ const MODE_LABELS: Record<VehicleMode, string> = {
   other: 'Altro',
 }
 const MODE_ROUTE_COLORS: Record<VehicleMode, string> = {
-  metro: '#0f766e',
-  tram: '#d97706',
-  bus: '#17345e',
-  rail: '#7c3aed',
-  trolleybus: '#2563eb',
-  other: '#475569',
+  metro: '#0057b8',
+  tram: '#ffd900',
+  bus: '#0057b8',
+  rail: '#003b7d',
+  trolleybus: '#3a7abd',
+  other: '#7b8da5',
 }
 
 interface BeforeInstallPromptEvent extends Event {
@@ -104,7 +105,7 @@ function createSimulatedVehicles(line: string): LineVehicleRecord[] {
   const mode = inferSimulationMode(line)
   const modeLabel = MODE_LABELS[mode]
   const routeColor = MODE_ROUTE_COLORS[mode]
-  const routeTextColor = '#fffaf2'
+  const routeTextColor = mode === 'tram' ? '#0057b8' : '#ffffff'
   const vehicleCount = randomInt(6, 12)
   const directionAngle = randomBetween(0, Math.PI * 2)
   const directionLatitude = Math.sin(directionAngle) * 0.034
@@ -217,6 +218,46 @@ function formatDistance(value?: number): string {
   return `${(value / 1000).toFixed(1)} km`
 }
 
+function formatDestinationPlace(value: string): string {
+  const normalizedValue = value.replace(/\s+/g, ' ').trim()
+  const commaParts = normalizedValue.split(/\s*,\s*/).filter(Boolean)
+  const hyphenParts = normalizedValue.split(/\s+-\s+/).filter(Boolean)
+  let destinationValue =
+    (commaParts.length > 1 ? commaParts.at(-1) : null) ??
+    (hyphenParts.length > 1 ? hyphenParts.at(-1) : null) ??
+    normalizedValue
+
+  destinationValue = destinationValue
+    .replace(/^\d+\s*[A-Z0-9/.-]*\s*/i, '')
+    .trim()
+
+  if (!destinationValue) {
+    destinationValue = normalizedValue
+  }
+
+  return destinationValue
+    .split(/(\s+|\/|-)/)
+    .map((chunk) => {
+      if (chunk.trim().length === 0 || chunk === '/' || chunk === '-') {
+        return chunk
+      }
+
+      if (/^[IVXLCDM]+$/i.test(chunk) || /\d/.test(chunk)) {
+        return chunk.toUpperCase()
+      }
+
+      return `${chunk.charAt(0).toUpperCase()}${chunk.slice(1).toLowerCase()}`
+    })
+    .join('')
+}
+
+function formatDestinationLabel(value: string | null | undefined): string {
+  const normalizedValue = value?.trim()
+  return normalizedValue
+    ? `Destinazione ${formatDestinationPlace(normalizedValue)}`
+    : 'Destinazione non disponibile'
+}
+
 function buildModesSummary(vehicles: LineVehicleRecord[]): string {
   const labels = Array.from(new Set(vehicles.map((vehicle) => vehicle.modeLabel)))
   return labels.length > 0 ? labels.join(' · ') : 'n/d'
@@ -232,10 +273,13 @@ function buildHeadsignSummary(vehicles: LineVehicleRecord[]): string {
   )
 
   if (headsigns.length === 0) {
-    return 'Direzione non disponibile'
+    return 'Destinazioni non disponibili'
   }
 
-  return headsigns.slice(0, 4).join(' | ')
+  return `Destinazioni: ${headsigns
+    .slice(0, 4)
+    .map((headsign) => formatDestinationPlace(headsign))
+    .join(' | ')}`
 }
 
 function buildStopServicesSummary(services: StopServiceRecord[]): string {
@@ -274,13 +318,14 @@ function App() {
   const [addressInput, setAddressInput] = useState('')
   const [selectedLine, setSelectedLine] = useState<string | null>(null)
   const [vehiclesResponse, setVehiclesResponse] = useState<LineVehiclesResponse | null>(null)
+  const [linePathsResponse, setLinePathsResponse] = useState<LinePathsResponse | null>(null)
   const [loadingVehicles, setLoadingVehicles] = useState(false)
   const [refreshingVehicles, setRefreshingVehicles] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [simulationMode, setSimulationMode] = useState(false)
   const [focusLocation, setFocusLocation] = useState<FocusLocation | null>(null)
   const [nearbyStops, setNearbyStops] = useState<StopRecord[]>([])
-  const [showStops, setShowStops] = useState(true)
+  const [showStops, setShowStops] = useState(false)
   const [loadingLocation, setLoadingLocation] = useState(false)
   const [searchingAddress, setSearchingAddress] = useState(false)
   const [selectedStopCode, setSelectedStopCode] = useState<string | null>(null)
@@ -291,6 +336,7 @@ function App() {
     useState<BeforeInstallPromptEvent | null>(null)
   const [installingApp, setInstallingApp] = useState(false)
   const [isStandalone, setIsStandalone] = useState(false)
+  const [recenterUserLocationRequest, setRecenterUserLocationRequest] = useState(0)
   const hasLoadedVehiclesRef = useRef(false)
   const hasRestoredLineRef = useRef(false)
 
@@ -349,6 +395,52 @@ function App() {
     }
   }, [])
 
+  const loadLinePaths = useCallback(async (line: string, signal?: AbortSignal) => {
+    const normalizedLine = line.trim().toUpperCase()
+    if (!normalizedLine) {
+      startTransition(() => {
+        setLinePathsResponse(null)
+      })
+      return null
+    }
+
+    try {
+      const apiResponse = await fetch(
+        `/api/line-paths?line=${encodeURIComponent(normalizedLine)}`,
+        { signal },
+      )
+
+      if (!apiResponse.ok) {
+        const payload = (await apiResponse.json().catch(() => null)) as
+          | { error?: string }
+          | null
+        throw new Error(payload?.error ?? `API responded with ${apiResponse.status}`)
+      }
+
+      const payload = (await apiResponse.json()) as LinePathsResponse
+      startTransition(() => {
+        setLinePathsResponse(payload)
+      })
+
+      return payload
+    } catch (fetchError) {
+      if ((fetchError as Error).name === 'AbortError') {
+        return null
+      }
+
+      startTransition(() => {
+        setLinePathsResponse(null)
+      })
+      setError(
+        fetchError instanceof Error
+          ? fetchError.message
+          : 'Impossibile caricare il percorso della linea.',
+      )
+
+      return null
+    }
+  }, [])
+
   const loadNearbyStops = useCallback(
     async (location: FocusLocation, signal?: AbortSignal) => {
       try {
@@ -371,7 +463,6 @@ function App() {
         startTransition(() => {
           setFocusLocation(location)
           setNearbyStops(payload.stops)
-          setShowStops(true)
 
           if (
             selectedStopCode &&
@@ -461,6 +552,7 @@ function App() {
     startTransition(() => {
       setSimulationMode(true)
       setVehiclesResponse(simulatedPayload)
+      setLinePathsResponse(null)
       setSelectedLine(simulatedPayload.line)
       setLineInput(simulatedPayload.line)
     })
@@ -483,6 +575,7 @@ function App() {
           kind: 'user',
         }
 
+        setRecenterUserLocationRequest((value) => value + 1)
         void loadNearbyStops(location).finally(() => {
           setLoadingLocation(false)
         })
@@ -555,11 +648,21 @@ function App() {
 
   const handleStopLineSelect = useCallback(
     async (lineCode: string) => {
+      setError(null)
       setLineInput(lineCode)
+      setSelectedLine(lineCode)
       await loadVehicles(lineCode)
     },
     [loadVehicles],
   )
+
+  const handleRecenterUserLocation = useCallback(() => {
+    if (focusLocation?.kind !== 'user') {
+      return
+    }
+
+    setRecenterUserLocationRequest((value) => value + 1)
+  }, [focusLocation])
 
   useEffect(() => {
     if (hasRestoredLineRef.current) {
@@ -583,6 +686,20 @@ function App() {
 
     window.localStorage.setItem(LAST_LINE_STORAGE_KEY, selectedLine)
   }, [selectedLine])
+
+  useEffect(() => {
+    if (!selectedLine || simulationMode) {
+      setLinePathsResponse(null)
+      return
+    }
+
+    const abortController = new AbortController()
+    void loadLinePaths(selectedLine, abortController.signal)
+
+    return () => {
+      abortController.abort()
+    }
+  }, [loadLinePaths, selectedLine, simulationMode])
 
   useEffect(() => {
     if (!selectedLine || simulationMode) {
@@ -654,6 +771,10 @@ function App() {
   const visibleVehicles = useMemo(
     () => vehiclesResponse?.vehicles ?? [],
     [vehiclesResponse],
+  )
+  const visibleLinePaths = useMemo(
+    () => linePathsResponse?.paths ?? [],
+    [linePathsResponse],
   )
   const selectedModesSummary = useMemo(
     () => buildModesSummary(visibleVehicles),
@@ -729,47 +850,72 @@ function App() {
           <div className="selection-box">
             <div className="selection-head">
               <p className="eyebrow">Localizzazione</p>
-              {focusLocation?.kind === 'user' ? (
-                <span className="mode-badge">Posizione attiva</span>
-              ) : null}
             </div>
 
-            <button
-              className="secondary-button location-button"
-              type="button"
-              onClick={handleUseMyLocation}
-              disabled={loadingLocation}
-            >
-              <span
-                className={`location-signal${
-                  focusLocation?.kind === 'user' ? ' is-active' : ''
-                }${loadingLocation ? ' is-loading' : ''}`}
-                aria-hidden="true"
-              ></span>
-              {loadingLocation ? 'Localizzo...' : 'Usa la mia posizione'}
-            </button>
+            <div className="location-options-grid">
+              <div className="option-card">
+                <div className="option-card-head">
+                  <p className="eyebrow">Usa localizzazione</p>
+                </div>
 
-            <form className="address-form" onSubmit={handleAddressSubmit}>
-              <label className="search-field">
-                <span>Ricerca indirizzo</span>
-                <input
-                  type="search"
-                  value={addressInput}
-                  placeholder="Es. Via Po 17"
-                  onChange={(event) => setAddressInput(event.target.value)}
-                />
-              </label>
+                <div className="location-actions">
+                  <button
+                    className={`secondary-button location-button${
+                      focusLocation?.kind === 'user' ? ' is-active' : ''
+                    }`}
+                    type="button"
+                    onClick={handleUseMyLocation}
+                    disabled={loadingLocation}
+                  >
+                    <span
+                      className={`location-signal${
+                        focusLocation?.kind === 'user' ? ' is-active' : ''
+                      }${loadingLocation ? ' is-loading' : ''}`}
+                      aria-hidden="true"
+                    ></span>
+                    {loadingLocation ? 'Localizzo...' : 'Usa la mia posizione'}
+                  </button>
 
-              <div className="simple-search-actions">
+                  {focusLocation?.kind === 'user' ? (
+                    <button
+                      className="secondary-button compact-button"
+                      type="button"
+                      onClick={handleRecenterUserLocation}
+                    >
+                      Torna alla mia posizione
+                    </button>
+                  ) : null}
+                </div>
+              </div>
+
+              <form className="address-form option-card" onSubmit={handleAddressSubmit}>
+                <div className="option-card-head">
+                  <p className="eyebrow">Ricerca indirizzo</p>
+                </div>
+
+                <label className="search-field">
+                  <span>Indirizzo</span>
+                  <input
+                    type="search"
+                    value={addressInput}
+                    placeholder="Es. Via Po 17"
+                    onChange={(event) => setAddressInput(event.target.value)}
+                  />
+                </label>
+
                 <button
-                  className="secondary-button"
+                  className="secondary-button compact-button"
                   type="submit"
                   disabled={searchingAddress}
                 >
                   {searchingAddress ? 'Cerco...' : 'Cerca indirizzo'}
                 </button>
-              </div>
-            </form>
+
+                {focusLocation?.kind === 'address' ? (
+                  <p className="option-caption">{focusLocation.label}</p>
+                ) : null}
+              </form>
+            </div>
 
             <label className="switch-row">
               <span className="switch-copy">
@@ -794,10 +940,8 @@ function App() {
               <span className="mode-badge">{visibleVehicles.length} mezzi live</span>
               {selectedLine ? <span className="mode-badge">{selectedModesSummary}</span> : null}
               {simulationMode ? <span className="mode-badge">Test traffico</span> : null}
-              {focusLocation ? (
-                <span className="mode-badge">
-                  {focusLocation.kind === 'user' ? 'Posizione attiva' : 'Indirizzo attivo'}
-                </span>
+              {focusLocation?.kind === 'address' ? (
+                <span className="mode-badge">Indirizzo attivo</span>
               ) : null}
               {nearbyStops.length > 0 ? (
                 <span className="mode-badge">{nearbyStops.length} fermate caricate</span>
@@ -805,15 +949,9 @@ function App() {
               {isStandalone ? <span className="mode-badge">PWA installata</span> : null}
             </div>
 
-            <p className="helper-copy location-caption">
-              {focusLocation
-                ? focusLocation.label
-                : 'Usa la posizione o cerca un indirizzo per caricare le fermate vicine.'}
-            </p>
-
             {installPromptEvent && !isStandalone ? (
               <button
-                className="secondary-button install-button"
+                className="secondary-button compact-button install-button"
                 type="button"
                 onClick={() => {
                   void handleInstallApp()
@@ -878,7 +1016,9 @@ function App() {
                           </span>
 
                           <span className="vehicle-row-copy">
-                            <strong>{arrival.headsign ?? arrival.routeName}</strong>
+                            <strong>
+                              {formatDestinationLabel(arrival.headsign ?? arrival.routeName)}
+                            </strong>
                             <span>
                               {arrival.modeLabel} ·{' '}
                               {arrival.realtime ? 'realtime' : 'orario programmato'}
@@ -948,12 +1088,15 @@ function App() {
               <p className="map-label">Mappa live</p>
               <h2>
                 {selectedLine
-                  ? `Linea ${selectedLine}: mezzi e fermate`
+                  ? `Linea ${selectedLine}: mezzi, fermate e percorso`
                   : 'Inserisci una linea per vedere i mezzi'}
               </h2>
             </div>
             <div className="map-legend">
               <span className="legend-dot legend-live-vehicle">Mezzi live</span>
+              {selectedLine && visibleLinePaths.length > 0 ? (
+                <span className="legend-dot legend-line-route">Percorso linea</span>
+              ) : null}
               {showStops ? <span className="legend-dot legend-nearby-stop">Fermate</span> : null}
               {selectedStopCode ? (
                 <span className="legend-dot legend-selected-stop">Fermata attiva</span>
@@ -971,13 +1114,18 @@ function App() {
             <MapView
               lineLabel={selectedLine}
               vehicleMarkers={visibleVehicles}
+              linePaths={visibleLinePaths}
               focusLocation={focusLocation}
               nearbyStops={nearbyStops}
               showStops={showStops}
               selectedStopCode={selectedStopCode}
+              selectedStop={selectedStop}
+              activeLine={selectedLine}
               selectedStopArrivals={selectedStopArrivals}
               loadingStopArrivals={loadingStopArrivals}
+              recenterFocusRequest={recenterUserLocationRequest}
               onSelectStop={handleStopSelect}
+              onSelectLine={handleStopLineSelect}
             />
           </div>
         </section>

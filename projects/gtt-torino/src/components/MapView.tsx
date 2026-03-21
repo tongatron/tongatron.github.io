@@ -1,11 +1,20 @@
 import { useEffect, useMemo, useRef } from 'react'
-import { divIcon, latLngBounds, type DivIcon } from 'leaflet'
-import { MapContainer, Marker, Popup, TileLayer, useMap } from 'react-leaflet'
+import { divIcon, latLng, latLngBounds, type DivIcon } from 'leaflet'
+import {
+  MapContainer,
+  Marker,
+  Polyline,
+  Popup,
+  TileLayer,
+  useMap,
+} from 'react-leaflet'
 import type {
   ArrivalRecord,
   FocusLocation,
+  LinePathRecord,
   LineVehicleRecord,
   StopRecord,
+  StopServiceRecord,
 } from '../types'
 
 const TURIN_CENTER: [number, number] = [45.0703, 7.6869]
@@ -86,6 +95,46 @@ function formatMinutesUntil(value: number): string {
   return `${value} min`
 }
 
+function formatDestinationPlace(value: string): string {
+  const normalizedValue = value.replace(/\s+/g, ' ').trim()
+  const commaParts = normalizedValue.split(/\s*,\s*/).filter(Boolean)
+  const hyphenParts = normalizedValue.split(/\s+-\s+/).filter(Boolean)
+  let destinationValue =
+    (commaParts.length > 1 ? commaParts.at(-1) : null) ??
+    (hyphenParts.length > 1 ? hyphenParts.at(-1) : null) ??
+    normalizedValue
+
+  destinationValue = destinationValue
+    .replace(/^\d+\s*[A-Z0-9/.-]*\s*/i, '')
+    .trim()
+
+  if (!destinationValue) {
+    destinationValue = normalizedValue
+  }
+
+  return destinationValue
+    .split(/(\s+|\/|-)/)
+    .map((chunk) => {
+      if (chunk.trim().length === 0 || chunk === '/' || chunk === '-') {
+        return chunk
+      }
+
+      if (/^[IVXLCDM]+$/i.test(chunk) || /\d/.test(chunk)) {
+        return chunk.toUpperCase()
+      }
+
+      return `${chunk.charAt(0).toUpperCase()}${chunk.slice(1).toLowerCase()}`
+    })
+    .join('')
+}
+
+function formatDestinationLabel(value: string | null | undefined): string {
+  const normalizedValue = value?.trim()
+  return normalizedValue
+    ? `Destinazione ${formatDestinationPlace(normalizedValue)}`
+    : 'Destinazione non disponibile'
+}
+
 function buildStopServicesSummary(stop: StopRecord): string {
   const lines = Array.from(new Set(stop.services.map((service) => service.lineCode)))
   if (lines.length === 0) {
@@ -95,8 +144,22 @@ function buildStopServicesSummary(stop: StopRecord): string {
   return lines.slice(0, 10).join(', ')
 }
 
+function buildSelectableStopServices(services: StopServiceRecord[]): StopServiceRecord[] {
+  const byLineCode = new Map<string, StopServiceRecord>()
+
+  services.forEach((service) => {
+    if (!byLineCode.has(service.lineCode)) {
+      byLineCode.set(service.lineCode, service)
+    }
+  })
+
+  return Array.from(byLineCode.values()).sort((left, right) =>
+    left.lineCode.localeCompare(right.lineCode, 'it', { numeric: true }),
+  )
+}
+
 function createVehicleIcon(vehicle: LineVehicleRecord): DivIcon {
-  const backgroundColor = vehicle.routeColor ?? '#d97706'
+  const backgroundColor = vehicle.routeColor ?? '#0057b8'
   const textColor = vehicle.routeTextColor ?? '#ffffff'
   const bearing = normalizeBearing(vehicle.bearing)
   const markerClasses = ['vehicle-marker-wrap']
@@ -170,10 +233,118 @@ function createFocusIcon(kind: FocusLocation['kind']): DivIcon {
   })
 }
 
+function createRouteArrowIcon(color: string, bearing: number): DivIcon {
+  return divIcon({
+    className: 'route-arrow-shell',
+    iconSize: [28, 28],
+    iconAnchor: [14, 14],
+    html: `
+      <div
+        class="route-arrow-marker"
+        style="--route-color:${escapeHtml(color)};--route-bearing:${bearing}deg;"
+      >
+        <span class="route-arrow-glyph" aria-hidden="true"></span>
+      </div>
+    `,
+  })
+}
+
 interface FitPoint {
   key: string
   latitude: number
   longitude: number
+}
+
+interface RouteArrowMarker {
+  key: string
+  latitude: number
+  longitude: number
+  bearing: number
+  color: string
+}
+
+function calculatePathBearing(
+  start: LinePathRecord['points'][number],
+  end: LinePathRecord['points'][number],
+): number {
+  return ((Math.atan2(end.longitude - start.longitude, end.latitude - start.latitude) * 180) / Math.PI + 360) % 360
+}
+
+function interpolatePathPoint(
+  start: LinePathRecord['points'][number],
+  end: LinePathRecord['points'][number],
+  ratio: number,
+): { latitude: number; longitude: number } {
+  return {
+    latitude: start.latitude + (end.latitude - start.latitude) * ratio,
+    longitude: start.longitude + (end.longitude - start.longitude) * ratio,
+  }
+}
+
+function buildRouteArrowMarkers(path: LinePathRecord): RouteArrowMarker[] {
+  const segments: Array<{
+    start: LinePathRecord['points'][number]
+    end: LinePathRecord['points'][number]
+    length: number
+  }> = []
+  let totalLength = 0
+
+  for (let index = 1; index < path.points.length; index += 1) {
+    const start = path.points[index - 1]
+    const end = path.points[index]
+    if (!start || !end) {
+      continue
+    }
+
+    const length = latLng(start.latitude, start.longitude).distanceTo(
+      latLng(end.latitude, end.longitude),
+    )
+
+    if (length < 12) {
+      continue
+    }
+
+    segments.push({ start, end, length })
+    totalLength += length
+  }
+
+  if (segments.length === 0 || totalLength < 180) {
+    return []
+  }
+
+  const fractions =
+    totalLength < 1200 ? [0.5] : totalLength < 2800 ? [0.34, 0.68] : [0.24, 0.5, 0.76]
+  const markers: RouteArrowMarker[] = []
+
+  fractions.forEach((fraction, index) => {
+    const targetLength = totalLength * fraction
+    let walkedLength = 0
+
+    for (const segment of segments) {
+      const segmentEnd = walkedLength + segment.length
+      if (segmentEnd < targetLength) {
+        walkedLength = segmentEnd
+        continue
+      }
+
+      const ratio = Math.min(
+        1,
+        Math.max(0, (targetLength - walkedLength) / segment.length),
+      )
+      const point = interpolatePathPoint(segment.start, segment.end, ratio)
+
+      markers.push({
+        key: `${path.pathId}:arrow:${index}`,
+        latitude: point.latitude,
+        longitude: point.longitude,
+        bearing: calculatePathBearing(segment.start, segment.end),
+        color: path.routeColor ?? '#17345e',
+      })
+      break
+    }
+  })
+
+  return markers
 }
 
 function FitMapToFeatures({
@@ -223,21 +394,52 @@ function FitMapToFeatures({
   return null
 }
 
+function RecenterToFocusLocation({
+  focusLocation,
+  requestVersion,
+}: {
+  focusLocation: FocusLocation | null
+  requestVersion: number
+}) {
+  const map = useMap()
+  const lastRequestRef = useRef(0)
+
+  useEffect(() => {
+    if (!focusLocation || requestVersion === 0 || requestVersion === lastRequestRef.current) {
+      return
+    }
+
+    lastRequestRef.current = requestVersion
+    map.flyTo([focusLocation.latitude, focusLocation.longitude], 15, {
+      duration: 0.6,
+    })
+  }, [focusLocation, map, requestVersion])
+
+  return null
+}
+
 interface StopPopupContentProps {
   stop: StopRecord
   isSelected: boolean
+  activeLine: string | null
   selectedStopArrivals: ArrivalRecord[]
   loadingStopArrivals: boolean
+  onSelectLine: (lineCode: string) => void
+  onSelectStop: (stopCode: string) => void
 }
 
 function StopPopupContent({
   stop,
   isSelected,
+  activeLine,
   selectedStopArrivals,
   loadingStopArrivals,
+  onSelectLine,
+  onSelectStop,
 }: StopPopupContentProps) {
   const distanceLabel = formatDistance(stop.distanceMeters)
   const arrivalsPreview = selectedStopArrivals.slice(0, 4)
+  const selectableServices = buildSelectableStopServices(stop.services)
 
   return (
     <div className="popup-content">
@@ -245,6 +447,28 @@ function StopPopupContent({
       <span>Palina {stop.stopCode}</span>
       {distanceLabel ? <span>Distanza {distanceLabel}</span> : null}
       <span>Linee: {buildStopServicesSummary(stop)}</span>
+
+      {selectableServices.length > 0 ? (
+        <div className="popup-line-grid">
+          {selectableServices.map((service) => (
+            <button
+              key={`${stop.stopCode}:${service.lineCode}`}
+              className={`popup-line-button${
+                activeLine === service.lineCode ? ' is-active' : ''
+              }`}
+              type="button"
+              onClick={(event) => {
+                event.preventDefault()
+                event.stopPropagation()
+                onSelectStop(stop.stopCode)
+                onSelectLine(service.lineCode)
+              }}
+            >
+              {service.lineCode}
+            </button>
+          ))}
+        </div>
+      ) : null}
 
       {isSelected ? (
         loadingStopArrivals ? (
@@ -256,7 +480,10 @@ function StopPopupContent({
                 key={`${arrival.tripId}:${arrival.predictedArrival}`}
                 className="popup-arrival-row"
               >
-                <strong>{arrival.lineCode}</strong>
+                <span className="popup-arrival-copy">
+                  <strong>{arrival.lineCode}</strong>
+                  <span>{formatDestinationLabel(arrival.headsign ?? arrival.routeName)}</span>
+                </span>
                 <span>{formatMinutesUntil(arrival.minutesUntil)}</span>
               </div>
             ))}
@@ -274,25 +501,35 @@ function StopPopupContent({
 interface MapViewProps {
   lineLabel: string | null
   vehicleMarkers: LineVehicleRecord[]
+  linePaths: LinePathRecord[]
   focusLocation: FocusLocation | null
   nearbyStops: StopRecord[]
   showStops: boolean
   selectedStopCode: string | null
+  selectedStop: StopRecord | null
+  activeLine: string | null
   selectedStopArrivals: ArrivalRecord[]
   loadingStopArrivals: boolean
+  recenterFocusRequest: number
   onSelectStop: (stopCode: string) => void
+  onSelectLine: (lineCode: string) => void
 }
 
 export function MapView({
   lineLabel,
   vehicleMarkers,
+  linePaths,
   focusLocation,
   nearbyStops,
   showStops,
   selectedStopCode,
+  selectedStop,
+  activeLine,
   selectedStopArrivals,
   loadingStopArrivals,
+  recenterFocusRequest,
   onSelectStop,
+  onSelectLine,
 }: MapViewProps) {
   const sortedVehicles = useMemo(() => {
     return [...vehicleMarkers].sort((left, right) => {
@@ -303,24 +540,85 @@ export function MapView({
     })
   }, [vehicleMarkers])
 
+  const renderedLinePaths = useMemo(
+    () =>
+      linePaths
+        .map((path) => ({
+          path,
+          positions: path.points.map(
+            (point) => [point.latitude, point.longitude] as [number, number],
+          ),
+          arrows: buildRouteArrowMarkers(path),
+        }))
+        .filter((path) => path.positions.length >= 2),
+    [linePaths],
+  )
+
   const visibleStops = useMemo(() => {
+    const selectedStops = selectedStop ? [selectedStop] : []
+
     if (showStops) {
-      return nearbyStops
+      const allStops = [...nearbyStops, ...selectedStops]
+      const seenStopCodes = new Set<string>()
+
+      return allStops.filter((stop) => {
+        if (seenStopCodes.has(stop.stopCode)) {
+          return false
+        }
+
+        seenStopCodes.add(stop.stopCode)
+        return true
+      })
     }
 
-    if (!selectedStopCode) {
+    if (!selectedStop) {
       return []
     }
 
-    return nearbyStops.filter((stop) => stop.stopCode === selectedStopCode)
-  }, [nearbyStops, selectedStopCode, showStops])
+    return [selectedStop]
+  }, [nearbyStops, selectedStop, showStops])
 
   const fitPoints = useMemo<FitPoint[]>(() => {
-    const points: FitPoint[] = sortedVehicles.map((vehicle) => ({
-      key: `vehicle:${vehicle.vehicleId ?? vehicle.tripId}`,
-      latitude: vehicle.latitude,
-      longitude: vehicle.longitude,
-    }))
+    const points: FitPoint[] = []
+
+    renderedLinePaths.forEach(({ path }) => {
+      if (path.points.length === 0) {
+        return
+      }
+
+      let minLatitude = path.points[0]!.latitude
+      let maxLatitude = path.points[0]!.latitude
+      let minLongitude = path.points[0]!.longitude
+      let maxLongitude = path.points[0]!.longitude
+
+      path.points.forEach((point) => {
+        minLatitude = Math.min(minLatitude, point.latitude)
+        maxLatitude = Math.max(maxLatitude, point.latitude)
+        minLongitude = Math.min(minLongitude, point.longitude)
+        maxLongitude = Math.max(maxLongitude, point.longitude)
+      })
+
+      points.push(
+        {
+          key: `${path.pathId}:nw`,
+          latitude: maxLatitude,
+          longitude: minLongitude,
+        },
+        {
+          key: `${path.pathId}:se`,
+          latitude: minLatitude,
+          longitude: maxLongitude,
+        },
+      )
+    })
+
+    points.push(
+      ...sortedVehicles.map((vehicle) => ({
+        key: `vehicle:${vehicle.vehicleId ?? vehicle.tripId}`,
+        latitude: vehicle.latitude,
+        longitude: vehicle.longitude,
+      })),
+    )
 
     if (focusLocation) {
       points.push({
@@ -330,16 +628,16 @@ export function MapView({
       })
     }
 
-    visibleStops.forEach((stop) => {
+    if (points.length === 0 && selectedStop) {
       points.push({
-        key: `stop:${stop.stopCode}`,
-        latitude: stop.latitude,
-        longitude: stop.longitude,
+        key: `selected-stop:${selectedStop.stopCode}`,
+        latitude: selectedStop.latitude,
+        longitude: selectedStop.longitude,
       })
-    })
+    }
 
     return points
-  }, [focusLocation, sortedVehicles, visibleStops])
+  }, [focusLocation, renderedLinePaths, selectedStop, sortedVehicles])
 
   return (
     <MapContainer
@@ -354,6 +652,35 @@ export function MapView({
       />
 
       <FitMapToFeatures points={fitPoints} />
+      <RecenterToFocusLocation
+        focusLocation={focusLocation?.kind === 'user' ? focusLocation : null}
+        requestVersion={recenterFocusRequest}
+      />
+
+      {renderedLinePaths.map(({ path, positions }) => (
+        <Polyline
+          key={path.pathId}
+          positions={positions}
+          pathOptions={{
+            color: path.routeColor ?? '#0057b8',
+            weight: 5,
+            opacity: 0.44,
+            dashArray: path.directionId === 1 ? '12 10' : undefined,
+          }}
+        />
+      ))}
+
+      {renderedLinePaths.flatMap(({ arrows }) =>
+        arrows.map((arrow) => (
+          <Marker
+            key={arrow.key}
+            position={[arrow.latitude, arrow.longitude]}
+            icon={createRouteArrowIcon(arrow.color, arrow.bearing)}
+            zIndexOffset={360}
+            interactive={false}
+          />
+        )),
+      )}
 
       {focusLocation ? (
         <Marker
@@ -391,8 +718,11 @@ export function MapView({
               <StopPopupContent
                 stop={stop}
                 isSelected={isSelected}
+                activeLine={activeLine}
                 selectedStopArrivals={isSelected ? selectedStopArrivals : []}
                 loadingStopArrivals={isSelected && loadingStopArrivals}
+                onSelectLine={onSelectLine}
+                onSelectStop={onSelectStop}
               />
             </Popup>
           </Marker>
@@ -409,7 +739,7 @@ export function MapView({
           <Popup>
             <div className="popup-content">
               <strong>{vehicle.modeLabel} {vehicle.lineCode}</strong>
-              <span>{vehicle.headsign ?? vehicle.routeName}</span>
+              <span>{formatDestinationLabel(vehicle.headsign ?? vehicle.routeName)}</span>
               <span>
                 {vehicle.vehicleLabel ? `Mezzo ${vehicle.vehicleLabel}` : 'Veicolo GTT'}
               </span>
