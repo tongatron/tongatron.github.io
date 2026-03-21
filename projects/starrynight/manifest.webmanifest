@@ -1,0 +1,18 @@
+{
+  "name": "Starry Night",
+  "short_name": "Starry Night",
+  "description": "Inquadra il cielo con il telefono e trova le costellazioni principali con geolocalizzazione, orientamento e camera.",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#050a15",
+  "theme_color": "#07111f",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
