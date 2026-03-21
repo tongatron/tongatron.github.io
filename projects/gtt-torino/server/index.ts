@@ -294,6 +294,19 @@ interface LineVehiclesResponse {
   vehicles: LineVehicleApiRecord[]
 }
 
+interface LineCatalogApiRecord {
+  lineCode: string
+  mode: VehicleMode
+  modeLabel: string
+  routeColor: string | null
+  routeTextColor: string | null
+}
+
+interface LinesCatalogResponse {
+  fetchedAt: string
+  lines: LineCatalogApiRecord[]
+}
+
 interface NearbyStopsResponse {
   fetchedAt: string
   userLocation: {
@@ -355,7 +368,13 @@ interface GeocodeCacheEntry {
   result: AddressSearchApiResponse
 }
 
-const SUPPORTED_SURFACE_MODES = new Set<VehicleMode>(['bus', 'trolleybus', 'tram'])
+const SUPPORTED_SURFACE_MODES = new Set<VehicleMode>([
+  'bus',
+  'trolleybus',
+  'tram',
+  'metro',
+  'rail',
+])
 const MODE_SORT_ORDER: Record<VehicleMode, number> = {
   tram: 0,
   bus: 1,
@@ -456,6 +475,44 @@ function compareStopServices(left: StopServiceRecord, right: StopServiceRecord):
   }
 
   return compareLineCodes(left.lineCode, right.lineCode)
+}
+
+function buildLineCatalog(staticData: StaticGtfsData): LineCatalogApiRecord[] {
+  const linesByKey = new Map<string, LineCatalogApiRecord>()
+
+  for (const routeRecord of staticData.routesById.values()) {
+    const { mode, label } = resolveRouteMode(routeRecord.routeTypeRaw)
+    if (!SUPPORTED_SURFACE_MODES.has(mode)) {
+      continue
+    }
+
+    const lineCode = routeRecord.routeShortName.trim()
+    if (!lineCode) {
+      continue
+    }
+
+    const catalogKey = buildStopServiceKey(lineCode, mode)
+    if (linesByKey.has(catalogKey)) {
+      continue
+    }
+
+    linesByKey.set(catalogKey, {
+      lineCode,
+      mode,
+      modeLabel: label,
+      routeColor: routeRecord.routeColor,
+      routeTextColor: routeRecord.routeTextColor,
+    })
+  }
+
+  return Array.from(linesByKey.values()).sort((left, right) => {
+    const modeOrderDifference = MODE_SORT_ORDER[left.mode] - MODE_SORT_ORDER[right.mode]
+    if (modeOrderDifference !== 0) {
+      return modeOrderDifference
+    }
+
+    return compareLineCodes(left.lineCode, right.lineCode)
+  })
 }
 
 function metersBetween(
@@ -1559,6 +1616,21 @@ app.get('/api/stops/nearby', async (request, response, next) => {
         longitude,
       },
       stops,
+    }
+
+    response.setHeader('Cache-Control', 'no-store')
+    response.json(payload)
+  } catch (error) {
+    next(error)
+  }
+})
+
+app.get('/api/lines', async (_request, response, next) => {
+  try {
+    const staticData = await getStaticGtfsData()
+    const payload: LinesCatalogResponse = {
+      fetchedAt: new Date().toISOString(),
+      lines: buildLineCatalog(staticData),
     }
 
     response.setHeader('Cache-Control', 'no-store')

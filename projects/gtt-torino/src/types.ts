@@ -91,6 +91,19 @@ export interface LineVehiclesResponse {
   vehicles: LineVehicleRecord[]
 }
 
+export interface LineCatalogRecord {
+  lineCode: string
+  mode: VehicleMode
+  modeLabel: string
+  routeColor: string | null
+  routeTextColor: string | null
+}
+
+export interface LinesCatalogResponse {
+  fetchedAt: string
+  lines: LineCatalogRecord[]
+}
+
 export interface NearbyStopsResponse {
   fetchedAt: string
   userLocation: {

@@ -12,9 +12,11 @@ import type {
   AddressSearchResponse,
   ArrivalRecord,
   FocusLocation,
+  LineCatalogRecord,
   LinePathsResponse,
   LineVehicleRecord,
   LineVehiclesResponse,
+  LinesCatalogResponse,
   NearbyStopsResponse,
   StopArrivalsResponse,
   StopRecord,
@@ -56,6 +58,24 @@ const MODE_ROUTE_COLORS: Record<VehicleMode, string> = {
   rail: '#003b7d',
   trolleybus: '#3a7abd',
   other: '#7b8da5',
+}
+type VehicleModeFilter = 'all' | 'bus' | 'tram' | 'metro' | 'trolleybus' | 'rail'
+
+const MODE_FILTER_ORDER: VehicleModeFilter[] = [
+  'all',
+  'bus',
+  'tram',
+  'metro',
+  'trolleybus',
+  'rail',
+]
+const MODE_FILTER_LABELS: Record<VehicleModeFilter, string> = {
+  all: 'Tutti',
+  bus: 'Bus',
+  tram: 'Tram',
+  metro: 'Metro',
+  trolleybus: 'Filobus',
+  rail: 'Treno',
 }
 
 interface BeforeInstallPromptEvent extends Event {
@@ -313,12 +333,24 @@ function mergeWarnings(...lists: Array<string[] | undefined>): string[] {
   )
 }
 
+function compareLineCatalogRecords(left: LineCatalogRecord, right: LineCatalogRecord): number {
+  return left.lineCode.localeCompare(right.lineCode, 'it', {
+    numeric: true,
+    sensitivity: 'base',
+  })
+}
+
 function App() {
   const [lineInput, setLineInput] = useState('')
   const [addressInput, setAddressInput] = useState('')
+  const [selectedModeFilter, setSelectedModeFilter] =
+    useState<VehicleModeFilter>('all')
   const [selectedLine, setSelectedLine] = useState<string | null>(null)
+  const [linesCatalogResponse, setLinesCatalogResponse] =
+    useState<LinesCatalogResponse | null>(null)
   const [vehiclesResponse, setVehiclesResponse] = useState<LineVehiclesResponse | null>(null)
   const [linePathsResponse, setLinePathsResponse] = useState<LinePathsResponse | null>(null)
+  const [loadingLinesCatalog, setLoadingLinesCatalog] = useState(false)
   const [loadingVehicles, setLoadingVehicles] = useState(false)
   const [refreshingVehicles, setRefreshingVehicles] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -340,7 +372,48 @@ function App() {
   const hasLoadedVehiclesRef = useRef(false)
   const hasRestoredLineRef = useRef(false)
 
-  const loadVehicles = useCallback(async (line: string, signal?: AbortSignal) => {
+  const loadLinesCatalog = useCallback(async (signal?: AbortSignal) => {
+    try {
+      setLoadingLinesCatalog(true)
+      const apiResponse = await fetch('/api/lines', { signal })
+
+      if (!apiResponse.ok) {
+        const payload = (await apiResponse.json().catch(() => null)) as
+          | { error?: string }
+          | null
+        throw new Error(payload?.error ?? `API responded with ${apiResponse.status}`)
+      }
+
+      const payload = (await apiResponse.json()) as LinesCatalogResponse
+      startTransition(() => {
+        setLinesCatalogResponse(payload)
+      })
+
+      return payload
+    } catch (fetchError) {
+      if ((fetchError as Error).name === 'AbortError') {
+        return null
+      }
+
+      setError(
+        fetchError instanceof Error
+          ? fetchError.message
+          : 'Impossibile caricare il catalogo linee.',
+      )
+
+      return null
+    } finally {
+      setLoadingLinesCatalog(false)
+    }
+  }, [])
+
+  const loadVehicles = useCallback(async (
+    line: string,
+    options?: {
+      signal?: AbortSignal
+      syncInput?: boolean
+    },
+  ) => {
     const normalizedLine = line.trim().toUpperCase()
     if (!normalizedLine) {
       setError('Inserisci una linea.')
@@ -357,7 +430,7 @@ function App() {
 
       const apiResponse = await fetch(
         `/api/vehicles?line=${encodeURIComponent(normalizedLine)}`,
-        { signal },
+        { signal: options?.signal },
       )
 
       if (!apiResponse.ok) {
@@ -372,7 +445,9 @@ function App() {
         setSimulationMode(false)
         setVehiclesResponse(payload)
         setSelectedLine(payload.line.toUpperCase())
-        setLineInput(payload.line.toUpperCase())
+        if (options?.syncInput ?? true) {
+          setLineInput(payload.line.toUpperCase())
+        }
       })
 
       return payload
@@ -656,6 +731,20 @@ function App() {
     [loadVehicles],
   )
 
+  const handleCatalogLineSelect = useCallback(
+    async (line: LineCatalogRecord) => {
+      setSelectedModeFilter(line.mode as VehicleModeFilter)
+      setError(null)
+      setSelectedLine(line.lineCode)
+      await loadVehicles(line.lineCode, { syncInput: false })
+    },
+    [loadVehicles],
+  )
+
+  const handleModeFilterChange = useCallback((mode: VehicleModeFilter) => {
+    setSelectedModeFilter(mode)
+  }, [])
+
   const handleRecenterUserLocation = useCallback(() => {
     if (focusLocation?.kind !== 'user') {
       return
@@ -678,6 +767,15 @@ function App() {
     setLineInput(storedLine)
     void loadVehicles(storedLine)
   }, [loadVehicles])
+
+  useEffect(() => {
+    const abortController = new AbortController()
+    void loadLinesCatalog(abortController.signal)
+
+    return () => {
+      abortController.abort()
+    }
+  }, [loadLinesCatalog])
 
   useEffect(() => {
     if (!selectedLine) {
@@ -772,6 +870,31 @@ function App() {
     () => vehiclesResponse?.vehicles ?? [],
     [vehiclesResponse],
   )
+  const availableLines = useMemo(
+    () => linesCatalogResponse?.lines ?? [],
+    [linesCatalogResponse],
+  )
+  const availableModeFilters = useMemo(() => {
+    const modes = new Set<VehicleModeFilter>(
+      availableLines
+        .map((line) => line.mode)
+        .filter((mode): mode is Exclude<VehicleModeFilter, 'all'> => mode !== 'other'),
+    )
+
+    return MODE_FILTER_ORDER.filter((mode) => mode === 'all' || modes.has(mode))
+  }, [availableLines])
+  const filteredLineOptions = useMemo(() => {
+    const normalizedQuery = lineInput.trim().toUpperCase()
+
+    return availableLines
+      .filter((line) => selectedModeFilter === 'all' || line.mode === selectedModeFilter)
+      .filter((line) =>
+        normalizedQuery.length === 0
+          ? true
+          : line.lineCode.toUpperCase().includes(normalizedQuery),
+      )
+      .sort(compareLineCatalogRecords)
+  }, [availableLines, lineInput, selectedModeFilter])
   const visibleLinePaths = useMemo(
     () => linePathsResponse?.paths ?? [],
     [linePathsResponse],
@@ -812,6 +935,21 @@ function App() {
     [selectedStopResponse?.warnings, vehiclesResponse?.warnings],
   )
 
+  useEffect(() => {
+    if (!selectedLine) {
+      return
+    }
+
+    const matchingLine = availableLines.find(
+      (line) => line.lineCode.toUpperCase() === selectedLine.toUpperCase(),
+    )
+    if (!matchingLine || matchingLine.mode === 'other') {
+      return
+    }
+
+    setSelectedModeFilter(matchingLine.mode as VehicleModeFilter)
+  }, [availableLines, selectedLine])
+
   return (
     <div className="app-shell">
       <section className="primary-stage">
@@ -826,25 +964,97 @@ function App() {
           </div>
 
           <div className="control-section">
-            <p className="eyebrow">Linea</p>
+            <p className="eyebrow">Cerca mezzo</p>
 
             <form className="simple-search-form" onSubmit={handleSearchSubmit}>
               <div className="line-search-row">
-                <label className="search-field compact-search-field">
-                  <span>Linea</span>
-                  <input
-                    type="search"
-                    value={lineInput}
-                    placeholder="Es. 4, 8, W15, M1N"
-                    onChange={(event) => setLineInput(event.target.value.toUpperCase())}
-                  />
-                </label>
+                <input
+                  className="line-search-input"
+                  type="search"
+                  value={lineInput}
+                  aria-label="Inserisci una linea"
+                  placeholder="Es. 4, 46, M1"
+                  onChange={(event) => setLineInput(event.target.value.toUpperCase())}
+                />
 
                 <button className="refresh-button" type="submit">
                   {loadingVehicles || refreshingVehicles ? 'Caricamento...' : 'Mostra'}
                 </button>
               </div>
             </form>
+          </div>
+
+          <div className="selection-box">
+            <div className="selection-head">
+              <p className="eyebrow">Tipo mezzo</p>
+              {selectedModeFilter !== 'all' ? (
+                <span className="mode-badge">
+                  {MODE_FILTER_LABELS[selectedModeFilter]}
+                </span>
+              ) : null}
+            </div>
+
+            <div className="mode-filter-grid">
+              {availableModeFilters.map((mode) => (
+                <button
+                  key={mode}
+                  className={`mode-filter-button${
+                    selectedModeFilter === mode ? ' is-active' : ''
+                  }`}
+                  type="button"
+                  onClick={() => handleModeFilterChange(mode)}
+                >
+                  {MODE_FILTER_LABELS[mode]}
+                </button>
+              ))}
+            </div>
+
+            <div className="line-picker-head">
+              <p className="helper-copy">
+                {selectedModeFilter === 'all'
+                  ? 'Tutte le linee disponibili'
+                  : `Linee ${MODE_FILTER_LABELS[selectedModeFilter].toLowerCase()} disponibili`}
+              </p>
+              <span className="mode-badge">{filteredLineOptions.length}</span>
+            </div>
+
+            {loadingLinesCatalog ? (
+              <p className="empty-state">Caricamento catalogo linee...</p>
+            ) : filteredLineOptions.length > 0 ? (
+              <div className="line-options-grid">
+                {filteredLineOptions.map((line) => (
+                  <button
+                    key={`${line.mode}:${line.lineCode}`}
+                    className={`line-option-button${
+                      selectedLine?.toUpperCase() === line.lineCode.toUpperCase()
+                        ? ' is-active'
+                        : ''
+                    }`}
+                    type="button"
+                    style={{
+                      backgroundColor:
+                        selectedLine?.toUpperCase() === line.lineCode.toUpperCase()
+                          ? line.routeColor ?? undefined
+                          : undefined,
+                      color:
+                        selectedLine?.toUpperCase() === line.lineCode.toUpperCase()
+                          ? line.routeTextColor ?? undefined
+                          : undefined,
+                    }}
+                    onClick={() => {
+                      void handleCatalogLineSelect(line)
+                    }}
+                  >
+                    <strong>{line.lineCode}</strong>
+                    <span>{line.modeLabel}</span>
+                  </button>
+                ))}
+              </div>
+            ) : (
+              <p className="empty-state">
+                Nessuna linea compatibile con il filtro selezionato.
+              </p>
+            )}
           </div>
 
           <div className="selection-box">
