@@ -329,6 +329,92 @@ a {
   font-size: 0.88rem;
 }
 
+.party-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  max-width: 100%;
+  vertical-align: middle;
+}
+
+.party-label.is-compact {
+  gap: 10px;
+}
+
+.party-label.is-inline {
+  margin-right: 0.35rem;
+}
+
+.party-mark-stack {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.party-mark {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  overflow: hidden;
+  border-radius: 50%;
+  border: 1px solid rgba(21, 34, 42, 0.1);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.94), rgba(243, 232, 214, 0.92));
+  box-shadow: 0 10px 22px rgba(67, 51, 30, 0.14);
+}
+
+.party-mark-stack.is-multi .party-mark {
+  width: 32px;
+  height: 32px;
+}
+
+.party-mark-stack.is-multi .party-mark + .party-mark {
+  margin-left: -10px;
+}
+
+.party-mark img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: white;
+}
+
+.party-mark-fallback {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  padding: 4px;
+  text-align: center;
+  font-size: 0.64rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--ink);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(249, 240, 225, 0.96));
+}
+
+.party-copy {
+  display: grid;
+  gap: 3px;
+  min-width: 0;
+}
+
+.party-display {
+  font-weight: 700;
+  line-height: 1.15;
+  overflow-wrap: anywhere;
+}
+
+.party-raw {
+  font-size: 0.74rem;
+  line-height: 1.2;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
 .kpi-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -442,6 +528,7 @@ a {
 }
 
 .leaderboard-name {
+  display: block;
   font-weight: 700;
 }
 
@@ -487,6 +574,20 @@ a {
   font-family: "Newsreader", serif;
   font-size: 1.7rem;
   line-height: 1;
+}
+
+.trend-name .party-label,
+.winner-name .party-label,
+.leaderboard-name .party-label,
+.result-list-trigger .party-label,
+.kpi-value .party-label {
+  width: 100%;
+}
+
+.trend-name .party-display {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
 }
 
 .trend-meta {
@@ -579,6 +680,7 @@ tbody tr:hover {
 
 .result-list-trigger {
   padding: 0;
+  width: 100%;
   text-align: left;
   font-weight: 700;
   color: inherit;
@@ -668,6 +770,24 @@ tbody tr:hover {
     grid-column: 2;
     justify-items: start;
   }
+
+  .party-label {
+    gap: 8px;
+  }
+
+  .party-mark {
+    width: 34px;
+    height: 34px;
+  }
+
+  .party-mark-stack.is-multi .party-mark {
+    width: 28px;
+    height: 28px;
+  }
+
+  .party-raw {
+    font-size: 0.68rem;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -679,4 +799,3 @@ tbody tr:hover {
     scroll-behavior: auto !important;
   }
 }
-

@@ -12,6 +12,236 @@ const dateTimeFormatter = new Intl.DateTimeFormat("it-IT", {
   dateStyle: "medium",
   timeStyle: "short",
 });
+const COMMONS_FILE_REDIRECT = "https://commons.wikimedia.org/wiki/Special:Redirect/file/";
+const TITLE_CASE_SMALL_WORDS = new Set([
+  "a",
+  "ad",
+  "ai",
+  "al",
+  "alla",
+  "alle",
+  "con",
+  "da",
+  "dal",
+  "dei",
+  "del",
+  "della",
+  "delle",
+  "di",
+  "e",
+  "ed",
+  "fra",
+  "gli",
+  "i",
+  "il",
+  "in",
+  "la",
+  "le",
+  "nel",
+  "nella",
+  "nelle",
+  "o",
+  "per",
+  "su",
+  "tra",
+  "un",
+  "una",
+  "uno",
+]);
+const PARTY_META = {
+  DC: {
+    displayName: "Democrazia Cristiana",
+    emblemFile: "Democrazia Cristiana.svg",
+  },
+  PCI: {
+    displayName: "Partito Comunista Italiano",
+    emblemFile: "Logo Partito Comunista Italiano.svg",
+  },
+  PSI: {
+    displayName: "Partito Socialista Italiano",
+    emblemFile: "Partito Socialista Italiano (1947-1966;1969-1971).svg",
+  },
+  PSIUP: {
+    displayName: "Partito Socialista Italiano di Unità Proletaria",
+    emblemFile: "Logo of the Italian Socialist Party of Proletarian Unity (1946).svg",
+  },
+  PRI: {
+    displayName: "Partito Repubblicano Italiano",
+    emblemFile: "Partito Repubblicano Italiano - logo colored (Italy, 1946).svg",
+  },
+  PLI: {
+    displayName: "Partito Liberale Italiano",
+    emblemFile: "Partito Liberale Italiano.svg",
+  },
+  PSDI: {
+    displayName: "Partito Socialista Democratico Italiano",
+    emblemFile: "Logo of the PSDI (1948-1966) (1969-1983).svg",
+  },
+  MSI: {
+    displayName: "Movimento Sociale Italiano",
+    emblemFile: "Movimento Sociale Italiano Logo.png",
+  },
+  "MSI-DN": {
+    displayName: "Movimento Sociale Italiano - Destra Nazionale",
+    emblemFile: "Movimento Sociale Italiano Logo.png",
+  },
+  PDS: {
+    displayName: "Partito Democratico della Sinistra",
+  },
+  PSU: {
+    displayName: "Partito Socialista Unificato",
+  },
+  PDIUM: {
+    displayName: "Partito Democratico Italiano di Unità Monarchica",
+  },
+  PDUP: {
+    displayName: "Partito di Unità Proletaria per il Comunismo",
+  },
+  PR: {
+    displayName: "Partito Radicale",
+  },
+  SVP: {
+    displayName: "Südtiroler Volkspartei",
+  },
+  UDC: {
+    displayName: "Unione di Centro",
+    emblemFile: "Unione di Centro-Casini Presidente.svg",
+  },
+  FI: {
+    displayName: "Forza Italia",
+    emblemFile: "Forza Italia - Electoral logo (Italy, 1994).svg",
+  },
+  AN: {
+    displayName: "Alleanza Nazionale",
+  },
+  PD: {
+    displayName: "Partito Democratico",
+    emblemFile: "Partito Democratico Italy.svg",
+  },
+  M5S: {
+    displayName: "Movimento 5 Stelle",
+    emblemFile: "Five Star Movement.svg",
+  },
+  LEGA: {
+    displayName: "Lega",
+    emblemFile: "Simbolo di Lega per Salvini Premier.svg",
+  },
+  RC: {
+    displayName: "Rifondazione Comunista",
+    emblemFile: "Rifondazione Comunista.svg",
+  },
+  "FR.UOMO QUALUNQUE": {
+    displayName: "Fronte dell'Uomo Qualunque",
+    emblemFile: "Fronte dell'Uomo Qualunque - logo color (Italy, 1946).svg",
+  },
+  "UN.DEMOC.NAZIONALE": {
+    displayName: "Unione Democratica Nazionale",
+    emblemFile: "Logo of the National Democratic Union (Italy).svg",
+  },
+  "FR.DEMOCR.POPOLARE": {
+    displayName: "Fronte Democratico Popolare",
+  },
+  "DEM.PROL": {
+    displayName: "Democrazia Proletaria",
+  },
+  "DL.LA MARGHERITA": {
+    displayName: "Democrazia e Libertà - La Margherita",
+  },
+  "PS D'AZ.": {
+    displayName: "Partito Sardo d'Azione",
+  },
+  CDR: {
+    displayName: "Concentrazione Democratica Repubblicana",
+  },
+  "PART.DEMOCR.LAVORO": {
+    displayName: "Partito Democratico del Lavoro",
+  },
+  "MOV.INDIPEND.SIC.": {
+    displayName: "Movimento per l'Indipendenza della Sicilia",
+  },
+  "P.CONTADINI D'ITALIA": {
+    displayName: "Partito dei Contadini d'Italia",
+  },
+  "BLOCCO NAZ.LIBERTA'": {
+    displayName: "Blocco Nazionale della Libertà",
+  },
+  "MOV.UNIONISTA IT.": {
+    displayName: "Movimento Unionista Italiano",
+  },
+  "ALL.MONARC.ITALIANA": {
+    displayName: "Alleanza Monarchica Italiana",
+  },
+  "MOV.DEM.MONARC.IT.": {
+    displayName: "Movimento Democratico Monarchico Italiano",
+  },
+  "ALL.REPUB.IT.": {
+    displayName: "Alleanza Repubblicana Italiana",
+  },
+  "PC.INTERNAZIONALISTA": {
+    displayName: "Partito Comunista Internazionalista",
+  },
+  "FR.DEM.PROG.REPUB.": {
+    displayName: "Fronte Democratico Progressista Repubblicano",
+  },
+  "PART.REDUCE IT.": {
+    displayName: "Partito Reduci d'Italia",
+  },
+  "PART.LAB.IT.": {
+    displayName: "Partito Laburista Italiano",
+  },
+  "P.POPOLARE ITALIANO": {
+    displayName: "Partito Popolare Italiano",
+  },
+  "P.NAZ.MONARCHICO": {
+    displayName: "Partito Nazionale Monarchico",
+  },
+  CCD: {
+    displayName: "Centro Cristiano Democratico",
+  },
+  CDU: {
+    displayName: "Cristiani Democratici Uniti",
+  },
+  UV: {
+    displayName: "Union Valdôtaine",
+  },
+  RV: {
+    displayName: "Rassemblement Valdôtain",
+  },
+  UVP: {
+    displayName: "Union Valdôtaine Progressiste",
+  },
+  PATT: {
+    displayName: "Partito Autonomista Trentino Tirolese",
+  },
+  MPA: {
+    displayName: "Movimento per l'Autonomia",
+  },
+  "NUOVO PSI": {
+    displayName: "Nuovo PSI",
+  },
+};
+const PARTY_ALIASES = {
+  "DEMOCRAZIA CRISTIANA": "DC",
+  "DEM.CRIST.": "DC",
+  "PARTITO COMUNISTA ITALIANO": "PCI",
+  "PARTITO SOCIALISTA ITALIANO": "PSI",
+  "PARTITO SOCIALISTA ITALIANO DI UNITA' PROLETARIA": "PSIUP",
+  "PARTITO REPUBBLICANO ITALIANO": "PRI",
+  "PARTITO LIBERALE ITALIANO": "PLI",
+  "PARTITO SOCIALISTA DEMOCRATICO ITALIANO": "PSDI",
+  "P.RAD": "PR",
+  "P.RAD.": "PR",
+  "FORZA ITALIA": "FI",
+  "PARTITO DEMOCRATICO": "PD",
+  "MOVIMENTO 5 STELLE": "M5S",
+  "MOVIMENTO 5 STELLE BEPPEGRILLO.IT": "M5S",
+  "UNIONE DI CENTRO": "UDC",
+  "RIFONDAZIONE COMUNISTA": "RC",
+  "LEGA": "LEGA",
+  "LEGA NORD": "LEGA",
+  "LEGA PER SALVINI PREMIER": "LEGA",
+  "PS.D'AZ.": "PS D'AZ.",
+};
 
 const state = {
   data: null,
@@ -231,7 +461,7 @@ function render() {
   )}`;
   elements.coverageNote.textContent = state.data.coverageNote;
   elements.seriesMeta.textContent = `${electionsForType.length} elezioni disponibili`;
-  elements.partyInput.value = state.party ?? "";
+  elements.partyInput.value = state.party ? getPartyInputLabel(state.party) : "";
 
   renderTypeTabs();
   renderYearChips(electionsForType);
@@ -285,16 +515,18 @@ function renderYearChips(electionsForType) {
 
 function renderPartyOptions(parties) {
   elements.partyOptions.innerHTML = parties
-    .map((party) => `<option value="${escapeHtml(party)}"></option>`)
+    .map((party) => `<option value="${escapeHtml(getPartyInputLabel(party))}"></option>`)
     .join("");
 }
 
 function renderSummary(election) {
   elements.summaryKicker.textContent = election.typeLabel;
   elements.summaryTitle.textContent = dateFormatter.format(new Date(election.date));
-  elements.summaryNote.textContent = `${election.winner.name} e la prima lista con ${formatPercent(
-    election.winner.share,
-  )} dei voti validi.`;
+  elements.summaryNote.innerHTML = `${renderPartyLabel(election.winner.name, {
+    compact: true,
+    hideRawName: true,
+    inline: true,
+  })} è la prima lista con ${escapeHtml(formatPercent(election.winner.share))} dei voti validi.`;
   elements.sourceFiles.textContent = `File usati per l'aggregazione: ${election.sourceFiles.join(
     ", ",
   )}`;
@@ -303,7 +535,10 @@ function renderSummary(election) {
   const kpis = [
     {
       title: "Lista in testa",
-      value: election.winner.name,
+      valueHtml: renderPartyLabel(election.winner.name, {
+        compact: true,
+        hideRawName: true,
+      }),
       detail: `${formatNumber(election.winner.votes)} voti, ${formatPercent(
         election.winner.share,
       )}`,
@@ -332,7 +567,7 @@ function renderSummary(election) {
       (kpi) => `
         <article class="kpi">
           <p class="kpi-title">${escapeHtml(kpi.title)}</p>
-          <p class="kpi-value">${escapeHtml(kpi.value)}</p>
+          <p class="kpi-value">${kpi.valueHtml ?? escapeHtml(kpi.value)}</p>
           <p class="kpi-detail">${escapeHtml(kpi.detail)}</p>
         </article>
       `,
@@ -350,7 +585,9 @@ function renderWinnerCards(electionsForType) {
           data-election-id="${election.id}"
         >
           <span class="winner-year">${election.year}</span>
-          <span class="winner-name">${escapeHtml(election.winner.name)}</span>
+          <span class="winner-name">${renderPartyLabel(election.winner.name, {
+            compact: true,
+          })}</span>
           <span class="winner-meta">${formatPercent(
             election.winner.share,
           )} · affluenza ${formatPercent(election.totals.turnoutPct)}</span>
@@ -373,7 +610,9 @@ function renderLeaderboard(election) {
         >
           <span class="leaderboard-rank">${index + 1}</span>
           <span class="leaderboard-main">
-            <span class="leaderboard-name">${escapeHtml(result.name)}</span>
+            <span class="leaderboard-name">${renderPartyLabel(result.name, {
+              compact: true,
+            })}</span>
             <span class="leaderboard-track">
               <span class="leaderboard-fill" style="--share: ${result.share};"></span>
             </span>
@@ -402,14 +641,18 @@ function renderTrendChart(electionsForType, party) {
   const presenceCount = series.filter((item) => item.present).length;
   const peak = series.reduce((best, item) => (item.share > best.share ? item : best), series[0]);
   const maxShare = Math.max(...series.map((item) => item.share), 5);
+  const partyDisplayName = getPartyDisplayName(party);
 
-  elements.trendCaption.textContent = `${party} compare in ${presenceCount} elezioni su ${series.length}. Picco: ${peak.election.year} con ${formatPercent(
+  elements.trendCaption.textContent = `${partyDisplayName} compare in ${presenceCount} elezioni su ${series.length}. Picco: ${peak.election.year} con ${formatPercent(
     peak.share,
   )}.`;
 
   elements.trendChart.innerHTML = `
     <div class="trend-selected">
-      <strong class="trend-name">${escapeHtml(party)}</strong>
+      <strong class="trend-name">${renderPartyLabel(party, {
+        compact: true,
+        hideRawName: true,
+      })}</strong>
       <span class="trend-meta">Clicca una barra per aprire quell'anno.</span>
     </div>
     <div class="trend-columns">
@@ -454,7 +697,9 @@ function renderTable(election) {
               class="result-list-trigger ${result.name === state.party ? "is-selected" : ""}"
               data-party="${escapeAttribute(result.name)}"
             >
-              ${escapeHtml(result.name)}
+              ${renderPartyLabel(result.name, {
+                compact: true,
+              })}
             </button>
           </td>
           <td>${formatNumber(result.votes)}</td>
@@ -505,15 +750,14 @@ function normalizePartyInput(value, parties) {
     return null;
   }
 
-  const exactMatch = parties.find((party) => party === trimmed);
-  if (exactMatch) {
-    return exactMatch;
+  const normalizedValue = normalizeAlias(trimmed);
+  for (const party of parties) {
+    const aliases = getPartyAliases(party);
+    if (aliases.some((alias) => normalizeAlias(alias) === normalizedValue)) {
+      return party;
+    }
   }
-
-  const caseInsensitiveMatch = parties.find(
-    (party) => party.toLowerCase() === trimmed.toLowerCase(),
-  );
-  return caseInsensitiveMatch ?? null;
+  return null;
 }
 
 function readStateFromHash() {
@@ -544,6 +788,293 @@ function formatNumber(value) {
 
 function formatPercent(value) {
   return `${percentFormatter.format(value)}%`;
+}
+
+function getPartyAliases(name) {
+  const displayName = getPartyDisplayName(name);
+  const aliases = [name, displayName, getPartyInputLabel(name)];
+
+  const canonicalKey = getCanonicalPartyKey(name);
+  const meta = PARTY_META[canonicalKey];
+  if (meta?.displayName) {
+    aliases.push(meta.displayName);
+  }
+
+  return Array.from(new Set(aliases.filter(Boolean)));
+}
+
+function getPartyDisplayName(name) {
+  const rawName = String(name ?? "").trim();
+  if (!rawName) {
+    return "";
+  }
+
+  const exactMeta = PARTY_META[getCanonicalPartyKey(rawName)];
+  if (exactMeta && !hasPartySeparators(rawName)) {
+    return exactMeta.displayName;
+  }
+
+  return splitPartyName(rawName)
+    .map((part) => {
+      if (isPartySeparator(part)) {
+        return part.includes("/") ? " / " : " - ";
+      }
+      return formatPartySegment(part);
+    })
+    .join("")
+    .replace(/\s{2,}/g, " ")
+    .trim();
+}
+
+function getPartyInputLabel(name) {
+  const rawName = String(name ?? "").trim();
+  const displayName = getPartyDisplayName(rawName);
+  if (!displayName) {
+    return "";
+  }
+
+  if (normalizeAlias(rawName) === normalizeAlias(displayName)) {
+    return displayName;
+  }
+
+  return `${displayName} (${rawName})`;
+}
+
+function getPartyPresentation(name) {
+  const rawName = String(name ?? "").trim();
+  const displayName = getPartyDisplayName(rawName);
+  return {
+    rawName,
+    displayName,
+    showRawName:
+      normalizeAlias(rawName) !== normalizeAlias(displayName) &&
+      rawName.length <= 24 &&
+      (rawName.includes(".") || rawName === rawName.toUpperCase()),
+    marks: getPartyMarks(rawName, displayName),
+  };
+}
+
+function renderPartyLabel(name, options = {}) {
+  const presentation = getPartyPresentation(name);
+  if (!presentation.displayName) {
+    return "";
+  }
+
+  const classes = ["party-label"];
+  if (options.compact) {
+    classes.push("is-compact");
+  }
+  if (options.inline) {
+    classes.push("is-inline");
+  }
+
+  return `
+    <span class="${classes.join(" ")}">
+      ${renderPartyMarks(presentation.marks)}
+      <span class="party-copy">
+        <span class="party-display">${escapeHtml(presentation.displayName)}</span>
+        ${
+          presentation.showRawName && !options.hideRawName
+            ? `<span class="party-raw">${escapeHtml(presentation.rawName)}</span>`
+            : ""
+        }
+      </span>
+    </span>
+  `.replace(/\s+/g, " ").trim();
+}
+
+function renderPartyMarks(marks) {
+  const stackClass = `party-mark-stack ${marks.length > 1 ? "is-multi" : ""}`.trim();
+  return `
+    <span class="${stackClass}" aria-hidden="true">
+      ${marks
+        .map((mark) => {
+          const imageHtml = mark.src
+            ? `<img
+                src="${escapeAttribute(mark.src)}"
+                alt=""
+                loading="lazy"
+                referrerpolicy="no-referrer"
+                onload="this.previousElementSibling.hidden = true"
+                onerror="this.remove()"
+              />`
+            : "";
+
+          return `
+            <span class="party-mark">
+              <span class="party-mark-fallback">${escapeHtml(mark.fallbackText)}</span>
+              ${imageHtml}
+            </span>
+          `.replace(/\s+/g, " ").trim();
+        })
+        .join("")}
+    </span>
+  `.replace(/\s+/g, " ").trim();
+}
+
+function getPartyMarks(name, displayName) {
+  const exactMeta = PARTY_META[getCanonicalPartyKey(name)];
+  if (exactMeta?.emblemFile) {
+    return [createPartyMark(exactMeta, name, displayName)];
+  }
+
+  const marks = [];
+  const seen = new Set();
+  splitPartyName(name).forEach((part) => {
+    if (isPartySeparator(part)) {
+      return;
+    }
+
+    const segment = part.trim();
+    if (!segment) {
+      return;
+    }
+
+    const canonicalKey = getCanonicalPartyKey(segment);
+    const meta = PARTY_META[canonicalKey];
+    if (!meta?.emblemFile || seen.has(canonicalKey)) {
+      return;
+    }
+
+    seen.add(canonicalKey);
+    marks.push(createPartyMark(meta, segment, meta.displayName));
+  });
+
+  if (marks.length) {
+    return marks.slice(0, 3);
+  }
+
+  return [
+    {
+      src: null,
+      fallbackText: getPartyBadgeText(name, displayName),
+    },
+  ];
+}
+
+function createPartyMark(meta, rawName, displayName) {
+  return {
+    src: getCommonsFileUrl(meta.emblemFile),
+    fallbackText: getPartyBadgeText(rawName, displayName),
+  };
+}
+
+function getPartyBadgeText(rawName, displayName) {
+  const condensedRaw = String(rawName ?? "")
+    .replaceAll(".", "")
+    .replaceAll("'", "")
+    .replaceAll("/", "")
+    .replaceAll("-", "")
+    .replace(/\s+/g, "")
+    .trim();
+  if (condensedRaw && condensedRaw.length <= 6 && condensedRaw === condensedRaw.toUpperCase()) {
+    return condensedRaw;
+  }
+
+  const initials = String(displayName ?? "")
+    .split(/\s+/)
+    .map((word) => word.replace(/^[^A-Za-z0-9]+|[^A-Za-z0-9]+$/g, ""))
+    .filter((word) => word && !TITLE_CASE_SMALL_WORDS.has(word.toLowerCase()))
+    .slice(0, 3)
+    .map((word) => word[0])
+    .join("")
+    .toUpperCase();
+
+  return initials || "LISTA";
+}
+
+function getCommonsFileUrl(fileName) {
+  return `${COMMONS_FILE_REDIRECT}${encodeURIComponent(fileName)}`;
+}
+
+function getCanonicalPartyKey(name) {
+  return PARTY_ALIASES[name] ?? name;
+}
+
+function formatPartySegment(segment) {
+  const trimmed = segment.trim();
+  if (!trimmed) {
+    return "";
+  }
+
+  const meta = PARTY_META[getCanonicalPartyKey(trimmed)];
+  if (meta) {
+    return meta.displayName;
+  }
+
+  if (isUnexpandedPartyCode(trimmed)) {
+    return trimmed;
+  }
+
+  return titleCasePartyName(trimmed);
+}
+
+function splitPartyName(value) {
+  return String(value).split(/(\s*[-/]\s*)/);
+}
+
+function isPartySeparator(value) {
+  return /^\s*[-/]\s*$/.test(value);
+}
+
+function hasPartySeparators(value) {
+  return /[-/]/.test(value);
+}
+
+function isUnexpandedPartyCode(value) {
+  if (/^[A-Z]'[A-Z]{3,}$/.test(value)) {
+    return false;
+  }
+
+  return value.includes(".") || (/^[A-Z0-9'&]{2,8}$/.test(value) && !value.includes(" "));
+}
+
+function titleCasePartyName(value) {
+  return value
+    .split(/\s+/)
+    .map((word, index) => {
+      const lower = word.toLowerCase();
+      if ((lower.startsWith("d'") || lower.startsWith("l'")) && lower.length > 2) {
+        const prefix = index === 0 ? `${lower[0].toUpperCase()}'` : lower.slice(0, 2);
+        return `${prefix}${capitalizeWord(lower.slice(2))}`;
+      }
+
+      if (index > 0 && TITLE_CASE_SMALL_WORDS.has(lower)) {
+        return restoreFinalAccent(lower);
+      }
+
+      return restoreFinalAccent(capitalizeWord(lower));
+    })
+    .join(" ");
+}
+
+function capitalizeWord(value) {
+  if (!value) {
+    return "";
+  }
+  return value[0].toUpperCase() + value.slice(1);
+}
+
+function restoreFinalAccent(value) {
+  return value
+    .replace(/a'$/i, "à")
+    .replace(/e'$/i, "è")
+    .replace(/i'$/i, "ì")
+    .replace(/o'$/i, "ò")
+    .replace(/u'$/i, "ù");
+}
+
+function normalizeAlias(value) {
+  return String(value ?? "")
+    .normalize("NFD")
+    .replace(/\p{Diacritic}/gu, "")
+    .replaceAll("’", "'")
+    .replaceAll("'", "")
+    .replace(/[().]/g, " ")
+    .replace(/\s*[-/]\s*/g, " ")
+    .replace(/\s+/g, " ")
+    .trim()
+    .toLowerCase();
 }
 
 function escapeHtml(value) {
