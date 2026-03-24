@@ -8,6 +8,11 @@ const dateFormatter = new Intl.DateTimeFormat("it-IT", {
   month: "long",
   year: "numeric",
 });
+const shortDateFormatter = new Intl.DateTimeFormat("it-IT", {
+  day: "2-digit",
+  month: "2-digit",
+  year: "2-digit",
+});
 const dateTimeFormatter = new Intl.DateTimeFormat("it-IT", {
   dateStyle: "medium",
   timeStyle: "short",
@@ -306,9 +311,8 @@ async function bootstrap() {
 
   const electionsForType = getElectionsByType(state.type);
   const fallbackElection = electionsForType[electionsForType.length - 1];
-  const requestedElection = electionsForType.find(
-    (item) => item.year === requested.year,
-  );
+  const requestedElection = electionsForType.find((item) => item.id === requested.electionId)
+    ?? electionsForType.find((item) => item.year === requested.year);
   state.electionId = (requestedElection ?? fallbackElection).id;
 
   const availableParties = getAvailableParties(state.type);
@@ -392,9 +396,8 @@ function attachEvents() {
     }
 
     const electionsForType = getElectionsByType(state.type);
-    const requestedElection = electionsForType.find(
-      (item) => item.year === requested.year,
-    );
+    const requestedElection = electionsForType.find((item) => item.id === requested.electionId)
+      ?? electionsForType.find((item) => item.year === requested.year);
     if (requestedElection) {
       state.electionId = requestedElection.id;
     }
@@ -479,6 +482,9 @@ function renderTypeTabs() {
     assemblea_costituente: "Assemblea Costituente",
     camera: "Camera",
     senato: "Senato",
+    referendum: "Referendum",
+    provinciali: "Provinciali",
+    comunali: "Comunali",
   };
 
   elements.typeTabs.innerHTML = getAvailableTypes()
@@ -497,6 +503,7 @@ function renderTypeTabs() {
 }
 
 function renderYearChips(electionsForType) {
+  const useDateLabels = hasDuplicateYears(electionsForType);
   elements.yearChips.innerHTML = [...electionsForType]
     .reverse()
     .map(
@@ -506,7 +513,7 @@ function renderYearChips(electionsForType) {
           class="year-chip ${election.id === state.electionId ? "is-active" : ""}"
           data-election-id="${election.id}"
         >
-          ${election.year}
+          ${useDateLabels ? formatShortDate(election.date) : election.year}
         </button>
       `,
     )
@@ -521,12 +528,24 @@ function renderPartyOptions(parties) {
 
 function renderSummary(election) {
   elements.summaryKicker.textContent = election.typeLabel;
-  elements.summaryTitle.textContent = dateFormatter.format(new Date(election.date));
-  elements.summaryNote.innerHTML = `${renderPartyLabel(election.winner.name, {
-    compact: true,
-    hideRawName: true,
-    inline: true,
-  })} è la prima lista con ${escapeHtml(formatPercent(election.winner.share))} dei voti validi.`;
+  elements.summaryTitle.textContent = dateFormatter.format(parseIsoDate(election.date));
+
+  if (election.type === "referendum") {
+    const questionText = election.referendumQuestion
+      ? `${escapeHtml(election.referendumQuestion)}. `
+      : "";
+    elements.summaryNote.innerHTML = `${questionText}${renderPartyLabel(election.winner.name, {
+      compact: true,
+      hideRawName: true,
+      inline: true,
+    })} è l'opzione prevalente con ${escapeHtml(formatPercent(election.winner.share))} dei voti validi.`;
+  } else {
+    elements.summaryNote.innerHTML = `${renderPartyLabel(election.winner.name, {
+      compact: true,
+      hideRawName: true,
+      inline: true,
+    })} è la prima lista con ${escapeHtml(formatPercent(election.winner.share))} dei voti validi.`;
+  }
   elements.sourceFiles.textContent = `File usati per l'aggregazione: ${election.sourceFiles.join(
     ", ",
   )}`;
@@ -534,7 +553,7 @@ function renderSummary(election) {
 
   const kpis = [
     {
-      title: "Lista in testa",
+      title: election.type === "referendum" ? "Opzione in testa" : "Lista in testa",
       valueHtml: renderPartyLabel(election.winner.name, {
         compact: true,
         hideRawName: true,
@@ -553,7 +572,9 @@ function renderSummary(election) {
     {
       title: "Voti validi di lista",
       value: formatNumber(election.totals.validVotes),
-      detail: `${election.results.length} liste in classifica`,
+      detail: election.type === "referendum"
+        ? `${election.results.length} opzioni in classifica`
+        : `${election.results.length} liste in classifica`,
     },
     {
       title: "Schede bianche",
@@ -576,6 +597,7 @@ function renderSummary(election) {
 }
 
 function renderWinnerCards(electionsForType) {
+  const useDateLabels = hasDuplicateYears(electionsForType);
   elements.winnerCards.innerHTML = electionsForType
     .map(
       (election) => `
@@ -584,7 +606,9 @@ function renderWinnerCards(electionsForType) {
           class="winner-card ${election.id === state.electionId ? "is-active" : ""}"
           data-election-id="${election.id}"
         >
-          <span class="winner-year">${election.year}</span>
+          <span class="winner-year">${
+            useDateLabels ? formatShortDate(election.date) : election.year
+          }</span>
           <span class="winner-name">${renderPartyLabel(election.winner.name, {
             compact: true,
           })}</span>
@@ -628,6 +652,7 @@ function renderLeaderboard(election) {
 }
 
 function renderTrendChart(electionsForType, party) {
+  const useDateLabels = hasDuplicateYears(electionsForType);
   const series = electionsForType.map((election) => {
     const result = election.results.find((item) => item.name === party);
     return {
@@ -675,7 +700,9 @@ function renderTrendChart(electionsForType, party) {
                   style="--height: ${(item.share / maxShare) * 100};"
                 ></span>
               </span>
-              <span class="trend-year">${item.election.year}</span>
+              <span class="trend-year">${
+                useDateLabels ? formatShortDate(item.election.date) : item.election.year
+              }</span>
             </button>
           `,
         )
@@ -685,7 +712,9 @@ function renderTrendChart(electionsForType, party) {
 }
 
 function renderTable(election) {
-  elements.tableCaption.textContent = `${election.results.length} liste ordinate per voti validi.`;
+  elements.tableCaption.textContent = election.type === "referendum"
+    ? `${election.results.length} opzioni ordinate per voti validi.`
+    : `${election.results.length} liste ordinate per voti validi.`;
   elements.resultsBody.innerHTML = election.results
     .map(
       (result, index) => `
@@ -764,6 +793,7 @@ function readStateFromHash() {
   const params = new URLSearchParams(window.location.hash.replace(/^#/, ""));
   return {
     type: params.get("type"),
+    electionId: params.get("election"),
     year: Number(params.get("year")),
     party: params.get("party"),
   };
@@ -773,6 +803,7 @@ function syncHash() {
   const currentElection = getCurrentElection();
   const params = new URLSearchParams({
     type: state.type,
+    election: currentElection.id,
     year: String(currentElection.year),
     party: state.party,
   });
@@ -1075,6 +1106,39 @@ function normalizeAlias(value) {
     .replace(/\s+/g, " ")
     .trim()
     .toLowerCase();
+}
+
+function hasDuplicateYears(elections) {
+  const seenYears = new Set();
+  for (const election of elections) {
+    if (seenYears.has(election.year)) {
+      return true;
+    }
+    seenYears.add(election.year);
+  }
+  return false;
+}
+
+function formatShortDate(isoDate) {
+  return shortDateFormatter.format(parseIsoDate(isoDate));
+}
+
+function parseIsoDate(value) {
+  const [year, month, day] = String(value ?? "").split("-").map((part) => Number(part));
+  if (
+    Number.isFinite(year) &&
+    Number.isFinite(month) &&
+    Number.isFinite(day) &&
+    year > 0 &&
+    month >= 1 &&
+    month <= 12 &&
+    day >= 1 &&
+    day <= 31
+  ) {
+    return new Date(year, month - 1, day);
+  }
+
+  return new Date(value);
 }
 
 function escapeHtml(value) {
