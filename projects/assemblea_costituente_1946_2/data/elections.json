@@ -1,0 +1,7990 @@
+{
+  "generatedAt": "2026-03-24T00:40:04.678Z",
+  "sourceCatalogUrl": "https://elezionistorico.interno.gov.it/eligendo/opendata.php",
+  "coverageNote": "La pagina usa i file territoriali con voti di lista disponibili nel catalogo open data. Per alcune elezioni recenti restano fuori la circoscrizione Estero e alcuni collegi speciali pubblicati in file separati senza voti di lista confrontabili.",
+  "elections": [
+    {
+      "id": "assemblea_costituente-1946-06-02",
+      "type": "assemblea_costituente",
+      "typeLabel": "Assemblea Costituente",
+      "year": 1946,
+      "date": "1946-06-02",
+      "title": "Assemblea Costituente 1946",
+      "sourceUrl": "https://elezionistorico.interno.gov.it/daithome/documenti/opendata/assemblea_costituente/assemblea_costituente-19460602.zip",
+      "sourceFiles": [
+        "assemblea_costituente-19460602.txt"
+      ],
+      "totals": {
+        "electors": 27992566,
+        "voters": 24943315,
+        "blankBallots": 641965,
+        "validVotes": 23013010,
+        "turnoutPct": 89.11,
+        "blankPct": 2.57
+      },
+      "winner": {
+        "name": "DC",
+        "votes": 8099975,
+        "share": 35.2
+      },
+      "results": [
+        {
+          "name": "DC",
+          "votes": 8099975,
+          "share": 35.2
+        },
+        {
+          "name": "PSIUP",
+          "votes": 4764101,
+          "share": 20.7
+        },
+        {
+          "name": "PCI",
+          "votes": 4344945,
+          "share": 18.88
+        },
+        {
+          "name": "UN.DEMOC.NAZIONALE",
+          "votes": 1559911,
+          "share": 6.78
+        },
+        {
+          "name": "FR.UOMO QUALUNQUE",
+          "votes": 1209706,
+          "share": 5.26
+        },
+        {
+          "name": "PRI",
+          "votes": 1003281,
+          "share": 4.36
+        },
+        {
+          "name": "BLOCCO NAZ.LIBERTA'",
+          "votes": 637071,
+          "share": 2.77
+        },
+        {
+          "name": "PARTITO D'AZIONE",
+          "votes": 334584,
+          "share": 1.45
+        },
+        {
+          "name": "MOV.INDIPEND.SIC.",
+          "votes": 166609,
+          "share": 0.72
+        },
+        {
+          "name": "P.CONTADINI D'ITALIA",
+          "votes": 99060,
+          "share": 0.43
+        },
+        {
+          "name": "CDR",
+          "votes": 97793,
+          "share": 0.42
+        },
+        {
+          "name": "ALTRE LISTE",
+          "votes": 86825,
+          "share": 0.38
+        },
+        {
+          "name": "PS D'AZ.",
+          "votes": 78317,
+          "share": 0.34
+        },
+        {
+          "name": "MOV.UNIONISTA IT.",
+          "votes": 66978,
+          "share": 0.29
+        },
+        {
+          "name": "PARTITO CRISTIANO SOCIALE",
+          "votes": 47047,
+          "share": 0.2
+        },
+        {
+          "name": "PART.DEMOCR.LAVORO",
+          "votes": 40652,
+          "share": 0.18
+        },
+        {
+          "name": "U.DEM.IND.LL.",
+          "votes": 34147,
+          "share": 0.15
+        },
+        {
+          "name": "MOV.NAZ.RICOSTRUZ.",
+          "votes": 31635,
+          "share": 0.14
+        },
+        {
+          "name": "ALL.MONARC.ITALIANA",
+          "votes": 30639,
+          "share": 0.13
+        },
+        {
+          "name": "MOV.DEM.MONARC.IT.",
+          "votes": 29920,
+          "share": 0.13
+        },
+        {
+          "name": "ALL.REPUB.IT.",
+          "votes": 29023,
+          "share": 0.13
+        },
+        {
+          "name": "PC.INTERNAZIONALISTA",
+          "votes": 22701,
+          "share": 0.1
+        },
+        {
+          "name": "FR.DEM.PROG.REPUB.",
+          "votes": 21553,
+          "share": 0.09
+        },
+        {
+          "name": "PART.REDUCE IT.",
+          "votes": 18479,
+          "share": 0.08
+        },
+        {
+          "name": "IND",
+          "votes": 17202,
+          "share": 0.07
+        },
+        {
+          "name": "U.COMB.RED.PART.F.PR",
+          "votes": 14598,
+          "share": 0.06
+        },
+        {
+          "name": "CENTRO POLITICO IT.",
+          "votes": 13196,
+          "share": 0.06
+        },
+        {
+          "name": "CONC.NAZ.COMBAT.RED.",
+          "votes": 12908,
+          "share": 0.06
+        },
+        {
+          "name": "GR.COMB.E IND.",
+          "votes": 12199,
+          "share": 0.05
+        },
+        {
+          "name": "P.PATR.MON.RINNOVAT.",
+          "votes": 10870,
+          "share": 0.05
+        },
+        {
+          "name": "P.UNIONE NAZIONALE",
+          "votes": 10717,
+          "share": 0.05
+        },
+        {
+          "name": "LEGA SARDA",
+          "votes": 10597,
+          "share": 0.05
+        },
+        {
+          "name": "P.IND.SICIL.LAVORO",
+          "votes": 10387,
+          "share": 0.05
+        },
+        {
+          "name": "COMB.REDUC.PARTIG.",
+          "votes": 8580,
+          "share": 0.04
+        },
+        {
+          "name": "INDIPEND.SIC.SINS.",
+          "votes": 5699,
+          "share": 0.02
+        },
+        {
+          "name": "ALL.REPUBBLICANA",
+          "votes": 5333,
+          "share": 0.02
+        },
+        {
+          "name": "UN.NAZ.SINISTR.GUER.",
+          "votes": 4959,
+          "share": 0.02
+        },
+        {
+          "name": "MOV.LAVORATORI IND.",
+          "votes": 4229,
+          "share": 0.02
+        },
+        {
+          "name": "LG.PACIFISTA IT.",
+          "votes": 4168,
+          "share": 0.02
+        },
+        {
+          "name": "PLI",
+          "votes": 4058,
+          "share": 0.02
+        },
+        {
+          "name": "PART.LAB.IT.",
+          "votes": 3802,
+          "share": 0.02
+        },
+        {
+          "name": "SCHIERAMENTO NAZ.",
+          "votes": 2775,
+          "share": 0.01
+        },
+        {
+          "name": "UN.COMUN.IT.INDIP.",
+          "votes": 1781,
+          "share": 0.01
+        }
+      ]
+    },
+    {
+      "id": "camera-1948-04-18",
+      "type": "camera",
+      "typeLabel": "Camera dei deputati",
+      "year": 1948,
+      "date": "1948-04-18",
+      "title": "Camera dei deputati 1948",
+      "sourceUrl": "https://elezionistorico.interno.gov.it/daithome/documenti/opendata/camera/camera-19480418.zip",
+      "sourceFiles": [
+        "camera-19480418.txt"
+      ],
+      "totals": {
+        "electors": 29033012,
+        "voters": 26774306,
+        "blankBallots": 164030,
+        "validVotes": 26184159,
+        "turnoutPct": 92.22,
+        "blankPct": 0.61
+      },
+      "winner": {
+        "name": "DC",
+        "votes": 12694319,
+        "share": 48.48
+      },
+      "results": [
+        {
+          "name": "DC",
+          "votes": 12694319,
+          "share": 48.48
+        },
+        {
+          "name": "FR.DEMOCR.POPOLARE",
+          "votes": 8112042,
+          "share": 30.98
+        },
+        {
+          "name": "UNITA' SOCIALISTA",
+          "votes": 1852689,
+          "share": 7.08
+        },
+        {
+          "name": "BLOCCO NAZIONALE",
+          "votes": 1002454,
+          "share": 3.83
+        },
+        {
+          "name": "P.NAZ.MON.ALL.D.LAV.",
+          "votes": 728576,
+          "share": 2.78
+        },
+        {
+          "name": "PRI",
+          "votes": 650783,
+          "share": 2.49
+        },
+        {
+          "name": "MSI",
+          "votes": 526089,
+          "share": 2.01
+        },
+        {
+          "name": "PPST-PPTT",
+          "votes": 124253,
+          "share": 0.47
+        },
+        {
+          "name": "P.CONTADINI D'ITALIA",
+          "votes": 94742,
+          "share": 0.36
+        },
+        {
+          "name": "PARTITO CRISTIANO SOCIALE",
+          "votes": 72369,
+          "share": 0.28
+        },
+        {
+          "name": "PS D'AZ.",
+          "votes": 61928,
+          "share": 0.24
+        },
+        {
+          "name": "MOV.NAZ.DEM.SOC.",
+          "votes": 56096,
+          "share": 0.21
+        },
+        {
+          "name": "UN.MOV.FEDERALISTI",
+          "votes": 50798,
+          "share": 0.19
+        },
+        {
+          "name": "BLOCCO POP.UNIONISTA",
+          "votes": 35585,
+          "share": 0.14
+        },
+        {
+          "name": "ALTRE LISTE",
+          "votes": 22513,
+          "share": 0.09
+        },
+        {
+          "name": "PC.INTERNAZIONALISTA",
+          "votes": 20733,
+          "share": 0.08
+        },
+        {
+          "name": "FR.DEM.PROG.REPUB.",
+          "votes": 14482,
+          "share": 0.06
+        },
+        {
+          "name": "CONC.NAZ.COMBAT.UNIT",
+          "votes": 10140,
+          "share": 0.04
+        },
+        {
+          "name": "P.DEMOLABURISTA IT.",
+          "votes": 8133,
+          "share": 0.03
+        },
+        {
+          "name": "P.INDIPENDENTE CONTADINI",
+          "votes": 6733,
+          "share": 0.03
+        },
+        {
+          "name": "P.DEM.IND.PENSIONATI",
+          "votes": 5280,
+          "share": 0.02
+        },
+        {
+          "name": "AS.NAZ.CONG.DIS.GUER",
+          "votes": 3707,
+          "share": 0.01
+        },
+        {
+          "name": "P.PATRIA E LIBERTA'",
+          "votes": 3178,
+          "share": 0.01
+        },
+        {
+          "name": "FR.DEGLI ITALIANI",
+          "votes": 3003,
+          "share": 0.01
+        },
+        {
+          "name": "CONC.RUR.IND.AOSTA",
+          "votes": 2906,
+          "share": 0.01
+        },
+        {
+          "name": "GR.POL.LA DESTRA",
+          "votes": 2830,
+          "share": 0.01
+        },
+        {
+          "name": "FR.ANTIBOLSCEVICO IT",
+          "votes": 2756,
+          "share": 0.01
+        },
+        {
+          "name": "UN.SOCIAL.INDIP.",
+          "votes": 2637,
+          "share": 0.01
+        },
+        {
+          "name": "RAGGRUP.POP.ITALIANO",
+          "votes": 2191,
+          "share": 0.01
+        },
+        {
+          "name": "MAGLIO",
+          "votes": 1642,
+          "share": 0.01
+        },
+        {
+          "name": "CONF.IT.LIBERI SIND.",
+          "votes": 1531,
+          "share": 0.01
+        },
+        {
+          "name": "MOV.UNITA'D'IT.",
+          "votes": 1524,
+          "share": 0.01
+        },
+        {
+          "name": "FR.UN.ANTICOM.RIS.N.",
+          "votes": 1444,
+          "share": 0.01
+        },
+        {
+          "name": "M.NAZ.SIN.DAN.GUERRA",
+          "votes": 1179,
+          "share": 0
+        },
+        {
+          "name": "LEGA SARDA",
+          "votes": 1117,
+          "share": 0
+        },
+        {
+          "name": "M.CAT.IND.PAX JUSTIT",
+          "votes": 961,
+          "share": 0
+        },
+        {
+          "name": "P.ESISTENZIALISTA IT",
+          "votes": 816,
+          "share": 0
+        }
+      ]
+    },
+    {
+      "id": "camera-1953-06-07",
+      "type": "camera",
+      "typeLabel": "Camera dei deputati",
+      "year": 1953,
+      "date": "1953-06-07",
+      "title": "Camera dei deputati 1953",
+      "sourceUrl": "https://elezionistorico.interno.gov.it/daithome/documenti/opendata/camera/camera-19530607.zip",
+      "sourceFiles": [
+        "camera-19530607.txt"
+      ],
+      "totals": {
+        "electors": 30276195,
+        "voters": 28409140,
+        "blankBallots": 0,
+        "validVotes": 27091326,
+        "turnoutPct": 93.83,
+        "blankPct": 0
+      },
+      "winner": {
+        "name": "DC",
+        "votes": 10862359,
+        "share": 40.1
+      },
+      "results": [
+        {
+          "name": "DC",
+          "votes": 10862359,
+          "share": 40.1
+        },
+        {
+          "name": "PCI",
+          "votes": 6120867,
+          "share": 22.59
+        },
+        {
+          "name": "PSI",
+          "votes": 3441068,
+          "share": 12.7
+        },
+        {
+          "name": "P.NAZ.MONARCHICO",
+          "votes": 1855734,
+          "share": 6.85
+        },
+        {
+          "name": "MSI",
+          "votes": 1582978,
+          "share": 5.84
+        },
+        {
+          "name": "PSDI",
+          "votes": 1223107,
+          "share": 4.51
+        },
+        {
+          "name": "PLI",
+          "votes": 817463,
+          "share": 3.02
+        },
+        {
+          "name": "PRI",
+          "votes": 438121,
+          "share": 1.62
+        },
+        {
+          "name": "UN.SOCIAL.INDIP.",
+          "votes": 225458,
+          "share": 0.83
+        },
+        {
+          "name": "UNITA'POPOLARE",
+          "votes": 170943,
+          "share": 0.63
+        },
+        {
+          "name": "PPST",
+          "votes": 122792,
+          "share": 0.45
+        },
+        {
+          "name": "ALL.DEMOC.NAZIONALE",
+          "votes": 120774,
+          "share": 0.45
+        },
+        {
+          "name": "PS D'AZ.",
+          "votes": 27255,
+          "share": 0.1
+        },
+        {
+          "name": "IND.SIN.",
+          "votes": 21730,
+          "share": 0.08
+        },
+        {
+          "name": "CENTRO POLITICO IT.",
+          "votes": 14489,
+          "share": 0.05
+        },
+        {
+          "name": "P.MONARCHICO NAZ.IT.",
+          "votes": 8068,
+          "share": 0.03
+        },
+        {
+          "name": "LISTA MONARCHICA",
+          "votes": 6770,
+          "share": 0.02
+        },
+        {
+          "name": "UN.NAZ.DEM.IMP.PUB.",
+          "votes": 6537,
+          "share": 0.02
+        },
+        {
+          "name": "P.NETTISTA ITALIANO",
+          "votes": 4292,
+          "share": 0.02
+        },
+        {
+          "name": "P.RADICAL SOCIALISTA",
+          "votes": 3244,
+          "share": 0.01
+        },
+        {
+          "name": "P.NAZIONALI FEDERATI",
+          "votes": 2884,
+          "share": 0.01
+        },
+        {
+          "name": "MOV.SOC.CRISTIANO",
+          "votes": 2793,
+          "share": 0.01
+        },
+        {
+          "name": "PPTT",
+          "votes": 1704,
+          "share": 0.01
+        },
+        {
+          "name": "M.FEMMINILE IT.",
+          "votes": 1689,
+          "share": 0.01
+        },
+        {
+          "name": "P.CRIST.MILITANTE",
+          "votes": 1468,
+          "share": 0.01
+        },
+        {
+          "name": "MOV.NAZIONALE IT.",
+          "votes": 1253,
+          "share": 0
+        },
+        {
+          "name": "P.UN.SOCIALE IT.",
+          "votes": 1119,
+          "share": 0
+        },
+        {
+          "name": "P.VOLONTA'NAZIONALE",
+          "votes": 1008,
+          "share": 0
+        },
+        {
+          "name": "P.FEDERALISTA IT.",
+          "votes": 834,
+          "share": 0
+        },
+        {
+          "name": "M.GARIB.ANTIF.PART.",
+          "votes": 733,
+          "share": 0
+        },
+        {
+          "name": "P.ESISTENZIALISTA UN",
+          "votes": 716,
+          "share": 0
+        },
+        {
+          "name": "P.UNIONE NAZIONALE",
+          "votes": 550,
+          "share": 0
+        },
+        {
+          "name": "IND",
+          "votes": 526,
+          "share": 0
+        }
+      ]
+    },
+    {
+      "id": "camera-1958-05-25",
+      "type": "camera",
+      "typeLabel": "Camera dei deputati",
+      "year": 1958,
+      "date": "1958-05-25",
+      "title": "Camera dei deputati 1958",
+      "sourceUrl": "https://elezionistorico.interno.gov.it/daithome/documenti/opendata/camera/camera-19580525.zip",
+      "sourceFiles": [
+        "camera-19580525.txt"
+      ],
+      "totals": {
+        "electors": 32434429,
+        "voters": 30434270,
+        "blankBallots": 473674,
+        "validVotes": 29559919,
+        "turnoutPct": 93.83,
+        "blankPct": 1.56
+      },
+      "winner": {
+        "name": "DC",
+        "votes": 12520050,
+        "share": 42.35
+      },
+      "results": [
+        {
+          "name": "DC",
+          "votes": 12520050,
+          "share": 42.35
+        },
+        {
+          "name": "PCI",
+          "votes": 6704423,
+          "share": 22.68
+        },
+        {
+          "name": "PSI",
+          "votes": 4206700,
+          "share": 14.23
+        },
+        {
+          "name": "MSI",
+          "votes": 1407721,
+          "share": 4.76
+        },
+        {
+          "name": "PSDI",
+          "votes": 1345428,
+          "share": 4.55
+        },
+        {
+          "name": "PLI",
+          "votes": 1047065,
+          "share": 3.54
+        },
+        {
+          "name": "P.MONARCHICO POP.",
+          "votes": 776929,
+          "share": 2.63
+        },
+        {
+          "name": "P.NAZ.MONARCHICO",
+          "votes": 659992,
+          "share": 2.23
+        },
+        {
+          "name": "PRI-P.RAD.",
+          "votes": 405781,
+          "share": 1.37
+        },
+        {
+          "name": "COMUNITA'",
+          "votes": 173128,
+          "share": 0.59
+        },
+        {
+          "name": "PPST",
+          "votes": 135491,
+          "share": 0.46
+        },
+        {
+          "name": "MOVIM.AUT.REG.-M.A.R.P.",
+          "votes": 70584,
+          "share": 0.24
+        },
+        {
+          "name": "UV",
+          "votes": 30596,
+          "share": 0.1
+        },
+        {
+          "name": "P.CAT.RIS.NAZ.CPI",
+          "votes": 15928,
+          "share": 0.05
+        },
+        {
+          "name": "FED.AUT.SOCIALDEM.IT",
+          "votes": 9332,
+          "share": 0.03
+        },
+        {
+          "name": "P.NAZIONALE LAVORO",
+          "votes": 7183,
+          "share": 0.02
+        },
+        {
+          "name": "AUT.PIEMONT-MOV.VIL.",
+          "votes": 6955,
+          "share": 0.02
+        },
+        {
+          "name": "UNIONE TRIESTINA",
+          "votes": 6661,
+          "share": 0.02
+        },
+        {
+          "name": "FR.DELL'INDIPENDENZA",
+          "votes": 6305,
+          "share": 0.02
+        },
+        {
+          "name": "MOV.PRO PENSIONATI",
+          "votes": 4985,
+          "share": 0.02
+        },
+        {
+          "name": "FR.UNICO SOLDATO IT.",
+          "votes": 4171,
+          "share": 0.01
+        },
+        {
+          "name": "CONC.EUROPEA DEMOC.",
+          "votes": 4133,
+          "share": 0.01
+        },
+        {
+          "name": "MOV.INDIP.DIVORZISTI",
+          "votes": 3955,
+          "share": 0.01
+        },
+        {
+          "name": "P.SOC.SICILIANO",
+          "votes": 3136,
+          "share": 0.01
+        },
+        {
+          "name": "MOV.NAZIONALE IT.",
+          "votes": 1499,
+          "share": 0.01
+        },
+        {
+          "name": "MOV.AZIONE-RINNOVAM.",
+          "votes": 752,
+          "share": 0
+        },
+        {
+          "name": "MOV.ECONOMICO IT.SOC",
+          "votes": 571,
+          "share": 0
+        },
+        {
+          "name": "P.IT.MUT.INV.GUERRA",
+          "votes": 465,
+          "share": 0
+        }
+      ]
+    },
+    {
+      "id": "camera-1963-04-28",
+      "type": "camera",
+      "typeLabel": "Camera dei deputati",
+      "year": 1963,
+      "date": "1963-04-28",
+      "title": "Camera dei deputati 1963",
+      "sourceUrl": "https://elezionistorico.interno.gov.it/daithome/documenti/opendata/camera/camera-19630428.zip",
+      "sourceFiles": [
+        "camera-19630428.txt"
+      ],
+      "totals": {
+        "electors": 34199184,
+        "voters": 31766009,
+        "blankBallots": 571961,
+        "validVotes": 30751940,
+        "turnoutPct": 92.89,
+        "blankPct": 1.8
+      },
+      "winner": {
+        "name": "DC",
+        "votes": 11773446,
+        "share": 38.29
+      },
+      "results": [
+        {
+          "name": "DC",
+          "votes": 11773446,
+          "share": 38.29
+        },
+        {
+          "name": "PCI",
+          "votes": 7767083,
+          "share": 25.26
+        },
+        {
+          "name": "PSI",
+          "votes": 4255931,
+          "share": 13.84
+        },
+        {
+          "name": "PLI",
+          "votes": 2143706,
+          "share": 6.97
+        },
+        {
+          "name": "PSDI",
+          "votes": 1876167,
+          "share": 6.1
+        },
+        {
+          "name": "MSI",
+          "votes": 1570232,
+          "share": 5.11
+        },
+        {
+          "name": "PDIUM",
+          "votes": 536851,
+          "share": 1.75
+        },
+        {
+          "name": "PRI",
+          "votes": 420210,
+          "share": 1.37
+        },
+        {
+          "name": "PPST",
+          "votes": 135457,
+          "share": 0.44
+        },
+        {
+          "name": "CONC.UNITA'RURALE",
+          "votes": 92222,
+          "share": 0.3
+        },
+        {
+          "name": "PAPI",
+          "votes": 87655,
+          "share": 0.29
+        },
+        {
+          "name": "UV",
+          "votes": 31844,
+          "share": 0.1
+        },
+        {
+          "name": "M.COMB.IT-FR.RIN.NAZ",
+          "votes": 19935,
+          "share": 0.06
+        },
+        {
+          "name": "MOV.POL.CATT.IT.",
+          "votes": 7220,
+          "share": 0.02
+        },
+        {
+          "name": "PART.SOC.CRIST.",
+          "votes": 6873,
+          "share": 0.02
+        },
+        {
+          "name": "PART.MON.NAZ.",
+          "votes": 6472,
+          "share": 0.02
+        },
+        {
+          "name": "L.UNIT.SLOV.",
+          "votes": 5679,
+          "share": 0.02
+        },
+        {
+          "name": "MOV.IND.TLT",
+          "votes": 4261,
+          "share": 0.01
+        },
+        {
+          "name": "UN.NAZ.SAL.PUB.",
+          "votes": 2926,
+          "share": 0.01
+        },
+        {
+          "name": "MOV.COLT.E SAL.",
+          "votes": 2685,
+          "share": 0.01
+        },
+        {
+          "name": "RINN.SOC.",
+          "votes": 1750,
+          "share": 0.01
+        },
+        {
+          "name": "MOV.POP.IT.",
+          "votes": 1621,
+          "share": 0.01
+        },
+        {
+          "name": "AV.NAZ.",
+          "votes": 959,
+          "share": 0
+        },
+        {
+          "name": "PART.LAB.IT.",
+          "votes": 755,
+          "share": 0
+        }
+      ]
+    },
+    {
+      "id": "camera-1968-05-19",
+      "type": "camera",
+      "typeLabel": "Camera dei deputati",
+      "year": 1968,
+      "date": "1968-05-19",
+      "title": "Camera dei deputati 1968",
+      "sourceUrl": "https://elezionistorico.interno.gov.it/daithome/documenti/opendata/camera/camera-19680519.zip",
+      "sourceFiles": [
+        "camera-19680519.txt"
+      ],
+      "totals": {
+        "electors": 35566493,
+        "voters": 33001644,
+        "blankBallots": 640130,
+        "validVotes": 31800100,
+        "turnoutPct": 92.79,
+        "blankPct": 1.94
+      },
+      "winner": {
+        "name": "DC",
+        "votes": 12439939,
+        "share": 39.12
+      },
+      "results": [
+        {
+          "name": "DC",
+          "votes": 12439939,
+          "share": 39.12
+        },
+        {
+          "name": "PCI",
+          "votes": 8557077,
+          "share": 26.91
+        },
+        {
+          "name": "PSU",
+          "votes": 4604395,
+          "share": 14.48
+        },
+        {
+          "name": "PLI",
+          "votes": 1850817,
+          "share": 5.82
+        },
+        {
+          "name": "PSIUP",
+          "votes": 1414971,
+          "share": 4.45
+        },
+        {
+          "name": "MSI",
+          "votes": 1414201,
+          "share": 4.45
+        },
+        {
+          "name": "PRI",
+          "votes": 626542,
+          "share": 1.97
+        },
+        {
+          "name": "PDIUM",
+          "votes": 414529,
+          "share": 1.3
+        },
+        {
+          "name": "PPST",
+          "votes": 152991,
+          "share": 0.48
+        },
+        {
+          "name": "SOCIALDEMOCRAZIA",
+          "votes": 100323,
+          "share": 0.32
+        },
+        {
+          "name": "NUOVA REPUBBLICA",
+          "votes": 63402,
+          "share": 0.2
+        },
+        {
+          "name": "PAPI",
+          "votes": 41716,
+          "share": 0.13
+        },
+        {
+          "name": "UV",
+          "votes": 31457,
+          "share": 0.1
+        },
+        {
+          "name": "PS D'AZ.",
+          "votes": 27228,
+          "share": 0.09
+        },
+        {
+          "name": "PART.MON.NAZ.",
+          "votes": 18883,
+          "share": 0.06
+        },
+        {
+          "name": "MOV.SOC.",
+          "votes": 6551,
+          "share": 0.02
+        },
+        {
+          "name": "UNIONE SLOVENA",
+          "votes": 6142,
+          "share": 0.02
+        },
+        {
+          "name": "PST.PROG.SOC.",
+          "votes": 5740,
+          "share": 0.02
+        },
+        {
+          "name": "UN.NAZ.SAL.PUB.",
+          "votes": 3697,
+          "share": 0.01
+        },
+        {
+          "name": "RAG.VOL.\"T\"",
+          "votes": 3158,
+          "share": 0.01
+        },
+        {
+          "name": "PART.ORD.ECON.",
+          "votes": 3013,
+          "share": 0.01
+        },
+        {
+          "name": "PART.DEM.PROG.",
+          "votes": 2208,
+          "share": 0.01
+        },
+        {
+          "name": "PART.AGRICOLTORI",
+          "votes": 2061,
+          "share": 0.01
+        },
+        {
+          "name": "RAGGR.ITAL.",
+          "votes": 1807,
+          "share": 0.01
+        },
+        {
+          "name": "P.COM.RIVOL.",
+          "votes": 1798,
+          "share": 0.01
+        },
+        {
+          "name": "P.RAD",
+          "votes": 1540,
+          "share": 0
+        },
+        {
+          "name": "RIS.POP.",
+          "votes": 1196,
+          "share": 0
+        },
+        {
+          "name": "SACRO IDEAL.MONDO",
+          "votes": 1126,
+          "share": 0
+        },
+        {
+          "name": "P.PROG.UNSIPO",
+          "votes": 1068,
+          "share": 0
+        },
+        {
+          "name": "PART.NAZ.MUT.COMB.IT",
+          "votes": 524,
+          "share": 0
+        }
+      ]
+    },
+    {
+      "id": "camera-1972-05-07",
+      "type": "camera",
+      "typeLabel": "Camera dei deputati",
+      "year": 1972,
+      "date": "1972-05-07",
+      "title": "Camera dei deputati 1972",
+      "sourceUrl": "https://elezionistorico.interno.gov.it/daithome/documenti/opendata/camera/camera-19720507.zip",
+      "sourceFiles": [
+        "camera-19720507.txt"
+      ],
+      "totals": {
+        "electors": 37049353,
+        "voters": 34525661,
+        "blankBallots": 600164,
+        "validVotes": 33404397,
+        "turnoutPct": 93.19,
+        "blankPct": 1.74
+      },
+      "winner": {
+        "name": "DC",
+        "votes": 12913522,
+        "share": 38.66
+      },
+      "results": [
+        {
+          "name": "DC",
+          "votes": 12913522,
+          "share": 38.66
+        },
+        {
+          "name": "PCI",
+          "votes": 9069992,
+          "share": 27.15
+        },
+        {
+          "name": "PSI",
+          "votes": 3208408,
+          "share": 9.6
+        },
+        {
+          "name": "MSI",
+          "votes": 2894647,
+          "share": 8.67
+        },
+        {
+          "name": "PSDI",
+          "votes": 1717408,
+          "share": 5.14
+        },
+        {
+          "name": "PLI",
+          "votes": 1300106,
+          "share": 3.89
+        },
+        {
+          "name": "PRI",
+          "votes": 954181,
+          "share": 2.86
+        },
+        {
+          "name": "PSIUP",
+          "votes": 648802,
+          "share": 1.94
+        },
+        {
+          "name": "MANIFESTO",
+          "votes": 224297,
+          "share": 0.67
+        },
+        {
+          "name": "PPST",
+          "votes": 153674,
+          "share": 0.46
+        },
+        {
+          "name": "MOV.POL.LAV.",
+          "votes": 120236,
+          "share": 0.36
+        },
+        {
+          "name": "PC(MARX-LEN)IT",
+          "votes": 86026,
+          "share": 0.26
+        },
+        {
+          "name": "DC-UV-RV-PSDI",
+          "votes": 34083,
+          "share": 0.1
+        },
+        {
+          "name": "DEM.POP.",
+          "votes": 28886,
+          "share": 0.09
+        },
+        {
+          "name": "PAPI",
+          "votes": 15304,
+          "share": 0.05
+        },
+        {
+          "name": "STELLA ROSSA-R.S.",
+          "votes": 9108,
+          "share": 0.03
+        },
+        {
+          "name": "AZ.CR.POP.",
+          "votes": 9068,
+          "share": 0.03
+        },
+        {
+          "name": "RINN.DEM.NAZ.",
+          "votes": 5893,
+          "share": 0.02
+        },
+        {
+          "name": "PCS (MARX.-LEN.)",
+          "votes": 2958,
+          "share": 0.01
+        },
+        {
+          "name": "FR.NAZ.SIC.",
+          "votes": 2884,
+          "share": 0.01
+        },
+        {
+          "name": "UN.FORZE DEM.",
+          "votes": 2191,
+          "share": 0.01
+        },
+        {
+          "name": "PART.AGRICOLTORI",
+          "votes": 1706,
+          "share": 0.01
+        },
+        {
+          "name": "FR.UOMO QUALUNQUE",
+          "votes": 1017,
+          "share": 0
+        }
+      ]
+    },
+    {
+      "id": "camera-1976-06-20",
+      "type": "camera",
+      "typeLabel": "Camera dei deputati",
+      "year": 1976,
+      "date": "1976-06-20",
+      "title": "Camera dei deputati 1976",
+      "sourceUrl": "https://elezionistorico.interno.gov.it/daithome/documenti/opendata/camera/camera-19760620.zip",
+      "sourceFiles": [
+        "camera-19760620.txt"
+      ],
+      "totals": {
+        "electors": 40447569,
+        "voters": 37743785,
+        "blankBallots": 595649,
+        "validVotes": 36717719,
+        "turnoutPct": 93.32,
+        "blankPct": 1.58
+      },
+      "winner": {
+        "name": "DC",
+        "votes": 14213375,
+        "share": 38.71
+      },
+      "results": [
+        {
+          "name": "DC",
+          "votes": 14213375,
+          "share": 38.71
+        },
+        {
+          "name": "PCI",
+          "votes": 12619736,
+          "share": 34.37
+        },
+        {
+          "name": "PSI",
+          "votes": 3541603,
+          "share": 9.65
+        },
+        {
+          "name": "MSI-DN",
+          "votes": 2244321,
+          "share": 6.11
+        },
+        {
+          "name": "PSDI",
+          "votes": 1236696,
+          "share": 3.37
+        },
+        {
+          "name": "PRI",
+          "votes": 1134965,
+          "share": 3.09
+        },
+        {
+          "name": "DEM.PROL",
+          "votes": 556006,
+          "share": 1.51
+        },
+        {
+          "name": "PLI",
+          "votes": 478497,
+          "share": 1.3
+        },
+        {
+          "name": "P.RAD",
+          "votes": 394760,
+          "share": 1.08
+        },
+        {
+          "name": "PPST",
+          "votes": 184324,
+          "share": 0.5
+        },
+        {
+          "name": "PCI-PSI-PDUP",
+          "votes": 26743,
+          "share": 0.07
+        },
+        {
+          "name": "DC-RV-UV-UVP-PRI",
+          "votes": 24080,
+          "share": 0.07
+        },
+        {
+          "name": "DEM.POP-UVP M.REG",
+          "votes": 20210,
+          "share": 0.06
+        },
+        {
+          "name": "NPP",
+          "votes": 10904,
+          "share": 0.03
+        },
+        {
+          "name": "UNIONE SLOVENA",
+          "votes": 8196,
+          "share": 0.02
+        },
+        {
+          "name": "TIROL.",
+          "votes": 7466,
+          "share": 0.02
+        },
+        {
+          "name": "POE",
+          "votes": 5436,
+          "share": 0.01
+        },
+        {
+          "name": "MOV.IND.TLT",
+          "votes": 4547,
+          "share": 0.01
+        },
+        {
+          "name": "P.DEM.",
+          "votes": 2795,
+          "share": 0.01
+        },
+        {
+          "name": "PART.SIN.DEM.",
+          "votes": 1760,
+          "share": 0
+        },
+        {
+          "name": "PART.BEN.CIV.",
+          "votes": 1299,
+          "share": 0
+        }
+      ]
+    },
+    {
+      "id": "camera-1979-06-03",
+      "type": "camera",
+      "typeLabel": "Camera dei deputati",
+      "year": 1979,
+      "date": "1979-06-03",
+      "title": "Camera dei deputati 1979",
+      "sourceUrl": "https://elezionistorico.interno.gov.it/daithome/documenti/opendata/camera/camera-19790603.zip",
+      "sourceFiles": [
+        "camera-19790603.txt"
+      ],
+      "totals": {
+        "electors": 42213292,
+        "voters": 38257912,
+        "blankBallots": 837079,
+        "validVotes": 36677526,
+        "turnoutPct": 90.63,
+        "blankPct": 2.19
+      },
+      "winner": {
+        "name": "DC",
+        "votes": 14045206,
+        "share": 38.29
+      },
+      "results": [
+        {
+          "name": "DC",
+          "votes": 14045206,
+          "share": 38.29
+        },
+        {
+          "name": "PCI",
+          "votes": 11138319,
+          "share": 30.37
+        },
+        {
+          "name": "PSI",
+          "votes": 3598705,
+          "share": 9.81
+        },
+        {
+          "name": "MSI-DN",
+          "votes": 1930021,
+          "share": 5.26
+        },
+        {
+          "name": "PSDI",
+          "votes": 1407777,
+          "share": 3.84
+        },
+        {
+          "name": "P.RAD",
+          "votes": 1264394,
+          "share": 3.45
+        },
+        {
+          "name": "PRI",
+          "votes": 1111532,
+          "share": 3.03
+        },
+        {
+          "name": "PLI",
+          "votes": 712403,
+          "share": 1.94
+        },
+        {
+          "name": "PDUP",
+          "votes": 513201,
+          "share": 1.4
+        },
+        {
+          "name": "NUOVA SIN.UNITA",
+          "votes": 288374,
+          "share": 0.79
+        },
+        {
+          "name": "DN-CD",
+          "votes": 229050,
+          "share": 0.62
+        },
+        {
+          "name": "PPST",
+          "votes": 204876,
+          "share": 0.56
+        },
+        {
+          "name": "LISTA PER TRIESTE",
+          "votes": 65400,
+          "share": 0.18
+        },
+        {
+          "name": "MOV.FRIULI",
+          "votes": 35232,
+          "share": 0.1
+        },
+        {
+          "name": "UNIONE VALDOSTANA-DEMPROL-PLI",
+          "votes": 33250,
+          "share": 0.09
+        },
+        {
+          "name": "UNITA DELLA SINISTRA",
+          "votes": 23909,
+          "share": 0.07
+        },
+        {
+          "name": "PS D'AZ.",
+          "votes": 18341,
+          "share": 0.05
+        },
+        {
+          "name": "DC-PSDI-PRI",
+          "votes": 13442,
+          "share": 0.04
+        },
+        {
+          "name": "POE",
+          "votes": 7519,
+          "share": 0.02
+        },
+        {
+          "name": "PARTITO POPOLARE ITALIANO",
+          "votes": 6557,
+          "share": 0.02
+        },
+        {
+          "name": "FRONTE GIUST.SIC.",
+          "votes": 5104,
+          "share": 0.01
+        },
+        {
+          "name": "PART.CRIST.AZ.SOC.",
+          "votes": 3129,
+          "share": 0.01
+        },
+        {
+          "name": "P.DEM.",
+          "votes": 3101,
+          "share": 0.01
+        },
+        {
+          "name": "PART.BEN.CIV.",
+          "votes": 3043,
+          "share": 0.01
+        },
+        {
+          "name": "PART.POP.CALAB.",
+          "votes": 2934,
+          "share": 0.01
+        },
+        {
+          "name": "FR.NAZ.SIC.",
+          "votes": 2725,
+          "share": 0.01
+        },
+        {
+          "name": "NPP",
+          "votes": 2143,
+          "share": 0.01
+        },
+        {
+          "name": "ASS.VAL.IND",
+          "votes": 2093,
+          "share": 0.01
+        },
+        {
+          "name": "FIORE MARGHERITA",
+          "votes": 2064,
+          "share": 0.01
+        },
+        {
+          "name": "MOV.POP.CRIST.",
+          "votes": 1905,
+          "share": 0.01
+        },
+        {
+          "name": "PART.SIN.DEM.",
+          "votes": 1552,
+          "share": 0
+        },
+        {
+          "name": "PART.NAZ.PENS.",
+          "votes": 106,
+          "share": 0
+        },
+        {
+          "name": "DEM.PROL",
+          "votes": 96,
+          "share": 0
+        },
+        {
+          "name": "MOV.ECOL.SARDO",
+          "votes": 21,
+          "share": 0
+        },
+        {
+          "name": "GIUST. E LIB.",
+          "votes": 2,
+          "share": 0
+        }
+      ]
+    },
+    {
+      "id": "camera-1983-06-26",
+      "type": "camera",
+      "typeLabel": "Camera dei deputati",
+      "year": 1983,
+      "date": "1983-06-26",
+      "title": "Camera dei deputati 1983",
+      "sourceUrl": "https://elezionistorico.interno.gov.it/daithome/documenti/opendata/camera/camera-19830626.zip",
+      "sourceFiles": [
+        "camera-19830626.txt"
+      ],
+      "totals": {
+        "electors": 44526307,
+        "voters": 39188182,
+        "blankBallots": 942382,
+        "validVotes": 36902772,
+        "turnoutPct": 88.01,
+        "blankPct": 2.4
+      },
+      "winner": {
+        "name": "DC",
+        "votes": 12151983,
+        "share": 32.93
+      },
+      "results": [
+        {
+          "name": "DC",
+          "votes": 12151983,
+          "share": 32.93
+        },
+        {
+          "name": "PCI",
+          "votes": 11031440,
+          "share": 29.89
+        },
+        {
+          "name": "PSI",
+          "votes": 4222963,
+          "share": 11.44
+        },
+        {
+          "name": "MSI-DN",
+          "votes": 2511206,
+          "share": 6.8
+        },
+        {
+          "name": "PRI",
+          "votes": 1874389,
+          "share": 5.08
+        },
+        {
+          "name": "PSDI",
+          "votes": 1508111,
+          "share": 4.09
+        },
+        {
+          "name": "PLI",
+          "votes": 1066911,
+          "share": 2.89
+        },
+        {
+          "name": "P.RAD",
+          "votes": 809711,
+          "share": 2.19
+        },
+        {
+          "name": "DEM.PROL",
+          "votes": 541978,
+          "share": 1.47
+        },
+        {
+          "name": "PART.NAZ.PENS.",
+          "votes": 503426,
+          "share": 1.36
+        },
+        {
+          "name": "PPST",
+          "votes": 184918,
+          "share": 0.5
+        },
+        {
+          "name": "LIGA VENETA",
+          "votes": 125301,
+          "share": 0.34
+        },
+        {
+          "name": "LISTA PER TRIESTE",
+          "votes": 92091,
+          "share": 0.25
+        },
+        {
+          "name": "PS D'AZ.",
+          "votes": 91917,
+          "share": 0.25
+        },
+        {
+          "name": "UV-UVP-D.POP.",
+          "votes": 28078,
+          "share": 0.08
+        },
+        {
+          "name": "MOV.FRIULI",
+          "votes": 26190,
+          "share": 0.07
+        },
+        {
+          "name": "PPTT",
+          "votes": 18655,
+          "share": 0.05
+        },
+        {
+          "name": "UN.DIF.PENS.",
+          "votes": 15182,
+          "share": 0.04
+        },
+        {
+          "name": "PART.MON.NAZ.",
+          "votes": 13572,
+          "share": 0.04
+        },
+        {
+          "name": "PART.SUD.TIROL",
+          "votes": 12270,
+          "share": 0.03
+        },
+        {
+          "name": "UN.PEN.PENS.IT.",
+          "votes": 9944,
+          "share": 0.03
+        },
+        {
+          "name": "UNIONE SLOVENA",
+          "votes": 9433,
+          "share": 0.03
+        },
+        {
+          "name": "POE",
+          "votes": 8070,
+          "share": 0.02
+        },
+        {
+          "name": "LISTA DI LOTTA",
+          "votes": 6861,
+          "share": 0.02
+        },
+        {
+          "name": "PART.CRIST.AZ.SOC.",
+          "votes": 6354,
+          "share": 0.02
+        },
+        {
+          "name": "VIV.LIB.",
+          "votes": 5257,
+          "share": 0.01
+        },
+        {
+          "name": "FR.NAZ.SIC.",
+          "votes": 5228,
+          "share": 0.01
+        },
+        {
+          "name": "PART.NAZ.INQ.",
+          "votes": 4768,
+          "share": 0.01
+        },
+        {
+          "name": "MOV.ECOL.SARDO",
+          "votes": 4263,
+          "share": 0.01
+        },
+        {
+          "name": "PLI-PRI-PSDI",
+          "votes": 4239,
+          "share": 0.01
+        },
+        {
+          "name": "MOV.IND.TLT",
+          "votes": 2913,
+          "share": 0.01
+        },
+        {
+          "name": "NUOVA SINISTRA",
+          "votes": 1852,
+          "share": 0.01
+        },
+        {
+          "name": "GIUST. E LIB.",
+          "votes": 1692,
+          "share": 0
+        },
+        {
+          "name": "MOV.POP.CRIST.",
+          "votes": 1606,
+          "share": 0
+        }
+      ]
+    },
+    {
+      "id": "camera-1987-06-14",
+      "type": "camera",
+      "typeLabel": "Camera dei deputati",
+      "year": 1987,
+      "date": "1987-06-14",
+      "title": "Camera dei deputati 1987",
+      "sourceUrl": "https://elezionistorico.interno.gov.it/daithome/documenti/opendata/camera/camera-19870614.zip",
+      "sourceFiles": [
+        "Camera-19870614.txt"
+      ],
+      "totals": {
+        "electors": 45689830,
+        "voters": 40603031,
+        "blankBallots": 774469,
+        "validVotes": 38585251,
+        "turnoutPct": 88.87,
+        "blankPct": 1.91
+      },
+      "winner": {
+        "name": "DC",
+        "votes": 13238731,
+        "share": 34.31
+      },
+      "results": [
+        {
+          "name": "DC",
+          "votes": 13238731,
+          "share": 34.31
+        },
+        {
+          "name": "PCI",
+          "votes": 10253776,
+          "share": 26.57
+        },
+        {
+          "name": "PSI",
+          "votes": 5504155,
+          "share": 14.26
+        },
+        {
+          "name": "MSI-DN",
+          "votes": 2282030,
+          "share": 5.91
+        },
+        {
+          "name": "PRI",
+          "votes": 1429446,
+          "share": 3.7
+        },
+        {
+          "name": "PSDI",
+          "votes": 1140742,
+          "share": 2.96
+        },
+        {
+          "name": "P.RAD",
+          "votes": 988037,
+          "share": 2.56
+        },
+        {
+          "name": "LISTA VERDE",
+          "votes": 969274,
+          "share": 2.51
+        },
+        {
+          "name": "PLI",
+          "votes": 810151,
+          "share": 2.1
+        },
+        {
+          "name": "DEM.PROL",
+          "votes": 642018,
+          "share": 1.66
+        },
+        {
+          "name": "LIGA VENETA-PU",
+          "votes": 298416,
+          "share": 0.77
+        },
+        {
+          "name": "PPST",
+          "votes": 202010,
+          "share": 0.52
+        },
+        {
+          "name": "LEGA LOMBARDA",
+          "votes": 186234,
+          "share": 0.48
+        },
+        {
+          "name": "PS D'AZ.",
+          "votes": 169974,
+          "share": 0.44
+        },
+        {
+          "name": "PIEMONT-AUT.REG.",
+          "votes": 72060,
+          "share": 0.19
+        },
+        {
+          "name": "PIEMONT",
+          "votes": 61698,
+          "share": 0.16
+        },
+        {
+          "name": "CPA",
+          "votes": 55909,
+          "share": 0.14
+        },
+        {
+          "name": "UV-ADP-PRI",
+          "votes": 41700,
+          "share": 0.11
+        },
+        {
+          "name": "DC-PCI-PSI-PSDI",
+          "votes": 29935,
+          "share": 0.08
+        },
+        {
+          "name": "ALL.POP.",
+          "votes": 25355,
+          "share": 0.07
+        },
+        {
+          "name": "MOV.LIB.FISCALE",
+          "votes": 25043,
+          "share": 0.06
+        },
+        {
+          "name": "ALL.PENS.",
+          "votes": 21338,
+          "share": 0.06
+        },
+        {
+          "name": "P.VERDE I.VER.E.",
+          "votes": 20960,
+          "share": 0.05
+        },
+        {
+          "name": "MOV.VEN.REG.AUT",
+          "votes": 18945,
+          "share": 0.05
+        },
+        {
+          "name": "MOV.NAZ.IT.CACC.",
+          "votes": 14786,
+          "share": 0.04
+        },
+        {
+          "name": "PNI-CACCIA PESCA",
+          "votes": 14306,
+          "share": 0.04
+        },
+        {
+          "name": "MOV.FRIULI",
+          "votes": 13207,
+          "share": 0.03
+        },
+        {
+          "name": "PART.SUD.TIROL",
+          "votes": 11286,
+          "share": 0.03
+        },
+        {
+          "name": "VERDI IT.-P.ECOL",
+          "votes": 10268,
+          "share": 0.03
+        },
+        {
+          "name": "PARTIDU INDIP.",
+          "votes": 9955,
+          "share": 0.03
+        },
+        {
+          "name": "ALL.UM.",
+          "votes": 5609,
+          "share": 0.01
+        },
+        {
+          "name": "NPP",
+          "votes": 5098,
+          "share": 0.01
+        },
+        {
+          "name": "GIUST. E LIB.",
+          "votes": 4793,
+          "share": 0.01
+        },
+        {
+          "name": "PART.NAZ.INQ.",
+          "votes": 2952,
+          "share": 0.01
+        },
+        {
+          "name": "RINASCITA SIC.",
+          "votes": 2951,
+          "share": 0.01
+        },
+        {
+          "name": "MOV.IND.TLT",
+          "votes": 2103,
+          "share": 0.01
+        }
+      ]
+    },
+    {
+      "id": "camera-1992-04-05",
+      "type": "camera",
+      "typeLabel": "Camera dei deputati",
+      "year": 1992,
+      "date": "1992-04-05",
+      "title": "Camera dei deputati 1992",
+      "sourceUrl": "https://elezionistorico.interno.gov.it/daithome/documenti/opendata/camera/camera-19920405.zip",
+      "sourceFiles": [
+        "camera-19920405.txt"
+      ],
+      "totals": {
+        "electors": 47486964,
+        "voters": 41479764,
+        "blankBallots": 872025,
+        "validVotes": 39241378,
+        "turnoutPct": 87.35,
+        "blankPct": 2.1
+      },
+      "winner": {
+        "name": "DC",
+        "votes": 11639170,
+        "share": 29.66
+      },
+      "results": [
+        {
+          "name": "DC",
+          "votes": 11639170,
+          "share": 29.66
+        },
+        {
+          "name": "PDS",
+          "votes": 6320198,
+          "share": 16.11
+        },
+        {
+          "name": "PSI",
+          "votes": 5343097,
+          "share": 13.62
+        },
+        {
+          "name": "LEGA LOMBARDA",
+          "votes": 3395449,
+          "share": 8.65
+        },
+        {
+          "name": "RIFONDAZIONE COMUNISTA",
+          "votes": 2203660,
+          "share": 5.62
+        },
+        {
+          "name": "MSI-DN",
+          "votes": 2106742,
+          "share": 5.37
+        },
+        {
+          "name": "PRI",
+          "votes": 1722296,
+          "share": 4.39
+        },
+        {
+          "name": "PLI",
+          "votes": 1121134,
+          "share": 2.86
+        },
+        {
+          "name": "FEDERAZIONE DEI VERDI",
+          "votes": 1093859,
+          "share": 2.79
+        },
+        {
+          "name": "PSDI",
+          "votes": 1064456,
+          "share": 2.71
+        },
+        {
+          "name": "LA RETE-MOV.DEM.",
+          "votes": 730093,
+          "share": 1.86
+        },
+        {
+          "name": "LISTA PANNELLA",
+          "votes": 485607,
+          "share": 1.24
+        },
+        {
+          "name": "LISTA REFERENDUM",
+          "votes": 319782,
+          "share": 0.81
+        },
+        {
+          "name": "PARTITO PENSIONATI",
+          "votes": 220541,
+          "share": 0.56
+        },
+        {
+          "name": "PPST",
+          "votes": 198433,
+          "share": 0.51
+        },
+        {
+          "name": "CPA",
+          "votes": 192778,
+          "share": 0.49
+        },
+        {
+          "name": "FEDERALISMO-PENS.UV.",
+          "votes": 154582,
+          "share": 0.39
+        },
+        {
+          "name": "LEGA AUT.VENETA",
+          "votes": 152280,
+          "share": 0.39
+        },
+        {
+          "name": "LA LEGA CAS-PENS.",
+          "votes": 133637,
+          "share": 0.34
+        },
+        {
+          "name": "LEGA ALPINA LUMBARDA",
+          "votes": 90815,
+          "share": 0.23
+        },
+        {
+          "name": "LEGA ALPINA PIEMONT",
+          "votes": 69682,
+          "share": 0.18
+        },
+        {
+          "name": "LEGA D'AZIONE MERIDIONALE",
+          "votes": 53746,
+          "share": 0.14
+        },
+        {
+          "name": "MOV.VEN.REG.AUT",
+          "votes": 49031,
+          "share": 0.12
+        },
+        {
+          "name": "UNION VENETO",
+          "votes": 48805,
+          "share": 0.12
+        },
+        {
+          "name": "VERDI FEDERALISTI",
+          "votes": 42624,
+          "share": 0.11
+        },
+        {
+          "name": "L.VALLE D'AOSTA",
+          "votes": 41398,
+          "share": 0.11
+        },
+        {
+          "name": "LG.LOMB.EUR.T.LIB.",
+          "votes": 33572,
+          "share": 0.09
+        },
+        {
+          "name": "GRUPPO DOLCHI-FOSSON",
+          "votes": 30719,
+          "share": 0.08
+        },
+        {
+          "name": "LEGA DELLE LEGHE",
+          "votes": 27865,
+          "share": 0.07
+        },
+        {
+          "name": "VERDI-VERDI",
+          "votes": 25875,
+          "share": 0.07
+        },
+        {
+          "name": "PART.AMORE",
+          "votes": 22408,
+          "share": 0.06
+        },
+        {
+          "name": "ALLEANZA LOMBARDA AUTONOMIA",
+          "votes": 15057,
+          "share": 0.04
+        },
+        {
+          "name": "PARTIDU INDIP.",
+          "votes": 15055,
+          "share": 0.04
+        },
+        {
+          "name": "PIEMONT LIBER",
+          "votes": 11254,
+          "share": 0.03
+        },
+        {
+          "name": "MOV.POL.DIF.AUTOMOB.",
+          "votes": 10058,
+          "share": 0.03
+        },
+        {
+          "name": "LEGA MARCHE",
+          "votes": 8035,
+          "share": 0.02
+        },
+        {
+          "name": "LEGA LAZIO",
+          "votes": 5917,
+          "share": 0.02
+        },
+        {
+          "name": "E.ROMAGNA-LG PADANA",
+          "votes": 5836,
+          "share": 0.01
+        },
+        {
+          "name": "C.S.T.",
+          "votes": 5719,
+          "share": 0.01
+        },
+        {
+          "name": "P.CRIST.DEMOCRAZIA",
+          "votes": 5039,
+          "share": 0.01
+        },
+        {
+          "name": "MOV.AUT.TOSCANO",
+          "votes": 4395,
+          "share": 0.01
+        },
+        {
+          "name": "LEGA MERID.D'IT.",
+          "votes": 4053,
+          "share": 0.01
+        },
+        {
+          "name": "PART.EUROPA 2000",
+          "votes": 3372,
+          "share": 0.01
+        },
+        {
+          "name": "VIVERE INSIEME",
+          "votes": 2842,
+          "share": 0.01
+        },
+        {
+          "name": "PART.GIUSTIZIALISTA",
+          "votes": 2792,
+          "share": 0.01
+        },
+        {
+          "name": "MOVIMENTO DELLE LIBERTA'",
+          "votes": 2394,
+          "share": 0.01
+        },
+        {
+          "name": "MOV.EUR.AUTOMOB.",
+          "votes": 2106,
+          "share": 0.01
+        },
+        {
+          "name": "LG.NAZ.PROTESTA",
+          "votes": 1448,
+          "share": 0
+        },
+        {
+          "name": "RINNOVAMENTO",
+          "votes": 1208,
+          "share": 0
+        },
+        {
+          "name": "LG.MERID.UN.NAZ.",
+          "votes": 464,
+          "share": 0
+        }
+      ]
+    },
+    {
+      "id": "camera-1994-03-27",
+      "type": "camera",
+      "typeLabel": "Camera dei deputati",
+      "year": 1994,
+      "date": "1994-03-27",
+      "title": "Camera dei deputati 1994",
+      "sourceUrl": "https://elezionistorico.interno.gov.it/daithome/documenti/opendata/camera/camera-19940327.zip",
+      "sourceFiles": [
+        "camera-19940327_Proporzionale.txt"
+      ],
+      "totals": {
+        "electors": 48450927,
+        "voters": 41606351,
+        "blankBallots": 1432074,
+        "validVotes": 38738121,
+        "turnoutPct": 85.87,
+        "blankPct": 3.44
+      },
+      "winner": {
+        "name": "FORZA ITALIA",
+        "votes": 8134781,
+        "share": 21
+      },
+      "results": [
+        {
+          "name": "FORZA ITALIA",
+          "votes": 8134781,
+          "share": 21
+        },
+        {
+          "name": "PDS",
+          "votes": 7881974,
+          "share": 20.35
+        },
+        {
+          "name": "ALLEANZA NAZIONALE",
+          "votes": 5231864,
+          "share": 13.51
+        },
+        {
+          "name": "P.POPOLARE ITALIANO",
+          "votes": 4286227,
+          "share": 11.06
+        },
+        {
+          "name": "LEGA NORD",
+          "votes": 3255331,
+          "share": 8.4
+        },
+        {
+          "name": "RIFONDAZIONE COMUNISTA",
+          "votes": 2346379,
+          "share": 6.06
+        },
+        {
+          "name": "PATTO SEGNI",
+          "votes": 1807831,
+          "share": 4.67
+        },
+        {
+          "name": "LISTA PANNELLA",
+          "votes": 1357042,
+          "share": 3.5
+        },
+        {
+          "name": "FEDERAZIONE DEI VERDI",
+          "votes": 1048633,
+          "share": 2.71
+        },
+        {
+          "name": "PSI",
+          "votes": 844058,
+          "share": 2.18
+        },
+        {
+          "name": "LA RETE-MOV.DEM.",
+          "votes": 712466,
+          "share": 1.84
+        },
+        {
+          "name": "ALLEANZA DEMOCRATICA",
+          "votes": 455861,
+          "share": 1.18
+        },
+        {
+          "name": "SVP",
+          "votes": 231825,
+          "share": 0.6
+        },
+        {
+          "name": "SOCIALDEMOCRAZIA",
+          "votes": 180718,
+          "share": 0.47
+        },
+        {
+          "name": "PROGRAMMA ITALIA",
+          "votes": 151437,
+          "share": 0.39
+        },
+        {
+          "name": "LEGA ALPINA LUMBARDA",
+          "votes": 136411,
+          "share": 0.35
+        },
+        {
+          "name": "LEGA AUT.VENETA",
+          "votes": 105345,
+          "share": 0.27
+        },
+        {
+          "name": "LEGA D'AZIONE MERIDIONALE",
+          "votes": 59850,
+          "share": 0.15
+        },
+        {
+          "name": "UN.POP.",
+          "votes": 36255,
+          "share": 0.09
+        },
+        {
+          "name": "VERDI-VERDI",
+          "votes": 32823,
+          "share": 0.08
+        },
+        {
+          "name": "SOLID.OCCUPAZ.SVILUP",
+          "votes": 32415,
+          "share": 0.08
+        },
+        {
+          "name": "PART.LEGGE NATURALE",
+          "votes": 25351,
+          "share": 0.07
+        },
+        {
+          "name": "PARTIDU INDIP.",
+          "votes": 20792,
+          "share": 0.05
+        },
+        {
+          "name": "UNIONE DEM.ITALIANA",
+          "votes": 20085,
+          "share": 0.05
+        },
+        {
+          "name": "UN.CRIST.RIF.",
+          "votes": 15768,
+          "share": 0.04
+        },
+        {
+          "name": "PATTO SOLIDARIETA'",
+          "votes": 15577,
+          "share": 0.04
+        },
+        {
+          "name": "LG.ANGELA BOSSI",
+          "votes": 15260,
+          "share": 0.04
+        },
+        {
+          "name": "LEGA PER IL PIEMONTE",
+          "votes": 15062,
+          "share": 0.04
+        },
+        {
+          "name": "ALL.MERIDIONALE",
+          "votes": 14006,
+          "share": 0.04
+        },
+        {
+          "name": "ADA",
+          "votes": 12898,
+          "share": 0.03
+        },
+        {
+          "name": "ALL.POP.",
+          "votes": 12516,
+          "share": 0.03
+        },
+        {
+          "name": "INIZIATIVA POP.DEM.",
+          "votes": 11596,
+          "share": 0.03
+        },
+        {
+          "name": "L'ARCA",
+          "votes": 11427,
+          "share": 0.03
+        },
+        {
+          "name": "RIN.SALENTINA",
+          "votes": 11412,
+          "share": 0.03
+        },
+        {
+          "name": "MOV.CRIST.DEM.",
+          "votes": 10875,
+          "share": 0.03
+        },
+        {
+          "name": "SOLID.PROGRESSO",
+          "votes": 10307,
+          "share": 0.03
+        },
+        {
+          "name": "INSIEME PER SVILUPPO",
+          "votes": 10252,
+          "share": 0.03
+        },
+        {
+          "name": "LISTA FRANCO GRECO",
+          "votes": 10215,
+          "share": 0.03
+        },
+        {
+          "name": "RINASCITA SOCIALISTA",
+          "votes": 9814,
+          "share": 0.03
+        },
+        {
+          "name": "DEM.E SOLIDARIETA'",
+          "votes": 9547,
+          "share": 0.02
+        },
+        {
+          "name": "UNIONE MEDITERRANEA",
+          "votes": 9186,
+          "share": 0.02
+        },
+        {
+          "name": "MOV.MERIDIONALE",
+          "votes": 8897,
+          "share": 0.02
+        },
+        {
+          "name": "DEMOCRAZIA SICILIANA",
+          "votes": 8407,
+          "share": 0.02
+        },
+        {
+          "name": "MOV.CATTOLICO DEM.",
+          "votes": 8344,
+          "share": 0.02
+        },
+        {
+          "name": "RIFORMISTI IRPINI",
+          "votes": 8262,
+          "share": 0.02
+        },
+        {
+          "name": "P.DEM.",
+          "votes": 7649,
+          "share": 0.02
+        },
+        {
+          "name": "UNIONE POP.",
+          "votes": 7589,
+          "share": 0.02
+        },
+        {
+          "name": "ALL.MUNICIPALITA'",
+          "votes": 7431,
+          "share": 0.02
+        },
+        {
+          "name": "UTOPIA",
+          "votes": 6939,
+          "share": 0.02
+        },
+        {
+          "name": "MOV.REP.",
+          "votes": 6621,
+          "share": 0.02
+        },
+        {
+          "name": "MOV.CRIST.VERITAS",
+          "votes": 6410,
+          "share": 0.02
+        },
+        {
+          "name": "RINNOVAMENTO",
+          "votes": 6016,
+          "share": 0.02
+        },
+        {
+          "name": "RIN.DEMOCRATICO",
+          "votes": 5578,
+          "share": 0.01
+        },
+        {
+          "name": "LIBERAL DEM.EUROPEI",
+          "votes": 4751,
+          "share": 0.01
+        },
+        {
+          "name": "INSIEME PER CAMBIARE",
+          "votes": 4588,
+          "share": 0.01
+        },
+        {
+          "name": "P.POP.PROGRESSISTA",
+          "votes": 4554,
+          "share": 0.01
+        },
+        {
+          "name": "CENTRO DEMOCRATICO",
+          "votes": 4427,
+          "share": 0.01
+        },
+        {
+          "name": "MEDITERRANEO",
+          "votes": 3821,
+          "share": 0.01
+        },
+        {
+          "name": "MOV.LIBERALDEM.SOC.",
+          "votes": 3498,
+          "share": 0.01
+        },
+        {
+          "name": "ALL.PROGRAMMA",
+          "votes": 3405,
+          "share": 0.01
+        },
+        {
+          "name": "MOV.POP.CRIST.",
+          "votes": 3352,
+          "share": 0.01
+        },
+        {
+          "name": "MOV.EUR.LIB.CRIST.",
+          "votes": 2900,
+          "share": 0.01
+        },
+        {
+          "name": "IDEA CITTA'",
+          "votes": 2803,
+          "share": 0.01
+        },
+        {
+          "name": "AUTONOMIA SOCIALISTA",
+          "votes": 2720,
+          "share": 0.01
+        },
+        {
+          "name": "ALL.PER I CASTELLI",
+          "votes": 2662,
+          "share": 0.01
+        },
+        {
+          "name": "CENTRO CRIST.DEM.",
+          "votes": 2646,
+          "share": 0.01
+        },
+        {
+          "name": "DEM.E RINNOVAMENTO",
+          "votes": 2379,
+          "share": 0.01
+        }
+      ]
+    },
+    {
+      "id": "camera-1996-04-21",
+      "type": "camera",
+      "typeLabel": "Camera dei deputati",
+      "year": 1996,
+      "date": "1996-04-21",
+      "title": "Camera dei deputati 1996",
+      "sourceUrl": "https://elezionistorico.interno.gov.it/daithome/documenti/opendata/camera/camera-19960421.zip",
+      "sourceFiles": [
+        "camera-19960421_Proporzionale.txt"
+      ],
+      "totals": {
+        "electors": 48749139,
+        "voters": 40364839,
+        "blankBallots": 1244825,
+        "validVotes": 37494985,
+        "turnoutPct": 82.8,
+        "blankPct": 3.08
+      },
+      "winner": {
+        "name": "PDS",
+        "votes": 7897032,
+        "share": 21.06
+      },
+      "results": [
+        {
+          "name": "PDS",
+          "votes": 7897032,
+          "share": 21.06
+        },
+        {
+          "name": "FORZA ITALIA",
+          "votes": 7715394,
+          "share": 20.58
+        },
+        {
+          "name": "ALLEANZA NAZIONALE",
+          "votes": 5875584,
+          "share": 15.67
+        },
+        {
+          "name": "LEGA NORD",
+          "votes": 3777932,
+          "share": 10.08
+        },
+        {
+          "name": "RIFONDAZIONE COMUNISTA",
+          "votes": 3215642,
+          "share": 8.58
+        },
+        {
+          "name": "POP-SVP-PRI-UD-PRODI",
+          "votes": 2554796,
+          "share": 6.81
+        },
+        {
+          "name": "CCD-CDU",
+          "votes": 2190058,
+          "share": 5.84
+        },
+        {
+          "name": "RINNOVAMENTO IT-DINI",
+          "votes": 1627272,
+          "share": 4.34
+        },
+        {
+          "name": "FEDERAZIONE DEI VERDI",
+          "votes": 937690,
+          "share": 2.5
+        },
+        {
+          "name": "PANNELLA-SGARBI",
+          "votes": 701036,
+          "share": 1.87
+        },
+        {
+          "name": "MOV.SOC.TRICOLORE",
+          "votes": 338746,
+          "share": 0.9
+        },
+        {
+          "name": "SOCIALISTA",
+          "votes": 149568,
+          "share": 0.4
+        },
+        {
+          "name": "LEGA D'AZIONE MERIDIONALE",
+          "votes": 72243,
+          "share": 0.19
+        },
+        {
+          "name": "UNIONE NORD EST",
+          "votes": 63951,
+          "share": 0.17
+        },
+        {
+          "name": "UNION FUR SUD TIROL",
+          "votes": 55502,
+          "share": 0.15
+        },
+        {
+          "name": "MANI PULITE",
+          "votes": 44508,
+          "share": 0.12
+        },
+        {
+          "name": "NOI SICILIANI-FNS",
+          "votes": 40845,
+          "share": 0.11
+        },
+        {
+          "name": "PS D'AZ.",
+          "votes": 37962,
+          "share": 0.1
+        },
+        {
+          "name": "VERDI-VERDI",
+          "votes": 25787,
+          "share": 0.07
+        },
+        {
+          "name": "SARDIGNA NATZIONE",
+          "votes": 23322,
+          "share": 0.06
+        },
+        {
+          "name": "GR.INDIP.LIBERTA'",
+          "votes": 17435,
+          "share": 0.05
+        },
+        {
+          "name": "AMBIENTALISTI",
+          "votes": 15672,
+          "share": 0.04
+        },
+        {
+          "name": "PART.UMANISTA",
+          "votes": 14807,
+          "share": 0.04
+        },
+        {
+          "name": "RINNOVAMENTO",
+          "votes": 13601,
+          "share": 0.04
+        },
+        {
+          "name": "PATTO PER L'AGRO",
+          "votes": 12304,
+          "share": 0.03
+        },
+        {
+          "name": "MOV.RIN.IT.",
+          "votes": 8917,
+          "share": 0.02
+        },
+        {
+          "name": "MOV.AUT.TOSCANO",
+          "votes": 8607,
+          "share": 0.02
+        },
+        {
+          "name": "PART.LEGGE NATURALE",
+          "votes": 8302,
+          "share": 0.02
+        },
+        {
+          "name": "NUOVA DEMOCRAZIA",
+          "votes": 8183,
+          "share": 0.02
+        },
+        {
+          "name": "DEMOCRAZIA SOCIALE",
+          "votes": 8003,
+          "share": 0.02
+        },
+        {
+          "name": "FEDERALISTI LIBERALI",
+          "votes": 6479,
+          "share": 0.02
+        },
+        {
+          "name": "PER LE MARCHE",
+          "votes": 5545,
+          "share": 0.01
+        },
+        {
+          "name": "NUOVE ENERGIE",
+          "votes": 5477,
+          "share": 0.01
+        },
+        {
+          "name": "SVILUPPO-LEGALITA'",
+          "votes": 5003,
+          "share": 0.01
+        },
+        {
+          "name": "NORD LIBERO AUT.",
+          "votes": 4967,
+          "share": 0.01
+        },
+        {
+          "name": "PART.FEDERAL.",
+          "votes": 3769,
+          "share": 0.01
+        },
+        {
+          "name": "RISORGIMENTO DEL SUD",
+          "votes": 3044,
+          "share": 0.01
+        }
+      ]
+    },
+    {
+      "id": "camera-2001-05-13",
+      "type": "camera",
+      "typeLabel": "Camera dei deputati",
+      "year": 2001,
+      "date": "2001-05-13",
+      "title": "Camera dei deputati 2001",
+      "sourceUrl": "https://elezionistorico.interno.gov.it/daithome/documenti/opendata/camera/camera-20010513.zip",
+      "sourceFiles": [
+        "camera-20010513_Proporzionale.txt"
+      ],
+      "totals": {
+        "electors": 49099332,
+        "voters": 39932869,
+        "blankBallots": 1689033,
+        "validVotes": 36965947,
+        "turnoutPct": 81.33,
+        "blankPct": 4.23
+      },
+      "winner": {
+        "name": "FORZA ITALIA",
+        "votes": 10884734,
+        "share": 29.45
+      },
+      "results": [
+        {
+          "name": "FORZA ITALIA",
+          "votes": 10884734,
+          "share": 29.45
+        },
+        {
+          "name": "DEMOCRATICI SINISTRA",
+          "votes": 6131644,
+          "share": 16.59
+        },
+        {
+          "name": "LA MARGHERITA",
+          "votes": 5361951,
+          "share": 14.51
+        },
+        {
+          "name": "ALLEANZA NAZIONALE",
+          "votes": 4444248,
+          "share": 12.02
+        },
+        {
+          "name": "RIFONDAZIONE COMUNISTA",
+          "votes": 1860892,
+          "share": 5.03
+        },
+        {
+          "name": "LEGA NORD",
+          "votes": 1449894,
+          "share": 3.92
+        },
+        {
+          "name": "LISTA DI PIETRO",
+          "votes": 1438385,
+          "share": 3.89
+        },
+        {
+          "name": "CCD-CDU",
+          "votes": 1191206,
+          "share": 3.22
+        },
+        {
+          "name": "DEMOCRAZIA EUROPEA",
+          "votes": 885253,
+          "share": 2.39
+        },
+        {
+          "name": "PANNELLA-BONINO",
+          "votes": 827113,
+          "share": 2.24
+        },
+        {
+          "name": "IL GIRASOLE",
+          "votes": 801944,
+          "share": 2.17
+        },
+        {
+          "name": "COMUNISTI ITALIANI",
+          "votes": 618071,
+          "share": 1.67
+        },
+        {
+          "name": "NUOVO PSI",
+          "votes": 352346,
+          "share": 0.95
+        },
+        {
+          "name": "SVP",
+          "votes": 200056,
+          "share": 0.54
+        },
+        {
+          "name": "FIAMMA TRICOLORE",
+          "votes": 142109,
+          "share": 0.38
+        },
+        {
+          "name": "LIGA FRONTE VENETO",
+          "votes": 74335,
+          "share": 0.2
+        },
+        {
+          "name": "PARTITO PENSIONATI",
+          "votes": 66257,
+          "share": 0.18
+        },
+        {
+          "name": "PS D'AZ-SARD.NATZ.",
+          "votes": 34345,
+          "share": 0.09
+        },
+        {
+          "name": "PAESE NUOVO",
+          "votes": 33348,
+          "share": 0.09
+        },
+        {
+          "name": "ABOLIZIONE SCORPORO",
+          "votes": 26749,
+          "share": 0.07
+        },
+        {
+          "name": "LEGA D'AZIONE MERIDIONALE",
+          "votes": 23812,
+          "share": 0.06
+        },
+        {
+          "name": "FRONTE NAZIONALE",
+          "votes": 23230,
+          "share": 0.06
+        },
+        {
+          "name": "VERDI-VERDI",
+          "votes": 18251,
+          "share": 0.05
+        },
+        {
+          "name": "FORZA NUOVA",
+          "votes": 13535,
+          "share": 0.04
+        },
+        {
+          "name": "LISTA AMADU",
+          "votes": 11513,
+          "share": 0.03
+        },
+        {
+          "name": "REPUBBLICANI EUROPEI",
+          "votes": 7983,
+          "share": 0.02
+        },
+        {
+          "name": "NOI SICILIANI",
+          "votes": 7798,
+          "share": 0.02
+        },
+        {
+          "name": "LIBERI E FORTI",
+          "votes": 7254,
+          "share": 0.02
+        },
+        {
+          "name": "SOCIAL.AUTON.",
+          "votes": 6775,
+          "share": 0.02
+        },
+        {
+          "name": "MOVIMENTO DELLE LIBERTA'",
+          "votes": 6773,
+          "share": 0.02
+        },
+        {
+          "name": "LIBDEM.BASTA",
+          "votes": 6027,
+          "share": 0.02
+        },
+        {
+          "name": "COMUNISMO",
+          "votes": 5203,
+          "share": 0.01
+        },
+        {
+          "name": "TERZO POLO AUTONOMIA",
+          "votes": 2913,
+          "share": 0.01
+        }
+      ]
+    },
+    {
+      "id": "camera-2006-04-09",
+      "type": "camera",
+      "typeLabel": "Camera dei deputati",
+      "year": 2006,
+      "date": "2006-04-09",
+      "title": "Camera dei deputati 2006",
+      "sourceUrl": "https://elezionistorico.interno.gov.it/daithome/documenti/opendata/camera/camera-20060409.zip",
+      "sourceFiles": [
+        "camera_italia-20060409.txt",
+        "camera_vaosta-20060409.txt"
+      ],
+      "totals": {
+        "electors": 47098181,
+        "voters": 39382430,
+        "blankBallots": 441791,
+        "validVotes": 38231107,
+        "turnoutPct": 83.62,
+        "blankPct": 1.12
+      },
+      "winner": {
+        "name": "L'ULIVO",
+        "votes": 11929536,
+        "share": 31.2
+      },
+      "results": [
+        {
+          "name": "L'ULIVO",
+          "votes": 11929536,
+          "share": 31.2
+        },
+        {
+          "name": "FORZA ITALIA",
+          "votes": 9046869,
+          "share": 23.66
+        },
+        {
+          "name": "ALLEANZA NAZIONALE",
+          "votes": 4707060,
+          "share": 12.31
+        },
+        {
+          "name": "UNIONE DI CENTRO",
+          "votes": 2582417,
+          "share": 6.75
+        },
+        {
+          "name": "RIFONDAZIONE COMUNISTA",
+          "votes": 2229858,
+          "share": 5.83
+        },
+        {
+          "name": "LEGA NORD",
+          "votes": 1748034,
+          "share": 4.57
+        },
+        {
+          "name": "LA ROSA NEL PUGNO",
+          "votes": 990443,
+          "share": 2.59
+        },
+        {
+          "name": "COMUNISTI ITALIANI",
+          "votes": 884677,
+          "share": 2.31
+        },
+        {
+          "name": "DI PIETRO ITALIA DEI VALORI",
+          "votes": 877092,
+          "share": 2.29
+        },
+        {
+          "name": "FEDERAZIONE DEI VERDI",
+          "votes": 783931,
+          "share": 2.05
+        },
+        {
+          "name": "U.D.EUR POPOLARI",
+          "votes": 534440,
+          "share": 1.4
+        },
+        {
+          "name": "PARTITO PENSIONATI",
+          "votes": 334936,
+          "share": 0.88
+        },
+        {
+          "name": "DEM.CRIST.-NUOVO PSI",
+          "votes": 285493,
+          "share": 0.75
+        },
+        {
+          "name": "ALTERNATIVA SOCIALE MUSSOLINI",
+          "votes": 257025,
+          "share": 0.67
+        },
+        {
+          "name": "FIAMMA TRICOLORE",
+          "votes": 231612,
+          "share": 0.61
+        },
+        {
+          "name": "SVP",
+          "votes": 182703,
+          "share": 0.48
+        },
+        {
+          "name": "I SOCIALISTI",
+          "votes": 115090,
+          "share": 0.3
+        },
+        {
+          "name": "PROGETTO NORDEST",
+          "votes": 92079,
+          "share": 0.24
+        },
+        {
+          "name": "LISTA CONSUMATORI",
+          "votes": 73687,
+          "share": 0.19
+        },
+        {
+          "name": "NO EURO",
+          "votes": 58720,
+          "share": 0.15
+        },
+        {
+          "name": "ALLEANZA LOMBARDA AUTONOMIA",
+          "votes": 44580,
+          "share": 0.12
+        },
+        {
+          "name": "AUT.LIB. DEMOCRATIE",
+          "votes": 34168,
+          "share": 0.09
+        },
+        {
+          "name": "PENSIONATI UNITI",
+          "votes": 27818,
+          "share": 0.07
+        },
+        {
+          "name": "VALLEE D'AOSTE",
+          "votes": 24119,
+          "share": 0.06
+        },
+        {
+          "name": "LIGA FRONTE VENETO",
+          "votes": 22010,
+          "share": 0.06
+        },
+        {
+          "name": "AMBIENTA-LISTA",
+          "votes": 17372,
+          "share": 0.05
+        },
+        {
+          "name": "DIE FREIHEITLICHEN",
+          "votes": 17167,
+          "share": 0.04
+        },
+        {
+          "name": "TERZO POLO",
+          "votes": 16234,
+          "share": 0.04
+        },
+        {
+          "name": "FI-AN",
+          "votes": 13374,
+          "share": 0.03
+        },
+        {
+          "name": "P.LIBERALE ITALIANO",
+          "votes": 12308,
+          "share": 0.03
+        },
+        {
+          "name": "IRS",
+          "votes": 11649,
+          "share": 0.03
+        },
+        {
+          "name": "SARDIGNA NATZIONE",
+          "votes": 11000,
+          "share": 0.03
+        },
+        {
+          "name": "S.O.S. ITALIA",
+          "votes": 6956,
+          "share": 0.02
+        },
+        {
+          "name": "SOLIDARIETA'",
+          "votes": 5878,
+          "share": 0.02
+        },
+        {
+          "name": "MOV.DEM.SIC-NOI SIC.",
+          "votes": 5176,
+          "share": 0.01
+        },
+        {
+          "name": "PER IL SUD",
+          "votes": 5130,
+          "share": 0.01
+        },
+        {
+          "name": "MOVIMENTO TRIVENETO",
+          "votes": 4518,
+          "share": 0.01
+        },
+        {
+          "name": "DIMENSIONE CHRISTIANA",
+          "votes": 2447,
+          "share": 0.01
+        },
+        {
+          "name": "LEGA NORD V.D'AOSTE",
+          "votes": 1566,
+          "share": 0
+        },
+        {
+          "name": "DESTRA NAZIONALE",
+          "votes": 1088,
+          "share": 0
+        },
+        {
+          "name": "LEGA SUD",
+          "votes": 847,
+          "share": 0
+        }
+      ]
+    },
+    {
+      "id": "camera-2008-04-13",
+      "type": "camera",
+      "typeLabel": "Camera dei deputati",
+      "year": 2008,
+      "date": "2008-04-13",
+      "title": "Camera dei deputati 2008",
+      "sourceUrl": "https://elezionistorico.interno.gov.it/daithome/documenti/opendata/camera/camera-20080413.zip",
+      "sourceFiles": [
+        "camera_italia-20080413.txt",
+        "camera_vaosta-20080413.txt"
+      ],
+      "totals": {
+        "electors": 47142437,
+        "voters": 37954253,
+        "blankBallots": 487694,
+        "validVotes": 36527230,
+        "turnoutPct": 80.51,
+        "blankPct": 1.28
+      },
+      "winner": {
+        "name": "IL POPOLO DELLA LIBERTA'",
+        "votes": 13642742,
+        "share": 37.35
+      },
+      "results": [
+        {
+          "name": "IL POPOLO DELLA LIBERTA'",
+          "votes": 13642742,
+          "share": 37.35
+        },
+        {
+          "name": "PARTITO DEMOCRATICO",
+          "votes": 12092998,
+          "share": 33.11
+        },
+        {
+          "name": "LEGA NORD",
+          "votes": 3026844,
+          "share": 8.29
+        },
+        {
+          "name": "UNIONE DI CENTRO",
+          "votes": 2050319,
+          "share": 5.61
+        },
+        {
+          "name": "DI PIETRO ITALIA DEI VALORI",
+          "votes": 1593675,
+          "share": 4.36
+        },
+        {
+          "name": "LA SINISTRA L'ARCOBALENO",
+          "votes": 1124418,
+          "share": 3.08
+        },
+        {
+          "name": "LA DESTRA - FIAMMA TRICOLORE",
+          "votes": 885229,
+          "share": 2.42
+        },
+        {
+          "name": "MOVIMENTO PER L'AUTONOMIA ALL.PER IL SUD",
+          "votes": 410487,
+          "share": 1.12
+        },
+        {
+          "name": "PARTITO SOCIALISTA",
+          "votes": 355581,
+          "share": 0.97
+        },
+        {
+          "name": "PARTITO COMUNISTA DEI LAVORATORI",
+          "votes": 208394,
+          "share": 0.57
+        },
+        {
+          "name": "SINISTRA CRITICA",
+          "votes": 167673,
+          "share": 0.46
+        },
+        {
+          "name": "SVP",
+          "votes": 147666,
+          "share": 0.4
+        },
+        {
+          "name": "ASS.DIFESA DELLA VITA ABORTO?NO,GRAZIE",
+          "votes": 135578,
+          "share": 0.37
+        },
+        {
+          "name": "PER IL BENE COMUNE",
+          "votes": 119420,
+          "share": 0.33
+        },
+        {
+          "name": "FORZA NUOVA",
+          "votes": 108837,
+          "share": 0.3
+        },
+        {
+          "name": "P.LIBERALE ITALIANO",
+          "votes": 103760,
+          "share": 0.28
+        },
+        {
+          "name": "UNIONE DEMOCRATICA PER I CONSUMATORI",
+          "votes": 91486,
+          "share": 0.25
+        },
+        {
+          "name": "LISTA DEI GRILLI PARLANTI",
+          "votes": 66844,
+          "share": 0.18
+        },
+        {
+          "name": "LG.VENETA REPUBBLICA",
+          "votes": 31353,
+          "share": 0.09
+        },
+        {
+          "name": "AUT.LIB. DEMOCRATIE",
+          "votes": 29311,
+          "share": 0.08
+        },
+        {
+          "name": "VALLEE D'AOSTE",
+          "votes": 28349,
+          "share": 0.08
+        },
+        {
+          "name": "DIE FREIHEITLICHEN",
+          "votes": 28347,
+          "share": 0.08
+        },
+        {
+          "name": "M.E.D.A.",
+          "votes": 16449,
+          "share": 0.05
+        },
+        {
+          "name": "PS D'AZ.",
+          "votes": 14856,
+          "share": 0.04
+        },
+        {
+          "name": "LEGA PER L'AUTONOMIA ALL.LOMB. LEGA PENS",
+          "votes": 14003,
+          "share": 0.04
+        },
+        {
+          "name": "UNION FUR SUD TIROL",
+          "votes": 12836,
+          "share": 0.04
+        },
+        {
+          "name": "SARDIGNA NATZIONE",
+          "votes": 7182,
+          "share": 0.02
+        },
+        {
+          "name": "LEGA SUD",
+          "votes": 4346,
+          "share": 0.01
+        },
+        {
+          "name": "L'INTESA VENETA",
+          "votes": 2388,
+          "share": 0.01
+        },
+        {
+          "name": "PARTITO DI ALTERNATIVA COMUNISTA",
+          "votes": 2049,
+          "share": 0.01
+        },
+        {
+          "name": "IL LOTO",
+          "votes": 1799,
+          "share": 0
+        },
+        {
+          "name": "AZ.SOCIALE MUSSOLINI",
+          "votes": 1066,
+          "share": 0
+        },
+        {
+          "name": "MOVIMENTO P.P.A.",
+          "votes": 945,
+          "share": 0
+        }
+      ]
+    },
+    {
+      "id": "camera-2013-02-24",
+      "type": "camera",
+      "typeLabel": "Camera dei deputati",
+      "year": 2013,
+      "date": "2013-02-24",
+      "title": "Camera dei deputati 2013",
+      "sourceUrl": "https://elezionistorico.interno.gov.it/daithome/documenti/opendata/camera/camera-20130224.zip",
+      "sourceFiles": [
+        "camera_italia-20130224.txt",
+        "camera_vaosta-20130224.txt"
+      ],
+      "totals": {
+        "electors": 47005431,
+        "voters": 35348710,
+        "blankBallots": 396971,
+        "validVotes": 34074959,
+        "turnoutPct": 75.2,
+        "blankPct": 1.12
+      },
+      "winner": {
+        "name": "MOVIMENTO 5 STELLE BEPPEGRILLO.IT",
+        "votes": 8702987,
+        "share": 25.54
+      },
+      "results": [
+        {
+          "name": "MOVIMENTO 5 STELLE BEPPEGRILLO.IT",
+          "votes": 8702987,
+          "share": 25.54
+        },
+        {
+          "name": "PARTITO DEMOCRATICO",
+          "votes": 8644542,
+          "share": 25.37
+        },
+        {
+          "name": "IL POPOLO DELLA LIBERTA'",
+          "votes": 7332829,
+          "share": 21.52
+        },
+        {
+          "name": "SCELTA CIVICA CON MONTI PER L'ITALIA",
+          "votes": 2824064,
+          "share": 8.29
+        },
+        {
+          "name": "LEGA NORD",
+          "votes": 1392537,
+          "share": 4.09
+        },
+        {
+          "name": "SINISTRA ECOLOGIA LIBERTA'",
+          "votes": 1089562,
+          "share": 3.2
+        },
+        {
+          "name": "RIVOLUZIONE CIVILE",
+          "votes": 765194,
+          "share": 2.25
+        },
+        {
+          "name": "FRATELLI D'ITALIA",
+          "votes": 668886,
+          "share": 1.96
+        },
+        {
+          "name": "UNIONE DI CENTRO",
+          "votes": 609560,
+          "share": 1.79
+        },
+        {
+          "name": "FARE PER FERMARE IL DECLINO",
+          "votes": 381236,
+          "share": 1.12
+        },
+        {
+          "name": "LA DESTRA",
+          "votes": 219671,
+          "share": 0.64
+        },
+        {
+          "name": "CENTRO DEMOCRATICO",
+          "votes": 167071,
+          "share": 0.49
+        },
+        {
+          "name": "FUTURO E LIBERTA'",
+          "votes": 159415,
+          "share": 0.47
+        },
+        {
+          "name": "GRANDE SUD - MPA",
+          "votes": 148549,
+          "share": 0.44
+        },
+        {
+          "name": "SVP",
+          "votes": 146804,
+          "share": 0.43
+        },
+        {
+          "name": "PARTITO COMUNISTA DEI LAVORATORI",
+          "votes": 89991,
+          "share": 0.26
+        },
+        {
+          "name": "FORZA NUOVA",
+          "votes": 89802,
+          "share": 0.26
+        },
+        {
+          "name": "MIR - MODERATI IN RIVOLUZIONE",
+          "votes": 81978,
+          "share": 0.24
+        },
+        {
+          "name": "LISTA AMNISTIA GIUSTIZIA LIBERTA'",
+          "votes": 64713,
+          "share": 0.19
+        },
+        {
+          "name": "PARTITO PENSIONATI",
+          "votes": 54857,
+          "share": 0.16
+        },
+        {
+          "name": "DIE FREIHEITLICHEN",
+          "votes": 48317,
+          "share": 0.14
+        },
+        {
+          "name": "CASAPOUND ITALIA",
+          "votes": 48132,
+          "share": 0.14
+        },
+        {
+          "name": "FIAMMA TRICOLORE",
+          "votes": 44744,
+          "share": 0.13
+        },
+        {
+          "name": "IO AMO L'ITALIA",
+          "votes": 42527,
+          "share": 0.12
+        },
+        {
+          "name": "INDIPENDENZA VENETA",
+          "votes": 33274,
+          "share": 0.1
+        },
+        {
+          "name": "LIBERALI PER L'ITALIA - PLI",
+          "votes": 28025,
+          "share": 0.08
+        },
+        {
+          "name": "INTESA POPOLARE",
+          "votes": 25632,
+          "share": 0.08
+        },
+        {
+          "name": "PS D'AZ.",
+          "votes": 18585,
+          "share": 0.05
+        },
+        {
+          "name": "VALLEE D'AOSTE",
+          "votes": 18376,
+          "share": 0.05
+        },
+        {
+          "name": "UNION VALDOTAINE PROGRESSISTE",
+          "votes": 18191,
+          "share": 0.05
+        },
+        {
+          "name": "LG.VENETA REPUBBLICA",
+          "votes": 15838,
+          "share": 0.05
+        },
+        {
+          "name": "AUTONOMIE LIBERTE' DEMOCRATIE",
+          "votes": 14340,
+          "share": 0.04
+        },
+        {
+          "name": "VOTO DI PROTESTA",
+          "votes": 12745,
+          "share": 0.04
+        },
+        {
+          "name": "VENETO STATO",
+          "votes": 11378,
+          "share": 0.03
+        },
+        {
+          "name": "RIFORMISTI ITALIANI",
+          "votes": 8223,
+          "share": 0.02
+        },
+        {
+          "name": "INDIPENDENZA PER LA SARDEGNA",
+          "votes": 7598,
+          "share": 0.02
+        },
+        {
+          "name": "PRI",
+          "votes": 7143,
+          "share": 0.02
+        },
+        {
+          "name": "MERIS",
+          "votes": 5901,
+          "share": 0.02
+        },
+        {
+          "name": "PARTITO DI ALTERNATIVA COMUNISTA",
+          "votes": 5159,
+          "share": 0.02
+        },
+        {
+          "name": "I PIRATI",
+          "votes": 4557,
+          "share": 0.01
+        },
+        {
+          "name": "MOVIMENTO PROGETTO ITALIA - MID",
+          "votes": 3967,
+          "share": 0.01
+        },
+        {
+          "name": "LIBERI PER UNA ITALIA EQUA",
+          "votes": 3243,
+          "share": 0.01
+        },
+        {
+          "name": "RIFONDAZIONE MISSINA ITALIANA",
+          "votes": 3180,
+          "share": 0.01
+        },
+        {
+          "name": "POPOLARI UNITI",
+          "votes": 2992,
+          "share": 0.01
+        },
+        {
+          "name": "PROGETTO NAZIONALE",
+          "votes": 2865,
+          "share": 0.01
+        },
+        {
+          "name": "MOVIMENTO P.P.A.",
+          "votes": 1526,
+          "share": 0
+        },
+        {
+          "name": "UNIONE POP.",
+          "votes": 1515,
+          "share": 0
+        },
+        {
+          "name": "TUTTI INSIEME PER L'ITALIA",
+          "votes": 1452,
+          "share": 0
+        },
+        {
+          "name": "STAMINALI D'ITALIA",
+          "votes": 585,
+          "share": 0
+        },
+        {
+          "name": "DEMOCRAZIA ATEA",
+          "votes": 556,
+          "share": 0
+        },
+        {
+          "name": "NATION VAL D'OUTA",
+          "votes": 145,
+          "share": 0
+        }
+      ]
+    },
+    {
+      "id": "camera-2018-03-04",
+      "type": "camera",
+      "typeLabel": "Camera dei deputati",
+      "year": 2018,
+      "date": "2018-03-04",
+      "title": "Camera dei deputati 2018",
+      "sourceUrl": "https://elezionistorico.interno.gov.it/daithome/documenti/opendata/camera/camera-20180304.zip",
+      "sourceFiles": [
+        "Camera2018_livComune.txt"
+      ],
+      "totals": {
+        "electors": 46604897,
+        "voters": 33995268,
+        "blankBallots": 391498,
+        "validVotes": 31582538,
+        "turnoutPct": 72.94,
+        "blankPct": 1.15
+      },
+      "winner": {
+        "name": "MOVIMENTO 5 STELLE",
+        "votes": 10237523,
+        "share": 32.42
+      },
+      "results": [
+        {
+          "name": "MOVIMENTO 5 STELLE",
+          "votes": 10237523,
+          "share": 32.42
+        },
+        {
+          "name": "PARTITO DEMOCRATICO",
+          "votes": 5888232,
+          "share": 18.64
+        },
+        {
+          "name": "LEGA",
+          "votes": 5576270,
+          "share": 17.66
+        },
+        {
+          "name": "FORZA ITALIA",
+          "votes": 4498106,
+          "share": 14.24
+        },
+        {
+          "name": "FRATELLI D'ITALIA CON GIORGIA MELONI",
+          "votes": 1398312,
+          "share": 4.43
+        },
+        {
+          "name": "LIBERI E UGUALI",
+          "votes": 1032713,
+          "share": 3.27
+        },
+        {
+          "name": "+EUROPA",
+          "votes": 803621,
+          "share": 2.54
+        },
+        {
+          "name": "NOI CON L'ITALIA - UDC",
+          "votes": 417702,
+          "share": 1.32
+        },
+        {
+          "name": "POTERE AL POPOLO!",
+          "votes": 349508,
+          "share": 1.11
+        },
+        {
+          "name": "CASAPOUND ITALIA",
+          "votes": 294734,
+          "share": 0.93
+        },
+        {
+          "name": "IL POPOLO DELLA FAMIGLIA",
+          "votes": 206346,
+          "share": 0.65
+        },
+        {
+          "name": "ITALIA EUROPA INSIEME",
+          "votes": 180980,
+          "share": 0.57
+        },
+        {
+          "name": "CIVICA POPOLARE LORENZIN",
+          "votes": 168269,
+          "share": 0.53
+        },
+        {
+          "name": "SVP - PATT",
+          "votes": 126769,
+          "share": 0.4
+        },
+        {
+          "name": "ITALIA AGLI ITALIANI",
+          "votes": 119980,
+          "share": 0.38
+        },
+        {
+          "name": "PARTITO COMUNISTA",
+          "votes": 102030,
+          "share": 0.32
+        },
+        {
+          "name": "PARTITO VALORE UMANO",
+          "votes": 44610,
+          "share": 0.14
+        },
+        {
+          "name": "10 VOLTE MEGLIO",
+          "votes": 33225,
+          "share": 0.11
+        },
+        {
+          "name": "PER UNA SINISTRA RIVOLUZIONARIA",
+          "votes": 27138,
+          "share": 0.09
+        },
+        {
+          "name": "PARTITO REPUBBLICANO ITALIANO - ALA",
+          "votes": 18866,
+          "share": 0.06
+        },
+        {
+          "name": "GRANDE NORD",
+          "votes": 18556,
+          "share": 0.06
+        },
+        {
+          "name": "AUTODETERMINATZIONE",
+          "votes": 18237,
+          "share": 0.06
+        },
+        {
+          "name": "LISTA DEL POPOLO PER LA COSTITUZIONE",
+          "votes": 9088,
+          "share": 0.03
+        },
+        {
+          "name": "PATTO PER L'AUTONOMIA",
+          "votes": 5871,
+          "share": 0.02
+        },
+        {
+          "name": "BLOCCO NAZIONALE PER LE LIBERTA'",
+          "votes": 3376,
+          "share": 0.01
+        },
+        {
+          "name": "SIAMO",
+          "votes": 1298,
+          "share": 0
+        },
+        {
+          "name": "RINASCIMENTO MIR",
+          "votes": 676,
+          "share": 0
+        },
+        {
+          "name": "ITALIA NEL CUORE",
+          "votes": 502,
+          "share": 0
+        },
+        {
+          "name": "FI -FRAT. D'IT. -MOV.NUOVA VALLE D'AOSTA",
+          "votes": 0,
+          "share": 0
+        },
+        {
+          "name": "PD-UV-UVP-EPAV",
+          "votes": 0,
+          "share": 0
+        },
+        {
+          "name": "POUR TOUS PER TUTTI PE TCHEUT",
+          "votes": 0,
+          "share": 0
+        },
+        {
+          "name": "RISPOSTA CIVICA",
+          "votes": 0,
+          "share": 0
+        }
+      ]
+    },
+    {
+      "id": "camera-2022-09-25",
+      "type": "camera",
+      "typeLabel": "Camera dei deputati",
+      "year": 2022,
+      "date": "2022-09-25",
+      "title": "Camera dei deputati 2022",
+      "sourceUrl": "https://elezionistorico.interno.gov.it/daithome/documenti/opendata/camera/camera-20220925.zip",
+      "sourceFiles": [
+        "Camera_Italia_LivComune.csv"
+      ],
+      "totals": {
+        "electors": 46021956,
+        "voters": 29413657,
+        "blankBallots": 494580,
+        "validVotes": 27069655,
+        "turnoutPct": 63.91,
+        "blankPct": 1.68
+      },
+      "winner": {
+        "name": "FRATELLI D'ITALIA CON GIORGIA MELONI",
+        "votes": 7098555,
+        "share": 26.22
+      },
+      "results": [
+        {
+          "name": "FRATELLI D'ITALIA CON GIORGIA MELONI",
+          "votes": 7098555,
+          "share": 26.22
+        },
+        {
+          "name": "PARTITO DEMOCRATICO - ITALIA DEMOCRATICA E PROGRESSISTA",
+          "votes": 5128861,
+          "share": 18.95
+        },
+        {
+          "name": "MOVIMENTO 5 STELLE",
+          "votes": 4178360,
+          "share": 15.44
+        },
+        {
+          "name": "LEGA PER SALVINI PREMIER",
+          "votes": 2392976,
+          "share": 8.84
+        },
+        {
+          "name": "FORZA ITALIA",
+          "votes": 2218466,
+          "share": 8.2
+        },
+        {
+          "name": "AZIONE - ITALIA VIVA - CALENDA",
+          "votes": 2065444,
+          "share": 7.63
+        },
+        {
+          "name": "ALLEANZA VERDI E SINISTRA",
+          "votes": 972919,
+          "share": 3.59
+        },
+        {
+          "name": "+EUROPA",
+          "votes": 759872,
+          "share": 2.81
+        },
+        {
+          "name": "ITALEXIT PER L'ITALIA",
+          "votes": 516465,
+          "share": 1.91
+        },
+        {
+          "name": "UNIONE POPOLARE CON DE MAGISTRIS",
+          "votes": 378959,
+          "share": 1.4
+        },
+        {
+          "name": "ITALIA SOVRANA E POPOLARE",
+          "votes": 336648,
+          "share": 1.24
+        },
+        {
+          "name": "NOI MODERATI/LUPI - TOTI - BRUGNARO - UDC",
+          "votes": 247436,
+          "share": 0.91
+        },
+        {
+          "name": "SUD CHIAMA NORD",
+          "votes": 208793,
+          "share": 0.77
+        },
+        {
+          "name": "VITA",
+          "votes": 192038,
+          "share": 0.71
+        },
+        {
+          "name": "IMPEGNO CIVICO LUIGI DI MAIO - CENTRO DEMOCRATICO",
+          "votes": 161624,
+          "share": 0.6
+        },
+        {
+          "name": "SUDTIROLER VOLKSPARTEI (SVP) - PATT",
+          "votes": 106092,
+          "share": 0.39
+        },
+        {
+          "name": "MASTELLA NOI DI CENTRO EUROPEISTI",
+          "votes": 43712,
+          "share": 0.16
+        },
+        {
+          "name": "PARTITO COMUNISTA ITALIANO",
+          "votes": 23736,
+          "share": 0.09
+        },
+        {
+          "name": "PARTITO ANIMALISTA - UCDL - 10 VOLTE MEGLIO",
+          "votes": 20082,
+          "share": 0.07
+        },
+        {
+          "name": "ALTERNATIVA PER L'ITALIA - NO GREEN PASS",
+          "votes": 15814,
+          "share": 0.06
+        },
+        {
+          "name": "PARTITO DELLA FOLLIA CREATIVA",
+          "votes": 1304,
+          "share": 0
+        },
+        {
+          "name": "FORZA DEL POPOLO",
+          "votes": 763,
+          "share": 0
+        },
+        {
+          "name": "FREE",
+          "votes": 736,
+          "share": 0
+        }
+      ]
+    },
+    {
+      "id": "senato-1948-04-18",
+      "type": "senato",
+      "typeLabel": "Senato della Repubblica",
+      "year": 1948,
+      "date": "1948-04-18",
+      "title": "Senato della Repubblica 1948",
+      "sourceUrl": "https://elezionistorico.interno.gov.it/daithome/documenti/opendata/senato/senato-19480418.zip",
+      "sourceFiles": [
+        "senato-19480418.txt"
+      ],
+      "totals": {
+        "electors": 25281575,
+        "voters": 23287583,
+        "blankBallots": 467594,
+        "validVotes": 22228781,
+        "turnoutPct": 92.11,
+        "blankPct": 2.01
+      },
+      "winner": {
+        "name": "DC",
+        "votes": 10674433,
+        "share": 48.02
+      },
+      "results": [
+        {
+          "name": "DC",
+          "votes": 10674433,
+          "share": 48.02
+        },
+        {
+          "name": "SOCIALCOMUNISTI",
+          "votes": 6905095,
+          "share": 31.06
+        },
+        {
+          "name": "BLOCCO NAZIONALE",
+          "votes": 1216103,
+          "share": 5.47
+        },
+        {
+          "name": "UNITA' SOCIALISTA",
+          "votes": 941752,
+          "share": 4.24
+        },
+        {
+          "name": "UNITA' SOC.-PRI",
+          "votes": 602515,
+          "share": 2.71
+        },
+        {
+          "name": "PRI",
+          "votes": 570070,
+          "share": 2.56
+        },
+        {
+          "name": "IND",
+          "votes": 540213,
+          "share": 2.43
+        },
+        {
+          "name": "P.NAZ.MONARCHICO",
+          "votes": 393283,
+          "share": 1.77
+        },
+        {
+          "name": "MSI",
+          "votes": 163966,
+          "share": 0.74
+        },
+        {
+          "name": "P.CONTADINI D'ITALIA",
+          "votes": 65925,
+          "share": 0.3
+        },
+        {
+          "name": "PS D'AZ.",
+          "votes": 65757,
+          "share": 0.3
+        },
+        {
+          "name": "UN.MOV.FEDERALISTI",
+          "votes": 43117,
+          "share": 0.19
+        },
+        {
+          "name": "MOV.NAZ.DEM.SOC.",
+          "votes": 27417,
+          "share": 0.12
+        },
+        {
+          "name": "FR.DEM.PROG.REPUB.",
+          "votes": 13434,
+          "share": 0.06
+        },
+        {
+          "name": "CONC.RUR.IND.AOSTA",
+          "votes": 2881,
+          "share": 0.01
+        },
+        {
+          "name": "UN.SOCIAL.INDIP.",
+          "votes": 2820,
+          "share": 0.01
+        }
+      ]
+    },
+    {
+      "id": "senato-1953-06-07",
+      "type": "senato",
+      "typeLabel": "Senato della Repubblica",
+      "year": 1953,
+      "date": "1953-06-07",
+      "title": "Senato della Repubblica 1953",
+      "sourceUrl": "https://elezionistorico.interno.gov.it/daithome/documenti/opendata/senato/senato-19530607.zip",
+      "sourceFiles": [
+        "senato-19530607.txt"
+      ],
+      "totals": {
+        "electors": 26878466,
+        "voters": 25212954,
+        "blankBallots": 625111,
+        "validVotes": 24233614,
+        "turnoutPct": 93.8,
+        "blankPct": 2.48
+      },
+      "winner": {
+        "name": "DC",
+        "votes": 9747816,
+        "share": 40.22
+      },
+      "results": [
+        {
+          "name": "DC",
+          "votes": 9747816,
+          "share": 40.22
+        },
+        {
+          "name": "PCI",
+          "votes": 4909242,
+          "share": 20.26
+        },
+        {
+          "name": "PSI",
+          "votes": 2887563,
+          "share": 11.92
+        },
+        {
+          "name": "P.NAZ.MONARCHICO",
+          "votes": 1577616,
+          "share": 6.51
+        },
+        {
+          "name": "MSI",
+          "votes": 1472669,
+          "share": 6.08
+        },
+        {
+          "name": "PSDI",
+          "votes": 1056087,
+          "share": 4.36
+        },
+        {
+          "name": "PLI",
+          "votes": 708081,
+          "share": 2.92
+        },
+        {
+          "name": "PRI",
+          "votes": 272211,
+          "share": 1.12
+        },
+        {
+          "name": "UNITA'POPOLARE",
+          "votes": 172525,
+          "share": 0.71
+        },
+        {
+          "name": "ALL.DEMOC.NAZIONALE",
+          "votes": 165629,
+          "share": 0.68
+        },
+        {
+          "name": "SARDEGNA CON DUE SPIGHE",
+          "votes": 159516,
+          "share": 0.66
+        },
+        {
+          "name": "DC-PRI",
+          "votes": 133137,
+          "share": 0.55
+        },
+        {
+          "name": "CONTADINI MONARCHICI",
+          "votes": 117415,
+          "share": 0.48
+        },
+        {
+          "name": "PPST",
+          "votes": 107139,
+          "share": 0.44
+        },
+        {
+          "name": "TESTA DI GARIBALDI",
+          "votes": 85043,
+          "share": 0.35
+        },
+        {
+          "name": "TRE STELLE-PACE LIB.LAVORO",
+          "votes": 75655,
+          "share": 0.31
+        },
+        {
+          "name": "GALLO",
+          "votes": 64041,
+          "share": 0.26
+        },
+        {
+          "name": "TRE SPIGHE DI GRANO E STELLA A 5 PUNTE",
+          "votes": 52321,
+          "share": 0.22
+        },
+        {
+          "name": "IND",
+          "votes": 42219,
+          "share": 0.17
+        },
+        {
+          "name": "CAMPIDOGLIO",
+          "votes": 35865,
+          "share": 0.15
+        },
+        {
+          "name": "PARTITO SARDO D'AZIONE",
+          "votes": 34443,
+          "share": 0.14
+        },
+        {
+          "name": "CORONA REALE NODO SABAUDO",
+          "votes": 32714,
+          "share": 0.13
+        },
+        {
+          "name": "PLI-PRI",
+          "votes": 31250,
+          "share": 0.13
+        },
+        {
+          "name": "CHIAVE",
+          "votes": 28426,
+          "share": 0.12
+        },
+        {
+          "name": "TRE SPIGHE-PACE LIB.LAVORO",
+          "votes": 26810,
+          "share": 0.11
+        },
+        {
+          "name": "CAMPANILE",
+          "votes": 22335,
+          "share": 0.09
+        },
+        {
+          "name": "SICILIA CON FARO",
+          "votes": 21572,
+          "share": 0.09
+        },
+        {
+          "name": "TRE SPIGHE-PACE LIB.COST.",
+          "votes": 20885,
+          "share": 0.09
+        },
+        {
+          "name": "ANTENNA CON DUE SPIGHE",
+          "votes": 20635,
+          "share": 0.09
+        },
+        {
+          "name": "CONTADINI",
+          "votes": 17282,
+          "share": 0.07
+        },
+        {
+          "name": "AUT.AOSTA-PACE",
+          "votes": 16873,
+          "share": 0.07
+        },
+        {
+          "name": "HUMANITAS",
+          "votes": 15018,
+          "share": 0.06
+        },
+        {
+          "name": "DC-PSDI",
+          "votes": 14626,
+          "share": 0.06
+        },
+        {
+          "name": "LA BILANCIA",
+          "votes": 9816,
+          "share": 0.04
+        },
+        {
+          "name": "SOCIALISMO INDIPENDENTE",
+          "votes": 8386,
+          "share": 0.03
+        },
+        {
+          "name": "PATRIA E FAMIGLIA",
+          "votes": 7975,
+          "share": 0.03
+        },
+        {
+          "name": "GARIBALDI-PACE LIB. LAVORO",
+          "votes": 7951,
+          "share": 0.03
+        },
+        {
+          "name": "PSDI-PRI",
+          "votes": 7909,
+          "share": 0.03
+        },
+        {
+          "name": "ARATRO",
+          "votes": 7542,
+          "share": 0.03
+        },
+        {
+          "name": "LISTA MONARCHICA",
+          "votes": 5746,
+          "share": 0.02
+        },
+        {
+          "name": "VANGA E ZAPPA INCROCIATE",
+          "votes": 5610,
+          "share": 0.02
+        },
+        {
+          "name": "VERITAS",
+          "votes": 4553,
+          "share": 0.02
+        },
+        {
+          "name": "IL MEZZOGIORNO",
+          "votes": 4290,
+          "share": 0.02
+        },
+        {
+          "name": "TRE COLLI CROCE E SOLE RAGGIANTE",
+          "votes": 3726,
+          "share": 0.02
+        },
+        {
+          "name": "MSI-DN-IND",
+          "votes": 3355,
+          "share": 0.01
+        },
+        {
+          "name": "PART.NAZ.MONARCHICO",
+          "votes": 2899,
+          "share": 0.01
+        },
+        {
+          "name": "ALTRI GRUPPI",
+          "votes": 2486,
+          "share": 0.01
+        },
+        {
+          "name": "UNSIPO",
+          "votes": 1826,
+          "share": 0.01
+        },
+        {
+          "name": "CENTRO POLITICO IT.",
+          "votes": 1233,
+          "share": 0.01
+        },
+        {
+          "name": "P.INDIPENDENTE CONTADINI",
+          "votes": 1055,
+          "share": 0
+        },
+        {
+          "name": "SPIGHE CON CROCE E SCRITTA MOLISE",
+          "votes": 791,
+          "share": 0
+        },
+        {
+          "name": "CATTOLICI INDIP.",
+          "votes": 548,
+          "share": 0
+        },
+        {
+          "name": "ALTRI",
+          "votes": 418,
+          "share": 0
+        },
+        {
+          "name": "PANNOCCHIA DI GRANOTURCO",
+          "votes": 397,
+          "share": 0
+        },
+        {
+          "name": "A TUTTI UNA CASA",
+          "votes": 304,
+          "share": 0
+        },
+        {
+          "name": "FR.NAZ.CORPORATIVO",
+          "votes": 139,
+          "share": 0
+        }
+      ]
+    },
+    {
+      "id": "senato-1958-05-25",
+      "type": "senato",
+      "typeLabel": "Senato della Repubblica",
+      "year": 1958,
+      "date": "1958-05-25",
+      "title": "Senato della Repubblica 1958",
+      "sourceUrl": "https://elezionistorico.interno.gov.it/daithome/documenti/opendata/senato/senato-19580525.zip",
+      "sourceFiles": [
+        "senato-19580525.txt"
+      ],
+      "totals": {
+        "electors": 29183501,
+        "voters": 27425843,
+        "blankBallots": 779712,
+        "validVotes": 26150489,
+        "turnoutPct": 93.98,
+        "blankPct": 2.84
+      },
+      "winner": {
+        "name": "DC",
+        "votes": 10781327,
+        "share": 41.23
+      },
+      "results": [
+        {
+          "name": "DC",
+          "votes": 10781327,
+          "share": 41.23
+        },
+        {
+          "name": "PCI",
+          "votes": 5701093,
+          "share": 21.8
+        },
+        {
+          "name": "PSI",
+          "votes": 3682703,
+          "share": 14.08
+        },
+        {
+          "name": "PSDI",
+          "votes": 1164399,
+          "share": 4.45
+        },
+        {
+          "name": "MSI",
+          "votes": 1150066,
+          "share": 4.4
+        },
+        {
+          "name": "PLI",
+          "votes": 1012737,
+          "share": 3.87
+        },
+        {
+          "name": "P.MONARCHICO POP.",
+          "votes": 774076,
+          "share": 2.96
+        },
+        {
+          "name": "P.NAZ.MONARCHICO",
+          "votes": 565052,
+          "share": 2.16
+        },
+        {
+          "name": "PRI-P.RAD.",
+          "votes": 363457,
+          "share": 1.39
+        },
+        {
+          "name": "PART.NAZ.MON-MSI",
+          "votes": 293460,
+          "share": 1.12
+        },
+        {
+          "name": "PCI-PSI",
+          "votes": 185557,
+          "share": 0.71
+        },
+        {
+          "name": "COMUNITA'",
+          "votes": 142917,
+          "share": 0.55
+        },
+        {
+          "name": "PPST",
+          "votes": 120090,
+          "share": 0.46
+        },
+        {
+          "name": "MOVIM.AUT.REG.-M.A.R.P.",
+          "votes": 61090,
+          "share": 0.23
+        },
+        {
+          "name": "PSI-PSDI-IS",
+          "votes": 43263,
+          "share": 0.17
+        },
+        {
+          "name": "IND.SIN.",
+          "votes": 28142,
+          "share": 0.11
+        },
+        {
+          "name": "PS D'AZ.",
+          "votes": 25923,
+          "share": 0.1
+        },
+        {
+          "name": "CHIAVE",
+          "votes": 12686,
+          "share": 0.05
+        },
+        {
+          "name": "TRE CIME DI LAVAREDO",
+          "votes": 9928,
+          "share": 0.04
+        },
+        {
+          "name": "BRUNO BUITONI",
+          "votes": 9439,
+          "share": 0.04
+        },
+        {
+          "name": "TOTA SABINA CIVITAS",
+          "votes": 6449,
+          "share": 0.02
+        },
+        {
+          "name": "PART.NAZ.MONARCHICO",
+          "votes": 4730,
+          "share": 0.02
+        },
+        {
+          "name": "P.NAZIONALE LAVORO",
+          "votes": 3588,
+          "share": 0.01
+        },
+        {
+          "name": "UNIFIC.SOCIALISTA",
+          "votes": 3110,
+          "share": 0.01
+        },
+        {
+          "name": "QUADRIFOGLIO",
+          "votes": 2818,
+          "share": 0.01
+        },
+        {
+          "name": "MOVIMENTO RURALE",
+          "votes": 2389,
+          "share": 0.01
+        }
+      ]
+    },
+    {
+      "id": "senato-1963-04-28",
+      "type": "senato",
+      "typeLabel": "Senato della Repubblica",
+      "year": 1963,
+      "date": "1963-04-28",
+      "title": "Senato della Repubblica 1963",
+      "sourceUrl": "https://elezionistorico.interno.gov.it/daithome/documenti/opendata/senato/senato-19630428.zip",
+      "sourceFiles": [
+        "senato-19630428.txt"
+      ],
+      "totals": {
+        "electors": 31011042,
+        "voters": 28868795,
+        "blankBallots": 870656,
+        "validVotes": 27469175,
+        "turnoutPct": 93.09,
+        "blankPct": 3.02
+      },
+      "winner": {
+        "name": "DC",
+        "votes": 10032173,
+        "share": 36.52
+      },
+      "results": [
+        {
+          "name": "DC",
+          "votes": 10032173,
+          "share": 36.52
+        },
+        {
+          "name": "PCI",
+          "votes": 6933292,
+          "share": 25.24
+        },
+        {
+          "name": "PSI",
+          "votes": 3849440,
+          "share": 14.01
+        },
+        {
+          "name": "PLI",
+          "votes": 2043309,
+          "share": 7.44
+        },
+        {
+          "name": "PSDI",
+          "votes": 1743837,
+          "share": 6.35
+        },
+        {
+          "name": "MSI",
+          "votes": 1458917,
+          "share": 5.31
+        },
+        {
+          "name": "PDIUM",
+          "votes": 429342,
+          "share": 1.56
+        },
+        {
+          "name": "PRI",
+          "votes": 223341,
+          "share": 0.81
+        },
+        {
+          "name": "MSI-PDIUM",
+          "votes": 212376,
+          "share": 0.77
+        },
+        {
+          "name": "DC-PRI",
+          "votes": 185684,
+          "share": 0.68
+        },
+        {
+          "name": "PPST",
+          "votes": 112023,
+          "share": 0.41
+        },
+        {
+          "name": "P.AUT.CRIST.SOC.",
+          "votes": 43355,
+          "share": 0.16
+        },
+        {
+          "name": "CONC.UNITA'RURALE",
+          "votes": 37262,
+          "share": 0.14
+        },
+        {
+          "name": "PS D'AZ.",
+          "votes": 34954,
+          "share": 0.13
+        },
+        {
+          "name": "UV",
+          "votes": 29510,
+          "share": 0.11
+        },
+        {
+          "name": "IND.DESTRA",
+          "votes": 24772,
+          "share": 0.09
+        },
+        {
+          "name": "INDIPENDENTE CATTOLICO",
+          "votes": 22578,
+          "share": 0.08
+        },
+        {
+          "name": "CUR",
+          "votes": 20802,
+          "share": 0.08
+        },
+        {
+          "name": "SINISTRA IND.",
+          "votes": 15224,
+          "share": 0.06
+        },
+        {
+          "name": "USCS",
+          "votes": 13187,
+          "share": 0.05
+        },
+        {
+          "name": "CONTADINI COMBATTENTI",
+          "votes": 3797,
+          "share": 0.01
+        }
+      ]
+    },
+    {
+      "id": "senato-1968-05-19",
+      "type": "senato",
+      "typeLabel": "Senato della Repubblica",
+      "year": 1968,
+      "date": "1968-05-19",
+      "title": "Senato della Repubblica 1968",
+      "sourceUrl": "https://elezionistorico.interno.gov.it/daithome/documenti/opendata/senato/senato-19680519.zip",
+      "sourceFiles": [
+        "senato-19680519.txt"
+      ],
+      "totals": {
+        "electors": 32504281,
+        "voters": 30241179,
+        "blankBallots": 1110891,
+        "validVotes": 28590608,
+        "turnoutPct": 93.04,
+        "blankPct": 3.67
+      },
+      "winner": {
+        "name": "DC",
+        "votes": 10963031,
+        "share": 38.34
+      },
+      "results": [
+        {
+          "name": "DC",
+          "votes": 10963031,
+          "share": 38.34
+        },
+        {
+          "name": "PCI-PSIUP",
+          "votes": 8577473,
+          "share": 30
+        },
+        {
+          "name": "PSU",
+          "votes": 4353804,
+          "share": 15.23
+        },
+        {
+          "name": "PLI",
+          "votes": 1936761,
+          "share": 6.77
+        },
+        {
+          "name": "MSI",
+          "votes": 1304913,
+          "share": 4.56
+        },
+        {
+          "name": "PRI",
+          "votes": 622420,
+          "share": 2.18
+        },
+        {
+          "name": "PDIUM",
+          "votes": 312621,
+          "share": 1.09
+        },
+        {
+          "name": "MSI-PDIUM",
+          "votes": 291967,
+          "share": 1.02
+        },
+        {
+          "name": "PPST",
+          "votes": 131071,
+          "share": 0.46
+        },
+        {
+          "name": "SOCIALDEMOCRAZIA",
+          "votes": 35872,
+          "share": 0.13
+        },
+        {
+          "name": "UV",
+          "votes": 28414,
+          "share": 0.1
+        },
+        {
+          "name": "PS D'AZ.",
+          "votes": 26391,
+          "share": 0.09
+        },
+        {
+          "name": "PST.PROG.SOC.",
+          "votes": 5870,
+          "share": 0.02
+        }
+      ]
+    },
+    {
+      "id": "senato-1972-05-07",
+      "type": "senato",
+      "typeLabel": "Senato della Repubblica",
+      "year": 1972,
+      "date": "1972-05-07",
+      "title": "Senato della Repubblica 1972",
+      "sourceUrl": "https://elezionistorico.interno.gov.it/daithome/documenti/opendata/senato/senato-19720507.zip",
+      "sourceFiles": [
+        "senato-19720507.txt"
+      ],
+      "totals": {
+        "electors": 33785713,
+        "voters": 31476356,
+        "blankBallots": 872928,
+        "validVotes": 30108447,
+        "turnoutPct": 93.16,
+        "blankPct": 2.77
+      },
+      "winner": {
+        "name": "DC",
+        "votes": 11463435,
+        "share": 38.07
+      },
+      "results": [
+        {
+          "name": "DC",
+          "votes": 11463435,
+          "share": 38.07
+        },
+        {
+          "name": "PCI-PSIUP",
+          "votes": 8311821,
+          "share": 27.61
+        },
+        {
+          "name": "PSI",
+          "votes": 3225471,
+          "share": 10.71
+        },
+        {
+          "name": "MSI",
+          "votes": 2766795,
+          "share": 9.19
+        },
+        {
+          "name": "PSDI",
+          "votes": 1614273,
+          "share": 5.36
+        },
+        {
+          "name": "PLI",
+          "votes": 1319032,
+          "share": 4.38
+        },
+        {
+          "name": "PRI",
+          "votes": 918397,
+          "share": 3.05
+        },
+        {
+          "name": "PCI-PSIUP-PS.D'AZ.",
+          "votes": 189534,
+          "share": 0.63
+        },
+        {
+          "name": "PPST-PPTT",
+          "votes": 110066,
+          "share": 0.37
+        },
+        {
+          "name": "PCI-PSIUP-PSI",
+          "votes": 41833,
+          "share": 0.14
+        },
+        {
+          "name": "PSDI-PRI",
+          "votes": 31953,
+          "share": 0.11
+        },
+        {
+          "name": "DC-UV-RV-PSDI",
+          "votes": 31114,
+          "share": 0.1
+        },
+        {
+          "name": "PC(MARX-LEN)IT",
+          "votes": 27876,
+          "share": 0.09
+        },
+        {
+          "name": "TIROL.",
+          "votes": 27762,
+          "share": 0.09
+        },
+        {
+          "name": "DEM.POP.",
+          "votes": 26372,
+          "share": 0.09
+        },
+        {
+          "name": "AZ.CR.POP.",
+          "votes": 2713,
+          "share": 0.01
+        }
+      ]
+    },
+    {
+      "id": "senato-1976-06-20",
+      "type": "senato",
+      "typeLabel": "Senato della Repubblica",
+      "year": 1976,
+      "date": "1976-06-20",
+      "title": "Senato della Repubblica 1976",
+      "sourceUrl": "https://elezionistorico.interno.gov.it/daithome/documenti/opendata/senato/senato-19760620.zip",
+      "sourceFiles": [
+        "senato-19760620.txt"
+      ],
+      "totals": {
+        "electors": 34916704,
+        "voters": 32606355,
+        "blankBallots": 707777,
+        "validVotes": 31433636,
+        "turnoutPct": 93.38,
+        "blankPct": 2.17
+      },
+      "winner": {
+        "name": "DC",
+        "votes": 12219710,
+        "share": 38.87
+      },
+      "results": [
+        {
+          "name": "DC",
+          "votes": 12219710,
+          "share": 38.87
+        },
+        {
+          "name": "PCI",
+          "votes": 10636851,
+          "share": 33.84
+        },
+        {
+          "name": "PSI",
+          "votes": 3209221,
+          "share": 10.21
+        },
+        {
+          "name": "MSI-DN",
+          "votes": 2089217,
+          "share": 6.65
+        },
+        {
+          "name": "PSDI",
+          "votes": 965805,
+          "share": 3.07
+        },
+        {
+          "name": "PRI",
+          "votes": 846198,
+          "share": 2.69
+        },
+        {
+          "name": "PLI",
+          "votes": 436696,
+          "share": 1.39
+        },
+        {
+          "name": "PLI-PRI-PSDI",
+          "votes": 334960,
+          "share": 1.07
+        },
+        {
+          "name": "P.RAD",
+          "votes": 265515,
+          "share": 0.84
+        },
+        {
+          "name": "PPST",
+          "votes": 158607,
+          "share": 0.5
+        },
+        {
+          "name": "DEM.PROL",
+          "votes": 78089,
+          "share": 0.25
+        },
+        {
+          "name": "PCI-PSI",
+          "votes": 52911,
+          "share": 0.17
+        },
+        {
+          "name": "PLI-PRI",
+          "votes": 51274,
+          "share": 0.16
+        },
+        {
+          "name": "DC-RV-UV-UVP-PRI",
+          "votes": 22913,
+          "share": 0.07
+        },
+        {
+          "name": "PCI-PSI-PDUP",
+          "votes": 21067,
+          "share": 0.07
+        },
+        {
+          "name": "DEM.POP-UVP M.REG",
+          "votes": 17700,
+          "share": 0.06
+        },
+        {
+          "name": "UNIONE SLOVENA",
+          "votes": 9073,
+          "share": 0.03
+        },
+        {
+          "name": "TIROL.",
+          "votes": 7195,
+          "share": 0.02
+        },
+        {
+          "name": "NPP",
+          "votes": 5171,
+          "share": 0.02
+        },
+        {
+          "name": "P.DEM.",
+          "votes": 3048,
+          "share": 0.01
+        },
+        {
+          "name": "GR.MARGH.",
+          "votes": 1895,
+          "share": 0.01
+        },
+        {
+          "name": "GR.AVE",
+          "votes": 520,
+          "share": 0
+        }
+      ]
+    },
+    {
+      "id": "senato-1979-06-03",
+      "type": "senato",
+      "typeLabel": "Senato della Repubblica",
+      "year": 1979,
+      "date": "1979-06-03",
+      "title": "Senato della Repubblica 1979",
+      "sourceUrl": "https://elezionistorico.interno.gov.it/daithome/documenti/opendata/senato/senato-19790603.zip",
+      "sourceFiles": [
+        "senato-19790603.txt"
+      ],
+      "totals": {
+        "electors": 36393941,
+        "voters": 32889346,
+        "blankBallots": 896307,
+        "validVotes": 31322430,
+        "turnoutPct": 90.37,
+        "blankPct": 2.73
+      },
+      "winner": {
+        "name": "DC",
+        "votes": 12006865,
+        "share": 38.33
+      },
+      "results": [
+        {
+          "name": "DC",
+          "votes": 12006865,
+          "share": 38.33
+        },
+        {
+          "name": "PCI",
+          "votes": 9853047,
+          "share": 31.46
+        },
+        {
+          "name": "PSI",
+          "votes": 3252708,
+          "share": 10.38
+        },
+        {
+          "name": "MSI-DN",
+          "votes": 1780632,
+          "share": 5.68
+        },
+        {
+          "name": "PSDI",
+          "votes": 1319918,
+          "share": 4.21
+        },
+        {
+          "name": "PRI",
+          "votes": 1052249,
+          "share": 3.36
+        },
+        {
+          "name": "PLI",
+          "votes": 691846,
+          "share": 2.21
+        },
+        {
+          "name": "P.RAD",
+          "votes": 413444,
+          "share": 1.32
+        },
+        {
+          "name": "P.RAD-N.SIN.UN.",
+          "votes": 365951,
+          "share": 1.17
+        },
+        {
+          "name": "DN-CD",
+          "votes": 177161,
+          "share": 0.57
+        },
+        {
+          "name": "PPST",
+          "votes": 172536,
+          "share": 0.55
+        },
+        {
+          "name": "ASSOCIAZIONE PER TRIESTE",
+          "votes": 61912,
+          "share": 0.2
+        },
+        {
+          "name": "NUOVA SIN.UNITA",
+          "votes": 44094,
+          "share": 0.14
+        },
+        {
+          "name": "UNIONE VALDOSTANA-DEMPROL-PLI",
+          "votes": 37082,
+          "share": 0.12
+        },
+        {
+          "name": "MOV.FRIULI",
+          "votes": 31486,
+          "share": 0.1
+        },
+        {
+          "name": "UNITA DELLA SINISTRA",
+          "votes": 19814,
+          "share": 0.06
+        },
+        {
+          "name": "PS D'AZ.",
+          "votes": 15720,
+          "share": 0.05
+        },
+        {
+          "name": "PRI-PST-PROGR.SOC.",
+          "votes": 9104,
+          "share": 0.03
+        },
+        {
+          "name": "NUOVA SIN.SARDA",
+          "votes": 5520,
+          "share": 0.02
+        },
+        {
+          "name": "PART.POP.CALAB.",
+          "votes": 4000,
+          "share": 0.01
+        },
+        {
+          "name": "P.DEM.",
+          "votes": 3760,
+          "share": 0.01
+        },
+        {
+          "name": "FIORE MARGHERITA",
+          "votes": 2059,
+          "share": 0.01
+        },
+        {
+          "name": "PART.BEN.CIV.",
+          "votes": 1068,
+          "share": 0
+        },
+        {
+          "name": "MOV.AVE",
+          "votes": 454,
+          "share": 0
+        }
+      ]
+    },
+    {
+      "id": "senato-1983-06-26",
+      "type": "senato",
+      "typeLabel": "Senato della Repubblica",
+      "year": 1983,
+      "date": "1983-06-26",
+      "title": "Senato della Repubblica 1983",
+      "sourceUrl": "https://elezionistorico.interno.gov.it/daithome/documenti/opendata/senato/senato-19830626.zip",
+      "sourceFiles": [
+        "senato-19830626.txt"
+      ],
+      "totals": {
+        "electors": 37603817,
+        "voters": 33411171,
+        "blankBallots": 1048887,
+        "validVotes": 31100297,
+        "turnoutPct": 88.85,
+        "blankPct": 3.14
+      },
+      "winner": {
+        "name": "DC",
+        "votes": 10077382,
+        "share": 32.4
+      },
+      "results": [
+        {
+          "name": "DC",
+          "votes": 10077382,
+          "share": 32.4
+        },
+        {
+          "name": "PCI",
+          "votes": 9579496,
+          "share": 30.8
+        },
+        {
+          "name": "PSI",
+          "votes": 3539561,
+          "share": 11.38
+        },
+        {
+          "name": "MSI-DN",
+          "votes": 2283435,
+          "share": 7.34
+        },
+        {
+          "name": "PRI",
+          "votes": 1452280,
+          "share": 4.67
+        },
+        {
+          "name": "PSDI",
+          "votes": 1193459,
+          "share": 3.84
+        },
+        {
+          "name": "PLI",
+          "votes": 834391,
+          "share": 2.68
+        },
+        {
+          "name": "P.RAD",
+          "votes": 548884,
+          "share": 1.76
+        },
+        {
+          "name": "PART.NAZ.PENS.",
+          "votes": 370756,
+          "share": 1.19
+        },
+        {
+          "name": "DEM.PROL",
+          "votes": 327699,
+          "share": 1.05
+        },
+        {
+          "name": "PPST",
+          "votes": 157466,
+          "share": 0.51
+        },
+        {
+          "name": "PLI-PRI",
+          "votes": 127504,
+          "share": 0.41
+        },
+        {
+          "name": "PLI-PRI-PSDI",
+          "votes": 100218,
+          "share": 0.32
+        },
+        {
+          "name": "LIGA VENETA",
+          "votes": 91171,
+          "share": 0.29
+        },
+        {
+          "name": "LISTA PER TRIESTE",
+          "votes": 85543,
+          "share": 0.28
+        },
+        {
+          "name": "PS D'AZ.",
+          "votes": 76807,
+          "share": 0.25
+        },
+        {
+          "name": "PLI-PSDI",
+          "votes": 72298,
+          "share": 0.23
+        },
+        {
+          "name": "RINN-MOLISE",
+          "votes": 33525,
+          "share": 0.11
+        },
+        {
+          "name": "LISTA TS-PPPIU",
+          "votes": 27940,
+          "share": 0.09
+        },
+        {
+          "name": "UV-UVP-D.POP.",
+          "votes": 26547,
+          "share": 0.09
+        },
+        {
+          "name": "MOV.FRIULI",
+          "votes": 23850,
+          "share": 0.08
+        },
+        {
+          "name": "PPTT",
+          "votes": 17374,
+          "share": 0.06
+        },
+        {
+          "name": "PART.CRIST.AZ.SOC.",
+          "votes": 12588,
+          "share": 0.04
+        },
+        {
+          "name": "UN.PEN.PENS.IT.",
+          "votes": 10895,
+          "share": 0.04
+        },
+        {
+          "name": "UNIONE SLOVENA",
+          "votes": 8904,
+          "share": 0.03
+        },
+        {
+          "name": "FR.NAZ.SIC.",
+          "votes": 8243,
+          "share": 0.03
+        },
+        {
+          "name": "LISTA DI LOTTA",
+          "votes": 6403,
+          "share": 0.02
+        },
+        {
+          "name": "LISTA TS-UDP",
+          "votes": 5678,
+          "share": 0.02
+        }
+      ]
+    },
+    {
+      "id": "senato-1987-06-14",
+      "type": "senato",
+      "typeLabel": "Senato della Repubblica",
+      "year": 1987,
+      "date": "1987-06-14",
+      "title": "Senato della Repubblica 1987",
+      "sourceUrl": "https://elezionistorico.interno.gov.it/daithome/documenti/opendata/senato/senato-19870614.zip",
+      "sourceFiles": [
+        "Senato-19870614.txt"
+      ],
+      "totals": {
+        "electors": 38951485,
+        "voters": 34421230,
+        "blankBallots": 961797,
+        "validVotes": 32408390,
+        "turnoutPct": 88.37,
+        "blankPct": 2.79
+      },
+      "winner": {
+        "name": "DC",
+        "votes": 10894353,
+        "share": 33.62
+      },
+      "results": [
+        {
+          "name": "DC",
+          "votes": 10894353,
+          "share": 33.62
+        },
+        {
+          "name": "PCI",
+          "votes": 9180688,
+          "share": 28.33
+        },
+        {
+          "name": "PSI",
+          "votes": 3534875,
+          "share": 10.91
+        },
+        {
+          "name": "MSI-DN",
+          "votes": 2120704,
+          "share": 6.54
+        },
+        {
+          "name": "PRI",
+          "votes": 1248469,
+          "share": 3.85
+        },
+        {
+          "name": "PSI-PSDI-PR",
+          "votes": 962109,
+          "share": 2.97
+        },
+        {
+          "name": "PSDI",
+          "votes": 764152,
+          "share": 2.36
+        },
+        {
+          "name": "PLI",
+          "votes": 700218,
+          "share": 2.16
+        },
+        {
+          "name": "LISTA VERDE",
+          "votes": 634145,
+          "share": 1.96
+        },
+        {
+          "name": "P.RAD",
+          "votes": 572385,
+          "share": 1.77
+        },
+        {
+          "name": "DEM.PROL",
+          "votes": 493618,
+          "share": 1.52
+        },
+        {
+          "name": "LIGA VENETA-PU",
+          "votes": 298522,
+          "share": 0.92
+        },
+        {
+          "name": "PPST",
+          "votes": 171512,
+          "share": 0.53
+        },
+        {
+          "name": "LEGA LOMBARDA",
+          "votes": 137272,
+          "share": 0.42
+        },
+        {
+          "name": "PS D'AZ.",
+          "votes": 124216,
+          "share": 0.38
+        },
+        {
+          "name": "ALL.LAICA SOC.",
+          "votes": 84854,
+          "share": 0.26
+        },
+        {
+          "name": "PIEMONT-AUT.REG.",
+          "votes": 60741,
+          "share": 0.19
+        },
+        {
+          "name": "PSI-PSDI-PR-VERDI",
+          "votes": 58491,
+          "share": 0.18
+        },
+        {
+          "name": "ALL.POP.PENS",
+          "votes": 51769,
+          "share": 0.16
+        },
+        {
+          "name": "PIEMONT",
+          "votes": 51336,
+          "share": 0.16
+        },
+        {
+          "name": "ALL.DEM.MOL.",
+          "votes": 49289,
+          "share": 0.15
+        },
+        {
+          "name": "CPA",
+          "votes": 41129,
+          "share": 0.13
+        },
+        {
+          "name": "UV-ADP-PRI",
+          "votes": 35826,
+          "share": 0.11
+        },
+        {
+          "name": "DC-PCI-PSI-PSDI-PLI",
+          "votes": 25423,
+          "share": 0.08
+        },
+        {
+          "name": "P.VERDE I.VER.E.",
+          "votes": 21998,
+          "share": 0.07
+        },
+        {
+          "name": "VERDI IT.-P.ECOL",
+          "votes": 19122,
+          "share": 0.06
+        },
+        {
+          "name": "MOV.FRIULI",
+          "votes": 17528,
+          "share": 0.05
+        },
+        {
+          "name": "MOV.LIB.FISCALE",
+          "votes": 13915,
+          "share": 0.04
+        },
+        {
+          "name": "PARTIDU INDIP.",
+          "votes": 11812,
+          "share": 0.04
+        },
+        {
+          "name": "PART.SUD.TIROL",
+          "votes": 8548,
+          "share": 0.03
+        },
+        {
+          "name": "RINASCITA SIC.",
+          "votes": 5257,
+          "share": 0.02
+        },
+        {
+          "name": "PS D'AZ-ALL.F.",
+          "votes": 4811,
+          "share": 0.01
+        },
+        {
+          "name": "PART.NAZ.INQ.",
+          "votes": 4102,
+          "share": 0.01
+        },
+        {
+          "name": "MOV.NAZ.IT.CACC.",
+          "votes": 2695,
+          "share": 0.01
+        },
+        {
+          "name": "NPP",
+          "votes": 2506,
+          "share": 0.01
+        }
+      ]
+    },
+    {
+      "id": "senato-1992-04-05",
+      "type": "senato",
+      "typeLabel": "Senato della Repubblica",
+      "year": 1992,
+      "date": "1992-04-05",
+      "title": "Senato della Repubblica 1992",
+      "sourceUrl": "https://elezionistorico.interno.gov.it/daithome/documenti/opendata/senato/senato-19920405.zip",
+      "sourceFiles": [
+        "senato-19920405.txt"
+      ],
+      "totals": {
+        "electors": 41053543,
+        "voters": 35633367,
+        "blankBallots": 1132874,
+        "validVotes": 33233188,
+        "turnoutPct": 86.8,
+        "blankPct": 3.18
+      },
+      "winner": {
+        "name": "DC",
+        "votes": 9070310,
+        "share": 27.29
+      },
+      "results": [
+        {
+          "name": "DC",
+          "votes": 9070310,
+          "share": 27.29
+        },
+        {
+          "name": "PDS",
+          "votes": 5663019,
+          "share": 17.04
+        },
+        {
+          "name": "PSI",
+          "votes": 4511814,
+          "share": 13.58
+        },
+        {
+          "name": "LEGA LOMBARDA",
+          "votes": 2721629,
+          "share": 8.19
+        },
+        {
+          "name": "MSI-DN",
+          "votes": 2169670,
+          "share": 6.53
+        },
+        {
+          "name": "RIFONDAZIONE COMUNISTA",
+          "votes": 2163865,
+          "share": 6.51
+        },
+        {
+          "name": "PRI",
+          "votes": 1561852,
+          "share": 4.7
+        },
+        {
+          "name": "FED.DEI VERDI",
+          "votes": 1022473,
+          "share": 3.08
+        },
+        {
+          "name": "PLI",
+          "votes": 937435,
+          "share": 2.82
+        },
+        {
+          "name": "PSDI",
+          "votes": 661640,
+          "share": 1.99
+        },
+        {
+          "name": "LISTA REFERENDUM",
+          "votes": 330581,
+          "share": 0.99
+        },
+        {
+          "name": "LA RETE-MOV.DEM.",
+          "votes": 239737,
+          "share": 0.72
+        },
+        {
+          "name": "PARTITO PENSIONATI",
+          "votes": 214702,
+          "share": 0.65
+        },
+        {
+          "name": "PSDI-LEGA NUOVA",
+          "votes": 190703,
+          "share": 0.57
+        },
+        {
+          "name": "FEDERALISMO-PENS.UV.",
+          "votes": 174314,
+          "share": 0.52
+        },
+        {
+          "name": "PPST",
+          "votes": 168143,
+          "share": 0.51
+        },
+        {
+          "name": "LISTA PANNELLA",
+          "votes": 167292,
+          "share": 0.5
+        },
+        {
+          "name": "PER LA CALABRIA",
+          "votes": 144225,
+          "share": 0.43
+        },
+        {
+          "name": "LEGA AUT.VENETA",
+          "votes": 137988,
+          "share": 0.42
+        },
+        {
+          "name": "LA LEGA CAS-PENS.",
+          "votes": 134229,
+          "share": 0.4
+        },
+        {
+          "name": "LEGA ALPINA LUMBARDA",
+          "votes": 119119,
+          "share": 0.36
+        },
+        {
+          "name": "CPA",
+          "votes": 115185,
+          "share": 0.35
+        },
+        {
+          "name": "LEGA ALPINA PIEMONT",
+          "votes": 73319,
+          "share": 0.22
+        },
+        {
+          "name": "LG.LOMB.EUR.T.LIB.",
+          "votes": 52288,
+          "share": 0.16
+        },
+        {
+          "name": "MOV.VEN.REG.AUT",
+          "votes": 49594,
+          "share": 0.15
+        },
+        {
+          "name": "LEGA D'AZIONE MERID.",
+          "votes": 48914,
+          "share": 0.15
+        },
+        {
+          "name": "LISTA PER IL MOLISE",
+          "votes": 48589,
+          "share": 0.15
+        },
+        {
+          "name": "VERDI FEDERALISTI",
+          "votes": 45970,
+          "share": 0.14
+        },
+        {
+          "name": "UNION VENETO",
+          "votes": 42344,
+          "share": 0.13
+        },
+        {
+          "name": "SENZA CONFINI",
+          "votes": 36057,
+          "share": 0.11
+        },
+        {
+          "name": "L.VALLE D'AOSTA",
+          "votes": 34142,
+          "share": 0.1
+        },
+        {
+          "name": "ALLEANZA LOMBARDA AUTONOMIA",
+          "votes": 32774,
+          "share": 0.1
+        },
+        {
+          "name": "GRUPPO DOLCHI-FOSSON",
+          "votes": 31163,
+          "share": 0.09
+        },
+        {
+          "name": "VERDI-VERDI",
+          "votes": 29208,
+          "share": 0.09
+        },
+        {
+          "name": "LEGA DELLE LEGHE",
+          "votes": 23649,
+          "share": 0.07
+        },
+        {
+          "name": "PART.AMORE",
+          "votes": 16864,
+          "share": 0.05
+        },
+        {
+          "name": "PARTIDU INDIP.",
+          "votes": 13373,
+          "share": 0.04
+        },
+        {
+          "name": "LEGA MARCHE",
+          "votes": 7575,
+          "share": 0.02
+        },
+        {
+          "name": "MOVIMENTO DELLE LIBERTA'",
+          "votes": 6782,
+          "share": 0.02
+        },
+        {
+          "name": "LEGA LAZIO",
+          "votes": 6768,
+          "share": 0.02
+        },
+        {
+          "name": "MOV.AUT.TOSCANO",
+          "votes": 6541,
+          "share": 0.02
+        },
+        {
+          "name": "MOV.EUR.AUTOMOB.",
+          "votes": 3677,
+          "share": 0.01
+        },
+        {
+          "name": "MOV.POL.DIF.AUTOMOB.",
+          "votes": 3224,
+          "share": 0.01
+        },
+        {
+          "name": "LG.MERID.UN.NAZ.",
+          "votes": 448,
+          "share": 0
+        }
+      ]
+    },
+    {
+      "id": "senato-1994-03-27",
+      "type": "senato",
+      "typeLabel": "Senato della Repubblica",
+      "year": 1994,
+      "date": "1994-03-27",
+      "title": "Senato della Repubblica 1994",
+      "sourceUrl": "https://elezionistorico.interno.gov.it/daithome/documenti/opendata/senato/senato-19940327.zip",
+      "sourceFiles": [
+        "senato-19940327.txt"
+      ],
+      "totals": {
+        "electors": 42209060,
+        "voters": 35860683,
+        "blankBallots": 1581713,
+        "validVotes": 33082167,
+        "turnoutPct": 84.96,
+        "blankPct": 4.41
+      },
+      "winner": {
+        "name": "PROGRESSISTI",
+        "votes": 10885044,
+        "share": 32.9
+      },
+      "results": [
+        {
+          "name": "PROGRESSISTI",
+          "votes": 10885044,
+          "share": 32.9
+        },
+        {
+          "name": "POLO DELLE LIBERTA'",
+          "votes": 6572878,
+          "share": 19.87
+        },
+        {
+          "name": "PATTO PER L'ITALIA",
+          "votes": 5519566,
+          "share": 16.68
+        },
+        {
+          "name": "POLO BUON GOVERNO",
+          "votes": 4547013,
+          "share": 13.74
+        },
+        {
+          "name": "ALLEANZA NAZIONALE",
+          "votes": 2079086,
+          "share": 6.28
+        },
+        {
+          "name": "PANNELLA-RIFORMATORI",
+          "votes": 767452,
+          "share": 2.32
+        },
+        {
+          "name": "PARTITO PENSIONATI",
+          "votes": 250263,
+          "share": 0.76
+        },
+        {
+          "name": "LEGA ALPINA LUMBARDA",
+          "votes": 246121,
+          "share": 0.74
+        },
+        {
+          "name": "SVP",
+          "votes": 217254,
+          "share": 0.66
+        },
+        {
+          "name": "LEGA AUT.VENETA",
+          "votes": 165288,
+          "share": 0.5
+        },
+        {
+          "name": "FI-CCD",
+          "votes": 149989,
+          "share": 0.45
+        },
+        {
+          "name": "PSI",
+          "votes": 103342,
+          "share": 0.31
+        },
+        {
+          "name": "VERDI FEDERALISTI",
+          "votes": 100146,
+          "share": 0.3
+        },
+        {
+          "name": "PS D'AZ.",
+          "votes": 88254,
+          "share": 0.27
+        },
+        {
+          "name": "PART.LEGGE NATURALE",
+          "votes": 86514,
+          "share": 0.26
+        },
+        {
+          "name": "PROGRAMMA ITALIA",
+          "votes": 78571,
+          "share": 0.24
+        },
+        {
+          "name": "LG.ANGELA BOSSI",
+          "votes": 72169,
+          "share": 0.22
+        },
+        {
+          "name": "VERDI-VERDI",
+          "votes": 68062,
+          "share": 0.21
+        },
+        {
+          "name": "SOCIALDEMOCRAZIA",
+          "votes": 66547,
+          "share": 0.2
+        },
+        {
+          "name": "MOV.VEN.REG.AUT",
+          "votes": 64149,
+          "share": 0.19
+        },
+        {
+          "name": "MAGRIS",
+          "votes": 61398,
+          "share": 0.19
+        },
+        {
+          "name": "UN.CRIST.RIF.",
+          "votes": 58540,
+          "share": 0.18
+        },
+        {
+          "name": "UN.POP.",
+          "votes": 58253,
+          "share": 0.18
+        },
+        {
+          "name": "LEGA D'AZIONE MERIDIONALE",
+          "votes": 54296,
+          "share": 0.16
+        },
+        {
+          "name": "LEGA PER IL PIEMONTE",
+          "votes": 49496,
+          "share": 0.15
+        },
+        {
+          "name": "P.DEM.",
+          "votes": 37532,
+          "share": 0.11
+        },
+        {
+          "name": "ADA",
+          "votes": 34587,
+          "share": 0.1
+        },
+        {
+          "name": "UN.RIF.MERIDIONALE",
+          "votes": 33259,
+          "share": 0.1
+        },
+        {
+          "name": "LG.AUT.TOSCANA-M.A.T",
+          "votes": 30627,
+          "share": 0.09
+        },
+        {
+          "name": "MOV.FED.CALABRIA LIB",
+          "votes": 30034,
+          "share": 0.09
+        },
+        {
+          "name": "L.VALLE D'AOSTA",
+          "votes": 27493,
+          "share": 0.08
+        },
+        {
+          "name": "PARTIDU INDIP.",
+          "votes": 26181,
+          "share": 0.08
+        },
+        {
+          "name": "SOLID.OCCUPAZ.SVILUP",
+          "votes": 25067,
+          "share": 0.08
+        },
+        {
+          "name": "VESPRI SICILIANI",
+          "votes": 24944,
+          "share": 0.08
+        },
+        {
+          "name": "ALL.MERIDIONALE",
+          "votes": 24147,
+          "share": 0.07
+        },
+        {
+          "name": "RINNOVAMENTO",
+          "votes": 20615,
+          "share": 0.06
+        },
+        {
+          "name": "INIZIATIVA POP.DEM.",
+          "votes": 20119,
+          "share": 0.06
+        },
+        {
+          "name": "CAT.SOC.LIB.DEM.",
+          "votes": 19013,
+          "share": 0.06
+        },
+        {
+          "name": "LIBERI FORTI UNITI",
+          "votes": 18392,
+          "share": 0.06
+        },
+        {
+          "name": "RIN.SALENTINA",
+          "votes": 17394,
+          "share": 0.05
+        },
+        {
+          "name": "P.POP.PROGRESSISTA",
+          "votes": 16554,
+          "share": 0.05
+        },
+        {
+          "name": "DEMOCRATICI POPOLARI",
+          "votes": 15799,
+          "share": 0.05
+        },
+        {
+          "name": "LEANZA",
+          "votes": 14599,
+          "share": 0.04
+        },
+        {
+          "name": "UN.CRIST.RIF.SOCIAL",
+          "votes": 13675,
+          "share": 0.04
+        },
+        {
+          "name": "UNITE VALDOTAINS",
+          "votes": 13254,
+          "share": 0.04
+        },
+        {
+          "name": "SICILIA FUTURA",
+          "votes": 12911,
+          "share": 0.04
+        },
+        {
+          "name": "LETTIERI",
+          "votes": 12901,
+          "share": 0.04
+        },
+        {
+          "name": "LA RETE-MOV.DEM.",
+          "votes": 12493,
+          "share": 0.04
+        },
+        {
+          "name": "SCUDO DEMOCRATICO",
+          "votes": 12064,
+          "share": 0.04
+        },
+        {
+          "name": "TRIMARCHI",
+          "votes": 11984,
+          "share": 0.04
+        },
+        {
+          "name": "MARONGIU SENATORE",
+          "votes": 11857,
+          "share": 0.04
+        },
+        {
+          "name": "ALL.MUNICIPALITA'",
+          "votes": 10910,
+          "share": 0.03
+        },
+        {
+          "name": "ALL.POP.",
+          "votes": 10716,
+          "share": 0.03
+        },
+        {
+          "name": "CEN.",
+          "votes": 9005,
+          "share": 0.03
+        },
+        {
+          "name": "UN.CRIST.RIF-RIS.POP",
+          "votes": 8941,
+          "share": 0.03
+        },
+        {
+          "name": "DEM.POPOLARE",
+          "votes": 8271,
+          "share": 0.03
+        },
+        {
+          "name": "LISTA FRANCO GRECO",
+          "votes": 8237,
+          "share": 0.02
+        },
+        {
+          "name": "DELFINO AL SENATO",
+          "votes": 7414,
+          "share": 0.02
+        },
+        {
+          "name": "AZ.AUTONOM.ARBORENSE",
+          "votes": 6978,
+          "share": 0.02
+        },
+        {
+          "name": "LISTA INSIEME",
+          "votes": 6255,
+          "share": 0.02
+        },
+        {
+          "name": "UNIONE ROMAGNA",
+          "votes": 6214,
+          "share": 0.02
+        },
+        {
+          "name": "MOV.CAT.RINNOVAMENTO",
+          "votes": 6073,
+          "share": 0.02
+        },
+        {
+          "name": "INSIEME PER SVILUPPO",
+          "votes": 5504,
+          "share": 0.02
+        },
+        {
+          "name": "UNIONE MEDITERRANEA",
+          "votes": 5279,
+          "share": 0.02
+        },
+        {
+          "name": "RIZZITIELLO",
+          "votes": 4692,
+          "share": 0.01
+        },
+        {
+          "name": "ZANGRANDO",
+          "votes": 4474,
+          "share": 0.01
+        },
+        {
+          "name": "DEM.E SOLIDARIETA'",
+          "votes": 4156,
+          "share": 0.01
+        },
+        {
+          "name": "CRD",
+          "votes": 3581,
+          "share": 0.01
+        },
+        {
+          "name": "D'ANGELLA",
+          "votes": 3421,
+          "share": 0.01
+        },
+        {
+          "name": "PDP",
+          "votes": 2786,
+          "share": 0.01
+        },
+        {
+          "name": "GRUPPO PROGRESSISTA",
+          "votes": 2593,
+          "share": 0.01
+        },
+        {
+          "name": "MEDITERRANEO",
+          "votes": 2548,
+          "share": 0.01
+        },
+        {
+          "name": "RINASCITA CIVILE",
+          "votes": 2286,
+          "share": 0.01
+        },
+        {
+          "name": "INSIEME PER CAMBIARE",
+          "votes": 1963,
+          "share": 0.01
+        },
+        {
+          "name": "GERVASI",
+          "votes": 1672,
+          "share": 0.01
+        },
+        {
+          "name": "PRIMAVERA",
+          "votes": 1012,
+          "share": 0
+        }
+      ]
+    },
+    {
+      "id": "senato-1996-04-21",
+      "type": "senato",
+      "typeLabel": "Senato della Repubblica",
+      "year": 1996,
+      "date": "1996-04-21",
+      "title": "Senato della Repubblica 1996",
+      "sourceUrl": "https://elezionistorico.interno.gov.it/daithome/documenti/opendata/senato/senato-19960421.zip",
+      "sourceFiles": [
+        "senato-19960421.txt"
+      ],
+      "totals": {
+        "electors": 42875726,
+        "voters": 35267907,
+        "blankBallots": 1280744,
+        "validVotes": 32632894,
+        "turnoutPct": 82.26,
+        "blankPct": 3.63
+      },
+      "winner": {
+        "name": "L'ULIVO",
+        "votes": 13090705,
+        "share": 40.12
+      },
+      "results": [
+        {
+          "name": "L'ULIVO",
+          "votes": 13090705,
+          "share": 40.12
+        },
+        {
+          "name": "POLO PER LE LIBERTA'",
+          "votes": 12187070,
+          "share": 37.35
+        },
+        {
+          "name": "LEGA NORD",
+          "votes": 3394062,
+          "share": 10.4
+        },
+        {
+          "name": "PROGRESSISTI (1996)",
+          "votes": 860792,
+          "share": 2.64
+        },
+        {
+          "name": "MOV.SOC.TRICOLORE",
+          "votes": 747988,
+          "share": 2.29
+        },
+        {
+          "name": "PANNELLA-SGARBI",
+          "votes": 510071,
+          "share": 1.56
+        },
+        {
+          "name": "L'ULIVO-PS.D'AZ.",
+          "votes": 421492,
+          "share": 1.29
+        },
+        {
+          "name": "SOCIALISTA",
+          "votes": 288080,
+          "share": 0.88
+        },
+        {
+          "name": "L'ABETE-SVP-PATT",
+          "votes": 178410,
+          "share": 0.55
+        },
+        {
+          "name": "MANI PULITE",
+          "votes": 109023,
+          "share": 0.33
+        },
+        {
+          "name": "ALLEANZA LOMBARDA AUTONOMIA",
+          "votes": 106371,
+          "share": 0.33
+        },
+        {
+          "name": "UNIONE NORD EST",
+          "votes": 72559,
+          "share": 0.22
+        },
+        {
+          "name": "NOI SICILIANI-FNS",
+          "votes": 71837,
+          "share": 0.22
+        },
+        {
+          "name": "LEGA D'AZIONE MERIDIONALE",
+          "votes": 66578,
+          "share": 0.2
+        },
+        {
+          "name": "VERDI-VERDI",
+          "votes": 61684,
+          "share": 0.19
+        },
+        {
+          "name": "ALL.PENSIONATI EUR.",
+          "votes": 60654,
+          "share": 0.19
+        },
+        {
+          "name": "DEMOCRAZIA SOCIALE",
+          "votes": 60262,
+          "share": 0.18
+        },
+        {
+          "name": "FED.LISTE CIVICHE IT",
+          "votes": 55887,
+          "share": 0.17
+        },
+        {
+          "name": "SARDIGNA NATZIONE",
+          "votes": 45346,
+          "share": 0.14
+        },
+        {
+          "name": "POUR VALLEE D'AOSTE",
+          "votes": 29538,
+          "share": 0.09
+        },
+        {
+          "name": "PIEMONTE NAZ.EUROPA",
+          "votes": 26897,
+          "share": 0.08
+        },
+        {
+          "name": "AMBIENTALISTI",
+          "votes": 26764,
+          "share": 0.08
+        },
+        {
+          "name": "GR.INDIP.LIBERTA'",
+          "votes": 23315,
+          "share": 0.07
+        },
+        {
+          "name": "UNION FUR SUD TIROL",
+          "votes": 19353,
+          "share": 0.06
+        },
+        {
+          "name": "MOV.AUT.TOSCANO",
+          "votes": 18568,
+          "share": 0.06
+        },
+        {
+          "name": "PATTO PER L'AGRO",
+          "votes": 17980,
+          "share": 0.06
+        },
+        {
+          "name": "RINNOVAMENTO",
+          "votes": 16191,
+          "share": 0.05
+        },
+        {
+          "name": "VALLE D'AOSTA-ULIVO",
+          "votes": 10371,
+          "share": 0.03
+        },
+        {
+          "name": "DESTRA DI POPOLO",
+          "votes": 6710,
+          "share": 0.02
+        },
+        {
+          "name": "PART.LEGGE NATURALE",
+          "votes": 5830,
+          "share": 0.02
+        },
+        {
+          "name": "DEMOCR.PROGRESSO",
+          "votes": 5688,
+          "share": 0.02
+        },
+        {
+          "name": "RIFONDAZIONE COMUNISTA",
+          "votes": 5681,
+          "share": 0.02
+        },
+        {
+          "name": "MOV.POP.MORALIZ.",
+          "votes": 5318,
+          "share": 0.02
+        },
+        {
+          "name": "ALPI AZZURRE",
+          "votes": 5144,
+          "share": 0.02
+        },
+        {
+          "name": "ALT.DEM.C.ROMANI",
+          "votes": 4524,
+          "share": 0.01
+        },
+        {
+          "name": "P.POP.PROGRESSISTA",
+          "votes": 4450,
+          "share": 0.01
+        },
+        {
+          "name": "PER UN PAESE NORMALE",
+          "votes": 3976,
+          "share": 0.01
+        },
+        {
+          "name": "REG.DOLOMITICA EUR",
+          "votes": 2898,
+          "share": 0.01
+        },
+        {
+          "name": "NORD LIBERO AUT.",
+          "votes": 2411,
+          "share": 0.01
+        },
+        {
+          "name": "COLPISCI IL CENTRO",
+          "votes": 2178,
+          "share": 0.01
+        },
+        {
+          "name": "ALL.CONTADINA ARTIG.",
+          "votes": 238,
+          "share": 0
+        }
+      ]
+    },
+    {
+      "id": "senato-2001-05-13",
+      "type": "senato",
+      "typeLabel": "Senato della Repubblica",
+      "year": 2001,
+      "date": "2001-05-13",
+      "title": "Senato della Repubblica 2001",
+      "sourceUrl": "https://elezionistorico.interno.gov.it/daithome/documenti/opendata/senato/senato-20010513.zip",
+      "sourceFiles": [
+        "senato-20010513.txt"
+      ],
+      "totals": {
+        "electors": 44499794,
+        "voters": 36189394,
+        "blankBallots": 1284005,
+        "validVotes": 33858141,
+        "turnoutPct": 81.32,
+        "blankPct": 3.55
+      },
+      "winner": {
+        "name": "CASA DELLE LIBERTA'",
+        "votes": 14402882,
+        "share": 42.54
+      },
+      "results": [
+        {
+          "name": "CASA DELLE LIBERTA'",
+          "votes": 14402882,
+          "share": 42.54
+        },
+        {
+          "name": "L'ULIVO",
+          "votes": 13102365,
+          "share": 38.7
+        },
+        {
+          "name": "RIFONDAZIONE COMUNISTA",
+          "votes": 1707119,
+          "share": 5.04
+        },
+        {
+          "name": "LISTA DI PIETRO",
+          "votes": 1139427,
+          "share": 3.37
+        },
+        {
+          "name": "DEMOCRAZIA EUROPEA",
+          "votes": 1065897,
+          "share": 3.15
+        },
+        {
+          "name": "PANNELLA-BONINO",
+          "votes": 676319,
+          "share": 2
+        },
+        {
+          "name": "FIAMMA TRICOLORE",
+          "votes": 339827,
+          "share": 1
+        },
+        {
+          "name": "ALLEANZA LOMBARDA AUTONOMIA",
+          "votes": 308687,
+          "share": 0.91
+        },
+        {
+          "name": "SVP-L'ULIVO",
+          "votes": 175592,
+          "share": 0.52
+        },
+        {
+          "name": "LIGA FRONTE VENETO",
+          "votes": 138269,
+          "share": 0.41
+        },
+        {
+          "name": "SVP",
+          "votes": 126157,
+          "share": 0.37
+        },
+        {
+          "name": "VA' PENSIERO PADANIA",
+          "votes": 119079,
+          "share": 0.35
+        },
+        {
+          "name": "FRONTE NAZIONALE",
+          "votes": 98403,
+          "share": 0.29
+        },
+        {
+          "name": "DEM.EUR-SOC.AUT",
+          "votes": 79017,
+          "share": 0.23
+        },
+        {
+          "name": "PARTITO PENSIONATI",
+          "votes": 78595,
+          "share": 0.23
+        },
+        {
+          "name": "FORZA NUOVA",
+          "votes": 39519,
+          "share": 0.12
+        },
+        {
+          "name": "VERDI-VERDI",
+          "votes": 35739,
+          "share": 0.11
+        },
+        {
+          "name": "PS D'AZ-SARD.NATZ.",
+          "votes": 32838,
+          "share": 0.1
+        },
+        {
+          "name": "VALLEE D'AOSTE",
+          "votes": 32429,
+          "share": 0.1
+        },
+        {
+          "name": "FILOGRANA SALENTO",
+          "votes": 21834,
+          "share": 0.06
+        },
+        {
+          "name": "NOI SICILIANI",
+          "votes": 20764,
+          "share": 0.06
+        },
+        {
+          "name": "LEGA D'AZIONE MERIDIONALE",
+          "votes": 19908,
+          "share": 0.06
+        },
+        {
+          "name": "LIBDEM.BASTA",
+          "votes": 19887,
+          "share": 0.06
+        },
+        {
+          "name": "FI-LG NORD (AOSTA)",
+          "votes": 14817,
+          "share": 0.04
+        },
+        {
+          "name": "P.LIBERAL POPOLARE",
+          "votes": 10290,
+          "share": 0.03
+        },
+        {
+          "name": "LISTA AMADU",
+          "votes": 9237,
+          "share": 0.03
+        },
+        {
+          "name": "LISTA ALTERNATIVA",
+          "votes": 7704,
+          "share": 0.02
+        },
+        {
+          "name": "FORZA CHIAPPETTA",
+          "votes": 6933,
+          "share": 0.02
+        },
+        {
+          "name": "DIE FREIHEITLICHEN",
+          "votes": 5332,
+          "share": 0.02
+        },
+        {
+          "name": "LISTA FRANCO GRECO",
+          "votes": 4284,
+          "share": 0.01
+        },
+        {
+          "name": "MOVIMENTO DELLE LIBERTA'",
+          "votes": 4023,
+          "share": 0.01
+        },
+        {
+          "name": "AN (AOSTA)",
+          "votes": 3686,
+          "share": 0.01
+        },
+        {
+          "name": "RENATO FIORELLI",
+          "votes": 2924,
+          "share": 0.01
+        },
+        {
+          "name": "TERZO POLO AUTONOMIA",
+          "votes": 2392,
+          "share": 0.01
+        },
+        {
+          "name": "COMUNISMO",
+          "votes": 2159,
+          "share": 0.01
+        },
+        {
+          "name": "GIUSEPPE BOSCOLO",
+          "votes": 1058,
+          "share": 0
+        },
+        {
+          "name": "PARLAMENTARE INDIP.",
+          "votes": 992,
+          "share": 0
+        },
+        {
+          "name": "GIUSTIZIA-PROGRESSO",
+          "votes": 953,
+          "share": 0
+        },
+        {
+          "name": "TOSCANA GRANDUC-FED.",
+          "votes": 625,
+          "share": 0
+        },
+        {
+          "name": "PA.C.I.",
+          "votes": 179,
+          "share": 0
+        }
+      ]
+    },
+    {
+      "id": "senato-2006-04-09",
+      "type": "senato",
+      "typeLabel": "Senato della Repubblica",
+      "year": 2006,
+      "date": "2006-04-09",
+      "title": "Senato della Repubblica 2006",
+      "sourceUrl": "https://elezionistorico.interno.gov.it/daithome/documenti/opendata/senato/senato-20060409.zip",
+      "sourceFiles": [
+        "senato_vaosta_trentino-20060409.txt",
+        "senato_italia-20060409.txt"
+      ],
+      "totals": {
+        "electors": 43012783,
+        "voters": 35943615,
+        "blankBallots": 481348,
+        "validVotes": 34808754,
+        "turnoutPct": 83.56,
+        "blankPct": 1.34
+      },
+      "winner": {
+        "name": "FORZA ITALIA",
+        "votes": 8202505,
+        "share": 23.56
+      },
+      "results": [
+        {
+          "name": "FORZA ITALIA",
+          "votes": 8202505,
+          "share": 23.56
+        },
+        {
+          "name": "DEMOCRATICI SINISTRA",
+          "votes": 5977433,
+          "share": 17.17
+        },
+        {
+          "name": "ALLEANZA NAZIONALE",
+          "votes": 4234913,
+          "share": 12.17
+        },
+        {
+          "name": "DL.LA MARGHERITA",
+          "votes": 3664830,
+          "share": 10.53
+        },
+        {
+          "name": "RIFONDAZIONE COMUNISTA",
+          "votes": 2518580,
+          "share": 7.24
+        },
+        {
+          "name": "UNIONE DI CENTRO",
+          "votes": 2311522,
+          "share": 6.64
+        },
+        {
+          "name": "LEGA NORD",
+          "votes": 1530303,
+          "share": 4.4
+        },
+        {
+          "name": "INSIEME CON L'UNIONE",
+          "votes": 1423012,
+          "share": 4.09
+        },
+        {
+          "name": "DI PIETRO ITALIA DEI VALORI",
+          "votes": 986145,
+          "share": 2.83
+        },
+        {
+          "name": "LA ROSA NEL PUGNO",
+          "votes": 851724,
+          "share": 2.45
+        },
+        {
+          "name": "U.D.EUR POPOLARI",
+          "votes": 477198,
+          "share": 1.37
+        },
+        {
+          "name": "PARTITO PENSIONATI",
+          "votes": 357731,
+          "share": 1.03
+        },
+        {
+          "name": "FIAMMA TRICOLORE",
+          "votes": 219621,
+          "share": 0.63
+        },
+        {
+          "name": "ALTERNATIVA SOCIALE MUSSOLINI",
+          "votes": 215295,
+          "share": 0.62
+        },
+        {
+          "name": "L'UNIONE SVP",
+          "votes": 198153,
+          "share": 0.57
+        },
+        {
+          "name": "DEM.CRIST.-NUOVO PSI",
+          "votes": 190714,
+          "share": 0.55
+        },
+        {
+          "name": "CASA DELLE LIBERTA'",
+          "votes": 175137,
+          "share": 0.5
+        },
+        {
+          "name": "I SOCIALISTI",
+          "votes": 126327,
+          "share": 0.36
+        },
+        {
+          "name": "SVP",
+          "votes": 117500,
+          "share": 0.34
+        },
+        {
+          "name": "PROGETTO NORDEST",
+          "votes": 93159,
+          "share": 0.27
+        },
+        {
+          "name": "ALLEANZA LOMBARDA AUTONOMIA",
+          "votes": 90943,
+          "share": 0.26
+        },
+        {
+          "name": "LISTA CONSUMATORI",
+          "votes": 72089,
+          "share": 0.21
+        },
+        {
+          "name": "PENSIONATI UNITI",
+          "votes": 61928,
+          "share": 0.18
+        },
+        {
+          "name": "L'ULIVO",
+          "votes": 59498,
+          "share": 0.17
+        },
+        {
+          "name": "PSDI",
+          "votes": 57392,
+          "share": 0.16
+        },
+        {
+          "name": "REPUBBLICANI EUROPEI",
+          "votes": 51020,
+          "share": 0.15
+        },
+        {
+          "name": "PRI",
+          "votes": 45151,
+          "share": 0.13
+        },
+        {
+          "name": "AMBIENTA-LISTA",
+          "votes": 36583,
+          "share": 0.11
+        },
+        {
+          "name": "ALLEANZA SICILIANA",
+          "votes": 36088,
+          "share": 0.1
+        },
+        {
+          "name": "NUOVA SICILIA",
+          "votes": 33458,
+          "share": 0.1
+        },
+        {
+          "name": "AUT.LIB. DEMOCRATIE",
+          "votes": 32554,
+          "share": 0.09
+        },
+        {
+          "name": "NO EURO",
+          "votes": 30515,
+          "share": 0.09
+        },
+        {
+          "name": "L'UNIONE",
+          "votes": 27629,
+          "share": 0.08
+        },
+        {
+          "name": "P.COM.MARX-LEN.",
+          "votes": 26008,
+          "share": 0.07
+        },
+        {
+          "name": "VALLEE D'AOSTE",
+          "votes": 23574,
+          "share": 0.07
+        },
+        {
+          "name": "LIGA FRONTE VENETO",
+          "votes": 23209,
+          "share": 0.07
+        },
+        {
+          "name": "PATTO PER LA SICILIA",
+          "votes": 20856,
+          "share": 0.06
+        },
+        {
+          "name": "PENSIONI E LAVORO",
+          "votes": 19765,
+          "share": 0.06
+        },
+        {
+          "name": "DIE FREIHEITLICHEN",
+          "votes": 16746,
+          "share": 0.05
+        },
+        {
+          "name": "PS D'AZ.",
+          "votes": 16735,
+          "share": 0.05
+        },
+        {
+          "name": "P.LIBERALE ITALIANO",
+          "votes": 15757,
+          "share": 0.05
+        },
+        {
+          "name": "TERZO POLO",
+          "votes": 13352,
+          "share": 0.04
+        },
+        {
+          "name": "FORZA ROMA",
+          "votes": 13320,
+          "share": 0.04
+        },
+        {
+          "name": "FI-AN",
+          "votes": 11505,
+          "share": 0.03
+        },
+        {
+          "name": "IRS",
+          "votes": 10693,
+          "share": 0.03
+        },
+        {
+          "name": "PER IL SUD",
+          "votes": 9992,
+          "share": 0.03
+        },
+        {
+          "name": "PATTO CRIST.ESTESO",
+          "votes": 9741,
+          "share": 0.03
+        },
+        {
+          "name": "SARDIGNA NATZIONE",
+          "votes": 8409,
+          "share": 0.02
+        },
+        {
+          "name": "RIFORMATORI LIBERALI",
+          "votes": 7701,
+          "share": 0.02
+        },
+        {
+          "name": "MOVIMENTO TRIVENETO",
+          "votes": 7433,
+          "share": 0.02
+        },
+        {
+          "name": "UNIONE POP. AUT.",
+          "votes": 7327,
+          "share": 0.02
+        },
+        {
+          "name": "MOV.DEM.SIC-NOI SIC.",
+          "votes": 6576,
+          "share": 0.02
+        },
+        {
+          "name": "SOLIDARIETA'",
+          "votes": 5424,
+          "share": 0.02
+        },
+        {
+          "name": "DEMOCRAZIA CRISTIANI UNITI",
+          "votes": 5399,
+          "share": 0.02
+        },
+        {
+          "name": "S.O.S. ITALIA",
+          "votes": 4963,
+          "share": 0.01
+        },
+        {
+          "name": "PARTITO DONNE D'EUROPA",
+          "votes": 4213,
+          "share": 0.01
+        },
+        {
+          "name": "MOV.IDEA SOC. RAUTI",
+          "votes": 3030,
+          "share": 0.01
+        },
+        {
+          "name": "LEGA SUD",
+          "votes": 2486,
+          "share": 0.01
+        },
+        {
+          "name": "DIMENSIONE CHRISTIANA",
+          "votes": 2435,
+          "share": 0.01
+        },
+        {
+          "name": "ITALIA MODERATA",
+          "votes": 2082,
+          "share": 0.01
+        },
+        {
+          "name": "UN.FEDERALISTA MERIDIONALE",
+          "votes": 1800,
+          "share": 0.01
+        },
+        {
+          "name": "LEGA NORD V.D'AOSTE",
+          "votes": 1573,
+          "share": 0
+        }
+      ]
+    },
+    {
+      "id": "senato-2008-04-13",
+      "type": "senato",
+      "typeLabel": "Senato della Repubblica",
+      "year": 2008,
+      "date": "2008-04-13",
+      "title": "Senato della Repubblica 2008",
+      "sourceUrl": "https://elezionistorico.interno.gov.it/daithome/documenti/opendata/senato/senato-20080413.zip",
+      "sourceFiles": [
+        "senato_italia-20080413.txt"
+      ],
+      "totals": {
+        "electors": 42358775,
+        "voters": 34058406,
+        "blankBallots": 448507,
+        "validVotes": 32771227,
+        "turnoutPct": 80.4,
+        "blankPct": 1.32
+      },
+      "winner": {
+        "name": "IL POPOLO DELLA LIBERTA'",
+        "votes": 12510306,
+        "share": 38.17
+      },
+      "results": [
+        {
+          "name": "IL POPOLO DELLA LIBERTA'",
+          "votes": 12510306,
+          "share": 38.17
+        },
+        {
+          "name": "PARTITO DEMOCRATICO",
+          "votes": 11042325,
+          "share": 33.7
+        },
+        {
+          "name": "LEGA NORD",
+          "votes": 2642167,
+          "share": 8.06
+        },
+        {
+          "name": "UNIONE DI CENTRO",
+          "votes": 1866294,
+          "share": 5.69
+        },
+        {
+          "name": "DI PIETRO ITALIA DEI VALORI",
+          "votes": 1414118,
+          "share": 4.32
+        },
+        {
+          "name": "LA SINISTRA L'ARCOBALENO",
+          "votes": 1053154,
+          "share": 3.21
+        },
+        {
+          "name": "LA DESTRA - FIAMMA TRICOLORE",
+          "votes": 687211,
+          "share": 2.1
+        },
+        {
+          "name": "MOVIMENTO PER L'AUTONOMIA ALL.PER IL SUD",
+          "votes": 355076,
+          "share": 1.08
+        },
+        {
+          "name": "PARTITO SOCIALISTA",
+          "votes": 284428,
+          "share": 0.87
+        },
+        {
+          "name": "PARTITO COMUNISTA DEI LAVORATORI",
+          "votes": 180454,
+          "share": 0.55
+        },
+        {
+          "name": "SINISTRA CRITICA",
+          "votes": 136396,
+          "share": 0.42
+        },
+        {
+          "name": "PER IL BENE COMUNE",
+          "votes": 105937,
+          "share": 0.32
+        },
+        {
+          "name": "P.LIBERALE ITALIANO",
+          "votes": 100721,
+          "share": 0.31
+        },
+        {
+          "name": "FORZA NUOVA",
+          "votes": 85630,
+          "share": 0.26
+        },
+        {
+          "name": "UNIONE DEMOCRATICA PER I CONSUMATORI",
+          "votes": 77725,
+          "share": 0.24
+        },
+        {
+          "name": "LISTA DEI GRILLI PARLANTI",
+          "votes": 49476,
+          "share": 0.15
+        },
+        {
+          "name": "LG.VENETA REPUBBLICA",
+          "votes": 47677,
+          "share": 0.15
+        },
+        {
+          "name": "LEGA PER L'AUTONOMIA ALL.LOMB. LEGA PENS",
+          "votes": 45622,
+          "share": 0.14
+        },
+        {
+          "name": "M.E.D.A.",
+          "votes": 20029,
+          "share": 0.06
+        },
+        {
+          "name": "PS D'AZ.",
+          "votes": 15292,
+          "share": 0.05
+        },
+        {
+          "name": "POPOLARI UNITI",
+          "votes": 12388,
+          "share": 0.04
+        },
+        {
+          "name": "P.COM.MARX-LEN.",
+          "votes": 8078,
+          "share": 0.02
+        },
+        {
+          "name": "LEGA SUD",
+          "votes": 7119,
+          "share": 0.02
+        },
+        {
+          "name": "SARDIGNA NATZIONE",
+          "votes": 6966,
+          "share": 0.02
+        },
+        {
+          "name": "FRONTE INDIPENDENTISTA LOMBARDIA",
+          "votes": 5249,
+          "share": 0.02
+        },
+        {
+          "name": "L'INTESA VENETA",
+          "votes": 4275,
+          "share": 0.01
+        },
+        {
+          "name": "PARTITO DEL SUD-ALLEANZA MERIDIONALE",
+          "votes": 3736,
+          "share": 0.01
+        },
+        {
+          "name": "SUD LIBERO",
+          "votes": 1776,
+          "share": 0.01
+        },
+        {
+          "name": "MOVIMENTO P.P.A.",
+          "votes": 1602,
+          "share": 0
+        }
+      ]
+    },
+    {
+      "id": "senato-2013-02-24",
+      "type": "senato",
+      "typeLabel": "Senato della Repubblica",
+      "year": 2013,
+      "date": "2013-02-24",
+      "title": "Senato della Repubblica 2013",
+      "sourceUrl": "https://elezionistorico.interno.gov.it/daithome/documenti/opendata/senato/senato-20130224.zip",
+      "sourceFiles": [
+        "senato_vaosta_trentino-20130224.txt",
+        "senato_italia-20130224.txt"
+      ],
+      "totals": {
+        "electors": 43071530,
+        "voters": 32398344,
+        "blankBallots": 386718,
+        "validVotes": 31228820,
+        "turnoutPct": 75.22,
+        "blankPct": 1.19
+      },
+      "winner": {
+        "name": "PARTITO DEMOCRATICO",
+        "votes": 8408958,
+        "share": 26.93
+      },
+      "results": [
+        {
+          "name": "PARTITO DEMOCRATICO",
+          "votes": 8408958,
+          "share": 26.93
+        },
+        {
+          "name": "MOVIMENTO 5 STELLE BEPPEGRILLO.IT",
+          "votes": 7382109,
+          "share": 23.64
+        },
+        {
+          "name": "IL POPOLO DELLA LIBERTA'",
+          "votes": 6829587,
+          "share": 21.87
+        },
+        {
+          "name": "CON MONTI PER L'ITALIA",
+          "votes": 2797486,
+          "share": 8.96
+        },
+        {
+          "name": "LEGA NORD",
+          "votes": 1331232,
+          "share": 4.26
+        },
+        {
+          "name": "SINISTRA ECOLOGIA LIBERTA'",
+          "votes": 912308,
+          "share": 2.92
+        },
+        {
+          "name": "FRATELLI D'ITALIA",
+          "votes": 592448,
+          "share": 1.9
+        },
+        {
+          "name": "RIVOLUZIONE CIVILE",
+          "votes": 561269,
+          "share": 1.8
+        },
+        {
+          "name": "FARE PER FERMARE IL DECLINO",
+          "votes": 288014,
+          "share": 0.92
+        },
+        {
+          "name": "LA DESTRA",
+          "votes": 224230,
+          "share": 0.72
+        },
+        {
+          "name": "CENTRO DEMOCRATICO",
+          "votes": 163373,
+          "share": 0.52
+        },
+        {
+          "name": "IL MEGAFONO - LISTA CROCETTA",
+          "votes": 138581,
+          "share": 0.44
+        },
+        {
+          "name": "SVP - PATT - PD - UPT",
+          "votes": 127656,
+          "share": 0.41
+        },
+        {
+          "name": "PARTITO PENSIONATI",
+          "votes": 123457,
+          "share": 0.4
+        },
+        {
+          "name": "GRANDE SUD",
+          "votes": 122100,
+          "share": 0.39
+        },
+        {
+          "name": "PARTITO COMUNISTA DEI LAVORATORI",
+          "votes": 113923,
+          "share": 0.36
+        },
+        {
+          "name": "SVP",
+          "votes": 97141,
+          "share": 0.31
+        },
+        {
+          "name": "IL POPOLO DELLA LIBERTA' - LEGA NORD",
+          "votes": 85298,
+          "share": 0.27
+        },
+        {
+          "name": "FORZA NUOVA",
+          "votes": 81519,
+          "share": 0.26
+        },
+        {
+          "name": "MIR - MODERATI IN RIVOLUZIONE",
+          "votes": 73058,
+          "share": 0.23
+        },
+        {
+          "name": "LISTA AMNISTIA GIUSTIZIA LIBERTA'",
+          "votes": 63147,
+          "share": 0.2
+        },
+        {
+          "name": "PARTITO SOCIALISTA ITALIANO",
+          "votes": 57688,
+          "share": 0.18
+        },
+        {
+          "name": "FIAMMA TRICOLORE",
+          "votes": 52107,
+          "share": 0.17
+        },
+        {
+          "name": "MPA - PARTITO DEI SICILIANI",
+          "votes": 48618,
+          "share": 0.16
+        },
+        {
+          "name": "PD - SVP",
+          "votes": 47623,
+          "share": 0.15
+        },
+        {
+          "name": "CASAPOUND ITALIA",
+          "votes": 42122,
+          "share": 0.13
+        },
+        {
+          "name": "DIE FREIHEITLICHEN",
+          "votes": 42094,
+          "share": 0.13
+        },
+        {
+          "name": "IO AMO L'ITALIA",
+          "votes": 40781,
+          "share": 0.13
+        },
+        {
+          "name": "INDIPENDENZA VENETA",
+          "votes": 29696,
+          "share": 0.1
+        },
+        {
+          "name": "INTESA POPOLARE",
+          "votes": 24979,
+          "share": 0.08
+        },
+        {
+          "name": "VALLEE D'AOSTE",
+          "votes": 24609,
+          "share": 0.08
+        },
+        {
+          "name": "CANTIERE POPOLARE",
+          "votes": 21685,
+          "share": 0.07
+        },
+        {
+          "name": "AUTONOMIE LIBERTE' DEMOCRATIE",
+          "votes": 20430,
+          "share": 0.07
+        },
+        {
+          "name": "LG.VENETA REPUBBLICA",
+          "votes": 20381,
+          "share": 0.07
+        },
+        {
+          "name": "BASTA TASSE",
+          "votes": 19300,
+          "share": 0.06
+        },
+        {
+          "name": "PS D'AZ.",
+          "votes": 18602,
+          "share": 0.06
+        },
+        {
+          "name": "MODERATI",
+          "votes": 14358,
+          "share": 0.05
+        },
+        {
+          "name": "CIVILTA' RURALE SVILUPPO",
+          "votes": 13945,
+          "share": 0.04
+        },
+        {
+          "name": "VERDI - GRUNE - VERC",
+          "votes": 12808,
+          "share": 0.04
+        },
+        {
+          "name": "RIALZATI ABRUZZO",
+          "votes": 11817,
+          "share": 0.04
+        },
+        {
+          "name": "P.COM.MARX-LEN.",
+          "votes": 9604,
+          "share": 0.03
+        },
+        {
+          "name": "VENETO STATO",
+          "votes": 8950,
+          "share": 0.03
+        },
+        {
+          "name": "PRI",
+          "votes": 8476,
+          "share": 0.03
+        },
+        {
+          "name": "DIMEZZIAMO LO STIPENDIO AI POLITICI",
+          "votes": 7968,
+          "share": 0.03
+        },
+        {
+          "name": "SCELTA CIVICA CON MONTI PER L'ITALIA",
+          "votes": 7646,
+          "share": 0.02
+        },
+        {
+          "name": "DONNE PER L'ITALIA",
+          "votes": 7610,
+          "share": 0.02
+        },
+        {
+          "name": "NO ALLA CHIUSURA DEGLI OSPEDALI",
+          "votes": 7547,
+          "share": 0.02
+        },
+        {
+          "name": "INDIPENDENZA PER LA SARDEGNA",
+          "votes": 7494,
+          "share": 0.02
+        },
+        {
+          "name": "UNIONE PADANA",
+          "votes": 7324,
+          "share": 0.02
+        },
+        {
+          "name": "LIBERI PER UNA ITALIA EQUA",
+          "votes": 6769,
+          "share": 0.02
+        },
+        {
+          "name": "POPOLARI UNITI",
+          "votes": 6583,
+          "share": 0.02
+        },
+        {
+          "name": "I PIRATI",
+          "votes": 6265,
+          "share": 0.02
+        },
+        {
+          "name": "RIFORMISTI ITALIANI",
+          "votes": 5952,
+          "share": 0.02
+        },
+        {
+          "name": "MERIS",
+          "votes": 5580,
+          "share": 0.02
+        },
+        {
+          "name": "PARTITO DI ALTERNATIVA COMUNISTA",
+          "votes": 5175,
+          "share": 0.02
+        },
+        {
+          "name": "VIVA L'ITALIA",
+          "votes": 4759,
+          "share": 0.02
+        },
+        {
+          "name": "L'ALTO ADIGE NEL CUORE",
+          "votes": 4672,
+          "share": 0.01
+        },
+        {
+          "name": "PAS - FLB&LT",
+          "votes": 4522,
+          "share": 0.01
+        },
+        {
+          "name": "PROGETTO NAZIONALE",
+          "votes": 3822,
+          "share": 0.01
+        },
+        {
+          "name": "LA BASE",
+          "votes": 3386,
+          "share": 0.01
+        },
+        {
+          "name": "TUTTI INSIEME PER L'ITALIA",
+          "votes": 3153,
+          "share": 0.01
+        },
+        {
+          "name": "RIFONDAZIONE MISSINA ITALIANA",
+          "votes": 2717,
+          "share": 0.01
+        },
+        {
+          "name": "MOVIMENTO EUDONNA",
+          "votes": 2689,
+          "share": 0.01
+        },
+        {
+          "name": "COSTRUIRE DEMOCRAZIA",
+          "votes": 2635,
+          "share": 0.01
+        },
+        {
+          "name": "UNIONE DI CENTRO",
+          "votes": 1594,
+          "share": 0.01
+        },
+        {
+          "name": "MOVIMENTO PROGETTO ITALIA - MID",
+          "votes": 1451,
+          "share": 0
+        },
+        {
+          "name": "PARTITO DEL SUD",
+          "votes": 1276,
+          "share": 0
+        },
+        {
+          "name": "MOVIMENTO NATURALISTA ITALIANO",
+          "votes": 1170,
+          "share": 0
+        },
+        {
+          "name": "COMUNITA' LUCANA",
+          "votes": 882,
+          "share": 0
+        },
+        {
+          "name": "PARTITO PER TUTTI - PARTEI FUR ALLE",
+          "votes": 426,
+          "share": 0
+        },
+        {
+          "name": "NATION VAL D'OUTA",
+          "votes": 186,
+          "share": 0
+        }
+      ]
+    },
+    {
+      "id": "senato-2018-03-04",
+      "type": "senato",
+      "typeLabel": "Senato della Repubblica",
+      "year": 2018,
+      "date": "2018-03-04",
+      "title": "Senato della Repubblica 2018",
+      "sourceUrl": "https://elezionistorico.interno.gov.it/daithome/documenti/opendata/senato/senato-20180304.zip",
+      "sourceFiles": [
+        "Senato2018_livComune.txt"
+      ],
+      "totals": {
+        "electors": 42872120,
+        "voters": 31298484,
+        "blankBallots": 378396,
+        "validVotes": 29113303,
+        "turnoutPct": 73,
+        "blankPct": 1.21
+      },
+      "winner": {
+        "name": "MOVIMENTO 5 STELLE",
+        "votes": 9285576,
+        "share": 31.89
+      },
+      "results": [
+        {
+          "name": "MOVIMENTO 5 STELLE",
+          "votes": 9285576,
+          "share": 31.89
+        },
+        {
+          "name": "PARTITO DEMOCRATICO",
+          "votes": 5557135,
+          "share": 19.09
+        },
+        {
+          "name": "LEGA",
+          "votes": 5212207,
+          "share": 17.9
+        },
+        {
+          "name": "FORZA ITALIA",
+          "votes": 4268421,
+          "share": 14.66
+        },
+        {
+          "name": "FRATELLI D'ITALIA CON GIORGIA MELONI",
+          "votes": 1259640,
+          "share": 4.33
+        },
+        {
+          "name": "LIBERI E UGUALI",
+          "votes": 922108,
+          "share": 3.17
+        },
+        {
+          "name": "+EUROPA",
+          "votes": 686123,
+          "share": 2.36
+        },
+        {
+          "name": "NOI CON L'ITALIA - UDC",
+          "votes": 353788,
+          "share": 1.22
+        },
+        {
+          "name": "POTERE AL POPOLO!",
+          "votes": 301594,
+          "share": 1.04
+        },
+        {
+          "name": "CASAPOUND ITALIA",
+          "votes": 245092,
+          "share": 0.84
+        },
+        {
+          "name": "IL POPOLO DELLA FAMIGLIA",
+          "votes": 198402,
+          "share": 0.68
+        },
+        {
+          "name": "ITALIA EUROPA INSIEME",
+          "votes": 156582,
+          "share": 0.54
+        },
+        {
+          "name": "CIVICA POPOLARE LORENZIN",
+          "votes": 150304,
+          "share": 0.52
+        },
+        {
+          "name": "ITALIA AGLI ITALIANI",
+          "votes": 141951,
+          "share": 0.49
+        },
+        {
+          "name": "SVP - PATT",
+          "votes": 122595,
+          "share": 0.42
+        },
+        {
+          "name": "PARTITO COMUNISTA",
+          "votes": 97148,
+          "share": 0.33
+        },
+        {
+          "name": "PARTITO VALORE UMANO",
+          "votes": 36307,
+          "share": 0.12
+        },
+        {
+          "name": "PER UNA SINISTRA RIVOLUZIONARIA",
+          "votes": 30158,
+          "share": 0.1
+        },
+        {
+          "name": "PARTITO REPUBBLICANO ITALIANO - ALA",
+          "votes": 25099,
+          "share": 0.09
+        },
+        {
+          "name": "AUTODETERMINATZIONE",
+          "votes": 19170,
+          "share": 0.07
+        },
+        {
+          "name": "GRANDE NORD",
+          "votes": 16191,
+          "share": 0.06
+        },
+        {
+          "name": "LISTA DEL POPOLO PER LA COSTITUZIONE",
+          "votes": 9323,
+          "share": 0.03
+        },
+        {
+          "name": "DESTRE UNITE - FORCONI",
+          "votes": 5830,
+          "share": 0.02
+        },
+        {
+          "name": "DEMOCRAZIA CRISTIANA",
+          "votes": 5232,
+          "share": 0.02
+        },
+        {
+          "name": "PATTO PER L'AUTONOMIA",
+          "votes": 4262,
+          "share": 0.01
+        },
+        {
+          "name": "SIAMO",
+          "votes": 1284,
+          "share": 0
+        },
+        {
+          "name": "SMS - STATO MODERNO SOLIDALE",
+          "votes": 1270,
+          "share": 0
+        },
+        {
+          "name": "RINASCIMENTO MIR",
+          "votes": 511,
+          "share": 0
+        },
+        {
+          "name": "FI -FRAT. D'IT. -MOV.NUOVA VALLE D'AOSTA",
+          "votes": 0,
+          "share": 0
+        },
+        {
+          "name": "PD-UV-UVP-EPAV",
+          "votes": 0,
+          "share": 0
+        },
+        {
+          "name": "POUR TOUS PER TUTTI PE TCHEUT",
+          "votes": 0,
+          "share": 0
+        },
+        {
+          "name": "RISPOSTA CIVICA",
+          "votes": 0,
+          "share": 0
+        }
+      ]
+    },
+    {
+      "id": "senato-2022-09-25",
+      "type": "senato",
+      "typeLabel": "Senato della Repubblica",
+      "year": 2022,
+      "date": "2022-09-25",
+      "title": "Senato della Repubblica 2022",
+      "sourceUrl": "https://elezionistorico.interno.gov.it/daithome/documenti/opendata/senato/senato-20220925.zip",
+      "sourceFiles": [
+        "Senato_Italia_LivComune.csv"
+      ],
+      "totals": {
+        "electors": 45210950,
+        "voters": 28876567,
+        "blankBallots": 498898,
+        "validVotes": 26601426,
+        "turnoutPct": 63.87,
+        "blankPct": 1.73
+      },
+      "winner": {
+        "name": "FRATELLI D'ITALIA CON GIORGIA MELONI",
+        "votes": 6975727,
+        "share": 26.22
+      },
+      "results": [
+        {
+          "name": "FRATELLI D'ITALIA CON GIORGIA MELONI",
+          "votes": 6975727,
+          "share": 26.22
+        },
+        {
+          "name": "PARTITO DEMOCRATICO - ITALIA DEMOCRATICA E PROGRESSISTA",
+          "votes": 5019511,
+          "share": 18.87
+        },
+        {
+          "name": "MOVIMENTO 5 STELLE",
+          "votes": 4128240,
+          "share": 15.52
+        },
+        {
+          "name": "LEGA PER SALVINI PREMIER",
+          "votes": 2371657,
+          "share": 8.92
+        },
+        {
+          "name": "FORZA ITALIA",
+          "votes": 2223392,
+          "share": 8.36
+        },
+        {
+          "name": "AZIONE - ITALIA VIVA - CALENDA",
+          "votes": 2016702,
+          "share": 7.58
+        },
+        {
+          "name": "ALLEANZA VERDI E SINISTRA",
+          "votes": 933196,
+          "share": 3.51
+        },
+        {
+          "name": "+EUROPA",
+          "votes": 776455,
+          "share": 2.92
+        },
+        {
+          "name": "ITALEXIT PER L'ITALIA",
+          "votes": 497741,
+          "share": 1.87
+        },
+        {
+          "name": "UNIONE POPOLARE CON DE MAGISTRIS",
+          "votes": 351640,
+          "share": 1.32
+        },
+        {
+          "name": "ITALIA SOVRANA E POPOLARE",
+          "votes": 298902,
+          "share": 1.12
+        },
+        {
+          "name": "SUD CHIAMA NORD",
+          "votes": 267079,
+          "share": 1
+        },
+        {
+          "name": "NOI MODERATI/LUPI - TOTI - BRUGNARO - UDC",
+          "votes": 236258,
+          "share": 0.89
+        },
+        {
+          "name": "VITA",
+          "votes": 188258,
+          "share": 0.71
+        },
+        {
+          "name": "IMPEGNO CIVICO LUIGI DI MAIO - CENTRO DEMOCRATICO",
+          "votes": 147460,
+          "share": 0.55
+        },
+        {
+          "name": "PARTITO COMUNISTA ITALIANO",
+          "votes": 68000,
+          "share": 0.26
+        },
+        {
+          "name": "MASTELLA NOI DI CENTRO EUROPEISTI",
+          "votes": 40101,
+          "share": 0.15
+        },
+        {
+          "name": "ALTERNATIVA PER L'ITALIA - NO GREEN PASS",
+          "votes": 38033,
+          "share": 0.14
+        },
+        {
+          "name": "PARTITO ANIMALISTA - UCDL - 10 VOLTE MEGLIO",
+          "votes": 15801,
+          "share": 0.06
+        },
+        {
+          "name": "PARTITO COMUNISTA DEI LAVORATORI",
+          "votes": 4247,
+          "share": 0.02
+        },
+        {
+          "name": "DESTRE UNITE",
+          "votes": 2205,
+          "share": 0.01
+        },
+        {
+          "name": "FORZA DEL POPOLO",
+          "votes": 821,
+          "share": 0
+        }
+      ]
+    }
+  ]
+}
