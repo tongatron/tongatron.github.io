@@ -253,6 +253,7 @@ const state = {
   type: null,
   electionId: null,
   party: null,
+  candidate: null,
 };
 
 const elements = {
@@ -260,10 +261,15 @@ const elements = {
   coverageNote: document.querySelector("#coverage-note"),
   typeTabs: document.querySelector("#type-tabs"),
   seriesMeta: document.querySelector("#series-meta"),
-  yearChips: document.querySelector("#year-chips"),
+  yearSelect: document.querySelector("#year-select"),
   partyInput: document.querySelector("#party-search"),
   partyApply: document.querySelector("#party-apply"),
   partyOptions: document.querySelector("#party-options"),
+  candidateInput: document.querySelector("#candidate-search"),
+  candidateApply: document.querySelector("#candidate-apply"),
+  candidateOptions: document.querySelector("#candidate-options"),
+  electionPrev: document.querySelector("#election-prev"),
+  electionNext: document.querySelector("#election-next"),
   summaryKicker: document.querySelector("#summary-kicker"),
   summaryTitle: document.querySelector("#summary-title"),
   summaryNote: document.querySelector("#summary-note"),
@@ -274,8 +280,12 @@ const elements = {
   leaderboard: document.querySelector("#leaderboard"),
   trendCaption: document.querySelector("#trend-caption"),
   trendChart: document.querySelector("#trend-chart"),
-  tableCaption: document.querySelector("#table-caption"),
-  resultsBody: document.querySelector("#results-body"),
+  insightTitle: document.querySelector("#insight-title"),
+  insightCaption: document.querySelector("#insight-caption"),
+  typeInsight: document.querySelector("#type-insight"),
+  candidateCaption: document.querySelector("#candidate-caption"),
+  candidateChart: document.querySelector("#candidate-chart"),
+  candidateHistory: document.querySelector("#candidate-history"),
 };
 
 bootstrap().catch((error) => {
@@ -315,11 +325,23 @@ async function bootstrap() {
     ?? electionsForType.find((item) => item.year === requested.year);
   state.electionId = (requestedElection ?? fallbackElection).id;
 
-  const availableParties = getAvailableParties(state.type);
-  state.party = normalizePartyInput(requested.party, availableParties);
-  if (!state.party) {
+  const availablePartiesGlobal = getAvailablePartiesAll();
+  state.party = normalizePartyInput(requested.party, availablePartiesGlobal);
+  if (state.party) {
+    const partiesForType = getAvailableParties(state.type);
+    if (!partiesForType.includes(state.party)) {
+      const preferredElection = findBestElectionForParty(state.party);
+      if (preferredElection) {
+        state.type = preferredElection.type;
+        state.electionId = preferredElection.id;
+      }
+    }
+  } else {
     state.party = getCurrentElection().winner.name;
   }
+
+  const availableCandidates = getAvailableCandidates(state.type);
+  state.candidate = normalizeCandidateInput(requested.candidate, availableCandidates);
 
   attachEvents();
   render();
@@ -335,13 +357,12 @@ function attachEvents() {
     setType(button.dataset.type);
   });
 
-  elements.yearChips.addEventListener("click", (event) => {
-    const button = event.target.closest("[data-election-id]");
-    if (!button) {
+  elements.yearSelect.addEventListener("change", (event) => {
+    const electionId = event.target.value;
+    if (!electionId) {
       return;
     }
-
-    setElection(button.dataset.electionId, true);
+    setElection(electionId, true);
   });
 
   elements.winnerCards.addEventListener("click", (event) => {
@@ -362,15 +383,6 @@ function attachEvents() {
     setParty(button.dataset.party);
   });
 
-  elements.resultsBody.addEventListener("click", (event) => {
-    const button = event.target.closest("[data-party]");
-    if (!button) {
-      return;
-    }
-
-    setParty(button.dataset.party);
-  });
-
   elements.trendChart.addEventListener("click", (event) => {
     const button = event.target.closest("[data-election-id]");
     if (!button) {
@@ -380,6 +392,23 @@ function attachEvents() {
     setElection(button.dataset.electionId, true);
   });
 
+  elements.candidateChart.addEventListener("click", (event) => {
+    const button = event.target.closest("[data-candidate]");
+    if (!button) {
+      return;
+    }
+
+    setCandidate(button.dataset.candidate);
+  });
+
+  elements.candidateHistory.addEventListener("click", (event) => {
+    const button = event.target.closest("[data-election-id][data-type]");
+    if (!button) {
+      return;
+    }
+    goToCandidatePresence(button.dataset.type, button.dataset.electionId);
+  });
+
   elements.partyApply.addEventListener("click", applyPartyInput);
   elements.partyInput.addEventListener("keydown", (event) => {
     if (event.key === "Enter") {
@@ -387,6 +416,16 @@ function attachEvents() {
       applyPartyInput();
     }
   });
+  elements.candidateApply.addEventListener("click", applyCandidateInput);
+  elements.candidateInput.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      applyCandidateInput();
+    }
+  });
+
+  elements.electionPrev.addEventListener("click", () => stepElection(-1));
+  elements.electionNext.addEventListener("click", () => stepElection(1));
 
   window.addEventListener("hashchange", () => {
     const requested = readStateFromHash();
@@ -402,20 +441,77 @@ function attachEvents() {
       state.electionId = requestedElection.id;
     }
 
-    const party = normalizePartyInput(requested.party, getAvailableParties(state.type));
+    const party = normalizePartyInput(requested.party, getAvailablePartiesAll());
     if (party) {
       state.party = party;
     }
 
+    if (requested.candidate === null) {
+      state.candidate = null;
+    } else {
+      const candidate = normalizeCandidateInput(
+        requested.candidate,
+        getAvailableCandidates(state.type),
+      );
+      state.candidate = candidate;
+    }
+
     render();
+  });
+
+  window.addEventListener("keydown", (event) => {
+    if (event.target instanceof HTMLElement) {
+      const tag = event.target.tagName;
+      if (tag === "INPUT" || tag === "TEXTAREA" || event.target.isContentEditable) {
+        return;
+      }
+    }
+
+    if (event.key === "ArrowLeft") {
+      event.preventDefault();
+      stepElection(-1);
+    }
+    if (event.key === "ArrowRight") {
+      event.preventDefault();
+      stepElection(1);
+    }
   });
 }
 
 function applyPartyInput() {
-  const availableParties = getAvailableParties(state.type);
-  const normalized = normalizePartyInput(elements.partyInput.value, availableParties);
+  const query = elements.partyInput.value;
+  const partiesForType = getAvailableParties(state.type);
+  const totalsForType = computePartyTotals(getElectionsByType(state.type));
+  const localMatch = findBestPartyMatch(query, partiesForType, totalsForType);
+  if (localMatch) {
+    setParty(localMatch);
+    return;
+  }
+
+  const resolvedGlobal = resolveGlobalPartySearch(query);
+  if (resolvedGlobal) {
+    state.type = resolvedGlobal.election.type;
+    state.electionId = resolvedGlobal.election.id;
+    state.party = resolvedGlobal.party;
+    state.candidate = normalizeCandidateInput(
+      state.candidate,
+      getAvailableCandidates(state.type),
+    );
+    render();
+  }
+}
+
+function applyCandidateInput() {
+  const availableCandidates = getAvailableCandidates(state.type);
+  const rawValue = elements.candidateInput.value.trim();
+  if (!rawValue) {
+    clearCandidate();
+    return;
+  }
+
+  const normalized = normalizeCandidateInput(rawValue, availableCandidates);
   if (normalized) {
-    setParty(normalized);
+    setCandidate(normalized);
   }
 }
 
@@ -430,6 +526,7 @@ function setType(type) {
 
   const parties = getAvailableParties(type);
   state.party = normalizePartyInput(state.party, parties) ?? getCurrentElection().winner.name;
+  state.candidate = normalizeCandidateInput(state.candidate, getAvailableCandidates(type));
   render();
 }
 
@@ -445,6 +542,21 @@ function setElection(electionId, preserveParty) {
   render();
 }
 
+function stepElection(delta) {
+  const electionsForType = getElectionsByType(state.type);
+  const currentIndex = electionsForType.findIndex((item) => item.id === state.electionId);
+  if (currentIndex < 0) {
+    return;
+  }
+
+  const nextIndex = currentIndex + delta;
+  if (nextIndex < 0 || nextIndex >= electionsForType.length) {
+    return;
+  }
+
+  setElection(electionsForType[nextIndex].id, true);
+}
+
 function setParty(party) {
   if (!party || state.party === party) {
     return;
@@ -454,10 +566,39 @@ function setParty(party) {
   render();
 }
 
+function setCandidate(candidate) {
+  if (!candidate || state.candidate === candidate) {
+    return;
+  }
+
+  state.candidate = candidate;
+
+  const currentElection = getCurrentElection();
+  if (!hasCandidateInElection(currentElection, candidate)) {
+    const latestMatchingElection = [...getElectionsByType(state.type)]
+      .reverse()
+      .find((election) => hasCandidateInElection(election, candidate));
+    if (latestMatchingElection) {
+      state.electionId = latestMatchingElection.id;
+    }
+  }
+
+  render();
+}
+
+function clearCandidate() {
+  if (!state.candidate) {
+    return;
+  }
+  state.candidate = null;
+  render();
+}
+
 function render() {
   const currentElection = getCurrentElection();
   const electionsForType = getElectionsByType(state.type);
-  const availableParties = getAvailableParties(state.type);
+  const availableParties = getAvailablePartiesAll();
+  const availableCandidates = getAvailableCandidates(state.type);
 
   elements.generatedAt.textContent = `Dataset rigenerato il ${dateTimeFormatter.format(
     new Date(state.data.generatedAt),
@@ -465,15 +606,20 @@ function render() {
   elements.coverageNote.textContent = state.data.coverageNote;
   elements.seriesMeta.textContent = `${electionsForType.length} elezioni disponibili`;
   elements.partyInput.value = state.party ? getPartyInputLabel(state.party) : "";
+  elements.candidateInput.value = state.candidate ?? "";
 
   renderTypeTabs();
-  renderYearChips(electionsForType);
+  renderYearSelect(electionsForType);
+  renderElectionPager(electionsForType);
   renderPartyOptions(availableParties);
+  renderCandidateOptions(availableCandidates);
   renderSummary(currentElection);
   renderWinnerCards(electionsForType);
   renderLeaderboard(currentElection);
   renderTrendChart(electionsForType, state.party);
-  renderTable(currentElection);
+  renderTypeInsight(currentElection, electionsForType);
+  renderCandidateChart(currentElection);
+  renderCandidateHistory(state.candidate);
   syncHash();
 }
 
@@ -502,27 +648,46 @@ function renderTypeTabs() {
     .join("");
 }
 
-function renderYearChips(electionsForType) {
+function renderYearSelect(electionsForType) {
   const useDateLabels = hasDuplicateYears(electionsForType);
-  elements.yearChips.innerHTML = [...electionsForType]
+  elements.yearSelect.innerHTML = [...electionsForType]
     .reverse()
     .map(
       (election) => `
-        <button
-          type="button"
-          class="year-chip ${election.id === state.electionId ? "is-active" : ""}"
-          data-election-id="${election.id}"
-        >
+        <option value="${election.id}" ${election.id === state.electionId ? "selected" : ""}>
           ${useDateLabels ? formatShortDate(election.date) : election.year}
-        </button>
+        </option>
       `,
     )
     .join("");
 }
 
+function renderElectionPager(electionsForType) {
+  const currentIndex = electionsForType.findIndex((item) => item.id === state.electionId);
+  const isFirst = currentIndex <= 0;
+  const isLast = currentIndex === electionsForType.length - 1;
+
+  elements.electionPrev.disabled = isFirst;
+  elements.electionNext.disabled = isLast;
+  elements.electionPrev.title = isFirst
+    ? "Nessuna elezione precedente"
+    : "Vai all'elezione precedente";
+  elements.electionNext.title = isLast
+    ? "Nessuna elezione successiva"
+    : "Vai all'elezione successiva";
+}
+
 function renderPartyOptions(parties) {
   elements.partyOptions.innerHTML = parties
+    .slice(0, 900)
     .map((party) => `<option value="${escapeHtml(getPartyInputLabel(party))}"></option>`)
+    .join("");
+}
+
+function renderCandidateOptions(candidates) {
+  elements.candidateOptions.innerHTML = candidates
+    .slice(0, 600)
+    .map((candidate) => `<option value="${escapeHtml(candidate)}"></option>`)
     .join("");
 }
 
@@ -576,12 +741,28 @@ function renderSummary(election) {
         ? `${election.results.length} opzioni in classifica`
         : `${election.results.length} liste in classifica`,
     },
-    {
-      title: "Schede bianche",
-      value: formatNumber(election.totals.blankBallots),
-      detail: `${formatPercent(election.totals.blankPct)} dei votanti`,
-    },
   ];
+
+  if (election.type === "referendum") {
+    const quorumReached = election.totals.turnoutPct >= 50;
+    kpis.push({
+      title: "Quorum (50% + 1)",
+      value: quorumReached ? "Raggiunto" : "Non raggiunto",
+      detail: `Affluenza al ${formatPercent(election.totals.turnoutPct)}`,
+    });
+  } else if (election.winnerCandidate) {
+    kpis.push({
+      title: "Candidato più votato",
+      value: election.winnerCandidate.name,
+      detail: `${formatNumber(election.winnerCandidate.votes)} voti`,
+    });
+  }
+
+  kpis.push({
+    title: "Schede bianche",
+    value: formatNumber(election.totals.blankBallots),
+    detail: `${formatPercent(election.totals.blankPct)} dei votanti`,
+  });
 
   elements.kpiGrid.innerHTML = kpis
     .map(
@@ -598,7 +779,8 @@ function renderSummary(election) {
 
 function renderWinnerCards(electionsForType) {
   const useDateLabels = hasDuplicateYears(electionsForType);
-  elements.winnerCards.innerHTML = electionsForType
+  elements.winnerCards.innerHTML = [...electionsForType]
+    .reverse()
     .map(
       (election) => `
         <button
@@ -653,7 +835,7 @@ function renderLeaderboard(election) {
 
 function renderTrendChart(electionsForType, party) {
   const useDateLabels = hasDuplicateYears(electionsForType);
-  const series = electionsForType.map((election) => {
+  const fullSeries = electionsForType.map((election) => {
     const result = election.results.find((item) => item.name === party);
     return {
       election,
@@ -662,15 +844,25 @@ function renderTrendChart(electionsForType, party) {
       present: Boolean(result),
     };
   });
+  const series = fullSeries.filter((item) => item.present);
+  const partyDisplayName = getPartyDisplayName(party) || party || "Lista selezionata";
 
-  const presenceCount = series.filter((item) => item.present).length;
+  if (!series.length) {
+    elements.trendCaption.textContent = `${partyDisplayName} non compare nella serie storica di questo tipo di elezione.`;
+    elements.trendChart.innerHTML = `
+      <p class="trend-empty">
+        Nessun anno disponibile da mostrare per la lista selezionata.
+      </p>
+    `;
+    return;
+  }
+
   const peak = series.reduce((best, item) => (item.share > best.share ? item : best), series[0]);
   const maxShare = Math.max(...series.map((item) => item.share), 5);
-  const partyDisplayName = getPartyDisplayName(party);
 
-  elements.trendCaption.textContent = `${partyDisplayName} compare in ${presenceCount} elezioni su ${series.length}. Picco: ${peak.election.year} con ${formatPercent(
-    peak.share,
-  )}.`;
+  elements.trendCaption.textContent = `${partyDisplayName} compare in ${series.length} elezioni su ${fullSeries.length}. Picco: ${
+    useDateLabels ? formatShortDate(peak.election.date) : peak.election.year
+  } con ${formatPercent(peak.share)}.`;
 
   elements.trendChart.innerHTML = `
     <div class="trend-selected">
@@ -678,7 +870,7 @@ function renderTrendChart(electionsForType, party) {
         compact: true,
         hideRawName: true,
       })}</strong>
-      <span class="trend-meta">Clicca una barra per aprire quell'anno.</span>
+      <span class="trend-meta">Solo anni in cui la lista è presente. Clicca una barra per aprire quell'elezione.</span>
     </div>
     <div class="trend-columns">
       ${series
@@ -686,14 +878,10 @@ function renderTrendChart(electionsForType, party) {
           (item) => `
             <button
               type="button"
-              class="trend-column ${item.present ? "" : "is-empty"} ${
-                item.election.id === state.electionId ? "is-current" : ""
-              }"
+              class="trend-column ${item.election.id === state.electionId ? "is-current" : ""}"
               data-election-id="${item.election.id}"
             >
-              <span class="trend-value">${
-                item.present ? formatPercent(item.share) : "–"
-              }</span>
+              <span class="trend-value">${formatPercent(item.share)}</span>
               <span class="trend-bar-track">
                 <span
                   class="trend-bar-fill"
@@ -711,32 +899,356 @@ function renderTrendChart(electionsForType, party) {
   `;
 }
 
-function renderTable(election) {
-  elements.tableCaption.textContent = election.type === "referendum"
-    ? `${election.results.length} opzioni ordinate per voti validi.`
-    : `${election.results.length} liste ordinate per voti validi.`;
-  elements.resultsBody.innerHTML = election.results
+function renderTypeInsight(election, electionsForType) {
+  if (election.type === "referendum") {
+    renderReferendumInsight(election);
+    return;
+  }
+
+  const results = Array.isArray(election.results) ? election.results : [];
+  if (!results.length) {
+    elements.insightTitle.textContent = "Analisi competizione";
+    elements.insightCaption.textContent = "Dati liste non disponibili per questa elezione.";
+    elements.typeInsight.innerHTML = `
+      <p class="insight-hint">
+        Il dataset non contiene risultati di lista sufficienti per calcolare indicatori comparabili.
+      </p>
+    `;
+    return;
+  }
+
+  const topFive = results.slice(0, 5);
+  const topThreeShare = topFive.slice(0, 3).reduce((sum, item) => sum + item.share, 0);
+  const concentration = results.reduce((sum, item) => {
+    const quota = item.share / 100;
+    return sum + quota * quota;
+  }, 0);
+  const effectiveLists = concentration > 0 ? 1 / concentration : 0;
+  const currentIndex = electionsForType.findIndex((item) => item.id === election.id);
+  const previousElection = currentIndex > 0 ? electionsForType[currentIndex - 1] : null;
+  const previousWinnerShare = previousElection
+    ? previousElection.results.find((item) => item.name === election.winner.name)?.share ?? 0
+    : null;
+  const winnerDelta = previousWinnerShare === null
+    ? null
+    : election.winner.share - previousWinnerShare;
+
+  elements.insightTitle.textContent = "Analisi competizione";
+  elements.insightCaption.textContent = previousElection
+    ? `Confronto con ${formatShortDate(previousElection.date)}.`
+    : "Prima elezione disponibile della serie.";
+
+  const deltaText = winnerDelta === null
+    ? "N/D"
+    : `${winnerDelta >= 0 ? "+" : ""}${formatPercent(winnerDelta)}`;
+
+  elements.typeInsight.innerHTML = `
+    <div class="insight-stats">
+      <article class="insight-stat">
+        <p class="insight-stat-label">Top 3 liste</p>
+        <p class="insight-stat-value">${formatPercent(topThreeShare)}</p>
+      </article>
+      <article class="insight-stat">
+        <p class="insight-stat-label">Liste effettive</p>
+        <p class="insight-stat-value">${effectiveLists.toFixed(2)}</p>
+      </article>
+      <article class="insight-stat">
+        <p class="insight-stat-label">Delta vincitore</p>
+        <p class="insight-stat-value">${deltaText}</p>
+      </article>
+    </div>
+    <div class="insight-stack">
+      ${topFive
+        .map(
+          (result) => `
+            <div class="insight-row">
+              <div class="insight-row-head">
+                <span>${renderPartyLabel(result.name, { compact: true, hideRawName: true })}</span>
+                <strong>${formatPercent(result.share)}</strong>
+              </div>
+              <span class="insight-row-track">
+                <span class="insight-row-fill" style="--value: ${result.share};"></span>
+              </span>
+            </div>
+          `,
+        )
+        .join("")}
+    </div>
+    <p class="insight-hint">
+      ${
+        election.winnerCandidate
+          ? `Candidato più votato: ${escapeHtml(election.winnerCandidate.name)} (${formatNumber(
+            election.winnerCandidate.votes,
+          )} voti).`
+          : "Nel dataset di questa elezione non sono presenti voti candidati aggregabili."
+      }
+    </p>
+  `;
+}
+
+function renderReferendumInsight(election) {
+  const yes = election.results.find((item) => normalizeAlias(item.name) === "si")
+    ?? election.results[0]
+    ?? { name: "SI", share: 0, votes: 0 };
+  const no = election.results.find((item) => normalizeAlias(item.name) === "no")
+    ?? election.results[1]
+    ?? { name: "NO", share: 0, votes: 0 };
+  const gapVotes = Math.abs(yes.votes - no.votes);
+  const quorumReached = election.totals.turnoutPct >= 50;
+
+  elements.insightTitle.textContent = "Analisi quesito";
+  elements.insightCaption.textContent = quorumReached
+    ? "Quorum raggiunto."
+    : "Quorum non raggiunto.";
+
+  elements.typeInsight.innerHTML = `
+    <div class="insight-stats">
+      <article class="insight-stat">
+        <p class="insight-stat-label">SI</p>
+        <p class="insight-stat-value">${formatPercent(yes.share)}</p>
+      </article>
+      <article class="insight-stat">
+        <p class="insight-stat-label">NO</p>
+        <p class="insight-stat-value">${formatPercent(no.share)}</p>
+      </article>
+      <article class="insight-stat">
+        <p class="insight-stat-label">Scarto voti</p>
+        <p class="insight-stat-value">${formatNumber(gapVotes)}</p>
+      </article>
+    </div>
+    <div class="insight-stack">
+      ${[
+        { label: "SI", share: yes.share, votes: yes.votes },
+        { label: "NO", share: no.share, votes: no.votes },
+        { label: "Affluenza", share: election.totals.turnoutPct, votes: election.totals.voters },
+      ]
+        .map(
+          (row) => `
+            <div class="insight-row">
+              <div class="insight-row-head">
+                <span>${escapeHtml(row.label)}</span>
+                <strong>${formatPercent(row.share)}</strong>
+              </div>
+              <span class="insight-row-track">
+                <span class="insight-row-fill" style="--value: ${row.share};"></span>
+              </span>
+            </div>
+          `,
+        )
+        .join("")}
+    </div>
+    <p class="insight-hint">
+      Voti validi: ${formatNumber(election.totals.validVotes)}.
+    </p>
+  `;
+}
+
+function renderCandidateChart(election) {
+  const allCandidates = Array.isArray(election.candidates) ? election.candidates : [];
+  const candidateLists = election.candidateLists && typeof election.candidateLists === "object"
+    ? election.candidateLists
+    : null;
+  const scopedCandidates = state.party && candidateLists
+    ? candidateLists[state.party]
+    : null;
+  const hasScopedCandidates = Array.isArray(scopedCandidates) && scopedCandidates.length > 0;
+  const candidates = hasScopedCandidates ? scopedCandidates : allCandidates;
+  const candidateCount = hasScopedCandidates
+    ? scopedCandidates.length
+    : Number.isFinite(election.candidateCount)
+      ? election.candidateCount
+      : candidates.length;
+  const selectedCandidateToken = normalizeSearchToken(state.candidate);
+  const selectedIndex = selectedCandidateToken
+    ? candidates.findIndex(
+      (candidate) => normalizeSearchToken(candidate.name) === selectedCandidateToken,
+    )
+    : -1;
+
+  if (!candidates.length) {
+    if (state.candidate) {
+      elements.candidateCaption.textContent = "Il candidato cercato non è disponibile per questa elezione.";
+    } else if (state.party && candidateLists) {
+      elements.candidateCaption.textContent = `Nessun candidato collegato alla lista ${getPartyDisplayName(state.party)} in questa elezione.`;
+    } else {
+      elements.candidateCaption.textContent = "Nessun dato candidati disponibile.";
+    }
+    elements.candidateChart.innerHTML = `
+      <p class="candidate-empty">
+        Questo tipo di elezione non include nel dataset un tracciato candidati uniforme per tutte le serie storiche.
+      </p>
+    `;
+    return;
+  }
+
+  const topCandidates = selectedIndex >= 0
+    ? [candidates[selectedIndex], ...candidates.filter((_, index) => index !== selectedIndex).slice(0, 11)]
+    : candidates.slice(0, 12);
+
+  const hasTrimmedList = candidateCount > candidates.length;
+  if (selectedIndex >= 0) {
+    elements.candidateCaption.textContent = hasScopedCandidates
+      ? `Top candidati della lista ${getPartyDisplayName(state.party)} · focus su ${candidates[selectedIndex].name}.`
+      : `${candidateCount} candidati aggregati · focus su ${candidates[selectedIndex].name} (posizione ${selectedIndex + 1}).`;
+  } else if (state.candidate) {
+    elements.candidateCaption.textContent = hasScopedCandidates
+      ? `${state.candidate} non è tra i candidati disponibili per la lista ${getPartyDisplayName(state.party)}.`
+      : `${state.candidate} non è presente in questa elezione.`;
+  } else if (hasScopedCandidates) {
+    elements.candidateCaption.textContent = `Top candidati della lista ${getPartyDisplayName(state.party)} in questa elezione.`;
+  } else {
+    elements.candidateCaption.textContent = hasTrimmedList
+      ? `${candidateCount} candidati aggregati (top ${candidates.length} nel dataset).`
+      : `${candidateCount} candidati con voti aggregati.`;
+  }
+
+  elements.candidateChart.innerHTML = topCandidates
     .map(
-      (result, index) => `
-        <tr>
-          <td>${index + 1}</td>
-          <td>
-            <button
-              type="button"
-              class="result-list-trigger ${result.name === state.party ? "is-selected" : ""}"
-              data-party="${escapeAttribute(result.name)}"
-            >
-              ${renderPartyLabel(result.name, {
-                compact: true,
-              })}
-            </button>
-          </td>
-          <td>${formatNumber(result.votes)}</td>
-          <td class="table-share">${formatPercent(result.share)}</td>
-        </tr>
+      (candidate) => `
+        <button
+          type="button"
+          class="candidate-item ${normalizeSearchToken(candidate.name) === selectedCandidateToken ? "is-selected" : ""}"
+          data-candidate="${escapeAttribute(candidate.name)}"
+        >
+          <span class="candidate-rank">${
+            candidates.findIndex((item) => item.name === candidate.name) + 1
+          }</span>
+          <span class="candidate-main">
+            <span class="candidate-name">${escapeHtml(candidate.name)}</span>
+            <span class="candidate-track">
+              <span class="candidate-fill" style="--share: ${candidate.share};"></span>
+            </span>
+          </span>
+          <span class="candidate-stats">
+            <span class="candidate-share">${formatPercent(candidate.share)}</span>
+            <span class="candidate-votes">${formatNumber(candidate.votes)} voti</span>
+          </span>
+        </button>
       `,
     )
     .join("");
+}
+
+function renderCandidateHistory(candidateName) {
+  if (!candidateName) {
+    elements.candidateHistory.innerHTML = "";
+    return;
+  }
+
+  const presences = getCandidatePresences(candidateName);
+  if (!presences.length) {
+    elements.candidateHistory.innerHTML = `
+      <div class="candidate-history-head">
+        <h3>Presenze nel tempo</h3>
+      </div>
+      <p class="candidate-empty">Nessuna presenza storica trovata per questo candidato.</p>
+    `;
+    return;
+  }
+
+  const visiblePresences = presences.slice(0, 32);
+  const hiddenCount = presences.length - visiblePresences.length;
+  elements.candidateHistory.innerHTML = `
+    <div class="candidate-history-head">
+      <h3>Presenze nel tempo</h3>
+      <p>${escapeHtml(candidateName)} compare in ${presences.length} elezioni.</p>
+    </div>
+    <div class="candidate-history-list">
+      ${visiblePresences
+        .map((presence) => `
+          <button
+            type="button"
+            class="candidate-history-item ${presence.election.id === state.electionId ? "is-current" : ""}"
+            data-type="${presence.election.type}"
+            data-election-id="${presence.election.id}"
+          >
+            <span class="candidate-history-date">${formatShortDate(presence.election.date)}</span>
+            <span class="candidate-history-type">${escapeHtml(presence.election.typeLabel)}</span>
+            <span class="candidate-history-meta">${formatNumber(presence.votes)} voti · ${formatPercent(presence.share)}</span>
+            ${
+              presence.lists.length
+                ? `<span class="candidate-history-lists">${escapeHtml(
+                  presence.lists.map((name) => getPartyDisplayName(name)).join(" · "),
+                )}</span>`
+                : ""
+            }
+          </button>
+        `)
+        .join("")}
+    </div>
+    ${
+      hiddenCount > 0
+        ? `<p class="candidate-history-overflow">Altre ${hiddenCount} presenze non mostrate.</p>`
+        : ""
+    }
+  `;
+}
+
+function getCandidatePresences(candidateName) {
+  const normalizedCandidate = normalizeSearchToken(candidateName);
+  return state.data.elections
+    .map((election) => {
+      const candidates = Array.isArray(election.candidates) ? election.candidates : [];
+      const globalCandidate = candidates.find(
+        (candidate) => normalizeSearchToken(candidate.name) === normalizedCandidate,
+      );
+
+      const listMatches = [];
+      if (election.candidateLists && typeof election.candidateLists === "object") {
+        Object.entries(election.candidateLists).forEach(([listName, listCandidates]) => {
+          if (!Array.isArray(listCandidates)) {
+            return;
+          }
+          const match = listCandidates.find(
+            (candidate) => normalizeSearchToken(candidate.name) === normalizedCandidate,
+          );
+          if (match) {
+            listMatches.push({
+              listName,
+              votes: match.votes,
+              share: match.share,
+            });
+          }
+        });
+      }
+
+      if (!globalCandidate && !listMatches.length) {
+        return null;
+      }
+
+      listMatches.sort((left, right) => right.votes - left.votes);
+      const bestListMatch = listMatches[0] ?? null;
+      return {
+        election,
+        votes: globalCandidate?.votes ?? bestListMatch?.votes ?? 0,
+        share: globalCandidate?.share ?? bestListMatch?.share ?? 0,
+        lists: listMatches.map((item) => item.listName).slice(0, 3),
+      };
+    })
+    .filter(Boolean)
+    .sort((left, right) => {
+      const dateCompare = right.election.date.localeCompare(left.election.date);
+      if (dateCompare !== 0) {
+        return dateCompare;
+      }
+      return right.votes - left.votes;
+    });
+}
+
+function goToCandidatePresence(type, electionId) {
+  const targetElection = state.data.elections.find(
+    (election) => election.id === electionId && election.type === type,
+  );
+  if (!targetElection) {
+    return;
+  }
+
+  state.type = targetElection.type;
+  state.electionId = targetElection.id;
+  if (!getAvailableParties(state.type).includes(state.party)) {
+    state.party = targetElection.winner.name;
+  }
+  render();
 }
 
 function getAvailableTypes() {
@@ -752,10 +1264,43 @@ function getCurrentElection() {
 }
 
 function getAvailableParties(type) {
+  return sortEntityNamesByTotals(computePartyTotals(getElectionsByType(type)));
+}
+
+function getAvailablePartiesAll() {
+  return sortEntityNamesByTotals(computePartyTotals(state.data.elections));
+}
+
+function computePartyTotals(elections) {
   const totals = new Map();
-  getElectionsByType(type).forEach((election) => {
+  elections.forEach((election) => {
     election.results.forEach((result) => {
       totals.set(result.name, (totals.get(result.name) ?? 0) + result.votes);
+    });
+  });
+  return totals;
+}
+
+function sortEntityNamesByTotals(totals) {
+  return Array.from(totals.entries())
+    .sort((left, right) => {
+      if (right[1] !== left[1]) {
+        return right[1] - left[1];
+      }
+      return left[0].localeCompare(right[0], "it");
+    })
+    .map(([name]) => name);
+}
+
+function getAvailableCandidates(type) {
+  const totals = new Map();
+  getElectionsByType(type).forEach((election) => {
+    let candidates = Array.isArray(election.candidates) ? election.candidates : [];
+    if (!candidates.length && election.candidateLists && typeof election.candidateLists === "object") {
+      candidates = Object.values(election.candidateLists).flat();
+    }
+    candidates.forEach((candidate) => {
+      totals.set(candidate.name, (totals.get(candidate.name) ?? 0) + candidate.votes);
     });
   });
 
@@ -789,6 +1334,121 @@ function normalizePartyInput(value, parties) {
   return null;
 }
 
+function findBestPartyMatch(value, parties, totals) {
+  const exactMatch = normalizePartyInput(value, parties);
+  if (exactMatch) {
+    return exactMatch;
+  }
+
+  const token = normalizeAlias(value);
+  if (!token || token.length < 2) {
+    return null;
+  }
+
+  const matches = parties.filter((party) =>
+    getPartyAliases(party).some((alias) => normalizeAlias(alias).includes(token)),
+  );
+  if (!matches.length) {
+    return null;
+  }
+
+  return [...matches].sort((left, right) => {
+    const leftVotes = totals.get(left) ?? 0;
+    const rightVotes = totals.get(right) ?? 0;
+    if (rightVotes !== leftVotes) {
+      return rightVotes - leftVotes;
+    }
+    return left.localeCompare(right, "it");
+  })[0];
+}
+
+function resolveGlobalPartySearch(value) {
+  const totals = computePartyTotals(state.data.elections);
+  const parties = sortEntityNamesByTotals(totals);
+  const party = findBestPartyMatch(value, parties, totals);
+  if (!party) {
+    return null;
+  }
+
+  const election = findBestElectionForParty(party);
+  if (!election) {
+    return null;
+  }
+
+  return {
+    party,
+    election,
+  };
+}
+
+function findBestElectionForParty(partyName) {
+  const matches = state.data.elections
+    .map((election) => {
+      const result = election.results.find((item) => item.name === partyName);
+      if (!result) {
+        return null;
+      }
+
+      return {
+        election,
+        share: result.share,
+        votes: result.votes,
+      };
+    })
+    .filter(Boolean)
+    .sort((left, right) => {
+      const dateCompare = right.election.date.localeCompare(left.election.date);
+      if (dateCompare !== 0) {
+        return dateCompare;
+      }
+      if (right.share !== left.share) {
+        return right.share - left.share;
+      }
+      return right.votes - left.votes;
+    });
+
+  return matches[0]?.election ?? null;
+}
+
+function normalizeCandidateInput(value, candidates) {
+  if (!value) {
+    return null;
+  }
+
+  const trimmed = String(value).trim();
+  if (!trimmed) {
+    return null;
+  }
+
+  const normalizedValue = normalizeSearchToken(trimmed);
+  const exact = candidates.find(
+    (candidate) => normalizeSearchToken(candidate) === normalizedValue,
+  );
+  if (exact) {
+    return exact;
+  }
+
+  const partialMatches = candidates.filter(
+    (candidate) => normalizeSearchToken(candidate).includes(normalizedValue),
+  );
+  if (partialMatches.length === 1) {
+    return partialMatches[0];
+  }
+
+  return null;
+}
+
+function hasCandidateInElection(election, candidateName) {
+  let candidates = Array.isArray(election?.candidates) ? election.candidates : [];
+  if (!candidates.length && election?.candidateLists && typeof election.candidateLists === "object") {
+    candidates = Object.values(election.candidateLists).flat();
+  }
+  const normalizedValue = normalizeSearchToken(candidateName);
+  return candidates.some(
+    (candidate) => normalizeSearchToken(candidate.name) === normalizedValue,
+  );
+}
+
 function readStateFromHash() {
   const params = new URLSearchParams(window.location.hash.replace(/^#/, ""));
   return {
@@ -796,6 +1456,7 @@ function readStateFromHash() {
     electionId: params.get("election"),
     year: Number(params.get("year")),
     party: params.get("party"),
+    candidate: params.get("candidate"),
   };
 }
 
@@ -806,6 +1467,7 @@ function syncHash() {
     election: currentElection.id,
     year: String(currentElection.year),
     party: state.party,
+    candidate: state.candidate ?? "",
   });
   const nextHash = `#${params.toString()}`;
   if (window.location.hash !== nextHash) {
@@ -1103,6 +1765,18 @@ function normalizeAlias(value) {
     .replaceAll("'", "")
     .replace(/[().]/g, " ")
     .replace(/\s*[-/]\s*/g, " ")
+    .replace(/\s+/g, " ")
+    .trim()
+    .toLowerCase();
+}
+
+function normalizeSearchToken(value) {
+  return String(value ?? "")
+    .normalize("NFD")
+    .replace(/\p{Diacritic}/gu, "")
+    .replaceAll("’", "'")
+    .replaceAll("'", " ")
+    .replace(/[^a-zA-Z0-9]+/g, " ")
     .replace(/\s+/g, " ")
     .trim()
     .toLowerCase();

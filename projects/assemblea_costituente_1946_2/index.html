@@ -6,7 +6,7 @@
     <title>Atlante delle elezioni italiane</title>
     <meta
       name="description"
-      content="Pagina interattiva per esplorare i risultati storici di Assemblea Costituente, Camera e Senato a partire dagli open data del Ministero dell'Interno."
+      content="Pagina interattiva per esplorare i risultati storici di Assemblea Costituente, Camera, Senato, Referendum, Provinciali e Comunali a partire dagli open data del Ministero dell'Interno."
     />
     <link rel="stylesheet" href="./styles.css" />
     <script defer src="./app.js"></script>
@@ -19,8 +19,8 @@
           <h1>Atlante delle elezioni italiane</h1>
           <p class="lead">
             Un'interfaccia unica per leggere i risultati nazionali di
-            Assemblea Costituente, Camera dei deputati e Senato della Repubblica
-            con ranking, affluenza e confronto storico delle liste.
+            Assemblea Costituente, Camera, Senato, Referendum, Provinciali e Comunali
+            con ranking liste, candidati (quando disponibili), affluenza e confronto storico.
           </p>
         </div>
         <div class="hero-meta">
@@ -48,24 +48,49 @@
               <p class="section-label">Serie storica</p>
               <p id="series-meta" class="controls-meta"></p>
             </div>
-            <div id="year-chips" class="year-chips" aria-label="Selettore anno"></div>
+            <select id="year-select" class="year-select" aria-label="Selettore anno"></select>
           </div>
 
           <div>
-            <label class="section-label" for="party-search">Confronta una lista</label>
+            <label class="section-label" for="party-search">Ricerca lista</label>
             <div class="search-wrap">
               <input
                 id="party-search"
                 name="party-search"
                 list="party-options"
                 autocomplete="off"
-                placeholder="Es. Democrazia Cristiana (DC), Partito Comunista Italiano (PCI)..."
+                placeholder="Es. Democrazia Cristiana, Fratelli d'Italia, Movimento 5 Stelle..."
               />
               <button id="party-apply" type="button" class="inline-action">
-                Mostra
+                Cerca
               </button>
             </div>
             <datalist id="party-options"></datalist>
+          </div>
+
+          <div>
+            <label class="section-label" for="candidate-search">Ricerca candidato</label>
+            <div class="search-wrap">
+              <input
+                id="candidate-search"
+                name="candidate-search"
+                list="candidate-options"
+                autocomplete="off"
+                placeholder="Es. Giorgio Almirante, Silvia Salis..."
+              />
+              <button id="candidate-apply" type="button" class="inline-action">
+                Cerca
+              </button>
+            </div>
+            <datalist id="candidate-options"></datalist>
+          </div>
+
+          <div>
+            <p class="section-label">Navigazione rapida</p>
+            <div class="series-nav">
+              <button id="election-prev" type="button" class="tab">← Elezione precedente</button>
+              <button id="election-next" type="button" class="tab">Elezione successiva →</button>
+            </div>
           </div>
         </section>
 
@@ -121,25 +146,25 @@
           </article>
         </section>
 
-        <section class="panel table-panel">
-          <div class="panel-head">
-            <h2>Dettaglio completo</h2>
-            <p id="table-caption"></p>
-          </div>
-          <div class="table-wrap">
-            <table>
-              <thead>
-                <tr>
-                  <th>Pos.</th>
-                  <th>Lista</th>
-                  <th>Voti</th>
-                  <th>Quota</th>
-                </tr>
-              </thead>
-              <tbody id="results-body"></tbody>
-            </table>
-          </div>
+        <section class="detail-grid">
+          <article class="panel">
+            <div class="panel-head">
+              <h2 id="insight-title">Analisi per tipo</h2>
+              <p id="insight-caption"></p>
+            </div>
+            <div id="type-insight" class="type-insight"></div>
+          </article>
+
+          <article class="panel">
+            <div class="panel-head">
+              <h2>Candidati</h2>
+              <p id="candidate-caption"></p>
+            </div>
+            <div id="candidate-chart" class="candidate-chart"></div>
+            <div id="candidate-history" class="candidate-history"></div>
+          </article>
         </section>
+
       </main>
 
       <footer class="footer-note panel">

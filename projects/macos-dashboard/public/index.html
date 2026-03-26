@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mac Tech Cockpit</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <div class="bg-grid" aria-hidden="true"></div>
+    <main class="cockpit">
+      <header class="topbar panel">
+        <div>
+          <p class="overline">Mac Tech Cockpit</p>
+          <h1 id="host-name">In attesa telemetria</h1>
+          <p id="rig-line" class="muted">Raccolta dati in corso</p>
+        </div>
+        <div class="topbar-actions">
+          <button id="refresh-btn" type="button">Refresh</button>
+          <p id="refresh-status" class="mono muted">Auto refresh: 3s</p>
+          <p id="last-update" class="mono muted">Mai</p>
+        </div>
+      </header>
+
+      <section class="kpi-grid">
+        <article class="panel kpi-card">
+          <div class="kpi-head">
+            <h2>CPU</h2>
+            <span id="cpu-meta" class="mono muted">n/d</span>
+          </div>
+          <div class="kpi-main">
+            <div class="gauge" id="cpu-gauge" style="--p:0">
+              <span id="cpu-value">--%</span>
+            </div>
+            <svg class="spark" id="cpu-spark" viewBox="0 0 220 64" preserveAspectRatio="none"></svg>
+          </div>
+        </article>
+
+        <article class="panel kpi-card">
+          <div class="kpi-head">
+            <h2>RAM</h2>
+            <span id="mem-meta" class="mono muted">n/d</span>
+          </div>
+          <div class="kpi-main">
+            <div class="gauge" id="mem-gauge" style="--p:0">
+              <span id="mem-value">--%</span>
+            </div>
+            <svg class="spark" id="mem-spark" viewBox="0 0 220 64" preserveAspectRatio="none"></svg>
+          </div>
+        </article>
+
+        <article class="panel kpi-card">
+          <div class="kpi-head">
+            <h2>Battery</h2>
+            <span id="batt-meta" class="mono muted">n/d</span>
+          </div>
+          <div class="kpi-main">
+            <div class="gauge" id="batt-gauge" style="--p:0">
+              <span id="batt-value">--%</span>
+            </div>
+            <svg class="spark" id="batt-spark" viewBox="0 0 220 64" preserveAspectRatio="none"></svg>
+          </div>
+        </article>
+
+        <article class="panel kpi-card net-card">
+          <div class="kpi-head">
+            <h2>Network</h2>
+            <span id="net-meta" class="mono muted">n/d</span>
+          </div>
+          <div class="net-main">
+            <div class="net-figures mono">
+              <p><span>RX</span><strong id="net-rx">n/d</strong></p>
+              <p><span>TX</span><strong id="net-tx">n/d</strong></p>
+            </div>
+            <svg class="spark" id="net-spark" viewBox="0 0 220 64" preserveAspectRatio="none"></svg>
+          </div>
+        </article>
+      </section>
+
+      <section class="layout-grid">
+        <article class="panel timeline-panel">
+          <div class="panel-head">
+            <h2>Timeline Live</h2>
+            <span class="mono muted">~3 minuti</span>
+          </div>
+
+          <div class="trace-row">
+            <div class="trace-head">
+              <span>CPU Busy</span>
+              <strong id="tl-cpu-now" class="mono">n/d</strong>
+            </div>
+            <svg id="tl-cpu" class="timeline" viewBox="0 0 640 86" preserveAspectRatio="none"></svg>
+          </div>
+
+          <div class="trace-row">
+            <div class="trace-head">
+              <span>RAM Used</span>
+              <strong id="tl-mem-now" class="mono">n/d</strong>
+            </div>
+            <svg id="tl-mem" class="timeline" viewBox="0 0 640 86" preserveAspectRatio="none"></svg>
+          </div>
+
+          <div class="trace-row">
+            <div class="trace-head">
+              <span>Net RX/TX (Mbps)</span>
+              <strong id="tl-net-now" class="mono">n/d</strong>
+            </div>
+            <svg id="tl-net" class="timeline" viewBox="0 0 640 86" preserveAspectRatio="none"></svg>
+          </div>
+        </article>
+
+        <article class="panel">
+          <div class="panel-head">
+            <h2>Sistema</h2>
+            <span id="thermal-chip" class="chip ok">Thermal OK</span>
+          </div>
+          <div id="system-quick" class="kv compact"></div>
+          <div id="sensor-compact" class="pill-list"></div>
+        </article>
+
+        <article class="panel">
+          <div class="panel-head">
+            <h2>Storage</h2>
+            <span class="mono muted">mount principali</span>
+          </div>
+          <div id="storage-bars" class="storage-bars"></div>
+        </article>
+
+        <article class="panel process-panel">
+          <div class="panel-head">
+            <h2>Top Processi</h2>
+            <span class="mono muted">CPU%</span>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>PID</th>
+                  <th>CPU</th>
+                  <th>MEM</th>
+                  <th>Process</th>
+                </tr>
+              </thead>
+              <tbody id="proc-body"></tbody>
+            </table>
+          </div>
+        </article>
+      </section>
+    </main>
+
+    <script src="/app.js" defer></script>
+  </body>
+</html>
