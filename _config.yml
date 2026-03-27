@@ -3,17 +3,6 @@ kramdown:
   auto_ids: true
   input: GFM
 
-
 include:
   - well-known
-```
-
----
-
-**Prossimi passi:**
-
-1. **Push** di tutto su GitHub
-2. **Aspetta ~1 minuto** che GitHub Pages aggiorni
-3. **Verifica** che il file sia raggiungibile aprendo nel browser:
-```
-   https://tongatron.github.io/.well-known/assetlinks.json
+  - .well-known

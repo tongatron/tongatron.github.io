@@ -1,1 +1,0 @@
-import{c as s,d as l}from"./c-7Z36VJR5.js";l();var a=()=>{let t=[s.isDesktop()?"isdesktop":"no-isdesktop"],o=s.isTablet()?["istablet","touch"]:["no-istablet","no-touch"],e=[s.isMobile()?"isphone":"no-isphone"],i=[...t,...o,...e];document.querySelector("html").classList.add(...i)};export{a};

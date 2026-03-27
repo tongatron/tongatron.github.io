@@ -1,0 +1,4 @@
+#Fri Mar 27 20:14:40 CET 2026
+base.0=/Users/tonga/Documents/GitHub/tongatron.github.io/twa-build/anonymous-pics/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+renamed.0=classes.dex
+path.0=classes.dex

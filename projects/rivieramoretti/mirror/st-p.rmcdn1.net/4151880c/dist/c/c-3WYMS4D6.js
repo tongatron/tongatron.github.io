@@ -1,3 +1,0 @@
-import{r as a,t as l,v as s}from"./c-AIHM4PPQ.js";import{D as o,F as i}from"./c-GLVKEI6A.js";import{a as e}from"./c-NKV6RTLL.js";var r,d,p,h=e(()=>{"use strict";s();i();r=t=>o("svg",{width:16,height:12,viewBox:"0 0 16 12",xmlns:"http://www.w3.org/2000/svg",role:"img",...t,children:o("path",{d:"M.929 5.414a1 1 0 011.414 0L5.88 8.95l7.778-7.778a1 1 0 011.327-.078l.087.078a1 1 0 010 1.414L6.586 11.07a1 1 0 01-1.414 0L.929 6.828a1 1 0 010-1.414z",fill:"currentColor",fillRule:"evenodd"})}),d=l.withComponent(a(r)`
-  display: block;
-`),p=d});export{p as a,h as b};
