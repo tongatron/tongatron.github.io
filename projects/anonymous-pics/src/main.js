@@ -9,6 +9,7 @@ const startButton = document.querySelector("#startButton");
 const startButtonLabel = document.querySelector("#startButtonLabel");
 const captureButton = document.querySelector("#captureButton");
 const downloadButton = document.querySelector("#downloadButton");
+const newPhotoButton = document.querySelector("#newPhotoButton");
 const saveButton = document.querySelector("#saveButton");
 const telegramButton = document.querySelector("#telegramButton");
 const whatsappButton = document.querySelector("#whatsappButton");
@@ -377,6 +378,24 @@ function downloadImage() {
   link.click();
 }
 
+function resetApp() {
+  stopStream();
+  setResultMode(false);
+  setShareActionsVisible(false);
+  syncCaptureControls(false);
+  syncFlipControls(false);
+  cameraOverlay.hidden = false;
+  cameraStatus.textContent = "Camera non avviata";
+  faceCount.textContent = "Volti rilevati: 0";
+  message.textContent = "L’immagine anonimizzata comparirà qui dopo lo scatto.";
+  canvas.width = 0;
+  canvas.height = 0;
+  freezeCanvas.width = 0;
+  freezeCanvas.height = 0;
+  setFreezeFrameVisible(false);
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
 async function canvasToFile() {
   const blob = await new Promise((resolve) => {
     canvas.toBlob(resolve, "image/png");
@@ -426,6 +445,7 @@ async function shareImage(target) {
 startButton.addEventListener("click", () => startCamera(true));
 captureButton.addEventListener("click", captureAndAnonymize);
 downloadButton.addEventListener("click", downloadImage);
+newPhotoButton.addEventListener("click", resetApp);
 saveButton.addEventListener("click", downloadImage);
 telegramButton.addEventListener("click", () => shareImage("telegram"));
 whatsappButton.addEventListener("click", () => shareImage("whatsapp"));
