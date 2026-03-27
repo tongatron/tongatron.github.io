@@ -6,6 +6,10 @@ const ctx = canvas.getContext("2d");
 const startButton = document.querySelector("#startButton");
 const captureButton = document.querySelector("#captureButton");
 const downloadButton = document.querySelector("#downloadButton");
+const flipButton = document.querySelector("#flipButton");
+const mobileStartButton = document.querySelector("#mobileStartButton");
+const mobileCaptureButton = document.querySelector("#mobileCaptureButton");
+const mobileFlipButton = document.querySelector("#mobileFlipButton");
 const message = document.querySelector("#message");
 const cameraStatus = document.querySelector("#cameraStatus");
 const faceCount = document.querySelector("#faceCount");
@@ -14,6 +18,34 @@ const baseUrl = import.meta.env.BASE_URL;
 
 let stream;
 let modelPromise;
+let currentFacingMode = "user";
+
+function stopStream() {
+  if (!stream) {
+    return;
+  }
+
+  stream.getTracks().forEach((track) => track.stop());
+  stream = undefined;
+}
+
+function syncCaptureControls(enabled) {
+  captureButton.disabled = !enabled;
+  mobileCaptureButton.disabled = !enabled;
+}
+
+function syncFlipControls(enabled) {
+  flipButton.disabled = !enabled;
+  mobileFlipButton.disabled = !enabled;
+}
+
+function updateCameraModeLabels() {
+  const usingFrontCamera = currentFacingMode === "user";
+  const label = usingFrontCamera ? "Camera posteriore" : "Camera frontale";
+
+  flipButton.textContent = label;
+  mobileFlipButton.textContent = usingFrontCamera ? "Retro" : "Selfie";
+}
 
 async function registerServiceWorker() {
   if (!("serviceWorker" in navigator)) {
@@ -43,17 +75,23 @@ async function ensureModel() {
   return modelPromise;
 }
 
-async function startCamera() {
-  if (stream) {
+async function startCamera(forceRestart = false) {
+  if (stream && !forceRestart) {
     return;
   }
 
+  if (forceRestart) {
+    stopStream();
+  }
+
+  syncCaptureControls(false);
+  syncFlipControls(false);
   message.textContent = "Richiesta accesso alla camera in corso...";
 
   try {
     stream = await navigator.mediaDevices.getUserMedia({
       video: {
-        facingMode: "user",
+        facingMode: { ideal: currentFacingMode },
         width: { ideal: 1280 },
         height: { ideal: 720 },
       },
@@ -67,12 +105,20 @@ async function startCamera() {
     });
 
     await video.play();
-    captureButton.disabled = false;
-    cameraStatus.textContent = "Camera attiva";
+    syncCaptureControls(true);
+    syncFlipControls(true);
+    updateCameraModeLabels();
+    startButton.textContent = "Riavvia camera";
+    mobileStartButton.textContent = "Riavvia";
+    cameraStatus.textContent =
+      currentFacingMode === "user" ? "Camera frontale attiva" : "Camera posteriore attiva";
     cameraOverlay.hidden = true;
     message.textContent = "Camera pronta. Puoi scattare la foto.";
   } catch (error) {
     console.error(error);
+    stopStream();
+    syncCaptureControls(false);
+    syncFlipControls(false);
     cameraStatus.textContent = "Accesso negato";
     message.textContent =
       "Impossibile accedere alla camera. Verifica i permessi del browser e usa HTTPS o localhost.";
@@ -139,7 +185,9 @@ async function captureAndAnonymize() {
     await startCamera();
   }
 
-  captureButton.disabled = true;
+  syncCaptureControls(false);
+  flipButton.disabled = true;
+  mobileFlipButton.disabled = true;
   downloadButton.disabled = true;
   message.textContent = "Caricamento del modello e anonimizzazione in corso...";
 
@@ -180,8 +228,16 @@ async function captureAndAnonymize() {
     message.textContent =
       "Si è verificato un errore durante l'elaborazione. Riprova con una nuova foto.";
   } finally {
-    captureButton.disabled = false;
+    syncCaptureControls(Boolean(stream));
+    syncFlipControls(Boolean(stream));
   }
+}
+
+async function switchCamera() {
+  currentFacingMode = currentFacingMode === "user" ? "environment" : "user";
+  updateCameraModeLabels();
+
+  await startCamera(true);
 }
 
 function downloadImage() {
@@ -193,15 +249,16 @@ function downloadImage() {
   link.click();
 }
 
-startButton.addEventListener("click", startCamera);
+startButton.addEventListener("click", () => startCamera(true));
 captureButton.addEventListener("click", captureAndAnonymize);
 downloadButton.addEventListener("click", downloadImage);
+flipButton.addEventListener("click", switchCamera);
+mobileStartButton.addEventListener("click", () => startCamera(true));
+mobileCaptureButton.addEventListener("click", captureAndAnonymize);
+mobileFlipButton.addEventListener("click", switchCamera);
+updateCameraModeLabels();
 registerServiceWorker();
 
 window.addEventListener("beforeunload", () => {
-  if (!stream) {
-    return;
-  }
-
-  stream.getTracks().forEach((track) => track.stop());
+  stopStream();
 });
