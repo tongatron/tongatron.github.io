@@ -323,6 +323,20 @@ button.primary {
   background: rgba(255, 251, 245, 0.92);
 }
 
+.is-result-mode .permission-panel,
+.is-result-mode .live-panel,
+.is-result-mode .mobile-actionbar {
+  display: none;
+}
+
+.is-result-mode .workspace {
+  grid-template-columns: 1fr;
+}
+
+.is-result-mode .result-panel {
+  margin-top: 0;
+}
+
 .live-panel .controls {
   display: none;
 }

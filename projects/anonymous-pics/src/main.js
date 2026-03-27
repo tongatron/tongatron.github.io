@@ -22,6 +22,7 @@ const message = document.querySelector("#message");
 const cameraStatus = document.querySelector("#cameraStatus");
 const faceCount = document.querySelector("#faceCount");
 const cameraOverlay = document.querySelector("#cameraOverlay");
+const appShell = document.querySelector(".app-shell");
 const baseUrl = import.meta.env.BASE_URL;
 
 let stream;
@@ -34,6 +35,10 @@ function setShareActionsVisible(visible) {
   saveButton.disabled = !visible;
   telegramButton.disabled = !visible;
   whatsappButton.disabled = !visible;
+}
+
+function setResultMode(active) {
+  appShell.classList.toggle("is-result-mode", active);
 }
 
 function setButtonState(button, active) {
@@ -118,6 +123,7 @@ async function startCamera(forceRestart = false) {
 
   syncCaptureControls(false);
   syncFlipControls(false);
+  setResultMode(false);
   setShareActionsVisible(false);
   message.textContent = "Richiesta accesso alla camera in corso...";
 
@@ -244,6 +250,14 @@ function drawEyeBar(landmarks, faceRect) {
   ctx.fillRect(barRect.x, barRect.y, barRect.width, barRect.height);
 }
 
+function triggerCaptureFeedback() {
+  if (!("vibrate" in navigator)) {
+    return;
+  }
+
+  navigator.vibrate(35);
+}
+
 async function captureAndAnonymize() {
   if (!stream) {
     await startCamera();
@@ -261,6 +275,7 @@ async function captureAndAnonymize() {
     canvas.width = video.videoWidth;
     canvas.height = video.videoHeight;
     ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+    triggerCaptureFeedback();
 
     const predictions = await model.estimateFaces(video, false);
 
@@ -283,6 +298,7 @@ async function captureAndAnonymize() {
     });
 
     faceCount.textContent = `Volti rilevati: ${predictions.length}`;
+    setResultMode(true);
     setShareActionsVisible(true);
     message.textContent =
       predictions.length > 0
@@ -373,6 +389,7 @@ mobileCaptureButton.addEventListener("click", captureAndAnonymize);
 mobileFlipButton.addEventListener("click", switchCamera);
 updateCameraUi(false);
 updateCameraModeLabels();
+setResultMode(false);
 setShareActionsVisible(false);
 registerServiceWorker();
 
