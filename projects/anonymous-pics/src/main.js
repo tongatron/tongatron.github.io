@@ -213,6 +213,37 @@ function pixelateRegion(rect, pixelSize = 14) {
   );
 }
 
+function drawEyeBar(landmarks, faceRect) {
+  if (!Array.isArray(landmarks) || landmarks.length < 2) {
+    return;
+  }
+
+  const [firstEye, secondEye] = landmarks;
+
+  if (!Array.isArray(firstEye) || !Array.isArray(secondEye)) {
+    return;
+  }
+
+  const eyeCenterX = (firstEye[0] + secondEye[0]) / 2;
+  const eyeCenterY = (firstEye[1] + secondEye[1]) / 2;
+  const eyeDistance = Math.hypot(secondEye[0] - firstEye[0], secondEye[1] - firstEye[1]);
+  const barWidth = Math.max(faceRect.width * 0.6, eyeDistance * 1.9);
+  const barHeight = Math.max(faceRect.height * 0.16, 18);
+  const barRect = clampRect(
+    eyeCenterX - barWidth / 2,
+    eyeCenterY - barHeight / 2,
+    barWidth,
+    barHeight,
+  );
+
+  if (!barRect.width || !barRect.height) {
+    return;
+  }
+
+  ctx.fillStyle = "#000000";
+  ctx.fillRect(barRect.x, barRect.y, barRect.width, barRect.height);
+}
+
 async function captureAndAnonymize() {
   if (!stream) {
     await startCamera();
@@ -248,6 +279,7 @@ async function captureAndAnonymize() {
       );
 
       pixelateRegion(rect, 18);
+      drawEyeBar(prediction.landmarks, rect);
     });
 
     faceCount.textContent = `Volti rilevati: ${predictions.length}`;
