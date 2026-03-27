@@ -4,24 +4,50 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Anonymous Pics</title>
+    <meta
+      name="description"
+      content="Scatta foto, anonimizza automaticamente i volti e salva l'immagine direttamente dal tuo dispositivo."
+    />
+    <meta name="theme-color" content="#f77f00" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <link rel="manifest" href="/projects/anonymous-pics/manifest.webmanifest" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="192x192"
+      href="/projects/anonymous-pics/icons/icon-192.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      href="/projects/anonymous-pics/icons/icon-192.png"
+    />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap"
       rel="stylesheet"
     />
-    <script type="module" crossorigin src="/assets/index-6Q05Ct7g.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-BSH4hSg8.css">
+    <script type="module" crossorigin src="/projects/anonymous-pics/assets/index-kg1waRw5.js"></script>
+    <link rel="stylesheet" crossorigin href="/projects/anonymous-pics/assets/index-CBmiKv4y.css">
   </head>
   <body>
     <main class="app-shell">
       <section class="hero">
-        <p class="eyebrow">Privacy-first camera</p>
+        <div class="hero-topbar">
+          <p class="eyebrow">Privacy-first camera</p>
+          <span class="install-badge">PWA Android</span>
+        </div>
         <h1>Scatta una foto, rileva i volti e anonimizzali.</h1>
         <p class="intro">
           Tutto avviene nel browser: la foto viene elaborata localmente, i volti
           vengono pixelati e l'immagine finale può essere scaricata subito.
         </p>
+        <div class="hero-points">
+          <span>Nessun upload</span>
+          <span>Rilevamento locale</span>
+          <span>Salvataggio immediato</span>
+        </div>
       </section>
 
       <section class="workspace">
@@ -33,7 +59,10 @@
           <div class="camera-stage">
             <video id="video" playsinline autoplay muted></video>
             <div id="cameraOverlay" class="camera-overlay">
-              Premi “Avvia camera” per iniziare.
+              <div class="overlay-copy">
+                <strong>Pronto per lo scatto</strong>
+                <span>Avvia la camera e inquadra il volto da anonimizzare.</span>
+              </div>
             </div>
           </div>
           <div class="controls">
@@ -54,6 +83,17 @@
           <p id="message" class="message">
             L’immagine anonimizzata comparirà qui dopo lo scatto.
           </p>
+        </div>
+      </section>
+
+      <section class="tips">
+        <div class="tip-card">
+          <span class="tip-index">01</span>
+          <p>Usa luce frontale e il viso ben centrato per un rilevamento più stabile.</p>
+        </div>
+        <div class="tip-card">
+          <span class="tip-index">02</span>
+          <p>Su Android puoi installare l’app dal browser e usarla come schermata dedicata.</p>
         </div>
       </section>
     </main>

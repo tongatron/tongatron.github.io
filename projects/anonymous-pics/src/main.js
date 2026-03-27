@@ -10,9 +10,24 @@ const message = document.querySelector("#message");
 const cameraStatus = document.querySelector("#cameraStatus");
 const faceCount = document.querySelector("#faceCount");
 const cameraOverlay = document.querySelector("#cameraOverlay");
+const baseUrl = import.meta.env.BASE_URL;
 
 let stream;
 let modelPromise;
+
+async function registerServiceWorker() {
+  if (!("serviceWorker" in navigator)) {
+    return;
+  }
+
+  try {
+    await navigator.serviceWorker.register(`${baseUrl}sw.js`, {
+      scope: baseUrl,
+    });
+  } catch (error) {
+    console.error("Service worker registration failed", error);
+  }
+}
 
 async function ensureModel() {
   if (!modelPromise) {
@@ -181,6 +196,7 @@ function downloadImage() {
 startButton.addEventListener("click", startCamera);
 captureButton.addEventListener("click", captureAndAnonymize);
 downloadButton.addEventListener("click", downloadImage);
+registerServiceWorker();
 
 window.addEventListener("beforeunload", () => {
   if (!stream) {

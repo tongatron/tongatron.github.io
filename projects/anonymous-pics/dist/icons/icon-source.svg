@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="bg" x1="0%" x2="100%" y1="0%" y2="100%">
+      <stop offset="0%" stop-color="#f7f2e8" />
+      <stop offset="55%" stop-color="#f4ede2" />
+      <stop offset="100%" stop-color="#dcc7a1" />
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" x2="100%" y1="0%" y2="100%">
+      <stop offset="0%" stop-color="#ff9d2f" />
+      <stop offset="100%" stop-color="#f77f00" />
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="128" fill="url(#bg)" />
+  <circle cx="256" cy="256" r="164" fill="#172121" opacity="0.08" />
+  <path
+    d="M172 192c0-35.346 28.654-64 64-64h40c35.346 0 64 28.654 64 64v40c0 35.346-28.654 64-64 64h-40c-35.346 0-64-28.654-64-64z"
+    fill="#172121"
+  />
+  <rect x="154" y="298" width="204" height="60" rx="30" fill="#172121" />
+  <rect x="146" y="164" width="220" height="176" rx="48" fill="url(#accent)" />
+  <rect x="178" y="196" width="156" height="112" rx="28" fill="#fff9f1" />
+  <g fill="#f77f00">
+    <rect x="196" y="214" width="28" height="28" rx="8" />
+    <rect x="228" y="214" width="28" height="28" rx="8" />
+    <rect x="260" y="214" width="28" height="28" rx="8" />
+    <rect x="292" y="214" width="24" height="28" rx="8" />
+    <rect x="196" y="246" width="28" height="28" rx="8" />
+    <rect x="228" y="246" width="28" height="28" rx="8" />
+    <rect x="260" y="246" width="28" height="28" rx="8" />
+    <rect x="292" y="246" width="24" height="28" rx="8" />
+  </g>
+  <circle cx="208" cy="332" r="12" fill="#fff9f1" />
+  <circle cx="304" cy="332" r="12" fill="#fff9f1" />
+</svg>
