@@ -36,6 +36,20 @@
         <p class="eyebrow">Privacy camera</p>
       </header>
 
+      <section class="permission-panel">
+        <div class="permission-copy">
+          <h1>Permesso fotocamera</h1>
+          <p>
+            Tocca il pulsante per autorizzare la camera. Dopo il consenso vedrai
+            subito l’anteprima.
+          </p>
+        </div>
+        <button id="permissionButton" class="permission-button status-button status-off">
+          <span class="status-dot" aria-hidden="true"></span>
+          <span id="permissionLabel">Attiva fotocamera</span>
+        </button>
+      </section>
+
       <section class="workspace">
         <div class="panel live-panel">
           <div class="panel-header">
@@ -57,7 +71,10 @@
             </div>
           </div>
           <div class="controls">
-            <button id="startButton" class="primary">Avvia camera</button>
+            <button id="startButton" class="primary status-button status-off">
+              <span class="status-dot" aria-hidden="true"></span>
+              <span id="startButtonLabel">Avvia camera</span>
+            </button>
             <button id="captureButton" disabled>Scatta e anonimizza</button>
           </div>
         </div>
@@ -70,6 +87,11 @@
             <span id="faceCount" class="status-pill">Volti rilevati: 0</span>
           </div>
           <canvas id="canvas"></canvas>
+          <div id="shareActions" class="share-actions" hidden>
+            <button id="saveButton" class="share-button">Salva in galleria</button>
+            <button id="telegramButton" class="share-button">Invia a Telegram</button>
+            <button id="whatsappButton" class="share-button">Invia a WhatsApp</button>
+          </div>
           <div class="controls">
             <button id="downloadButton" disabled>Salva immagine</button>
           </div>
@@ -80,7 +102,10 @@
       </section>
 
       <div class="mobile-actionbar">
-        <button id="mobileStartButton" class="ghost-button mobile-secondary">Avvia</button>
+        <button id="mobileStartButton" class="ghost-button mobile-secondary status-button status-off">
+          <span class="status-dot" aria-hidden="true"></span>
+          <span id="mobileStartLabel">Avvia</span>
+        </button>
         <button id="mobileCaptureButton" class="mobile-shutter" disabled aria-label="Scatta e anonimizza">
           <span></span>
         </button>

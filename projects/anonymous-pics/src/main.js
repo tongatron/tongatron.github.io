@@ -4,10 +4,18 @@ const video = document.querySelector("#video");
 const canvas = document.querySelector("#canvas");
 const ctx = canvas.getContext("2d");
 const startButton = document.querySelector("#startButton");
+const startButtonLabel = document.querySelector("#startButtonLabel");
 const captureButton = document.querySelector("#captureButton");
 const downloadButton = document.querySelector("#downloadButton");
+const saveButton = document.querySelector("#saveButton");
+const telegramButton = document.querySelector("#telegramButton");
+const whatsappButton = document.querySelector("#whatsappButton");
+const shareActions = document.querySelector("#shareActions");
 const flipButton = document.querySelector("#flipButton");
+const permissionButton = document.querySelector("#permissionButton");
+const permissionLabel = document.querySelector("#permissionLabel");
 const mobileStartButton = document.querySelector("#mobileStartButton");
+const mobileStartLabel = document.querySelector("#mobileStartLabel");
 const mobileCaptureButton = document.querySelector("#mobileCaptureButton");
 const mobileFlipButton = document.querySelector("#mobileFlipButton");
 const message = document.querySelector("#message");
@@ -20,6 +28,29 @@ let stream;
 let modelPromise;
 let currentFacingMode = "user";
 
+function setShareActionsVisible(visible) {
+  shareActions.hidden = !visible;
+  downloadButton.disabled = !visible;
+  saveButton.disabled = !visible;
+  telegramButton.disabled = !visible;
+  whatsappButton.disabled = !visible;
+}
+
+function setButtonState(button, active) {
+  button.classList.toggle("status-on", active);
+  button.classList.toggle("status-off", !active);
+}
+
+function updateCameraUi(active) {
+  setButtonState(permissionButton, active);
+  setButtonState(startButton, active);
+  setButtonState(mobileStartButton, active);
+
+  permissionLabel.textContent = active ? "Camera attiva" : "Attiva fotocamera";
+  startButtonLabel.textContent = active ? "Camera attiva" : "Avvia camera";
+  mobileStartLabel.textContent = active ? "Attiva" : "Avvia";
+}
+
 function stopStream() {
   if (!stream) {
     return;
@@ -27,6 +58,7 @@ function stopStream() {
 
   stream.getTracks().forEach((track) => track.stop());
   stream = undefined;
+  updateCameraUi(false);
 }
 
 function syncCaptureControls(enabled) {
@@ -86,6 +118,7 @@ async function startCamera(forceRestart = false) {
 
   syncCaptureControls(false);
   syncFlipControls(false);
+  setShareActionsVisible(false);
   message.textContent = "Richiesta accesso alla camera in corso...";
 
   try {
@@ -107,9 +140,8 @@ async function startCamera(forceRestart = false) {
     await video.play();
     syncCaptureControls(true);
     syncFlipControls(true);
+    updateCameraUi(true);
     updateCameraModeLabels();
-    startButton.textContent = "Riavvia camera";
-    mobileStartButton.textContent = "Riavvia";
     cameraStatus.textContent =
       currentFacingMode === "user" ? "Camera frontale attiva" : "Camera posteriore attiva";
     cameraOverlay.hidden = true;
@@ -189,7 +221,7 @@ async function captureAndAnonymize() {
   syncCaptureControls(false);
   flipButton.disabled = true;
   mobileFlipButton.disabled = true;
-  downloadButton.disabled = true;
+  setShareActionsVisible(false);
   message.textContent = "Caricamento del modello e anonimizzazione in corso...";
 
   try {
@@ -215,11 +247,11 @@ async function captureAndAnonymize() {
         height + marginY * 2,
       );
 
-      pixelateRegion(rect, 7);
+      pixelateRegion(rect, 18);
     });
 
     faceCount.textContent = `Volti rilevati: ${predictions.length}`;
-    downloadButton.disabled = false;
+    setShareActionsVisible(true);
     message.textContent =
       predictions.length > 0
         ? "Foto anonimizzata pronta per il salvataggio."
@@ -250,14 +282,66 @@ function downloadImage() {
   link.click();
 }
 
+async function canvasToFile() {
+  const blob = await new Promise((resolve) => {
+    canvas.toBlob(resolve, "image/png");
+  });
+
+  if (!blob) {
+    throw new Error("Image export failed");
+  }
+
+  const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
+
+  return new File([blob], `anonymous-pics-${timestamp}.png`, {
+    type: "image/png",
+  });
+}
+
+async function shareImage(target) {
+  try {
+    const file = await canvasToFile();
+    const sharePayload = {
+      files: [file],
+      title: "Anonymous Pics",
+      text:
+        target === "telegram"
+          ? "Invia la foto anonimizzata con Telegram."
+          : "Invia la foto anonimizzata con WhatsApp.",
+    };
+
+    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+      await navigator.share(sharePayload);
+      return;
+    }
+
+    message.textContent =
+      "La condivisione diretta del file non e supportata qui. Usa 'Salva in galleria' e condividi la foto dall'app.";
+  } catch (error) {
+    if (error?.name === "AbortError") {
+      return;
+    }
+
+    console.error(error);
+    message.textContent =
+      "Condivisione non riuscita. Salva prima la foto e inviala manualmente.";
+  }
+}
+
 startButton.addEventListener("click", () => startCamera(true));
 captureButton.addEventListener("click", captureAndAnonymize);
 downloadButton.addEventListener("click", downloadImage);
+saveButton.addEventListener("click", downloadImage);
+telegramButton.addEventListener("click", () => shareImage("telegram"));
+whatsappButton.addEventListener("click", () => shareImage("whatsapp"));
 flipButton.addEventListener("click", switchCamera);
+permissionButton.addEventListener("click", () => startCamera(true));
 mobileStartButton.addEventListener("click", () => startCamera(true));
 mobileCaptureButton.addEventListener("click", captureAndAnonymize);
 mobileFlipButton.addEventListener("click", switchCamera);
+updateCameraUi(false);
 updateCameraModeLabels();
+setShareActionsVisible(false);
 registerServiceWorker();
 
 window.addEventListener("beforeunload", () => {
