@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Anonymous Pics</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <script type="module" src="/src/main.js"></script>
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="hero">
+        <p class="eyebrow">Privacy-first camera</p>
+        <h1>Scatta una foto, rileva i volti e anonimizzali.</h1>
+        <p class="intro">
+          Tutto avviene nel browser: la foto viene elaborata localmente, i volti
+          vengono pixelati e l'immagine finale può essere scaricata subito.
+        </p>
+      </section>
+
+      <section class="workspace">
+        <div class="panel live-panel">
+          <div class="panel-header">
+            <h2>Anteprima camera</h2>
+            <span id="cameraStatus" class="status-pill">Camera non avviata</span>
+          </div>
+          <div class="camera-stage">
+            <video id="video" playsinline autoplay muted></video>
+            <div id="cameraOverlay" class="camera-overlay">
+              Premi “Avvia camera” per iniziare.
+            </div>
+          </div>
+          <div class="controls">
+            <button id="startButton" class="primary">Avvia camera</button>
+            <button id="captureButton" disabled>Scatta e anonimizza</button>
+          </div>
+        </div>
+
+        <div class="panel result-panel">
+          <div class="panel-header">
+            <h2>Risultato</h2>
+            <span id="faceCount" class="status-pill">Volti rilevati: 0</span>
+          </div>
+          <canvas id="canvas"></canvas>
+          <div class="controls">
+            <button id="downloadButton" disabled>Salva immagine</button>
+          </div>
+          <p id="message" class="message">
+            L’immagine anonimizzata comparirà qui dopo lo scatto.
+          </p>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
