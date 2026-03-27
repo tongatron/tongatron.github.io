@@ -114,6 +114,7 @@ async function startCamera(forceRestart = false) {
       currentFacingMode === "user" ? "Camera frontale attiva" : "Camera posteriore attiva";
     cameraOverlay.hidden = true;
     message.textContent = "Camera pronta. Puoi scattare la foto.";
+    video.scrollIntoView({ behavior: "smooth", block: "center" });
   } catch (error) {
     console.error(error);
     stopStream();
@@ -214,7 +215,7 @@ async function captureAndAnonymize() {
         height + marginY * 2,
       );
 
-      pixelateRegion(rect, 12);
+      pixelateRegion(rect, 7);
     });
 
     faceCount.textContent = `Volti rilevati: ${predictions.length}`;
