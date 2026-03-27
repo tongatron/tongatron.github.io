@@ -1,6 +1,8 @@
 import "./styles.css";
 
 const video = document.querySelector("#video");
+const freezeCanvas = document.querySelector("#freezeCanvas");
+const freezeCtx = freezeCanvas.getContext("2d");
 const canvas = document.querySelector("#canvas");
 const ctx = canvas.getContext("2d");
 const startButton = document.querySelector("#startButton");
@@ -28,6 +30,7 @@ const baseUrl = import.meta.env.BASE_URL;
 let stream;
 let modelPromise;
 let currentFacingMode = "user";
+let audioContext;
 
 function setShareActionsVisible(visible) {
   shareActions.hidden = !visible;
@@ -39,6 +42,10 @@ function setShareActionsVisible(visible) {
 
 function setResultMode(active) {
   appShell.classList.toggle("is-result-mode", active);
+}
+
+function setFreezeFrameVisible(visible) {
+  freezeCanvas.hidden = !visible;
 }
 
 function setButtonState(button, active) {
@@ -64,6 +71,7 @@ function stopStream() {
   stream.getTracks().forEach((track) => track.stop());
   stream = undefined;
   updateCameraUi(false);
+  setFreezeFrameVisible(false);
 }
 
 function syncCaptureControls(enabled) {
@@ -112,6 +120,41 @@ async function ensureModel() {
   return modelPromise;
 }
 
+function playCaptureSound() {
+  const AudioCtx = window.AudioContext || window.webkitAudioContext;
+
+  if (!AudioCtx) {
+    return;
+  }
+
+  if (!audioContext) {
+    audioContext = new AudioCtx();
+  }
+
+  const now = audioContext.currentTime;
+  const oscillator = audioContext.createOscillator();
+  const gain = audioContext.createGain();
+
+  oscillator.type = "triangle";
+  oscillator.frequency.setValueAtTime(1200, now);
+  oscillator.frequency.exponentialRampToValueAtTime(500, now + 0.06);
+  gain.gain.setValueAtTime(0.0001, now);
+  gain.gain.exponentialRampToValueAtTime(0.18, now + 0.01);
+  gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.08);
+
+  oscillator.connect(gain);
+  gain.connect(audioContext.destination);
+  oscillator.start(now);
+  oscillator.stop(now + 0.09);
+}
+
+function freezePreviewFrame() {
+  freezeCanvas.width = video.videoWidth;
+  freezeCanvas.height = video.videoHeight;
+  freezeCtx.drawImage(video, 0, 0, freezeCanvas.width, freezeCanvas.height);
+  setFreezeFrameVisible(true);
+}
+
 async function startCamera(forceRestart = false) {
   if (stream && !forceRestart) {
     return;
@@ -151,6 +194,7 @@ async function startCamera(forceRestart = false) {
     cameraStatus.textContent =
       currentFacingMode === "user" ? "Camera frontale attiva" : "Camera posteriore attiva";
     cameraOverlay.hidden = true;
+    setFreezeFrameVisible(false);
     message.textContent = "Camera pronta. Puoi scattare la foto.";
     video.scrollIntoView({ behavior: "smooth", block: "center" });
   } catch (error) {
@@ -272,6 +316,8 @@ async function captureAndAnonymize() {
   try {
     const model = await ensureModel();
 
+    freezePreviewFrame();
+    playCaptureSound();
     canvas.width = video.videoWidth;
     canvas.height = video.videoHeight;
     ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
@@ -306,6 +352,7 @@ async function captureAndAnonymize() {
         : "Nessun volto rilevato. L'immagine è comunque pronta per il salvataggio.";
   } catch (error) {
     console.error(error);
+    setFreezeFrameVisible(false);
     message.textContent =
       "Si è verificato un errore durante l'elaborazione. Riprova con una nuova foto.";
   } finally {

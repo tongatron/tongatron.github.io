@@ -261,7 +261,8 @@ button.primary {
   width: 100%;
 }
 
-#video {
+#video,
+#freezeCanvas {
   height: 100%;
 }
 
@@ -276,6 +277,13 @@ button.primary {
 }
 
 #video {
+  object-fit: cover;
+}
+
+#freezeCanvas {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
   object-fit: cover;
 }
 
