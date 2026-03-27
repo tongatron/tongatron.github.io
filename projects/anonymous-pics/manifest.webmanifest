@@ -1,0 +1,25 @@
+{
+  "name": "Anonymous Pics",
+  "short_name": "Anon Pics",
+  "description": "Scatta una foto, rileva i volti e anonimizzali direttamente sul dispositivo.",
+  "start_url": "/projects/anonymous-pics/",
+  "scope": "/projects/anonymous-pics/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f4ede2",
+  "theme_color": "#f77f00",
+  "icons": [
+    {
+      "src": "/projects/anonymous-pics/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/projects/anonymous-pics/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
