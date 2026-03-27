@@ -238,8 +238,7 @@ button.primary {
   font-size: 0.86rem;
 }
 
-.camera-stage,
-#canvas {
+.camera-stage {
   width: 100%;
   aspect-ratio: 10 / 16;
   background:
@@ -260,7 +259,20 @@ button.primary {
 #canvas {
   display: block;
   width: 100%;
+}
+
+#video {
   height: 100%;
+}
+
+#canvas {
+  height: auto;
+  max-height: none;
+  background:
+    radial-gradient(circle at top, rgba(247, 127, 0, 0.22), transparent 42%),
+    linear-gradient(160deg, rgba(220, 199, 161, 0.7), rgba(247, 127, 0, 0.16)),
+    #f7efe3;
+  object-fit: contain;
 }
 
 #video {
@@ -456,8 +468,7 @@ button.primary {
     align-items: center;
   }
 
-  .camera-stage,
-  #canvas {
+  .camera-stage {
     aspect-ratio: 4 / 3;
   }
 
