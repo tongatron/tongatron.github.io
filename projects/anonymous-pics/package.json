@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "description": "Web app per scattare foto, anonimizzare i volti e salvare l'immagine",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
+    "dev": "node scripts/prepare-build.mjs && vite",
+    "build": "node scripts/prepare-build.mjs && vite build",
     "preview": "vite preview",
-    "publish": "vite build && node scripts/publish-dist.mjs"
+    "publish": "npm run build && node scripts/publish-dist.mjs"
   },
   "keywords": [
     "camera",
