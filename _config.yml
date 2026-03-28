@@ -3,6 +3,16 @@ kramdown:
   auto_ids: true
   input: GFM
 
+exclude:
+  - node_modules
+  - vendor
+  - test-results
+  - projects/PS-Torino/node_modules
+  - projects/anonymous-pics/node_modules
+  - projects/assemblea_costituente_1946_2/node_modules
+  - projects/qrscanner/ionic-capacitor-qr/node_modules
+  - projects/ryanair-search/node_modules
+
 collections:
   projects:
     output: true

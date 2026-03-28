@@ -26,20 +26,17 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.4
+          bundler-cache: true
+
       - name: Configure Pages
         uses: actions/configure-pages@v5
 
-      - name: Prepare static site artifact
-        run: |
-          rm -rf _site
-          mkdir -p _site
-          rsync -a ./ _site/ \
-            --exclude '.git/' \
-            --exclude '.github/' \
-            --exclude '.jekyll-cache/' \
-            --exclude 'test-results/' \
-            --exclude '.DS_Store'
-          touch _site/.nojekyll
+      - name: Build Jekyll site
+        run: bundle exec jekyll build
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
