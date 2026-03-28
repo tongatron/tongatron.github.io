@@ -1,0 +1,226 @@
+backend:
+  name: github
+  repo: tongatron/tongatron.github.io
+  branch: main
+  use_graphql: true
+  # Per usare Decap CMS in produzione su GitHub Pages serve un OAuth proxy esterno.
+  # Quando lo avrai, decommenta e compila questi campi:
+  # base_url: https://cms-auth.example.com
+  # auth_endpoint: auth
+
+local_backend: true
+
+site_url: https://tongatron.github.io
+display_url: https://tongatron.github.io
+logo_url: /img/fablogo.png
+
+media_folder: "img/uploads"
+public_folder: "/img/uploads"
+
+publish_mode: simple
+
+slug:
+  encoding: "ascii"
+  clean_accents: true
+  sanitize_replacement: "-"
+
+collections:
+  - name: "projects"
+    label: "Projects"
+    label_singular: "Project"
+    folder: "_projects"
+    create: true
+    extension: "md"
+    format: "frontmatter"
+    preview_path: "work/{{slug}}"
+    slug: "{{slug}}"
+    identifier_field: "title"
+    summary: "{{title}} · {{status}} · agg. {{updated_at}}"
+    sortable_fields:
+      - "title"
+      - "published_at"
+      - "updated_at"
+      - "status"
+      - "featured"
+    view_filters:
+      - label: "In evidenza"
+        field: "featured"
+        pattern: true
+      - label: "Attivi"
+        field: "status"
+        pattern: "active"
+      - label: "Archiviati"
+        field: "status"
+        pattern: "archived"
+      - label: "Bozze"
+        field: "draft"
+        pattern: true
+    fields:
+      - label: "Titolo"
+        name: "title"
+        widget: "string"
+
+      - label: "Slug"
+        name: "slug"
+        widget: "string"
+        hint: "Usato per il nome file e per gli URL di anteprima."
+        pattern:
+          - "^[a-z0-9-]+$"
+          - "Usa solo lettere minuscole, numeri e trattini."
+
+      - label: "Pubblicato il"
+        name: "published_at"
+        widget: "datetime"
+        format: "YYYY-MM-DD"
+        picker_utc: true
+
+      - label: "Aggiornato il"
+        name: "updated_at"
+        widget: "datetime"
+        format: "YYYY-MM-DD"
+        picker_utc: true
+        default: "{{now}}"
+
+      - label: "Stato"
+        name: "status"
+        widget: "select"
+        options:
+          - { label: "Active", value: "active" }
+          - { label: "Experimental", value: "experimental" }
+          - { label: "Archived", value: "archived" }
+        default: "active"
+
+      - label: "Categoria"
+        name: "category"
+        widget: "select"
+        options:
+          - { label: "Game", value: "game" }
+          - { label: "Utility", value: "utility" }
+          - { label: "Simulator", value: "simulator" }
+          - { label: "IoT", value: "iot" }
+          - { label: "Fabrication", value: "fabrication" }
+        default: "utility"
+
+      - label: "Excerpt"
+        name: "excerpt"
+        widget: "text"
+
+      - label: "Tag"
+        name: "tags"
+        widget: "list"
+        hint: "Tag descrittivi usati nei filtri della pagina projects."
+        allow_add: true
+        collapsed: false
+        field:
+          label: "Tag"
+          name: "tag"
+          widget: "string"
+
+      - label: "Tecnologie"
+        name: "stack"
+        widget: "list"
+        hint: "Tecnologie usate nel progetto, mostrate e filtrabili."
+        allow_add: true
+        collapsed: false
+        field:
+          label: "Tecnologia"
+          name: "technology"
+          widget: "string"
+
+      - label: "Piattaforme"
+        name: "platforms"
+        widget: "list"
+        required: false
+        field:
+          label: "Piattaforma"
+          name: "platform"
+          widget: "string"
+
+      - label: "URL live"
+        name: "live_url"
+        widget: "string"
+        required: false
+
+      - label: "URL GitHub"
+        name: "github_url"
+        widget: "string"
+        required: false
+
+      - label: "URL Docs"
+        name: "docs_url"
+        widget: "string"
+        required: false
+
+      - label: "Website URL"
+        name: "website_url"
+        widget: "string"
+        required: false
+
+      - label: "Icona"
+        name: "icon"
+        widget: "image"
+        required: false
+        choose_url: false
+        media_library:
+          config:
+            multiple: false
+
+      - label: "Immagine cover"
+        name: "cover_image"
+        widget: "image"
+        required: false
+        choose_url: false
+        media_library:
+          config:
+            multiple: false
+
+      - label: "In evidenza"
+        name: "featured"
+        widget: "boolean"
+        default: false
+        required: false
+
+      - label: "Bozza"
+        name: "draft"
+        widget: "boolean"
+        default: false
+        required: false
+
+      - label: "Privato"
+        name: "private"
+        widget: "boolean"
+        default: false
+        required: false
+
+      - label: "Client work"
+        name: "client_work"
+        widget: "boolean"
+        default: false
+        required: false
+
+      - label: "Open source"
+        name: "open_source"
+        widget: "boolean"
+        default: false
+        required: false
+
+      - label: "Ruolo"
+        name: "role"
+        widget: "string"
+        required: false
+
+      - label: "SEO title"
+        name: "seo_title"
+        widget: "string"
+        required: false
+
+      - label: "SEO description"
+        name: "seo_description"
+        widget: "text"
+        required: false
+
+      - label: "Contenuto"
+        name: "body"
+        widget: "markdown"
+        modes: ["raw", "rich_text"]
+        editor_components: ["image", "code-block"]
