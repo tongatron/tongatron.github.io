@@ -2,3 +2,16 @@ markdown: kramdown
 kramdown:
   auto_ids: true
   input: GFM
+
+collections:
+  projects:
+    output: true
+    permalink: /work/:name/
+
+defaults:
+  - scope:
+      path: ""
+      type: projects
+    values:
+      layout: project
+      lang: it

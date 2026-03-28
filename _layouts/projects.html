@@ -1,0 +1,191 @@
+---
+layout: default
+---
+{% assign visible_projects = site.projects | where_exp: "project", "project.draft != true and project.private != true" | sort: "title" | sort: "published_at" | sort: "updated_at" %}
+{% assign featured_projects = visible_projects | where: "featured", true %}
+{% assign archive_projects = visible_projects | where_exp: "project", "project.featured != true" %}
+{% assign category_tokens = "" | split: "" %}
+{% assign tag_tokens = "" | split: "" %}
+{% assign stack_tokens = "" | split: "" %}
+{% for project in visible_projects %}
+  {% if project.category %}
+    {% assign category_tokens = category_tokens | push: project.category %}
+  {% endif %}
+  {% for project_tag in project.tags %}
+    {% assign tag_tokens = tag_tokens | push: project_tag %}
+  {% endfor %}
+  {% for technology in project.stack %}
+    {% assign stack_tokens = stack_tokens | push: technology %}
+  {% endfor %}
+{% endfor %}
+{% assign categories = category_tokens | uniq | sort_natural %}
+{% assign tags = tag_tokens | uniq | sort_natural %}
+{% assign technologies = stack_tokens | uniq | sort_natural %}
+<main>
+  <section class="container-shell hero border-0 mt-0 pt-4">
+    <p class="eyebrow">Tongatron / Projects</p>
+    <h1>{{ page.title | default: "Projects" }}</h1>
+    <p class="section-intro mt-3">{{ page.intro | default: "Archivio Jekyll dei progetti web, mobile, utility, simulatori e prototipi IoT sviluppati negli ultimi cicli di lavoro." }}</p>
+  </section>
+
+  {% if featured_projects.size > 0 %}
+  <section class="container-shell" id="featured-projects" data-featured-section>
+    <div class="section-heading">
+      <h2 class="section-title">In evidenza</h2>
+    </div>
+    <p class="section-intro">Selezione dei progetti principali, ordinata per aggiornamenti recenti.</p>
+    <div class="cards-grid" data-project-grid="featured">
+      {% for project in featured_projects reversed %}
+        {% include project-card.html project=project %}
+      {% endfor %}
+    </div>
+  </section>
+  {% endif %}
+
+  <section class="container-shell" id="all-projects">
+    <div class="section-heading">
+      <h2 class="section-title">Archivio completo</h2>
+    </div>
+    <p class="section-intro">Ogni scheda include date di pubblicazione e aggiornamento, link live e collegamenti opzionali a repository o documentazione.</p>
+    <div class="tag-filter-bar" aria-label="Filtri progetti">
+      <div class="tag-filter-group">
+        <p class="tag-filter-title">Categoria</p>
+        <div class="tag-filter-row" data-filter-group="category">
+          <button class="tag tag-filter is-active" type="button" data-filter-type="category" data-filter-value="all" aria-pressed="true">Tutte</button>
+          {% for category in categories %}
+          <button class="tag tag-filter" type="button" data-filter-type="category" data-filter-value="{{ category | downcase }}" aria-pressed="false">{{ category }}</button>
+          {% endfor %}
+        </div>
+      </div>
+      <div class="tag-filter-group">
+        <p class="tag-filter-title">Tag</p>
+        <div class="tag-filter-row" data-filter-group="tag">
+          <button class="tag tag-filter is-active" type="button" data-filter-type="tag" data-filter-value="all" aria-pressed="true">Tutti</button>
+          {% for tag in tags %}
+          <button class="tag tag-filter" type="button" data-filter-type="tag" data-filter-value="{{ tag | downcase }}" aria-pressed="false">{{ tag }}</button>
+          {% endfor %}
+        </div>
+      </div>
+      <div class="tag-filter-group">
+        <p class="tag-filter-title">Tecnologie</p>
+        <div class="tag-filter-row" data-filter-group="stack">
+          <button class="tag tag-filter is-active" type="button" data-filter-type="stack" data-filter-value="all" aria-pressed="true">Tutte</button>
+          {% for technology in technologies %}
+          <button class="tag tag-filter" type="button" data-filter-type="stack" data-filter-value="{{ technology | downcase }}" aria-pressed="false">{{ technology }}</button>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+    <div class="projects-results-meta">
+      <span data-project-count>{{ visible_projects.size }} progetti visibili</span>
+      <button class="tag tag-filter" type="button" data-reset-filters>Reset filtri</button>
+    </div>
+    <div class="cards-grid" data-project-grid="archive">
+      {% for project in archive_projects reversed %}
+        {% include project-card.html project=project %}
+      {% endfor %}
+    </div>
+    <div class="projects-empty" data-project-empty>Nessun progetto corrisponde ai filtri correnti.</div>
+  </section>
+</main>
+<script>
+  (() => {
+    const filterButtons = Array.from(document.querySelectorAll(".tag-filter[data-filter-type]"));
+    const projectCards = Array.from(document.querySelectorAll(".project-card[data-category]"));
+    const countNode = document.querySelector("[data-project-count]");
+    const emptyNode = document.querySelector("[data-project-empty]");
+    const featuredSection = document.querySelector("[data-featured-section]");
+    const resetButton = document.querySelector("[data-reset-filters]");
+
+    if (!filterButtons.length || !projectCards.length) return;
+
+    const state = {
+      category: "all",
+      tag: "all",
+      stack: "all"
+    };
+
+    const getTokens = (value) => value ? value.split("|").filter(Boolean) : [];
+
+    const syncButtons = () => {
+      filterButtons.forEach((button) => {
+        const type = button.dataset.filterType;
+        const isActive = state[type] === button.dataset.filterValue;
+        button.classList.toggle("is-active", isActive);
+        button.setAttribute("aria-pressed", isActive ? "true" : "false");
+      });
+    };
+
+    const applyFilters = () => {
+      let visibleCount = 0;
+      const hasActiveFilters = state.category !== "all" || state.tag !== "all" || state.stack !== "all";
+
+      projectCards.forEach((card) => {
+        const matchesCategory = state.category === "all" || card.dataset.category === state.category;
+        const matchesTag = state.tag === "all" || getTokens(card.dataset.tags).includes(state.tag);
+        const matchesStack = state.stack === "all" || getTokens(card.dataset.stack).includes(state.stack);
+        const isVisible = matchesCategory && matchesTag && matchesStack;
+
+        card.classList.toggle("is-hidden", !isVisible);
+        if (isVisible) visibleCount += 1;
+      });
+
+      if (countNode) {
+        countNode.textContent = visibleCount === 1 ? "1 progetto visibile" : `${visibleCount} progetti visibili`;
+      }
+
+      if (emptyNode) {
+        emptyNode.style.display = visibleCount === 0 ? "block" : "none";
+      }
+
+      if (featuredSection) {
+        featuredSection.style.display = hasActiveFilters ? "none" : "";
+      }
+
+      filterButtons.forEach((button) => {
+        const type = button.dataset.filterType;
+        const value = button.dataset.filterValue;
+
+        if (value === "all") {
+          button.classList.remove("is-dimmed");
+          return;
+        }
+
+        const hasMatch = projectCards.some((card) => {
+          const matchesCurrentCategory = type === "category" ? true : state.category === "all" || card.dataset.category === state.category;
+          const matchesCurrentTag = type === "tag" ? true : state.tag === "all" || getTokens(card.dataset.tags).includes(state.tag);
+          const matchesCurrentStack = type === "stack" ? true : state.stack === "all" || getTokens(card.dataset.stack).includes(state.stack);
+
+          if (!(matchesCurrentCategory && matchesCurrentTag && matchesCurrentStack)) return false;
+
+          if (type === "category") return card.dataset.category === value;
+          if (type === "tag") return getTokens(card.dataset.tags).includes(value);
+          return getTokens(card.dataset.stack).includes(value);
+        });
+
+        button.classList.toggle("is-dimmed", !hasMatch);
+      });
+    };
+
+    filterButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        state[button.dataset.filterType] = button.dataset.filterValue;
+        syncButtons();
+        applyFilters();
+      });
+    });
+
+    if (resetButton) {
+      resetButton.addEventListener("click", () => {
+        state.category = "all";
+        state.tag = "all";
+        state.stack = "all";
+        syncButtons();
+        applyFilters();
+      });
+    }
+
+    syncButtons();
+    applyFilters();
+  })();
+</script>

@@ -1,0 +1,71 @@
+---
+layout: default
+---
+<main>
+  <section class="container-shell hero border-0 mt-0 pt-4">
+    <p class="eyebrow">Tongatron / Work</p>
+    <h1>{{ page.title }}</h1>
+    {% if page.excerpt %}
+    <p class="section-intro mt-3">{{ page.excerpt }}</p>
+    {% endif %}
+  </section>
+
+  <section class="container-shell">
+    <div class="project-panel">
+      <div class="project-hero">
+        {% if page.icon %}
+        <img src="{{ page.icon | relative_url }}" alt="Icona {{ page.title }}" class="project-icon-large">
+        {% endif %}
+        <div>
+          <div class="meta-tags">
+            {% if page.status %}<span class="tag">{{ page.status }}</span>{% endif %}
+            {% if page.category %}<span class="tag">{{ page.category }}</span>{% endif %}
+            {% for tag in page.tags limit: 4 %}<span class="tag">{{ tag }}</span>{% endfor %}
+          </div>
+
+          <ul class="meta-list">
+            {% if page.published_at %}
+            <li>
+              <strong>Pubblicato</strong>
+              <span>{{ page.published_at | date: "%d/%m/%Y" }}</span>
+            </li>
+            {% endif %}
+            {% if page.updated_at %}
+            <li>
+              <strong>Aggiornato</strong>
+              <span>{{ page.updated_at | date: "%d/%m/%Y" }}</span>
+            </li>
+            {% endif %}
+            {% if page.role %}
+            <li>
+              <strong>Ruolo</strong>
+              <span>{{ page.role }}</span>
+            </li>
+            {% endif %}
+            {% if page.platforms %}
+            <li>
+              <strong>Piattaforme</strong>
+              <span>{{ page.platforms | join: ", " }}</span>
+            </li>
+            {% endif %}
+          </ul>
+
+          <div class="button-row">
+            {% if page.live_url %}<a href="{{ page.live_url | relative_url }}" target="_blank" rel="noopener">Apri progetto</a>{% endif %}
+            {% if page.github_url %}<a href="{{ page.github_url }}" target="_blank" rel="noopener">GitHub</a>{% endif %}
+            {% if page.docs_url %}<a href="{{ page.docs_url }}" target="_blank" rel="noopener">Docs</a>{% endif %}
+            {% if page.website_url %}<a href="{{ page.website_url }}" target="_blank" rel="noopener">Sito</a>{% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="container-shell">
+    <div class="project-content-panel">
+      <div class="project-content">
+        {{ content }}
+      </div>
+    </div>
+  </section>
+</main>
