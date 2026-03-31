@@ -1,10 +1,9 @@
 ---
-title: "Robottino"
+title: Robottino
 slug: robottino
 published_at: 2026-03-01
-updated_at: 2026-03-20
+updated_at: 2026-03-30
 status: active
-excerpt: "Robot educativo STEM open source basato su Arduino, con sensori, luci RGB, display e testa rotante programmabile."
 category: iot
 tags:
   - stem
@@ -17,15 +16,18 @@ stack:
 platforms:
   - web
   - hardware
-live_url: /projects/robottino/robottino-site/index.html
-icon: /img/robottino.jpg
-cover_image: /img/robottino.jpg
+live_url: "/projects/robottino/robottino-site/index.html"
+icon: "/img/robottino.jpg"
+cover_image: "/img/robottino.jpg"
 featured: true
 draft: false
 private: false
-role: "Ideazione, prototipazione e documentazione"
-seo_title: "Robottino | Tongatron"
-seo_description: "Robot educativo open source basato su Arduino con sensori e componenti programmabili."
+client_work: false
+open_source: false
+role: Ideazione, prototipazione e documentazione
+seo_title: Robottino | Tongatron
+seo_description: Robot educativo open source basato su Arduino con sensori e componenti programmabili.
+excerpt: Robot educativo STEM open source basato su Arduino, con sensori, luci RGB, display e testa rotante programmabile.
 ---
 ## Overview
 

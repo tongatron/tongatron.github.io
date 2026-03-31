@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <title>Animation Lab</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=IBM+Plex+Mono:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="stage">
+      <div class="glow glow--amber" aria-hidden="true"></div>
+      <div class="glow glow--cyan" aria-hidden="true"></div>
+
+      <aside class="control-stack">
+        <nav class="anim-menu" aria-label="Selettore animazioni">
+          <span class="menu__label">Animation Lab</span>
+          <button
+            class="menu__button is-active"
+            type="button"
+            data-animation-target="letters"
+          >
+            Parete tipografica
+          </button>
+          <button
+            class="menu__button"
+            type="button"
+            data-animation-target="ascii"
+            data-ascii-mode="bloom"
+          >
+            ASCII condensa
+          </button>
+          <button
+            class="menu__button"
+            type="button"
+            data-animation-target="ascii"
+            data-ascii-mode="scan"
+          >
+            ASCII scansione
+          </button>
+          <button
+            class="menu__button"
+            type="button"
+            data-animation-target="ascii"
+            data-ascii-mode="cascade"
+          >
+            ASCII cascata
+          </button>
+          <button
+            class="menu__button"
+            type="button"
+            data-animation-target="ascii"
+            data-ascii-mode="none"
+          >
+            ASCII statica
+          </button>
+
+          <div class="menu__actions" aria-label="Azioni interfaccia">
+            <button
+              class="console__button menu__action"
+              id="stopAnimation"
+              type="button"
+            >
+              Stop
+            </button>
+            <button
+              class="console__button menu__action"
+              id="closePanel"
+              type="button"
+            >
+              Chiudi pannello
+            </button>
+          </div>
+        </nav>
+
+        <aside class="console is-collapsed" id="consolePanel">
+          <button
+            class="console__toggle"
+            id="consoleToggle"
+            type="button"
+            aria-expanded="false"
+            aria-controls="consoleBody"
+          >
+            CONSOLE
+          </button>
+
+          <div class="console__body" id="consoleBody">
+            <section
+              class="console__panel"
+              id="lettersConsole"
+              data-console-panel="letters"
+            >
+              <label class="console__label" for="lettersPhraseInput">Frasi</label>
+              <textarea
+                id="lettersPhraseInput"
+                class="console__textarea"
+                spellcheck="false"
+                placeholder="una frase per riga"
+              ></textarea>
+
+              <div class="console__group">
+                <label class="console__label" for="lettersExposureTime">
+                  Esposizione
+                </label>
+                <div class="console__range">
+                  <input
+                    id="lettersExposureTime"
+                    class="console__range-input"
+                    type="range"
+                    min="800"
+                    max="8000"
+                    step="100"
+                  />
+                  <span class="console__value" id="lettersExposureValue"></span>
+                </div>
+              </div>
+
+              <div class="console__options">
+                <label class="console__check">
+                  <input id="lettersToggleDrop" type="checkbox" />
+                  <span>Caduta tessere</span>
+                </label>
+                <label class="console__check">
+                  <input id="lettersToggleScramble" type="checkbox" />
+                  <span>Scramble</span>
+                </label>
+                <label class="console__check">
+                  <input id="lettersToggleHighlight" type="checkbox" />
+                  <span>Glow frasi</span>
+                </label>
+              </div>
+
+              <div class="console__actions">
+                <button
+                  class="console__button"
+                  id="lettersApplyPhrases"
+                  type="button"
+                >
+                  Applica
+                </button>
+                <button
+                  class="console__button"
+                  id="lettersResetPhrases"
+                  type="button"
+                >
+                  Reset
+                </button>
+              </div>
+
+              <div
+                class="console__status"
+                id="lettersStatus"
+                aria-live="polite"
+              ></div>
+              <div class="console__message" id="lettersMessage" hidden></div>
+            </section>
+
+            <section
+              class="console__panel is-hidden"
+              id="asciiConsole"
+              data-console-panel="ascii"
+            >
+              <div class="console__group">
+                <span class="console__label">Sorgenti ASCII</span>
+                <div class="console__actions">
+                  <label class="console__button console__upload" for="asciiImageUpload">
+                    Carica immagini
+                  </label>
+                  <input
+                    id="asciiImageUpload"
+                    class="console__file"
+                    type="file"
+                    accept="image/*"
+                    multiple
+                  />
+                  <button
+                    class="console__button"
+                    id="asciiToggleMotion"
+                    type="button"
+                  >
+                    Pausa
+                  </button>
+                  <button
+                    class="console__button"
+                    id="asciiNextSource"
+                    type="button"
+                  >
+                    Prossima
+                  </button>
+                  <button
+                    class="console__button"
+                    id="asciiResetImages"
+                    type="button"
+                  >
+                    Solo campioni
+                  </button>
+                </div>
+              </div>
+
+              <div class="console__triple">
+                <label class="console__range-card" for="asciiColumnsRange">
+                  <span class="console__label">Dettaglio</span>
+                  <span class="console__value" id="asciiColumnsValue"></span>
+                  <input
+                    id="asciiColumnsRange"
+                    class="console__range-input"
+                    type="range"
+                    min="54"
+                    max="140"
+                    step="2"
+                    value="92"
+                  />
+                </label>
+
+                <label class="console__range-card" for="asciiSpeedRange">
+                  <span class="console__label">Tempo</span>
+                  <span class="console__value" id="asciiSpeedValue"></span>
+                  <input
+                    id="asciiSpeedRange"
+                    class="console__range-input"
+                    type="range"
+                    min="1800"
+                    max="5600"
+                    step="100"
+                    value="3400"
+                  />
+                </label>
+
+                <label class="console__range-card" for="asciiContrastRange">
+                  <span class="console__label">Contrasto</span>
+                  <span class="console__value" id="asciiContrastValue"></span>
+                  <input
+                    id="asciiContrastRange"
+                    class="console__range-input"
+                    type="range"
+                    min="80"
+                    max="180"
+                    step="1"
+                    value="118"
+                  />
+                </label>
+              </div>
+
+              <label class="console__label" for="asciiPhraseInput">Frasi ASCII</label>
+              <textarea
+                id="asciiPhraseInput"
+                class="console__textarea console__textarea--small"
+                spellcheck="false"
+                placeholder="una frase per riga"
+              ></textarea>
+
+              <div class="console__actions">
+                <button
+                  class="console__button"
+                  id="asciiApplyPhrases"
+                  type="button"
+                >
+                  Aggiorna frasi
+                </button>
+                <button
+                  class="console__button"
+                  id="asciiClearPhrases"
+                  type="button"
+                >
+                  Rimuovi frasi
+                </button>
+              </div>
+
+              <div class="console__status" id="asciiStatus" aria-live="polite"></div>
+              <div class="console__message" id="asciiMessage" hidden></div>
+            </section>
+          </div>
+        </aside>
+      </aside>
+
+      <section class="scene scene--active" id="lettersScene">
+        <div
+          id="wall"
+          class="wall"
+          aria-label="Parete fitta di tessere animate"
+        ></div>
+      </section>
+
+      <section class="scene scene--hidden" id="asciiScene">
+        <div
+          id="asciiStage"
+          class="ascii-stage"
+          aria-label="Visualizzatore ASCII art"
+        >
+          <pre id="asciiScreen" aria-live="polite"></pre>
+        </div>
+      </section>
+    </main>
+
+    <script src="./letter-wall.js"></script>
+    <script src="./ascii-lab.js"></script>
+    <script src="./script.js"></script>
+  </body>
+</html>

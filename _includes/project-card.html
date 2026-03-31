@@ -23,8 +23,8 @@
   {% endif %}
   <p class="project-meta">Pubblicato {{ project.published_at | date: "%d/%m/%Y" }}{% if project.updated_at %} · Aggiornato {{ project.updated_at | date: "%d/%m/%Y" }}{% endif %}</p>
   <div class="button-row">
-    {% if project.live_url %}<a href="{{ project.live_url | relative_url }}" target="_blank" rel="noopener">Apri</a>{% endif %}
-    {% if project.github_url %}<a href="{{ project.github_url }}" target="_blank" rel="noopener">GitHub</a>{% endif %}
-    {% if project.url %}<a href="{{ project.url | relative_url }}">Scheda</a>{% endif %}
+    {% if project.live_url %}<a href="{{ project.live_url | relative_url }}" target="_blank" rel="noopener" class="project-link-arrow">Apri <i class="bi bi-box-arrow-up-right" aria-hidden="true"></i></a>{% endif %}
+    {% if project.github_url %}<a href="{{ project.github_url }}" target="_blank" rel="noopener"><i class="bi bi-github" aria-hidden="true"></i><span>GitHub</span></a>{% endif %}
+    {% if project.url %}<a href="{{ project.url | relative_url }}" class="project-link-arrow project-link-square">Scheda</a>{% endif %}
   </div>
 </article>

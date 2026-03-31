@@ -1,10 +1,9 @@
 ---
-title: "Rumore Bianco"
+title: Rumore Bianco
 slug: rumorebianco
 published_at: 2026-03-01
-updated_at: 2026-03-20
+updated_at: 2026-03-30
 status: active
-excerpt: "Generatore audio con parametri regolabili in tempo reale come volume, filtro e controlli sonori."
 category: utility
 tags:
   - android-pwa
@@ -17,15 +16,18 @@ stack:
 platforms:
   - web
   - mobile
-live_url: /projects/rumorebianco/index.html
-icon: /projects/rumorebianco/icons/icon-192.svg
-cover_image: /img/robottino.jpg
+live_url: "/projects/rumorebianco/index.html"
+icon: "/projects/rumorebianco/icons/icon-192.svg"
+cover_image: "/img/robottino.jpg"
 featured: false
 draft: false
 private: false
-role: "UI audio e sviluppo frontend"
-seo_title: "Rumore Bianco | Tongatron"
-seo_description: "Generatore di rumore bianco via browser con controlli audio in tempo reale."
+client_work: false
+open_source: false
+role: UI audio e sviluppo frontend
+seo_title: Rumore Bianco | Tongatron
+seo_description: Generatore di rumore bianco via browser con controlli audio in tempo reale.
+excerpt: Generatore audio con parametri regolabili in tempo reale come volume, filtro e controlli sonori.
 ---
 ## Overview
 

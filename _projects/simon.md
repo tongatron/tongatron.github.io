@@ -1,10 +1,9 @@
 ---
-title: "Simon Simulator"
+title: Simon Simulator
 slug: simon
 published_at: 2026-03-01
-updated_at: 2026-03-20
+updated_at: 2026-03-30
 status: active
-excerpt: "Versione web del gioco Simon con sequenze colore, feedback audiovisivo e modalita strict."
 category: game
 tags:
   - android-pwa
@@ -17,15 +16,18 @@ stack:
 platforms:
   - web
   - mobile
-live_url: /projects/simon/index.html
-icon: /projects/simon/icons/icon-192.png
-cover_image: /img/robottino.jpg
+live_url: "/projects/simon/index.html"
+icon: "/projects/simon/icons/icon-192.png"
+cover_image: "/img/robottino.jpg"
 featured: true
 draft: false
 private: false
-role: "UI, logica di gioco e sviluppo frontend"
-seo_title: "Simon Simulator | Tongatron"
-seo_description: "Gioco Simon per browser con sequenze colore e modalita strict."
+client_work: false
+open_source: false
+role: UI, logica di gioco e sviluppo frontend
+seo_title: Simon Simulator | Tongatron
+seo_description: Gioco Simon per browser con sequenze colore e modalita strict.
+excerpt: Versione web del gioco Simon con sequenze colore, feedback audiovisivo e modalita strict.
 ---
 ## Overview
 

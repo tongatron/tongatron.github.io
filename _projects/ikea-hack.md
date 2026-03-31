@@ -1,10 +1,9 @@
 ---
-title: "IKEA Hack Nordli"
+title: IKEA Hack Nordli
 slug: ikea-hack
 published_at: 2017-03-05
-updated_at: 2026-03-20
+updated_at: 2026-03-30
 status: archived
-excerpt: "Personalizzazione della cassettiera Nordli con tavolino estraibile realizzato tramite pannello tagliato a laser."
 category: fabrication
 tags:
   - fablab
@@ -15,15 +14,18 @@ stack:
   - Laser cutting
 platforms:
   - physical
-live_url: /projects/IKEA-hack/index.html
-icon: /projects/IKEA-hack/ikea.jpg
-cover_image: /projects/IKEA-hack/ikea.jpg
+live_url: "/projects/IKEA-hack/index.html"
+icon: "/projects/IKEA-hack/ikea.jpg"
+cover_image: "/projects/IKEA-hack/ikea.jpg"
 featured: false
 draft: false
 private: false
-role: "Progettazione e fabbricazione digitale"
-seo_title: "IKEA Hack Nordli | Tongatron"
-seo_description: "Progetto FabLab di personalizzazione Nordli con tavolino estraibile tagliato a laser."
+client_work: false
+open_source: false
+role: Progettazione e fabbricazione digitale
+seo_title: IKEA Hack Nordli | Tongatron
+seo_description: Progetto FabLab di personalizzazione Nordli con tavolino estraibile tagliato a laser.
+excerpt: Personalizzazione della cassettiera Nordli con tavolino estraibile realizzato tramite pannello tagliato a laser.
 ---
 ## Overview
 

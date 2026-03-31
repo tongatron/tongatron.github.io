@@ -1,10 +1,9 @@
 ---
-title: "Selfomatic"
+title: Selfomatic
 slug: selfomatic
 published_at: 2026-03-01
-updated_at: 2026-03-20
+updated_at: 2026-03-30
 status: active
-excerpt: "Social camera per eventi con scatto automatico e pubblicazione in tempo reale, pensata per attivazioni e comunicazione live."
 category: iot
 tags:
   - events
@@ -17,15 +16,18 @@ stack:
 platforms:
   - web
   - installation
-live_url: /projects/selfomatic/index.html
-icon: /img/contact.jpg
-cover_image: /img/contact.jpg
+live_url: "/projects/selfomatic/index.html"
+icon: "/img/contact.jpg"
+cover_image: "/img/contact.jpg"
 featured: false
 draft: false
 private: false
-role: "Concept, esperienza utente e integrazione sistema"
-seo_title: "Selfomatic | Tongatron"
-seo_description: "Social camera per eventi con scatto automatico e pubblicazione in tempo reale."
+client_work: false
+open_source: false
+role: Concept, esperienza utente e integrazione sistema
+seo_title: Selfomatic | Tongatron
+seo_description: Social camera per eventi con scatto automatico e pubblicazione in tempo reale.
+excerpt: Social camera per eventi con scatto automatico e pubblicazione in tempo reale, pensata per attivazioni e comunicazione live.
 ---
 ## Overview
 

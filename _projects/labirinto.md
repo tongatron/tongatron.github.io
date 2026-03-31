@@ -1,10 +1,9 @@
 ---
-title: "Maze Game"
+title: Maze Game
 slug: labirinto
 published_at: 2026-03-01
-updated_at: 2026-03-20
+updated_at: 2026-03-30
 status: active
-excerpt: "Gioco del labirinto con livelli easy, medium e hard, controlli tastiera e touch."
 category: game
 tags:
   - android-pwa
@@ -17,15 +16,18 @@ stack:
 platforms:
   - web
   - mobile
-live_url: /projects/labirinto/index.html
-icon: /projects/labirinto/icons/icon-192.svg
-cover_image: /img/robottino.jpg
+live_url: "/projects/labirinto/index.html"
+icon: "/projects/labirinto/icons/icon-192.svg"
+cover_image: "/img/robottino.jpg"
 featured: true
 draft: false
 private: false
-role: "Game design e sviluppo frontend"
-seo_title: "Maze Game | Tongatron"
-seo_description: "Gioco del labirinto per browser con livelli di difficolta e controlli touch."
+client_work: false
+open_source: false
+role: Game design e sviluppo frontend
+seo_title: Maze Game | Tongatron
+seo_description: Gioco del labirinto per browser con livelli di difficolta e controlli touch.
+excerpt: Gioco del labirinto con livelli easy, medium e hard, controlli tastiera e touch.
 ---
 ## Overview
 

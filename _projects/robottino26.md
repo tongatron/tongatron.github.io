@@ -1,10 +1,9 @@
 ---
-title: "Robottino 26"
+title: Robottino 26
 slug: robottino26
 published_at: 2026-03-01
-updated_at: 2026-03-20
+updated_at: 2026-03-30
 status: active
-excerpt: "Landing page del progetto con overview, documentazione componenti e simulatore web del piccolo robot con testa rotante."
 category: simulator
 tags:
   - stem
@@ -16,15 +15,18 @@ stack:
   - JavaScript
 platforms:
   - web
-live_url: /projects/robottino26/index.html
-icon: /img/robottino.jpg
-cover_image: /img/robottino.jpg
+live_url: "/projects/robottino26/index.html"
+icon: "/img/robottino.jpg"
+cover_image: "/img/robottino.jpg"
 featured: false
 draft: false
 private: false
-role: "Concept, documentazione e simulazione web"
-seo_title: "Robottino 26 | Tongatron"
-seo_description: "Pagina progetto e simulatore web del robot educativo Robottino 26."
+client_work: false
+open_source: false
+role: Concept, documentazione e simulazione web
+seo_title: Robottino 26 | Tongatron
+seo_description: Pagina progetto e simulatore web del robot educativo Robottino 26.
+excerpt: Landing page del progetto con overview, documentazione componenti e simulatore web del piccolo robot con testa rotante.
 ---
 ## Overview
 

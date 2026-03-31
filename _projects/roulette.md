@@ -1,10 +1,9 @@
 ---
-title: "Roulette Simulator"
+title: Roulette Simulator
 slug: roulette
 published_at: 2026-03-01
-updated_at: 2026-03-20
+updated_at: 2026-03-30
 status: active
-excerpt: "Simulatore stile casino con ruota animata, puntate multiple, bilancio e storico spin."
 category: simulator
 tags:
   - android-pwa
@@ -17,15 +16,18 @@ stack:
 platforms:
   - web
   - mobile
-live_url: /projects/roulette/index.html
-icon: /projects/roulette/icons/icon-192.svg
-cover_image: /img/robottino.jpg
+live_url: "/projects/roulette/index.html"
+icon: "/projects/roulette/icons/icon-192.svg"
+cover_image: "/img/robottino.jpg"
 featured: false
 draft: false
 private: false
-role: "Game logic e sviluppo frontend"
-seo_title: "Roulette Simulator | Tongatron"
-seo_description: "Simulatore roulette per browser con puntate e storico delle giocate."
+client_work: false
+open_source: false
+role: Game logic e sviluppo frontend
+seo_title: Roulette Simulator | Tongatron
+seo_description: Simulatore roulette per browser con puntate e storico delle giocate.
+excerpt: Simulatore stile casino con ruota animata, puntate multiple, bilancio e storico spin.
 ---
 ## Overview
 

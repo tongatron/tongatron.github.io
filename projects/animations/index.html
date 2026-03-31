@@ -3,27 +3,27 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Tongatron | Soluzioni digitali e prototipi</title>
+  <title>Tongatron | Animations Test</title>
   <meta name="description" content="Tongatron: sviluppo di soluzioni digitali, prototipi e prodotti web per contesti reali.">
   <!-- SEO + Social -->
   <meta name="keywords" content="Tongatron, soluzioni digitali, sviluppo software, project management, fablab, prototipi IoT, web mobile">
   <meta name="robots" content="index, follow, max-image-preview:large">
   <meta name="author" content="Tongatron">
-  <link rel="canonical" href="https://tongatron.org/">
+  <link rel="canonical" href="https://tongatron.org/projects/animations/">
   <link rel="alternate" hreflang="it" href="https://tongatron.org/">
   <link rel="alternate" hreflang="en" href="https://tongatron.org/index-en.html">
   <link rel="alternate" hreflang="x-default" href="https://tongatron.org/">
   <meta property="og:locale" content="it_IT">
   <meta property="og:site_name" content="Tongatron">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Tongatron | Soluzioni digitali e prototipi">
-  <meta property="og:description" content="Sviluppo di soluzioni digitali, prototipi e prodotti web orientati al rilascio.">
-  <meta property="og:url" content="https://tongatron.org/">
+  <meta property="og:title" content="Tongatron | Animations Test">
+  <meta property="og:description" content="Sandbox per sperimentare animazioni e interazioni visive di Tongatron.">
+  <meta property="og:url" content="https://tongatron.org/projects/animations/">
   <meta property="og:image" content="https://tongatron.org/img/robottino.jpg">
   <meta property="og:image:alt" content="Tongatron preview image">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Tongatron | Soluzioni digitali e prototipi">
-  <meta name="twitter:description" content="Sviluppo di soluzioni digitali, prototipi e prodotti web orientati al rilascio.">
+  <meta name="twitter:title" content="Tongatron | Animations Test">
+  <meta name="twitter:description" content="Sandbox per sperimentare animazioni e interazioni visive di Tongatron.">
   <meta name="twitter:image" content="https://tongatron.org/img/robottino.jpg">
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
@@ -455,6 +455,20 @@
       }
     }
 
+    @keyframes fallingBlock {
+      0% {
+        transform: translate3d(var(--fall-x, 0px), -2rem, 0) rotate(var(--fall-rot-start, -6deg));
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+      }
+      100% {
+        transform: translate3d(calc(var(--fall-x, 0px) + var(--fall-drift, 0px)), 112vh, 0) rotate(var(--fall-rot-end, 14deg));
+        opacity: 0;
+      }
+    }
+
     .balloons-toast {
       position: fixed;
       top: 1rem;
@@ -479,6 +493,264 @@
     .balloons-toast.is-visible {
       opacity: 1;
       transform: translate(-50%, 0);
+    }
+
+    .animation-lab {
+      position: fixed;
+      top: 1.1rem;
+      right: 1.1rem;
+      z-index: 5;
+      width: min(18rem, calc(100vw - 2rem));
+    }
+
+    .animation-lab details {
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 1rem;
+      background: rgba(12, 12, 12, 0.92);
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.28);
+      overflow: hidden;
+      backdrop-filter: blur(8px);
+    }
+
+    .animation-lab summary {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      list-style: none;
+      cursor: pointer;
+      padding: 0.8rem 1rem;
+      font-size: 0.94rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text);
+    }
+
+    .animation-lab summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .animation-lab summary i {
+      font-size: 0.86rem;
+      transition: transform 0.22s ease;
+    }
+
+    .animation-lab details[open] summary i {
+      transform: rotate(180deg);
+    }
+
+    .animation-lab-body {
+      display: grid;
+      gap: 0.85rem;
+      padding: 0 1rem 1rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .animation-lab-option {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding-top: 0.9rem;
+      color: var(--text);
+    }
+
+    .animation-lab-option-label {
+      display: grid;
+      gap: 0.14rem;
+    }
+
+    .animation-lab-option-label strong {
+      font-size: 1rem;
+      font-weight: 700;
+      line-height: 1.05;
+    }
+
+    .animation-lab-option-label span {
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.2;
+    }
+
+    .animation-lab-active {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      padding-top: 0.2rem;
+    }
+
+    .animation-lab-chip {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.22rem 0.58rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 223, 255, 0.22);
+      background: rgba(148, 223, 255, 0.08);
+      color: var(--accent-soft);
+      font-size: 0.74rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      line-height: 1;
+    }
+
+    .animation-lab-switch {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      width: 3rem;
+      height: 1.8rem;
+      flex: 0 0 auto;
+    }
+
+    .animation-lab-switch input {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+      margin: 0;
+    }
+
+    .animation-lab-switch-track {
+      width: 100%;
+      height: 100%;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.14);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      transition: background 0.22s ease, border-color 0.22s ease;
+    }
+
+    .animation-lab-switch-thumb {
+      position: absolute;
+      top: 0.18rem;
+      left: 0.2rem;
+      width: 1.05rem;
+      height: 1.05rem;
+      border-radius: 50%;
+      background: #ffffff;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.26);
+      transition: transform 0.22s ease;
+      pointer-events: none;
+    }
+
+    .animation-lab-switch input:checked + .animation-lab-switch-track {
+      background: rgba(148, 223, 255, 0.18);
+      border-color: rgba(148, 223, 255, 0.38);
+    }
+
+    .animation-lab-switch input:checked ~ .animation-lab-switch-thumb {
+      transform: translateX(1.16rem);
+    }
+
+    body.balloons-disabled .balloons-layer,
+    body.balloons-disabled .balloons-dust,
+    body.balloons-disabled .balloons-toast {
+      opacity: 0 !important;
+      visibility: hidden !important;
+      pointer-events: none !important;
+    }
+
+    body.balloons-disabled .brand-balloon-trigger {
+      opacity: 0.74;
+    }
+
+    .screen-glitch-layer,
+    .glass-crack-layer,
+    .falling-layer {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 3;
+      overflow: hidden;
+    }
+
+    .screen-glitch-layer {
+      opacity: 0;
+      background:
+        repeating-linear-gradient(180deg, rgba(255, 255, 255, 0.04) 0 2px, transparent 2px 7px),
+        linear-gradient(90deg, transparent 0 12%, rgba(255, 255, 255, 0.14) 12% 17%, transparent 17% 52%, rgba(255, 211, 56, 0.12) 52% 58%, transparent 58% 100%);
+      mix-blend-mode: screen;
+      transition: opacity 0.08s linear;
+    }
+
+    body.screen-glitch-active .screen-glitch-layer {
+      opacity: 1;
+    }
+
+    body.screen-glitch-active main,
+    body.screen-glitch-active header {
+      transform: translateX(2px);
+      filter: saturate(1.14) contrast(1.04);
+    }
+
+    .glass-crack-layer {
+      opacity: 0;
+      transition: opacity 0.08s linear;
+    }
+
+    .glass-crack-layer::before,
+    .glass-crack-layer::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-repeat: no-repeat;
+      opacity: 0;
+    }
+
+    .glass-crack-layer::before {
+      background-image:
+        linear-gradient(67deg, transparent 0 46%, rgba(255,255,255,0.82) 46.5%, transparent 47.2%),
+        linear-gradient(112deg, transparent 0 49%, rgba(255,255,255,0.72) 49.4%, transparent 50.1%),
+        linear-gradient(152deg, transparent 0 48%, rgba(255,255,255,0.55) 48.4%, transparent 49.1%),
+        linear-gradient(31deg, transparent 0 49%, rgba(255,255,255,0.42) 49.4%, transparent 50%);
+      background-size: 50% 70%, 36% 44%, 38% 52%, 28% 38%;
+      background-position: 64% 18%, 58% 26%, 70% 28%, 61% 40%;
+    }
+
+    .glass-crack-layer::after {
+      background-image:
+        radial-gradient(circle at 63% 22%, rgba(255,255,255,0.42) 0 2px, transparent 3px),
+        radial-gradient(circle at 63% 22%, rgba(255,255,255,0.12) 0 24px, transparent 34px);
+      mix-blend-mode: screen;
+    }
+
+    body.glass-crack-active .glass-crack-layer {
+      opacity: 1;
+    }
+
+    body.glass-crack-active .glass-crack-layer::before,
+    body.glass-crack-active .glass-crack-layer::after {
+      opacity: 1;
+    }
+
+    .falling-block {
+      position: fixed;
+      top: -4rem;
+      left: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.45rem 0.75rem;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 0.7rem;
+      background: rgba(10, 10, 10, 0.94);
+      color: var(--text);
+      box-shadow: 0 14px 32px rgba(0, 0, 0, 0.28);
+      font-size: 0.98rem;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+      white-space: nowrap;
+      animation: fallingBlock var(--fall-duration, 1.5s) cubic-bezier(0.2, 0.7, 0.35, 1) forwards;
+    }
+
+    .swap-word {
+      display: inline-block;
+      transition: color 0.12s ease, transform 0.12s ease, opacity 0.12s ease;
+    }
+
+    .swap-word.is-mutating {
+      color: #fff0b3;
+      transform: translateY(-0.05em);
     }
 
     .header-topbar {
@@ -1093,6 +1365,12 @@
     }
 
     @media (max-width: 767.98px) {
+      .animation-lab {
+        top: 0.75rem;
+        right: 0.75rem;
+        width: min(15rem, calc(100vw - 1.5rem));
+      }
+
       body .container {
         --bs-gutter-x: 1.8rem;
       }
@@ -1138,6 +1416,75 @@
   <div class="balloons-dust" id="balloons-dust" aria-hidden="true"></div>
   <div class="balloons-layer" id="balloons-layer" aria-hidden="true"></div>
   <div class="balloons-toast" id="balloons-toast" role="status" aria-live="polite">Balloons are coming</div>
+  <div class="screen-glitch-layer" id="screen-glitch-layer" aria-hidden="true"></div>
+  <div class="glass-crack-layer" id="glass-crack-layer" aria-hidden="true"></div>
+  <div class="falling-layer" id="falling-layer" aria-hidden="true"></div>
+  <aside class="animation-lab" aria-label="Pannello test animazioni">
+    <details>
+      <summary>
+        <span>Animazioni</span>
+        <i class="bi bi-chevron-down" aria-hidden="true"></i>
+      </summary>
+      <div class="animation-lab-body">
+        <label class="animation-lab-option">
+          <span class="animation-lab-option-label">
+            <strong>Palloncini</strong>
+            <span>Attiva l'esplosione del logo e il layer di sfondo.</span>
+          </span>
+          <span class="animation-lab-switch">
+            <input type="checkbox" id="toggle-balloons" checked>
+            <span class="animation-lab-switch-track" aria-hidden="true"></span>
+            <span class="animation-lab-switch-thumb" aria-hidden="true"></span>
+          </span>
+        </label>
+        <label class="animation-lab-option">
+          <span class="animation-lab-option-label">
+            <strong>Glitch televisivo</strong>
+            <span>Disturbi rapidi sullo schermo a intervalli irregolari.</span>
+          </span>
+          <span class="animation-lab-switch">
+            <input type="checkbox" id="toggle-glitch">
+            <span class="animation-lab-switch-track" aria-hidden="true"></span>
+            <span class="animation-lab-switch-thumb" aria-hidden="true"></span>
+          </span>
+        </label>
+        <label class="animation-lab-option">
+          <span class="animation-lab-option-label">
+            <strong>Testo mutevole</strong>
+            <span>Parole che cambiano per un istante e poi si riallineano.</span>
+          </span>
+          <span class="animation-lab-switch">
+            <input type="checkbox" id="toggle-words">
+            <span class="animation-lab-switch-track" aria-hidden="true"></span>
+            <span class="animation-lab-switch-thumb" aria-hidden="true"></span>
+          </span>
+        </label>
+        <label class="animation-lab-option">
+          <span class="animation-lab-option-label">
+            <strong>Blocchi in caduta</strong>
+            <span>Parole e piccoli blocchi che attraversano lo schermo.</span>
+          </span>
+          <span class="animation-lab-switch">
+            <input type="checkbox" id="toggle-fall">
+            <span class="animation-lab-switch-track" aria-hidden="true"></span>
+            <span class="animation-lab-switch-thumb" aria-hidden="true"></span>
+          </span>
+        </label>
+        <label class="animation-lab-option">
+          <span class="animation-lab-option-label">
+            <strong>Vetro rotto</strong>
+            <span>Una crepa rapida come overlay al momento del trigger.</span>
+          </span>
+          <span class="animation-lab-switch">
+            <input type="checkbox" id="toggle-glass">
+            <span class="animation-lab-switch-track" aria-hidden="true"></span>
+            <span class="animation-lab-switch-thumb" aria-hidden="true"></span>
+          </span>
+        </label>
+        <div class="animation-lab-active" id="animation-lab-active"></div>
+      </div>
+    </details>
+  </aside>
   <header class="container py-4">
     <div class="pb-3 border-bottom header-topbar">
       <div class="d-flex align-items-center text-body-emphasis text-decoration-none brand-logo">
@@ -1155,8 +1502,8 @@
         <span class="fs-1 fw-semibold">tongatron</span>
       </div>
       <nav class="lang-switch" aria-label="Selettore lingua">
-        <a href="index.html" lang="it" hreflang="it" class="active" aria-current="page">ITA</a>
-        <a href="index-en.html" lang="en" hreflang="en">ENG</a>
+        <a href="/index.html" lang="it" hreflang="it" class="active" aria-current="page">ITA</a>
+        <a href="/index-en.html" lang="en" hreflang="en">ENG</a>
       </nav>
     </div>
   </header>
@@ -1166,33 +1513,33 @@
       <div class="variant-hero-wrap">
         <div class="row g-4 g-xl-5 align-items-start">
           <div class="col-12 col-xl-7">
-            <h1 class="variant-display variant-hero-title fw-bold">Soluzioni e prototipi digitali che arrivano a destinazione</h1>
-            <p class="variant-hero-copy mt-4 mb-0">
+            <h1 class="variant-display variant-hero-title fw-bold animation-copy-target">Soluzioni e prototipi digitali che arrivano a destinazione</h1>
+            <p class="variant-hero-copy mt-4 mb-0 animation-copy-target">
               Progetto, coordino e sviluppo soluzioni digitali per contesti reali: piattaforme web, applicazioni interattive, strumenti mobile-first, prototipi IoT e iniziative di innovazione orientate al rilascio.
             </p>
-            <p class="variant-hero-copy mt-4 mb-0">
+            <p class="variant-hero-copy mt-4 mb-0 animation-copy-target">
               Ho maturato esperienza anche in aziende e multinazionali di settori diversi, lavorando su stakeholder complessi, requisiti eterogenei e obiettivi operativi concreti. L'approccio integra project management, competenze tecniche e cultura maker per trasformare obiettivi chiari in prodotti utili, leggibili e sostenibili.
             </p>
           </div>
           <div class="col-12 col-xl-5">
             <aside class="variant-operating-shell">
               <div class="variant-display variant-mono variant-operating-label">Operating Model</div>
-              <h2 class="variant-display variant-operating-title fw-bold">Metodo, esecuzione, rilascio</h2>
+              <h2 class="variant-display variant-operating-title fw-bold animation-copy-target">Metodo, esecuzione, rilascio</h2>
               <span class="variant-mono variant-pill">active delivery</span>
 
               <div class="variant-operating-card">
                 <div class="variant-display variant-mono variant-operating-label mb-3">01 / Scope</div>
-                <p class="variant-operating-copy">Analisi del contesto, definizione del perimetro, priorita, roadmap e modello di lavoro coerente con il team.</p>
+                <p class="variant-operating-copy animation-copy-target">Analisi del contesto, definizione del perimetro, priorita, roadmap e modello di lavoro coerente con il team.</p>
               </div>
 
               <div class="variant-operating-card">
                 <div class="variant-display variant-mono variant-operating-label mb-3">02 / Build</div>
-                <p class="variant-operating-copy">Sviluppo software, interfacce, prototipi e strumenti digitali orientati all'uso reale e non solo alla demo.</p>
+                <p class="variant-operating-copy animation-copy-target">Sviluppo software, interfacce, prototipi e strumenti digitali orientati all'uso reale e non solo alla demo.</p>
               </div>
 
               <div class="variant-operating-card">
                 <div class="variant-display variant-mono variant-operating-label mb-3">03 / Release</div>
-                <p class="variant-operating-copy">Messa online, validazione, documentazione, formazione e passaggio di consegne quando serve autonomia operativa.</p>
+                <p class="variant-operating-copy animation-copy-target">Messa online, validazione, documentazione, formazione e passaggio di consegne quando serve autonomia operativa.</p>
               </div>
             </aside>
           </div>
@@ -1235,7 +1582,7 @@
       <div class="row g-3 align-items-start mb-4">
         <div class="col-12 col-lg-5">
           <div class="iot-summary">
-            <img src="img/fablogo-white.png" alt="Logo Fablab Torino" class="iot-logo-mark">
+            <img src="/img/fablogo-white.png" alt="Logo Fablab Torino" class="iot-logo-mark">
             <p class="iot-intro-copy">Progetti ideati e sviluppati<br>presso <a href="https://fablabtorino.org/">Fablab Torino</a></p>
           </div>
         </div>
@@ -1252,31 +1599,31 @@
       <div class="row row-cols-1 row-cols-md-3 g-4 iot-project-grid">
         <div class="col">
           <article class="card project-item h-100 border-0 shadow-sm">
-            <img src="img/robottino.jpg" class="card-img-top card-media" alt="Progetto Robottino">
+            <img src="/img/robottino.jpg" class="card-img-top card-media" alt="Progetto Robottino">
             <div class="card-body">
               <h3 class="h5 card-title">Robottino</h3>
               <p class="card-text">Robot educativo STEM open source. Basato su Arduino, integra display, sensori ambientali, buzzer, luci RGB, sensore ultrasonico e testa rotante programmabile.</p>
-              <a class="project-link-arrow" href="projects/robottino/robottino-site/index.html" target="_blank" rel="noopener">Vai al sito</a>
+              <a class="project-link-arrow" href="/projects/robottino/robottino-site/index.html" target="_blank" rel="noopener">Vai al sito</a>
             </div>
           </article>
         </div>
         <div class="col">
           <article class="card project-item h-100 border-0 shadow-sm">
-            <img src="img/contact.jpg" class="card-img-top card-media" alt="Progetto Self-O-Matic">
+            <img src="/img/contact.jpg" class="card-img-top card-media" alt="Progetto Self-O-Matic">
             <div class="card-body">
               <h3 class="h5 card-title">Selfomatic</h3>
               <p class="card-text">Social camera per eventi con scatto automatico e pubblicazione in tempo reale. Una soluzione efficace per attivazioni, fiere e comunicazione live.</p>
-              <a class="project-link-arrow" href="projects/selfomatic/index.html" target="_blank" rel="noopener">Vai al sito</a>
+              <a class="project-link-arrow" href="/projects/selfomatic/index.html" target="_blank" rel="noopener">Vai al sito</a>
             </div>
           </article>
         </div>
         <div class="col">
           <article class="card project-item h-100 border-0 shadow-sm">
-            <img src="projects/IKEA-hack/ikea.jpg" class="card-img-top card-media" alt="Progetto IKEA Hack Nordli">
+            <img src="/projects/IKEA-hack/ikea.jpg" class="card-img-top card-media" alt="Progetto IKEA Hack Nordli">
             <div class="card-body">
               <h3 class="h5 card-title">IKEA Hack Nordli</h3>
               <p class="card-text">Progetto FabLab: personalizzazione della cassettiera IKEA Nordli con tavolino estraibile realizzato tramite pannello tagliato a laser.</p>
-              <a class="project-link-arrow" href="projects/IKEA-hack/index.html" target="_blank" rel="noopener">Vai al sito</a>
+              <a class="project-link-arrow" href="/projects/IKEA-hack/index.html" target="_blank" rel="noopener">Vai al sito</a>
             </div>
           </article>
         </div>
@@ -1290,7 +1637,7 @@
         <div class="web-projects-cards">
           <article class="web-project-card">
             <div class="web-project-head">
-              <img src="projects/ryanair-search/assets/icon-192.png" alt="Icona Ryanair Search" class="web-project-icon">
+              <img src="/projects/ryanair-search/assets/icon-192.png" alt="Icona Ryanair Search" class="web-project-icon">
               <div class="web-project-tags">
                 <span class="web-project-tag">Utility</span>
                 <span class="web-project-tag">Travel</span>
@@ -1298,12 +1645,12 @@
             </div>
             <h4 class="h2 fw-bold">Ryanair Search</h4>
             <p>Ricerca voli Ryanair A/R con filtri su partenza, destinazione, budget, durata e link condivisibile dei risultati.</p>
-            <a class="web-project-open" href="projects/ryanair-search/index.html" target="_blank" rel="noopener">Apri</a>
+            <a class="web-project-open" href="/projects/ryanair-search/index.html" target="_blank" rel="noopener">Apri</a>
           </article>
 
           <article class="web-project-card">
             <div class="web-project-head">
-              <img src="projects/Forza4/assets/icons/icon.svg" alt="Icona Connect Four" class="web-project-icon">
+              <img src="/projects/Forza4/assets/icons/icon.svg" alt="Icona Connect Four" class="web-project-icon">
               <div class="web-project-tags">
                 <span class="web-project-tag">Games</span>
                 <span class="web-project-tag">Android PWA</span>
@@ -1311,12 +1658,12 @@
             </div>
             <h4 class="h2 fw-bold">Connect Four</h4>
             <p>Classico Forza 4 contro CPU con selezione difficolta e nuova partita rapida.</p>
-            <a class="web-project-open" href="projects/Forza4/index.html" target="_blank" rel="noopener">Apri</a>
+            <a class="web-project-open" href="/projects/Forza4/index.html" target="_blank" rel="noopener">Apri</a>
           </article>
 
           <article class="web-project-card">
             <div class="web-project-head">
-              <img src="projects/simon/icons/icon-192.png" alt="Icona Simon" class="web-project-icon">
+              <img src="/projects/simon/icons/icon-192.png" alt="Icona Simon" class="web-project-icon">
               <div class="web-project-tags">
                 <span class="web-project-tag">Games</span>
                 <span class="web-project-tag">Android PWA</span>
@@ -1324,12 +1671,12 @@
             </div>
             <h4 class="h2 fw-bold">Simon</h4>
             <p>Versione web del gioco Simon: ripeti la sequenza colori con modalita strict opzionale.</p>
-            <a class="web-project-open" href="projects/simon/index.html" target="_blank" rel="noopener">Apri</a>
+            <a class="web-project-open" href="/projects/simon/index.html" target="_blank" rel="noopener">Apri</a>
           </article>
 
           <article class="web-project-card">
             <div class="web-project-head">
-              <img src="projects/rumorebianco/icons/icon-192.svg" alt="Icona Rumore Bianco" class="web-project-icon">
+              <img src="/projects/rumorebianco/icons/icon-192.svg" alt="Icona Rumore Bianco" class="web-project-icon">
               <div class="web-project-tags">
                 <span class="web-project-tag">Utility</span>
                 <span class="web-project-tag">Music</span>
@@ -1338,11 +1685,11 @@
             </div>
             <h4 class="h2 fw-bold">Rumore Bianco</h4>
             <p>Generatore audio con parametri regolabili in tempo reale (volume, filtro e controlli sonori).</p>
-            <a class="web-project-open" href="projects/rumorebianco/index.html" target="_blank" rel="noopener">Apri</a>
+            <a class="web-project-open" href="/projects/rumorebianco/index.html" target="_blank" rel="noopener">Apri</a>
           </article>
         </div>
         <div class="mt-3 text-end">
-          <a class="btn btn-outline-primary" href="projects/index.html">altri progetti</a>
+          <a class="btn btn-outline-primary" href="/projects/index.html">altri progetti</a>
         </div>
       </div>
     </section>
@@ -1435,21 +1782,126 @@
   <script>
     (() => {
       const trigger = document.querySelector(".brand-balloon-trigger");
+      const toggleMap = {
+        balloons: document.getElementById("toggle-balloons"),
+        glitch: document.getElementById("toggle-glitch"),
+        words: document.getElementById("toggle-words"),
+        fall: document.getElementById("toggle-fall"),
+        glass: document.getElementById("toggle-glass")
+      };
+      const toggleLabels = {
+        balloons: "Palloncini",
+        glitch: "Glitch",
+        words: "Testo",
+        fall: "Caduta",
+        glass: "Vetro"
+      };
+      const activeFiltersEl = document.getElementById("animation-lab-active");
       const dustLayer = document.getElementById("balloons-dust");
       const layer = document.getElementById("balloons-layer");
       const toast = document.getElementById("balloons-toast");
-      if (!trigger || !dustLayer || !layer || !toast) return;
+      const fallingLayer = document.getElementById("falling-layer");
+      if (!trigger || !dustLayer || !layer || !toast || !fallingLayer) return;
 
       let isAnimating = false;
       let isStriped = false;
       let sceneStarted = false;
-      let spawnTimer = null;
-      let dustTimer = null;
-      let toastTimer = null;
+      let spawnTimer = 0;
+      let dustTimer = 0;
+      let toastTimer = 0;
+      let glitchTimer = 0;
+      let wordsTimer = 0;
+      let fallTimer = 0;
+      let glitchBurstTimer = 0;
+      let crackTimer = 0;
       const active = new Set();
       const activeDust = new Set();
+      const wordVariants = {
+        soluzioni: ["sistemi", "esperienze", "interfacce"],
+        prototipi: ["rilasci", "strumenti", "concept"],
+        digitali: ["software", "connesse", "operative"],
+        destinazione: ["release", "produzione", "delivery"],
+        progetto: ["imposto", "strutturo", "coordino"],
+        sviluppo: ["realizzo", "costruisco", "rilascio"],
+        metodo: ["processo", "struttura", "ritmo"],
+        esecuzione: ["delivery", "messa a terra", "sviluppo"],
+        rilascio: ["go-live", "handover", "validazione"],
+        contesto: ["scenario", "perimetro", "ecosistema"],
+        roadmap: ["sequenza", "traiettoria", "tabella"],
+        strumenti: ["moduli", "blocchi", "componenti"],
+        autonomia: ["continuita", "operativita", "tenuta"]
+      };
+      const fallbackVariants = ["signal", "runtime", "build", "scope", "deploy", "release"];
+      const fallingTokens = ["scope", "build", "release", "web", "mobile", "iot", "utility", "game", "prototype", "delivery"];
+      const swapWords = [];
+      const tokenStorageKey = "tongatron-animations-test-toggles";
 
       const randomBetween = (min, max) => Math.random() * (max - min) + min;
+      const randomItem = (items) => items[Math.floor(Math.random() * items.length)];
+      const effectEnabled = (name) => Boolean(toggleMap[name]?.checked);
+
+      const saveToggleState = () => {
+        const state = {};
+        Object.entries(toggleMap).forEach(([name, el]) => {
+          if (el) state[name] = el.checked;
+        });
+        localStorage.setItem(tokenStorageKey, JSON.stringify(state));
+      };
+
+      const restoreToggleState = () => {
+        try {
+          const saved = JSON.parse(localStorage.getItem(tokenStorageKey) || "{}");
+          Object.entries(toggleMap).forEach(([name, el]) => {
+            if (!el || typeof saved[name] !== "boolean") return;
+            el.checked = saved[name];
+          });
+        } catch (error) {
+          console.warn("Toggle state restore skipped", error);
+        }
+      };
+
+      const renderActiveFilters = () => {
+        if (!activeFiltersEl) return;
+        const activeFilters = Object.entries(toggleMap).filter(([, el]) => el?.checked);
+        activeFiltersEl.innerHTML = "";
+        activeFilters.forEach(([name]) => {
+          const chip = document.createElement("span");
+          chip.className = "animation-lab-chip";
+          chip.textContent = toggleLabels[name];
+          activeFiltersEl.appendChild(chip);
+        });
+      };
+
+      const normalizeToken = (value) =>
+        String(value || "")
+          .toLowerCase()
+          .replace(/[.,:;!?()]/g, "")
+          .trim();
+
+      const prepareSwapTargets = () => {
+        document.querySelectorAll(".animation-copy-target").forEach((element) => {
+          const text = element.textContent;
+          const parts = text.split(/(\s+)/);
+          element.innerHTML = "";
+          parts.forEach((part) => {
+            if (!part) return;
+            if (/^\s+$/.test(part)) {
+              element.appendChild(document.createTextNode(part));
+              return;
+            }
+            if (!/[A-Za-zÀ-ÿ]/.test(part)) {
+              element.appendChild(document.createTextNode(part));
+              return;
+            }
+            const span = document.createElement("span");
+            span.className = "swap-word";
+            span.dataset.original = part;
+            span.textContent = part;
+            swapWords.push(span);
+            element.appendChild(span);
+          });
+        });
+      };
 
       const removeBalloon = (balloon) => {
         active.delete(balloon);
@@ -1482,7 +1934,7 @@
 
       const scheduleDust = () => {
         if (!sceneStarted) return;
-        createDust();
+        if (effectEnabled("balloons")) createDust();
         dustTimer = window.setTimeout(scheduleDust, randomBetween(180, 620));
       };
 
@@ -1513,30 +1965,139 @@
 
       const scheduleSpawn = () => {
         if (!sceneStarted) return;
-        spawnBalloon();
+        if (effectEnabled("balloons")) spawnBalloon();
         spawnTimer = window.setTimeout(scheduleSpawn, randomBetween(700, 1800));
       };
 
-      const startBackgroundScene = () => {
+      const triggerGlitchBurst = () => {
+        if (!effectEnabled("glitch")) return;
+        document.body.classList.add("screen-glitch-active");
+        if (glitchBurstTimer) window.clearTimeout(glitchBurstTimer);
+        glitchBurstTimer = window.setTimeout(() => {
+          document.body.classList.remove("screen-glitch-active");
+        }, 150);
+      };
+
+      const scheduleGlitch = () => {
+        if (!sceneStarted) return;
+        if (effectEnabled("glitch")) triggerGlitchBurst();
+        glitchTimer = window.setTimeout(scheduleGlitch, randomBetween(3400, 7600));
+      };
+
+      const mutateWord = (wordEl) => {
+        if (!wordEl || wordEl.classList.contains("is-mutating")) return;
+        const original = wordEl.dataset.original || wordEl.textContent || "";
+        const normalized = normalizeToken(original);
+        const variants = wordVariants[normalized] || fallbackVariants;
+        const replacement = randomItem(variants);
+        wordEl.classList.add("is-mutating");
+        wordEl.textContent = replacement;
+        window.setTimeout(() => {
+          wordEl.textContent = original;
+          wordEl.classList.remove("is-mutating");
+        }, 760);
+      };
+
+      const triggerWordBurst = () => {
+        if (!effectEnabled("words") || !swapWords.length) return;
+        const shuffled = [...swapWords].sort(() => Math.random() - 0.5).slice(0, Math.min(4, swapWords.length));
+        shuffled.forEach((wordEl, index) => {
+          window.setTimeout(() => mutateWord(wordEl), index * 80);
+        });
+      };
+
+      const scheduleWords = () => {
+        if (!sceneStarted) return;
+        if (effectEnabled("words")) triggerWordBurst();
+        wordsTimer = window.setTimeout(scheduleWords, randomBetween(2800, 5400));
+      };
+
+      const spawnFallingBlock = (text) => {
+        const block = document.createElement("span");
+        block.className = "falling-block";
+        block.textContent = text;
+        block.style.left = `${randomBetween(6, 84)}vw`;
+        block.style.setProperty("--fall-x", `${randomBetween(-24, 24).toFixed(1)}px`);
+        block.style.setProperty("--fall-drift", `${randomBetween(-160, 160).toFixed(1)}px`);
+        block.style.setProperty("--fall-rot-start", `${randomBetween(-14, 14).toFixed(1)}deg`);
+        block.style.setProperty("--fall-rot-end", `${randomBetween(-34, 34).toFixed(1)}deg`);
+        block.style.setProperty("--fall-duration", `${randomBetween(1.2, 2.1).toFixed(2)}s`);
+        block.addEventListener("animationend", () => block.remove());
+        fallingLayer.appendChild(block);
+      };
+
+      const triggerFallBurst = () => {
+        if (!effectEnabled("fall")) return;
+        const count = 6;
+        for (let i = 0; i < count; i += 1) {
+          window.setTimeout(() => spawnFallingBlock(randomItem(fallingTokens)), i * 80);
+        }
+      };
+
+      const scheduleFalling = () => {
+        if (!sceneStarted) return;
+        if (effectEnabled("fall")) triggerFallBurst();
+        fallTimer = window.setTimeout(scheduleFalling, randomBetween(5200, 9200));
+      };
+
+      const triggerGlassCrack = () => {
+        if (!effectEnabled("glass")) return;
+        document.body.classList.add("glass-crack-active");
+        if (crackTimer) window.clearTimeout(crackTimer);
+        crackTimer = window.setTimeout(() => {
+          document.body.classList.remove("glass-crack-active");
+        }, 760);
+      };
+
+      const startAnimationScene = () => {
         if (sceneStarted) return;
         sceneStarted = true;
+        scheduleSpawn();
+        scheduleDust();
+        scheduleGlitch();
+        scheduleWords();
+        scheduleFalling();
+      };
+
+      const triggerEnabledEffects = () => {
+        if (effectEnabled("balloons")) {
+          toast.classList.add("is-visible");
+          if (toastTimer) window.clearTimeout(toastTimer);
+          toastTimer = window.setTimeout(() => {
+            toast.classList.remove("is-visible");
+          }, 4400);
+          for (let i = 0; i < 6; i += 1) {
+            window.setTimeout(spawnBalloon, i * 150);
+          }
+          for (let i = 0; i < 10; i += 1) {
+            window.setTimeout(createDust, i * 90);
+          }
+        }
+        triggerGlitchBurst();
+        triggerWordBurst();
+        triggerFallBurst();
+        triggerGlassCrack();
+      };
+
+      const setBalloonsEnabled = (enabled) => {
+        document.body.classList.toggle("balloons-disabled", !enabled);
+      };
+
+      const handleToggleChange = () => {
+        setBalloonsEnabled(effectEnabled("balloons"));
+        renderActiveFilters();
+        saveToggleState();
+      };
+
+      const runAnimation = () => {
+        const anyEffectEnabled = Object.keys(toggleMap).some((name) => effectEnabled(name));
+        if (!anyEffectEnabled) return;
+        if (isAnimating || isStriped) return;
         toast.classList.add("is-visible");
         if (toastTimer) window.clearTimeout(toastTimer);
         toastTimer = window.setTimeout(() => {
           toast.classList.remove("is-visible");
         }, 4400);
-        scheduleSpawn();
-        scheduleDust();
-        for (let i = 0; i < 6; i += 1) {
-          window.setTimeout(spawnBalloon, i * 150);
-        }
-        for (let i = 0; i < 10; i += 1) {
-          window.setTimeout(createDust, i * 90);
-        }
-      };
-
-      const runAnimation = () => {
-        if (isAnimating || isStriped) return;
         isAnimating = true;
         trigger.classList.add("is-popping");
 
@@ -1548,7 +2109,8 @@
           trigger.classList.add("is-striped");
           isStriped = true;
           isAnimating = false;
-          startBackgroundScene();
+          startAnimationScene();
+          triggerEnabledEffects();
         }, 300);
       };
 
@@ -1563,6 +2125,14 @@
         event.preventDefault();
         runAnimation();
       });
+
+      restoreToggleState();
+      prepareSwapTargets();
+      Object.values(toggleMap).forEach((toggle) => {
+        if (!toggle) return;
+        toggle.addEventListener("change", handleToggleChange);
+      });
+      handleToggleChange();
     })();
   </script>
 </body>

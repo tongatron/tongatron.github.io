@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 120" role="img" aria-labelledby="title desc">
+  <title id="title">Open Source Initiative</title>
+  <desc id="desc">Logo monocromatico bianco ispirato al simbolo Open Source Initiative.</desc>
+  <g fill="none" fill-rule="evenodd">
+    <g transform="translate(8 10)">
+      <circle cx="50" cy="50" r="40" stroke="#FFFFFF" stroke-width="12"/>
+      <path d="M50 16c11.046 0 20 8.954 20 20 0 8.674-5.521 16.06-13.24 18.82L84 94H65.5L42 59.5v-13c0-9.113 7.387-16.5 16.5-16.5H50Z" fill="#FFFFFF"/>
+      <circle cx="50" cy="36" r="7" fill="#050505"/>
+    </g>
+    <g fill="#FFFFFF" font-family="Titillium Web, Arial, sans-serif">
+      <text x="118" y="54" font-size="34" font-weight="700" letter-spacing="1.8">OPEN SOURCE</text>
+      <text x="118" y="88" font-size="34" font-weight="300" letter-spacing="1.8">INITIATIVE</text>
+    </g>
+  </g>
+</svg>
