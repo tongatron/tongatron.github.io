@@ -1,21 +1,16 @@
 ---
-title: ChatAnalysis
-slug: chatanalysis
-published_at: 2026-03-05
-updated_at: 2026-03-30
-status: active
-category: utility
-tags:
-  - ai
-  - analytics
-  - web
+title: "ChatAnalysis"
+slug: "chatanalysis"
+published_at: "anno 2026"
+status: "active"
+category: "utility"
 stack:
   - HTML
   - CSS
   - JavaScript
 platforms:
   - web
-live_url: "/projects/chatanalysis/index.html"
+project_url: "/projects/chatanalysis/index.html"
 icon: "/projects/chatanalysis/assets/icon.svg"
 cover_image: "/img/robottino.jpg"
 featured: true
@@ -23,17 +18,9 @@ draft: false
 private: false
 client_work: false
 open_source: false
-role: Analisi prodotto, UI e sviluppo frontend
-seo_title: ChatAnalysis | Tongatron
-seo_description: Analisi browser-based di chat esportate con metriche e statistiche.
-excerpt: Importa chat WhatsApp dal browser e genera metriche, statistiche partecipanti, parole frequenti e sentiment analysis base.
+role: "Analisi prodotto, UI e sviluppo frontend"
+seo_title: "ChatAnalysis | Tongatron"
+seo_description: "Tool browser-based per leggere esportazioni WhatsApp, ricavare metriche utili e visualizzare statistiche sintetiche senza passare da servizi esterni. Il progetto organizza partecipanti, frequenze lessicali e segnali di sentiment in un'interfaccia rapida da consultare, pensata per analisi personali, test di prodotto e confronti veloci tra conversazioni."
+excerpt: "Tool browser-based per leggere esportazioni WhatsApp, ricavare metriche utili e visualizzare statistiche sintetiche senza passare da servizi esterni. Il progetto organizza partecipanti, frequenze lessicali e segnali di sentiment in un'interfaccia rapida da consultare, pensata per analisi personali, test di prodotto e confronti veloci tra conversazioni."
 ---
-## Overview
-
-Tool orientato all'analisi locale di conversazioni esportate, senza dipendere da servizi esterni per il flusso principale.
-
-## Funzionalita principali
-
-- import di chat esportate
-- statistiche per partecipante
-- frequenze lessicali e analisi base
+Tool browser-based per leggere esportazioni WhatsApp, ricavare metriche utili e visualizzare statistiche sintetiche senza passare da servizi esterni. Il progetto organizza partecipanti, frequenze lessicali e segnali di sentiment in un'interfaccia rapida da consultare, pensata per analisi personali, test di prodotto e confronti veloci tra conversazioni.

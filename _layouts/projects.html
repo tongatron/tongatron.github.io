@@ -1,26 +1,10 @@
 ---
 layout: default
 ---
-{% assign visible_projects = site.projects | where_exp: "project", "project.draft != true and project.private != true" | sort: "title" | sort: "published_at" | sort: "updated_at" %}
-{% assign featured_projects = visible_projects | where: "featured", true %}
-{% assign archive_projects = visible_projects | where_exp: "project", "project.featured != true" %}
-{% assign category_tokens = "" | split: "" %}
-{% assign tag_tokens = "" | split: "" %}
-{% assign stack_tokens = "" | split: "" %}
-{% for project in visible_projects %}
-  {% if project.category %}
-    {% assign category_tokens = category_tokens | push: project.category %}
-  {% endif %}
-  {% for project_tag in project.tags %}
-    {% assign tag_tokens = tag_tokens | push: project_tag %}
-  {% endfor %}
-  {% for technology in project.stack %}
-    {% assign stack_tokens = stack_tokens | push: technology %}
-  {% endfor %}
-{% endfor %}
-{% assign categories = category_tokens | uniq | sort_natural %}
-{% assign tags = tag_tokens | uniq | sort_natural %}
-{% assign technologies = stack_tokens | uniq | sort_natural %}
+{% assign visible_projects = site.projects | where_exp: "project", "project.draft != true and project.private != true" | sort: "title" | sort: "published_at" %}
+{% assign featured_projects = visible_projects | where: "projects_section", "featured" | sort: "projects_order" %}
+{% assign interactive_projects = visible_projects | where: "projects_section", "interactive" | sort: "projects_order" %}
+{% assign fabrication_projects = visible_projects | where: "projects_section", "fabrication" | sort: "projects_order" %}
 <main>
   <section class="container-shell hero border-0 mt-0 pt-4">
     <div class="projects-hero-grid">
@@ -29,248 +13,56 @@ layout: default
         <h1>{{ page.title | default: "Projects" }}</h1>
         <p class="section-intro mt-3">{{ page.intro | default: "Archivio Jekyll dei progetti web, mobile, utility, simulatori e prototipi IoT sviluppati negli ultimi cicli di lavoro." }}</p>
       </div>
-      <div class="projects-hero-icons" aria-hidden="true">
-        {% for project in visible_projects reversed limit: 12 %}
-          {% if project.icon %}
-          <div class="hero-icon-flip hero-icon-flip-{{ forloop.index0 }}">
-            <div class="hero-icon-flip-inner">
-              <div class="hero-icon-face hero-icon-front">
-                <img src="{{ project.icon | relative_url }}" alt="" class="hero-icon-image">
-              </div>
-              <div class="hero-icon-face hero-icon-back">
-                <img src="{{ project.icon | relative_url }}" alt="" class="hero-icon-image">
-              </div>
-            </div>
-          </div>
-          {% endif %}
-        {% endfor %}
+      <div class="projects-hero-meta" aria-label="Struttura archivio">
+        <div class="projects-hero-stat">
+          <span class="projects-hero-stat-value">{{ featured_projects.size }}</span>
+          <span class="projects-hero-stat-label">In evidenza</span>
+        </div>
+        <div class="projects-hero-stat">
+          <span class="projects-hero-stat-value">{{ interactive_projects.size }}</span>
+          <span class="projects-hero-stat-label">Giochi e simulatori</span>
+        </div>
+        <div class="projects-hero-stat">
+          <span class="projects-hero-stat-value">{{ fabrication_projects.size }}</span>
+          <span class="projects-hero-stat-label">IoT e fabrication</span>
+        </div>
       </div>
     </div>
   </section>
 
-  {% if featured_projects.size > 0 %}
   <section class="container-shell" id="featured-projects" data-featured-section>
     <div class="section-heading">
       <h2 class="section-title">In evidenza</h2>
     </div>
-    <p class="section-intro">Selezione dei progetti principali, ordinata per aggiornamenti recenti.</p>
+    <p class="section-intro">Selezione dei progetti principali che oggi guidano il lavoro tra utility, osservazione e prototipi interattivi.</p>
     <div class="cards-grid" data-project-grid="featured">
-      {% for project in featured_projects reversed %}
+      {% for project in featured_projects %}
         {% include project-card.html project=project %}
       {% endfor %}
     </div>
   </section>
-  {% endif %}
 
   <section class="container-shell" id="all-projects">
     <div class="section-heading">
-      <h2 class="section-title">Archivio completo</h2>
+      <h2 class="section-title">Giochi e simulatori</h2>
     </div>
-    <p class="section-intro">Ogni scheda include date di pubblicazione e aggiornamento, link live e collegamenti opzionali a repository o documentazione.</p>
-    <div class="filter-toolbar" aria-label="Filtri progetti">
-      <div class="filter-menu">
-        <p class="tag-filter-title">Categoria</p>
-        <details class="filter-dropdown" data-filter-dropdown>
-          <summary><span data-filter-summary="category">Tutte</span><i class="bi bi-chevron-down" aria-hidden="true"></i></summary>
-          <div class="filter-options">
-            {% for category in categories %}
-            <label class="filter-option">
-              <input type="checkbox" data-filter-type="category" value="{{ category | downcase }}" data-filter-label="{{ category }}">
-              <span>{{ category }}</span>
-            </label>
-            {% endfor %}
-          </div>
-        </details>
-      </div>
-      <div class="filter-menu">
-        <p class="tag-filter-title">Tag</p>
-        <details class="filter-dropdown" data-filter-dropdown>
-          <summary><span data-filter-summary="tag">Tutti</span><i class="bi bi-chevron-down" aria-hidden="true"></i></summary>
-          <div class="filter-options">
-            {% for tag in tags %}
-            <label class="filter-option">
-              <input type="checkbox" data-filter-type="tag" value="{{ tag | downcase }}" data-filter-label="{{ tag }}">
-              <span>{{ tag }}</span>
-            </label>
-            {% endfor %}
-          </div>
-        </details>
-      </div>
-      <div class="filter-menu">
-        <p class="tag-filter-title">Tecnologia</p>
-        <details class="filter-dropdown" data-filter-dropdown>
-          <summary><span data-filter-summary="stack">Tutte</span><i class="bi bi-chevron-down" aria-hidden="true"></i></summary>
-          <div class="filter-options">
-            {% for technology in technologies %}
-            <label class="filter-option">
-              <input type="checkbox" data-filter-type="stack" value="{{ technology | downcase }}" data-filter-label="{{ technology }}">
-              <span>{{ technology }}</span>
-            </label>
-            {% endfor %}
-          </div>
-        </details>
-      </div>
-    </div>
-    <div class="projects-results-meta">
-      <span data-project-count>{{ visible_projects.size }} progetti visibili</span>
-      <div class="projects-meta-actions">
-        <div class="active-filters" data-active-filters hidden></div>
-        <button class="tag tag-filter" type="button" data-reset-filters>Reset</button>
-      </div>
-    </div>
+    <p class="section-intro">Progetti browser-first orientati a gioco, simulazione, audio, test interattivi e piccoli strumenti da usare in modo diretto.</p>
     <div class="cards-grid" data-project-grid="archive">
-      {% for project in archive_projects reversed %}
+      {% for project in interactive_projects %}
         {% include project-card.html project=project %}
       {% endfor %}
     </div>
-    <div class="projects-empty" data-project-empty>Nessun progetto corrisponde ai filtri correnti.</div>
+  </section>
+
+  <section class="container-shell" id="iot-projects">
+    <div class="section-heading">
+      <h2 class="section-title">IoT e Digital Fabrications</h2>
+    </div>
+    <p class="section-intro">Progetti fisici, installativi e di fabbricazione digitale sviluppati tra open hardware, interazione, documentazione e prototipazione concreta.</p>
+    <div class="cards-grid" data-project-grid="iot">
+      {% for project in fabrication_projects %}
+        {% include project-card.html project=project %}
+      {% endfor %}
+    </div>
   </section>
 </main>
-<div class="projects-osi-badge" aria-hidden="true">
-  <img src="{{ '/img/osi-white.svg' | relative_url }}" alt="" class="projects-osi-image">
-</div>
-<script>
-  (() => {
-    const filterInputs = Array.from(document.querySelectorAll("input[data-filter-type]"));
-    const projectCards = Array.from(document.querySelectorAll(".project-card[data-category]"));
-    const countNode = document.querySelector("[data-project-count]");
-    const emptyNode = document.querySelector("[data-project-empty]");
-    const featuredSection = document.querySelector("[data-featured-section]");
-    const resetButton = document.querySelector("[data-reset-filters]");
-    const activeFiltersNode = document.querySelector("[data-active-filters]");
-    const summaryNodes = {
-      category: document.querySelector('[data-filter-summary="category"]'),
-      tag: document.querySelector('[data-filter-summary="tag"]'),
-      stack: document.querySelector('[data-filter-summary="stack"]')
-    };
-
-    if (!filterInputs.length || !projectCards.length) return;
-
-    const state = {
-      category: new Set(),
-      tag: new Set(),
-      stack: new Set()
-    };
-
-    const getTokens = (value) => value ? value.split("|").filter(Boolean) : [];
-
-    const labelDefaults = {
-      category: "Tutte",
-      tag: "Tutti",
-      stack: "Tutte"
-    };
-
-    const syncSummaries = () => {
-      Object.entries(summaryNodes).forEach(([type, node]) => {
-        if (!node) return;
-        const count = state[type].size;
-        if (count === 0) {
-          node.textContent = labelDefaults[type];
-          return;
-        }
-        if (count === 1) {
-          const input = filterInputs.find((field) => field.dataset.filterType === type && field.checked);
-          node.textContent = input?.dataset.filterLabel || Array.from(state[type])[0];
-          return;
-        }
-        node.textContent = `${count} selezionati`;
-      });
-    };
-
-    const renderActiveFilters = () => {
-      if (!activeFiltersNode) return;
-      activeFiltersNode.innerHTML = "";
-
-      const items = [];
-      filterInputs.forEach((input) => {
-        if (!input.checked) return;
-        items.push({ type: input.dataset.filterType, value: input.value, label: input.dataset.filterLabel || input.value });
-      });
-
-      activeFiltersNode.hidden = items.length === 0;
-
-      items.forEach((item) => {
-        const button = document.createElement("button");
-        button.type = "button";
-        button.className = "active-filter-chip";
-        button.dataset.filterType = item.type;
-        button.dataset.filterValue = item.value;
-        button.innerHTML = `<span>${item.label}</span><i class="bi bi-x-lg" aria-hidden="true"></i>`;
-        activeFiltersNode.appendChild(button);
-      });
-    };
-
-    const applyFilters = () => {
-      let visibleCount = 0;
-      const hasActiveFilters = state.category.size > 0 || state.tag.size > 0 || state.stack.size > 0;
-
-      projectCards.forEach((card) => {
-        const cardTags = getTokens(card.dataset.tags);
-        const cardStack = getTokens(card.dataset.stack);
-        const matchesCategory = state.category.size === 0 || state.category.has(card.dataset.category);
-        const matchesTag = state.tag.size === 0 || Array.from(state.tag).some((token) => cardTags.includes(token));
-        const matchesStack = state.stack.size === 0 || Array.from(state.stack).some((token) => cardStack.includes(token));
-        const isVisible = matchesCategory && matchesTag && matchesStack;
-
-        card.classList.toggle("is-hidden", !isVisible);
-        if (isVisible) visibleCount += 1;
-      });
-
-      if (countNode) {
-        countNode.textContent = visibleCount === 1 ? "1 progetto visibile" : `${visibleCount} progetti visibili`;
-      }
-
-      if (emptyNode) {
-        emptyNode.style.display = visibleCount === 0 ? "block" : "none";
-      }
-
-      if (featuredSection) {
-        featuredSection.style.display = hasActiveFilters ? "none" : "";
-      }
-    };
-
-    filterInputs.forEach((input) => {
-      input.addEventListener("change", () => {
-        const type = input.dataset.filterType;
-        if (input.checked) {
-          state[type].add(input.value);
-        } else {
-          state[type].delete(input.value);
-        }
-        syncSummaries();
-        renderActiveFilters();
-        applyFilters();
-      });
-    });
-
-    if (activeFiltersNode) {
-      activeFiltersNode.addEventListener("click", (event) => {
-        const button = event.target.closest(".active-filter-chip");
-        if (!button) return;
-        const input = filterInputs.find((field) => field.dataset.filterType === button.dataset.filterType && field.value === button.dataset.filterValue);
-        if (!input) return;
-        input.checked = false;
-        state[button.dataset.filterType].delete(button.dataset.filterValue);
-        syncSummaries();
-        renderActiveFilters();
-        applyFilters();
-      });
-    }
-
-    if (resetButton) {
-      resetButton.addEventListener("click", () => {
-        Object.keys(state).forEach((key) => state[key].clear());
-        filterInputs.forEach((input) => {
-          input.checked = false;
-        });
-        syncSummaries();
-        renderActiveFilters();
-        applyFilters();
-      });
-    }
-
-    syncSummaries();
-    renderActiveFilters();
-    applyFilters();
-  })();
-</script>

@@ -1,14 +1,11 @@
 ---
-title: Ryanair Search
-slug: ryanair-search
-published_at: 2026-03-10
-updated_at: 2026-03-30
-status: active
-category: utility
-tags:
-  - travel
-  - search
-  - web
+title: "Ryanair Search"
+slug: "ryanair-search"
+published_at: "anno 2026"
+status: "active"
+category: "utility"
+projects_section: "featured"
+projects_order: 2
 stack:
   - HTML
   - CSS
@@ -16,7 +13,7 @@ stack:
 platforms:
   - web
   - mobile
-live_url: "/projects/ryanair-search/index.html"
+project_url: "/projects/ryanair-search/index.html"
 icon: "/projects/ryanair-search/assets/icon-192.png"
 cover_image: "/projects/ryanair-search/assets/social-preview.png"
 featured: true
@@ -24,17 +21,9 @@ draft: false
 private: false
 client_work: false
 open_source: false
-role: UX, integrazione dati e sviluppo frontend
-seo_title: Ryanair Search | Tongatron
-seo_description: Utility web per cercare voli Ryanair con filtri e condivisione risultati.
-excerpt: Ricerca voli Ryanair A/R con filtri su partenza, destinazione, budget, durata e link condivisibile.
+role: "UX, integrazione dati e sviluppo frontend"
+seo_title: "Ryanair Search | Tongatron"
+seo_description: "Utility web per cercare voli Ryanair andata e ritorno con filtri su budget, durata, partenza e destinazione, ottimizzata anche per l'uso da smartphone. Il progetto punta su velocita di consultazione, confronto rapido delle opzioni e condivisione dei risultati, riducendo attrito e passaggi nella ricerca operativa dei voli."
+excerpt: "Utility web per cercare voli Ryanair andata e ritorno con filtri su budget, durata, partenza e destinazione, ottimizzata anche per l'uso da smartphone. Il progetto punta su velocita di consultazione, confronto rapido delle opzioni e condivisione dei risultati, riducendo attrito e passaggi nella ricerca operativa dei voli."
 ---
-## Overview
-
-Interfaccia di ricerca dedicata ai voli Ryanair, progettata per essere rapida da usare anche su smartphone.
-
-## Funzionalita principali
-
-- filtri su budget e durata
-- ricerca andata e ritorno
-- link condivisibile dei risultati
+Utility web per cercare voli Ryanair andata e ritorno con filtri su budget, durata, partenza e destinazione, ottimizzata anche per l'uso da smartphone. Il progetto punta su velocita di consultazione, confronto rapido delle opzioni e condivisione dei risultati, riducendo attrito e passaggi nella ricerca operativa dei voli.

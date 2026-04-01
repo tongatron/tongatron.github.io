@@ -31,7 +31,7 @@ PRIMARY_FIELDS = [
     "tags",
     "stack",
     "platforms",
-    "live_url",
+    "project_url",
     "icon",
     "cover_image",
     "featured",

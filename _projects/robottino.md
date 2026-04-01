@@ -1,14 +1,11 @@
 ---
-title: Robottino
-slug: robottino
-published_at: 2026-03-01
-updated_at: 2026-03-30
-status: active
-category: iot
-tags:
-  - stem
-  - arduino
-  - open-hardware
+title: "Robottino"
+slug: "robottino"
+published_at: "anno 2026"
+status: "active"
+category: "iot"
+projects_section: "fabrication"
+projects_order: 1
 stack:
   - Arduino
   - Web
@@ -16,7 +13,7 @@ stack:
 platforms:
   - web
   - hardware
-live_url: "/projects/robottino/robottino-site/index.html"
+project_url: "/projects/robottino/robottino-site/index.html"
 icon: "/img/robottino.jpg"
 cover_image: "/img/robottino.jpg"
 featured: true
@@ -24,17 +21,9 @@ draft: false
 private: false
 client_work: false
 open_source: false
-role: Ideazione, prototipazione e documentazione
-seo_title: Robottino | Tongatron
-seo_description: Robot educativo open source basato su Arduino con sensori e componenti programmabili.
-excerpt: Robot educativo STEM open source basato su Arduino, con sensori, luci RGB, display e testa rotante programmabile.
+role: "Ideazione, prototipazione e documentazione"
+seo_title: "Robottino | Tongatron"
+seo_description: "Robot educativo open source basato su Arduino che combina sensori, luci, display e componenti programmabili in un formato pensato per attivita STEM. Il progetto intreccia hardware, didattica e cultura maker, con l'obiettivo di rendere comprensibili elettronica e interazione fisica attraverso un oggetto semplice da mostrare, usare e raccontare."
+excerpt: "Robot educativo open source basato su Arduino che combina sensori, luci, display e componenti programmabili in un formato pensato per attivita STEM. Il progetto intreccia hardware, didattica e cultura maker, con l'obiettivo di rendere comprensibili elettronica e interazione fisica attraverso un oggetto semplice da mostrare, usare e raccontare."
 ---
-## Overview
-
-Robottino e un progetto STEM che combina hardware, programmazione e materiali didattici in un formato accessibile.
-
-## Funzionalita principali
-
-- base Arduino
-- sensori e luci RGB
-- approccio educativo e open source
+Robot educativo open source basato su Arduino che combina sensori, luci, display e componenti programmabili in un formato pensato per attivita STEM. Il progetto intreccia hardware, didattica e cultura maker, con l'obiettivo di rendere comprensibili elettronica e interazione fisica attraverso un oggetto semplice da mostrare, usare e raccontare.

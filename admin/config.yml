@@ -136,8 +136,8 @@ collections:
           name: "platform"
           widget: "string"
 
-      - label: "URL live"
-        name: "live_url"
+      - label: "Link del progetto"
+        name: "project_url"
         widget: "string"
         required: false
 

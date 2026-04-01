@@ -1,14 +1,11 @@
 ---
-title: Multi Web Simulator
-slug: multi-simulator
-published_at: 2026-03-01
-updated_at: 2026-03-30
-status: active
-category: simulator
-tags:
-  - android-pwa
-  - music
-  - web
+title: "Multi Web Simulator"
+slug: "multi-simulator"
+published_at: "anno 2026"
+status: "active"
+category: "simulator"
+projects_section: "interactive"
+projects_order: 5
 stack:
   - HTML
   - CSS
@@ -16,7 +13,7 @@ stack:
 platforms:
   - web
   - mobile
-live_url: "/projects/multi-simulator/index.html"
+project_url: "/projects/multi-simulator/index.html"
 icon: "/projects/multi-simulator/icons/icon-192.svg"
 cover_image: "/img/robottino.jpg"
 featured: false
@@ -24,17 +21,9 @@ draft: false
 private: false
 client_work: false
 open_source: false
-role: Interfaccia e simulazione frontend
-seo_title: Multi Web Simulator | Tongatron
-seo_description: Simulatore web della board open source MULTI per uso musicale ed elettroacustico.
-excerpt: Simulazione web della board open source MULTI del laboratorio elettroacustico Pangrus.
+role: "Interfaccia e simulazione frontend"
+seo_title: "Multi Web Simulator | Tongatron"
+seo_description: "Simulazione web della board open source MULTI sviluppata per tradurre in browser un dispositivo del laboratorio elettroacustico Pangrus. Il progetto rende piu accessibile la logica dello strumento, facilita test e dimostrazioni e collega interazione sonora, documentazione e prototipazione in una forma leggibile anche fuori dal contesto fisico."
+excerpt: "Simulazione web della board open source MULTI sviluppata per tradurre in browser un dispositivo del laboratorio elettroacustico Pangrus. Il progetto rende piu accessibile la logica dello strumento, facilita test e dimostrazioni e collega interazione sonora, documentazione e prototipazione in una forma leggibile anche fuori dal contesto fisico."
 ---
-## Overview
-
-Progetto di simulazione browser-based per rendere esplorabile una board hardware senza passare subito dal dispositivo fisico.
-
-## Funzionalita principali
-
-- simulazione accessibile via browser
-- interfaccia orientata alla sperimentazione
-- utilizzo desktop e mobile
+Simulazione web della board open source MULTI sviluppata per tradurre in browser un dispositivo del laboratorio elettroacustico Pangrus. Il progetto rende piu accessibile la logica dello strumento, facilita test e dimostrazioni e collega interazione sonora, documentazione e prototipazione in una forma leggibile anche fuori dal contesto fisico.

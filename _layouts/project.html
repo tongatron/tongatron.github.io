@@ -27,13 +27,7 @@ layout: default
             {% if page.published_at %}
             <li>
               <strong>Pubblicato</strong>
-              <span>{{ page.published_at | date: "%d/%m/%Y" }}</span>
-            </li>
-            {% endif %}
-            {% if page.updated_at %}
-            <li>
-              <strong>Aggiornato</strong>
-              <span>{{ page.updated_at | date: "%d/%m/%Y" }}</span>
+              <span>{{ page.published_at }}</span>
             </li>
             {% endif %}
             {% if page.role %}
@@ -51,7 +45,7 @@ layout: default
           </ul>
 
           <div class="button-row">
-            {% if page.live_url %}<a href="{{ page.live_url | relative_url }}" target="_blank" rel="noopener" class="project-link-arrow">Apri progetto <i class="bi bi-box-arrow-up-right" aria-hidden="true"></i></a>{% endif %}
+            {% if page.project_url %}<a href="{{ page.project_url | relative_url }}" target="_blank" rel="noopener" class="project-link-arrow">Apri progetto <i class="bi bi-box-arrow-up-right" aria-hidden="true"></i></a>{% endif %}
             {% if page.github_url %}<a href="{{ page.github_url }}" target="_blank" rel="noopener"><i class="bi bi-github" aria-hidden="true"></i><span>GitHub</span></a>{% endif %}
             {% if page.docs_url %}<a href="{{ page.docs_url }}" target="_blank" rel="noopener">Docs</a>{% endif %}
             {% if page.website_url %}<a href="{{ page.website_url }}" target="_blank" rel="noopener">Sito</a>{% endif %}

@@ -1,14 +1,11 @@
 ---
-title: Selfomatic
-slug: selfomatic
-published_at: 2026-03-01
-updated_at: 2026-03-30
-status: active
-category: iot
-tags:
-  - events
-  - camera
-  - installation
+title: "Selfomatic"
+slug: "selfomatic"
+published_at: "anno 2026"
+status: "active"
+category: "iot"
+projects_section: "fabrication"
+projects_order: 2
 stack:
   - Web
   - Hardware
@@ -16,7 +13,7 @@ stack:
 platforms:
   - web
   - installation
-live_url: "/projects/selfomatic/index.html"
+project_url: "/projects/selfomatic/index.html"
 icon: "/img/contact.jpg"
 cover_image: "/img/contact.jpg"
 featured: false
@@ -24,17 +21,9 @@ draft: false
 private: false
 client_work: false
 open_source: false
-role: Concept, esperienza utente e integrazione sistema
-seo_title: Selfomatic | Tongatron
-seo_description: Social camera per eventi con scatto automatico e pubblicazione in tempo reale.
-excerpt: Social camera per eventi con scatto automatico e pubblicazione in tempo reale, pensata per attivazioni e comunicazione live.
+role: "Concept, esperienza utente e integrazione sistema"
+seo_title: "Selfomatic | Tongatron"
+seo_description: "Social camera per eventi progettata per scattare automaticamente, pubblicare in tempo reale e alimentare un flusso visivo condiviso durante attivazioni e contesti live. Il progetto unisce hardware, web publishing e immediatezza d'uso, trasformando la raccolta di immagini in un'esperienza partecipativa pensata per fiere, brand ed eventi."
+excerpt: "Social camera per eventi progettata per scattare automaticamente, pubblicare in tempo reale e alimentare un flusso visivo condiviso durante attivazioni e contesti live. Il progetto unisce hardware, web publishing e immediatezza d'uso, trasformando la raccolta di immagini in un'esperienza partecipativa pensata per fiere, brand ed eventi."
 ---
-## Overview
-
-Installazione pensata per eventi e attivazioni, in cui la parte fotografica diventa esperienza condivisibile in tempo reale.
-
-## Funzionalita principali
-
-- scatto automatico
-- pubblicazione live
-- formato adatto a eventi e installazioni
+Social camera per eventi progettata per scattare automaticamente, pubblicare in tempo reale e alimentare un flusso visivo condiviso durante attivazioni e contesti live. Il progetto unisce hardware, web publishing e immediatezza d'uso, trasformando la raccolta di immagini in un'esperienza partecipativa pensata per fiere, brand ed eventi.

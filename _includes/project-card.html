@@ -1,30 +1,9 @@
 {% assign project = include.project %}
-{% assign project_tags = project.tags | join: "|" | downcase %}
-{% assign project_stack = project.stack | join: "|" | downcase %}
-<article class="project-card" data-category="{{ project.category | downcase }}" data-tags="{{ project_tags }}" data-stack="{{ project_stack }}" data-status="{{ project.status | downcase }}">
-  <div class="project-head">
-    {% if project.icon %}
-    <img src="{{ project.icon | relative_url }}" alt="Icona {{ project.title }}" class="project-icon">
-    {% endif %}
-    <div class="tag-row">
-      {% if project.status %}<span class="tag">{{ project.status }}</span>{% endif %}
-      {% if project.category %}<span class="tag">{{ project.category }}</span>{% endif %}
-      {% for tag in project.tags limit: 3 %}<span class="tag">{{ tag }}</span>{% endfor %}
-    </div>
-  </div>
+{% assign card_summary = project.content | markdownify | strip_html | strip_newlines | replace: "  ", " " | strip %}
+<article class="project-card">
   <h3>{{ project.title }}</h3>
-  <p>{{ project.excerpt }}</p>
-  {% if project.stack and project.stack.size > 0 %}
-  <div class="project-tech-list" aria-label="Tecnologie">
-    {% for technology in project.stack limit: 4 %}
-    <span class="tag tag-tech">{{ technology }}</span>
-    {% endfor %}
-  </div>
-  {% endif %}
-  <p class="project-meta">Pubblicato {{ project.published_at | date: "%d/%m/%Y" }}{% if project.updated_at %} · Aggiornato {{ project.updated_at | date: "%d/%m/%Y" }}{% endif %}</p>
+  <p>{{ card_summary | default: project.excerpt }}</p>
   <div class="button-row">
-    {% if project.live_url %}<a href="{{ project.live_url | relative_url }}" target="_blank" rel="noopener" class="project-link-arrow">Apri <i class="bi bi-box-arrow-up-right" aria-hidden="true"></i></a>{% endif %}
-    {% if project.github_url %}<a href="{{ project.github_url }}" target="_blank" rel="noopener"><i class="bi bi-github" aria-hidden="true"></i><span>GitHub</span></a>{% endif %}
-    {% if project.url %}<a href="{{ project.url | relative_url }}" class="project-link-arrow project-link-square">Scheda</a>{% endif %}
+    {% if project.project_url %}<a href="{{ project.project_url | relative_url }}" target="_blank" rel="noopener" class="project-link-arrow">Apri <i class="bi bi-box-arrow-up-right" aria-hidden="true"></i></a>{% endif %}
   </div>
 </article>

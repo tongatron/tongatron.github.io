@@ -1,20 +1,17 @@
 ---
-title: IKEA Hack Nordli
-slug: ikea-hack
-published_at: 2017-03-05
-updated_at: 2026-03-30
-status: archived
-category: fabrication
-tags:
-  - fablab
-  - laser-cut
-  - furniture
+title: "IKEA Hack Nordli"
+slug: "ikea-hack"
+published_at: "anno 2017"
+status: "archived"
+category: "fabrication"
+projects_section: "fabrication"
+projects_order: 3
 stack:
   - Digital fabrication
   - Laser cutting
 platforms:
   - physical
-live_url: "/projects/IKEA-hack/index.html"
+project_url: "/projects/IKEA-hack/index.html"
 icon: "/projects/IKEA-hack/ikea.jpg"
 cover_image: "/projects/IKEA-hack/ikea.jpg"
 featured: false
@@ -22,17 +19,9 @@ draft: false
 private: false
 client_work: false
 open_source: false
-role: Progettazione e fabbricazione digitale
-seo_title: IKEA Hack Nordli | Tongatron
-seo_description: Progetto FabLab di personalizzazione Nordli con tavolino estraibile tagliato a laser.
-excerpt: Personalizzazione della cassettiera Nordli con tavolino estraibile realizzato tramite pannello tagliato a laser.
+role: "Progettazione e fabbricazione digitale"
+seo_title: "IKEA Hack Nordli | Tongatron"
+seo_description: "Hack di prodotto nato in ambito FabLab per personalizzare la cassettiera Nordli con un tavolino estraibile tagliato a laser. Il progetto unisce progettazione pratica, adattamento dell'arredo e fabbricazione digitale, documentando una modifica concreta pensata per migliorare uso quotidiano, ergonomia e integrazione nello spazio domestico."
+excerpt: "Hack di prodotto nato in ambito FabLab per personalizzare la cassettiera Nordli con un tavolino estraibile tagliato a laser. Il progetto unisce progettazione pratica, adattamento dell'arredo e fabbricazione digitale, documentando una modifica concreta pensata per migliorare uso quotidiano, ergonomia e integrazione nello spazio domestico."
 ---
-## Overview
-
-Progetto di fabbricazione digitale incentrato sulla personalizzazione di un elemento d'arredo commerciale con un intervento mirato.
-
-## Funzionalita principali
-
-- adattamento di un mobile IKEA
-- componente custom tagliato a laser
-- approccio FabLab e prototipazione rapida
+Hack di prodotto nato in ambito FabLab per personalizzare la cassettiera Nordli con un tavolino estraibile tagliato a laser. Il progetto unisce progettazione pratica, adattamento dell'arredo e fabbricazione digitale, documentando una modifica concreta pensata per migliorare uso quotidiano, ergonomia e integrazione nello spazio domestico.

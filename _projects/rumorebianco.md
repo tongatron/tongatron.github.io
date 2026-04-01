@@ -1,14 +1,11 @@
 ---
-title: Rumore Bianco
-slug: rumorebianco
-published_at: 2026-03-01
-updated_at: 2026-03-30
-status: active
-category: utility
-tags:
-  - android-pwa
-  - audio
-  - web
+title: "Rumore Bianco"
+slug: "rumorebianco"
+published_at: "anno 2026"
+status: "active"
+category: "utility"
+projects_section: "interactive"
+projects_order: 3
 stack:
   - HTML
   - CSS
@@ -16,7 +13,7 @@ stack:
 platforms:
   - web
   - mobile
-live_url: "/projects/rumorebianco/index.html"
+project_url: "/projects/rumorebianco/index.html"
 icon: "/projects/rumorebianco/icons/icon-192.svg"
 cover_image: "/img/robottino.jpg"
 featured: false
@@ -24,17 +21,9 @@ draft: false
 private: false
 client_work: false
 open_source: false
-role: UI audio e sviluppo frontend
-seo_title: Rumore Bianco | Tongatron
-seo_description: Generatore di rumore bianco via browser con controlli audio in tempo reale.
-excerpt: Generatore audio con parametri regolabili in tempo reale come volume, filtro e controlli sonori.
+role: "UI audio e sviluppo frontend"
+seo_title: "Rumore Bianco | Tongatron"
+seo_description: "Generatore audio pensato per creare rumore bianco e varianti controllabili in tempo reale, con parametri essenziali come volume, filtro e risposta sonora. Il progetto combina semplicita d'uso e sperimentazione minimale, offrendo un tool diretto da browser utile per test, ascolto ambientale, focus o piccoli setup personali."
+excerpt: "Generatore audio pensato per creare rumore bianco e varianti controllabili in tempo reale, con parametri essenziali come volume, filtro e risposta sonora. Il progetto combina semplicita d'uso e sperimentazione minimale, offrendo un tool diretto da browser utile per test, ascolto ambientale, focus o piccoli setup personali."
 ---
-## Overview
-
-Utility sonora pensata per un utilizzo diretto dal browser, con un'interfaccia essenziale e parametri immediatamente accessibili.
-
-## Funzionalita principali
-
-- generazione audio in tempo reale
-- regolazione dei parametri sonori
-- utilizzo ottimizzato anche da mobile
+Generatore audio pensato per creare rumore bianco e varianti controllabili in tempo reale, con parametri essenziali come volume, filtro e risposta sonora. Il progetto combina semplicita d'uso e sperimentazione minimale, offrendo un tool diretto da browser utile per test, ascolto ambientale, focus o piccoli setup personali.
