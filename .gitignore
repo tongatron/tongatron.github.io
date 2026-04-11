@@ -5,3 +5,6 @@
 /.jekyll-cache/
 /.jekyll-metadata
 /node_modules/
+/.claude/worktrees/clever-margulis/.github/workflows
+/.claude/worktrees/clever-margulis/_includes
+/.claude

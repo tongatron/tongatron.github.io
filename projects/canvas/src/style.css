@@ -1,0 +1,42 @@
+@import "tailwindcss";
+
+* {
+	@apply antialiased tracking-tight;
+}
+
+@theme {
+	--font-sans: "Geist";
+	--font-mono: "Geist Mono";
+	--color-bright: #fd453a;
+	--color-black: #222222;
+}
+
+.is-heading {
+	@apply font-bold text-5xl sm:text-7xl md:text-8xl lg:text-8xl tracking-[-0.06em] font-sans !leading-none;
+}
+
+p {
+	@apply font-sans leading-tight;
+}
+
+#page-host {
+	position: fixed;
+	top: 0;
+	left: -200vw;
+	width: 100vw;
+	height: 100vh;
+	pointer-events: none;
+	z-index: -1;
+}
+
+#scroll-spacer {
+	position: relative;
+	width: 1px;
+	height: 400vh;
+	pointer-events: none;
+}
+
+html,
+body {
+	@apply bg-white font-sans;
+}
