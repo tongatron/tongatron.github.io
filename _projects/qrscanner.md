@@ -15,7 +15,6 @@ platforms:
   - mobile
 project_url: "/projects/qrscanner/index.html"
 icon: "/projects/qrscanner/icons/icon-192.png"
-cover_image: "/img/robottino.jpg"
 featured: false
 draft: false
 private: false

@@ -12,7 +12,6 @@ platforms:
   - web
 project_url: "/projects/chatanalysis/index.html"
 icon: "/projects/chatanalysis/assets/icon.svg"
-cover_image: "/img/robottino.jpg"
 featured: true
 draft: false
 private: false
