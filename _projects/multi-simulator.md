@@ -15,7 +15,6 @@ platforms:
   - mobile
 project_url: "/projects/multi-simulator/index.html"
 icon: "/projects/multi-simulator/icons/icon-192.svg"
-cover_image: "/img/robottino.jpg"
 featured: false
 draft: false
 private: false

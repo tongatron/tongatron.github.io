@@ -15,7 +15,6 @@ platforms:
   - mobile
 project_url: "/projects/rumorebianco/index.html"
 icon: "/projects/rumorebianco/icons/icon-192.svg"
-cover_image: "/img/robottino.jpg"
 featured: false
 draft: false
 private: false

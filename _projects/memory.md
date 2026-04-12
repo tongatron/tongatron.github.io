@@ -15,7 +15,6 @@ platforms:
   - mobile
 project_url: "/projects/memory/index.html"
 icon: "/projects/memory/icon-192.png"
-cover_image: "/img/robottino.jpg"
 featured: false
 draft: false
 private: false

@@ -15,7 +15,6 @@ platforms:
   - mobile
 project_url: "/projects/roulette/index.html"
 icon: "/projects/roulette/icons/icon-192.svg"
-cover_image: "/img/robottino.jpg"
 featured: false
 draft: false
 private: false

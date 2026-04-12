@@ -15,7 +15,6 @@ platforms:
   - mobile
 project_url: "/projects/simon/index.html"
 icon: "/projects/simon/icons/icon-192.png"
-cover_image: "/img/robottino.jpg"
 featured: true
 draft: false
 private: false

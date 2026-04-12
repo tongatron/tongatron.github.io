@@ -15,7 +15,6 @@ platforms:
   - mobile
 project_url: "/projects/forza4/index.html"
 icon: "/projects/forza4/assets/icons/icon.svg"
-cover_image: "/img/robottino.jpg"
 featured: true
 draft: false
 private: false
