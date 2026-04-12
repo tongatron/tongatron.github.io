@@ -14,6 +14,7 @@ platforms:
   - web
   - mobile
 project_url: "https://chat.tongatron.org/"
+cover_image: "/img/projects/raspi-chat.jpg"
 featured: false
 draft: false
 private: false

@@ -15,7 +15,7 @@ platforms:
   - mobile
 project_url: "/projects/ryanair-search/index.html"
 icon: "/projects/ryanair-search/assets/icon-192.png"
-cover_image: "/projects/ryanair-search/assets/social-preview.png"
+cover_image: "/img/projects/ryanair-search.jpg"
 featured: true
 draft: false
 private: false

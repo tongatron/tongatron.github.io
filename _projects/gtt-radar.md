@@ -14,6 +14,7 @@ platforms:
   - web
   - mobile
 project_url: "https://gtt-to.onrender.com/"
+cover_image: "/img/projects/gtt-radar.jpg"
 featured: false
 draft: false
 private: false

@@ -13,7 +13,7 @@ stack:
 platforms:
   - web
 project_url: "/head-tracking/"
-cover_image: "/img/robottino.jpg"
+cover_image: "/img/projects/head-tracking.jpg"
 featured: false
 draft: false
 private: false
