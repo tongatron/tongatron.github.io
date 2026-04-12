@@ -796,7 +796,7 @@
 
     .web-projects-cards {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 1rem;
       align-items: start;
     }
@@ -810,6 +810,16 @@
       background: linear-gradient(180deg, rgba(20, 20, 20, 0.96), rgba(11, 11, 11, 0.96));
       box-shadow: inset 0 1px 0 rgba(255,255,255,0.04);
       overflow: hidden;
+    }
+
+    .web-project-cover {
+      width: 100%;
+      height: 170px;
+      object-fit: cover;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 0.9rem;
+      margin-bottom: 0.85rem;
+      background: rgba(255,255,255,0.02);
     }
 
     .web-project-head {
@@ -1296,24 +1306,28 @@
       <div class="web-projects-shell">
         <div class="web-projects-cards">
           <article class="web-project-card">
+            <img src="img/projects/ryanair-search.jpg" class="web-project-cover" alt="Anteprima Ryanair Search">
             <h4 class="h2 fw-bold">Ryanair Search</h4>
             <p>Utility web per cercare voli Ryanair andata e ritorno con filtri su budget, durata, partenza e destinazione, ottimizzata anche per l'uso da smartphone.</p>
             <a class="web-project-open" href="projects/ryanair-search/index.html" target="_blank" rel="noopener">Apri</a>
           </article>
 
           <article class="web-project-card">
+            <img src="img/projects/head-tracking.jpg" class="web-project-cover" alt="Anteprima Head Tracking">
             <h4 class="h2 fw-bold">Head Tracking</h4>
             <p>Esperimento web che usa il browser per testare interazioni basate sul movimento della testa, con un'impostazione diretta e immediata da provare online.</p>
             <a class="web-project-open" href="head-tracking/" target="_blank" rel="noopener">Apri</a>
           </article>
 
           <article class="web-project-card">
+            <img src="img/projects/gtt-radar.jpg" class="web-project-cover" alt="Anteprima GTT Radar">
             <h4 class="h2 fw-bold">GTT Radar</h4>
             <p>Utility web per monitorare linee e passaggi del trasporto pubblico torinese con un'interfaccia rapida da consultare e un uso mobile-first.</p>
             <a class="web-project-open" href="https://gtt-to.onrender.com/" target="_blank" rel="noopener">Apri</a>
           </article>
 
           <article class="web-project-card">
+            <img src="img/projects/raspi-chat.jpg" class="web-project-cover" alt="Anteprima Raspi Chat">
             <h4 class="h2 fw-bold">Raspi Chat</h4>
             <p>Progetto self-hosted per piccoli gruppi, con stanze private, notifiche web e un'amministrazione semplice da gestire.</p>
             <a class="web-project-open" href="https://chat.tongatron.org/" target="_blank" rel="noopener">Apri</a>
