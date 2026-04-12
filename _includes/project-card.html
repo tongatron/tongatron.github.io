@@ -1,6 +1,12 @@
 {% assign project = include.project %}
 {% assign card_summary = project.content | markdownify | strip_html | strip_newlines | replace: "  ", " " | strip %}
 <article class="project-card">
+  {% if project.cover_image %}
+  <img
+    class="project-card-cover"
+    src="{{ project.cover_image | relative_url }}"
+    alt="Anteprima {{ project.title }}">
+  {% endif %}
   <h3>{{ project.title }}</h3>
   <p>{{ card_summary | default: project.excerpt }}</p>
   <div class="button-row">
