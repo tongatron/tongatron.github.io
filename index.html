@@ -1482,7 +1482,7 @@ main {
         </div>
 
         <div class="col-12 col-md-7">
-          <h3 class="fw-bold mb-3 text-uppercase" style="font-size:1.15rem;letter-spacing:0.06em;">Scrivimi</h3>
+          <h3 class="fw-bold mb-3 text-uppercase text-end" style="font-size:1.15rem;letter-spacing:0.06em;">Scrivimi</h3>
           <div id="contact-status" class="contact-feedback" role="alert" style="display:none;"></div>
           <form id="contact-form" novalidate>
             <div class="row g-2 mb-3">
@@ -1502,10 +1502,12 @@ main {
               <textarea id="cf-message" class="contact-input" rows="4" placeholder="Scrivi qui..." required></textarea>
               <div class="contact-invalid">Inserisci un messaggio.</div>
             </div>
-            <button type="submit" class="btn-ghost contact-submit" id="cf-btn">
-              <span class="cf-spinner spinner-border spinner-border-sm me-2" role="status" style="display:none;"></span>
-              <span class="cf-label">Invia</span>
-            </button>
+            <div class="text-end">
+              <button type="submit" class="btn btn-outline-primary contact-submit" id="cf-btn">
+                <span class="cf-spinner spinner-border spinner-border-sm me-2" role="status" style="display:none;"></span>
+                <span class="cf-label">Invia</span>
+              </button>
+            </div>
           </form>
         </div>
 
