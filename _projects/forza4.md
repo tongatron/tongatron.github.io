@@ -1,5 +1,5 @@
 ---
-title: "Connect Four"
+title: "Forza Quattro"
 slug: "forza4"
 published_at: "anno 2026"
 status: "active"
@@ -21,7 +21,7 @@ private: false
 client_work: false
 open_source: false
 role: "Design e sviluppo frontend"
-seo_title: "Connect Four | Tongatron"
+seo_title: "Forza Quattro | Tongatron"
 seo_description: "Versione browser di Connect Four progettata per partite veloci contro CPU, con difficolta selezionabile, interfaccia chiara e uso immediato anche da schermi touch. Il progetto punta su leggibilita, ritmo rapido e una resa stabile sia su desktop sia su dispositivi mobili, senza passaggi o setup aggiuntivi."
 excerpt: "Versione browser di Connect Four progettata per partite veloci contro CPU, con difficolta selezionabile, interfaccia chiara e uso immediato anche da schermi touch. Il progetto punta su leggibilita, ritmo rapido e una resa stabile sia su desktop sia su dispositivi mobili, senza passaggi o setup aggiuntivi."
 ---
