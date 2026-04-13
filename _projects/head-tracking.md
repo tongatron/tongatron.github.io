@@ -19,6 +19,7 @@ draft: false
 private: false
 client_work: false
 open_source: false
+github_url: "https://github.com/tongatron/head-tracking"
 role: "Prototipazione interaction e sviluppo frontend"
 seo_title: "Head Tracking | Tongatron"
 seo_description: "Esperimento web che usa il browser per testare interazioni basate sul movimento della testa, con un'impostazione diretta e immediata da provare online. Il progetto serve come base per esplorare input alternativi, prototipi interattivi e possibili estensioni su interfacce accessibili, installazioni e strumenti sperimentali leggeri."

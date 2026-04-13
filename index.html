@@ -920,6 +920,44 @@
       transform: translateX(3px);
     }
 
+    .web-project-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+    .web-project-github {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.18rem 0.6rem 0.18rem 0.45rem;
+      border: 1.5px solid rgba(255,255,255,0.25);
+      border-radius: 6px;
+      background: #161b22;
+      color: #fff;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+      white-space: nowrap;
+      text-decoration: none;
+      transition: border-color 0.2s ease, background 0.2s ease;
+    }
+    .web-project-github::before {
+      content: "\f3ed";
+      font-family: bootstrap-icons;
+      font-style: normal;
+      font-weight: 400;
+      font-size: 1.15em;
+      line-height: 1;
+      -webkit-font-smoothing: antialiased;
+    }
+    .web-project-github:hover,
+    .web-project-github:focus {
+      background: #21262d;
+      border-color: rgba(255,255,255,0.5);
+      color: #fff;
+    }
+
     .btn-outline-primary,
     .variant-btn-primary,
     .variant-btn-secondary {
@@ -1309,28 +1347,40 @@
             <img src="img/projects/ryanair-search.jpg" class="web-project-cover" alt="Anteprima Ryanair Search">
             <h4 class="h2 fw-bold">Ryanair Search</h4>
             <p>Utility web per cercare voli Ryanair andata e ritorno con filtri su budget, durata, partenza e destinazione, ottimizzata anche per l'uso da smartphone.</p>
-            <a class="web-project-open" href="projects/ryanair-search/index.html" target="_blank" rel="noopener">Apri</a>
+            <div class="web-project-actions">
+              <a class="web-project-github" href="https://github.com/tongatron/tongatron.github.io/tree/main/projects/ryanair-search" target="_blank" rel="noopener">Open in GitHub</a>
+              <a class="web-project-open" href="projects/ryanair-search/index.html" target="_blank" rel="noopener">Apri</a>
+            </div>
           </article>
 
           <article class="web-project-card">
             <img src="img/projects/head-tracking.jpg" class="web-project-cover" alt="Anteprima Head Tracking">
             <h4 class="h2 fw-bold">Head Tracking</h4>
             <p>Esperimento web che usa il browser per testare interazioni basate sul movimento della testa, con un'impostazione diretta e immediata da provare online.</p>
-            <a class="web-project-open" href="head-tracking/" target="_blank" rel="noopener">Apri</a>
+            <div class="web-project-actions">
+              <a class="web-project-github" href="https://github.com/tongatron/head-tracking" target="_blank" rel="noopener">Open in GitHub</a>
+              <a class="web-project-open" href="head-tracking/" target="_blank" rel="noopener">Apri</a>
+            </div>
           </article>
 
           <article class="web-project-card">
             <img src="img/projects/gtt-radar.jpg" class="web-project-cover" alt="Anteprima GTT Radar">
             <h4 class="h2 fw-bold">GTT Radar</h4>
             <p>Utility web per monitorare linee e passaggi del trasporto pubblico torinese con un'interfaccia rapida da consultare e un uso mobile-first.</p>
-            <a class="web-project-open" href="https://gtt-to.onrender.com/" target="_blank" rel="noopener">Apri</a>
+            <div class="web-project-actions">
+              <a class="web-project-github" href="https://github.com/tongatron/gtt-to" target="_blank" rel="noopener">Open in GitHub</a>
+              <a class="web-project-open" href="https://gtt-to.onrender.com/" target="_blank" rel="noopener">Apri</a>
+            </div>
           </article>
 
           <article class="web-project-card">
             <img src="img/projects/raspi-chat.jpg" class="web-project-cover" alt="Anteprima Raspi Chat">
             <h4 class="h2 fw-bold">Raspi Chat</h4>
             <p>Progetto self-hosted per piccoli gruppi, con stanze private, notifiche web e un'amministrazione semplice da gestire.</p>
-            <a class="web-project-open" href="https://chat.tongatron.org/" target="_blank" rel="noopener">Apri</a>
+            <div class="web-project-actions">
+              <a class="web-project-github" href="https://github.com/tongatron/raspi-chat" target="_blank" rel="noopener">Open in GitHub</a>
+              <a class="web-project-open" href="https://chat.tongatron.org/" target="_blank" rel="noopener">Apri</a>
+            </div>
           </article>
         </div>
         <div class="mt-3 text-end">

@@ -20,6 +20,7 @@ draft: false
 private: false
 client_work: false
 open_source: false
+github_url: "https://github.com/tongatron/gtt-to"
 role: "UX di consultazione e sviluppo frontend"
 seo_title: "GTT Radar | Tongatron"
 seo_description: "Utility web per monitorare linee e passaggi del trasporto pubblico torinese con un'interfaccia rapida da consultare. Il progetto e pensato per accesso diretto da browser, lettura immediata delle informazioni utili e uso mobile-first, riducendo attrito e passaggi nelle verifiche quotidiane."

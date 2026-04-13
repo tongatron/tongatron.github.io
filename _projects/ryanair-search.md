@@ -21,6 +21,7 @@ draft: false
 private: false
 client_work: false
 open_source: false
+github_url: "https://github.com/tongatron/tongatron.github.io/tree/main/projects/ryanair-search"
 role: "UX, integrazione dati e sviluppo frontend"
 seo_title: "Ryanair Search | Tongatron"
 seo_description: "Utility web per cercare voli Ryanair andata e ritorno con filtri su budget, durata, partenza e destinazione, ottimizzata anche per l'uso da smartphone. Il progetto punta su velocita di consultazione, confronto rapido delle opzioni e condivisione dei risultati, riducendo attrito e passaggi nella ricerca operativa dei voli."

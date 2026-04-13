@@ -10,6 +10,7 @@
   <h3>{{ project.title }}</h3>
   <p>{{ card_summary | default: project.excerpt }}</p>
   <div class="button-row">
+    {% if project.github_url %}<a href="{{ project.github_url }}" target="_blank" rel="noopener" class="project-card-github"><i class="bi bi-github" aria-hidden="true"></i> Open in GitHub</a>{% endif %}
     {% if project.project_url %}<a href="{{ project.project_url | relative_url }}" target="_blank" rel="noopener" class="project-link-arrow">Apri <i class="bi bi-box-arrow-up-right" aria-hidden="true"></i></a>{% endif %}
   </div>
 </article>
