@@ -920,6 +920,66 @@ main {
       color: #fff;
     }
 
+    .contact-label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.4rem;
+    }
+    .contact-input {
+      display: block;
+      width: 100%;
+      padding: 0.55rem 0.75rem;
+      background: var(--bg-soft);
+      border: 1px solid var(--line-strong);
+      border-radius: 0.45rem;
+      color: var(--text);
+      font-size: 0.95rem;
+      font-family: inherit;
+      transition: border-color 0.18s ease;
+      resize: vertical;
+    }
+    .contact-input::placeholder { color: var(--muted); opacity: 0.7; }
+    .contact-input:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+    .was-validated .contact-input:invalid {
+      border-color: #f87171;
+    }
+    .contact-invalid {
+      display: none;
+      font-size: 0.8rem;
+      color: #f87171;
+      margin-top: 0.3rem;
+    }
+    .was-validated .contact-input:invalid ~ .contact-invalid {
+      display: block;
+    }
+    .contact-submit {
+      min-height: 38px;
+      padding: 0.45rem 1.4rem;
+    }
+    .contact-feedback {
+      padding: 0.65rem 0.9rem;
+      border-radius: 0.45rem;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+    .contact-feedback.ok {
+      background: rgba(74, 222, 128, 0.1);
+      border: 1px solid rgba(74, 222, 128, 0.35);
+      color: #4ade80;
+    }
+    .contact-feedback.err {
+      background: rgba(248, 113, 113, 0.1);
+      border: 1px solid rgba(248, 113, 113, 0.35);
+      color: #f87171;
+    }
+
     .btn-outline-primary,
     .variant-btn-primary,
     .variant-btn-secondary {
@@ -1383,42 +1443,69 @@ main {
 
     <section id="contacts" class="container py-4 border-top">
       <h2 class="fw-bold section-title">Contatti</h2>
-      <div class="row row-cols-1 g-3">
+      <div class="row g-4 align-items-start">
 
-        <div class="col">
-          <article class="contact-item">
-            <h3 class="h6 text-uppercase">Mail</h3>
-            <p><a href="mailto:giovanni.bindi@tongatron.org">giovanni.bindi@tongatron.org</a></p>
-          </article>
+        <div class="col-12 col-md-5">
+          <div class="row row-cols-1 g-3">
+            <div class="col">
+              <article class="contact-item">
+                <h3 class="h6 text-uppercase">Mail</h3>
+                <p><a href="mailto:giovanni.bindi@tongatron.org">giovanni.bindi@tongatron.org</a></p>
+              </article>
+            </div>
+            <div class="col">
+              <article class="contact-item">
+                <h3 class="h6 text-uppercase">GitHub</h3>
+                <p><a href="https://github.com/tongatron">github.com/tongatron</a></p>
+              </article>
+            </div>
+            <div class="col">
+              <article class="contact-item">
+                <h3 class="h6 text-uppercase">LinkedIn</h3>
+                <p><a href="https://www.linkedin.com/in/giovannibindi/">linkedin.com/in/giovannibindi</a></p>
+              </article>
+            </div>
+            <div class="col">
+              <article class="contact-item">
+                <h3 class="h6 text-uppercase">X</h3>
+                <p><a href="https://x.com/giobindi">x.com/giobindi</a></p>
+              </article>
+            </div>
+            <div class="col">
+              <article class="contact-item">
+                <h3 class="h6 text-uppercase">Hackaday</h3>
+                <p><a href="https://hackaday.io/tongatron">hackaday.io/tongatron</a></p>
+              </article>
+            </div>
+          </div>
         </div>
 
-        <div class="col">
-          <article class="contact-item">
-            <h3 class="h6 text-uppercase">GitHub</h3>
-            <p><a href="https://github.com/tongatron">github.com/tongatron</a></p>
-          </article>
-        </div>        
-
-        <div class="col">
-          <article class="contact-item">
-            <h3 class="h6 text-uppercase">LinkedIn</h3>
-            <p><a href="https://www.linkedin.com/in/giovannibindi/">linkedin.com/in/giovannibindi</a></p>
-          </article>
+        <div class="col-12 col-md-7">
+          <h3 class="fw-bold mb-3" style="font-size:1.15rem;">Contattami</h3>
+          <div id="contact-status" class="contact-feedback" role="alert" style="display:none;"></div>
+          <form id="contact-form" novalidate>
+            <div class="mb-3">
+              <label for="cf-name" class="contact-label">Nome</label>
+              <input type="text" id="cf-name" class="contact-input" placeholder="Il tuo nome" required>
+              <div class="contact-invalid">Inserisci il tuo nome.</div>
+            </div>
+            <div class="mb-3">
+              <label for="cf-email" class="contact-label">Mail</label>
+              <input type="email" id="cf-email" class="contact-input" placeholder="tua@email.com" required>
+              <div class="contact-invalid">Inserisci un'email valida.</div>
+            </div>
+            <div class="mb-4">
+              <label for="cf-message" class="contact-label">Messaggio</label>
+              <textarea id="cf-message" class="contact-input" rows="4" placeholder="Scrivi qui..." required></textarea>
+              <div class="contact-invalid">Inserisci un messaggio.</div>
+            </div>
+            <button type="submit" class="btn-ghost contact-submit" id="cf-btn">
+              <span class="cf-spinner spinner-border spinner-border-sm me-2" role="status" style="display:none;"></span>
+              <span class="cf-label">Invia</span>
+            </button>
+          </form>
         </div>
-        <div class="col">
-          <article class="contact-item">
-            <h3 class="h6 text-uppercase">X</h3>
-            <p><a href="https://x.com/giobindi">x.com/giobindi</a></p>
-          </article>
-        </div>
 
-
-        <div class="col">
-          <article class="contact-item">
-            <h3 class="h6 text-uppercase">Hackaday</h3>
-            <p><a href="https://hackaday.io/tongatron">hackaday.io/tongatron</a></p>
-          </article>
-        </div>
       </div>
     </section>
   </main>
@@ -1560,6 +1647,64 @@ main {
         if (event.key !== "Enter" && event.key !== " ") return;
         event.preventDefault();
         runAnimation();
+      });
+    })();
+  </script>
+
+  <script>
+    (() => {
+      const API = 'https://api.tongatron.org/api/send-mail';
+      const form = document.getElementById('contact-form');
+      const btn  = document.getElementById('cf-btn');
+      const statusEl = document.getElementById('contact-status');
+      if (!form) return;
+
+      function showStatus(text, type) {
+        statusEl.textContent = text;
+        statusEl.className = 'contact-feedback ' + type;
+        statusEl.style.display = 'block';
+        statusEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        form.classList.add('was-validated');
+        if (!form.checkValidity()) return;
+
+        const spinner = btn.querySelector('.cf-spinner');
+        const label   = btn.querySelector('.cf-label');
+        spinner.style.display = 'inline-block';
+        label.textContent = 'Invio…';
+        btn.disabled = true;
+        statusEl.style.display = 'none';
+
+        const payload = {
+          name:    document.getElementById('cf-name').value.trim(),
+          email:   document.getElementById('cf-email').value.trim(),
+          message: document.getElementById('cf-message').value.trim(),
+        };
+
+        try {
+          const res  = await fetch(API, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload),
+          });
+          const data = await res.json();
+          if (data.ok) {
+            showStatus('✅ Messaggio inviato! Ti rispondo il prima possibile.', 'ok');
+            form.reset();
+            form.classList.remove('was-validated');
+          } else {
+            showStatus('❌ ' + (data.error || 'Errore sconosciuto.'), 'err');
+          }
+        } catch (err) {
+          showStatus('❌ Impossibile raggiungere il server. Riprova più tardi.', 'err');
+        } finally {
+          spinner.style.display = 'none';
+          label.textContent = 'Invia';
+          btn.disabled = false;
+        }
       });
     })();
   </script>
