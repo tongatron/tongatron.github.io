@@ -13,7 +13,7 @@ stack:
 platforms:
   - web
   - mobile
-project_url: "/projects/qrscanner/index.html"
+project_url: "https://tongatron.github.io/games-utilities/qrscanner/index.html"
 icon: "/projects/qrscanner/icons/icon-192.png"
 featured: false
 draft: false

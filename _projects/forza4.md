@@ -13,7 +13,7 @@ stack:
 platforms:
   - web
   - mobile
-project_url: "/projects/forza4/index.html"
+project_url: "https://tongatron.github.io/games-utilities/forza4/index.html"
 icon: "/projects/forza4/assets/icons/icon.svg"
 featured: true
 draft: false

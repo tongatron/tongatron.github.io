@@ -13,7 +13,7 @@ stack:
 platforms:
   - web
   - mobile
-project_url: "/projects/rumorebianco/index.html"
+project_url: "https://tongatron.github.io/games-utilities/rumorebianco/index.html"
 icon: "/projects/rumorebianco/icons/icon-192.svg"
 featured: false
 draft: false

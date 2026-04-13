@@ -13,7 +13,7 @@ stack:
 platforms:
   - web
   - mobile
-project_url: "/projects/memory/index.html"
+project_url: "https://tongatron.github.io/games-utilities/memory/index.html"
 icon: "/projects/memory/icon-192.png"
 featured: false
 draft: false

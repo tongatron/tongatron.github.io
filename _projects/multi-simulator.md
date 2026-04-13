@@ -13,7 +13,7 @@ stack:
 platforms:
   - web
   - mobile
-project_url: "/projects/multi-simulator/index.html"
+project_url: "https://tongatron.github.io/games-utilities/multi-simulator/index.html"
 icon: "/projects/multi-simulator/icons/icon-192.svg"
 featured: false
 draft: false

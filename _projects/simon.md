@@ -13,7 +13,7 @@ stack:
 platforms:
   - web
   - mobile
-project_url: "/projects/simon/index.html"
+project_url: "https://tongatron.github.io/games-utilities/simon/index.html"
 icon: "/projects/simon/icons/icon-192.png"
 featured: true
 draft: false

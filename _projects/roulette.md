@@ -13,7 +13,7 @@ stack:
 platforms:
   - web
   - mobile
-project_url: "/projects/roulette/index.html"
+project_url: "https://tongatron.github.io/games-utilities/roulette/index.html"
 icon: "/projects/roulette/icons/icon-192.svg"
 featured: false
 draft: false
