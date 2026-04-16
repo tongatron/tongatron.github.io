@@ -5,7 +5,7 @@ published_at: "anno 2026"
 status: "active"
 category: "utility"
 projects_section: "featured"
-projects_order: 5
+projects_order: 6
 stack:
   - HTML
   - CSS
