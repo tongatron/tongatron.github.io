@@ -833,68 +833,14 @@ main {
       margin: 0 0 0.7rem;
     }
 
-    .project-link-arrow,
-    .web-project-open {
+    .project-action-button {
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       align-self: flex-start;
-      gap: 0.34rem;
-      padding: 0;
-      border: 0;
-      background: transparent;
-      color: var(--accent-soft);
-      font-size: 0.96rem;
-      font-weight: 700;
-      letter-spacing: 0.02em;
-      line-height: 1.2;
-      white-space: nowrap;
-      transition: color 0.22s ease, gap 0.22s ease;
-    }
-
-    .project-link-arrow::after,
-    .web-project-open::after {
-      content: "\f1c5";
-      display: inline-block;
-      font-family: bootstrap-icons;
-      font-style: normal;
-      font-weight: 400;
-      font-variant: normal;
-      text-transform: none;
-      font-size: 0.9em;
-      line-height: 1;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      transition: transform 0.22s ease;
-    }
-
-    .project-link-arrow:hover,
-    .project-link-arrow:focus,
-    .web-project-open:hover,
-    .web-project-open:focus {
-      color: var(--text);
-      gap: 0.44rem;
-    }
-
-    .project-link-arrow:hover::after,
-    .project-link-arrow:focus::after,
-    .web-project-open:hover::after,
-    .web-project-open:focus::after {
-      transform: translateX(3px);
-    }
-
-    .web-project-actions {
-      display: flex;
-      align-items: flex-start;
-      gap: 0.75rem;
-      flex-wrap: wrap;
-      margin-top: auto;
-      padding-top: 0.15rem;
-    }
-    .web-project-github {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.35rem;
-      padding: 0.18rem 0.6rem 0.18rem 0.45rem;
+      gap: 0.42rem;
+      min-height: 2.45rem;
+      padding: 0.25rem 0.72rem 0.25rem 0.58rem;
       border: 1.5px solid rgba(255,255,255,0.25);
       border-radius: 6px;
       background: #161b22;
@@ -902,21 +848,43 @@ main {
       font-size: 0.78rem;
       font-weight: 600;
       letter-spacing: 0.01em;
+      line-height: 1;
       white-space: nowrap;
       text-decoration: none;
-      transition: border-color 0.2s ease, background 0.2s ease;
+      transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
     }
-    .web-project-github::before {
-      content: "\f3ed";
+
+    .project-action-button::before {
       font-family: bootstrap-icons;
       font-style: normal;
       font-weight: 400;
-      font-size: 1.15em;
+      font-size: 1.05em;
       line-height: 1;
       -webkit-font-smoothing: antialiased;
     }
-    .web-project-github:hover,
-    .web-project-github:focus {
+
+    .project-action-open::before {
+      content: "\f1c5";
+    }
+
+    .project-action-github::before {
+      content: "\f3ed";
+      font-size: 1.15em;
+    }
+
+    .web-project-actions {
+      display: flex;
+      align-items: stretch;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      margin-top: auto;
+      padding-top: 0.15rem;
+    }
+    .web-project-actions .project-action-button {
+      flex: 0 0 auto;
+    }
+    .project-action-button:hover,
+    .project-action-button:focus {
       background: #21262d;
       border-color: rgba(255,255,255,0.5);
       color: #fff;
@@ -1331,7 +1299,7 @@ HTML, CSS; Javascript, Node ana whatever gets the job done</p>
             <div class="card-body">
               <h3 class="h5 card-title">Robottino</h3>
               <p class="card-text">Robot educativo STEM open source. Basato su Arduino, integra display, sensori ambientali, buzzer, luci RGB, sensore ultrasonico e testa rotante programmabile.</p>
-              <a class="project-link-arrow" href="projects/robottino/robottino-site/index.html" target="_blank" rel="noopener">Vai al sito</a>
+              <a class="project-action-button project-action-open" href="projects/robottino/robottino-site/index.html" target="_blank" rel="noopener">Apri</a>
             </div>
           </article>
         </div>
@@ -1341,7 +1309,7 @@ HTML, CSS; Javascript, Node ana whatever gets the job done</p>
             <div class="card-body">
               <h3 class="h5 card-title">Selfomatic</h3>
               <p class="card-text">Social camera per eventi con scatto automatico e pubblicazione in tempo reale. Una soluzione efficace per attivazioni, fiere e comunicazione live.</p>
-              <a class="project-link-arrow" href="projects/selfomatic/index.html" target="_blank" rel="noopener">Vai al sito</a>
+              <a class="project-action-button project-action-open" href="projects/selfomatic/index.html" target="_blank" rel="noopener">Apri</a>
             </div>
           </article>
         </div>
@@ -1351,7 +1319,7 @@ HTML, CSS; Javascript, Node ana whatever gets the job done</p>
             <div class="card-body">
               <h3 class="h5 card-title">IKEA Hack Nordli</h3>
               <p class="card-text">Progetto FabLab: personalizzazione della cassettiera IKEA Nordli con tavolino estraibile realizzato tramite pannello tagliato a laser.</p>
-              <a class="project-link-arrow" href="projects/IKEA-hack/index.html" target="_blank" rel="noopener">Vai al sito</a>
+              <a class="project-action-button project-action-open" href="projects/IKEA-hack/index.html" target="_blank" rel="noopener">Apri</a>
             </div>
           </article>
         </div>
@@ -1368,8 +1336,8 @@ HTML, CSS; Javascript, Node ana whatever gets the job done</p>
             <h4 class="h2 fw-bold">Ryanair Search</h4>
             <p>Utility web per cercare voli Ryanair andata e ritorno con filtri su budget, durata, partenza e destinazione, ottimizzata anche per l'uso da smartphone.</p>
             <div class="web-project-actions">
-              <a class="web-project-github" href="https://github.com/tongatron/tongatron.github.io/tree/main/projects/ryanair-search" target="_blank" rel="noopener">Open in GitHub</a>
-              <a class="web-project-open" href="projects/ryanair-search/index.html" target="_blank" rel="noopener">Apri</a>
+              <a class="project-action-button project-action-open" href="projects/ryanair-search/index.html" target="_blank" rel="noopener">Apri</a>
+              <a class="project-action-button project-action-github" href="https://github.com/tongatron/tongatron.github.io/tree/main/projects/ryanair-search" target="_blank" rel="noopener">GitHub</a>
             </div>
           </article>
 
@@ -1378,8 +1346,8 @@ HTML, CSS; Javascript, Node ana whatever gets the job done</p>
             <h4 class="h2 fw-bold">Head Tracking</h4>
             <p>Esperimento web che usa il browser per testare interazioni basate sul movimento della testa, con un'impostazione diretta e immediata da provare online.</p>
             <div class="web-project-actions">
-              <a class="web-project-github" href="https://github.com/tongatron/head-tracking" target="_blank" rel="noopener">Open in GitHub</a>
-              <a class="web-project-open" href="head-tracking/" target="_blank" rel="noopener">Apri</a>
+              <a class="project-action-button project-action-open" href="head-tracking/" target="_blank" rel="noopener">Apri</a>
+              <a class="project-action-button project-action-github" href="https://github.com/tongatron/head-tracking" target="_blank" rel="noopener">GitHub</a>
             </div>
           </article>
 
@@ -1388,8 +1356,8 @@ HTML, CSS; Javascript, Node ana whatever gets the job done</p>
             <h4 class="h2 fw-bold">GTT Radar</h4>
             <p>Utility web per monitorare linee e passaggi del trasporto pubblico torinese con un'interfaccia rapida da consultare e un uso mobile-first.</p>
             <div class="web-project-actions">
-              <a class="web-project-github" href="https://github.com/tongatron/gtt-to" target="_blank" rel="noopener">Open in GitHub</a>
-              <a class="web-project-open" href="https://gtt-to.onrender.com/" target="_blank" rel="noopener">Apri</a>
+              <a class="project-action-button project-action-open" href="https://gtt-to.onrender.com/" target="_blank" rel="noopener">Apri</a>
+              <a class="project-action-button project-action-github" href="https://github.com/tongatron/gtt-to" target="_blank" rel="noopener">GitHub</a>
             </div>
           </article>
 
@@ -1398,8 +1366,8 @@ HTML, CSS; Javascript, Node ana whatever gets the job done</p>
             <h4 class="h2 fw-bold">PA Ninja</h4>
             <p>Strumento locale per consultare, raccogliere e organizzare informazioni provenienti da portali della Pubblica Amministrazione italiana.</p>
             <div class="web-project-actions">
-              <a class="web-project-github" href="https://github.com/tongatron/pa-ninja" target="_blank" rel="noopener">Open in GitHub</a>
-              <a class="web-project-open" href="https://tongatron.github.io/pa-ninja/landing/" target="_blank" rel="noopener">Apri</a>
+              <a class="project-action-button project-action-open" href="https://tongatron.github.io/pa-ninja/landing/" target="_blank" rel="noopener">Apri</a>
+              <a class="project-action-button project-action-github" href="https://github.com/tongatron/pa-ninja" target="_blank" rel="noopener">GitHub</a>
             </div>
           </article>
 
@@ -1408,8 +1376,8 @@ HTML, CSS; Javascript, Node ana whatever gets the job done</p>
             <h4 class="h2 fw-bold">Raspi Chat</h4>
             <p>Progetto self-hosted per piccoli gruppi, con stanze private, notifiche web e un'amministrazione semplice da gestire.</p>
             <div class="web-project-actions">
-              <a class="web-project-github" href="https://github.com/tongatron/raspi-chat" target="_blank" rel="noopener">Open in GitHub</a>
-              <a class="web-project-open" href="https://chat.tongatron.org/" target="_blank" rel="noopener">Apri</a>
+              <a class="project-action-button project-action-open" href="https://chat.tongatron.org/" target="_blank" rel="noopener">Apri</a>
+              <a class="project-action-button project-action-github" href="https://github.com/tongatron/raspi-chat" target="_blank" rel="noopener">GitHub</a>
             </div>
           </article>
         </div>

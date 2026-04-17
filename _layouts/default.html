@@ -212,7 +212,7 @@
     }
 
     .btn-ghost,
-    .button-row a:not(.project-link-arrow) {
+    .button-row a:not(.project-link-arrow):not(.project-action-button) {
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -249,22 +249,68 @@
       font-size: 1.02rem;
     }
 
-    .button-row a:not(.project-link-arrow) {
+    .button-row a:not(.project-link-arrow):not(.project-action-button) {
       gap: 0.45rem;
     }
 
-    .button-row a:not(.project-link-arrow) .bi {
+    .button-row a:not(.project-link-arrow):not(.project-action-button) .bi {
       font-size: 0.98rem;
+    }
+
+    .project-action-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.42rem;
+      min-height: 2.45rem;
+      padding: 0.25rem 0.72rem 0.25rem 0.58rem;
+      border: 1.5px solid rgba(255,255,255,0.25);
+      border-radius: 6px;
+      background: #161b22;
+      color: #fff;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+      line-height: 1;
+      white-space: nowrap;
+      text-decoration: none;
+      transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
+    }
+
+    .project-action-button::before {
+      font-family: bootstrap-icons;
+      font-style: normal;
+      font-weight: 400;
+      font-size: 1.05em;
+      line-height: 1;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .project-action-open::before {
+      content: "\f1c5";
+    }
+
+    .project-action-github::before {
+      content: "\f3ed";
+      font-size: 1.15em;
     }
 
     .btn-ghost:hover,
     .btn-ghost:focus,
-    .button-row a:not(.project-link-arrow):hover,
-    .button-row a:not(.project-link-arrow):focus {
+    .button-row a:not(.project-link-arrow):not(.project-action-button):hover,
+    .button-row a:not(.project-link-arrow):not(.project-action-button):focus {
       background: rgba(255, 255, 255, 0.05);
       color: var(--text);
       border-color: rgba(255, 255, 255, 0.42);
       transform: translateY(-1px);
+    }
+
+    .project-action-button:hover,
+    .project-action-button:focus {
+      background: #21262d;
+      border-color: rgba(255,255,255,0.5);
+      color: #fff;
+      transform: none;
     }
 
     .project-link-arrow:hover,
@@ -671,32 +717,6 @@
       flex-wrap: wrap;
       gap: 0.75rem;
       margin-top: 0;
-    }
-
-    .project-card-github {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.35rem;
-      padding: 0.18rem 0.6rem 0.18rem 0.45rem;
-      border: 1.5px solid rgba(255,255,255,0.25);
-      border-radius: 6px;
-      background: #161b22;
-      color: #fff;
-      font-size: 0.78rem;
-      font-weight: 600;
-      letter-spacing: 0.01em;
-      white-space: nowrap;
-      text-decoration: none;
-      transition: border-color 0.2s ease, background 0.2s ease;
-    }
-    .project-card-github .bi {
-      font-size: 1.15em;
-    }
-    .project-card-github:hover,
-    .project-card-github:focus {
-      background: #21262d;
-      border-color: rgba(255,255,255,0.5);
-      color: #fff;
     }
 
     .project-content > :first-child {
