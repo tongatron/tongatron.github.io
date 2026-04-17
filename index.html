@@ -756,6 +756,48 @@ main {
       margin-bottom: 1rem;
     }
 
+    .game-links-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .game-link-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.8rem;
+      padding: 0.9rem 0.4rem 0 0.4rem;
+      border-top: 1px solid var(--line);
+      text-align: center;
+    }
+
+    .game-link-icon {
+      width: 3rem;
+      height: 3rem;
+      flex: 0 0 3rem;
+      display: block;
+      object-fit: contain;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 0.7rem;
+      padding: 0.42rem;
+      background: rgba(255,255,255,0.04);
+    }
+
+    .game-link-title {
+      display: inline-block;
+      color: var(--text);
+      font-weight: 700;
+      line-height: 1.3;
+      text-decoration: none;
+    }
+
+    .game-link-title:hover,
+    .game-link-title:focus {
+      color: var(--text);
+    }
+
     .web-projects-cards {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -1135,6 +1177,10 @@ main {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
 
+      .game-links-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
       .variant-hero-title {
         font-size: clamp(2.8rem, 12vw, 4.4rem);
       }
@@ -1384,6 +1430,29 @@ HTML, CSS; Javascript, Node ana whatever gets the job done</p>
         <div class="mt-3 text-end">
           <a class="btn btn-outline-primary" href="projects/index.html">altri progetti</a>
         </div>
+      </div>
+    </section>
+
+    <section id="games-simulators" class="container py-4 border-top">
+      <h2 class="fw-bold section-title">Giochi e simulatori</h2>
+      <p class="web-projects-intro">Progetti mobile-first e PWA orientati a gioco, simulazione, audio, test interattivi e piccoli strumenti da usare in modo diretto.</p>
+      <div class="game-links-grid">
+        <article class="game-link-item">
+          <img src="projects/Forza4/assets/icons/icon.svg" class="game-link-icon" alt="Icona Forza Quattro">
+          <a class="game-link-title" href="https://tongatron.github.io/games-utilities/forza4/index.html" target="_blank" rel="noopener">Forza Quattro</a>
+        </article>
+        <article class="game-link-item">
+          <img src="projects/simon/icons/icon-192.png" class="game-link-icon" alt="Icona Simon">
+          <a class="game-link-title" href="https://tongatron.github.io/games-utilities/simon/index.html" target="_blank" rel="noopener">Simon</a>
+        </article>
+        <article class="game-link-item">
+          <img src="projects/memory/icon-192.png" class="game-link-icon" alt="Icona Memory">
+          <a class="game-link-title" href="https://tongatron.github.io/games-utilities/memory/index.html" target="_blank" rel="noopener">Memory</a>
+        </article>
+        <article class="game-link-item">
+          <img src="projects/rumorebianco/icons/icon-192.svg" class="game-link-icon" alt="Icona Rumore Bianco">
+          <a class="game-link-title" href="https://tongatron.github.io/games-utilities/rumorebianco/index.html" target="_blank" rel="noopener">Rumore Bianco</a>
+        </article>
       </div>
     </section>
 
