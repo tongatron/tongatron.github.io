@@ -334,7 +334,16 @@
       align-items: start;
     }
 
-    .project-card,
+    .project-card {
+      border: 0;
+      border-radius: 1.1rem;
+      background: transparent;
+      box-shadow: none;
+      padding: 1rem;
+      overflow: hidden;
+      height: fit-content;
+    }
+
     .project-panel,
     .project-content-panel {
       border: 1px solid var(--line);
@@ -343,18 +352,13 @@
       box-shadow: inset 0 1px 0 rgba(255,255,255,0.04);
     }
 
-    .project-card {
-      padding: 1rem;
-      overflow: hidden;
-      height: fit-content;
-    }
-
     .project-card-cover {
       display: block;
       width: 100%;
       height: 180px;
       object-fit: cover;
-      border-radius: 0.9rem;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 0;
       margin-bottom: 1rem;
       background: rgba(255,255,255,0.03);
     }
