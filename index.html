@@ -147,11 +147,8 @@
       gap: 1rem;
     }
 
-    .header-github-follow {
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      flex: 0 0 auto;
+    .hero-github-follow {
+      margin-top: 0.9rem;
     }
 
     header .border-bottom {
@@ -627,7 +624,10 @@ main {
     }
 
     .service-item,
-    .network-item,
+    .network-item {
+      padding-top: 1rem;
+    }
+
     .contact-item {
       padding-top: 1rem;
       border-top: 1px solid var(--line);
@@ -707,7 +707,6 @@ main {
 
     .iot-spec-item {
       padding-top: 0.65rem;
-      border-top: 1px solid var(--line);
     }
 
     .iot-spec-item strong {
@@ -779,10 +778,9 @@ main {
 
     .game-link-item {
       display: flex;
-      align-items: flex-start;
+      align-items: center;
       gap: 0.9rem;
       padding-top: 0.85rem;
-      border-top: 1px solid var(--line);
       text-align: left;
     }
 
@@ -799,7 +797,9 @@ main {
     }
 
     .game-link-title {
-      display: inline-block;
+      display: flex;
+      align-items: center;
+      min-height: 3rem;
       color: var(--text);
       font-weight: 700;
       line-height: 1.3;
@@ -1131,7 +1131,6 @@ main {
     .variant-operating-card {
       position: relative;
       border: 0;
-      border-top: 1px solid var(--line);
       border-radius: 0;
       background: transparent;
       padding: 1.15rem 0 0;
@@ -1204,16 +1203,6 @@ main {
         --bs-gutter-x: 1.8rem;
       }
 
-      .header-topbar {
-        align-items: flex-start;
-      }
-
-      .header-github-follow {
-        width: auto;
-        justify-content: flex-end;
-        margin-left: auto;
-      }
-
       .variant-hero-wrap,
       .card,
       .web-projects-shell,
@@ -1271,9 +1260,6 @@ main {
         </span>
         <span class="fs-1 fw-semibold">tongatron</span>
       </div>
-      <div class="header-github-follow">
-        <a class="github-button" href="https://github.com/tongatron" data-color-scheme="no-preference: light; light: light; dark: dark;" data-size="large" aria-label="Follow @tongatron on GitHub">Follow @tongatron</a>
-      </div>
     </div>
   </header>
 
@@ -1305,7 +1291,10 @@ From web platforms to real-time applications, mobile-first tools, IoT prototypes
 execution, simplicity, real-world impact</p>
 <p><strong>🚀 STACK: </strong>
 HTML, CSS; Javascript, Node ana whatever gets the job done</p>
-
+              <div class="hero-github-follow">
+                <a class="github-button" href="https://github.com/tongatron" data-color-scheme="no-preference: light; light: light; dark: dark;" data-size="large" aria-label="Follow @tongatron on GitHub">Follow @tongatron</a>
+              </div>
+	
             </p>
 
               </div>
