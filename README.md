@@ -1,51 +1,50 @@
-# tongatron.github.io
+# tongatron 🧪
 
-Minimal hub for projects, experiments and digital tools.
+> small repo, big rabbit hole
 
 ---
 
-## 🌐 Enter
+## 🌐 enter the system
 
 👉 https://tongatron.github.io/
 
 ---
 
-## 🧠 About
+## 🧠 what is this?
 
-This repository hosts the public entry point to my work.
+this repo is just a door.
 
-Inside you’ll find:
-- web experiments
-- small tools
-- creative coding projects
-- prototypes and ideas in progress
-
----
-
-## ⚡ Philosophy
-
-- build fast
-- ship real things
-- keep it simple
-- iterate in public
+behind it:
+- ⚙️ tools
+- 🧪 experiments
+- 🛰 weird interfaces
+- 📡 things that (mostly) work
 
 ---
 
-## 🚀 Projects
+## 🚀 projects
 
-All projects live here:
+everything lives here ↓
 
 👉 https://tongatron.github.io/
 
 ---
 
-## 🛠 Tech
+## 🧩 philosophy
 
-HTML · CSS · JavaScript · Node.js  
-+ whatever works
+- 🏃 build fast  
+- 🔁 iterate faster  
+- 🧱 ship real things  
+- 🪶 keep it lightweight  
+- 🧑‍🔧 break → fix → repeat  
 
 ---
 
-## 📫 Contact
+## 🛠 stack (more or less)
 
-→ via GitHub
+```bash
+html
+css
+javascript
+node
++ whatever gets the job done
