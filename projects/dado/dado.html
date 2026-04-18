@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dado</title>
+  <style>
+    :root {
+      --bg1: #1d1d28;
+      --bg2: #111118;
+      --bg3: #09090d;
+      --panel: rgba(255,255,255,.05);
+      --panel-border: rgba(255,255,255,.08);
+      --text: #f2f2f2;
+      --muted: #cfcfda;
+      --size: 120px;
+      --pip: 14px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, var(--bg1) 0%, var(--bg2) 45%, var(--bg3) 100%);
+      color: var(--text);
+      overflow-x: hidden;
+      overflow-y: auto;
+    }
+
+    .wrap {
+      width: min(92vw, 900px);
+      margin: 0 auto;
+      padding: 24px;
+      display: grid;
+      gap: 24px;
+      justify-items: center;
+    }
+
+    .scene {
+      width: 260px;
+      height: 260px;
+      perspective: 900px;
+      display: grid;
+      place-items: center;
+      position: relative;
+    }
+
+    .shadow {
+      position: absolute;
+      width: 170px;
+      height: 170px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(0,0,0,.48), rgba(0,0,0,0) 70%);
+      filter: blur(12px);
+      transform: translateY(78px);
+    }
+
+    .cube {
+      width: var(--size);
+      height: var(--size);
+      position: relative;
+      transform-style: preserve-3d;
+      transform: rotateX(-25deg) rotateY(35deg);
+      will-change: transform;
+    }
+
+    .face {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(3, 1fr);
+      padding: 14px;
+      border-radius: 22px;
+      background: linear-gradient(145deg, #fefefe, #dddddd);
+      border: 1px solid rgba(255,255,255,.35);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.25), 0 10px 24px rgba(0,0,0,.35);
+      backface-visibility: hidden;
+    }
+
+    .pip {
+      width: var(--pip);
+      height: var(--pip);
+      align-self: center;
+      justify-self: center;
+      border-radius: 50%;
+      background: #111;
+      opacity: 0;
+    }
+
+    .show { opacity: 1; }
+
+    .front  { transform: translateZ(calc(var(--size) / 2)); }
+    .back   { transform: rotateY(180deg) translateZ(calc(var(--size) / 2)); }
+    .right  { transform: rotateY(90deg) translateZ(calc(var(--size) / 2)); }
+    .left   { transform: rotateY(-90deg) translateZ(calc(var(--size) / 2)); }
+    .top    { transform: rotateX(90deg) translateZ(calc(var(--size) / 2)); }
+    .bottom { transform: rotateX(-90deg) translateZ(calc(var(--size) / 2)); }
+
+    .controls {
+      display: flex;
+      justify-content: center;
+    }
+
+    button {
+      appearance: none;
+      border: 1px solid rgba(255,255,255,.16);
+      border-radius: 999px;
+      background: #f6f6f6;
+      color: #111;
+      font-weight: 800;
+      letter-spacing: .03em;
+      padding: 14px 22px;
+      cursor: pointer;
+      transition: transform .15s ease, opacity .15s ease;
+      box-shadow: 0 10px 24px rgba(0,0,0,.22);
+    }
+
+    button:hover { transform: translateY(-1px); }
+    button:active { transform: translateY(1px) scale(.99); }
+    button:disabled { opacity: .55; cursor: wait; }
+
+    .stats {
+      width: min(92vw, 520px);
+      display: grid;
+      gap: 12px;
+      padding: 12px;
+      border-radius: 18px;
+      background: var(--panel);
+      border: 1px solid var(--panel-border);
+      backdrop-filter: blur(6px);
+    }
+
+    .chart-wrap {
+      display: grid;
+      gap: 10px;
+    }
+
+    .chart-row {
+      display: grid;
+      grid-template-columns: 14px 1fr 26px;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .chart-label,
+    .chart-value {
+      font-weight: 700;
+      color: #e8e8ef;
+      font-size: .72rem;
+    }
+
+    .chart-bar-box {
+      height: 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.08);
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,.06);
+    }
+
+    .chart-bar {
+      height: 100%;
+      width: 0%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, rgba(255,255,255,.95), rgba(210,210,220,.65));
+      transition: width .25s ease;
+    }
+
+    .metrics-wrap {
+      display: grid;
+      gap: 10px;
+      justify-items: center;
+      padding-top: 2px;
+    }
+
+    .total-wrap {
+      display: grid;
+      gap: 4px;
+      justify-items: center;
+    }
+
+    .total-label {
+      font-size: .72rem;
+      color: #d7d7e2;
+      font-weight: 700;
+    }
+
+    .total-value {
+      font-size: 1.5rem;
+      line-height: 1;
+      font-weight: 900;
+      color: #ffffff;
+    }
+
+    .reset-small {
+      padding: 6px 10px;
+      border-radius: 4px;
+      font-size: .72rem;
+      letter-spacing: .02em;
+      min-width: 0;
+      background: rgba(255,255,255,.08);
+      color: #f2f2f2;
+      box-shadow: none;
+    }
+
+
+    .actions-wrap {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .bulk-wrap {
+      display: grid;
+      grid-template-columns: 72px auto;
+      align-items: center;
+      gap: 6px;
+      justify-self: start;
+    }
+
+    .bulk-wrap input {
+      width: 72px;
+      padding: 6px 8px;
+      border-radius: 4px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.07);
+      color: #f2f2f2;
+      font-size: .72rem;
+      min-width: 0;
+    }
+
+    .bulk-small {
+      padding: 6px 10px;
+      border-radius: 4px;
+      font-size: .72rem;
+      letter-spacing: .02em;
+      min-width: 0;
+      background: rgba(255,255,255,.08);
+      color: #f2f2f2;
+      box-shadow: none;
+    }
+
+    @media (max-width: 640px) {
+      :root {
+        --size: 104px;
+        --pip: 12px;
+      }
+      .scene {
+        width: 220px;
+        height: 220px;
+      }
+      .stats {
+        width: min(94vw, 560px);
+        padding: 14px;
+      }
+      .chart-row {
+        grid-template-columns: 16px 1fr 30px;
+        gap: 8px;
+      }
+      .chart-label,
+      .chart-value,
+      .total-label,
+      .reset-small,
+      .bulk-small,
+      .bulk-wrap input {
+        font-size: .78rem;
+      }
+      .total-value {
+        font-size: 1.8rem;
+      }
+      .chart-bar-box {
+        height: 14px;
+      }
+      .actions-wrap {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <div class="scene" aria-label="Animazione dado">
+      <div class="shadow"></div>
+      <div class="cube" id="cube">
+        <div class="face front">
+          <span class="pip"></span><span class="pip"></span><span class="pip"></span>
+          <span class="pip"></span><span class="pip show"></span><span class="pip"></span>
+          <span class="pip"></span><span class="pip"></span><span class="pip"></span>
+        </div>
+        <div class="face back">
+          <span class="pip show"></span><span class="pip"></span><span class="pip show"></span>
+          <span class="pip show"></span><span class="pip"></span><span class="pip show"></span>
+          <span class="pip show"></span><span class="pip"></span><span class="pip show"></span>
+        </div>
+        <div class="face right">
+          <span class="pip"></span><span class="pip"></span><span class="pip show"></span>
+          <span class="pip"></span><span class="pip show"></span><span class="pip"></span>
+          <span class="pip show"></span><span class="pip"></span><span class="pip"></span>
+        </div>
+        <div class="face left">
+          <span class="pip show"></span><span class="pip"></span><span class="pip show"></span>
+          <span class="pip show"></span><span class="pip"></span><span class="pip show"></span>
+          <span class="pip"></span><span class="pip"></span><span class="pip"></span>
+        </div>
+        <div class="face top">
+          <span class="pip show"></span><span class="pip"></span><span class="pip show"></span>
+          <span class="pip"></span><span class="pip show"></span><span class="pip"></span>
+          <span class="pip show"></span><span class="pip"></span><span class="pip show"></span>
+        </div>
+        <div class="face bottom">
+          <span class="pip show"></span><span class="pip"></span><span class="pip"></span>
+          <span class="pip"></span><span class="pip"></span><span class="pip"></span>
+          <span class="pip"></span><span class="pip"></span><span class="pip show"></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="controls">
+      <button id="rollBtn">Lancia il dado</button>
+    </div>
+
+    <div class="stats">
+      <div class="chart-wrap" aria-label="Istogramma dei lanci">
+        <div class="chart-row"><span class="chart-label">1</span><div class="chart-bar-box"><div class="chart-bar" id="bar1"></div></div><span class="chart-value" id="count1">0</span></div>
+        <div class="chart-row"><span class="chart-label">2</span><div class="chart-bar-box"><div class="chart-bar" id="bar2"></div></div><span class="chart-value" id="count2">0</span></div>
+        <div class="chart-row"><span class="chart-label">3</span><div class="chart-bar-box"><div class="chart-bar" id="bar3"></div></div><span class="chart-value" id="count3">0</span></div>
+        <div class="chart-row"><span class="chart-label">4</span><div class="chart-bar-box"><div class="chart-bar" id="bar4"></div></div><span class="chart-value" id="count4">0</span></div>
+        <div class="chart-row"><span class="chart-label">5</span><div class="chart-bar-box"><div class="chart-bar" id="bar5"></div></div><span class="chart-value" id="count5">0</span></div>
+        <div class="chart-row"><span class="chart-label">6</span><div class="chart-bar-box"><div class="chart-bar" id="bar6"></div></div><span class="chart-value" id="count6">0</span></div>
+      </div>
+
+      <div class="metrics-wrap">
+        <div class="total-wrap">
+          <div class="total-label">Totale lanci</div>
+          <div id="totalCount" class="total-value">0</div>
+        </div>
+        <div class="actions-wrap">
+          <div class="bulk-wrap">
+            <input id="bulkCount" type="number" min="1" step="1" value="100" aria-label="Numero di lanci casuali" />
+            <button id="bulkBtn" class="bulk-small">Lancia per X volte</button>
+          </div>
+          <button id="resetBtn" class="reset-small">Azzera</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const cube = document.getElementById('cube');
+    const rollBtn = document.getElementById('rollBtn');
+    const resetBtn = document.getElementById('resetBtn');
+    const bulkBtn = document.getElementById('bulkBtn');
+    const bulkCountEl = document.getElementById('bulkCount');
+    const totalEl = document.getElementById('totalCount');
+
+    const countEls = {
+      1: document.getElementById('count1'),
+      2: document.getElementById('count2'),
+      3: document.getElementById('count3'),
+      4: document.getElementById('count4'),
+      5: document.getElementById('count5'),
+      6: document.getElementById('count6')
+    };
+
+    const barEls = {
+      1: document.getElementById('bar1'),
+      2: document.getElementById('bar2'),
+      3: document.getElementById('bar3'),
+      4: document.getElementById('bar4'),
+      5: document.getElementById('bar5'),
+      6: document.getElementById('bar6')
+    };
+
+    const baseOrientations = {
+      1: { x: 0, y: 0 },
+      2: { x: 90, y: 0 },
+      3: { x: 0, y: -90 },
+      4: { x: 0, y: 90 },
+      5: { x: -90, y: 0 },
+      6: { x: 0, y: 180 }
+    };
+
+    let history = JSON.parse(localStorage.getItem('dice-history') || '[]');
+    let rolling = false;
+    let currentX = -25;
+    let currentY = 35;
+
+    function randomInt(min, max) {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    function applyTransform(x, y) {
+      cube.style.transform = `rotateX(${x}deg) rotateY(${y}deg)`;
+    }
+
+    function updateStats() {
+      const counts = { 1:0, 2:0, 3:0, 4:0, 5:0, 6:0 };
+      history.forEach(n => { if (counts[n] !== undefined) counts[n]++; });
+      const maxCount = Math.max(1, ...Object.values(counts));
+
+      for (let i = 1; i <= 6; i++) {
+        countEls[i].textContent = counts[i];
+        barEls[i].style.width = `${(counts[i] / maxCount) * 100}%`;
+      }
+
+      totalEl.textContent = history.length;
+    }
+
+    function rollDice() {
+      if (rolling) return;
+      rolling = true;
+      rollBtn.disabled = true;
+      resetBtn.disabled = true;
+      bulkBtn.disabled = true;
+
+      const result = randomInt(1, 6);
+      const base = baseOrientations[result];
+      const spinsX = randomInt(4, 7) * 360;
+      const spinsY = randomInt(4, 7) * 360;
+
+      currentX = base.x + spinsX;
+      currentY = base.y + spinsY;
+
+      cube.style.transition = 'transform 1.35s cubic-bezier(.2,.8,.2,1)';
+      applyTransform(currentX, currentY);
+
+      const onDone = () => {
+        cube.removeEventListener('transitionend', onDone);
+        cube.style.transition = 'none';
+        applyTransform(base.x, base.y);
+
+        history.push(result);
+        localStorage.setItem('dice-history', JSON.stringify(history));
+        updateStats();
+
+        requestAnimationFrame(() => {
+          rollBtn.disabled = false;
+          resetBtn.disabled = false;
+          bulkBtn.disabled = false;
+          rolling = false;
+          currentX = base.x;
+          currentY = base.y;
+        });
+      };
+
+      cube.addEventListener('transitionend', onDone, { once: true });
+
+      setTimeout(() => {
+        if (!rolling) return;
+        onDone();
+      }, 1500);
+    }
+
+    rollBtn.addEventListener('click', rollDice);
+
+
+    bulkBtn.addEventListener('click', () => {
+      if (rolling) return;
+
+      const n = Math.max(1, Math.floor(Number(bulkCountEl.value) || 0));
+      if (!Number.isFinite(n) || n < 1) return;
+
+      for (let i = 0; i < n; i++) {
+        history.push(randomInt(1, 6));
+      }
+
+      localStorage.setItem('dice-history', JSON.stringify(history));
+      updateStats();
+    });
+
+    resetBtn.addEventListener('click', () => {
+      if (rolling) return;
+      history = [];
+      localStorage.removeItem('dice-history');
+      updateStats();
+    });
+
+    applyTransform(currentX, currentY);
+    updateStats();
+  </script>
+</body>
+</html>
