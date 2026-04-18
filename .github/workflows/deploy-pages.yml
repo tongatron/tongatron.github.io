@@ -26,22 +26,29 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: 3.4
-          bundler-cache: true
-
       - name: Configure Pages
         uses: actions/configure-pages@v5
 
-      - name: Build Jekyll site
-        run: bundle exec jekyll build
+      - name: Prepare static artifact
+        run: |
+          mkdir -p dist
+          rsync -av --delete \
+            --exclude='.git/' \
+            --exclude='.github/' \
+            --exclude='.claude/' \
+            --exclude='dist/' \
+            --exclude='.DS_Store' \
+            --exclude='README.md' \
+            --exclude='links.markdown' \
+            --exclude='tools/' \
+            --exclude='test-results/' \
+            --exclude='node_modules/' \
+            ./ dist/
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./_site
+          path: ./dist
 
       - name: Deploy to GitHub Pages
         id: deployment

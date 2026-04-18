@@ -3,26 +3,61 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Tongatron | Soluzioni digitali e prototipi</title>
-  <meta name="description" content="Tongatron: soluzioni digitali che arrivano a destinazione">
+  <title>Tongatron | Software, utility web e prototipi IoT</title>
+  <meta name="description" content="Tongatron progetta software, utility web, prototipi IoT e soluzioni digitali orientate all'esecuzione, tra sviluppo, consulenza e sperimentazione.">
   <!-- SEO + Social -->
-  <meta name="keywords" content="Tongatron, soluzioni digitali, sviluppo software, project management, fablab, prototipi IoT, web mobile">
   <meta name="robots" content="index, follow, max-image-preview:large">
   <meta name="author" content="Tongatron">
   <link rel="canonical" href="https://tongatron.org/">
   <link rel="alternate" hreflang="it" href="https://tongatron.org/">
+  <link rel="alternate" hreflang="x-default" href="https://tongatron.org/">
   <meta property="og:locale" content="it_IT">
   <meta property="og:site_name" content="Tongatron">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Tongatron | Soluzioni digitali">
-  <meta property="og:description" content="Soluzioni digitali che arrivano a destinazione">
+  <meta property="og:title" content="Tongatron | Software, utility web e prototipi IoT">
+  <meta property="og:description" content="Tongatron progetta software, utility web, prototipi IoT e soluzioni digitali orientate all'esecuzione, tra sviluppo, consulenza e sperimentazione.">
   <meta property="og:url" content="https://tongatron.org/">
   <meta property="og:image" content="https://tongatron.org/img/tongatron-meta.jpg">
   <meta property="og:image:alt" content="Tongatron preview image">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Tongatron | Soluzioni digitali">
-  <meta name="twitter:description" content="Soluzioni digitali che arrivano a destinazione">
+  <meta name="twitter:title" content="Tongatron | Software, utility web e prototipi IoT">
+  <meta name="twitter:description" content="Tongatron progetta software, utility web, prototipi IoT e soluzioni digitali orientate all'esecuzione, tra sviluppo, consulenza e sperimentazione.">
   <meta name="twitter:image" content="https://tongatron.org/img/tongatron-meta.jpg">
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Tongatron",
+      "url": "https://tongatron.org/",
+      "inLanguage": "it",
+      "description": "Tongatron progetta software, utility web, prototipi IoT e soluzioni digitali orientate all'esecuzione, tra sviluppo, consulenza e sperimentazione.",
+      "publisher": {
+        "@type": "Organization",
+        "name": "Tongatron",
+        "url": "https://tongatron.org/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://tongatron.org/img/fablogo.png"
+        }
+      }
+    }
+  </script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Tongatron",
+      "url": "https://tongatron.org/",
+      "logo": "https://tongatron.org/img/fablogo.png",
+      "email": "giovanni.bindi@tongatron.org",
+      "sameAs": [
+        "https://github.com/tongatron",
+        "https://www.linkedin.com/in/giovannibindi/",
+        "https://x.com/giobindi",
+        "https://hackaday.io/tongatron"
+      ]
+    }
+  </script>
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 
@@ -120,6 +155,16 @@
 
     a:hover,
     a:focus {
+      color: var(--text);
+    }
+
+    .content-link {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .content-link:hover,
+    .content-link:focus {
       color: var(--text);
     }
 
@@ -1340,51 +1385,61 @@ HTML, CSS; Javascript, Node ana whatever gets the job done</p>
       <div class="web-projects-shell">
         <div class="web-projects-cards">
           <article class="web-project-card">
-            <img src="img/projects/ryanair-search.jpg" class="web-project-cover" alt="Anteprima Ryanair Search">
-            <h4 class="h2 fw-bold">Ryanair Search</h4>
+            <a class="content-link" href="https://tongatron.org/projects/ryanair-search">
+              <img src="img/projects/ryanair-search.jpg" class="web-project-cover" alt="Anteprima Ryanair Search">
+            </a>
+            <h4 class="h2 fw-bold"><a class="content-link" href="https://tongatron.org/projects/ryanair-search">Ryanair Search</a></h4>
             <p>Utility web per cercare voli Ryanair andata e ritorno con filtri su budget, durata, partenza e destinazione, ottimizzata anche per l'uso da smartphone.</p>
             <div class="web-project-actions">
-              <a class="project-action-button project-action-open" href="projects/ryanair-search/index.html" target="_blank" rel="noopener">Apri</a>
+              <a class="project-action-button project-action-open" href="https://tongatron.org/projects/ryanair-search">Apri</a>
               <a class="project-action-button project-action-github" href="https://github.com/tongatron/tongatron.github.io/tree/main/projects/ryanair-search" target="_blank" rel="noopener">GitHub</a>
             </div>
           </article>
 
           <article class="web-project-card">
-            <img src="img/projects/head-tracking.jpg" class="web-project-cover" alt="Anteprima Head Tracking">
-            <h4 class="h2 fw-bold">Head Tracking</h4>
+            <a class="content-link" href="https://tongatron.org/head-tracking">
+              <img src="img/projects/head-tracking.jpg" class="web-project-cover" alt="Anteprima Head Tracking">
+            </a>
+            <h4 class="h2 fw-bold"><a class="content-link" href="https://tongatron.org/head-tracking">Head Tracking</a></h4>
             <p>Esperimento web che usa il browser per testare interazioni basate sul movimento della testa, con un'impostazione diretta e immediata da provare online.</p>
             <div class="web-project-actions">
-              <a class="project-action-button project-action-open" href="head-tracking/" target="_blank" rel="noopener">Apri</a>
+              <a class="project-action-button project-action-open" href="https://tongatron.org/head-tracking">Apri</a>
               <a class="project-action-button project-action-github" href="https://github.com/tongatron/head-tracking" target="_blank" rel="noopener">GitHub</a>
             </div>
           </article>
 
           <article class="web-project-card">
-            <img src="img/projects/gtt-radar.jpg" class="web-project-cover" alt="Anteprima GTT Radar">
-            <h4 class="h2 fw-bold">GTT Radar</h4>
+            <a class="content-link" href="https://gtt-to.onrender.com/">
+              <img src="img/projects/gtt-radar.jpg" class="web-project-cover" alt="Anteprima GTT Radar">
+            </a>
+            <h4 class="h2 fw-bold"><a class="content-link" href="https://gtt-to.onrender.com/">GTT Radar</a></h4>
             <p>Utility web per monitorare linee e passaggi del trasporto pubblico torinese con un'interfaccia rapida da consultare e un uso mobile-first.</p>
             <div class="web-project-actions">
-              <a class="project-action-button project-action-open" href="https://gtt-to.onrender.com/" target="_blank" rel="noopener">Apri</a>
+              <a class="project-action-button project-action-open" href="https://gtt-to.onrender.com/">Apri</a>
               <a class="project-action-button project-action-github" href="https://github.com/tongatron/gtt-to" target="_blank" rel="noopener">GitHub</a>
             </div>
           </article>
 
           <article class="web-project-card">
-            <img src="img/projects/pa-ninja.jpg" class="web-project-cover" alt="Anteprima PA Ninja">
-            <h4 class="h2 fw-bold">PA Ninja</h4>
+            <a class="content-link" href="https://tongatron.github.io/pa-ninja/landing/">
+              <img src="img/projects/pa-ninja.jpg" class="web-project-cover" alt="Anteprima PA Ninja">
+            </a>
+            <h4 class="h2 fw-bold"><a class="content-link" href="https://tongatron.github.io/pa-ninja/landing/">PA Ninja</a></h4>
             <p>Strumento locale per consultare, raccogliere e organizzare informazioni provenienti da portali della Pubblica Amministrazione italiana.</p>
             <div class="web-project-actions">
-              <a class="project-action-button project-action-open" href="https://tongatron.github.io/pa-ninja/landing/" target="_blank" rel="noopener">Apri</a>
+              <a class="project-action-button project-action-open" href="https://tongatron.github.io/pa-ninja/landing/">Apri</a>
               <a class="project-action-button project-action-github" href="https://github.com/tongatron/pa-ninja" target="_blank" rel="noopener">GitHub</a>
             </div>
           </article>
 
           <article class="web-project-card">
-            <img src="img/projects/raspi-chat.jpg" class="web-project-cover" alt="Anteprima Raspi Chat">
-            <h4 class="h2 fw-bold">Raspi Chat</h4>
+            <a class="content-link" href="https://chat.tongatron.org/">
+              <img src="img/projects/raspi-chat.jpg" class="web-project-cover" alt="Anteprima Raspi Chat">
+            </a>
+            <h4 class="h2 fw-bold"><a class="content-link" href="https://chat.tongatron.org/">Raspi Chat</a></h4>
             <p>Progetto self-hosted per piccoli gruppi, con stanze private, notifiche web e un'amministrazione semplice da gestire.</p>
             <div class="web-project-actions">
-              <a class="project-action-button project-action-open" href="https://chat.tongatron.org/" target="_blank" rel="noopener">Apri</a>
+              <a class="project-action-button project-action-open" href="https://chat.tongatron.org/">Apri</a>
               <a class="project-action-button project-action-github" href="https://github.com/tongatron/raspi-chat" target="_blank" rel="noopener">GitHub</a>
             </div>
           </article>
@@ -1414,31 +1469,37 @@ HTML, CSS; Javascript, Node ana whatever gets the job done</p>
       <div class="row row-cols-1 row-cols-md-3 g-4 iot-project-grid">
         <div class="col">
           <article class="card project-item h-100 border-0 shadow-sm">
-            <img src="img/robottino.jpg" class="card-img-top card-media" alt="Progetto Robottino">
+            <a class="content-link" href="/projects/robottino/robottino-site/index.html">
+              <img src="img/robottino.jpg" class="card-img-top card-media" alt="Progetto Robottino">
+            </a>
             <div class="card-body">
-              <h3 class="h5 card-title">Robottino</h3>
+              <h3 class="h5 card-title"><a class="content-link" href="/projects/robottino/robottino-site/index.html">Robottino</a></h3>
               <p class="card-text">Robot educativo STEM open source. Basato su Arduino, integra display, sensori ambientali, buzzer, luci RGB, sensore ultrasonico e testa rotante programmabile.</p>
-              <a class="project-action-button project-action-open" href="projects/robottino/robottino-site/index.html" target="_blank" rel="noopener">Apri</a>
+              <a class="project-action-button project-action-open" href="/projects/robottino/robottino-site/index.html">Apri</a>
             </div>
           </article>
         </div>
         <div class="col">
           <article class="card project-item h-100 border-0 shadow-sm">
-            <img src="img/contact.jpg" class="card-img-top card-media" alt="Progetto Self-O-Matic">
+            <a class="content-link" href="/projects/selfomatic/index.html">
+              <img src="img/contact.jpg" class="card-img-top card-media" alt="Progetto Self-O-Matic">
+            </a>
             <div class="card-body">
-              <h3 class="h5 card-title">Selfomatic</h3>
+              <h3 class="h5 card-title"><a class="content-link" href="/projects/selfomatic/index.html">Selfomatic</a></h3>
               <p class="card-text">Social camera per eventi con scatto automatico e pubblicazione in tempo reale. Una soluzione efficace per attivazioni, fiere e comunicazione live.</p>
-              <a class="project-action-button project-action-open" href="projects/selfomatic/index.html" target="_blank" rel="noopener">Apri</a>
+              <a class="project-action-button project-action-open" href="/projects/selfomatic/index.html">Apri</a>
             </div>
           </article>
         </div>
         <div class="col">
           <article class="card project-item h-100 border-0 shadow-sm">
-            <img src="projects/IKEA-hack/ikea.jpg" class="card-img-top card-media" alt="Progetto IKEA Hack Nordli">
+            <a class="content-link" href="/projects/IKEA-hack/index.html">
+              <img src="projects/IKEA-hack/ikea.jpg" class="card-img-top card-media" alt="Progetto IKEA Hack Nordli">
+            </a>
             <div class="card-body">
-              <h3 class="h5 card-title">IKEA Hack Nordli</h3>
+              <h3 class="h5 card-title"><a class="content-link" href="/projects/IKEA-hack/index.html">IKEA Hack Nordli</a></h3>
               <p class="card-text">Progetto FabLab: personalizzazione della cassettiera IKEA Nordli con tavolino estraibile realizzato tramite pannello tagliato a laser.</p>
-              <a class="project-action-button project-action-open" href="projects/IKEA-hack/index.html" target="_blank" rel="noopener">Apri</a>
+              <a class="project-action-button project-action-open" href="/projects/IKEA-hack/index.html">Apri</a>
             </div>
           </article>
         </div>
