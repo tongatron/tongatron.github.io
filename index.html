@@ -140,11 +140,12 @@
 
     .dust-speck {
       position: absolute;
-      width: 2px;
-      height: 2px;
+      width: 4px;
+      height: 4px;
       border-radius: 50%;
-      background: rgba(255, 255, 255, 0.12);
-      opacity: 0.16;
+      background: rgba(255, 245, 210, 0.56);
+      box-shadow: 0 0 12px rgba(255, 220, 120, 0.34);
+      opacity: 0.68;
       animation: dust-float linear infinite;
     }
 
@@ -1580,6 +1581,7 @@ main {
       let isAnimating = false;
       let isStriped = false;
       let sceneStarted = false;
+      let dustStarted = false;
       let spawnTimer = null;
       let dustTimer = null;
       let toastTimer = null;
@@ -1601,14 +1603,14 @@ main {
 
       const createDust = () => {
         const speck = document.createElement("span");
-        const size = randomBetween(1.4, 3.2);
+        const size = randomBetween(3.2, 7.4);
         speck.className = "dust-speck";
         speck.style.width = `${size}px`;
         speck.style.height = `${size}px`;
         speck.style.left = `${randomBetween(0, 100)}%`;
         speck.style.bottom = `${randomBetween(-8, 18)}vh`;
-        speck.style.animationDuration = `${randomBetween(16, 34)}s`;
-        speck.style.setProperty("--dust-drift", `${randomBetween(-30, 30).toFixed(1)}px`);
+        speck.style.animationDuration = `${randomBetween(16, 30)}s`;
+        speck.style.setProperty("--dust-drift", `${randomBetween(-56, 56).toFixed(1)}px`);
         speck.addEventListener("animationend", () => {
           activeDust.delete(speck);
           speck.remove();
@@ -1618,9 +1620,9 @@ main {
       };
 
       const scheduleDust = () => {
-        if (!sceneStarted) return;
+        if (!dustStarted) return;
         createDust();
-        dustTimer = window.setTimeout(scheduleDust, randomBetween(180, 620));
+        dustTimer = window.setTimeout(scheduleDust, randomBetween(45, 110));
       };
 
       const spawnBalloon = () => {
@@ -1654,6 +1656,15 @@ main {
         spawnTimer = window.setTimeout(scheduleSpawn, randomBetween(700, 1800));
       };
 
+      const startDustScene = () => {
+        if (dustStarted) return;
+        dustStarted = true;
+        scheduleDust();
+        for (let i = 0; i < 44; i += 1) {
+          window.setTimeout(createDust, i * 24);
+        }
+      };
+
       const startBackgroundScene = () => {
         if (sceneStarted) return;
         sceneStarted = true;
@@ -1662,13 +1673,10 @@ main {
         toastTimer = window.setTimeout(() => {
           toast.classList.remove("is-visible");
         }, 4400);
+        startDustScene();
         scheduleSpawn();
-        scheduleDust();
         for (let i = 0; i < 6; i += 1) {
           window.setTimeout(spawnBalloon, i * 150);
-        }
-        for (let i = 0; i < 10; i += 1) {
-          window.setTimeout(createDust, i * 90);
         }
       };
 
