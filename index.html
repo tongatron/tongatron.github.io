@@ -1095,7 +1095,7 @@ main {
 
     .variant-hero-photo {
       display: block;
-      width: 100%;
+      width: min(70%, 640px);
       max-width: 640px;
       aspect-ratio: 1;
       object-fit: cover;
@@ -1237,6 +1237,10 @@ main {
       .web-projects-intro,
       .stack-list li {
         font-size: 0.98rem;
+      }
+
+      .variant-hero-photo {
+        width: min(100%, 420px);
       }
 
       .web-projects-cards {
