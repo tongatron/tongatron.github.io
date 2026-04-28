@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Analizzatore Password</title>
+  <title>Analizzatore Password + Have I Been Pwned</title>
 
   <style>
     * { box-sizing: border-box; }
@@ -26,7 +26,7 @@
 
     main {
       width: 100%;
-      max-width: 900px;
+      max-width: 980px;
       background: rgba(10,10,10,0.95);
       border: 1px solid #fff;
       box-shadow: 0 0 25px rgba(255,255,255,0.1);
@@ -43,6 +43,7 @@
     .subtitle {
       color: #bbb;
       margin-bottom: 28px;
+      line-height: 1.45;
     }
 
     .input-row {
@@ -52,7 +53,6 @@
       margin-bottom: 22px;
     }
 
-    /* INPUT CHIARO */
     input {
       background: #ffffff;
       border: 1px solid #fff;
@@ -67,7 +67,6 @@
       box-shadow: 0 0 10px rgba(255,255,255,0.5);
     }
 
-    /* PULSANTE CHIARO */
     button {
       background: #ffffff;
       color: #000;
@@ -100,11 +99,12 @@
     .strength-label {
       color: #bbb;
       margin-bottom: 28px;
+      line-height: 1.45;
     }
 
     .grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(5, 1fr);
       gap: 14px;
     }
 
@@ -123,14 +123,16 @@
     }
 
     .big {
-      font-size: clamp(1.25rem, 4vw, 1.8rem);
+      font-size: clamp(1.1rem, 3vw, 1.65rem);
       font-weight: bold;
+      word-break: break-word;
     }
 
     .small {
       margin-top: 8px;
       color: #aaa;
       font-size: 0.9rem;
+      line-height: 1.35;
     }
 
     .checks {
@@ -152,12 +154,33 @@
       border-color: #fff;
     }
 
+    .check.bad {
+      color: #ff7777;
+      border-color: #ff7777;
+    }
+
     .note {
       margin-top: 28px;
       padding: 14px;
       border-left: 3px solid #fff;
       color: #bbb;
       background: rgba(255,255,255,0.05);
+      line-height: 1.45;
+    }
+
+    .danger {
+      color: #ff7777;
+      border-color: #ff7777;
+    }
+
+    .ok-text {
+      color: #fff;
+    }
+
+    @media (max-width: 900px) {
+      .grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
     }
 
     @media (max-width: 760px) {
@@ -177,22 +200,48 @@
     <h1>Password Analyzer</h1>
 
     <p class="subtitle">
-      &gt; Inserisci una password. Calcolo locale.
+      &gt; Analisi locale della forza della password + controllo leak con modello k-anonymity Have I Been Pwned.
+      La password non viene inviata: viene calcolato SHA-1 nel browser e vengono inviati solo i primi 5 caratteri dell'hash.
     </p>
 
     <div class="input-row">
-      <input id="password" type="password" placeholder="Inserisci password..." />
-      <button id="toggle">Mostra</button>
+      <input id="password" type="password" placeholder="Inserisci password..." autocomplete="off" spellcheck="false" />
+      <button id="toggle" type="button">Mostra</button>
     </div>
 
     <div class="bar"><div id="fill" class="fill"></div></div>
     <div id="label" class="strength-label">Inserisci una password</div>
 
     <div class="grid">
-      <div class="card"><h2>Lunghezza</h2><div id="length" class="big">0</div></div>
-      <div class="card"><h2>Charset</h2><div id="charset" class="big">0</div></div>
-      <div class="card"><h2>Combinazioni</h2><div id="comb" class="big">0</div></div>
-      <div class="card"><h2>Tempo</h2><div id="time" class="big">0 sec</div></div>
+      <div class="card">
+        <h2>Lunghezza</h2>
+        <div id="length" class="big">0</div>
+        <div class="small">Numero di caratteri.</div>
+      </div>
+
+      <div class="card">
+        <h2>Charset</h2>
+        <div id="charset" class="big">0</div>
+        <div class="small">Set stimato: minuscole, maiuscole, numeri, simboli.</div>
+      </div>
+
+      <div class="card">
+        <h2>Combinazioni</h2>
+        <div id="comb" class="big">0</div>
+        <div class="small">Formula: charset ^ lunghezza.</div>
+      </div>
+
+      <div class="card">
+        <h2>Tempo medio</h2>
+        <div id="time" class="big">0 sec</div>
+        <div class="small">A 100 tentativi al secondo.</div>
+      </div>
+
+      <div class="card" id="leakCard">
+        <h2>Leak HIBP</h2>
+        <div id="leak" class="big">—</div>
+        <div class="small">Controllo tramite SHA-1 parziale.</div>
+      </div>
     </div>
 
     <div class="checks">
@@ -200,10 +249,14 @@
       <div id="u" class="check">Maiuscole: no</div>
       <div id="n" class="check">Numeri: no</div>
       <div id="s" class="check">Simboli: no</div>
+      <div id="seq" class="check">Sequenze prevedibili: no</div>
+      <div id="rep" class="check">Ripetizioni: no</div>
     </div>
 
     <p class="note">
-      Modello semplificato brute force.
+      Modello semplificato: la stima brute force è didattica. In un attacco reale contano dizionari,
+      password già trapelate, regole di mutazione, hashing, salting, rate limit e potenza dell'attaccante.
+      Per usare il controllo HIBP apri la pagina da localhost o da HTTPS; da file:// alcuni browser possono bloccare fetch o crypto.subtle.
     </p>
   </main>
 
@@ -217,8 +270,19 @@ const combEl = document.getElementById("comb");
 const timeEl = document.getElementById("time");
 const fill = document.getElementById("fill");
 const label = document.getElementById("label");
+const leakEl = document.getElementById("leak");
+const leakCard = document.getElementById("leakCard");
 
 const RATE = 100n;
+let debounceTimer = null;
+let requestId = 0;
+
+const commonWords = [
+  "password", "admin", "qwerty", "letmein", "welcome",
+  "ciao", "amore", "giovanni", "torino", "calcio",
+  "juventus", "inter", "milan", "napoli", "roma",
+  "123456", "12345678", "000000"
+];
 
 function est(p){
   let size=0;
@@ -239,38 +303,237 @@ function pow(b,e){
   return r;
 }
 
-function fmt(n){
+function fmtBig(n){
   const s=n.toString();
-  return s.length>12 ? s[0]+","+s.slice(1,4)+"e"+(s.length-1) : s;
+  if(s.length <= 15) return s.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  return s[0]+","+s.slice(1,4)+" × 10^"+(s.length-1);
 }
 
-function update(){
-  const p=i.value;
-  const len=p.length;
-  const d=est(p);
+function fmtTime(sec){
+  if(sec < 1n) return "meno di 1 sec";
 
-  lengthEl.textContent=len;
-  charsetEl.textContent=d.size;
+  const year = 60n * 60n * 24n * 365n;
+  const day = 60n * 60n * 24n;
+  const hour = 60n * 60n;
+  const minute = 60n;
 
-  document.getElementById("l").textContent="Minuscole: "+(d.l?"sì":"no");
-  document.getElementById("u").textContent="Maiuscole: "+(d.u?"sì":"no");
-  document.getElementById("n").textContent="Numeri: "+(d.n?"sì":"no");
-  document.getElementById("s").textContent="Simboli: "+(d.s?"sì":"no");
+  const units = [
+    ["anno", "anni", year],
+    ["giorno", "giorni", day],
+    ["ora", "ore", hour],
+    ["min", "min", minute],
+    ["sec", "sec", 1n]
+  ];
 
-  if(!p){ combEl.textContent="0"; timeEl.textContent="0"; return; }
+  const parts = [];
+  let rest = sec;
 
-  const comb=pow(d.size,len);
-  const sec=(comb/2n)/RATE;
+  for(const [sing, plur, value] of units){
+    const amount = rest / value;
+    if(amount > 0n){
+      parts.push(amount.toString() + " " + (amount === 1n ? sing : plur));
+      rest %= value;
+    }
+    if(parts.length === 2) break;
+  }
 
-  combEl.textContent=fmt(comb);
-  timeEl.textContent=sec+" sec";
-
-  const ent=Math.log2(d.size)*len;
-  fill.style.width=Math.min(100,(ent/80)*100)+"%";
+  return parts.join(" e ");
 }
 
-t.onclick=()=>{ i.type=i.type==="password"?"text":"password"; };
-i.oninput=update;
+function hasSequence(p){
+  const x = p.toLowerCase();
+  const seqs = [
+    "123", "1234", "12345", "123456", "abcdef", "abc",
+    "qwerty", "asdf", "zxcv", "0000", "1111"
+  ];
+  return seqs.some(seq => x.includes(seq));
+}
+
+function hasRepeatedChars(p){
+  return /(.)\1\1/.test(p);
+}
+
+function hasCommonWord(p){
+  const x = p.toLowerCase();
+  return commonWords.some(w => x.includes(w));
+}
+
+function setCheck(id, label, ok, badMode = false){
+  const el = document.getElementById(id);
+  el.textContent = label + ": " + (ok ? "sì" : "no");
+  el.classList.toggle("ok", ok && !badMode);
+  el.classList.toggle("bad", ok && badMode);
+}
+
+async function sha1(text){
+  const data = new TextEncoder().encode(text);
+  const hash = await crypto.subtle.digest("SHA-1", data);
+  return Array.from(new Uint8Array(hash))
+    .map(b => b.toString(16).padStart(2,"0"))
+    .join("")
+    .toUpperCase();
+}
+
+async function checkPwned(password){
+  const hash = await sha1(password);
+  const prefix = hash.slice(0,5);
+  const suffix = hash.slice(5);
+
+  const res = await fetch("https://api.pwnedpasswords.com/range/" + prefix, {
+    method: "GET",
+    headers: { "Add-Padding": "true" }
+  });
+
+  if(!res.ok) throw new Error("Errore API HIBP: " + res.status);
+
+  const text = await res.text();
+  const lines = text.split("\n");
+
+  for(const line of lines){
+    const [foundSuffix, count] = line.trim().split(":");
+    if(foundSuffix === suffix){
+      return Number(count);
+    }
+  }
+
+  return 0;
+}
+
+function resetEmpty(){
+  lengthEl.textContent = "0";
+  charsetEl.textContent = "0";
+  combEl.textContent = "0";
+  timeEl.textContent = "0 sec";
+  leakEl.textContent = "—";
+  leakCard.classList.remove("danger");
+  fill.style.width = "0%";
+  fill.style.background = "#ff4444";
+  label.textContent = "Inserisci una password";
+
+  setCheck("l", "Minuscole", false);
+  setCheck("u", "Maiuscole", false);
+  setCheck("n", "Numeri", false);
+  setCheck("s", "Simboli", false);
+  setCheck("seq", "Sequenze prevedibili", false, true);
+  setCheck("rep", "Ripetizioni", false, true);
+}
+
+async function update(){
+  const currentRequest = ++requestId;
+  const p = i.value;
+  const len = p.length;
+
+  if(!p){
+    resetEmpty();
+    return;
+  }
+
+  const d = est(p);
+  const sequence = hasSequence(p);
+  const repeated = hasRepeatedChars(p);
+  const common = hasCommonWord(p);
+
+  lengthEl.textContent = len;
+  charsetEl.textContent = d.size;
+
+  setCheck("l", "Minuscole", d.l);
+  setCheck("u", "Maiuscole", d.u);
+  setCheck("n", "Numeri", d.n);
+  setCheck("s", "Simboli", d.s);
+  setCheck("seq", "Sequenze prevedibili", sequence, true);
+  setCheck("rep", "Ripetizioni", repeated, true);
+
+  if(d.size === 0){
+    combEl.textContent = "0";
+    timeEl.textContent = "0 sec";
+    return;
+  }
+
+  const comb = pow(d.size, len);
+  const sec = (comb / 2n) / RATE;
+
+  combEl.textContent = fmtBig(comb);
+  timeEl.textContent = fmtTime(sec);
+
+  let entropy = Math.log2(d.size) * len;
+  const warnings = [];
+
+  if(len < 10){
+    entropy -= 15;
+    warnings.push("troppo corta");
+  }
+  if(sequence){
+    entropy -= 20;
+    warnings.push("sequenza prevedibile");
+  }
+  if(repeated){
+    entropy -= 10;
+    warnings.push("ripetizioni");
+  }
+  if(common){
+    entropy -= 30;
+    warnings.push("parola comune");
+  }
+
+  entropy = Math.max(0, entropy);
+
+  let status = "debole";
+  let color = "#ff4444";
+
+  if(entropy >= 80){
+    status = "molto forte";
+    color = "#ffffff";
+  } else if(entropy >= 60){
+    status = "forte";
+    color = "#cccccc";
+  } else if(entropy >= 40){
+    status = "media";
+    color = "#aaaaaa";
+  }
+
+  fill.style.width = Math.min(100, (entropy / 80) * 100) + "%";
+  fill.style.background = color;
+  label.textContent = status + " — entropia stimata: " + entropy.toFixed(1) + " bit";
+
+  if(warnings.length){
+    label.textContent += " — attenzione: " + warnings.join(", ");
+  }
+
+  leakEl.textContent = "controllo...";
+  leakCard.classList.remove("danger");
+
+  try {
+    const count = await checkPwned(p);
+
+    if(currentRequest !== requestId) return;
+
+    if(count > 0){
+      leakEl.textContent = count.toLocaleString("it-IT") + " volte";
+      leakCard.classList.add("danger");
+      fill.style.background = "#ff4444";
+      label.textContent = "COMPROMESSA — trovata in dataset di password trapelate. Non usarla.";
+    } else {
+      leakEl.textContent = "non trovata";
+      leakCard.classList.remove("danger");
+    }
+  } catch(err){
+    if(currentRequest !== requestId) return;
+    leakEl.textContent = "non disponibile";
+    label.textContent += " — controllo leak non disponibile";
+  }
+}
+
+t.onclick = () => {
+  i.type = i.type === "password" ? "text" : "password";
+  t.textContent = i.type === "password" ? "Mostra" : "Nascondi";
+};
+
+i.oninput = () => {
+  clearTimeout(debounceTimer);
+  debounceTimer = setTimeout(update, 500);
+};
+
+resetEmpty();
 </script>
 </body>
 </html>
