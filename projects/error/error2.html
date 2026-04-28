@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<title>Terminale Panico Estremo</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: #000;
+    color: #eee;
+    font-family: "Courier New", monospace;
+    overflow: hidden;
+  }
+
+  #screen {
+    position: fixed;
+    inset: 0;
+    padding: 22px;
+    background:
+      radial-gradient(circle at center, rgba(255,255,255,0.06), transparent 45%),
+      repeating-linear-gradient(
+        0deg,
+        rgba(255,255,255,0.04) 0px,
+        rgba(255,255,255,0.04) 1px,
+        transparent 2px,
+        transparent 4px
+      ),
+      #020202;
+    animation: flicker 0.12s infinite;
+  }
+
+  #terminal {
+    white-space: pre-wrap;
+    font-size: 15px;
+    line-height: 1.42;
+    text-shadow: 0 0 8px currentColor;
+  }
+
+  .green { color: #d8ffd8; }
+  .yellow { color: #ffe27a; }
+  .red { color: #ff3333; }
+  .white { color: #ffffff; }
+
+  .cursor::after {
+    content: "█";
+    animation: blink 0.6s infinite;
+  }
+
+  @keyframes blink {
+    50% { opacity: 0; }
+  }
+
+  @keyframes flicker {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.94; }
+  }
+
+  #glitch {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background:
+      linear-gradient(transparent 70%, rgba(255,0,0,0.08)),
+      repeating-linear-gradient(
+        90deg,
+        rgba(255,255,255,0.03) 0,
+        rgba(255,255,255,0.03) 2px,
+        transparent 3px,
+        transparent 6px
+      );
+    mix-blend-mode: screen;
+    animation: glitchMove 0.18s infinite;
+  }
+
+  @keyframes glitchMove {
+    0% { transform: translate(0,0); }
+    25% { transform: translate(3px,-2px); }
+    50% { transform: translate(-4px,2px); }
+    75% { transform: translate(2px,3px); }
+    100% { transform: translate(-2px,-1px); }
+  }
+
+  .popup {
+    position: fixed;
+    width: 320px;
+    background: #111;
+    border: 2px solid #fff;
+    box-shadow: 0 0 25px rgba(255,0,0,0.8);
+    color: white;
+    z-index: 5;
+    font-family: Arial, sans-serif;
+    animation: popShake 0.15s infinite;
+  }
+
+  .popup .bar {
+    background: #9b0000;
+    padding: 8px;
+    font-weight: bold;
+  }
+
+  .popup .body {
+    padding: 14px;
+    font-size: 14px;
+  }
+
+  .popup button {
+    background: black;
+    color: white;
+    border: 1px solid white;
+    padding: 6px 12px;
+    margin-top: 8px;
+  }
+
+  @keyframes popShake {
+    0% { transform: translate(0,0); }
+    50% { transform: translate(2px,-2px); }
+    100% { transform: translate(-2px,2px); }
+  }
+
+  #wipe {
+    display: none;
+    position: fixed;
+    left: 50%;
+    bottom: 40px;
+    transform: translateX(-50%);
+    width: min(700px, 90vw);
+    border: 2px solid #fff;
+    padding: 14px;
+    background: #111;
+    z-index: 6;
+    color: white;
+  }
+
+  #bar {
+    height: 28px;
+    width: 0%;
+    background: #ff2222;
+    margin-top: 10px;
+    box-shadow: 0 0 16px red;
+  }
+
+  #panic {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(circle, #c00000, #250000 70%);
+    color: white;
+    z-index: 20;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    font-family: Arial, sans-serif;
+    animation: finalShake 0.08s infinite;
+  }
+
+  #panic h1 {
+    font-size: clamp(36px, 8vw, 90px);
+    margin: 0 20px 20px;
+    text-shadow: 0 0 25px black;
+  }
+
+  #panic p {
+    font-size: 22px;
+    max-width: 760px;
+    margin: 8px 20px;
+  }
+
+  #panic button {
+    margin-top: 28px;
+    padding: 16px 24px;
+    background: black;
+    color: white;
+    border: 2px solid white;
+    font-size: 18px;
+    cursor: pointer;
+  }
+
+  @keyframes finalShake {
+    0% { transform: translate(0,0) rotate(0deg); }
+    25% { transform: translate(5px,-4px) rotate(-0.5deg); }
+    50% { transform: translate(-5px,4px) rotate(0.5deg); }
+    75% { transform: translate(4px,5px) rotate(-0.3deg); }
+    100% { transform: translate(-4px,-5px) rotate(0.3deg); }
+  }
+</style>
+</head>
+
+<body>
+
+<div id="screen">
+  <div id="terminal" class="cursor"></div>
+</div>
+
+<div id="glitch"></div>
+
+<div id="wipe">
+  <div>FORMATTAZIONE DISCO LOCALE — SIMULAZIONE DRAMMATICA</div>
+  <div id="bar"></div>
+</div>
+
+<div id="panic">
+  <h1>⚠ SISTEMA DISTRUTTO ⚠</h1>
+  <p>Falso allarme. Non è stato cancellato niente.</p>
+  <p>Era solo un terminale teatrale con pessimo senso dell’umorismo.</p>
+  <button onclick="location.reload()">Riavvia finto sistema</button>
+</div>
+
+<script>
+const terminal = document.getElementById("terminal");
+const wipe = document.getElementById("wipe");
+const bar = document.getElementById("bar");
+
+let audioCtx;
+let i = 0;
+let wipeStarted = false;
+
+const lines = [
+  "[BIOS] TONGATRON PANIC BIOS v6.66",
+  "[BIOS] Controllo integrità utente...",
+  "[OK] Tastiera rilevata",
+  "[OK] Schermo rilevato",
+  "[WARNING] Autostima non montata correttamente",
+  "[SCAN] Analisi disco locale...",
+  "[SCAN] Lettura cartelle personali...",
+  "[ERROR] Cartella 'Desktop' contiene 472 file senza senso",
+  "[CRITICAL] Rilevata installazione emotivamente instabile",
+  "[SYSTEM] Tentativo di ottenere privilegi assoluti...",
+  "[REQUEST] Accesso amministratore universale...",
+  "[DENIED] Il browser ha riso e ha detto no.",
+  "[REQUEST] Accesso alla camera...",
+  "[DENIED] Camera negata. Il sistema procederà immaginando la tua espressione.",
+  "[REQUEST] Accesso al microfono...",
+  "[DENIED] Microfono negato. Il silenzio è stato registrato simbolicamente.",
+  "[REQUEST] Accesso alla posizione...",
+  "[DENIED] Posizione negata. Coordinate sostituite con: divano, probabilmente.",
+  "[DELETE] Preparazione cancellazione disco locale...",
+  "[DELETE] Eliminazione file importanti...",
+  "[ERROR] File importanti non trovati.",
+  "[DELETE] Eliminazione ricordi imbarazzanti...",
+  "[ERROR] Ricordi imbarazzanti protetti da trauma.",
+  "[FATAL] Avvio protocollo: FORMATTAZIONE PANICO",
+  "[FATAL] C:/ viene giudicato severamente...",
+  "[FATAL] /Users viene guardato con sospetto...",
+  "[FATAL] Montaggio unità: ANSIA:",
+  "[FATAL] Scrittura settore 000000...",
+  "[FATAL] Scrittura settore 000001...",
+  "[FATAL] Scrittura settore 000002...",
+  "[FATAL] Rilevata resistenza passivo-aggressiva del disco.",
+  "[CRITICAL] Il sistema sta fingendo di cancellare tutto.",
+  "[CRITICAL] Non spegnere il computer. O fallo. Tanto è finto.",
+  "[ALERT] Kernel panic scenografico imminente.",
+  "[ALERT] Ultima possibilità per prendere la cosa troppo sul serio.",
+  "[END] Fine simulazione. Preparazione schermata finale."
+];
+
+const fakePermissions = [
+  ["[REQUEST] Permesso: leggere pensieri recenti...", "[DENIED] Pensieri troppo disordinati. Parsing fallito."],
+  ["[REQUEST] Permesso: cancellare cronologia browser...", "[DENIED] Il browser protegge il tuo imbarazzo."],
+  ["[REQUEST] Permesso: accesso al disco locale...", "[ERROR] I siti web non possono farlo. Per fortuna."],
+  ["[REQUEST] Permesso: formattare C:/...", "[FATAL] Permesso inesistente. Minaccia puramente teatrale."],
+  ["[REQUEST] Permesso: accedere alla cartella Download...", "[DENIED] Troppo caos. Il sistema ha avuto paura."],
+  ["[REQUEST] Permesso: attivare modalità onnipotente...", "[ERROR] Modalità onnipotente non disponibile nel piano gratuito della realtà."]
+];
+
+function beep(freq = 220, duration = 70) {
+  try {
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.frequency.value = freq;
+    osc.type = "square";
+    gain.gain.value = 0.04;
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    osc.start();
+    osc.stop(audioCtx.currentTime + duration / 1000);
+  } catch(e) {}
+}
+
+document.body.addEventListener("click", () => {
+  if (!audioCtx) beep(180, 50);
+}, { once: true });
+
+function appendLine(line) {
+  let cls = "green";
+
+  if (
+    line.includes("ERROR") ||
+    line.includes("CRITICAL") ||
+    line.includes("FATAL") ||
+    line.includes("DELETE") ||
+    line.includes("DENIED")
+  ) cls = "red";
+
+  else if (
+    line.includes("WARNING") ||
+    line.includes("REQUEST") ||
+    line.includes("SCAN") ||
+    line.includes("ALERT")
+  ) cls = "yellow";
+
+  terminal.innerHTML += `<span class="${cls}">${line}</span>\n`;
+
+  if (cls === "red") beep(110 + Math.random() * 90, 55);
+  else if (cls === "yellow") beep(260, 35);
+
+  window.scrollTo(0, document.body.scrollHeight);
+}
+
+function fakePermission(callback) {
+  if (Math.random() < 0.45) {
+    const p = fakePermissions[Math.floor(Math.random() * fakePermissions.length)];
+    appendLine(p[0]);
+    setTimeout(() => {
+      appendLine(p[1]);
+      callback();
+    }, 500 + Math.random() * 600);
+  } else {
+    callback();
+  }
+}
+
+function createPopup() {
+  const popup = document.createElement("div");
+  popup.className = "popup";
+  popup.style.left = Math.random() * (window.innerWidth - 340) + "px";
+  popup.style.top = Math.random() * (window.innerHeight - 180) + "px";
+
+  const messages = [
+    "Errore gravissimo ma non meglio specificato.",
+    "Disco locale offeso dalla scansione.",
+    "Permesso negato con disprezzo.",
+    "La cartella Download ha chiesto un avvocato.",
+    "Sistema emotivamente compromesso.",
+    "Kernel panic: troppo teatro."
+  ];
+
+  popup.innerHTML = `
+    <div class="bar">ERRORE DI SISTEMA</div>
+    <div class="body">
+      ${messages[Math.floor(Math.random() * messages.length)]}
+      <br>
+      <button>OK, panico</button>
+    </div>
+  `;
+
+  popup.querySelector("button").onclick = () => popup.remove();
+  document.body.appendChild(popup);
+
+  setTimeout(() => popup.remove(), 4200);
+}
+
+function startWipe() {
+  if (wipeStarted) return;
+  wipeStarted = true;
+  wipe.style.display = "block";
+
+  let progress = 0;
+  const timer = setInterval(() => {
+    progress += Math.random() * 8;
+    if (progress > 99) progress = 99;
+    bar.style.width = progress + "%";
+    appendLine("[WIPE] Progresso cancellazione simulata: " + Math.floor(progress) + "%");
+
+    if (Math.random() < 0.35) createPopup();
+
+    if (progress >= 99) {
+      clearInterval(timer);
+      appendLine("[ERROR] Impossibile completare: manca sempre l'ultimo 1% per motivi narrativi.");
+    }
+  }, 450);
+}
+
+function writeLine() {
+  if (i >= lines.length) {
+    setTimeout(() => {
+      document.getElementById("panic").style.display = "flex";
+      beep(80, 400);
+    }, 1200);
+    return;
+  }
+
+  fakePermission(() => {
+    appendLine(lines[i]);
+
+    if (lines[i].includes("FORMATTAZIONE PANICO")) startWipe();
+    if (Math.random() < 0.22) createPopup();
+
+    i++;
+    setTimeout(writeLine, 170 + Math.random() * 420);
+  });
+}
+
+setTimeout(writeLine, 600);
+</script>
+
+</body>
+</html>
