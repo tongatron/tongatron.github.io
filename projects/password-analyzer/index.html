@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Analizzatore Password</title>
+
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Courier New", monospace;
+      background:
+        linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px),
+        #000;
+      background-size: 24px 24px;
+      color: #e5e5e5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    main {
+      width: 100%;
+      max-width: 900px;
+      background: rgba(10,10,10,0.95);
+      border: 1px solid #fff;
+      box-shadow: 0 0 25px rgba(255,255,255,0.1);
+      padding: 32px;
+    }
+
+    h1 {
+      margin: 0 0 12px;
+      font-size: clamp(2rem, 5vw, 3.4rem);
+      color: #fff;
+      text-transform: uppercase;
+    }
+
+    .subtitle {
+      color: #bbb;
+      margin-bottom: 28px;
+    }
+
+    .input-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+      margin-bottom: 22px;
+    }
+
+    /* INPUT CHIARO */
+    input {
+      background: #ffffff;
+      border: 1px solid #fff;
+      color: #000;
+      padding: 15px;
+      font-family: inherit;
+      font-size: 1rem;
+      outline: none;
+    }
+
+    input:focus {
+      box-shadow: 0 0 10px rgba(255,255,255,0.5);
+    }
+
+    /* PULSANTE CHIARO */
+    button {
+      background: #ffffff;
+      color: #000;
+      border: 1px solid #fff;
+      padding: 0 18px;
+      font-family: inherit;
+      cursor: pointer;
+      text-transform: uppercase;
+      font-weight: bold;
+    }
+
+    button:hover {
+      background: #e5e5e5;
+    }
+
+    .bar {
+      height: 16px;
+      background: #000;
+      border: 1px solid #fff;
+      margin-bottom: 10px;
+    }
+
+    .fill {
+      height: 100%;
+      width: 0%;
+      background: #ff4444;
+      transition: width 0.25s ease, background 0.25s ease;
+    }
+
+    .strength-label {
+      color: #bbb;
+      margin-bottom: 28px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+
+    .card {
+      background: #000;
+      border: 1px solid #888;
+      padding: 18px;
+      min-height: 130px;
+    }
+
+    .card h2 {
+      margin: 0 0 10px;
+      font-size: 0.85rem;
+      color: #fff;
+      text-transform: uppercase;
+    }
+
+    .big {
+      font-size: clamp(1.25rem, 4vw, 1.8rem);
+      font-weight: bold;
+    }
+
+    .small {
+      margin-top: 8px;
+      color: #aaa;
+      font-size: 0.9rem;
+    }
+
+    .checks {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-top: 24px;
+    }
+
+    .check {
+      background: #000;
+      border: 1px solid #666;
+      padding: 12px;
+      color: #aaa;
+    }
+
+    .check.ok {
+      color: #fff;
+      border-color: #fff;
+    }
+
+    .note {
+      margin-top: 28px;
+      padding: 14px;
+      border-left: 3px solid #fff;
+      color: #bbb;
+      background: rgba(255,255,255,0.05);
+    }
+
+    @media (max-width: 760px) {
+      .grid, .checks, .input-row {
+        grid-template-columns: 1fr;
+      }
+
+      button {
+        padding: 14px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main>
+    <h1>Password Analyzer</h1>
+
+    <p class="subtitle">
+      &gt; Inserisci una password. Calcolo locale.
+    </p>
+
+    <div class="input-row">
+      <input id="password" type="password" placeholder="Inserisci password..." />
+      <button id="toggle">Mostra</button>
+    </div>
+
+    <div class="bar"><div id="fill" class="fill"></div></div>
+    <div id="label" class="strength-label">Inserisci una password</div>
+
+    <div class="grid">
+      <div class="card"><h2>Lunghezza</h2><div id="length" class="big">0</div></div>
+      <div class="card"><h2>Charset</h2><div id="charset" class="big">0</div></div>
+      <div class="card"><h2>Combinazioni</h2><div id="comb" class="big">0</div></div>
+      <div class="card"><h2>Tempo</h2><div id="time" class="big">0 sec</div></div>
+    </div>
+
+    <div class="checks">
+      <div id="l" class="check">Minuscole: no</div>
+      <div id="u" class="check">Maiuscole: no</div>
+      <div id="n" class="check">Numeri: no</div>
+      <div id="s" class="check">Simboli: no</div>
+    </div>
+
+    <p class="note">
+      Modello semplificato brute force.
+    </p>
+  </main>
+
+<script>
+const i = document.getElementById("password");
+const t = document.getElementById("toggle");
+
+const lengthEl = document.getElementById("length");
+const charsetEl = document.getElementById("charset");
+const combEl = document.getElementById("comb");
+const timeEl = document.getElementById("time");
+const fill = document.getElementById("fill");
+const label = document.getElementById("label");
+
+const RATE = 100n;
+
+function est(p){
+  let size=0;
+  const l=/[a-z]/.test(p);
+  const u=/[A-Z]/.test(p);
+  const n=/[0-9]/.test(p);
+  const s=/[^a-zA-Z0-9]/.test(p);
+  if(l) size+=26;
+  if(u) size+=26;
+  if(n) size+=10;
+  if(s) size+=33;
+  return {size,l,u,n,s};
+}
+
+function pow(b,e){
+  let r=1n; b=BigInt(b); e=BigInt(e);
+  while(e>0n){ if(e%2n) r*=b; b*=b; e/=2n; }
+  return r;
+}
+
+function fmt(n){
+  const s=n.toString();
+  return s.length>12 ? s[0]+","+s.slice(1,4)+"e"+(s.length-1) : s;
+}
+
+function update(){
+  const p=i.value;
+  const len=p.length;
+  const d=est(p);
+
+  lengthEl.textContent=len;
+  charsetEl.textContent=d.size;
+
+  document.getElementById("l").textContent="Minuscole: "+(d.l?"sì":"no");
+  document.getElementById("u").textContent="Maiuscole: "+(d.u?"sì":"no");
+  document.getElementById("n").textContent="Numeri: "+(d.n?"sì":"no");
+  document.getElementById("s").textContent="Simboli: "+(d.s?"sì":"no");
+
+  if(!p){ combEl.textContent="0"; timeEl.textContent="0"; return; }
+
+  const comb=pow(d.size,len);
+  const sec=(comb/2n)/RATE;
+
+  combEl.textContent=fmt(comb);
+  timeEl.textContent=sec+" sec";
+
+  const ent=Math.log2(d.size)*len;
+  fill.style.width=Math.min(100,(ent/80)*100)+"%";
+}
+
+t.onclick=()=>{ i.type=i.type==="password"?"text":"password"; };
+i.oninput=update;
+</script>
+</body>
+</html>
