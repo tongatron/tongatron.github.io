@@ -3,319 +3,325 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Password Analyzer 90s Office</title>
+  <title>Password Analyzer // Hacker Terminal</title>
 
   <style>
     * {
       box-sizing: border-box;
     }
 
+    :root {
+      --bg: #020403;
+      --panel: #050a07;
+      --text: #d7ffe1;
+      --muted: #7da98a;
+      --line: #1cff78;
+      --line-dim: rgba(28, 255, 120, 0.26);
+      --bad: #ff3b3b;
+      --warn: #ffd166;
+      --ok: #1cff78;
+    }
+
     body {
       margin: 0;
       min-height: 100vh;
-      font-family: Tahoma, "MS Sans Serif", Arial, sans-serif;
-      background: #008080;
-      color: #000;
-      padding: 28px;
+      background:
+        radial-gradient(circle at 20% 10%, rgba(28,255,120,0.13), transparent 28%),
+        radial-gradient(circle at 80% 80%, rgba(28,255,120,0.08), transparent 30%),
+        var(--bg);
+      color: var(--text);
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+      padding: 22px;
       display: flex;
       align-items: center;
       justify-content: center;
+      overflow-x: hidden;
     }
 
-    .window {
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        repeating-linear-gradient(
+          to bottom,
+          rgba(255,255,255,0.03) 0,
+          rgba(255,255,255,0.03) 1px,
+          transparent 1px,
+          transparent 4px
+        );
+      mix-blend-mode: screen;
+      opacity: 0.38;
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(28,255,120,0.045),
+        transparent
+      );
+      animation: sweep 7s linear infinite;
+    }
+
+    @keyframes sweep {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+
+    .terminal {
       width: 100%;
-      max-width: 980px;
-      background: #c0c0c0;
-      border-top: 2px solid #ffffff;
-      border-left: 2px solid #ffffff;
-      border-right: 2px solid #404040;
-      border-bottom: 2px solid #404040;
-      box-shadow: 6px 6px 0 rgba(0,0,0,0.35);
+      max-width: 1050px;
+      border: 1px solid var(--line);
+      background: rgba(2, 6, 4, 0.94);
+      box-shadow:
+        0 0 0 1px rgba(28,255,120,0.12),
+        0 0 35px rgba(28,255,120,0.16),
+        inset 0 0 60px rgba(28,255,120,0.04);
+      position: relative;
     }
 
-    .titlebar {
-      background: linear-gradient(90deg, #000080, #1084d0);
-      color: #fff;
-      padding: 4px 8px;
-      font-size: 14px;
-      font-weight: bold;
+    .terminal-top {
+      height: 38px;
+      border-bottom: 1px solid var(--line-dim);
       display: flex;
+      align-items: center;
       justify-content: space-between;
-      align-items: center;
-    }
-
-    .window-buttons {
-      display: flex;
-      gap: 3px;
-    }
-
-    .win-btn {
-      width: 18px;
-      height: 18px;
-      background: #c0c0c0;
-      color: #000;
-      border-top: 2px solid #fff;
-      border-left: 2px solid #fff;
-      border-right: 2px solid #404040;
-      border-bottom: 2px solid #404040;
-      font-size: 11px;
-      line-height: 12px;
-      text-align: center;
-    }
-
-    .menubar {
-      background: #c0c0c0;
-      padding: 4px 8px;
-      border-bottom: 1px solid #808080;
+      padding: 0 14px;
+      background: linear-gradient(90deg, rgba(28,255,120,0.12), rgba(28,255,120,0.02));
+      color: var(--muted);
       font-size: 13px;
+      letter-spacing: 0.04em;
     }
 
-    .menubar span {
-      margin-right: 18px;
-    }
-
-    .toolbar {
-      padding: 6px 8px;
-      border-top: 1px solid #fff;
-      border-bottom: 1px solid #808080;
+    .dots {
       display: flex;
-      gap: 6px;
-      flex-wrap: wrap;
+      gap: 7px;
     }
 
-    .tool {
-      min-width: 34px;
-      height: 28px;
-      background: #c0c0c0;
-      border-top: 2px solid #fff;
-      border-left: 2px solid #fff;
-      border-right: 2px solid #404040;
-      border-bottom: 2px solid #404040;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 15px;
+    .dot {
+      width: 10px;
+      height: 10px;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      box-shadow: 0 0 8px rgba(28,255,120,0.25);
     }
 
     main {
-      padding: 18px;
-    }
-
-    .dialog {
-      background: #d4d0c8;
-      border-top: 2px solid #fff;
-      border-left: 2px solid #fff;
-      border-right: 2px solid #404040;
-      border-bottom: 2px solid #404040;
-      padding: 18px;
+      padding: 26px;
     }
 
     h1 {
       margin: 0 0 8px;
-      font-size: 26px;
-      font-weight: bold;
+      color: var(--line);
+      font-size: clamp(1.8rem, 5vw, 3.4rem);
+      line-height: 0.95;
+      text-transform: uppercase;
+      letter-spacing: -0.06em;
+      text-shadow: 0 0 15px rgba(28,255,120,0.33);
     }
 
     .subtitle {
-      margin: 0 0 16px;
-      font-size: 14px;
-      line-height: 1.4;
+      color: var(--muted);
+      margin: 0 0 24px;
+      line-height: 1.55;
+      max-width: 900px;
     }
 
-    fieldset {
-      border: 2px groove #fff;
-      margin: 0 0 16px;
-      padding: 14px;
-    }
-
-    legend {
-      padding: 0 8px;
-      font-weight: bold;
-      font-size: 13px;
-    }
-
-    .input-row {
+    .prompt-line {
       display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 8px;
-      align-items: stretch;
+      grid-template-columns: auto 1fr auto;
+      gap: 10px;
+      align-items: center;
+      border: 1px solid var(--line-dim);
+      background: rgba(28,255,120,0.035);
+      padding: 12px;
+      margin-bottom: 18px;
+    }
+
+    .prompt {
+      color: var(--line);
+      white-space: nowrap;
     }
 
     input {
       width: 100%;
-      background: #fff;
-      color: #000;
-      border-top: 2px solid #404040;
-      border-left: 2px solid #404040;
-      border-right: 2px solid #fff;
-      border-bottom: 2px solid #fff;
-      padding: 8px;
-      font-family: Tahoma, "MS Sans Serif", Arial, sans-serif;
-      font-size: 15px;
-      outline: none;
+      border: 0;
+      outline: 0;
+      background: transparent;
+      color: #fff;
+      font-family: inherit;
+      font-size: 1rem;
+      caret-color: var(--line);
+    }
+
+    input::placeholder {
+      color: rgba(215,255,225,0.35);
     }
 
     button {
-      background: #c0c0c0;
-      color: #000;
-      border-top: 2px solid #fff;
-      border-left: 2px solid #fff;
-      border-right: 2px solid #404040;
-      border-bottom: 2px solid #404040;
-      padding: 7px 14px;
-      font-family: Tahoma, "MS Sans Serif", Arial, sans-serif;
-      font-size: 13px;
+      border: 1px solid var(--line);
+      background: transparent;
+      color: var(--line);
+      padding: 8px 13px;
+      font-family: inherit;
       cursor: pointer;
-      min-width: 90px;
+      text-transform: uppercase;
+      box-shadow: inset 0 0 15px rgba(28,255,120,0.08);
     }
 
-    button:active {
-      border-top: 2px solid #404040;
-      border-left: 2px solid #404040;
-      border-right: 2px solid #fff;
-      border-bottom: 2px solid #fff;
-      padding-top: 8px;
-      padding-left: 15px;
+    button:hover {
+      background: rgba(28,255,120,0.12);
     }
 
-    .meter-frame {
-      background: #fff;
-      border-top: 2px solid #404040;
-      border-left: 2px solid #404040;
-      border-right: 2px solid #fff;
-      border-bottom: 2px solid #fff;
-      height: 22px;
+    .meter {
+      height: 18px;
+      border: 1px solid var(--line);
+      background:
+        repeating-linear-gradient(
+          90deg,
+          rgba(28,255,120,0.06) 0,
+          rgba(28,255,120,0.06) 8px,
+          transparent 8px,
+          transparent 16px
+        );
       padding: 2px;
-      margin-top: 10px;
+      margin-bottom: 10px;
     }
 
     .fill {
       height: 100%;
       width: 0%;
-      background: repeating-linear-gradient(
-        90deg,
-        #000080 0,
-        #000080 8px,
-        #1084d0 8px,
-        #1084d0 16px
-      );
-      transition: width 0.25s ease;
+      background: var(--bad);
+      box-shadow: 0 0 12px currentColor;
+      transition: width 0.25s ease, background 0.25s ease;
     }
 
-    .status-line {
-      margin-top: 8px;
-      background: #ffffe1;
-      border: 1px solid #808080;
-      padding: 8px;
-      min-height: 34px;
-      font-size: 13px;
-      line-height: 1.35;
+    .label {
+      color: var(--muted);
+      margin-bottom: 22px;
+      min-height: 24px;
+      line-height: 1.45;
     }
 
     .grid {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
-      gap: 10px;
+      gap: 12px;
+      margin-bottom: 18px;
     }
 
-    .card {
-      background: #d4d0c8;
-      border-top: 2px solid #fff;
-      border-left: 2px solid #fff;
-      border-right: 2px solid #404040;
-      border-bottom: 2px solid #404040;
-      padding: 10px;
-      min-height: 112px;
+    .box {
+      border: 1px solid var(--line-dim);
+      background: rgba(0,0,0,0.32);
+      padding: 14px;
+      min-height: 122px;
+      position: relative;
     }
 
-    .card h2 {
-      margin: 0 0 8px;
-      font-size: 12px;
+    .box::before {
+      content: "";
+      position: absolute;
+      top: -1px;
+      left: -1px;
+      width: 12px;
+      height: 12px;
+      border-top: 1px solid var(--line);
+      border-left: 1px solid var(--line);
+    }
+
+    .box h2 {
+      margin: 0 0 10px;
+      font-size: 0.78rem;
+      color: var(--line);
       text-transform: uppercase;
+      letter-spacing: 0.07em;
     }
 
     .big {
-      background: #fff;
-      border-top: 2px solid #404040;
-      border-left: 2px solid #404040;
-      border-right: 2px solid #fff;
-      border-bottom: 2px solid #fff;
-      padding: 8px;
-      min-height: 42px;
-      font-size: 17px;
-      font-weight: bold;
+      font-size: clamp(1rem, 3vw, 1.6rem);
+      font-weight: 700;
       word-break: break-word;
+      color: #fff;
     }
 
     .small {
-      margin-top: 7px;
-      font-size: 11px;
-      color: #333;
-      line-height: 1.3;
+      margin-top: 8px;
+      font-size: 0.78rem;
+      color: var(--muted);
+      line-height: 1.35;
     }
 
     .checks {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 8px;
+      gap: 10px;
+      margin-bottom: 18px;
     }
 
     .check {
-      background: #d4d0c8;
-      border-top: 2px solid #fff;
-      border-left: 2px solid #fff;
-      border-right: 2px solid #404040;
-      border-bottom: 2px solid #404040;
-      padding: 8px;
-      font-size: 13px;
+      border: 1px solid var(--line-dim);
+      padding: 10px;
+      color: var(--muted);
+      background: rgba(28,255,120,0.025);
     }
 
-    .check.ok::before {
-      content: "✓ ";
-      color: #008000;
-      font-weight: bold;
+    .check.ok {
+      color: var(--ok);
+      border-color: rgba(28,255,120,0.55);
     }
 
-    .check.bad::before {
-      content: "! ";
-      color: #800000;
-      font-weight: bold;
+    .check.bad {
+      color: var(--bad);
+      border-color: rgba(255,59,59,0.75);
+    }
+
+    .console {
+      border: 1px solid var(--line-dim);
+      background: rgba(0,0,0,0.45);
+      padding: 14px;
+      min-height: 126px;
+      color: var(--muted);
+      line-height: 1.5;
+      font-size: 0.92rem;
+      white-space: pre-wrap;
+    }
+
+    .danger {
+      border-color: rgba(255,59,59,0.9);
     }
 
     .danger .big,
-    .danger {
-      color: #800000;
+    .danger h2 {
+      color: var(--bad);
     }
 
-    .note {
-      background: #ffffe1;
-      border: 1px solid #808080;
-      padding: 10px;
-      font-size: 12px;
-      line-height: 1.4;
-      margin: 0;
+    .footer {
+      border-top: 1px solid var(--line-dim);
+      padding: 10px 14px;
+      color: var(--muted);
+      font-size: 0.8rem;
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
     }
 
-    .statusbar {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 6px;
-      padding: 5px;
-      border-top: 1px solid #808080;
-      background: #c0c0c0;
-      font-size: 12px;
+    .blink {
+      display: inline-block;
+      animation: blink 1s steps(2, start) infinite;
     }
 
-    .statusbox {
-      border-top: 1px solid #808080;
-      border-left: 1px solid #808080;
-      border-right: 1px solid #fff;
-      border-bottom: 1px solid #fff;
-      padding: 3px 6px;
-      min-height: 20px;
+    @keyframes blink {
+      50% { opacity: 0; }
     }
 
-    @media (max-width: 920px) {
+    @media (max-width: 900px) {
       .grid {
         grid-template-columns: repeat(2, 1fr);
       }
@@ -331,131 +337,110 @@
         align-items: flex-start;
       }
 
-      .input-row,
+      main {
+        padding: 16px;
+      }
+
+      .prompt-line,
       .grid,
       .checks {
         grid-template-columns: 1fr;
       }
 
-      .toolbar {
-        display: none;
+      .prompt-line {
+        gap: 8px;
+      }
+
+      button {
+        width: 100%;
       }
     }
   </style>
 </head>
 
 <body>
-  <div class="window">
-    <div class="titlebar">
-      <span>Password Analyzer - Microsoft Office Style Utility</span>
-      <div class="window-buttons">
-        <div class="win-btn">_</div>
-        <div class="win-btn">□</div>
-        <div class="win-btn">×</div>
+  <div class="terminal">
+    <div class="terminal-top">
+      <div class="dots">
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
       </div>
-    </div>
-
-    <div class="menubar">
-      <span><u>F</u>ile</span>
-      <span><u>M</u>odifica</span>
-      <span><u>V</u>isualizza</span>
-      <span><u>S</u>trumenti</span>
-      <span><u>?</u></span>
-    </div>
-
-    <div class="toolbar">
-      <div class="tool">📄</div>
-      <div class="tool">💾</div>
-      <div class="tool">🖨</div>
-      <div class="tool">🔍</div>
-      <div class="tool">🔐</div>
-      <div class="tool">?</div>
+      <div>root@localhost:/usr/bin/password-audit</div>
+      <div>SECURE MODE</div>
     </div>
 
     <main>
-      <div class="dialog">
-        <h1>Analizzatore Password</h1>
+      <h1>Password<br>Analyzer</h1>
 
-        <p class="subtitle">
-          Utility dimostrativa in stile software da ufficio anni '90. Analizza lunghezza, set di caratteri,
-          combinazioni teoriche e leak tramite modello k-anonymity di Have I Been Pwned.
-        </p>
+      <p class="subtitle">
+        // brute force estimator + pattern scan + Have I Been Pwned k-anonymity check.
+        La password resta nel browser: viene inviato solo il prefisso SHA-1 di 5 caratteri.
+      </p>
 
-        <fieldset>
-          <legend>Inserimento password</legend>
-
-          <div class="input-row">
-            <input id="password" type="password" placeholder="Inserisci password..." autocomplete="off" spellcheck="false" />
-            <button id="toggle" type="button">Mostra</button>
-          </div>
-
-          <div class="meter-frame">
-            <div id="fill" class="fill"></div>
-          </div>
-
-          <div id="label" class="status-line">Inserisci una password</div>
-        </fieldset>
-
-        <fieldset>
-          <legend>Risultati</legend>
-
-          <div class="grid">
-            <div class="card">
-              <h2>Lunghezza</h2>
-              <div id="length" class="big">0</div>
-              <div class="small">Numero di caratteri.</div>
-            </div>
-
-            <div class="card">
-              <h2>Charset</h2>
-              <div id="charset" class="big">0</div>
-              <div class="small">Set stimato.</div>
-            </div>
-
-            <div class="card">
-              <h2>Combinazioni</h2>
-              <div id="comb" class="big">0</div>
-              <div class="small">Charset ^ lunghezza.</div>
-            </div>
-
-            <div class="card">
-              <h2>Tempo medio</h2>
-              <div id="time" class="big">0 sec</div>
-              <div class="small">A 100 tentativi/sec.</div>
-            </div>
-
-            <div class="card" id="leakCard">
-              <h2>Leak HIBP</h2>
-              <div id="leak" class="big">—</div>
-              <div class="small">SHA-1 parziale.</div>
-            </div>
-          </div>
-        </fieldset>
-
-        <fieldset>
-          <legend>Controlli</legend>
-
-          <div class="checks">
-            <div id="l" class="check">Minuscole: no</div>
-            <div id="u" class="check">Maiuscole: no</div>
-            <div id="n" class="check">Numeri: no</div>
-            <div id="s" class="check">Simboli: no</div>
-            <div id="seq" class="check">Sequenze prevedibili: no</div>
-            <div id="rep" class="check">Ripetizioni: no</div>
-          </div>
-        </fieldset>
-
-        <p class="note">
-          Nota tecnica: il controllo HIBP non invia la password. Il browser calcola SHA-1,
-          invia solo i primi 5 caratteri dell'hash e confronta localmente il suffisso.
-          Per funzionare correttamente, apri la pagina da localhost o HTTPS.
-        </p>
+      <div class="prompt-line">
+        <span class="prompt">audit$</span>
+        <input id="password" type="password" placeholder="./scan --password ********" autocomplete="off" spellcheck="false" />
+        <button id="toggle" type="button">Mostra</button>
       </div>
+
+      <div class="meter">
+        <div id="fill" class="fill"></div>
+      </div>
+
+      <div id="label" class="label">waiting for input<span class="blink">_</span></div>
+
+      <div class="grid">
+        <div class="box">
+          <h2>len</h2>
+          <div id="length" class="big">0</div>
+          <div class="small">caratteri</div>
+        </div>
+
+        <div class="box">
+          <h2>charset</h2>
+          <div id="charset" class="big">0</div>
+          <div class="small">spazio simbolico stimato</div>
+        </div>
+
+        <div class="box">
+          <h2>keyspace</h2>
+          <div id="comb" class="big">0</div>
+          <div class="small">charset ^ lunghezza</div>
+        </div>
+
+        <div class="box">
+          <h2>avg crack</h2>
+          <div id="time" class="big">0 sec</div>
+          <div class="small">100 tentativi/sec</div>
+        </div>
+
+        <div class="box" id="leakCard">
+          <h2>hibp leak</h2>
+          <div id="leak" class="big">—</div>
+          <div class="small">SHA-1 range API</div>
+        </div>
+      </div>
+
+      <div class="checks">
+        <div id="l" class="check">[ ] minuscole</div>
+        <div id="u" class="check">[ ] maiuscole</div>
+        <div id="n" class="check">[ ] numeri</div>
+        <div id="s" class="check">[ ] simboli</div>
+        <div id="seq" class="check">[ ] sequenze prevedibili</div>
+        <div id="rep" class="check">[ ] ripetizioni</div>
+      </div>
+
+      <div id="console" class="console">> inizializzazione modulo audit...
+> crypto.subtle: standby
+> HIBP range API: standby
+> attesa input utente</div>
     </main>
 
-    <div class="statusbar">
-      <div class="statusbox" id="statusbarText">Pronto</div>
-      <div class="statusbox">NUM</div>
+    <div class="footer">
+      <span>MODE: client-side only</span>
+      <span>RATE: 100 guesses/sec</span>
+      <span>HIBP: SHA-1 prefix only</span>
     </div>
   </div>
 
@@ -471,7 +456,7 @@ const fill = document.getElementById("fill");
 const label = document.getElementById("label");
 const leakEl = document.getElementById("leak");
 const leakCard = document.getElementById("leakCard");
-const statusbarText = document.getElementById("statusbarText");
+const consoleEl = document.getElementById("console");
 
 const RATE = 100n;
 let debounceTimer = null;
@@ -483,6 +468,10 @@ const commonWords = [
   "juventus", "inter", "milan", "napoli", "roma",
   "123456", "12345678", "000000"
 ];
+
+function log(lines){
+  consoleEl.textContent = lines.join("\n");
+}
 
 function est(p){
   let size=0;
@@ -560,7 +549,7 @@ function hasCommonWord(p){
 
 function setCheck(id, text, ok, badMode = false){
   const el = document.getElementById(id);
-  el.textContent = text + ": " + (ok ? "sì" : "no");
+  el.textContent = (ok ? "[x] " : "[ ] ") + text;
   el.classList.toggle("ok", ok && !badMode);
   el.classList.toggle("bad", ok && badMode);
 }
@@ -592,11 +581,17 @@ async function checkPwned(password){
   for(const line of lines){
     const [foundSuffix, count] = line.trim().split(":");
     if(foundSuffix === suffix){
-      return Number(count);
+      return {
+        count: Number(count),
+        prefix
+      };
     }
   }
 
-  return 0;
+  return {
+    count: 0,
+    prefix
+  };
 }
 
 function resetEmpty(){
@@ -607,15 +602,22 @@ function resetEmpty(){
   leakEl.textContent = "—";
   leakCard.classList.remove("danger");
   fill.style.width = "0%";
-  label.textContent = "Inserisci una password";
-  statusbarText.textContent = "Pronto";
+  fill.style.background = "var(--bad)";
+  label.innerHTML = 'waiting for input<span class="blink">_</span>';
 
-  setCheck("l", "Minuscole", false);
-  setCheck("u", "Maiuscole", false);
-  setCheck("n", "Numeri", false);
-  setCheck("s", "Simboli", false);
-  setCheck("seq", "Sequenze prevedibili", false, true);
-  setCheck("rep", "Ripetizioni", false, true);
+  setCheck("l", "minuscole", false);
+  setCheck("u", "maiuscole", false);
+  setCheck("n", "numeri", false);
+  setCheck("s", "simboli", false);
+  setCheck("seq", "sequenze prevedibili", false, true);
+  setCheck("rep", "ripetizioni", false, true);
+
+  log([
+    "> inizializzazione modulo audit...",
+    "> crypto.subtle: standby",
+    "> HIBP range API: standby",
+    "> attesa input utente"
+  ]);
 }
 
 async function update(){
@@ -636,12 +638,12 @@ async function update(){
   lengthEl.textContent = len;
   charsetEl.textContent = d.size;
 
-  setCheck("l", "Minuscole", d.l);
-  setCheck("u", "Maiuscole", d.u);
-  setCheck("n", "Numeri", d.n);
-  setCheck("s", "Simboli", d.s);
-  setCheck("seq", "Sequenze prevedibili", sequence, true);
-  setCheck("rep", "Ripetizioni", repeated, true);
+  setCheck("l", "minuscole", d.l);
+  setCheck("u", "maiuscole", d.u);
+  setCheck("n", "numeri", d.n);
+  setCheck("s", "simboli", d.s);
+  setCheck("seq", "sequenze prevedibili", sequence, true);
+  setCheck("rep", "ripetizioni", repeated, true);
 
   if(d.size === 0){
     combEl.textContent = "0";
@@ -660,7 +662,7 @@ async function update(){
 
   if(len < 10){
     entropy -= 15;
-    warnings.push("troppo corta");
+    warnings.push("password corta");
   }
   if(sequence){
     entropy -= 20;
@@ -677,44 +679,80 @@ async function update(){
 
   entropy = Math.max(0, entropy);
 
-  let status = "debole";
-  let width = Math.min(100, (entropy / 80) * 100);
+  let status = "WEAK";
+  let color = "var(--bad)";
 
-  if(entropy >= 80) status = "molto forte";
-  else if(entropy >= 60) status = "forte";
-  else if(entropy >= 40) status = "media";
-
-  fill.style.width = width + "%";
-  label.textContent = status + " — entropia stimata: " + entropy.toFixed(1) + " bit";
-
-  if(warnings.length){
-    label.textContent += " — attenzione: " + warnings.join(", ");
+  if(entropy >= 80){
+    status = "VERY_STRONG";
+    color = "var(--ok)";
+  } else if(entropy >= 60){
+    status = "STRONG";
+    color = "var(--ok)";
+  } else if(entropy >= 40){
+    status = "MEDIUM";
+    color = "var(--warn)";
   }
 
-  leakEl.textContent = "controllo...";
-  statusbarText.textContent = "Controllo Have I Been Pwned in corso...";
+  fill.style.width = Math.min(100, (entropy / 80) * 100) + "%";
+  fill.style.background = color;
+  label.textContent = "status=" + status + " | entropy=" + entropy.toFixed(1) + "bit";
+
+  if(warnings.length){
+    label.textContent += " | flags=" + warnings.join(", ");
+  }
+
+  leakEl.textContent = "scanning...";
   leakCard.classList.remove("danger");
 
+  log([
+    "> input ricevuto: " + len + " caratteri",
+    "> keyspace stimato: " + fmtBig(comb),
+    "> tempo medio brute force @100/s: " + fmtTime(sec),
+    "> calcolo SHA-1 locale...",
+    "> invio prefix hash a HIBP range API..."
+  ]);
+
   try {
-    const count = await checkPwned(p);
+    const result = await checkPwned(p);
 
     if(currentRequest !== requestId) return;
 
-    if(count > 0){
-      leakEl.textContent = count.toLocaleString("it-IT") + " volte";
+    if(result.count > 0){
+      leakEl.textContent = result.count.toLocaleString("it-IT") + " hit";
       leakCard.classList.add("danger");
-      label.textContent = "COMPROMESSA — trovata in dataset di password trapelate. Non usarla.";
-      statusbarText.textContent = "Password compromessa";
+      fill.style.background = "var(--bad)";
+      label.textContent = "BREACHED_PASSWORD_DETECTED | non usare questa password";
+
+      log([
+        "> SHA-1 prefix inviato: " + result.prefix,
+        "> risposta HIBP: MATCH",
+        "> occorrenze trovate: " + result.count.toLocaleString("it-IT"),
+        "> verdict: COMPROMESSA",
+        "> action: cambia password immediatamente"
+      ]);
     } else {
-      leakEl.textContent = "non trovata";
+      leakEl.textContent = "no match";
       leakCard.classList.remove("danger");
-      statusbarText.textContent = "Controllo completato: non trovata nei leak HIBP";
+
+      log([
+        "> SHA-1 prefix inviato: " + result.prefix,
+        "> risposta HIBP: nessun suffisso corrispondente",
+        "> verdict: non trovata nei leak HIBP",
+        "> nota: questo non garantisce che sia sicura in assoluto"
+      ]);
     }
   } catch(err){
     if(currentRequest !== requestId) return;
-    leakEl.textContent = "non disponibile";
-    label.textContent += " — controllo leak non disponibile";
-    statusbarText.textContent = "Errore o blocco rete/API";
+
+    leakEl.textContent = "offline/error";
+    label.textContent += " | HIBP unavailable";
+
+    log([
+      "> errore controllo HIBP",
+      "> possibile causa: file://, CORS, rete assente, API non raggiungibile",
+      "> suggerimento: apri da localhost o HTTPS",
+      "> errore: " + err.message
+    ]);
   }
 }
 
