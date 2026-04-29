@@ -3,39 +3,48 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Password Analyzer // Hacker Terminal</title>
-
+  <title>Password Analyzer | Security Audit</title>
   <style>
+    :root {
+      color-scheme: dark;
+      --bg: #07111b;
+      --bg-soft: #0d1a27;
+      --panel: rgba(9, 19, 31, 0.82);
+      --panel-strong: rgba(8, 17, 28, 0.96);
+      --line: rgba(148, 177, 201, 0.18);
+      --line-strong: rgba(148, 177, 201, 0.32);
+      --text: #f4f8fb;
+      --muted: #98a8b8;
+      --accent: #77e3c8;
+      --accent-2: #5ba6ff;
+      --good: #78e38a;
+      --warn: #f3c96b;
+      --bad: #ff7f7f;
+      --shadow: 0 18px 48px rgba(0, 0, 0, 0.34);
+      --radius-xl: 10px;
+      --radius-lg: 8px;
+      --radius-md: 6px;
+      --mono: "IBM Plex Mono", "SFMono-Regular", Menlo, Consolas, monospace;
+      --sans: "Avenir Next", "Segoe UI", "Helvetica Neue", sans-serif;
+    }
+
     * {
       box-sizing: border-box;
     }
 
-    :root {
-      --bg: #020403;
-      --panel: #050a07;
-      --text: #d7ffe1;
-      --muted: #7da98a;
-      --line: #1cff78;
-      --line-dim: rgba(28, 255, 120, 0.26);
-      --bad: #ff3b3b;
-      --warn: #ffd166;
-      --ok: #1cff78;
+    html {
+      scroll-behavior: smooth;
     }
 
     body {
       margin: 0;
       min-height: 100vh;
-      background:
-        radial-gradient(circle at 20% 10%, rgba(28,255,120,0.13), transparent 28%),
-        radial-gradient(circle at 80% 80%, rgba(28,255,120,0.08), transparent 30%),
-        var(--bg);
       color: var(--text);
-      font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
-      padding: 22px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow-x: hidden;
+      font-family: var(--sans);
+      background:
+        radial-gradient(circle at top left, rgba(91, 166, 255, 0.16), transparent 28%),
+        radial-gradient(circle at bottom right, rgba(119, 227, 200, 0.12), transparent 24%),
+        linear-gradient(180deg, #08111a 0%, #061018 100%);
     }
 
     body::before {
@@ -44,109 +53,190 @@
       inset: 0;
       pointer-events: none;
       background:
-        repeating-linear-gradient(
-          to bottom,
-          rgba(255,255,255,0.03) 0,
-          rgba(255,255,255,0.03) 1px,
-          transparent 1px,
-          transparent 4px
-        );
-      mix-blend-mode: screen;
-      opacity: 0.38;
+        linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+      background-size: 32px 32px;
+      mask-image: radial-gradient(circle at center, black 45%, transparent 95%);
+      opacity: 0.3;
     }
 
-    body::after {
-      content: "";
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(28,255,120,0.045),
-        transparent
-      );
-      animation: sweep 7s linear infinite;
-    }
-
-    @keyframes sweep {
-      0% { transform: translateX(-100%); }
-      100% { transform: translateX(100%); }
-    }
-
-    .terminal {
-      width: 100%;
-      max-width: 1050px;
+    .shell {
+      width: min(1240px, calc(100vw - 32px));
+      margin: 24px auto;
       border: 1px solid var(--line);
-      background: rgba(2, 6, 4, 0.94);
-      box-shadow:
-        0 0 0 1px rgba(28,255,120,0.12),
-        0 0 35px rgba(28,255,120,0.16),
-        inset 0 0 60px rgba(28,255,120,0.04);
-      position: relative;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), transparent), var(--panel-strong);
+      border-radius: 10px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      backdrop-filter: blur(18px);
     }
 
-    .terminal-top {
-      height: 38px;
-      border-bottom: 1px solid var(--line-dim);
+    .topbar {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 14px;
-      background: linear-gradient(90deg, rgba(28,255,120,0.12), rgba(28,255,120,0.02));
-      color: var(--muted);
-      font-size: 13px;
-      letter-spacing: 0.04em;
+      gap: 16px;
+      padding: 16px 22px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.02);
     }
 
     .dots {
       display: flex;
-      gap: 7px;
+      gap: 8px;
     }
 
     .dot {
-      width: 10px;
-      height: 10px;
-      border: 1px solid var(--line);
-      border-radius: 50%;
-      box-shadow: 0 0 8px rgba(28,255,120,0.25);
+      width: 11px;
+      height: 11px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.08);
     }
 
-    main {
-      padding: 26px;
+    .topbar-meta,
+    .badge,
+    .mono {
+      font-family: var(--mono);
     }
 
-    h1 {
-      margin: 0 0 8px;
-      color: var(--line);
-      font-size: clamp(1.8rem, 5vw, 3.4rem);
-      line-height: 0.95;
-      text-transform: uppercase;
-      letter-spacing: -0.06em;
-      text-shadow: 0 0 15px rgba(28,255,120,0.33);
-    }
-
-    .subtitle {
+    .topbar-meta {
       color: var(--muted);
-      margin: 0 0 24px;
-      line-height: 1.55;
-      max-width: 900px;
+      font-size: 0.8rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
     }
 
-    .prompt-line {
+    .app {
+      display: grid;
+      gap: 14px;
+      padding: 14px;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 0.9fr) minmax(360px, 1.1fr);
+      gap: 14px;
+      align-items: stretch;
+    }
+
+    .panel {
+      position: relative;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-xl);
+      background: var(--panel);
+      padding: 16px;
+      overflow: hidden;
+    }
+
+    .panel::after {
+      content: "";
+      position: absolute;
+      inset: auto -20% -60% 40%;
+      height: 160px;
+      background: radial-gradient(circle, rgba(119, 227, 200, 0.12), transparent 70%);
+      pointer-events: none;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin: 0;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 7px 10px;
+      border-radius: 4px;
+      border: 1px solid var(--line);
+      color: var(--accent);
+      background: rgba(119, 227, 200, 0.08);
+      font-size: 0.8rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.4rem, 5vw, 4.5rem);
+      line-height: 0.92;
+      letter-spacing: -0.06em;
+      max-width: 10ch;
+    }
+
+    .hero-copy {
+      margin-top: 12px;
+      max-width: 64ch;
+      color: var(--muted);
+      line-height: 1.65;
+      font-size: 1rem;
+    }
+
+    .hero-points {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .badge {
+      padding: 8px 10px;
+      border-radius: 4px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.02);
+      color: var(--muted);
+      font-size: 0.76rem;
+      letter-spacing: 0.03em;
+    }
+
+    .input-panel {
+      display: grid;
+      gap: 12px;
+      align-content: start;
+      border-color: rgba(119, 227, 200, 0.42);
+      background:
+        linear-gradient(180deg, rgba(119, 227, 200, 0.09), rgba(91, 166, 255, 0.06)),
+        rgba(8, 18, 29, 0.98);
+      box-shadow:
+        inset 0 0 0 1px rgba(119, 227, 200, 0.08),
+        0 0 0 1px rgba(119, 227, 200, 0.08);
+    }
+
+    .label-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      color: var(--muted);
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .input-shell {
       display: grid;
       grid-template-columns: auto 1fr auto;
-      gap: 10px;
+      gap: 12px;
       align-items: center;
-      border: 1px solid var(--line-dim);
-      background: rgba(28,255,120,0.035);
-      padding: 12px;
-      margin-bottom: 18px;
+      padding: 18px 18px;
+      border-radius: 4px;
+      border: 1px solid rgba(119, 227, 200, 0.55);
+      background:
+        linear-gradient(90deg, rgba(119, 227, 200, 0.08), rgba(91, 166, 255, 0.06)),
+        rgba(255, 255, 255, 0.03);
+      box-shadow:
+        inset 0 0 0 1px rgba(119, 227, 200, 0.12),
+        0 0 28px rgba(119, 227, 200, 0.12);
     }
 
     .prompt {
-      color: var(--line);
-      white-space: nowrap;
+      color: var(--accent);
+      font-family: var(--mono);
+      font-size: 0.92rem;
+      letter-spacing: 0.04em;
     }
 
     input {
@@ -154,619 +244,1216 @@
       border: 0;
       outline: 0;
       background: transparent;
-      color: #fff;
-      font-family: inherit;
-      font-size: 1rem;
-      caret-color: var(--line);
+      color: var(--text);
+      font: inherit;
+      font-size: 1.12rem;
+      font-family: var(--mono);
+      letter-spacing: 0.01em;
+      min-width: 0;
     }
 
     input::placeholder {
-      color: rgba(215,255,225,0.35);
+      color: rgba(244, 248, 251, 0.36);
+    }
+
+    .button-row {
+      display: flex;
+      gap: 8px;
     }
 
     button {
-      border: 1px solid var(--line);
-      background: transparent;
-      color: var(--line);
-      padding: 8px 13px;
-      font-family: inherit;
+      border: 1px solid var(--line-strong);
+      background: rgba(255, 255, 255, 0.03);
+      color: var(--text);
       cursor: pointer;
-      text-transform: uppercase;
-      box-shadow: inset 0 0 15px rgba(28,255,120,0.08);
+      border-radius: 4px;
+      padding: 9px 11px;
+      font: inherit;
+      transition: 160ms ease;
     }
 
     button:hover {
-      background: rgba(28,255,120,0.12);
+      transform: translateY(-1px);
+      border-color: rgba(119, 227, 200, 0.45);
+      background: rgba(119, 227, 200, 0.08);
+    }
+
+    .strength-card {
+      display: grid;
+      grid-template-columns: 124px 1fr;
+      gap: 18px;
+      align-items: center;
+      padding: 14px;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .ring {
+      width: 124px;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: conic-gradient(var(--accent) 0deg, rgba(255, 255, 255, 0.08) 0deg);
+      position: relative;
+    }
+
+    .ring::before {
+      content: "";
+      position: absolute;
+      inset: 12px;
+      background: var(--bg-soft);
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.04);
+    }
+
+    .ring-value {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+    }
+
+    .ring-value strong {
+      display: block;
+      font-size: 2rem;
+      line-height: 1;
+      letter-spacing: -0.05em;
+    }
+
+    .ring-value span {
+      color: var(--muted);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .status-copy {
+      display: grid;
+      gap: 10px;
+    }
+
+    .status-copy h2 {
+      font-size: 1.45rem;
+      letter-spacing: -0.03em;
+    }
+
+    .status-copy p {
+      color: var(--muted);
+      line-height: 1.55;
     }
 
     .meter {
-      height: 18px;
-      border: 1px solid var(--line);
-      background:
-        repeating-linear-gradient(
-          90deg,
-          rgba(28,255,120,0.06) 0,
-          rgba(28,255,120,0.06) 8px,
-          transparent 8px,
-          transparent 16px
-        );
-      padding: 2px;
-      margin-bottom: 10px;
+      height: 8px;
+      border-radius: 3px;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.06);
     }
 
-    .fill {
+    .meter > span {
+      display: block;
       height: 100%;
       width: 0%;
-      background: var(--bad);
-      box-shadow: 0 0 12px currentColor;
-      transition: width 0.25s ease, background 0.25s ease;
-    }
-
-    .label {
-      color: var(--muted);
-      margin-bottom: 22px;
-      min-height: 24px;
-      line-height: 1.45;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      transition: width 200ms ease, background 200ms ease;
     }
 
     .grid {
       display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 12px;
-      margin-bottom: 18px;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      gap: 14px;
     }
 
-    .box {
-      border: 1px solid var(--line-dim);
-      background: rgba(0,0,0,0.32);
-      padding: 14px;
-      min-height: 122px;
-      position: relative;
+    .span-8 { grid-column: span 8; }
+    .span-7 { grid-column: span 7; }
+    .span-6 { grid-column: span 6; }
+    .span-5 { grid-column: span 5; }
+    .span-4 { grid-column: span 4; }
+    .span-3 { grid-column: span 3; }
+
+    .section-title {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: end;
+      margin-bottom: 12px;
     }
 
-    .box::before {
-      content: "";
-      position: absolute;
-      top: -1px;
-      left: -1px;
-      width: 12px;
-      height: 12px;
-      border-top: 1px solid var(--line);
-      border-left: 1px solid var(--line);
+    .section-title h2 {
+      font-size: 1.2rem;
+      letter-spacing: -0.03em;
     }
 
-    .box h2 {
-      margin: 0 0 10px;
-      font-size: 0.78rem;
-      color: var(--line);
-      text-transform: uppercase;
-      letter-spacing: 0.07em;
-    }
-
-    .big {
-      font-size: clamp(1rem, 3vw, 1.6rem);
-      font-weight: 700;
-      word-break: break-word;
-      color: #fff;
-    }
-
-    .small {
-      margin-top: 8px;
-      font-size: 0.78rem;
+    .section-title p {
       color: var(--muted);
-      line-height: 1.35;
+      font-size: 0.92rem;
     }
 
-    .checks {
+    .stat-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 10px;
-      margin-bottom: 18px;
     }
 
-    .check {
-      border: 1px solid var(--line-dim);
-      padding: 10px;
+    .stat {
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      padding: 13px;
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .stat span {
+      display: block;
       color: var(--muted);
-      background: rgba(28,255,120,0.025);
+      font-size: 0.8rem;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
     }
 
-    .check.ok {
-      color: var(--ok);
-      border-color: rgba(28,255,120,0.55);
+    .stat strong {
+      display: block;
+      font-size: clamp(1.1rem, 2vw, 1.55rem);
+      letter-spacing: -0.04em;
+      word-break: break-word;
     }
 
-    .check.bad {
+    .detail-list,
+    .signal-list,
+    .advice-list,
+    .scenario-list,
+    .tech-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .detail-item,
+    .signal,
+    .advice,
+    .scenario,
+    .tech-item {
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      background: rgba(255, 255, 255, 0.02);
+      padding: 14px 16px;
+    }
+
+    .signal,
+    .scenario {
+      display: grid;
+      gap: 8px;
+    }
+
+    .signal-head,
+    .scenario-head,
+    .tech-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .signal-title,
+    .scenario strong,
+    .tech-title {
+      font-weight: 600;
+      letter-spacing: -0.02em;
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 4px;
+      padding: 5px 8px;
+      font-size: 0.75rem;
+      border: 1px solid var(--line-strong);
+      background: rgba(255, 255, 255, 0.03);
+      white-space: nowrap;
+    }
+
+    .pill.good {
+      color: var(--good);
+      border-color: rgba(120, 227, 138, 0.32);
+      background: rgba(120, 227, 138, 0.08);
+    }
+
+    .pill.warn {
+      color: var(--warn);
+      border-color: rgba(243, 201, 107, 0.35);
+      background: rgba(243, 201, 107, 0.08);
+    }
+
+    .pill.bad {
       color: var(--bad);
-      border-color: rgba(255,59,59,0.75);
+      border-color: rgba(255, 127, 127, 0.35);
+      background: rgba(255, 127, 127, 0.08);
+    }
+
+    .composition {
+      display: grid;
+      gap: 8px;
+    }
+
+    .comp-row {
+      display: grid;
+      grid-template-columns: 140px 1fr auto;
+      gap: 12px;
+      align-items: center;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .comp-bar {
+      height: 8px;
+      border-radius: 3px;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .comp-bar span {
+      display: block;
+      width: 0%;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, rgba(119, 227, 200, 0.35), rgba(91, 166, 255, 0.9));
+      transition: width 180ms ease;
+    }
+
+    .leak-card[data-state="bad"] {
+      border-color: rgba(255, 127, 127, 0.45);
+      box-shadow: inset 0 0 0 1px rgba(255, 127, 127, 0.08);
     }
 
     .console {
-      border: 1px solid var(--line-dim);
-      background: rgba(0,0,0,0.45);
+      min-height: 180px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      background: #07111b;
       padding: 14px;
-      min-height: 126px;
-      color: var(--muted);
-      line-height: 1.5;
-      font-size: 0.92rem;
+      font-family: var(--mono);
+      font-size: 0.86rem;
+      color: #afc2d4;
+      line-height: 1.65;
       white-space: pre-wrap;
+      overflow: auto;
     }
 
-    .danger {
-      border-color: rgba(255,59,59,0.9);
+    details {
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      background: rgba(255, 255, 255, 0.02);
+      padding: 12px 14px;
     }
 
-    .danger .big,
-    .danger h2 {
-      color: var(--bad);
+    summary {
+      cursor: pointer;
+      font-weight: 600;
+      list-style: none;
+    }
+
+    summary::-webkit-details-marker {
+      display: none;
     }
 
     .footer {
-      border-top: 1px solid var(--line-dim);
-      padding: 10px 14px;
+      padding: 0 14px 14px;
       color: var(--muted);
-      font-size: 0.8rem;
-      display: flex;
-      justify-content: space-between;
-      gap: 14px;
-      flex-wrap: wrap;
+      font-size: 0.84rem;
+      line-height: 1.6;
     }
 
-    .blink {
-      display: inline-block;
-      animation: blink 1s steps(2, start) infinite;
-    }
-
-    @keyframes blink {
-      50% { opacity: 0; }
-    }
-
-    @media (max-width: 900px) {
-      .grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .checks {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
-    @media (max-width: 640px) {
-      body {
-        padding: 10px;
-        align-items: flex-start;
-      }
-
-      main {
-        padding: 16px;
-      }
-
-      .prompt-line,
-      .grid,
-      .checks {
+    @media (max-width: 1080px) {
+      .hero,
+      .stat-grid {
         grid-template-columns: 1fr;
       }
 
-      .prompt-line {
-        gap: 8px;
+      .span-8,
+      .span-7,
+      .span-6,
+      .span-5,
+      .span-4,
+      .span-3 {
+        grid-column: span 12;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .shell {
+        width: min(100vw - 16px, 1240px);
+        margin: 8px auto;
+        border-radius: 8px;
       }
 
-      button {
+      .app,
+      .topbar,
+      .footer {
+        padding-left: 14px;
+        padding-right: 14px;
+      }
+
+      .app {
+        gap: 14px;
+        padding-top: 14px;
+        padding-bottom: 14px;
+      }
+
+      .hero h1 {
+        max-width: none;
+      }
+
+      .input-shell,
+      .strength-card,
+      .comp-row {
+        grid-template-columns: 1fr;
+      }
+
+      .button-row {
         width: 100%;
+      }
+
+      .button-row button {
+        flex: 1;
       }
     }
   </style>
 </head>
-
 <body>
-  <div class="terminal">
-    <div class="terminal-top">
-      <div class="dots">
+  <div class="shell">
+    <div class="topbar">
+      <div class="dots" aria-hidden="true">
         <span class="dot"></span>
         <span class="dot"></span>
         <span class="dot"></span>
       </div>
-      <div>root@localhost:/usr/bin/password-audit</div>
-      <div>SECURE MODE</div>
+      <div class="topbar-meta">password-analyzer / client-side audit</div>
+      <div class="topbar-meta">k-anonymity enabled</div>
     </div>
 
-    <main>
-      <h1>Password<br>Analyzer</h1>
-
-      <p class="subtitle">
-        // brute force estimator + pattern scan + Have I Been Pwned k-anonymity check.
-        La password resta nel browser: viene inviato solo il prefisso SHA-1 di 5 caratteri.
-      </p>
-
-      <div class="prompt-line">
-        <span class="prompt">audit$</span>
-        <input id="password" type="password" placeholder="./scan --password ********" autocomplete="off" spellcheck="false" />
-        <button id="toggle" type="button">Mostra</button>
-      </div>
-
-      <div class="meter">
-        <div id="fill" class="fill"></div>
-      </div>
-
-      <div id="label" class="label">waiting for input<span class="blink">_</span></div>
-
-      <div class="grid">
-        <div class="box">
-          <h2>len</h2>
-          <div id="length" class="big">0</div>
-          <div class="small">caratteri</div>
+    <div class="app">
+      <section class="hero">
+        <div class="panel">
+          <div class="eyebrow">Security posture report</div>
+          <h1>Analisi password più completa, più chiara, più tecnica.</h1>
+          <p class="hero-copy">
+            Valuta robustezza, entropia stimata, keyspace teorico, pattern deboli,
+            riuso potenziale e presenza nei leak pubblici. Tutta l'analisi avviene
+            localmente nel browser; per Have I Been Pwned viene inviato solo il prefisso SHA-1 di 5 caratteri.
+          </p>
+          <div class="hero-points">
+            <span class="badge">Local SHA-1 hashing</span>
+            <span class="badge">Pattern &amp; dictionary heuristics</span>
+            <span class="badge">Multi-scenario crack estimate</span>
+            <span class="badge">Actionable remediation</span>
+          </div>
         </div>
 
-        <div class="box">
-          <h2>charset</h2>
-          <div id="charset" class="big">0</div>
-          <div class="small">spazio simbolico stimato</div>
+        <div class="panel input-panel">
+          <div class="label-row">
+            <span>Inserisci la password da auditare</span>
+            <span class="mono" id="privacyHint">nessun invio del testo in chiaro</span>
+          </div>
+
+          <div class="input-shell">
+            <span class="prompt">audit$</span>
+            <input id="passwordInput" type="password" placeholder="es. M!aPassword#2026?" autocomplete="off" spellcheck="false" />
+            <div class="button-row">
+              <button id="toggleBtn" type="button">Mostra</button>
+              <button id="clearBtn" type="button">Reset</button>
+            </div>
+          </div>
+
+          <div class="strength-card">
+            <div class="ring" id="scoreRing" aria-hidden="true">
+              <div class="ring-value">
+                <strong id="scoreValue">0</strong>
+                <span>score</span>
+              </div>
+            </div>
+
+            <div class="status-copy">
+              <div class="section-title">
+                <h2 id="statusTitle">In attesa di input</h2>
+                <span class="pill" id="statusPill">Idle</span>
+              </div>
+              <p id="statusText">Inserisci una password per ottenere un report tecnico con punteggio, entropia, pattern deboli e scenari di attacco.</p>
+              <div class="meter">
+                <span id="statusMeter"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="grid">
+        <div class="panel span-8">
+          <div class="section-title">
+            <div>
+              <h2>Metriche principali</h2>
+              <p>Valori derivati da lunghezza, set di caratteri, entropia grezza e penalizzazioni euristiche.</p>
+            </div>
+          </div>
+
+          <div class="stat-grid">
+            <div class="stat">
+              <span>Lunghezza</span>
+              <strong id="statLength">0</strong>
+            </div>
+            <div class="stat">
+              <span>Charset stimato</span>
+              <strong id="statCharset">0</strong>
+            </div>
+            <div class="stat">
+              <span>Entropia</span>
+              <strong id="statEntropy">0 bit</strong>
+            </div>
+            <div class="stat leak-card" id="leakCard" data-state="idle">
+              <span>Leak check</span>
+              <strong id="statLeak">In attesa</strong>
+            </div>
+          </div>
+
+          <div class="detail-list" style="margin-top: 14px;">
+            <div class="detail-item">
+              <div class="tech-head">
+                <span class="tech-title">Keyspace teorico</span>
+                <span class="pill" id="spacePill">raw</span>
+              </div>
+              <p class="mono" id="statKeyspace" style="margin-top: 8px;">0</p>
+            </div>
+            <div class="detail-item">
+              <div class="tech-head">
+                <span class="tech-title">Osservazioni rapide</span>
+                <span class="pill" id="patternPill">nessun pattern</span>
+              </div>
+              <p class="muted" id="quickSummary" style="margin-top: 8px;">Nessuna analisi disponibile finché il campo è vuoto.</p>
+            </div>
+          </div>
         </div>
 
-        <div class="box">
-          <h2>keyspace</h2>
-          <div id="comb" class="big">0</div>
-          <div class="small">charset ^ lunghezza</div>
+        <div class="panel span-4">
+          <div class="section-title">
+            <div>
+              <h2>Composizione</h2>
+              <p>Copertura categorie e distribuzione interna.</p>
+            </div>
+          </div>
+
+          <div class="composition">
+            <div class="comp-row">
+              <span>Minuscole</span>
+              <div class="comp-bar"><span id="barLower"></span></div>
+              <strong id="countLower">0</strong>
+            </div>
+            <div class="comp-row">
+              <span>Maiuscole</span>
+              <div class="comp-bar"><span id="barUpper"></span></div>
+              <strong id="countUpper">0</strong>
+            </div>
+            <div class="comp-row">
+              <span>Numeri</span>
+              <div class="comp-bar"><span id="barDigit"></span></div>
+              <strong id="countDigit">0</strong>
+            </div>
+            <div class="comp-row">
+              <span>Simboli</span>
+              <div class="comp-bar"><span id="barSymbol"></span></div>
+              <strong id="countSymbol">0</strong>
+            </div>
+          </div>
+
+          <div class="detail-list" style="margin-top: 14px;">
+            <div class="detail-item">
+              <div class="tech-head">
+                <span class="tech-title">Caratteri unici</span>
+                <span class="pill" id="uniquePill">diversity</span>
+              </div>
+              <p id="statUnique" class="mono" style="margin-top: 8px;">0 / 0</p>
+            </div>
+            <div class="detail-item">
+              <div class="tech-head">
+                <span class="tech-title">Classi presenti</span>
+                <span class="pill" id="classesPill">0 / 4</span>
+              </div>
+              <p id="classSummary" class="muted" style="margin-top: 8px;">Nessuna categoria rilevata.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="grid">
+        <div class="panel span-7">
+          <div class="section-title">
+            <div>
+              <h2>Scenari di attacco</h2>
+              <p>Tempi medi stimati assumendo metà del keyspace prima del successo.</p>
+            </div>
+          </div>
+          <div class="scenario-list" id="scenarioList"></div>
         </div>
 
-        <div class="box">
-          <h2>avg crack</h2>
-          <div id="time" class="big">0 sec</div>
-          <div class="small">100 tentativi/sec</div>
+        <div class="panel span-5">
+          <div class="section-title">
+            <div>
+              <h2>Segnali di rischio</h2>
+              <p>Le euristiche negative riducono il punteggio finale.</p>
+            </div>
+          </div>
+          <div class="signal-list" id="signalList"></div>
+        </div>
+      </section>
+
+      <section class="grid">
+        <div class="panel span-6">
+          <div class="section-title">
+            <div>
+              <h2>Raccomandazioni</h2>
+              <p>Indicazioni operative per aumentare resistenza e unicita'.</p>
+            </div>
+          </div>
+          <div class="advice-list" id="adviceList"></div>
         </div>
 
-        <div class="box" id="leakCard">
-          <h2>hibp leak</h2>
-          <div id="leak" class="big">—</div>
-          <div class="small">SHA-1 range API</div>
+        <div class="panel span-6">
+          <div class="section-title">
+            <div>
+              <h2>Dettagli tecnici</h2>
+              <p>Trasparenza sul metodo di stima usato dalla pagina.</p>
+            </div>
+          </div>
+
+          <div class="tech-list">
+            <div class="tech-item">
+              <div class="tech-head">
+                <span class="tech-title">Formula entropia grezza</span>
+                <span class="pill">H = L * log2(C)</span>
+              </div>
+              <p class="muted" id="entropyFormula" style="margin-top: 8px;">0 * log2(0) = 0 bit</p>
+            </div>
+            <div class="tech-item">
+              <div class="tech-head">
+                <span class="tech-title">Penalita' euristiche</span>
+                <span class="pill" id="penaltyPill">0 bit</span>
+              </div>
+              <p class="muted" id="penaltySummary" style="margin-top: 8px;">Nessuna penalita' applicata.</p>
+            </div>
+            <div class="tech-item">
+              <div class="tech-head">
+                <span class="tech-title">Leak workflow</span>
+                <span class="pill">SHA-1 range API</span>
+              </div>
+              <p class="muted" id="hibpSummary" style="margin-top: 8px;">Controllo non ancora eseguito.</p>
+            </div>
+          </div>
         </div>
-      </div>
+      </section>
 
-      <div class="checks">
-        <div id="l" class="check">[ ] minuscole</div>
-        <div id="u" class="check">[ ] maiuscole</div>
-        <div id="n" class="check">[ ] numeri</div>
-        <div id="s" class="check">[ ] simboli</div>
-        <div id="seq" class="check">[ ] sequenze prevedibili</div>
-        <div id="rep" class="check">[ ] ripetizioni</div>
-      </div>
+      <section class="panel">
+        <div class="section-title">
+          <div>
+            <h2>Log di analisi</h2>
+            <p>Sequenza operativa locale utile per debug e trasparenza.</p>
+          </div>
+        </div>
+        <div id="consoleLog" class="console"></div>
+      </section>
 
-      <div id="console" class="console">> inizializzazione modulo audit...
-> crypto.subtle: standby
-> HIBP range API: standby
-> attesa input utente</div>
-    </main>
+      <section class="panel">
+        <details>
+          <summary>Metodo di valutazione</summary>
+          <p class="muted" style="margin-top: 12px; line-height: 1.7;">
+            Il punteggio combina entropia teorica, varieta' dei caratteri, lunghezza,
+            densita' di caratteri unici e penalita' su pattern comuni: sequenze, anni,
+            ripetizioni, parole frequenti e strutture da tastiera. Le stime non sostituiscono
+            un password manager o un sistema di passphrase, ma aiutano a individuare debolezze evidenti.
+          </p>
+        </details>
+      </section>
+    </div>
 
     <div class="footer">
-      <span>MODE: client-side only</span>
-      <span>RATE: 100 guesses/sec</span>
-      <span>HIBP: SHA-1 prefix only</span>
+      Tutta la logica gira nel browser. Il controllo breach usa il modello k-anonymity di Have I Been Pwned:
+      viene inviato solo il prefisso SHA-1 di 5 caratteri, non la password completa.
     </div>
   </div>
 
-<script>
-const i = document.getElementById("password");
-const t = document.getElementById("toggle");
+  <script>
+    const input = document.getElementById("passwordInput");
+    const toggleBtn = document.getElementById("toggleBtn");
+    const clearBtn = document.getElementById("clearBtn");
 
-const lengthEl = document.getElementById("length");
-const charsetEl = document.getElementById("charset");
-const combEl = document.getElementById("comb");
-const timeEl = document.getElementById("time");
-const fill = document.getElementById("fill");
-const label = document.getElementById("label");
-const leakEl = document.getElementById("leak");
-const leakCard = document.getElementById("leakCard");
-const consoleEl = document.getElementById("console");
+    const ui = {
+      scoreRing: document.getElementById("scoreRing"),
+      scoreValue: document.getElementById("scoreValue"),
+      statusTitle: document.getElementById("statusTitle"),
+      statusPill: document.getElementById("statusPill"),
+      statusText: document.getElementById("statusText"),
+      statusMeter: document.getElementById("statusMeter"),
+      statLength: document.getElementById("statLength"),
+      statCharset: document.getElementById("statCharset"),
+      statEntropy: document.getElementById("statEntropy"),
+      statLeak: document.getElementById("statLeak"),
+      leakCard: document.getElementById("leakCard"),
+      statKeyspace: document.getElementById("statKeyspace"),
+      quickSummary: document.getElementById("quickSummary"),
+      patternPill: document.getElementById("patternPill"),
+      spacePill: document.getElementById("spacePill"),
+      statUnique: document.getElementById("statUnique"),
+      uniquePill: document.getElementById("uniquePill"),
+      classesPill: document.getElementById("classesPill"),
+      classSummary: document.getElementById("classSummary"),
+      entropyFormula: document.getElementById("entropyFormula"),
+      penaltyPill: document.getElementById("penaltyPill"),
+      penaltySummary: document.getElementById("penaltySummary"),
+      hibpSummary: document.getElementById("hibpSummary"),
+      consoleLog: document.getElementById("consoleLog"),
+      scenarioList: document.getElementById("scenarioList"),
+      signalList: document.getElementById("signalList"),
+      adviceList: document.getElementById("adviceList")
+    };
 
-const RATE = 100n;
-let debounceTimer = null;
-let requestId = 0;
+    const compositionBars = {
+      lower: document.getElementById("barLower"),
+      upper: document.getElementById("barUpper"),
+      digit: document.getElementById("barDigit"),
+      symbol: document.getElementById("barSymbol")
+    };
 
-const commonWords = [
-  "password", "admin", "qwerty", "letmein", "welcome",
-  "ciao", "amore", "giovanni", "torino", "calcio",
-  "juventus", "inter", "milan", "napoli", "roma",
-  "123456", "12345678", "000000"
-];
+    const compositionCounts = {
+      lower: document.getElementById("countLower"),
+      upper: document.getElementById("countUpper"),
+      digit: document.getElementById("countDigit"),
+      symbol: document.getElementById("countSymbol")
+    };
 
-function log(lines){
-  consoleEl.textContent = lines.join("\n");
-}
+    const COMMON_WORDS = [
+      "password", "admin", "welcome", "qwerty", "letmein", "dragon",
+      "football", "baseball", "secret", "master", "login", "ciao",
+      "amore", "juventus", "milan", "roma", "napoli", "inter",
+      "123456", "12345678", "abcdef", "passw0rd"
+    ];
 
-function est(p){
-  let size=0;
-  const l=/[a-z]/.test(p);
-  const u=/[A-Z]/.test(p);
-  const n=/[0-9]/.test(p);
-  const s=/[^a-zA-Z0-9]/.test(p);
-  if(l) size+=26;
-  if(u) size+=26;
-  if(n) size+=10;
-  if(s) size+=33;
-  return {size,l,u,n,s};
-}
+    const KEYBOARD_PATTERNS = ["qwerty", "asdf", "zxcv", "1q2w3e", "qazwsx"];
+    const RATES = [
+      { label: "Online rate-limited", rate: 100n, hint: "Login con throttling severo" },
+      { label: "Online aggressivo", rate: 10000n, hint: "Tentativi rapidi contro endpoint deboli" },
+      { label: "GPU offline (fast hash)", rate: 10000000000n, hint: "Hash veloci tipo SHA-1/MD5 compromessi" },
+      { label: "Cluster offline", rate: 100000000000n, hint: "Attacco parallelo ad alto budget" }
+    ];
 
-function pow(b,e){
-  let r=1n; b=BigInt(b); e=BigInt(e);
-  while(e>0n){ if(e%2n) r*=b; b*=b; e/=2n; }
-  return r;
-}
+    const hibpCache = new Map();
+    let debounceTimer = null;
+    let requestToken = 0;
 
-function fmtBig(n){
-  const s=n.toString();
-  if(s.length <= 15) return s.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-  return s[0]+","+s.slice(1,4)+" × 10^"+(s.length-1);
-}
-
-function fmtTime(sec){
-  if(sec < 1n) return "meno di 1 sec";
-
-  const year = 60n * 60n * 24n * 365n;
-  const day = 60n * 60n * 24n;
-  const hour = 60n * 60n;
-  const minute = 60n;
-
-  const units = [
-    ["anno", "anni", year],
-    ["giorno", "giorni", day],
-    ["ora", "ore", hour],
-    ["min", "min", minute],
-    ["sec", "sec", 1n]
-  ];
-
-  const parts = [];
-  let rest = sec;
-
-  for(const [sing, plur, value] of units){
-    const amount = rest / value;
-    if(amount > 0n){
-      parts.push(amount.toString() + " " + (amount === 1n ? sing : plur));
-      rest %= value;
+    function log(lines) {
+      ui.consoleLog.textContent = lines.join("\n");
     }
-    if(parts.length === 2) break;
-  }
 
-  return parts.join(" e ");
-}
+    function fmtInt(value) {
+      return value.toLocaleString("it-IT");
+    }
 
-function hasSequence(p){
-  const x = p.toLowerCase();
-  const seqs = [
-    "123", "1234", "12345", "123456", "abcdef", "abc",
-    "qwerty", "asdf", "zxcv", "0000", "1111"
-  ];
-  return seqs.some(seq => x.includes(seq));
-}
+    function fmtBigInt(value) {
+      const text = value.toString();
+      if (text.length <= 18) {
+        return text.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+      }
+      return text.slice(0, 1) + "," + text.slice(1, 4) + " × 10^" + (text.length - 1);
+    }
 
-function hasRepeatedChars(p){
-  return /(.)\1\1/.test(p);
-}
+    function formatBigRatio(value, divisor, suffix) {
+      const whole = value / divisor;
+      const decimals = ((value % divisor) * 10n) / divisor;
+      return whole.toString() + "," + decimals.toString() + " " + suffix;
+    }
 
-function hasCommonWord(p){
-  const x = p.toLowerCase();
-  return commonWords.some(w => x.includes(w));
-}
+    function formatYearsApproxBigInt(years) {
+      if (years >= 1000000000000n) return "oltre 1 trilione di anni";
+      if (years >= 1000000000n) return formatBigRatio(years, 1000000000n, "miliardi di anni");
+      if (years >= 1000000n) return formatBigRatio(years, 1000000n, "milioni di anni");
+      return years.toString() + " anni";
+    }
 
-function setCheck(id, text, ok, badMode = false){
-  const el = document.getElementById(id);
-  el.textContent = (ok ? "[x] " : "[ ] ") + text;
-  el.classList.toggle("ok", ok && !badMode);
-  el.classList.toggle("bad", ok && badMode);
-}
+    function fmtTime(seconds) {
+      if (seconds < 1n) return "meno di 1 secondo";
 
-async function sha1(text){
-  const data = new TextEncoder().encode(text);
-  const hash = await crypto.subtle.digest("SHA-1", data);
-  return Array.from(new Uint8Array(hash))
-    .map(b => b.toString(16).padStart(2,"0"))
-    .join("")
-    .toUpperCase();
-}
+      const units = [
+        ["anno", "anni", 31536000n],
+        ["giorno", "giorni", 86400n],
+        ["ora", "ore", 3600n],
+        ["minuto", "minuti", 60n],
+        ["secondo", "secondi", 1n]
+      ];
 
-async function checkPwned(password){
-  const hash = await sha1(password);
-  const prefix = hash.slice(0,5);
-  const suffix = hash.slice(5);
+      if (seconds >= 31536000n * 1000000n) {
+        const years = seconds / 31536000n;
+        return formatYearsApproxBigInt(years);
+      }
 
-  const res = await fetch("https://api.pwnedpasswords.com/range/" + prefix, {
-    method: "GET",
-    headers: { "Add-Padding": "true" }
-  });
+      const parts = [];
+      let remaining = seconds;
 
-  if(!res.ok) throw new Error("Errore API HIBP: " + res.status);
+      for (const [single, plural, size] of units) {
+        const amount = remaining / size;
+        if (amount > 0n) {
+          parts.push(amount.toString() + " " + (amount === 1n ? single : plural));
+          remaining %= size;
+        }
+        if (parts.length === 2) break;
+      }
 
-  const text = await res.text();
-  const lines = text.split("\n");
+      return parts.join(" e ");
+    }
 
-  for(const line of lines){
-    const [foundSuffix, count] = line.trim().split(":");
-    if(foundSuffix === suffix){
+    function powBigInt(base, exponent) {
+      let result = 1n;
+      let x = BigInt(base);
+      let n = BigInt(exponent);
+      while (n > 0n) {
+        if (n % 2n === 1n) result *= x;
+        x *= x;
+        n /= 2n;
+      }
+      return result;
+    }
+
+    function sha1Hex(text) {
+      const data = new TextEncoder().encode(text);
+      return crypto.subtle.digest("SHA-1", data).then((hash) =>
+        Array.from(new Uint8Array(hash))
+          .map((byte) => byte.toString(16).padStart(2, "0"))
+          .join("")
+          .toUpperCase()
+      );
+    }
+
+    function containsSequence(value) {
+      const lower = value.toLowerCase();
+      const sequences = ["0123", "1234", "2345", "abcd", "bcde", "cdef", "qwerty", "asdf", "zxcv"];
+      return sequences.some((sequence) => lower.includes(sequence));
+    }
+
+    function containsRepeatedRuns(value) {
+      return /(.)\1{2,}/.test(value);
+    }
+
+    function containsYear(value) {
+      return /(19\d{2}|20\d{2})/.test(value);
+    }
+
+    function containsCommonWord(value) {
+      const lower = value.toLowerCase();
+      return COMMON_WORDS.find((word) => lower.includes(word)) || "";
+    }
+
+    function containsKeyboardPattern(value) {
+      const lower = value.toLowerCase();
+      return KEYBOARD_PATTERNS.find((item) => lower.includes(item)) || "";
+    }
+
+    function analyzeComposition(password) {
+      const counts = {
+        lower: (password.match(/[a-z]/g) || []).length,
+        upper: (password.match(/[A-Z]/g) || []).length,
+        digit: (password.match(/[0-9]/g) || []).length,
+        symbol: (password.match(/[^a-zA-Z0-9]/g) || []).length
+      };
+
+      let charset = 0;
+      if (counts.lower) charset += 26;
+      if (counts.upper) charset += 26;
+      if (counts.digit) charset += 10;
+      if (counts.symbol) charset += 33;
+
+      return { counts, charset };
+    }
+
+    function getStrengthMeta(score, breached) {
+      if (breached) return { title: "Password compromessa", pill: "Compromessa", color: "var(--bad)" };
+      if (score >= 90) return { title: "Molto robusta", pill: "Very strong", color: "var(--good)" };
+      if (score >= 75) return { title: "Robusta", pill: "Strong", color: "var(--good)" };
+      if (score >= 55) return { title: "Discreta ma migliorabile", pill: "Medium", color: "var(--warn)" };
+      if (score >= 30) return { title: "Debole", pill: "Weak", color: "var(--bad)" };
+      return { title: "Molto debole", pill: "Critical", color: "var(--bad)" };
+    }
+
+    function scenarioTemplate(label, hint, time) {
+      return [
+        '<div class="scenario">',
+        '  <div class="scenario-head">',
+        "    <strong>" + label + "</strong>",
+        '    <span class="pill">' + time + "</span>",
+        "  </div>",
+        '  <p class="muted">' + hint + "</p>",
+        "</div>"
+      ].join("");
+    }
+
+    function signalTemplate(title, severity, body) {
+      return [
+        '<div class="signal">',
+        '  <div class="signal-head">',
+        '    <span class="signal-title">' + title + "</span>",
+        '    <span class="pill ' + severity + '">' + severity.toUpperCase() + "</span>",
+        "  </div>",
+        '  <p class="muted">' + body + "</p>",
+        "</div>"
+      ].join("");
+    }
+
+    function adviceTemplate(title, body) {
+      return [
+        '<div class="advice">',
+        "  <strong>" + title + "</strong>",
+        '  <p class="muted" style="margin-top: 8px;">' + body + "</p>",
+        "</div>"
+      ].join("");
+    }
+
+    function resetView() {
+      ui.scoreValue.textContent = "0";
+      ui.scoreRing.style.background = "conic-gradient(var(--accent) 0deg, rgba(255,255,255,0.08) 0deg)";
+      ui.statusTitle.textContent = "In attesa di input";
+      ui.statusPill.textContent = "Idle";
+      ui.statusPill.className = "pill";
+      ui.statusText.textContent = "Inserisci una password per ottenere un report tecnico con punteggio, entropia, pattern deboli e scenari di attacco.";
+      ui.statusMeter.style.width = "0%";
+      ui.statusMeter.style.background = "linear-gradient(90deg, var(--accent), var(--accent-2))";
+
+      ui.statLength.textContent = "0";
+      ui.statCharset.textContent = "0";
+      ui.statEntropy.textContent = "0 bit";
+      ui.statLeak.textContent = "In attesa";
+      ui.leakCard.dataset.state = "idle";
+      ui.statKeyspace.textContent = "0";
+      ui.quickSummary.textContent = "Nessuna analisi disponibile finché il campo è vuoto.";
+      ui.patternPill.textContent = "nessun pattern";
+      ui.patternPill.className = "pill";
+      ui.spacePill.textContent = "raw";
+      ui.statUnique.textContent = "0 / 0";
+      ui.uniquePill.textContent = "diversity";
+      ui.classesPill.textContent = "0 / 4";
+      ui.classSummary.textContent = "Nessuna categoria rilevata.";
+      ui.entropyFormula.textContent = "0 * log2(0) = 0 bit";
+      ui.penaltyPill.textContent = "0 bit";
+      ui.penaltySummary.textContent = "Nessuna penalita' applicata.";
+      ui.hibpSummary.textContent = "Controllo non ancora eseguito.";
+
+      Object.values(compositionBars).forEach((bar) => { bar.style.width = "0%"; });
+      Object.values(compositionCounts).forEach((count) => { count.textContent = "0"; });
+
+      ui.scenarioList.innerHTML = RATES.map((item) => scenarioTemplate(item.label, item.hint, "n/d")).join("");
+      ui.signalList.innerHTML = signalTemplate("Nessun input", "warn", "La valutazione parte quando la password contiene almeno un carattere.");
+      ui.adviceList.innerHTML = adviceTemplate("Usa una passphrase lunga", "Punta ad almeno 16 caratteri, con parole non correlate o generate da password manager.");
+
+      log([
+        "> init: password analyzer ready",
+        "> mode: client-side analysis",
+        "> breach workflow: SHA-1 prefix only",
+        "> waiting for user input"
+      ]);
+    }
+
+    function renderAnalysis(password) {
+      const length = password.length;
+      const { counts, charset } = analyzeComposition(password);
+      const uniqueChars = new Set(password).size;
+      const classCount = [counts.lower, counts.upper, counts.digit, counts.symbol].filter(Boolean).length;
+      const rawEntropy = charset ? length * Math.log2(charset) : 0;
+      const issues = [];
+      const suggestions = [];
+      let penalty = 0;
+
+      if (length < 12) {
+        penalty += 18;
+        issues.push({ title: "Lunghezza insufficiente", severity: "bad", body: "Sotto i 12 caratteri la superficie di ricerca cala molto, anche con caratteri misti." });
+        suggestions.push({ title: "Aumenta la lunghezza", body: "Porta la password almeno a 16 caratteri per guadagnare resistenza reale, non solo complessita' visiva." });
+      } else if (length < 16) {
+        penalty += 8;
+        issues.push({ title: "Lunghezza solo discreta", severity: "warn", body: "Meglio di una password corta, ma una passphrase piu' lunga offre un margine migliore." });
+      }
+
+      if (classCount <= 2) {
+        penalty += 8;
+        issues.push({ title: "Varieta' limitata", severity: "warn", body: "Poche classi di caratteri riducono il charset effettivo e semplificano la stima." });
+        suggestions.push({ title: "Mixa le categorie", body: "Combina lettere maiuscole e minuscole, numeri e simboli in modo non prevedibile." });
+      }
+
+      if (containsSequence(password)) {
+        penalty += 18;
+        issues.push({ title: "Sequenza prevedibile", severity: "bad", body: "Sono presenti pattern lineari come 1234, abcd o sequenze di tastiera." });
+      }
+
+      if (containsRepeatedRuns(password)) {
+        penalty += 12;
+        issues.push({ title: "Ripetizioni estese", severity: "warn", body: "Gruppi di caratteri ripetuti come aaa o 111 sono facili da modellare negli attacchi." });
+      }
+
+      const matchedWord = containsCommonWord(password);
+      if (matchedWord) {
+        penalty += 26;
+        issues.push({ title: "Parola comune rilevata", severity: "bad", body: 'La stringa contiene "' + matchedWord + '", tipico bersaglio di dizionari e regole di mutazione.' });
+      }
+
+      if (containsYear(password)) {
+        penalty += 10;
+        issues.push({ title: "Anno riconoscibile", severity: "warn", body: "Date e anni recenti sono pattern molto usati nelle password personali." });
+      }
+
+      const keyboardPattern = containsKeyboardPattern(password);
+      if (keyboardPattern) {
+        penalty += 14;
+        issues.push({ title: "Pattern di tastiera", severity: "bad", body: 'La sequenza "' + keyboardPattern + '" e\' altamente prevedibile.' });
+      }
+
+      const diversityRatio = length ? uniqueChars / length : 0;
+      if (length && diversityRatio < 0.55) {
+        penalty += 14;
+        issues.push({ title: "Bassa diversita' interna", severity: "warn", body: "Molti caratteri si ripetono: la password appare meno casuale del charset nominale." });
+      }
+
+      const normalizedEntropy = Math.max(0, rawEntropy - penalty);
+      const scoreBase = Math.min(100, Math.round((normalizedEntropy / 90) * 100));
+      const lengthBonus = Math.min(15, Math.max(0, length - 12));
+      const diversityBonus = Math.round(diversityRatio * 10);
+      const score = Math.max(0, Math.min(100, scoreBase + lengthBonus + diversityBonus - (issues.length >= 4 ? 8 : 0)));
+      const keyspace = charset ? powBigInt(charset, length) : 0n;
+
+      const scenarios = RATES.map((item) => {
+        const avgSeconds = keyspace ? (keyspace / 2n) / item.rate : 0n;
+        return { ...item, avgSeconds };
+      });
+
+      const summary = [];
+      if (length >= 16) summary.push("lunghezza solida");
+      if (classCount === 4) summary.push("tutte le classi presenti");
+      if (diversityRatio >= 0.75) summary.push("buona diversita'");
+      if (!issues.length) summary.push("nessun pattern forte rilevato");
+
+      if (!suggestions.length) {
+        suggestions.push({ title: "Conserva l'unicita'", body: "La password sembra strutturalmente valida: evita riuso tra servizi e salva tutto in un password manager." });
+      }
+
       return {
-        count: Number(count),
-        prefix
+        length,
+        counts,
+        charset,
+        classCount,
+        uniqueChars,
+        rawEntropy,
+        normalizedEntropy,
+        penalty,
+        diversityRatio,
+        score,
+        keyspace,
+        issues,
+        suggestions,
+        scenarios,
+        summary
       };
     }
-  }
 
-  return {
-    count: 0,
-    prefix
-  };
-}
+    function updateComposition(counts, length) {
+      const entries = [
+        ["lower", counts.lower],
+        ["upper", counts.upper],
+        ["digit", counts.digit],
+        ["symbol", counts.symbol]
+      ];
 
-function resetEmpty(){
-  lengthEl.textContent = "0";
-  charsetEl.textContent = "0";
-  combEl.textContent = "0";
-  timeEl.textContent = "0 sec";
-  leakEl.textContent = "—";
-  leakCard.classList.remove("danger");
-  fill.style.width = "0%";
-  fill.style.background = "var(--bad)";
-  label.innerHTML = 'waiting for input<span class="blink">_</span>';
+      entries.forEach(([key, value]) => {
+        compositionCounts[key].textContent = String(value);
+        compositionBars[key].style.width = (length ? (value / length) * 100 : 0) + "%";
+      });
+    }
 
-  setCheck("l", "minuscole", false);
-  setCheck("u", "maiuscole", false);
-  setCheck("n", "numeri", false);
-  setCheck("s", "simboli", false);
-  setCheck("seq", "sequenze prevedibili", false, true);
-  setCheck("rep", "ripetizioni", false, true);
+    function applyBaseUi(password, report) {
+      const strength = getStrengthMeta(report.score, false);
+      const ringDeg = Math.round((report.score / 100) * 360);
+      const meterColor = strength.color === "var(--good)"
+        ? "linear-gradient(90deg, #78e38a, #77e3c8)"
+        : strength.color === "var(--warn)"
+          ? "linear-gradient(90deg, #f3c96b, #f7e08c)"
+          : "linear-gradient(90deg, #ff7f7f, #f3a7a7)";
 
-  log([
-    "> inizializzazione modulo audit...",
-    "> crypto.subtle: standby",
-    "> HIBP range API: standby",
-    "> attesa input utente"
-  ]);
-}
+      ui.scoreValue.textContent = String(report.score);
+      ui.scoreRing.style.background = "conic-gradient(" + strength.color + " " + ringDeg + "deg, rgba(255,255,255,0.08) " + ringDeg + "deg)";
+      ui.statusTitle.textContent = strength.title;
+      ui.statusPill.textContent = strength.pill;
+      ui.statusPill.className = "pill " + (report.score >= 75 ? "good" : report.score >= 55 ? "warn" : "bad");
+      ui.statusText.textContent = report.issues.length
+        ? "Entropia stimata " + report.normalizedEntropy.toFixed(1) + " bit dopo penalita' euristiche. Sono stati rilevati " + report.issues.length + " segnali di rischio."
+        : "La password mostra una buona struttura: entropia stimata " + report.normalizedEntropy.toFixed(1) + " bit e nessun pattern importante rilevato.";
+      ui.statusMeter.style.width = report.score + "%";
+      ui.statusMeter.style.background = meterColor;
 
-async function update(){
-  const currentRequest = ++requestId;
-  const p = i.value;
-  const len = p.length;
+      ui.statLength.textContent = fmtInt(report.length);
+      ui.statCharset.textContent = fmtInt(report.charset);
+      ui.statEntropy.textContent = report.normalizedEntropy.toFixed(1) + " bit";
+      ui.statKeyspace.textContent = fmtBigInt(report.keyspace);
+      ui.quickSummary.textContent = report.summary.length
+        ? report.summary.join(" | ")
+        : "La struttura appare debole o troppo prevedibile.";
+      ui.patternPill.textContent = report.issues.length ? fmtInt(report.issues.length) + " risk flag" + (report.issues.length > 1 ? "s" : "") : "clean";
+      ui.patternPill.className = "pill " + (report.issues.length ? (report.issues.length >= 3 ? "bad" : "warn") : "good");
+      ui.spacePill.textContent = report.charset + "^" + report.length;
+      ui.statUnique.textContent = report.uniqueChars + " / " + report.length;
+      ui.uniquePill.textContent = Math.round(report.diversityRatio * 100) + "% unique";
+      ui.classesPill.textContent = report.classCount + " / 4";
+      ui.classSummary.textContent = [
+        report.counts.lower ? "minuscole" : null,
+        report.counts.upper ? "maiuscole" : null,
+        report.counts.digit ? "numeri" : null,
+        report.counts.symbol ? "simboli" : null
+      ].filter(Boolean).join(", ") || "Nessuna categoria rilevata.";
+      ui.entropyFormula.textContent = report.length + " * log2(" + report.charset + ") = " + report.rawEntropy.toFixed(1) + " bit";
+      ui.penaltyPill.textContent = "-" + report.penalty + " bit";
+      ui.penaltySummary.textContent = report.penalty
+        ? "Riduzione applicata per pattern prevedibili, struttura debole o segnali da dizionario."
+        : "Nessuna penalita' significativa rilevata.";
 
-  if(!p){
-    resetEmpty();
-    return;
-  }
+      updateComposition(report.counts, report.length);
 
-  const d = est(p);
-  const sequence = hasSequence(p);
-  const repeated = hasRepeatedChars(p);
-  const common = hasCommonWord(p);
+      ui.scenarioList.innerHTML = report.scenarios
+        .map((item) => scenarioTemplate(item.label, item.hint, fmtTime(item.avgSeconds)))
+        .join("");
 
-  lengthEl.textContent = len;
-  charsetEl.textContent = d.size;
+      ui.signalList.innerHTML = report.issues.length
+        ? report.issues.map((issue) => signalTemplate(issue.title, issue.severity, issue.body)).join("")
+        : signalTemplate("Nessun pattern critico", "good", "Nessuna sequenza, parola comune o ripetizione marcata e' stata rilevata.");
 
-  setCheck("l", "minuscole", d.l);
-  setCheck("u", "maiuscole", d.u);
-  setCheck("n", "numeri", d.n);
-  setCheck("s", "simboli", d.s);
-  setCheck("seq", "sequenze prevedibili", sequence, true);
-  setCheck("rep", "ripetizioni", repeated, true);
-
-  if(d.size === 0){
-    combEl.textContent = "0";
-    timeEl.textContent = "0 sec";
-    return;
-  }
-
-  const comb = pow(d.size, len);
-  const sec = (comb / 2n) / RATE;
-
-  combEl.textContent = fmtBig(comb);
-  timeEl.textContent = fmtTime(sec);
-
-  let entropy = Math.log2(d.size) * len;
-  const warnings = [];
-
-  if(len < 10){
-    entropy -= 15;
-    warnings.push("password corta");
-  }
-  if(sequence){
-    entropy -= 20;
-    warnings.push("sequenza prevedibile");
-  }
-  if(repeated){
-    entropy -= 10;
-    warnings.push("ripetizioni");
-  }
-  if(common){
-    entropy -= 30;
-    warnings.push("parola comune");
-  }
-
-  entropy = Math.max(0, entropy);
-
-  let status = "WEAK";
-  let color = "var(--bad)";
-
-  if(entropy >= 80){
-    status = "VERY_STRONG";
-    color = "var(--ok)";
-  } else if(entropy >= 60){
-    status = "STRONG";
-    color = "var(--ok)";
-  } else if(entropy >= 40){
-    status = "MEDIUM";
-    color = "var(--warn)";
-  }
-
-  fill.style.width = Math.min(100, (entropy / 80) * 100) + "%";
-  fill.style.background = color;
-  label.textContent = "status=" + status + " | entropy=" + entropy.toFixed(1) + "bit";
-
-  if(warnings.length){
-    label.textContent += " | flags=" + warnings.join(", ");
-  }
-
-  leakEl.textContent = "scanning...";
-  leakCard.classList.remove("danger");
-
-  log([
-    "> input ricevuto: " + len + " caratteri",
-    "> keyspace stimato: " + fmtBig(comb),
-    "> tempo medio brute force @100/s: " + fmtTime(sec),
-    "> calcolo SHA-1 locale...",
-    "> invio prefix hash a HIBP range API..."
-  ]);
-
-  try {
-    const result = await checkPwned(p);
-
-    if(currentRequest !== requestId) return;
-
-    if(result.count > 0){
-      leakEl.textContent = result.count.toLocaleString("it-IT") + " hit";
-      leakCard.classList.add("danger");
-      fill.style.background = "var(--bad)";
-      label.textContent = "BREACHED_PASSWORD_DETECTED | non usare questa password";
+      ui.adviceList.innerHTML = report.suggestions
+        .map((item) => adviceTemplate(item.title, item.body))
+        .join("");
 
       log([
-        "> SHA-1 prefix inviato: " + result.prefix,
-        "> risposta HIBP: MATCH",
-        "> occorrenze trovate: " + result.count.toLocaleString("it-IT"),
-        "> verdict: COMPROMESSA",
-        "> action: cambia password immediatamente"
-      ]);
-    } else {
-      leakEl.textContent = "no match";
-      leakCard.classList.remove("danger");
-
-      log([
-        "> SHA-1 prefix inviato: " + result.prefix,
-        "> risposta HIBP: nessun suffisso corrispondente",
-        "> verdict: non trovata nei leak HIBP",
-        "> nota: questo non garantisce che sia sicura in assoluto"
+        "> input-length: " + report.length,
+        "> charset-estimate: " + report.charset,
+        "> raw-entropy: " + report.rawEntropy.toFixed(1) + " bits",
+        "> heuristic-penalty: -" + report.penalty + " bits",
+        "> normalized-entropy: " + report.normalizedEntropy.toFixed(1) + " bits",
+        "> keyspace: " + fmtBigInt(report.keyspace),
+        "> scenarios: " + report.scenarios.map((item) => item.label + "=" + fmtTime(item.avgSeconds)).join(" | "),
+        "> breach-check: pending"
       ]);
     }
-  } catch(err){
-    if(currentRequest !== requestId) return;
 
-    leakEl.textContent = "offline/error";
-    label.textContent += " | HIBP unavailable";
+    async function checkPwned(password) {
+      if (hibpCache.has(password)) return hibpCache.get(password);
 
-    log([
-      "> errore controllo HIBP",
-      "> possibile causa: file://, CORS, rete assente, API non raggiungibile",
-      "> suggerimento: apri da localhost o HTTPS",
-      "> errore: " + err.message
-    ]);
-  }
-}
+      const hash = await sha1Hex(password);
+      const prefix = hash.slice(0, 5);
+      const suffix = hash.slice(5);
+      const response = await fetch("https://api.pwnedpasswords.com/range/" + prefix, {
+        method: "GET",
+        headers: { "Add-Padding": "true" }
+      });
 
-t.onclick = () => {
-  i.type = i.type === "password" ? "text" : "password";
-  t.textContent = i.type === "password" ? "Mostra" : "Nascondi";
-};
+      if (!response.ok) {
+        throw new Error("HIBP status " + response.status);
+      }
 
-i.oninput = () => {
-  clearTimeout(debounceTimer);
-  debounceTimer = setTimeout(update, 500);
-};
+      const text = await response.text();
+      const line = text.split("\n").find((item) => item.startsWith(suffix + ":"));
+      const result = {
+        prefix,
+        count: line ? Number(line.split(":")[1].trim()) : 0
+      };
+      hibpCache.set(password, result);
+      return result;
+    }
 
-resetEmpty();
-</script>
+    async function runAnalysis() {
+      const token = ++requestToken;
+      const password = input.value;
+
+      if (!password) {
+        resetView();
+        return;
+      }
+
+      const report = renderAnalysis(password);
+      applyBaseUi(password, report);
+      ui.statLeak.textContent = "Scanning...";
+      ui.leakCard.dataset.state = "pending";
+      ui.hibpSummary.textContent = "Calcolo SHA-1 locale in corso e interrogazione HIBP tramite prefisso.";
+
+      try {
+        const breach = await checkPwned(password);
+        if (token !== requestToken) return;
+
+        if (breach.count > 0) {
+          const strength = getStrengthMeta(report.score, true);
+          ui.statLeak.textContent = fmtInt(breach.count) + " occorrenze";
+          ui.leakCard.dataset.state = "bad";
+          ui.statusTitle.textContent = strength.title;
+          ui.statusPill.textContent = strength.pill;
+          ui.statusPill.className = "pill bad";
+          ui.statusText.textContent = "La password compare in breach pubblici: va sostituita subito anche se struttura e lunghezza sembrano buone.";
+          ui.statusMeter.style.background = "linear-gradient(90deg, #ff7f7f, #f3a7a7)";
+          ui.hibpSummary.textContent = "Match trovato con prefisso " + breach.prefix + ": la password appare in database di leak pubblici.";
+
+          log([
+            "> input-length: " + report.length,
+            "> normalized-entropy: " + report.normalizedEntropy.toFixed(1) + " bits",
+            "> local-sha1: complete",
+            "> hibp-prefix: " + breach.prefix,
+            "> breach-match: yes",
+            "> occurrences: " + fmtInt(breach.count),
+            "> verdict: replace immediately"
+          ]);
+        } else {
+          ui.statLeak.textContent = "Nessun match";
+          ui.leakCard.dataset.state = "ok";
+          ui.hibpSummary.textContent = "Nessun suffisso corrispondente trovato per il prefisso " + breach.prefix + ".";
+
+          log([
+            "> input-length: " + report.length,
+            "> normalized-entropy: " + report.normalizedEntropy.toFixed(1) + " bits",
+            "> local-sha1: complete",
+            "> hibp-prefix: " + breach.prefix,
+            "> breach-match: no",
+            "> verdict: not found in public leaks"
+          ]);
+        }
+      } catch (error) {
+        if (token !== requestToken) return;
+        ui.statLeak.textContent = "Errore / offline";
+        ui.leakCard.dataset.state = "warn";
+        ui.hibpSummary.textContent = "Impossibile completare il check HIBP. Verifica rete, esecuzione da localhost/https o disponibilita' API.";
+
+        log([
+          "> breach-check: failed",
+          "> reason: " + error.message,
+          "> note: analysis remains local and usable without HIBP"
+        ]);
+      }
+    }
+
+    toggleBtn.addEventListener("click", () => {
+      input.type = input.type === "password" ? "text" : "password";
+      toggleBtn.textContent = input.type === "password" ? "Mostra" : "Nascondi";
+    });
+
+    clearBtn.addEventListener("click", () => {
+      input.value = "";
+      requestToken += 1;
+      resetView();
+      input.focus();
+    });
+
+    input.addEventListener("input", () => {
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(runAnalysis, 180);
+    });
+
+    resetView();
+  </script>
 </body>
 </html>

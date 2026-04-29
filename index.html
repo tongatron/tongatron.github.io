@@ -1745,6 +1745,7 @@ main {
   <script>
     (() => {
       const API = 'https://api.tongatron.org/api/send-mail';
+      const EMAIL_TO = 'giovanni.bindi@tongatron.org';
       const form = document.getElementById('contact-form');
       const btn  = document.getElementById('cf-btn');
       const statusEl = document.getElementById('contact-status');
@@ -1755,6 +1756,14 @@ main {
         statusEl.className = 'contact-feedback ' + type;
         statusEl.style.display = 'block';
         statusEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+
+      function openMailFallback(payload) {
+        const subject = encodeURIComponent(`Messaggio dal sito da ${payload.name}`);
+        const body = encodeURIComponent(
+          `Nome: ${payload.name}\nEmail: ${payload.email}\n\n${payload.message}`
+        );
+        window.location.href = `mailto:${EMAIL_TO}?subject=${subject}&body=${body}`;
       }
 
       form.addEventListener('submit', async (e) => {
@@ -1781,16 +1790,18 @@ main {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload),
           });
-          const data = await res.json();
-          if (data.ok) {
+          const data = await res.json().catch(() => null);
+          if (res.ok && data && data.ok) {
             showStatus('✅ Messaggio inviato! Ti rispondo il prima possibile.', 'ok');
             form.reset();
             form.classList.remove('was-validated');
           } else {
-            showStatus('❌ ' + (data.error || 'Errore sconosciuto.'), 'err');
+            openMailFallback(payload);
+            showStatus('⚠️ Invio automatico non disponibile. Ho aperto la tua app email con il messaggio gia compilato.', 'err');
           }
         } catch (err) {
-          showStatus('❌ Impossibile raggiungere il server. Riprova più tardi.', 'err');
+          openMailFallback(payload);
+          showStatus('⚠️ Server non raggiungibile. Ho aperto la tua app email con il messaggio gia compilato.', 'err');
         } finally {
           spinner.style.display = 'none';
           label.textContent = 'Invia';
