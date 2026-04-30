@@ -1,33 +1,105 @@
 # Raspberry Services Inventory
 
-Snapshot: 2026-04-29
+Snapshot: 2026-04-30
 Host: `raspberrypi`
 Tailscale: `raspberrypi.tailce2514.ts.net`
+OS: Raspbian GNU/Linux 13 (trixie) — armv7l
+Node.js: v20.19.2 / npm 9.2.0
+SSH user: `giovanni` — key: `~/.ssh/raspberry_pi` (Mac)
 
-Questo file documenta i servizi e le app che risultano in esecuzione sul Raspberry al momento del rilievo.
+Questo file documenta i servizi, le app e la topologia di rete del Raspberry. Va aggiornato ogni volta che si aggiunge un servizio, cambia una porta, o si modifica un tunnel.
 
-![Diagramma architettura servizi Raspberry](img/raspberry-services-architecture.png)
+---
 
-## Overview
+## Topologia pubblica (Cloudflare Tunnels)
 
-Il Raspberry espone un web server `nginx` su porta `80` e usa servizi Node.js dietro proxy locale:
+| Hostname | Tunnel | → Porta locale | Servizio |
+|---|---|---|---|
+| `chat.tongatron.org` | `cloudflared.service` | `localhost:80` (nginx) | raspi-chat / fastify-api |
+| `api.tongatron.org` | `cloudflared.service` | `localhost:3000` | fastify-api |
+| `private.tongatron.org` | `cloudflared.service` | `localhost:3200` | raspi-admin |
+| `mhz.tongatron.org` | `cloudflared-magazzino.service` | `localhost:3100` | magazzino-sereno |
 
-- `fastify-api` su `127.0.0.1:3000`
-- `magazzino-sereno` su `127.0.0.1:3100`
-- due tunnel `cloudflared`
-- accesso remoto via `ssh` e `tailscaled`
+Config tunnel principale: `/etc/cloudflared/config.yml` (tunnel ID: `8521f89c-9038-474b-886b-71fb4ae98bc6`)
+Config tunnel magazzino: `~/.cloudflared/magazzino-config.yml` (tunnel ID: `e1fea28b-808a-40d5-a5cc-3b8adce1c71e`)
 
-## Running Services
+---
 
-### Web and reverse proxy
+## Porte in ascolto
 
-- `nginx.service`
-  - ruolo: reverse proxy HTTP principale
-  - porta pubblica: `80`
-  - config attiva: `/etc/nginx/sites-available/fastify-api`
-  - comportamento attuale: inoltra tutto a `http://127.0.0.1:3000`
+| Porta | Bind | Processo | Note |
+|---|---|---|---|
+| `22` | `0.0.0.0` | `sshd` | accesso shell |
+| `80` | `0.0.0.0` | `nginx` | reverse proxy principale |
+| `3000` | `127.0.0.1` | `node` (fastify-api) | raspi-chat + API |
+| `3100` | `127.0.0.1` | `node` (magazzino.service) | magazzino-sereno |
+| `3200` | `127.0.0.1` | `node` (raspi-admin.service) | pannello admin |
+| `139`, `445` | `0.0.0.0` | `smbd` | Samba |
 
-Config rilevante:
+---
+
+## App e servizi Node.js
+
+### fastify-api
+
+- **Service:** `fastify-api.service`
+- **Working dir:** `/srv/apps/fastify-api`
+- **Git:** `https://github.com/tongatron/raspi-chat.git`
+- **Avvio:** `/usr/bin/node /srv/apps/fastify-api/server.js`
+- **Bind:** `127.0.0.1:3000`
+- **Env:** `NODE_ENV=production`, `HOST=127.0.0.1`, `PORT=3000`
+- **Env file:** `/srv/apps/fastify-api/.env`
+- **Hostname pubblici:** `api.tongatron.org`, `chat.tongatron.org` (via nginx)
+
+Route principali:
+- `/` — landing page
+- `/admin/*` — pannello admin integrato (legacy, sostituito da raspi-admin)
+- `POST /api/send-mail` — invio mail via Gmail
+- `/chat*`, `/ws` — chat real-time WebSocket
+- `/health`, `/status`
+
+Plugin Fastify registrati: `@fastify/cors`, `@fastify/websocket`, `@fastify/multipart`, `@fastify/formbody`
+
+---
+
+### raspi-admin
+
+- **Service:** `raspi-admin.service`
+- **Working dir:** `/srv/apps/raspi-admin`
+- **Git:** `https://github.com/tongatron/raspi-admin.git` (privato)
+- **Avvio:** `/usr/bin/node server.js`
+- **Bind:** `127.0.0.1:3200`
+- **Env file:** `/srv/apps/raspi-admin/.env`
+- **Hostname pubblico:** `https://private.tongatron.org`
+- **Login:** `https://private.tongatron.org/admin/login`
+
+Pannello admin per il Raspberry: gestione servizi systemd, log, repo GitHub. Protetto da password (`ADMIN_PASSWORD` in `.env`). Plugin Fastify registrato come wrapper standalone (`server.js` locale).
+
+---
+
+### magazzino-sereno
+
+- **Service:** `magazzino.service`
+- **Working dir:** `/home/giovanni/magazzino-sereno/server`
+- **Git:** `https://github.com/tongatron/magazzino.git`
+- **Avvio:** `/usr/bin/npm start`
+- **Bind:** `127.0.0.1:3100`
+- **Env:** `HOST=127.0.0.1`, `PORT=3100`
+- **Hostname pubblico:** `https://mhz.tongatron.org` (tunnel dedicato)
+
+---
+
+### tongatron-server (non attivo come systemd)
+
+- **Dir:** `/home/giovanni/tongatron-server`
+- **Descrizione:** server Express con socket.io e nodemailer — predecessore di fastify-api
+- **Nota:** il file `.service` è presente ma il servizio non è abilitato; la funzione mail è migrata in fastify-api
+
+---
+
+## Nginx
+
+Config attiva: `/etc/nginx/sites-enabled/fastify-api`
 
 ```nginx
 server {
@@ -35,152 +107,87 @@ server {
     listen [::]:80 default_server;
     server_name _;
 
+    set $upstream http://127.0.0.1:3000;
+    if ($host = mhz.tongatron.org) {
+        set $upstream http://127.0.0.1:3100;
+    }
+
     location / {
         client_max_body_size 20m;
-        proxy_pass http://127.0.0.1:3000;
+        proxy_pass $upstream;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        # ...altri header standard
     }
 }
 ```
 
-### App 1: fastify-api
+---
 
-- service: `fastify-api.service`
-- working dir: `/srv/apps/fastify-api`
-- start command: `/usr/bin/node /srv/apps/fastify-api/server.js`
-- bind: `127.0.0.1:3000`
-- runtime: Node.js + Fastify
+## Cloudflare Tunnels
 
-Dipendenze principali:
+### Tunnel principale (`cloudflared.service`)
 
-- `fastify`
-- `@fastify/cors`
-- `@fastify/multipart`
-- `@fastify/websocket`
-- `better-sqlite3`
-- `nodemailer`
-- `web-push`
-- `ws`
+- **Config:** `/etc/cloudflared/config.yml`
+- **Credentials:** `/etc/cloudflared/8521f89c-9038-474b-886b-71fb4ae98bc6.json`
+- **Avvio:** `/usr/local/bin/cloudflared --no-autoupdate --config /etc/cloudflared/config.yml tunnel run`
 
-Funzioni osservate:
+Per aggiungere un hostname: modifica `/etc/cloudflared/config.yml`, aggiungi la regola ingress, poi:
+```bash
+cloudflared tunnel route dns 8521f89c-9038-474b-886b-71fb4ae98bc6 <nuovo-hostname>
+sudo systemctl restart cloudflared.service
+```
 
-- landing page e home applicativa
-- route di stato: `/health`, `/status`
-- chat
-- registrazione/login utenti
-- web push
-- route mail: `POST /api/send-mail`
+### Tunnel magazzino (`cloudflared-magazzino.service`)
 
-Note:
+- **Config:** `~/.cloudflared/magazzino-config.yml`
+- **Credentials:** `~/.cloudflared/e1fea28b-808a-40d5-a5cc-3b8adce1c71e.json`
 
-- gira come utente `giovanni`
-- `NODE_ENV=production`
-- `HOST=127.0.0.1`
-- `PORT=3000`
+---
 
-### App 2: Magazzino Sereno
+## Percorsi importanti
 
-- service: `magazzino.service`
-- working dir: `/home/giovanni/magazzino-sereno/server`
-- start command: `/usr/bin/npm start`
-- bind: `127.0.0.1:3100`
-- runtime: Node.js + Fastify
+| Cosa | Percorso |
+|---|---|
+| App di produzione | `/srv/apps/` |
+| fastify-api | `/srv/apps/fastify-api/` |
+| raspi-admin | `/srv/apps/raspi-admin/` |
+| magazzino-sereno | `/home/giovanni/magazzino-sereno/` |
+| Nginx sites | `/etc/nginx/sites-enabled/` |
+| Systemd services custom | `/etc/systemd/system/` |
+| Cloudflared config (principale) | `/etc/cloudflared/config.yml` |
+| Cloudflared config (magazzino) | `~/.cloudflared/magazzino-config.yml` |
+| SSH keys (Mac → Pi) | `~/.ssh/raspberry_pi` |
+| DuckDNS updater | `~/duckdns/` |
+| Backup scripts | `~/backup-raspberry/` |
 
-Dipendenze principali:
+---
 
-- `fastify`
-- `@fastify/multipart`
-- `@fastify/static`
-- `better-sqlite3`
-- `marked`
-- `xlsx`
-
-Note:
-
-- gira come utente `giovanni`
-- `HOST=127.0.0.1`
-- `PORT=3100`
-- al momento non risulta dietro la config `nginx` attiva di default; probabilmente viene pubblicato tramite tunnel dedicato
-
-### Cloudflare tunnels
-
-- `cloudflared.service`
-  - comando: `/usr/local/bin/cloudflared --no-autoupdate --config /etc/cloudflared/config.yml tunnel run`
-  - ruolo: tunnel Cloudflare principale
-
-- `cloudflared-magazzino.service`
-  - comando: `/usr/local/bin/cloudflared tunnel --config /home/giovanni/.cloudflared/magazzino-config.yml run`
-  - ruolo: tunnel dedicato per Magazzino
-
-### Remote access and network
-
-- `ssh.service`
-  - porta: `22`
-  - ruolo: accesso remoto shell
-
-- `tailscaled.service`
-  - ruolo: rete Tailscale / accesso privato
-
-- `avahi-daemon.service`
-  - ruolo: discovery LAN / mDNS
-
-### File sharing and system support
-
-- `smbd.service`
-- `nmbd.service`
-- `winbind.service`
-
-Ruolo:
-
-- stack Samba per condivisioni e interoperabilita di rete locale
-
-## Listening Ports
-
-Porte rilevate al momento del controllo:
-
-- `0.0.0.0:80` -> `nginx`
-- `0.0.0.0:22` -> `ssh`
-- `127.0.0.1:3000` -> `fastify-api`
-- `127.0.0.1:3100` -> `magazzino-sereno`
-- `127.0.0.1:20242` -> `cloudflared`
-- porte SMB (`139`, `445`)
-
-## File and Paths
-
-Percorsi principali:
-
-- `fastify-api`: `/srv/apps/fastify-api`
-- `magazzino-sereno`: `/home/giovanni/magazzino-sereno/server`
-- `nginx active site`: `/etc/nginx/sites-available/fastify-api`
-- `systemd unit fastify-api`: `/etc/systemd/system/fastify-api.service`
-- `systemd unit magazzino`: `/etc/systemd/system/magazzino.service`
-- `systemd unit cloudflared`: `/etc/systemd/system/cloudflared.service`
-- `systemd unit cloudflared-magazzino`: `/etc/systemd/system/cloudflared-magazzino.service`
-
-## Operational Notes
-
-- `nginx` oggi punta tutto a `fastify-api`, quindi ogni app aggiuntiva pubblicata via HTTP richiede:
-  - una nuova route/proxy dedicata
-  - oppure un virtual host separato
-  - oppure un tunnel Cloudflare dedicato
-
-- La route contatti del sito Tongatron e stata ripristinata in `fastify-api` come:
-  - `POST /api/send-mail`
-
-- Il Raspberry ospita sia componenti di produzione sia utility personali/prototipi. Conviene tenere questo inventario aggiornato quando:
-  - si aggiunge un nuovo service `systemd`
-  - si cambia il target di `nginx`
-  - si apre un nuovo tunnel Cloudflare
-
-## Suggested Maintenance Commands
+## Comandi utili
 
 ```bash
-systemctl status fastify-api
-systemctl status magazzino
-systemctl status nginx
-systemctl status cloudflared
-systemctl status cloudflared-magazzino
+# Stato servizi
+systemctl status fastify-api raspi-admin magazzino nginx cloudflared
 
-ss -ltnp
+# Log in tempo reale
+journalctl -u raspi-admin -f
 journalctl -u fastify-api -n 100 --no-pager
-journalctl -u magazzino -n 100 --no-pager
+
+# Porte in ascolto
+ss -tlnp
+
+# Aggiornare un'app da git
+cd /srv/apps/fastify-api && git pull && sudo systemctl restart fastify-api
+cd /srv/apps/raspi-admin && git pull && sudo systemctl restart raspi-admin
+cd ~/magazzino-sereno && git pull && sudo systemctl restart magazzino
 ```
+
+---
+
+## Note operative
+
+- `raspi-admin` è il pannello di controllo ufficiale: gestisce i servizi systemd, i log e i repo direttamente dalla UI web.
+- Variabili sensibili (password, token GitHub, chiavi mail) sono in `/srv/apps/fastify-api/.env` e `/srv/apps/raspi-admin/.env` — mai committare.
+- Aggiornare questo file ogni volta che si aggiunge un servizio, cambia porta, o si crea/modifica un tunnel Cloudflare.
