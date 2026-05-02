@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pulsanti con dot (clean backgrounds)</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: system-ui, sans-serif;
+}
+
+/* SEZIONI */
+.section { padding: 40px; }
+.dark { background: #111; color: #eee; }
+.gray { background: #777; color: #111; }
+.light { background: #fff; color: #111; }
+
+h2 { margin-bottom: 20px; font-weight: 500; }
+
+/* GRID */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 20px;
+}
+
+/* CARD (solo per grigio) */
+.card {
+  padding: 15px;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.2);
+}
+
+/* disattiva card su scuro e chiaro */
+.dark .card,
+.light .card {
+  background: transparent;
+  padding: 0;
+}
+
+/* CODICE */
+.code {
+  font-size: 12px;
+  opacity: 0.6;
+  margin-bottom: 8px;
+}
+
+/* BASE BUTTON */
+.site-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  font-size: 14px;
+  transition: 0.2s;
+}
+
+.dot {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: #ffcc00;
+}
+
+/* ===== SCURO (B) ===== */
+.B1 { color: #ddd; }
+.B2 { border: 1px solid #444; padding: 6px 10px; border-radius: 6px; }
+.B3:hover .dot { box-shadow: 0 0 8px rgba(255,204,0,0.8); }
+.B4 { background: #222; padding: 6px 10px; border-radius: 6px; }
+.B5 { background: #ffcc00; color: #111; padding: 6px 12px; border-radius: 6px; font-weight: 600; }
+.B5 .dot { background: #111; }
+.B6 { letter-spacing: 1px; text-transform: uppercase; }
+.B7 { border-bottom: 2px solid #ffcc00; padding-bottom: 2px; }
+.B8 .dot { transform: scale(1.3); }
+
+/* ===== GRIGIO (G) ===== */
+.G1 { color: #111; }
+.G2 { border: 1px solid #333; padding: 6px 10px; border-radius: 6px; }
+.G3 { background: #999; padding: 6px 10px; border-radius: 6px; }
+.G4:hover { color: #000; }
+.G5 { background: #111; color: #ffcc00; padding: 6px 10px; border-radius: 6px; }
+.G6 { font-style: italic; }
+.G7 { border-bottom: 2px solid #222; }
+.G8 .dot { opacity: 0.6; }
+
+/* ===== CHIARO (L) ===== */
+.L1 { color: #222; }
+.L2 { border: 1px solid #ccc; padding: 6px 10px; border-radius: 6px; }
+.L3 { background: #f9f9f9; border-radius: 20px; padding: 6px 12px; border: 1px solid #ddd; }
+.L4:hover .dot { transform: scale(1.2); }
+.L5 { background: #111; color: #ffcc00; padding: 6px 12px; border-radius: 6px; }
+.L6 { letter-spacing: 0.5px; }
+.L7 { border-bottom: 2px solid #ffcc00; }
+.L8 .dot { box-shadow: 0 0 4px rgba(255,204,0,0.5); }
+
+</style>
+</head>
+
+<body>
+
+<!-- SCURO -->
+<div class="section dark">
+  <h2>Scuro (B)</h2>
+  <div class="grid">
+    <div><div class="code">B1</div><a class="site-badge B1"><span class="dot"></span>tongatron.org</a></div>
+    <div><div class="code">B2</div><a class="site-badge B2"><span class="dot"></span>tongatron.org</a></div>
+    <div><div class="code">B3</div><a class="site-badge B3"><span class="dot"></span>tongatron.org</a></div>
+    <div><div class="code">B4</div><a class="site-badge B4"><span class="dot"></span>tongatron.org</a></div>
+    <div><div class="code">B5</div><a class="site-badge B5"><span class="dot"></span>tongatron.org</a></div>
+    <div><div class="code">B6</div><a class="site-badge B6"><span class="dot"></span>tongatron.org</a></div>
+    <div><div class="code">B7</div><a class="site-badge B7"><span class="dot"></span>tongatron.org</a></div>
+    <div><div class="code">B8</div><a class="site-badge B8"><span class="dot"></span>tongatron.org</a></div>
+  </div>
+</div>
+
+<!-- GRIGIO -->
+<div class="section gray">
+  <h2>Grigio (G)</h2>
+  <div class="grid">
+    <div class="card"><div class="code">G1</div><a class="site-badge G1"><span class="dot"></span>tongatron.org</a></div>
+    <div class="card"><div class="code">G2</div><a class="site-badge G2"><span class="dot"></span>tongatron.org</a></div>
+    <div class="card"><div class="code">G3</div><a class="site-badge G3"><span class="dot"></span>tongatron.org</a></div>
+    <div class="card"><div class="code">G4</div><a class="site-badge G4"><span class="dot"></span>tongatron.org</a></div>
+    <div class="card"><div class="code">G5</div><a class="site-badge G5"><span class="dot"></span>tongatron.org</a></div>
+    <div class="card"><div class="code">G6</div><a class="site-badge G6"><span class="dot"></span>tongatron.org</a></div>
+    <div class="card"><div class="code">G7</div><a class="site-badge G7"><span class="dot"></span>tongatron.org</a></div>
+    <div class="card"><div class="code">G8</div><a class="site-badge G8"><span class="dot"></span>tongatron.org</a></div>
+  </div>
+</div>
+
+<!-- CHIARO -->
+<div class="section light">
+  <h2>Chiaro (L)</h2>
+  <div class="grid">
+    <div><div class="code">L1</div><a class="site-badge L1"><span class="dot"></span>tongatron.org</a></div>
+    <div><div class="code">L2</div><a class="site-badge L2"><span class="dot"></span>tongatron.org</a></div>
+    <div><div class="code">L3</div><a class="site-badge L3"><span class="dot"></span>tongatron.org</a></div>
+    <div><div class="code">L4</div><a class="site-badge L4"><span class="dot"></span>tongatron.org</a></div>
+    <div><div class="code">L5</div><a class="site-badge L5"><span class="dot"></span>tongatron.org</a></div>
+    <div><div class="code">L6</div><a class="site-badge L6"><span class="dot"></span>tongatron.org</a></div>
+    <div><div class="code">L7</div><a class="site-badge L7"><span class="dot"></span>tongatron.org</a></div>
+    <div><div class="code">L8</div><a class="site-badge L8"><span class="dot"></span>tongatron.org</a></div>
+  </div>
+</div>
+
+</body>
+</html>
