@@ -1208,6 +1208,7 @@ const minRam  = Math.min(...computers.map(c => c.ramKB));
 
 let selected = new Set(); // indici in computers[]
 let activeCategories = new Set(); // empty = all
+let lastBenchmarkResult = null; // { measuredSeconds, ops, sys }
 
 const CATEGORY_ORDER = ["Early Computer", "Mainframe", "Supercomputer", "Personal Computer", "Console", "Smartphone", "IoT", "Embedded"];
 
@@ -1406,6 +1407,9 @@ document.getElementById('btn-run-test').addEventListener('click', () => {
       const measuredMs = e.data;
       const measuredSeconds = measuredMs / 1000;
 
+      // Save benchmark result for later comparison
+      lastBenchmarkResult = { measuredSeconds, ops, sys };
+
       let html = `<strong style="color: var(--text);">✓ System: ${sys.os} · ${sys.browser}</strong><br>`;
       html += `<strong style="color: var(--accent); font-size: 1.1em;">⏱ Measured: ${formatTime(measuredSeconds)}</strong>`;
 
@@ -1417,6 +1421,8 @@ document.getElementById('btn-run-test').addEventListener('click', () => {
           const ratioStr = formatRatio(ratio);
           html += `<div style="margin-top: .3rem;">${c.name}: <span style="color: var(--accent); font-weight: 600;">${ratioStr}</span></div>`;
         });
+      } else {
+        html += '<br><br><em style="color: var(--muted);">Seleziona una macchina per il confronto →</em>';
       }
 
       result.innerHTML = html;
@@ -1454,6 +1460,24 @@ function toggleSelect(idx, cardEl) {
   if (check) check.textContent = selected.has(idx) ? '✓' : '';
   updateBar();
   renderWorkload();
+  if (lastBenchmarkResult) renderBenchmarkComparison();
+}
+
+function renderBenchmarkComparison() {
+  if (!lastBenchmarkResult || selected.size === 0) return;
+  const result = document.getElementById('test-result');
+  const { measuredSeconds, ops, sys } = lastBenchmarkResult;
+
+  let html = `<strong style="color: var(--text);">✓ System: ${sys.os} · ${sys.browser}</strong><br>`;
+  html += `<strong style="color: var(--accent); font-size: 1.1em;">⏱ Measured: ${formatTime(measuredSeconds)}</strong>`;
+  html += '<br><br><strong>Comparison:</strong><br>';
+  [...selected].map(i => computers[i]).sort((a, b) => b.mips - a.mips).forEach(c => {
+    const estSeconds = ops / (c.mips * 1e6);
+    const ratio = estSeconds / measuredSeconds;
+    const ratioStr = formatRatio(ratio);
+    html += `<div style="margin-top: .3rem;">${c.name}: <span style="color: var(--accent); font-weight: 600;">${ratioStr}</span></div>`;
+  });
+  result.innerHTML = html;
 }
 
 function render() {
