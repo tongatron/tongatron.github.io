@@ -80,6 +80,19 @@
   }
   .seg button.active { background: #111; color: #fff; }
 
+  /* Animazioni */
+  @keyframes badge-hover {
+    0% { transform: scale(1); opacity: 1; }
+    100% { transform: scale(1.08); opacity: 0.95; }
+  }
+  .with-animations .site-badge {
+    transition: transform 0.2s ease-out, opacity 0.2s ease-out;
+    cursor: pointer;
+  }
+  .with-animations .site-badge:hover {
+    animation: badge-hover 0.2s ease-out forwards;
+  }
+
   /* Sezioni sfondo */
   .section { padding: 32px 24px; }
   .section h2 {
@@ -298,6 +311,12 @@
     <label>Dimensione
       <input type="number" id="size-input" value="14" min="10" max="24" step="1">
     </label>
+    <label>Animazioni
+      <span class="seg" id="anim-seg">
+        <button data-anim="over" class="active">Over</button>
+        <button data-anim="none">None</button>
+      </span>
+    </label>
     <label>Colore mark
       <input type="color" id="accent-input" value="#ffcc00">
     </label>
@@ -356,6 +375,7 @@
   const shapeSeg = document.getElementById('shape-seg');
   const fontSelect = document.getElementById('font-select');
   const sizeInput = document.getElementById('size-input');
+  const animSeg = document.getElementById('anim-seg');
   const toast = document.getElementById('toast');
 
   let state = {
@@ -366,6 +386,7 @@
     customBg: customBg.value,
     font: fontSelect.value,
     fontSize: parseInt(sizeInput.value),
+    animations: 'over',
   };
 
   function buildMarkHTML() {
@@ -459,6 +480,17 @@
     charLabel.style.display = state.shape === 'char' ? 'flex' : 'none';
     render();
   });
+
+  animSeg.addEventListener('click', e => {
+    const b = e.target.closest('button');
+    if (!b) return;
+    animSeg.querySelectorAll('button').forEach(x => x.classList.toggle('active', x === b));
+    state.animations = b.dataset.anim;
+    document.body.classList.toggle('with-animations', state.animations === 'over');
+  });
+
+  // Initialize animations
+  document.body.classList.add('with-animations');
 
   render();
 </script>
