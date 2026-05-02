@@ -1336,21 +1336,28 @@ document.getElementById('btn-run-test').addEventListener('click', () => {
   btn.style.opacity = '0.6';
 
   let estHtml = `<strong style="color: var(--text);">System: ${sys.os} · ${sys.browser}</strong><br>`;
-  estHtml += `<em style="color: var(--muted);">Estimated time: ~20 seconds on modern hardware</em><br>`;
-
-  if (selected.size > 0) {
-    estHtml += `<em style="color: var(--muted);">Starting benchmark...</em>`;
-  }
+  estHtml += `<em style="color: var(--muted);">Running benchmark (~20 sec)...</em>`;
   result.innerHTML = estHtml;
 
-  setTimeout(() => {
-    const t0 = performance.now();
-    let x = 1;
-    for (let i = 0; i < ops; i++) {
-      x = (x * 1.0000001 + 0.1) % 1000000;
-    }
-    const t1 = performance.now();
-    const measuredSeconds = (t1 - t0) / 1000;
+  // Use Web Worker to avoid blocking UI
+  const workerCode = `
+    self.onmessage = function(e) {
+      const ops = e.data;
+      const t0 = performance.now();
+      let x = 1;
+      for (let i = 0; i < ops; i++) {
+        x = (x * 1.0000001 + 0.1) % 1000000;
+      }
+      const t1 = performance.now();
+      self.postMessage(t1 - t0);
+    };
+  `;
+  const blob = new Blob([workerCode], { type: 'application/javascript' });
+  const worker = new Worker(URL.createObjectURL(blob));
+
+  worker.onmessage = (e) => {
+    const measuredMs = e.data;
+    const measuredSeconds = measuredMs / 1000;
 
     let html = `<strong style="color: var(--text);">System: ${sys.os} · ${sys.browser}</strong><br>`;
     html += `<strong style="color: var(--accent);">Measured: ${formatTime(measuredSeconds)}</strong>`;
@@ -1368,7 +1375,10 @@ document.getElementById('btn-run-test').addEventListener('click', () => {
     result.innerHTML = html;
     btn.disabled = false;
     btn.style.opacity = '1';
-  }, 50);
+    worker.terminate();
+  };
+
+  worker.postMessage(ops);
 });
 
 function updateBar() {
