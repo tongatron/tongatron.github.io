@@ -1341,12 +1341,17 @@ document.getElementById('btn-estimate').addEventListener('click', () => {
   const result = document.getElementById('test-result');
   const sys = detectSystem();
 
+  // Calibration: ~20 seconds for 1e9 ops on modern hardware
+  const referenceOps = 1e9;
+  const referenceTime = 20;
+  const estimatedSeconds = (ops / referenceOps) * referenceTime;
+
   let html = `<strong style="color: var(--text);">System: ${sys.os} · ${sys.browser}</strong><br>`;
-  html += `<strong style="color: var(--accent);">⏱ Estimated wait: ~20 seconds</strong><br>`;
+  html += `<strong style="color: var(--accent);">⏱ Estimated wait: ${formatTime(estimatedSeconds)}</strong><br>`;
   html += `<em style="color: var(--muted); font-size: .8rem;">Operations: ${(ops / 1e6).toFixed(0)} million</em>`;
 
   if (selected.size > 0) {
-    html += '<br><br><em style="color: var(--muted);">You can compare with:</em><br>';
+    html += '<br><br><em style="color: var(--muted);">Compare with:</em><br>';
     [...selected].slice(0, 3).map(i => computers[i]).forEach(c => {
       const estSec = ops / (c.mips * 1e6);
       html += `<div style="margin-top: .2rem; font-size: .8rem;">${c.name}: ~${formatTime(estSec)}</div>`;
