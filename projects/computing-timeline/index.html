@@ -424,6 +424,61 @@
   .stbtn:first-child { border-right: 1px solid var(--border); }
   .stbtn.active { background: #1f6feb22; color: var(--accent); font-weight: 600; }
   .stbtn:hover:not(.active) { background: #ffffff0a; }
+
+  /* ---- workload calculator ---- */
+  #workload {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+    margin: 1.5rem 0;
+  }
+  #workload h3 {
+    margin: 0 0 .25rem;
+    font-size: 1rem;
+  }
+  #workload .wl-sub {
+    margin: 0 0 .9rem;
+    color: var(--muted);
+    font-size: .85rem;
+  }
+  .wl-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .6rem;
+    align-items: center;
+    margin-bottom: .9rem;
+  }
+  .wl-controls label { color: var(--muted); font-size: .85rem; }
+  .wl-controls select, .wl-controls input {
+    background: #0d1117;
+    color: var(--text);
+    border: 1px solid var(--border);
+    padding: .45rem .7rem;
+    border-radius: 6px;
+    font: inherit;
+    font-size: .9rem;
+  }
+  .wl-controls input { width: 160px; }
+  .wl-results {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: .6rem;
+  }
+  .wl-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    background: #0d1117;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: .5rem .8rem;
+    font-size: .88rem;
+    gap: .5rem;
+  }
+  .wl-row .wl-name { color: var(--text); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .wl-row .wl-time { color: var(--accent); font-weight: 600; white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .wl-empty { color: var(--muted); font-size: .88rem; font-style: italic; }
 </style>
 </head>
 <body>
@@ -456,6 +511,28 @@
       <option value="desc">Descending</option>
     </select>
   </div>
+
+  <section id="workload">
+    <h3>How long would it take?</h3>
+    <p class="wl-sub">Pick a workload (or enter operations) and see how long each <strong>selected</strong> machine would take to finish it.</p>
+    <div class="wl-controls">
+      <label for="wl-preset">Workload:</label>
+      <select id="wl-preset">
+        <option value="1e6">Add 1 million numbers (10⁶ ops)</option>
+        <option value="1e9" selected>Add 1 billion numbers (10⁹ ops)</option>
+        <option value="3e9">Compute π to 1 million digits (~3×10⁹ ops)</option>
+        <option value="1e10">SHA-256 hash of 1 GB (~10¹⁰ ops)</option>
+        <option value="6e10">Render a 1080p 3D frame (~6×10¹⁰ ops)</option>
+        <option value="1e12">Train a tiny neural net (~10¹² ops)</option>
+        <option value="custom">Custom…</option>
+      </select>
+      <label for="wl-custom" id="wl-custom-label" style="display:none">Operations:</label>
+      <input id="wl-custom" type="number" min="1" step="1" value="1000000000" style="display:none">
+    </div>
+    <div class="wl-results" id="wl-results">
+      <div class="wl-empty">Select one or more machines from the list below to see results.</div>
+    </div>
+  </section>
 
   <div class="list-header">
     <span>Machine</span>
@@ -926,6 +1003,53 @@ function formatRam(kb) {
   return (kb*1024) + ' byte';
 }
 
+function formatTime(seconds) {
+  if (!isFinite(seconds) || seconds <= 0) return '—';
+  if (seconds < 1e-6) return (seconds * 1e9).toFixed(2) + ' ns';
+  if (seconds < 1e-3) return (seconds * 1e6).toFixed(2) + ' µs';
+  if (seconds < 1)    return (seconds * 1e3).toFixed(2) + ' ms';
+  if (seconds < 60)   return seconds.toFixed(2) + ' s';
+  if (seconds < 3600) return (seconds / 60).toFixed(1) + ' min';
+  if (seconds < 86400) return (seconds / 3600).toFixed(1) + ' h';
+  if (seconds < 31536000) return (seconds / 86400).toFixed(1) + ' days';
+  const years = seconds / 31536000;
+  if (years < 1e3) return years.toFixed(1) + ' years';
+  if (years < 1e6) return (years / 1e3).toFixed(1) + ' thousand years';
+  if (years < 1e9) return (years / 1e6).toFixed(1) + ' million years';
+  return (years / 1e9).toFixed(1) + ' billion years';
+}
+
+const wlPreset = document.getElementById('wl-preset');
+const wlCustom = document.getElementById('wl-custom');
+const wlCustomLabel = document.getElementById('wl-custom-label');
+const wlResults = document.getElementById('wl-results');
+
+function currentOps() {
+  if (wlPreset.value === 'custom') return parseFloat(wlCustom.value) || 0;
+  return parseFloat(wlPreset.value);
+}
+
+function renderWorkload() {
+  const ops = currentOps();
+  if (selected.size === 0) {
+    wlResults.innerHTML = '<div class="wl-empty">Select one or more machines from the list below to see results.</div>';
+    return;
+  }
+  const items = [...selected].map(i => computers[i]).sort((a, b) => b.mips - a.mips);
+  wlResults.innerHTML = items.map(c => {
+    const seconds = ops / (c.mips * 1e6);
+    return `<div class="wl-row"><span class="wl-name">${c.name} <span style="color:var(--muted);font-size:.78rem">(${c.year})</span></span><span class="wl-time">${formatTime(seconds)}</span></div>`;
+  }).join('');
+}
+
+wlPreset.addEventListener('change', () => {
+  const isCustom = wlPreset.value === 'custom';
+  wlCustom.style.display = isCustom ? '' : 'none';
+  wlCustomLabel.style.display = isCustom ? '' : 'none';
+  renderWorkload();
+});
+wlCustom.addEventListener('input', renderWorkload);
+
 function updateBar() {
   const n = selected.size;
   if (n === 0) { compareBar.classList.remove('visible'); return; }
@@ -947,6 +1071,7 @@ function toggleSelect(idx, cardEl) {
   const check = cardEl.querySelector('.sel-check');
   if (check) check.textContent = selected.has(idx) ? '✓' : '';
   updateBar();
+  renderWorkload();
 }
 
 function render() {
@@ -1081,6 +1206,7 @@ document.getElementById('btn-clear-sel').addEventListener('click', () => {
   selected.clear();
   document.querySelectorAll('.card.selected').forEach(el => el.classList.remove('selected'));
   updateBar();
+  renderWorkload();
 });
 document.getElementById('btn-close-modal').addEventListener('click', () => modalOverlay.classList.remove('open'));
 modalOverlay.addEventListener('click', e => { if (e.target === modalOverlay) modalOverlay.classList.remove('open'); });
