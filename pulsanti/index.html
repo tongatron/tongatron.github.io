@@ -104,20 +104,12 @@
     position: relative;
     padding: 18px 14px 14px;
     border-radius: 10px;
-    background: rgba(255,255,255,0.06);
-    border: 1px solid rgba(255,255,255,0.08);
+    background: transparent;
+    border: transparent;
     display: flex;
     flex-direction: column;
     gap: 12px;
     min-height: 110px;
-  }
-  .light .card, .custom .card {
-    background: rgba(0,0,0,0.03);
-    border-color: rgba(0,0,0,0.08);
-  }
-  .gray .card {
-    background: rgba(255,255,255,0.18);
-    border-color: rgba(255,255,255,0.25);
   }
   .card-label {
     font-size: 10px;
@@ -190,36 +182,68 @@
     font-weight: 600;
   }
 
+  /* ===== VARIANTI NERO (A) ===== */
+  .A1 { color: #fff; }
+  .A2 { border: 1px solid var(--accent); padding: 6px 10px; border-radius: 6px; }
+  .A3 .mark { box-shadow: 0 0 8px rgba(255,204,0,0.8); }
+  .A4 { background: #222; padding: 6px 10px; border-radius: 6px; }
+  .A5 { background: var(--accent); color: #000; padding: 6px 12px; border-radius: 6px; font-weight: 600; }
+  .A5 .mark { background: #000; }
+  .A6 { letter-spacing: 1px; text-transform: uppercase; }
+  .A7 { border-bottom: 2px solid var(--accent); padding-bottom: 2px; }
+  .A8 .mark { transform: scale(1.3); }
+
   /* ===== VARIANTI SCURO (B) ===== */
   .B1 { color: #ddd; }
-  .B2 { border: 1px solid #444; padding: 6px 10px; border-radius: 6px; }
+  .B2 { border: 1px solid var(--accent); padding: 6px 10px; border-radius: 6px; }
   .B3 .mark { box-shadow: 0 0 8px rgba(255,204,0,0.8); }
   .B4 { background: #222; padding: 6px 10px; border-radius: 6px; }
   .B5 { background: var(--accent); color: #111; padding: 6px 12px; border-radius: 6px; font-weight: 600; }
   .B5 .mark { background: #111; }
-  .B5 .mark-baloon::after { border-left-color: #111; border-top-color: #111; }
   .B6 { letter-spacing: 1px; text-transform: uppercase; }
   .B7 { border-bottom: 2px solid var(--accent); padding-bottom: 2px; }
   .B8 .mark { transform: scale(1.3); }
 
-  /* ===== VARIANTI GRIGIO (G) ===== */
-  .G1 { color: #111; }
-  .G2 { border: 1px solid #333; padding: 6px 10px; border-radius: 6px; }
-  .G3 { background: #999; padding: 6px 10px; border-radius: 6px; }
-  .G4 { color: #111; }
-  .G5 { background: #111; color: var(--accent); padding: 6px 10px; border-radius: 6px; }
-  .G6 { font-style: italic; }
-  .G7 { border-bottom: 2px solid #222; }
-  .G8 .mark { opacity: 0.6; }
+  /* ===== VARIANTI GRIGIO SCURO (C) ===== */
+  .C1 { color: #fff; }
+  .C2 { border: 1px solid var(--accent); padding: 6px 10px; border-radius: 6px; }
+  .C3 .mark { box-shadow: 0 0 8px rgba(255,204,0,0.8); }
+  .C4 { background: #666; padding: 6px 10px; border-radius: 6px; }
+  .C5 { background: var(--accent); color: #000; padding: 6px 10px; border-radius: 6px; font-weight: 600; }
+  .C5 .mark { background: #000; }
+  .C6 { font-style: italic; }
+  .C7 { border-bottom: 2px solid var(--accent); }
+  .C8 .mark { opacity: 0.7; }
 
-  /* ===== VARIANTI CHIARO (L) ===== */
-  .L1 { color: #222; }
-  .L2 { border: 1px solid #ccc; padding: 6px 10px; border-radius: 6px; }
-  .L3 { background: #f5f5f5; border-radius: 20px; padding: 6px 12px; border: 1px solid #e3e3e3; }
-  .L4 .mark { transform: scale(1.1); }
-  .L5 { background: #111; color: var(--accent); padding: 6px 12px; border-radius: 6px; }
-  .L6 { letter-spacing: 0.5px; }
-  .L7 { border-bottom: 2px solid var(--accent); }
+  /* ===== VARIANTI GRIGIO CHIARO (D) ===== */
+  .D1 { color: #000; }
+  .D2 { border: 1px solid #333; padding: 6px 10px; border-radius: 6px; }
+  .D3 .mark { transform: scale(1.2); }
+  .D4 { background: #bbb; border-radius: 20px; padding: 6px 12px; border: 1px solid #999; }
+  .D5 { background: #111; color: var(--accent); padding: 6px 12px; border-radius: 6px; }
+  .D6 { letter-spacing: 0.5px; }
+  .D7 { border-bottom: 2px solid #333; }
+  .D8 .mark { opacity: 0.8; }
+
+  /* ===== VARIANTI BIANCO (E) ===== */
+  .E1 { color: #222; }
+  .E2 { border: 1px solid #333; padding: 6px 10px; border-radius: 6px; }
+  .E3 .mark { transform: scale(1.2); }
+  .E4 { background: #f5f5f5; border-radius: 20px; padding: 6px 12px; border: 1px solid #ddd; }
+  .E5 { background: #111; color: var(--accent); padding: 6px 12px; border-radius: 6px; }
+  .E6 { letter-spacing: 0.5px; }
+  .E7 { border-bottom: 2px solid #333; }
+  .E8 .mark { opacity: 0.8; }
+
+  /* ===== VARIANTI CUSTOM (F) ===== */
+  .F1 { color: #222; }
+  .F2 { border: 1px solid #666; padding: 6px 10px; border-radius: 6px; }
+  .F3 .mark { transform: scale(1.1); }
+  .F4 { background: rgba(0,0,0,0.1); border-radius: 20px; padding: 6px 12px; border: 1px solid rgba(0,0,0,0.2); }
+  .F5 { background: #111; color: var(--accent); padding: 6px 12px; border-radius: 6px; }
+  .F6 { letter-spacing: 0.5px; }
+  .F7 { border-bottom: 2px solid var(--accent); }
+  .F8 .mark { opacity: 0.8; }
   .L8 .mark { box-shadow: 0 0 4px rgba(255,204,0,0.5); }
 
   .toast {
@@ -355,8 +379,7 @@
   }
 
   function buildBadgeHTML(prefix, n, { inline = false } = {}) {
-    // Variant for "C" (custom) reuses L styles for readability on arbitrary bg
-    const cls = (prefix === 'C' ? 'L' : prefix) + n;
+    const cls = prefix + n;
     const styleAttr = inline
       ? ` style="--accent:${state.accent}; font-family:${state.font}; font-size:${state.fontSize}px"`
       : ` style="font-family:${state.font}; font-size:${state.fontSize}px"`;
