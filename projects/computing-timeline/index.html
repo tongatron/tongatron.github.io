@@ -86,6 +86,12 @@
     color: #fff;
   }
   .site-badge.A6:hover { opacity: .85; }
+  .site-badge.B7 {
+    border-bottom: 2px solid var(--accent, #ffcc00);
+    padding-bottom: 2px;
+    color: #fff;
+  }
+  .site-badge.B7:hover { opacity: .85; }
   main { max-width: 1200px; margin: 0 auto; padding: 1.5rem; }
 
   .controls {
@@ -573,7 +579,7 @@
 </head>
 <body>
 <header>
-  <div class="header-inner"><a class="site-badge A6" href="https://tongatron.org" style="--accent:#ffcc00; font-family:system-ui; font-size:14px"><span class="mark mark-dot"></span>tongatron.org</a></div>
+  <div class="header-inner"><a class="site-badge B7" href="https://tongatron.org" style="--accent:#ffcc00; font-family:'Courier Prime', monospace; font-size:14px"><span class="mark mark-dot"></span>[tongatron.org](http://tongatron.org)</a></div>
   <h1>Moore's Law in Motion</h1>
   <p>80 years of computing power, from the 27-ton machine that cracked artillery tables to the supercomputer in your pocket.</p>
 </header>
@@ -1290,15 +1296,52 @@ wlPreset.addEventListener('change', () => {
 });
 wlCustom.addEventListener('input', renderWorkload);
 
+// ── System detection ──
+function detectSystem() {
+  const ua = navigator.userAgent;
+  let os = 'Unknown';
+  if (ua.indexOf('Win') > -1) os = 'Windows';
+  else if (ua.indexOf('Mac') > -1) os = 'macOS';
+  else if (ua.indexOf('Linux') > -1) os = 'Linux';
+  else if (ua.indexOf('Android') > -1) os = 'Android';
+  else if (ua.indexOf('iPhone') > -1 || ua.indexOf('iPad') > -1) os = 'iOS';
+
+  let browser = 'Unknown';
+  if (ua.indexOf('Edg') > -1) browser = 'Edge';
+  else if (ua.indexOf('Chrome') > -1) browser = 'Chrome';
+  else if (ua.indexOf('Safari') > -1) browser = 'Safari';
+  else if (ua.indexOf('Firefox') > -1) browser = 'Firefox';
+
+  return { os, browser, ua };
+}
+
+function formatRatio(ratio) {
+  if (ratio < 1) {
+    const slower = 1 / ratio;
+    const exp = Math.log10(slower).toFixed(1);
+    return `10^${exp} slower`;
+  }
+  const exp = Math.log10(ratio).toFixed(1);
+  return `10^${exp}×`;
+}
+
 // ── Run on this computer ──
 document.getElementById('btn-run-test').addEventListener('click', () => {
   const btn = document.getElementById('btn-run-test');
   const result = document.getElementById('test-result');
   const ops = currentOps();
+  const sys = detectSystem();
 
   btn.disabled = true;
   btn.style.opacity = '0.6';
-  result.innerHTML = '<em>Running benchmark... (takes ~20 seconds)</em>';
+
+  let estHtml = `<strong style="color: var(--text);">System: ${sys.os} · ${sys.browser}</strong><br>`;
+  estHtml += `<em style="color: var(--muted);">Estimated time: ~20 seconds on modern hardware</em><br>`;
+
+  if (selected.size > 0) {
+    estHtml += `<em style="color: var(--muted);">Starting benchmark...</em>`;
+  }
+  result.innerHTML = estHtml;
 
   setTimeout(() => {
     const t0 = performance.now();
@@ -1309,17 +1352,16 @@ document.getElementById('btn-run-test').addEventListener('click', () => {
     const t1 = performance.now();
     const measuredSeconds = (t1 - t0) / 1000;
 
-    let html = `<strong style="color: var(--text);">This computer: ${formatTime(measuredSeconds)}</strong>`;
+    let html = `<strong style="color: var(--text);">System: ${sys.os} · ${sys.browser}</strong><br>`;
+    html += `<strong style="color: var(--accent);">Measured: ${formatTime(measuredSeconds)}</strong>`;
 
     if (selected.size > 0) {
       html += '<br><br><strong>Comparison:</strong><br>';
       [...selected].map(i => computers[i]).sort((a, b) => b.mips - a.mips).forEach(c => {
         const estSeconds = ops / (c.mips * 1e6);
         const ratio = estSeconds / measuredSeconds;
-        const ratioStr = ratio >= 1000 ? (ratio/1000).toFixed(1)+'K×' :
-                         ratio >= 1 ? ratio.toFixed(1)+'×' :
-                         (1/ratio).toFixed(1)+'× slower';
-        html += `<div style="margin-top: .3rem;">${c.name}: <span style="color: var(--accent);">${ratioStr}</span> ${ratio >= 1 ? 'slower' : 'faster'}</div>`;
+        const ratioStr = formatRatio(ratio);
+        html += `<div style="margin-top: .3rem;">${c.name}: <span style="color: var(--accent);">${ratioStr}</span></div>`;
       });
     }
 
