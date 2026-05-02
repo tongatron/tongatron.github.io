@@ -1606,7 +1606,7 @@ function openModal() {
         if (c.benchmark && lastBenchmarkResult) {
           return `<strong style="color:var(--accent);">${formatTime(lastBenchmarkResult.measuredSeconds)}</strong>`;
         }
-        if (!c.benchmark) {
+        if (!c.benchmark && lastBenchmarkResult) {
           const estSec = lastBenchmarkResult.ops / (c.mips * 1e6);
           return `${formatTime(estSec)}`;
         }
