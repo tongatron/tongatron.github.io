@@ -997,7 +997,7 @@ function updateBar() {
   compareBar.classList.add('visible');
   const names = [...selected].map(i => `<strong>${computers[i].name}</strong>`).join(', ');
   selNames.innerHTML = `${n} selected: ${names}`;
-  const canCompare = lastBenchmarkResult ? n >= 1 : n >= 2;
+  const canCompare = n >= 1;
   document.getElementById('btn-compare').disabled = !canCompare;
   document.getElementById('btn-compare').style.opacity = canCompare ? '1' : '.5';
 }
@@ -1088,7 +1088,7 @@ function render() {
 function openModal() {
   const sel = [...selected].map(i => computers[i]);
   const hasBenchmark = lastBenchmarkResult !== null;
-  if (sel.length < 1 || (!hasBenchmark && sel.length < 2)) return;
+  if (sel.length < 1) return;
 
   const allMachines = hasBenchmark ? [{ name: 'This Computer', mips: -1, ramKB: -1, benchmark: true, benchmarkTime: lastBenchmarkResult.measuredSeconds }, ...sel] : sel;
   const maxM = Math.max(...allMachines.filter(c => c.mips >= 0).map(c => c.mips));
