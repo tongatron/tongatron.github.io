@@ -702,496 +702,11 @@
 </footer>
 
 <script>
-const computers = [
-  {
-    name: "Apollo Guidance Computer",
-    year: 1966,
-    category: "Embedded",
-    desc: "The on-board computer for the Apollo missions. It guided the 1969 Moon landing.",
-    cpu: "Custom NOR-gate logic (~5,000 ICs)",
-    freq: "2.048 MHz",
-    ram: "4 KB (magnetic core memory)",
-    rom: "72 KB (rope memory)",
-    mips: 0.04,
-    ramKB: 4
-  },
-  {
-    name: "PDP-8",
-    year: 1965,
-    category: "Mainframe",
-    desc: "The first commercially successful minicomputer, made by DEC.",
-    cpu: "12-bit, discrete transistor logic",
-    freq: "~0.33 MHz",
-    ram: "4–32 KB",
-    mips: 0.05,
-    ramKB: 16
-  },
-  {
-    name: "Altair 8800",
-    year: 1975,
-    category: "Personal Computer",
-    desc: "The computer that ignited the personal computer revolution.",
-    cpu: "Intel 8080 (8-bit)",
-    freq: "2 MHz",
-    ram: "256 bytes (expandable)",
-    mips: 0.29,
-    ramKB: 0.25
-  },
-  {
-    name: "Apple II",
-    year: 1977,
-    category: "Personal Computer",
-    desc: "One of the first mass-market PCs, designed by Steve Wozniak.",
-    cpu: "MOS 6502 (8-bit)",
-    freq: "1.023 MHz",
-    ram: "4–48 KB",
-    mips: 0.43,
-    ramKB: 48
-  },
-  {
-    name: "IBM PC (5150)",
-    year: 1981,
-    category: "Personal Computer",
-    desc: "Set the PC standard we still use today.",
-    cpu: "Intel 8088 (16-bit)",
-    freq: "4.77 MHz",
-    ram: "16–256 KB",
-    mips: 0.33,
-    ramKB: 256
-  },
-  {
-    name: "Commodore 64",
-    year: 1982,
-    category: "Personal Computer",
-    desc: "The best-selling personal computer of all time.",
-    cpu: "MOS 6510 (8-bit)",
-    freq: "1.023 MHz",
-    ram: "64 KB",
-    mips: 0.43,
-    ramKB: 64
-  },
-  {
-    name: "Apple Macintosh 128K",
-    year: 1984,
-    category: "Personal Computer",
-    desc: "The original Mac. Brought the graphical user interface to the masses.",
-    cpu: "Motorola 68000 (16/32-bit)",
-    freq: "7.8336 MHz",
-    ram: "128 KB",
-    mips: 0.7,
-    ramKB: 128
-  },
-  {
-    name: "Commodore Amiga 500",
-    year: 1987,
-    category: "Personal Computer",
-    desc: "Multimedia capabilities years ahead of the competition.",
-    cpu: "Motorola 68000",
-    freq: "7.16 MHz",
-    ram: "512 KB (expandable to 8 MB)",
-    mips: 0.7,
-    ramKB: 512
-  },
-  {
-    name: "PC with Intel 80486 DX",
-    year: 1989,
-    category: "Personal Computer",
-    desc: "The Windows 3.1 era and the rise of the multimedia PC.",
-    cpu: "Intel 80486 DX (32-bit, integrated FPU)",
-    freq: "33 MHz",
-    ram: "4–16 MB",
-    mips: 27,
-    ramKB: 8 * 1024
-  },
-  {
-    name: "PC with Pentium",
-    year: 1995,
-    category: "Personal Computer",
-    desc: "Windows 95, CD-ROMs, and mass-market Internet.",
-    cpu: "Intel Pentium (superscalar)",
-    freq: "100 MHz",
-    ram: "8–32 MB",
-    mips: 188,
-    ramKB: 16 * 1024
-  },
-  {
-    name: "iMac G3",
-    year: 1998,
-    category: "Personal Computer",
-    desc: "The translucent Mac that saved Apple and redefined computer design.",
-    cpu: "PowerPC 750 (G3)",
-    freq: "233 MHz",
-    ram: "32 MB",
-    mips: 525,
-    ramKB: 32 * 1024
-  },
-  {
-    name: "PC with Pentium 4",
-    year: 2003,
-    category: "Personal Computer",
-    desc: "The GHz race era — clock speed as marketing.",
-    cpu: "Intel Pentium 4",
-    freq: "3.0 GHz",
-    ram: "512 MB – 2 GB",
-    mips: 9700,
-    ramKB: 1 * 1024 * 1024
-  },
-  {
-    name: "iPhone (1st gen)",
-    year: 2007,
-    category: "Smartphone",
-    desc: "The phone that permanently changed personal computing.",
-    cpu: "Samsung S5L8900 (ARM 11)",
-    freq: "412 MHz",
-    ram: "128 MB",
-    mips: 500,
-    ramKB: 128 * 1024
-  },
-  {
-    name: "MacBook Pro (Intel Core i7)",
-    year: 2015,
-    category: "Personal Computer",
-    desc: "A portable workstation for professionals.",
-    cpu: "Intel Core i7-4870HQ (4-core, 8-thread)",
-    freq: "2.5 GHz (turbo 3.7)",
-    ram: "16 GB",
-    mips: 110000,
-    ramKB: 16 * 1024 * 1024
-  },
-  {
-    name: "iPhone 15 Pro",
-    year: 2023,
-    category: "Smartphone",
-    desc: "More powerful than supercomputers from 25 years ago — fits in your pocket.",
-    cpu: "Apple A17 Pro (6-core CPU + 6-core GPU + Neural Engine)",
-    freq: "up to 3.78 GHz",
-    ram: "8 GB",
-    mips: 600000,
-    ramKB: 8 * 1024 * 1024
-  },
-  {
-    name: "Xiaomi Redmi 12",
-    year: 2023,
-    category: "Smartphone",
-    desc: "Mass-market Android phone — proof that 'budget' today means flagship-class power from a few years ago.",
-    cpu: "MediaTek Helio G88 (8-core, ARM Cortex-A75/A55)",
-    freq: "up to 2.0 GHz",
-    ram: "4–8 GB LPDDR4X",
-    mips: 210000,
-    ramKB: 8 * 1024 * 1024
-  },
-  {
-    name: "MacBook Pro M4 Max",
-    year: 2024,
-    category: "Personal Computer",
-    desc: "Apple Silicon with 16 CPU cores and a workstation-class integrated GPU.",
-    cpu: "Apple M4 Max (12P + 4E cores, 40-core GPU)",
-    freq: "up to 4.5 GHz",
-    ram: "up to 128 GB unified",
-    mips: 1500000,
-    ramKB: 128 * 1024 * 1024
-  },
-  {
-    name: "Arduino UNO",
-    year: 2010,
-    category: "IoT",
-    desc: "The open-source microcontroller board that brought electronics to makers worldwide.",
-    cpu: "Microchip ATmega328P (AVR, 8-bit)",
-    freq: "16 MHz",
-    ram: "2 KB SRAM",
-    rom: "32 KB flash",
-    mips: 16,
-    ramKB: 2
-  },
-  {
-    name: "Raspberry Pi 4",
-    year: 2019,
-    category: "IoT",
-    desc: "A full Linux desktop on a credit-card-sized board for $35.",
-    cpu: "Broadcom BCM2711 (4-core ARM Cortex-A72, 64-bit)",
-    freq: "1.5 GHz (1.8 GHz revised)",
-    ram: "1–8 GB LPDDR4",
-    mips: 13500,
-    ramKB: 4 * 1024 * 1024
-  },
-  {
-    name: "ESP32",
-    year: 2016,
-    category: "IoT",
-    desc: "Dual-core microcontroller with built-in Wi-Fi and Bluetooth — the IoT workhorse.",
-    cpu: "Tensilica Xtensa LX6 (dual-core, 32-bit)",
-    freq: "240 MHz",
-    ram: "520 KB SRAM",
-    rom: "4 MB flash (typical)",
-    mips: 600,
-    ramKB: 0.5
-  },
-  {
-    name: "ATtiny85",
-    year: 2008,
-    category: "IoT",
-    desc: "A tiny 8-pin AVR microcontroller — fits on a fingertip, runs simple smart devices.",
-    cpu: "Microchip ATtiny85 (AVR, 8-bit)",
-    freq: "20 MHz",
-    ram: "512 bytes SRAM",
-    rom: "8 KB flash",
-    mips: 20,
-    ramKB: 0.5
-  },
-  {
-    name: "Colossus Mark 1",
-    year: 1944,
-    category: "Early Computer",
-    desc: "The British codebreaking machine at Bletchley Park — the first programmable, electronic, digital computer.",
-    cpu: "~1,500 vacuum tubes (thyratrons)",
-    freq: "5.8 kHz (paper-tape sync)",
-    ram: "5 characters of shift register",
-    mips: 0.001,
-    ramKB: 0.005
-  },
-  {
-    name: "ENIAC",
-    year: 1945,
-    category: "Early Computer",
-    desc: "The first general-purpose electronic computer. Weighed 27 tons and filled an entire room.",
-    cpu: "17,468 vacuum tubes",
-    freq: "100 kHz (internal clock)",
-    ram: "20 ten-digit numbers (accumulators)",
-    mips: 0.005,
-    ramKB: 0.1
-  },
-  {
-    name: "IBM System/360 Model 30",
-    year: 1965,
-    category: "Mainframe",
-    desc: "The mainframe that standardised enterprise computing in the 1960s.",
-    cpu: "Microprogrammed transistor logic (32-bit)",
-    freq: "~1 MHz",
-    ram: "8–64 KB (core memory)",
-    mips: 0.034,
-    ramKB: 64
-  },
-  {
-    name: "Cray-1",
-    year: 1976,
-    category: "Supercomputer",
-    desc: "The iconic C-shaped supercomputer. Price tag: $8.8 million.",
-    cpu: "64-bit vector processor",
-    freq: "80 MHz",
-    ram: "8 MB",
-    mips: 160,
-    ramKB: 8 * 1024
-  },
-  {
-    name: "Atari 2600",
-    year: 1977,
-    category: "Console",
-    desc: "The console that popularised home gaming with interchangeable cartridges.",
-    cpu: "MOS 6507 (8-bit)",
-    freq: "1.19 MHz",
-    ram: "128 bytes",
-    mips: 0.5,
-    ramKB: 0.125
-  },
-  {
-    name: "Sinclair ZX Spectrum",
-    year: 1982,
-    category: "Personal Computer",
-    desc: "The tiny home computer that taught a generation of Brits to code.",
-    cpu: "Zilog Z80A (8-bit)",
-    freq: "3.5 MHz",
-    ram: "16 or 48 KB",
-    mips: 0.58,
-    ramKB: 48
-  },
-  {
-    name: "Nintendo Entertainment System (NES)",
-    year: 1983,
-    category: "Console",
-    desc: "Rescued the video game industry after the 1983 crash.",
-    cpu: "Ricoh 2A03 (6502-based)",
-    freq: "1.79 MHz",
-    ram: "2 KB",
-    mips: 0.5,
-    ramKB: 2
-  },
-  {
-    name: "SEGA Master System",
-    year: 1985,
-    category: "Console",
-    desc: "SEGA's 8-bit answer to the NES — huge in Brazil and Europe.",
-    cpu: "Zilog Z80A (8-bit)",
-    freq: "3.58 MHz",
-    ram: "8 KB + 16 KB video",
-    mips: 0.58,
-    ramKB: 8
-  },
-  {
-    name: "SEGA Mega Drive / Genesis",
-    year: 1988,
-    category: "Console",
-    desc: "16-bit \"Blast Processing\" — Sonic the Hedgehog's home and SEGA's biggest hit.",
-    cpu: "Motorola 68000 + Zilog Z80",
-    freq: "7.6 MHz",
-    ram: "64 KB + 64 KB video",
-    mips: 0.76,
-    ramKB: 64
-  },
-  {
-    name: "Atari Lynx",
-    year: 1989,
-    category: "Console",
-    desc: "The first colour handheld console — backlit screen, 16-bit graphics, ahead of its time.",
-    cpu: "MOS 65SC02 (8-bit) + Suzy/Mikey custom chips",
-    freq: "4 MHz",
-    ram: "64 KB",
-    mips: 0.7,
-    ramKB: 64
-  },
-  {
-    name: "Nintendo Game Boy",
-    year: 1989,
-    category: "Console",
-    desc: "The best-selling portable console of the 20th century. Ran on 4 AA batteries.",
-    cpu: "Sharp LR35902 (Z80/8080 hybrid)",
-    freq: "4.19 MHz",
-    ram: "8 KB + 8 KB video",
-    mips: 1,
-    ramKB: 8
-  },
-  {
-    name: "Super Nintendo (SNES)",
-    year: 1990,
-    category: "Console",
-    desc: "16-bit classics: Super Mario World, Zelda: A Link to the Past, Donkey Kong Country.",
-    cpu: "Ricoh 5A22 (65C816, 16-bit)",
-    freq: "3.58 MHz",
-    ram: "128 KB + 64 KB video",
-    mips: 1.79,
-    ramKB: 128
-  },
-  {
-    name: "Sony PlayStation",
-    year: 1994,
-    category: "Console",
-    desc: "Ushered in the era of 3D home gaming.",
-    cpu: "MIPS R3000A (32-bit)",
-    freq: "33.87 MHz",
-    ram: "2 MB + 1 MB video",
-    mips: 30,
-    ramKB: 2 * 1024
-  },
-  {
-    name: "SEGA Saturn",
-    year: 1994,
-    category: "Console",
-    desc: "Dual-CPU 32-bit console — powerful but notoriously hard to program for.",
-    cpu: "2× Hitachi SH-2 (32-bit)",
-    freq: "28.6 MHz",
-    ram: "2 MB + 1.5 MB video",
-    mips: 25,
-    ramKB: 2 * 1024
-  },
-  {
-    name: "Nintendo 64",
-    year: 1996,
-    category: "Console",
-    desc: "First 64-bit home console. Super Mario 64 reinvented the platformer.",
-    cpu: "NEC VR4300 (MIPS, 64-bit)",
-    freq: "93.75 MHz",
-    ram: "4 MB (expandable to 8)",
-    mips: 125,
-    ramKB: 4 * 1024
-  },
-  {
-    name: "SEGA Dreamcast",
-    year: 1998,
-    category: "Console",
-    desc: "Ahead of its time — first console with built-in modem for online play. SEGA's last console.",
-    cpu: "Hitachi SH-4 (RISC, 32-bit, 128-bit FPU)",
-    freq: "200 MHz",
-    ram: "16 MB + 8 MB video + 2 MB audio",
-    mips: 360,
-    ramKB: 16 * 1024
-  },
-  {
-    name: "Sony PlayStation 2",
-    year: 2000,
-    category: "Console",
-    desc: "The best-selling console of all time: over 155 million units sold.",
-    cpu: "Emotion Engine (MIPS, 128-bit)",
-    freq: "294.9 MHz",
-    ram: "32 MB RDRAM",
-    mips: 6200,
-    ramKB: 32 * 1024
-  },
-  {
-    name: "Xbox 360",
-    year: 2005,
-    category: "Console",
-    desc: "Microsoft's breakthrough console, pioneering Xbox Live online gaming.",
-    cpu: "IBM Xenon (PowerPC, 3-core)",
-    freq: "3.2 GHz",
-    ram: "512 MB GDDR3 shared",
-    mips: 19200,
-    ramKB: 512 * 1024
-  },
-  {
-    name: "Sony PlayStation 3",
-    year: 2006,
-    category: "Console",
-    desc: "Revolutionary Cell architecture — also used as a scientific research platform.",
-    cpu: "Cell Broadband Engine (1 PPE + 7 SPE)",
-    freq: "3.2 GHz",
-    ram: "256 MB XDR + 256 MB GDDR3",
-    mips: 20500,
-    ramKB: 512 * 1024
-  },
-  {
-    name: "Nintendo Switch",
-    year: 2017,
-    category: "Console",
-    desc: "Hybrid home/portable console built on mobile technology.",
-    cpu: "NVIDIA Tegra X1 (4-core ARM Cortex-A57)",
-    freq: "1.02 GHz (handheld)",
-    ram: "4 GB LPDDR4",
-    mips: 16000,
-    ramKB: 4 * 1024 * 1024
-  },
-  {
-    name: "Sony PlayStation 5",
-    year: 2020,
-    category: "Console",
-    desc: "Hardware ray tracing, ultra-fast SSD, 3D audio.",
-    cpu: "AMD Zen 2 (8-core, 16-thread)",
-    freq: "up to 3.5 GHz",
-    ram: "16 GB GDDR6 unified",
-    mips: 280000,
-    ramKB: 16 * 1024 * 1024
-  },
-  {
-    name: "Xbox Series X",
-    year: 2020,
-    category: "Console",
-    desc: "Microsoft's most powerful console ever — 12 TFLOPS of GPU performance.",
-    cpu: "AMD Zen 2 (8-core, 16-thread)",
-    freq: "3.8 GHz",
-    ram: "16 GB GDDR6 unified",
-    mips: 290000,
-    ramKB: 16 * 1024 * 1024
-  },
-  {
-    name: "Steam Deck",
-    year: 2022,
-    category: "Console",
-    desc: "Valve's portable PC gaming device — runs Windows games via Proton on Linux.",
-    cpu: "AMD Aerith Zen 2 (4-core, 8-thread)",
-    freq: "up to 3.5 GHz",
-    ram: "16 GB LPDDR5",
-    mips: 110000,
-    ramKB: 16 * 1024 * 1024
-  }
-];
+let computers = [];
+let maxMips, minMips, maxRam, minRam;
+let selected = new Set();
+let activeCategories = new Set();
+let lastBenchmarkResult = null;
 
 const grid = document.getElementById('grid');
 const sortSel = document.getElementById('sort');
@@ -1201,16 +716,41 @@ const selNames = document.getElementById('sel-names');
 const modalOverlay = document.getElementById('modal-overlay');
 const cmpTable = document.getElementById('cmp-table');
 
-const maxMips = Math.max(...computers.map(c => c.mips));
-const minMips = Math.min(...computers.map(c => c.mips));
-const maxRam  = Math.max(...computers.map(c => c.ramKB));
-const minRam  = Math.min(...computers.map(c => c.ramKB));
-
-let selected = new Set(); // indici in computers[]
-let activeCategories = new Set(); // empty = all
-let lastBenchmarkResult = null; // { measuredSeconds, ops, sys }
-
 const CATEGORY_ORDER = ["Early Computer", "Mainframe", "Supercomputer", "Personal Computer", "Console", "Smartphone", "IoT", "Embedded"];
+
+// Load computers data from JSON
+fetch('./data/computers.json')
+  .then(resp => resp.json())
+  .then(data => {
+    computers = data;
+    maxMips = Math.max(...computers.map(c => c.mips));
+    minMips = Math.min(...computers.map(c => c.mips));
+    maxRam  = Math.max(...computers.map(c => c.ramKB));
+    minRam  = Math.min(...computers.map(c => c.ramKB));
+
+    // Set up event listeners
+    document.getElementById('btn-compare').addEventListener('click', openModal);
+    document.getElementById('btn-clear-sel').addEventListener('click', () => {
+      selected.clear();
+      document.querySelectorAll('.card.selected').forEach(el => el.classList.remove('selected'));
+      lastBenchmarkResult = null;
+      updateBar();
+      renderWorkload();
+      document.getElementById('test-result').innerHTML = '';
+    });
+    document.getElementById('btn-filter-all').addEventListener('click', () => {
+      activeCategories.clear();
+      renderFilters();
+      render();
+    });
+    sortSel.addEventListener('change', render);
+    dirSel.addEventListener('change', render);
+
+    // Initialize UI
+    renderFilters();
+    render();
+  })
+  .catch(err => console.error('Failed to load computers data:', err));
 
 function renderFilters() {
   const counts = {};
@@ -1234,12 +774,6 @@ function renderFilters() {
     });
   });
 }
-document.getElementById('btn-filter-all').addEventListener('click', () => {
-  activeCategories.clear();
-  renderFilters();
-  render();
-});
-
 function logPct(value, min, max) {
   const lv = Math.log10(value), lmin = Math.log10(min), lmax = Math.log10(max);
   return Math.max(2, ((lv - lmin) / (lmax - lmin)) * 100);
@@ -1647,22 +1181,12 @@ function openModal() {
   modalOverlay.classList.add('open');
 }
 
-document.getElementById('btn-compare').addEventListener('click', openModal);
-document.getElementById('btn-clear-sel').addEventListener('click', () => {
-  selected.clear();
-  document.querySelectorAll('.card.selected').forEach(el => el.classList.remove('selected'));
-  lastBenchmarkResult = null; // Reset benchmark when clearing selection
-  updateBar();
-  renderWorkload();
-  document.getElementById('test-result').innerHTML = '';
-});
+// Event listeners that depend on document being ready but not on computers data
 document.getElementById('btn-close-modal').addEventListener('click', () => modalOverlay.classList.remove('open'));
 modalOverlay.addEventListener('click', e => { if (e.target === modalOverlay) modalOverlay.classList.remove('open'); });
 
-sortSel.addEventListener('change', render);
-dirSel.addEventListener('change', render);
-renderFilters();
-render();
+// Event listeners and initialization that depend on computers data will be added inside fetch callback
+// (in the renderFilters() setup)
 
 // ── Charts ────────────────────────────────────────────────────────────────────
 
