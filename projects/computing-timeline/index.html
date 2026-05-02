@@ -1,0 +1,1264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Moore's Law in Motion — 80 Years of Computing Power</title>
+<style>
+  :root {
+    --bg: #0e1116;
+    --panel: #161b22;
+    --border: #30363d;
+    --text: #e6edf3;
+    --muted: #8b949e;
+    --accent: #58a6ff;
+    --accent2: #f78166;
+    --bar1: linear-gradient(90deg, #2ea043, #56d364);
+    --bar2: linear-gradient(90deg, #1f6feb, #58a6ff);
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.5;
+  }
+  header {
+    position: relative;
+    padding: 2.5rem 1.5rem 1.5rem;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+    background: linear-gradient(180deg, #161b22, #0e1116);
+  }
+  header h1 { margin: 0 0 .5rem; font-size: 2rem; }
+  header p { margin: 0 auto; max-width: 700px; color: var(--muted); }
+  .header-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    text-align: left;
+  }
+  .site-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: .4rem;
+    color: var(--muted);
+    text-decoration: none;
+    font-size: .82rem;
+    padding: .3rem .6rem;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: var(--panel);
+    transition: color .15s, border-color .15s;
+  }
+  .site-badge:hover { color: var(--text); border-color: var(--accent); }
+  main { max-width: 1200px; margin: 0 auto; padding: 1.5rem; }
+
+  .controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .75rem;
+    margin-bottom: 1.5rem;
+    align-items: center;
+    justify-content: center;
+  }
+  .controls label { color: var(--muted); font-size: .9rem; }
+  .controls select, .controls button {
+    background: var(--panel);
+    color: var(--text);
+    border: 1px solid var(--border);
+    padding: .5rem .8rem;
+    border-radius: 6px;
+    font: inherit;
+    cursor: pointer;
+  }
+  .controls button:hover { border-color: var(--accent); }
+
+  /* ---- lista orizzontale ---- */
+  .list-header, .card {
+    display: grid;
+    grid-template-columns: 2fr 2.2fr 2.2fr 1fr;
+    gap: 0;
+    align-items: center;
+  }
+  .list-header {
+    padding: .4rem 1rem;
+    font-size: .78rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    color: var(--muted);
+    border-bottom: 2px solid var(--border);
+    position: sticky;
+    top: 0;
+    background: var(--bg);
+    z-index: 10;
+  }
+  .list-header .col-bar { padding-left: .5rem; }
+  #grid {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .card {
+    background: var(--panel);
+    border-bottom: 1px solid var(--border);
+    padding: .7rem 1rem;
+    cursor: pointer;
+    transition: background .12s;
+    position: relative;
+  }
+  .card:last-child { border-bottom: none; }
+  .card:hover { background: #1c2230; }
+  .card.selected { background: #1a2332; border-left: 3px solid var(--accent); }
+
+  /* colonna nome */
+  .col-name { padding-right: 1rem; }
+  .card-title {
+    font-size: .95rem;
+    font-weight: 600;
+    margin: 0 0 .15rem;
+    display: flex;
+    align-items: baseline;
+    gap: .5rem;
+    flex-wrap: wrap;
+  }
+  .year {
+    color: var(--accent2);
+    font-size: .8rem;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .desc { color: var(--muted); font-size: .78rem; margin: 0; line-height: 1.35; }
+
+  /* colonna specs */
+  .col-specs { padding-right: 1rem; }
+  .specs {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: .1rem .5rem;
+    font-size: .78rem;
+  }
+  .specs dt { color: var(--muted); white-space: nowrap; }
+  .specs dd { margin: 0; }
+
+  /* colonne barre */
+  .col-bar { padding: 0 .5rem; }
+  .bar-metric-label {
+    font-size: .72rem;
+    color: var(--muted);
+    margin-bottom: .2rem;
+  }
+  .bar-row { margin-bottom: .3rem; }
+  .bar-row:last-child { margin-bottom: 0; }
+  .bar-track {
+    background: #0d1117;
+    border: 1px solid var(--border);
+    height: 9px;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .bar-fill { height: 100%; border-radius: 3px; transition: width .3s ease; }
+  .bar-fill.cpu { background: var(--bar2); }
+  .bar-fill.ram { background: var(--bar1); }
+  .bar-value {
+    font-size: .72rem;
+    color: var(--muted);
+    margin-top: .15rem;
+    text-align: right;
+  }
+
+  /* colonna selezione */
+  .col-sel { text-align: center; }
+  .sel-check {
+    width: 20px; height: 20px;
+    border: 2px solid var(--border);
+    border-radius: 5px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: .8rem;
+    transition: all .12s;
+    background: transparent;
+  }
+  .card.selected .sel-check {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #0e1116;
+  }
+
+  footer {
+    text-align: center;
+    color: var(--muted);
+    font-size: .8rem;
+    padding: 2rem 1rem;
+    border-top: 1px solid var(--border);
+    margin-top: 2rem;
+  }
+  .note {
+    background: #161b22;
+    border-left: 3px solid var(--accent);
+    padding: .75rem 1rem;
+    margin: 1rem 0 1.5rem;
+    border-radius: 4px;
+    font-size: .9rem;
+    color: var(--muted);
+  }
+
+  /* ---- selezione carte ---- */
+  .card { cursor: pointer; transition: border-color .15s; position: relative; }
+  .card:hover { border-color: #58a6ff66; }
+  .card.selected { border-color: var(--accent); background: #1a2332; }
+  .card .sel-badge {
+    display: none;
+    position: absolute;
+    top: .6rem; right: .6rem;
+    background: var(--accent);
+    color: #0e1116;
+    font-size: .7rem;
+    font-weight: 700;
+    padding: .1rem .4rem;
+    border-radius: 4px;
+  }
+  .card.selected .sel-badge { display: inline; }
+
+  /* ---- barra di confronto fissa in basso ---- */
+  #compare-bar {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    background: #161b22ee;
+    backdrop-filter: blur(8px);
+    border-top: 1px solid var(--border);
+    padding: .75rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    z-index: 100;
+    transform: translateY(100%);
+    transition: transform .25s ease;
+  }
+  #compare-bar.visible { transform: translateY(0); }
+  #compare-bar .sel-names {
+    flex: 1;
+    font-size: .9rem;
+    color: var(--muted);
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  #compare-bar .sel-names strong { color: var(--text); }
+  #btn-compare {
+    background: var(--accent);
+    color: #0e1116;
+    border: none;
+    padding: .55rem 1.2rem;
+    border-radius: 6px;
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  #btn-compare:hover { opacity: .85; }
+  #btn-clear-sel {
+    background: transparent;
+    color: var(--muted);
+    border: 1px solid var(--border);
+    padding: .5rem .9rem;
+    border-radius: 6px;
+    font: inherit;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  #btn-clear-sel:hover { border-color: var(--accent2); color: var(--accent2); }
+
+  /* ---- modal di confronto ---- */
+  #modal-overlay {
+    display: none;
+    position: fixed; inset: 0;
+    background: #0009;
+    z-index: 200;
+    overflow-y: auto;
+    padding: 2rem 1rem;
+  }
+  #modal-overlay.open { display: flex; align-items: flex-start; justify-content: center; }
+  #modal {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    width: 100%;
+    max-width: 960px;
+    overflow: hidden;
+  }
+  #modal header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid var(--border);
+  }
+  #modal header h2 { margin: 0; font-size: 1.1rem; }
+  #btn-close-modal {
+    background: transparent;
+    border: none;
+    color: var(--muted);
+    font-size: 1.4rem;
+    cursor: pointer;
+    line-height: 1;
+    padding: 0 .25rem;
+  }
+  #btn-close-modal:hover { color: var(--text); }
+
+  /* tabella confronto */
+  #cmp-table { width: 100%; border-collapse: collapse; font-size: .88rem; }
+  #cmp-table th, #cmp-table td {
+    padding: .6rem 1rem;
+    border-bottom: 1px solid var(--border);
+    text-align: left;
+    vertical-align: top;
+  }
+  #cmp-table th { color: var(--muted); font-weight: 500; width: 110px; }
+  #cmp-table td { color: var(--text); }
+  #cmp-table tr:last-child th,
+  #cmp-table tr:last-child td { border-bottom: none; }
+  .cmp-machine-header {
+    background: #1a2332;
+    text-align: center !important;
+    font-weight: 700;
+    color: var(--accent) !important;
+    font-size: .95rem;
+  }
+  .cmp-year { color: var(--accent2); font-weight: 600; }
+
+  /* barre nel modal */
+  .cmp-bar-wrap { display: flex; align-items: center; gap: .5rem; }
+  .cmp-bar-track {
+    flex: 1;
+    background: #0d1117;
+    border: 1px solid var(--border);
+    height: 10px;
+    border-radius: 5px;
+    overflow: hidden;
+  }
+  .cmp-bar-fill { height: 100%; border-radius: 4px; }
+  .cmp-bar-fill.cpu { background: var(--bar2); }
+  .cmp-bar-fill.ram { background: var(--bar1); }
+  .cmp-bar-val { font-size: .8rem; color: var(--muted); white-space: nowrap; min-width: 90px; text-align: right; }
+
+  /* ratio badge */
+  .ratio-badge {
+    display: inline-block;
+    background: #2a2a3d;
+    border: 1px solid #444;
+    border-radius: 4px;
+    padding: .05rem .4rem;
+    font-size: .75rem;
+    color: #a5d6ff;
+    margin-left: .3rem;
+  }
+  .winner { color: #56d364; font-weight: 600; }
+
+  /* ---- charts section ---- */
+  #charts-section {
+    max-width: 1200px;
+    margin: 2.5rem auto 0;
+    padding: 0 1.5rem 1rem;
+  }
+  #charts-section h2 {
+    font-size: 1.3rem;
+    margin: 0 0 .35rem;
+  }
+  .charts-sub {
+    color: var(--muted);
+    font-size: .88rem;
+    margin: 0 0 1.5rem;
+  }
+  .chart-wrap {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1rem 1rem .5rem;
+    margin-bottom: 1.25rem;
+    overflow-x: auto;
+  }
+  .chart-title {
+    font-size: .85rem;
+    font-weight: 600;
+    margin-bottom: .6rem;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+  }
+  .chart-title span { font-weight: 400; text-transform: none; color: var(--muted); letter-spacing: 0; }
+  .cpu-title { color: #58a6ff; }
+  .ram-title { color: #56d364; }
+  canvas { display: block; }
+  .charts-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+  }
+  .charts-header h2 { margin: 0 0 .3rem; font-size: 1.3rem; }
+  .charts-sub { color: var(--muted); font-size: .88rem; margin: 0; }
+  .scale-toggle {
+    display: flex;
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+  .stbtn {
+    background: transparent;
+    color: var(--muted);
+    border: none;
+    padding: .45rem .9rem;
+    font: inherit;
+    font-size: .85rem;
+    cursor: pointer;
+    transition: background .15s, color .15s;
+  }
+  .stbtn:first-child { border-right: 1px solid var(--border); }
+  .stbtn.active { background: #1f6feb22; color: var(--accent); font-weight: 600; }
+  .stbtn:hover:not(.active) { background: #ffffff0a; }
+</style>
+</head>
+<body>
+<header>
+  <div class="header-inner"><a class="site-badge" href="https://tongatron.org/" target="_blank" rel="noreferrer">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
+      <path fill-rule="evenodd" d="M8.48 10.901C11.211 10.227 13 7.837 13 5A5 5 0 0 0 3 5c0 2.837 1.789 5.227 4.52 5.901l-.244.487a.25.25 0 1 0 .448.224l.04-.08c.009.17.024.315.051.45.068.344.208.622.448 1.102l.013.028c.212.422.182.85.05 1.246-.135.402-.366.751-.534 1.003a.25.25 0 0 0 .416.278l.004-.007c.166-.248.431-.646.588-1.115.16-.479.212-1.051-.076-1.629-.258-.515-.365-.732-.419-1.004a2 2 0 0 1-.037-.289l.008.017a.25.25 0 1 0 .448-.224zM4.352 3.356a4 4 0 0 1 3.15-2.325C7.774.997 8 1.224 8 1.5s-.226.496-.498.542c-.95.162-1.749.78-2.173 1.617a.6.6 0 0 1-.52.341c-.346 0-.599-.329-.457-.644"/>
+    </svg>
+    <span>tongatron.org</span>
+  </a></div>
+  <h1>Moore's Law in Motion</h1>
+  <p>80 years of computing power, from the 27-ton machine that cracked artillery tables to the supercomputer in your pocket.</p>
+</header>
+
+<main>
+  <div class="note">
+    Bars show CPU speed (MIPS — millions of instructions per second) and RAM on a <strong>logarithmic scale</strong>: the only way to visualise a range that spans from a few hundred instructions per second to billions.
+  </div>
+
+  <div class="controls">
+    <label for="sort">Sort by:</label>
+    <select id="sort">
+      <option value="year">Year (chronological)</option>
+      <option value="cpu">CPU Speed</option>
+      <option value="ram">RAM Amount</option>
+    </select>
+    <label for="dir">Order:</label>
+    <select id="dir">
+      <option value="asc">Ascending</option>
+      <option value="desc">Descending</option>
+    </select>
+  </div>
+
+  <div class="list-header">
+    <span>Machine</span>
+    <span>Specs</span>
+    <span class="col-bar">CPU &amp; RAM</span>
+    <span style="text-align:center">Sel.</span>
+  </div>
+  <div id="grid"></div>
+</main>
+
+<!-- barra fissa selezione -->
+<div id="compare-bar">
+  <div class="sel-names" id="sel-names"></div>
+  <button id="btn-clear-sel">Clear selection</button>
+  <button id="btn-compare">Compare ▶</button>
+</div>
+
+<!-- modal confronto -->
+<div id="modal-overlay">
+  <div id="modal">
+    <header>
+      <h2>Machine comparison</h2>
+      <button id="btn-close-modal" title="Close">✕</button>
+    </header>
+    <div style="overflow-x:auto">
+      <table id="cmp-table"></table>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== CHARTS ===================== -->
+<section id="charts-section">
+  <div class="charts-header">
+    <div>
+      <h2>Growth over time</h2>
+      <p class="charts-sub" id="charts-sub-text">Each bar is one machine, sorted chronologically. Logarithmic scale — each grid line is ×10.</p>
+    </div>
+    <div class="scale-toggle" id="scale-toggle">
+      <button class="stbtn active" data-mode="log">Logarithmic</button>
+      <button class="stbtn" data-mode="linear">Linear</button>
+    </div>
+  </div>
+
+  <div class="chart-wrap">
+    <div class="chart-title cpu-title">CPU Speed <span id="cpu-scale-label">(MIPS — log scale)</span></div>
+    <canvas id="chart-cpu"></canvas>
+  </div>
+
+  <div class="chart-wrap">
+    <div class="chart-title ram-title">RAM <span id="ram-scale-label">(log scale)</span></div>
+    <canvas id="chart-ram"></canvas>
+  </div>
+</section>
+
+<footer>
+  Specs are simplified for clarity. MIPS values are indicative estimates — comparing different architectures (8-bit vs modern ARM) is never perfectly apples-to-apples, but it conveys the scale of change.
+</footer>
+
+<script>
+const computers = [
+  {
+    name: "Apollo Guidance Computer",
+    year: 1966,
+    desc: "The on-board computer for the Apollo missions. It guided the 1969 Moon landing.",
+    cpu: "Custom NOR-gate logic (~5,000 ICs)",
+    freq: "2.048 MHz",
+    ram: "4 KB (magnetic core memory)",
+    rom: "72 KB (rope memory)",
+    mips: 0.04,
+    ramKB: 4
+  },
+  {
+    name: "PDP-8",
+    year: 1965,
+    desc: "The first commercially successful minicomputer, made by DEC.",
+    cpu: "12-bit, discrete transistor logic",
+    freq: "~0.33 MHz",
+    ram: "4–32 KB",
+    mips: 0.05,
+    ramKB: 16
+  },
+  {
+    name: "Altair 8800",
+    year: 1975,
+    desc: "The computer that ignited the personal computer revolution.",
+    cpu: "Intel 8080 (8-bit)",
+    freq: "2 MHz",
+    ram: "256 bytes (expandable)",
+    mips: 0.29,
+    ramKB: 0.25
+  },
+  {
+    name: "Apple II",
+    year: 1977,
+    desc: "One of the first mass-market PCs, designed by Steve Wozniak.",
+    cpu: "MOS 6502 (8-bit)",
+    freq: "1.023 MHz",
+    ram: "4–48 KB",
+    mips: 0.43,
+    ramKB: 48
+  },
+  {
+    name: "IBM PC (5150)",
+    year: 1981,
+    desc: "Set the PC standard we still use today.",
+    cpu: "Intel 8088 (16-bit)",
+    freq: "4.77 MHz",
+    ram: "16–256 KB",
+    mips: 0.33,
+    ramKB: 256
+  },
+  {
+    name: "Commodore 64",
+    year: 1982,
+    desc: "The best-selling personal computer of all time.",
+    cpu: "MOS 6510 (8-bit)",
+    freq: "1.023 MHz",
+    ram: "64 KB",
+    mips: 0.43,
+    ramKB: 64
+  },
+  {
+    name: "Apple Macintosh 128K",
+    year: 1984,
+    desc: "The original Mac. Brought the graphical user interface to the masses.",
+    cpu: "Motorola 68000 (16/32-bit)",
+    freq: "7.8336 MHz",
+    ram: "128 KB",
+    mips: 0.7,
+    ramKB: 128
+  },
+  {
+    name: "Commodore Amiga 500",
+    year: 1987,
+    desc: "Multimedia capabilities years ahead of the competition.",
+    cpu: "Motorola 68000",
+    freq: "7.16 MHz",
+    ram: "512 KB (expandable to 8 MB)",
+    mips: 0.7,
+    ramKB: 512
+  },
+  {
+    name: "PC with Intel 80486 DX",
+    year: 1989,
+    desc: "The Windows 3.1 era and the rise of the multimedia PC.",
+    cpu: "Intel 80486 DX (32-bit, integrated FPU)",
+    freq: "33 MHz",
+    ram: "4–16 MB",
+    mips: 27,
+    ramKB: 8 * 1024
+  },
+  {
+    name: "PC with Pentium",
+    year: 1995,
+    desc: "Windows 95, CD-ROMs, and mass-market Internet.",
+    cpu: "Intel Pentium (superscalar)",
+    freq: "100 MHz",
+    ram: "8–32 MB",
+    mips: 188,
+    ramKB: 16 * 1024
+  },
+  {
+    name: "iMac G3",
+    year: 1998,
+    desc: "The translucent Mac that saved Apple and redefined computer design.",
+    cpu: "PowerPC 750 (G3)",
+    freq: "233 MHz",
+    ram: "32 MB",
+    mips: 525,
+    ramKB: 32 * 1024
+  },
+  {
+    name: "PC with Pentium 4",
+    year: 2003,
+    desc: "The GHz race era — clock speed as marketing.",
+    cpu: "Intel Pentium 4",
+    freq: "3.0 GHz",
+    ram: "512 MB – 2 GB",
+    mips: 9700,
+    ramKB: 1 * 1024 * 1024
+  },
+  {
+    name: "iPhone (1st gen)",
+    year: 2007,
+    desc: "The phone that permanently changed personal computing.",
+    cpu: "Samsung S5L8900 (ARM 11)",
+    freq: "412 MHz",
+    ram: "128 MB",
+    mips: 500,
+    ramKB: 128 * 1024
+  },
+  {
+    name: "MacBook Pro (Intel Core i7)",
+    year: 2015,
+    desc: "A portable workstation for professionals.",
+    cpu: "Intel Core i7-4870HQ (4-core, 8-thread)",
+    freq: "2.5 GHz (turbo 3.7)",
+    ram: "16 GB",
+    mips: 110000,
+    ramKB: 16 * 1024 * 1024
+  },
+  {
+    name: "iPhone 15 Pro",
+    year: 2023,
+    desc: "More powerful than supercomputers from 25 years ago — fits in your pocket.",
+    cpu: "Apple A17 Pro (6-core CPU + 6-core GPU + Neural Engine)",
+    freq: "up to 3.78 GHz",
+    ram: "8 GB",
+    mips: 600000,
+    ramKB: 8 * 1024 * 1024
+  },
+  {
+    name: "MacBook Pro M4 Max",
+    year: 2024,
+    desc: "Apple Silicon with 16 CPU cores and a workstation-class integrated GPU.",
+    cpu: "Apple M4 Max (12P + 4E cores, 40-core GPU)",
+    freq: "up to 4.5 GHz",
+    ram: "up to 128 GB unified",
+    mips: 1500000,
+    ramKB: 128 * 1024 * 1024
+  },
+  {
+    name: "ENIAC",
+    year: 1945,
+    desc: "The first general-purpose electronic computer. Weighed 27 tons and filled an entire room.",
+    cpu: "17,468 vacuum tubes",
+    freq: "100 kHz (internal clock)",
+    ram: "20 ten-digit numbers (accumulators)",
+    mips: 0.005,
+    ramKB: 0.1
+  },
+  {
+    name: "IBM System/360 Model 30",
+    year: 1965,
+    desc: "The mainframe that standardised enterprise computing in the 1960s.",
+    cpu: "Microprogrammed transistor logic (32-bit)",
+    freq: "~1 MHz",
+    ram: "8–64 KB (core memory)",
+    mips: 0.034,
+    ramKB: 64
+  },
+  {
+    name: "Cray-1",
+    year: 1976,
+    desc: "The iconic C-shaped supercomputer. Price tag: $8.8 million.",
+    cpu: "64-bit vector processor",
+    freq: "80 MHz",
+    ram: "8 MB",
+    mips: 160,
+    ramKB: 8 * 1024
+  },
+  {
+    name: "Atari 2600",
+    year: 1977,
+    desc: "The console that popularised home gaming with interchangeable cartridges.",
+    cpu: "MOS 6507 (8-bit)",
+    freq: "1.19 MHz",
+    ram: "128 bytes",
+    mips: 0.5,
+    ramKB: 0.125
+  },
+  {
+    name: "Sinclair ZX Spectrum",
+    year: 1982,
+    desc: "The tiny home computer that taught a generation of Brits to code.",
+    cpu: "Zilog Z80A (8-bit)",
+    freq: "3.5 MHz",
+    ram: "16 or 48 KB",
+    mips: 0.58,
+    ramKB: 48
+  },
+  {
+    name: "Nintendo Entertainment System (NES)",
+    year: 1983,
+    desc: "Rescued the video game industry after the 1983 crash.",
+    cpu: "Ricoh 2A03 (6502-based)",
+    freq: "1.79 MHz",
+    ram: "2 KB",
+    mips: 0.5,
+    ramKB: 2
+  },
+  {
+    name: "Nintendo Game Boy",
+    year: 1989,
+    desc: "The best-selling portable console of the 20th century. Ran on 4 AA batteries.",
+    cpu: "Sharp LR35902 (Z80/8080 hybrid)",
+    freq: "4.19 MHz",
+    ram: "8 KB + 8 KB video",
+    mips: 1,
+    ramKB: 8
+  },
+  {
+    name: "Super Nintendo (SNES)",
+    year: 1990,
+    desc: "16-bit classics: Super Mario World, Zelda: A Link to the Past, Donkey Kong Country.",
+    cpu: "Ricoh 5A22 (65C816, 16-bit)",
+    freq: "3.58 MHz",
+    ram: "128 KB + 64 KB video",
+    mips: 1.79,
+    ramKB: 128
+  },
+  {
+    name: "Sony PlayStation",
+    year: 1994,
+    desc: "Ushered in the era of 3D home gaming.",
+    cpu: "MIPS R3000A (32-bit)",
+    freq: "33.87 MHz",
+    ram: "2 MB + 1 MB video",
+    mips: 30,
+    ramKB: 2 * 1024
+  },
+  {
+    name: "Nintendo 64",
+    year: 1996,
+    desc: "First 64-bit home console. Super Mario 64 reinvented the platformer.",
+    cpu: "NEC VR4300 (MIPS, 64-bit)",
+    freq: "93.75 MHz",
+    ram: "4 MB (expandable to 8)",
+    mips: 125,
+    ramKB: 4 * 1024
+  },
+  {
+    name: "Sony PlayStation 2",
+    year: 2000,
+    desc: "The best-selling console of all time: over 155 million units sold.",
+    cpu: "Emotion Engine (MIPS, 128-bit)",
+    freq: "294.9 MHz",
+    ram: "32 MB RDRAM",
+    mips: 6200,
+    ramKB: 32 * 1024
+  },
+  {
+    name: "Xbox 360",
+    year: 2005,
+    desc: "Microsoft's breakthrough console, pioneering Xbox Live online gaming.",
+    cpu: "IBM Xenon (PowerPC, 3-core)",
+    freq: "3.2 GHz",
+    ram: "512 MB GDDR3 shared",
+    mips: 19200,
+    ramKB: 512 * 1024
+  },
+  {
+    name: "Sony PlayStation 3",
+    year: 2006,
+    desc: "Revolutionary Cell architecture — also used as a scientific research platform.",
+    cpu: "Cell Broadband Engine (1 PPE + 7 SPE)",
+    freq: "3.2 GHz",
+    ram: "256 MB XDR + 256 MB GDDR3",
+    mips: 20500,
+    ramKB: 512 * 1024
+  },
+  {
+    name: "Nintendo Switch",
+    year: 2017,
+    desc: "Hybrid home/portable console built on mobile technology.",
+    cpu: "NVIDIA Tegra X1 (4-core ARM Cortex-A57)",
+    freq: "1.02 GHz (handheld)",
+    ram: "4 GB LPDDR4",
+    mips: 16000,
+    ramKB: 4 * 1024 * 1024
+  },
+  {
+    name: "Sony PlayStation 5",
+    year: 2020,
+    desc: "Hardware ray tracing, ultra-fast SSD, 3D audio.",
+    cpu: "AMD Zen 2 (8-core, 16-thread)",
+    freq: "up to 3.5 GHz",
+    ram: "16 GB GDDR6 unified",
+    mips: 280000,
+    ramKB: 16 * 1024 * 1024
+  },
+  {
+    name: "Xbox Series X",
+    year: 2020,
+    desc: "Microsoft's most powerful console ever — 12 TFLOPS of GPU performance.",
+    cpu: "AMD Zen 2 (8-core, 16-thread)",
+    freq: "3.8 GHz",
+    ram: "16 GB GDDR6 unified",
+    mips: 290000,
+    ramKB: 16 * 1024 * 1024
+  },
+  {
+    name: "Steam Deck",
+    year: 2022,
+    desc: "Valve's portable PC gaming device — runs Windows games via Proton on Linux.",
+    cpu: "AMD Aerith Zen 2 (4-core, 8-thread)",
+    freq: "up to 3.5 GHz",
+    ram: "16 GB LPDDR5",
+    mips: 110000,
+    ramKB: 16 * 1024 * 1024
+  }
+];
+
+const grid = document.getElementById('grid');
+const sortSel = document.getElementById('sort');
+const dirSel = document.getElementById('dir');
+const compareBar = document.getElementById('compare-bar');
+const selNames = document.getElementById('sel-names');
+const modalOverlay = document.getElementById('modal-overlay');
+const cmpTable = document.getElementById('cmp-table');
+
+const maxMips = Math.max(...computers.map(c => c.mips));
+const minMips = Math.min(...computers.map(c => c.mips));
+const maxRam  = Math.max(...computers.map(c => c.ramKB));
+const minRam  = Math.min(...computers.map(c => c.ramKB));
+
+let selected = new Set(); // indici in computers[]
+
+function logPct(value, min, max) {
+  const lv = Math.log10(value), lmin = Math.log10(min), lmax = Math.log10(max);
+  return Math.max(2, ((lv - lmin) / (lmax - lmin)) * 100);
+}
+
+function formatMips(m) {
+  if (m >= 1e6) return (m/1e6).toFixed(2) + ' billion IPS';
+  if (m >= 1e3) return (m/1e3).toFixed(1) + ' GIPS';
+  if (m >= 1)   return m.toFixed(0) + ' MIPS';
+  return (m*1000).toFixed(0) + ' kIPS';
+}
+
+function formatRam(kb) {
+  if (kb >= 1024*1024) return (kb/1024/1024).toFixed(0) + ' GB';
+  if (kb >= 1024)      return (kb/1024).toFixed(0) + ' MB';
+  if (kb >= 1)         return kb + ' KB';
+  return (kb*1024) + ' byte';
+}
+
+function updateBar() {
+  const n = selected.size;
+  if (n === 0) { compareBar.classList.remove('visible'); return; }
+  compareBar.classList.add('visible');
+  const names = [...selected].map(i => `<strong>${computers[i].name}</strong>`).join(', ');
+  selNames.innerHTML = `${n} selected: ${names}`;
+  document.getElementById('btn-compare').disabled = n < 2;
+  document.getElementById('btn-compare').style.opacity = n < 2 ? '.5' : '1';
+}
+
+function toggleSelect(idx, cardEl) {
+  if (selected.has(idx)) {
+    selected.delete(idx);
+    cardEl.classList.remove('selected');
+  } else {
+    selected.add(idx);
+    cardEl.classList.add('selected');
+  }
+  const check = cardEl.querySelector('.sel-check');
+  if (check) check.textContent = selected.has(idx) ? '✓' : '';
+  updateBar();
+}
+
+function render() {
+  const key = sortSel.value;
+  const dir = dirSel.value === 'asc' ? 1 : -1;
+  const sorted = [...computers.keys()].sort((a, b) => {
+    const va = key === 'year' ? computers[a].year : key === 'cpu' ? computers[a].mips : computers[a].ramKB;
+    const vb = key === 'year' ? computers[b].year : key === 'cpu' ? computers[b].mips : computers[b].ramKB;
+    return (va - vb) * dir;
+  });
+
+  grid.innerHTML = '';
+  sorted.forEach(idx => {
+    const c = computers[idx];
+    const isSel = selected.has(idx);
+    const art = document.createElement('article');
+    art.className = 'card' + (isSel ? ' selected' : '');
+    art.dataset.idx = idx;
+    art.innerHTML = `
+      <div class="col-name">
+        <div class="card-title">${c.name} <span class="year">${c.year}</span></div>
+        <p class="desc">${c.desc}</p>
+      </div>
+      <div class="col-specs">
+        <dl class="specs">
+          <dt>CPU</dt><dd>${c.cpu}</dd>
+          <dt>Clock</dt><dd>${c.freq}</dd>
+          <dt>RAM</dt><dd>${c.ram}</dd>
+          ${c.rom ? `<dt>ROM</dt><dd>${c.rom}</dd>` : ''}
+        </dl>
+      </div>
+      <div class="col-bar">
+        <div class="bar-row">
+          <div class="bar-metric-label">CPU Speed</div>
+          <div class="bar-track"><div class="bar-fill cpu" style="width:${logPct(c.mips,minMips,maxMips)}%"></div></div>
+          <div class="bar-value">${formatMips(c.mips)}</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-metric-label">RAM</div>
+          <div class="bar-track"><div class="bar-fill ram" style="width:${logPct(c.ramKB,minRam,maxRam)}%"></div></div>
+          <div class="bar-value">${formatRam(c.ramKB)}</div>
+        </div>
+      </div>
+      <div class="col-sel">
+        <span class="sel-check">${isSel ? '✓' : ''}</span>
+      </div>`;
+    art.addEventListener('click', () => toggleSelect(idx, art));
+    grid.appendChild(art);
+  });
+}
+
+function openModal() {
+  const sel = [...selected].map(i => computers[i]);
+  if (sel.length < 2) return;
+
+  const maxM = Math.max(...sel.map(c => c.mips));
+  const maxR = Math.max(...sel.map(c => c.ramKB));
+
+  const cols = sel.length;
+  let html = '<thead><tr><th></th>';
+  sel.forEach(c => {
+    html += `<th class="cmp-machine-header">${c.name}<br><span class="cmp-year">${c.year}</span></th>`;
+  });
+  html += '</tr></thead><tbody>';
+
+  // rows
+  const rows = [
+    { label: 'Description', fn: c => `<span style="color:var(--muted);font-size:.82rem">${c.desc}</span>` },
+    { label: 'CPU', fn: c => c.cpu },
+    { label: 'Clock', fn: c => c.freq },
+    { label: 'RAM', fn: c => c.ram },
+    {
+      label: 'CPU Speed',
+      fn: (c, all) => {
+        const pct = logPct(c.mips, Math.min(...all.map(x=>x.mips)), Math.max(...all.map(x=>x.mips)));
+        const winner = c.mips === maxM;
+        const ratio = (c.mips / Math.min(...sel.map(x=>x.mips))).toFixed(0);
+        return `<div class="cmp-bar-wrap">
+          <div class="cmp-bar-track"><div class="cmp-bar-fill cpu" style="width:${pct}%"></div></div>
+          <span class="cmp-bar-val ${winner?'winner':''}">${formatMips(c.mips)}${winner?' 🏆':''}</span>
+        </div>`;
+      },
+      multi: true
+    },
+    {
+      label: 'RAM (amount)',
+      fn: (c, all) => {
+        const pct = logPct(c.ramKB, Math.min(...all.map(x=>x.ramKB)), Math.max(...all.map(x=>x.ramKB)));
+        const winner = c.ramKB === maxR;
+        return `<div class="cmp-bar-wrap">
+          <div class="cmp-bar-track"><div class="cmp-bar-fill ram" style="width:${pct}%"></div></div>
+          <span class="cmp-bar-val ${winner?'winner':''}">${formatRam(c.ramKB)}${winner?' 🏆':''}</span>
+        </div>`;
+      },
+      multi: true
+    },
+  ];
+
+  rows.forEach(row => {
+    html += `<tr><th>${row.label}</th>`;
+    sel.forEach(c => {
+      html += `<td>${row.multi ? row.fn(c, sel) : row.fn(c)}</td>`;
+    });
+    html += '</tr>';
+  });
+
+  // rapporto velocità rispetto alla macchina più lenta
+  if (sel.length >= 2) {
+    const minM = Math.min(...sel.map(c => c.mips));
+    const minR = Math.min(...sel.map(c => c.ramKB));
+    html += `<tr><th>CPU ×<br><span style="font-size:.75rem;color:var(--muted)">vs slowest</span></th>`;
+    sel.forEach(c => {
+      const r = (c.mips / minM);
+      html += `<td><span class="ratio-badge">${r >= 1000 ? (r/1000).toFixed(1)+'K×' : r >= 1 ? r.toFixed(r<10?1:0)+'×' : r.toFixed(2)+'×'}</span></td>`;
+    });
+    html += '</tr>';
+    html += `<tr><th>RAM ×<br><span style="font-size:.75rem;color:var(--muted)">vs least RAM</span></th>`;
+    sel.forEach(c => {
+      const r = (c.ramKB / minR);
+      html += `<td><span class="ratio-badge">${r >= 1000000 ? (r/1000000).toFixed(1)+'M×' : r >= 1000 ? (r/1000).toFixed(1)+'K×' : r.toFixed(r<10?1:0)+'×'}</span></td>`;
+    });
+    html += '</tr>';
+  }
+
+  html += '</tbody>';
+  cmpTable.innerHTML = html;
+  modalOverlay.classList.add('open');
+}
+
+document.getElementById('btn-compare').addEventListener('click', openModal);
+document.getElementById('btn-clear-sel').addEventListener('click', () => {
+  selected.clear();
+  document.querySelectorAll('.card.selected').forEach(el => el.classList.remove('selected'));
+  updateBar();
+});
+document.getElementById('btn-close-modal').addEventListener('click', () => modalOverlay.classList.remove('open'));
+modalOverlay.addEventListener('click', e => { if (e.target === modalOverlay) modalOverlay.classList.remove('open'); });
+
+sortSel.addEventListener('change', render);
+dirSel.addEventListener('change', render);
+render();
+
+// ── Charts ────────────────────────────────────────────────────────────────────
+
+let chartMode = 'log'; // 'log' | 'linear'
+
+const SHORT_NAMES = {
+  'Nintendo Entertainment System (NES)': 'NES',
+  'Apple Macintosh 128K': 'Mac 128K',
+  'MacBook Pro (Intel Core i7)': 'MBP i7',
+  'MacBook Pro M4 Max': 'MBP M4 Max',
+  'Apollo Guidance Computer': 'AGC',
+  'PC with Intel 80486 DX': '486 DX',
+  'PC with Pentium 4': 'Pentium 4',
+  'PC with Pentium': 'Pentium',
+  'IBM System/360 Model 30': 'IBM S/360',
+  'Sony PlayStation 2': 'PS2',
+  'Sony PlayStation 3': 'PS3',
+  'Sony PlayStation 5': 'PS5',
+  'Sony PlayStation': 'PS1',
+  'Nintendo Game Boy': 'Game Boy',
+  'Nintendo Switch': 'Switch',
+  'Nintendo 64': 'N64',
+  'Super Nintendo (SNES)': 'SNES',
+  'iPhone (1st gen)': 'iPhone 1G',
+  'iPhone 15 Pro': 'iPhone 15P',
+  'Commodore Amiga 500': 'Amiga 500',
+  'Sinclair ZX Spectrum': 'ZX Spectrum',
+};
+function shortName(n) { return SHORT_NAMES[n] || n; }
+
+function formatMipsShort(v) {
+  if (v >= 1e6) return (v/1e6).toFixed(v>=1e8?0:1) + 'B';
+  if (v >= 1e3) return (v/1e3).toFixed(0) + 'M';
+  if (v >= 1)   return v.toFixed(0);
+  return (v*1000).toFixed(0) + 'k';
+}
+function formatRamShort(kb) {
+  if (kb >= 1024*1024) return (kb/1024/1024).toFixed(0)+'GB';
+  if (kb >= 1024)      return (kb/1024).toFixed(0)+'MB';
+  if (kb >= 1)         return kb+'KB';
+  return (kb*1024)+'B';
+}
+
+function linearTicks(min, max, count = 6) {
+  const step = (max - min) / count;
+  const mag  = Math.pow(10, Math.floor(Math.log10(step)));
+  const nice = [1,2,5,10].map(f => f*mag).find(f => f >= step) || step;
+  const ticks = [];
+  for (let v = 0; v <= max * 1.01; v += nice) if (v >= 0) ticks.push(v);
+  return ticks;
+}
+
+function drawChart(canvasId, valueKey, color1, color2, labelFn, mode) {
+  const canvas = document.getElementById(canvasId);
+  const sorted = [...computers].sort((a, b) => a.year - b.year);
+  const values = sorted.map(c => c[valueKey]);
+
+  const PAD_L = 76, PAD_R = 16, PAD_T = 16, PAD_B = 110;
+  const BAR_GAP = 4;
+
+  const wrap  = canvas.parentElement;
+  const totalW = Math.max(wrap.clientWidth - 32, sorted.length * 28);
+  const totalH = 320;
+  canvas.width  = totalW;
+  canvas.height = totalH;
+
+  const ctx    = canvas.getContext('2d');
+  ctx.clearRect(0, 0, totalW, totalH);
+
+  const chartW = totalW - PAD_L - PAD_R;
+  const chartH = totalH - PAD_T - PAD_B;
+  const barW   = Math.max(6, chartW / sorted.length - BAR_GAP);
+  const step   = chartW / sorted.length;
+
+  const vMin = Math.min(...values);
+  const vMax = Math.max(...values);
+
+  // ── y-coordinate helpers ──
+  const yLog = v => PAD_T + chartH - ((Math.log10(v) - Math.log10(vMin)) / (Math.log10(vMax) - Math.log10(vMin))) * chartH;
+  const yLin = v => PAD_T + chartH - ((v - 0) / (vMax - 0)) * chartH;
+  const yFor  = v => mode === 'log' ? yLog(v) : yLin(v);
+
+  const xFor  = i => PAD_L + i * step + step / 2; // centre of each slot
+
+  // ── grid & Y-axis ticks ──
+  ctx.font = '10.5px -apple-system, sans-serif';
+  const ticks = mode === 'log'
+    ? (() => { const t = []; for (let e = Math.floor(Math.log10(vMin)); e <= Math.ceil(Math.log10(vMax)); e++) t.push(Math.pow(10,e)); return t; })()
+    : linearTicks(0, vMax);
+
+  ticks.forEach(v => {
+    const y = Math.round(yFor(v)) + 0.5;
+    if (y < PAD_T - 2 || y > PAD_T + chartH + 2) return;
+    ctx.strokeStyle = '#21262d';
+    ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(PAD_L, y); ctx.lineTo(totalW - PAD_R, y); ctx.stroke();
+    ctx.fillStyle = '#8b949e';
+    ctx.textAlign = 'right';
+    ctx.fillText(labelFn(v), PAD_L - 5, y + 3.5);
+  });
+
+  // ── axes ──
+  ctx.strokeStyle = '#30363d';
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(PAD_L, PAD_T);
+  ctx.lineTo(PAD_L, PAD_T + chartH + 1);
+  ctx.lineTo(totalW - PAD_R, PAD_T + chartH + 1);
+  ctx.stroke();
+
+  if (mode === 'log') {
+    // ── BAR chart ──
+    sorted.forEach((c, i) => {
+      const x    = PAD_L + i * step + BAR_GAP / 2;
+      const yTop = yFor(c[valueKey]);
+      const yBot = PAD_T + chartH;
+      const h    = yBot - yTop;
+      const grad = ctx.createLinearGradient(0, yTop, 0, yBot);
+      grad.addColorStop(0, color1);
+      grad.addColorStop(1, color2);
+      ctx.fillStyle = grad;
+      ctx.beginPath();
+      ctx.roundRect(x, yTop, barW, h, [3,3,0,0]);
+      ctx.fill();
+    });
+  } else {
+    // ── LINE chart ──
+    // filled area
+    const areaGrad = ctx.createLinearGradient(0, PAD_T, 0, PAD_T + chartH);
+    areaGrad.addColorStop(0, color1 + '55');
+    areaGrad.addColorStop(1, color1 + '08');
+    ctx.beginPath();
+    sorted.forEach((c, i) => {
+      const x = xFor(i), y = yFor(c[valueKey]);
+      i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+    });
+    ctx.lineTo(xFor(sorted.length - 1), PAD_T + chartH);
+    ctx.lineTo(xFor(0), PAD_T + chartH);
+    ctx.closePath();
+    ctx.fillStyle = areaGrad;
+    ctx.fill();
+
+    // line
+    ctx.beginPath();
+    ctx.strokeStyle = color1;
+    ctx.lineWidth = 2.5;
+    ctx.lineJoin = 'round';
+    sorted.forEach((c, i) => {
+      const x = xFor(i), y = yFor(c[valueKey]);
+      i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+    });
+    ctx.stroke();
+
+    // dots
+    sorted.forEach((c, i) => {
+      const x = xFor(i), y = yFor(c[valueKey]);
+      ctx.beginPath();
+      ctx.arc(x, y, 3.5, 0, Math.PI * 2);
+      ctx.fillStyle = color1;
+      ctx.fill();
+      ctx.strokeStyle = '#0e1116';
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+    });
+  }
+
+  // ── X-axis labels (shared for both modes) ──
+  const yBot = PAD_T + chartH;
+  sorted.forEach((c, i) => {
+    const cx = mode === 'log' ? PAD_L + i * step + barW / 2 + BAR_GAP / 2 : xFor(i);
+
+    ctx.save();
+    ctx.translate(cx, yBot + 8);
+    ctx.rotate(-Math.PI / 2.8);
+    ctx.font = '10px -apple-system, sans-serif';
+    ctx.fillStyle = '#8b949e';
+    ctx.textAlign = 'right';
+    ctx.fillText(c.year, 0, 0);
+    ctx.restore();
+
+    ctx.save();
+    ctx.translate(cx, yBot + 34);
+    ctx.rotate(-Math.PI / 2.8);
+    ctx.font = '10px -apple-system, sans-serif';
+    ctx.fillStyle = '#c9d1d9';
+    ctx.textAlign = 'right';
+    ctx.fillText(shortName(c.name), 0, 0);
+    ctx.restore();
+  });
+}
+
+function drawCharts() {
+  drawChart('chart-cpu', 'mips',  '#58a6ff', '#1f6feb', formatMipsShort, chartMode);
+  drawChart('chart-ram', 'ramKB', '#56d364', '#2ea043', formatRamShort,  chartMode);
+}
+
+// ── toggle wiring ──
+document.getElementById('scale-toggle').addEventListener('click', e => {
+  const btn = e.target.closest('.stbtn');
+  if (!btn) return;
+  chartMode = btn.dataset.mode;
+  document.querySelectorAll('.stbtn').forEach(b => b.classList.toggle('active', b === btn));
+
+  const isLog = chartMode === 'log';
+  document.getElementById('cpu-scale-label').textContent = isLog ? '(MIPS — log scale)' : '(MIPS — linear scale)';
+  document.getElementById('ram-scale-label').textContent = isLog ? '(log scale)' : '(linear scale)';
+  document.getElementById('charts-sub-text').textContent = isLog
+    ? 'Each bar is one machine, sorted chronologically. Logarithmic scale — each grid line is ×10.'
+    : 'Each point is one machine, sorted chronologically. Linear scale — shows true relative magnitude.';
+  drawCharts();
+});
+
+drawCharts();
+window.addEventListener('resize', drawCharts);
+</script>
+</body>
+</html>
