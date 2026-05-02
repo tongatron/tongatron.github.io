@@ -1427,6 +1427,7 @@ document.getElementById('btn-run-test').addEventListener('click', () => {
 
       // Save benchmark result for later comparison
       lastBenchmarkResult = { measuredSeconds, ops, sys };
+      updateBar(); // Re-enable Compare button if 1+ machines are selected
 
       let html = `<strong style="color: var(--text);">✓ System: ${sys.os} · ${sys.browser}</strong><br>`;
       html += `<strong style="color: var(--accent); font-size: 1.1em;">⏱ Measured: ${formatTime(measuredSeconds)}</strong>`;
