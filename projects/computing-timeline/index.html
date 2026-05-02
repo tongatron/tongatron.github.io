@@ -83,7 +83,6 @@
   }
   .site-badge.A6 {
     letter-spacing: 1px;
-    text-transform: uppercase;
     color: #fff;
   }
   .site-badge.A6:hover { opacity: .85; }
@@ -623,6 +622,10 @@
     </div>
     <div class="wl-results" id="wl-results">
       <div class="wl-empty">Select one or more machines from the list below to see results.</div>
+    </div>
+    <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border);">
+      <button id="btn-run-test" style="background: var(--accent); color: #000; border: none; padding: .55rem 1.2rem; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: .9rem;">Run on this computer →</button>
+      <div id="test-result" style="margin-top: .8rem; color: var(--muted); font-size: .85rem;"></div>
     </div>
   </section>
 
@@ -1286,6 +1289,45 @@ wlPreset.addEventListener('change', () => {
   renderWorkload();
 });
 wlCustom.addEventListener('input', renderWorkload);
+
+// ── Run on this computer ──
+document.getElementById('btn-run-test').addEventListener('click', () => {
+  const btn = document.getElementById('btn-run-test');
+  const result = document.getElementById('test-result');
+  const ops = currentOps();
+
+  btn.disabled = true;
+  btn.style.opacity = '0.6';
+  result.innerHTML = '<em>Running benchmark... (takes ~20 seconds)</em>';
+
+  setTimeout(() => {
+    const t0 = performance.now();
+    let x = 1;
+    for (let i = 0; i < ops; i++) {
+      x = (x * 1.0000001 + 0.1) % 1000000;
+    }
+    const t1 = performance.now();
+    const measuredSeconds = (t1 - t0) / 1000;
+
+    let html = `<strong style="color: var(--text);">This computer: ${formatTime(measuredSeconds)}</strong>`;
+
+    if (selected.size > 0) {
+      html += '<br><br><strong>Comparison:</strong><br>';
+      [...selected].map(i => computers[i]).sort((a, b) => b.mips - a.mips).forEach(c => {
+        const estSeconds = ops / (c.mips * 1e6);
+        const ratio = estSeconds / measuredSeconds;
+        const ratioStr = ratio >= 1000 ? (ratio/1000).toFixed(1)+'K×' :
+                         ratio >= 1 ? ratio.toFixed(1)+'×' :
+                         (1/ratio).toFixed(1)+'× slower';
+        html += `<div style="margin-top: .3rem;">${c.name}: <span style="color: var(--accent);">${ratioStr}</span> ${ratio >= 1 ? 'slower' : 'faster'}</div>`;
+      });
+    }
+
+    result.innerHTML = html;
+    btn.disabled = false;
+    btn.style.opacity = '1';
+  }, 50);
+});
 
 function updateBar() {
   const n = selected.size;
