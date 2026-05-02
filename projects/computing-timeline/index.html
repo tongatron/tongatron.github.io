@@ -1246,10 +1246,10 @@ function logPct(value, min, max) {
 }
 
 function formatMips(m) {
-  if (m >= 1e6) return (m/1e6).toFixed(2) + ' billion IPS';
-  if (m >= 1e3) return (m/1e3).toFixed(1) + ' GIPS';
-  if (m >= 1)   return m.toFixed(0) + ' MIPS';
-  return (m*1000).toFixed(0) + ' kIPS';
+  if (m >= 1e6) return (m/1e6).toFixed(2) + ' GIPS';
+  if (m >= 1e3) return (m/1e3).toFixed(1) + ' MIPS';
+  if (m >= 1)   return m.toFixed(1) + ' KIPS';
+  return (m*1000).toFixed(0) + ' IPS';
 }
 
 function formatRam(kb) {
