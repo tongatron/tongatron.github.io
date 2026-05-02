@@ -1493,7 +1493,7 @@ function renderBenchmarkComparison() {
   html += '<br><br><strong>Comparison:</strong><br>';
   [...selected].map(i => computers[i]).sort((a, b) => b.mips - a.mips).forEach(c => {
     const estSeconds = ops / (c.mips * 1e6);
-    const ratio = estSeconds / measuredSeconds;
+    const ratio = measuredSeconds / estSeconds;
     const ratioStr = formatRatio(ratio);
     html += `<div style="margin-top: .5rem; margin-bottom: .3rem;"><span style="color: var(--text); font-weight: 500;">${c.name}:</span> <span style="color: var(--accent); font-weight: 600;">${ratioStr}</span></div>`;
   });
