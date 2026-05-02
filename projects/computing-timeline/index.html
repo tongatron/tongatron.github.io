@@ -1495,7 +1495,7 @@ function renderBenchmarkComparison() {
     const estSeconds = ops / (c.mips * 1e6);
     const ratio = estSeconds / measuredSeconds;
     const ratioStr = formatRatio(ratio);
-    html += `<div style="margin-top: .3rem;">${c.name}: <span style="color: var(--accent); font-weight: 600;">${ratioStr}</span></div>`;
+    html += `<div style="margin-top: .5rem; margin-bottom: .3rem;"><span style="color: var(--text); font-weight: 500;">${c.name}:</span> <span style="color: var(--accent); font-weight: 600;">${ratioStr}</span></div>`;
   });
   result.innerHTML = html;
 }
@@ -1651,8 +1651,10 @@ document.getElementById('btn-compare').addEventListener('click', openModal);
 document.getElementById('btn-clear-sel').addEventListener('click', () => {
   selected.clear();
   document.querySelectorAll('.card.selected').forEach(el => el.classList.remove('selected'));
+  lastBenchmarkResult = null; // Reset benchmark when clearing selection
   updateBar();
   renderWorkload();
+  document.getElementById('test-result').innerHTML = '';
 });
 document.getElementById('btn-close-modal').addEventListener('click', () => modalOverlay.classList.remove('open'));
 modalOverlay.addEventListener('click', e => { if (e.target === modalOverlay) modalOverlay.classList.remove('open'); });
