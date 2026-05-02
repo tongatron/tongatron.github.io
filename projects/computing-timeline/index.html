@@ -630,9 +630,9 @@
       <div class="wl-empty">Select one or more machines from the list below to see results.</div>
     </div>
     <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border);">
-      <div style="display: flex; gap: .6rem; flex-wrap: wrap;">
-        <button id="btn-estimate" style="background: transparent; color: var(--muted); border: 1px solid var(--border); padding: .5rem 1rem; border-radius: 6px; cursor: pointer; font-size: .9rem;">📊 Estimate wait time</button>
-        <button id="btn-run-test" style="background: var(--accent); color: #000; border: none; padding: .55rem 1.2rem; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: .9rem;">▶ Run benchmark</button>
+      <div style="display: flex; gap: .6rem; flex-wrap: wrap; justify-content: center;">
+        <button id="btn-estimate" style="background: transparent; color: var(--muted); border: 1px solid var(--border); padding: .55rem 1.1rem; border-radius: 6px; cursor: pointer; font-size: .9rem; transition: all .15s;">📊 Estimate wait time</button>
+        <button id="btn-run-test" style="background: var(--accent); color: #000; border: none; padding: .55rem 1.1rem; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: .9rem; transition: all .15s;">▶ Run benchmark</button>
       </div>
       <div id="test-progress" style="margin-top: 1rem; display: none;">
         <div style="height: 6px; background: var(--border); border-radius: 3px; overflow: hidden;">
@@ -1339,16 +1339,29 @@ function formatRatio(ratio) {
 document.getElementById('btn-estimate').addEventListener('click', () => {
   const ops = currentOps();
   const result = document.getElementById('test-result');
+  const btnRun = document.getElementById('btn-run-test');
   const sys = detectSystem();
 
   // Calibration: ~20 seconds for 1e9 ops on modern hardware
   const referenceOps = 1e9;
   const referenceTime = 20;
   const estimatedSeconds = (ops / referenceOps) * referenceTime;
+  const maxAllowed = 30;
 
   let html = `<strong style="color: var(--text);">System: ${sys.os} · ${sys.browser}</strong><br>`;
   html += `<strong style="color: var(--accent);">⏱ Estimated wait: ${formatTime(estimatedSeconds)}</strong><br>`;
   html += `<em style="color: var(--muted); font-size: .8rem;">Operations: ${(ops / 1e6).toFixed(0)} million</em>`;
+
+  if (estimatedSeconds > maxAllowed) {
+    html += `<br><span style="color: #f78166; font-weight: 600;">⚠ Too long (max ${maxAllowed}s)</span>`;
+    btnRun.disabled = true;
+    btnRun.style.opacity = '0.4';
+    btnRun.style.cursor = 'not-allowed';
+  } else {
+    btnRun.disabled = false;
+    btnRun.style.opacity = '1';
+    btnRun.style.cursor = 'pointer';
+  }
 
   if (selected.size > 0) {
     html += '<br><br><em style="color: var(--muted);">Compare with:</em><br>';
