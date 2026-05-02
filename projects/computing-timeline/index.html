@@ -1462,8 +1462,9 @@ function updateBar() {
   compareBar.classList.add('visible');
   const names = [...selected].map(i => `<strong>${computers[i].name}</strong>`).join(', ');
   selNames.innerHTML = `${n} selected: ${names}`;
-  document.getElementById('btn-compare').disabled = n < 2;
-  document.getElementById('btn-compare').style.opacity = n < 2 ? '.5' : '1';
+  const canCompare = lastBenchmarkResult ? n >= 1 : n >= 2;
+  document.getElementById('btn-compare').disabled = !canCompare;
+  document.getElementById('btn-compare').style.opacity = canCompare ? '1' : '.5';
 }
 
 function toggleSelect(idx, cardEl) {
@@ -1551,30 +1552,32 @@ function render() {
 
 function openModal() {
   const sel = [...selected].map(i => computers[i]);
-  if (sel.length < 2) return;
+  const hasBenchmark = lastBenchmarkResult !== null;
+  if (sel.length < 1 || (!hasBenchmark && sel.length < 2)) return;
 
-  const maxM = Math.max(...sel.map(c => c.mips));
-  const maxR = Math.max(...sel.map(c => c.ramKB));
+  const allMachines = hasBenchmark ? [{ name: 'This Computer', mips: -1, ramKB: -1, benchmark: true, benchmarkTime: lastBenchmarkResult.measuredSeconds }, ...sel] : sel;
+  const maxM = Math.max(...allMachines.filter(c => c.mips >= 0).map(c => c.mips));
+  const maxR = Math.max(...allMachines.filter(c => c.ramKB >= 0).map(c => c.ramKB));
 
-  const cols = sel.length;
   let html = '<thead><tr><th></th>';
-  sel.forEach(c => {
-    html += `<th class="cmp-machine-header">${c.name}<br><span class="cmp-year">${c.year}</span></th>`;
+  allMachines.forEach(c => {
+    html += `<th class="cmp-machine-header">${c.name}${c.benchmark ? '' : `<br><span class="cmp-year">${c.year}</span>`}</th>`;
   });
   html += '</tr></thead><tbody>';
 
   // rows
   const rows = [
-    { label: 'Description', fn: c => `<span style="color:var(--muted);font-size:.82rem">${c.desc}</span>` },
-    { label: 'CPU', fn: c => c.cpu },
-    { label: 'Clock', fn: c => c.freq },
-    { label: 'RAM', fn: c => c.ram },
+    { label: 'Description', fn: c => c.benchmark ? `<span style="color:var(--accent);font-size:.82rem">Measured on this computer</span>` : `<span style="color:var(--muted);font-size:.82rem">${c.desc}</span>` },
+    { label: 'CPU', fn: c => c.benchmark ? '—' : c.cpu },
+    { label: 'Clock', fn: c => c.benchmark ? '—' : c.freq },
+    { label: 'RAM', fn: c => c.benchmark ? '—' : c.ram },
     {
       label: 'CPU Speed',
       fn: (c, all) => {
-        const pct = logPct(c.mips, Math.min(...all.map(x=>x.mips)), Math.max(...all.map(x=>x.mips)));
+        if (c.benchmark) return `<span style="color:var(--muted);">—</span>`;
+        const validMachines = all.filter(m => m.mips >= 0);
+        const pct = logPct(c.mips, Math.min(...validMachines.map(x=>x.mips)), Math.max(...validMachines.map(x=>x.mips)));
         const winner = c.mips === maxM;
-        const ratio = (c.mips / Math.min(...sel.map(x=>x.mips))).toFixed(0);
         return `<div class="cmp-bar-wrap">
           <div class="cmp-bar-track"><div class="cmp-bar-fill cpu" style="width:${pct}%"></div></div>
           <span class="cmp-bar-val ${winner?'winner':''}">${formatMips(c.mips)}${winner?' 🏆':''}</span>
@@ -1585,7 +1588,9 @@ function openModal() {
     {
       label: 'RAM (amount)',
       fn: (c, all) => {
-        const pct = logPct(c.ramKB, Math.min(...all.map(x=>x.ramKB)), Math.max(...all.map(x=>x.ramKB)));
+        if (c.benchmark) return `<span style="color:var(--muted);">—</span>`;
+        const validMachines = all.filter(m => m.ramKB >= 0);
+        const pct = logPct(c.ramKB, Math.min(...validMachines.map(x=>x.ramKB)), Math.max(...validMachines.map(x=>x.ramKB)));
         const winner = c.ramKB === maxR;
         return `<div class="cmp-bar-wrap">
           <div class="cmp-bar-track"><div class="cmp-bar-fill ram" style="width:${pct}%"></div></div>
@@ -1594,12 +1599,26 @@ function openModal() {
       },
       multi: true
     },
+    {
+      label: 'Benchmark Time',
+      fn: (c, ops) => {
+        if (c.benchmark && lastBenchmarkResult) {
+          return `<strong style="color:var(--accent);">${formatTime(lastBenchmarkResult.measuredSeconds)}</strong>`;
+        }
+        if (!c.benchmark) {
+          const estSec = lastBenchmarkResult.ops / (c.mips * 1e6);
+          return `${formatTime(estSec)}`;
+        }
+        return '—';
+      },
+      multi: false
+    }
   ];
 
   rows.forEach(row => {
     html += `<tr><th>${row.label}</th>`;
-    sel.forEach(c => {
-      html += `<td>${row.multi ? row.fn(c, sel) : row.fn(c)}</td>`;
+    allMachines.forEach(c => {
+      html += `<td>${row.multi ? row.fn(c, allMachines) : row.fn(c)}</td>`;
     });
     html += '</tr>';
   });
