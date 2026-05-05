@@ -329,6 +329,29 @@
   .brand-terminal-text { color: #f5f5f5; }
   .brand-terminal-cursor { color: #ffcc00; }
 
+  .brand-terminal-prompt {
+    color: #888;
+    margin-right: 8px;
+  }
+  .brand-terminal-block-cursor {
+    display: inline-block;
+    width: 10px;
+    height: 18px;
+    background: #ffcc00;
+    margin-left: 6px;
+    vertical-align: middle;
+    animation: terminal-blink 1s steps(1) infinite;
+  }
+  .brand-terminal-sub {
+    margin-top: 10px;
+    font-size: 13px;
+    color: #666;
+    font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+  }
+  @keyframes terminal-blink {
+    50% { opacity: 0; }
+  }
+
   .official-badge {
     display: inline-flex;
     align-items: center;
@@ -487,6 +510,22 @@
   </div>
 </div>
 
+<!-- ANIMATED -->
+<div class="section" style="background:#000; color:#eee; border-bottom: 2px solid #ffcc00;">
+  <h2>Terminal Badge — Animato</h2>
+  <div style="display:flex; flex-direction:column; gap:10px; align-items:flex-start;">
+    <div style="background:#111; border-radius:10px; padding:20px 24px; box-shadow: 0 0 0 1px #222; min-width:320px;">
+      <div class="brand-terminal-line">
+        <span class="brand-terminal-prompt">></span>
+        <div class="brand-terminal-dot"></div>
+        <span class="brand-terminal-text">tongatron.org</span>
+        <span class="brand-terminal-block-cursor"></span>
+      </div>
+    </div>
+    <button class="copy-btn" data-official="animated">Copia HTML</button>
+  </div>
+</div>
+
 <!-- NERO -->
 <div class="section" style="background:#000; color:#eee;">
   <h2>Nero</h2>
@@ -627,12 +666,14 @@
 
   const OFFICIAL_HTML = `<div class="brand-terminal">\n  <div class="brand-terminal-line">\n    <div class="brand-terminal-dot"></div>\n    <span class="brand-terminal-text">tongatron.org<span class="brand-terminal-cursor">_</span></span>\n  </div>\n</div>`;
   const OFFICIAL_MD = `● [tongatron.org](https://tongatron.org)_`;
+  const ANIMATED_HTML = `<style>@keyframes terminal-blink{50%{opacity:0}}</style>\n<div style="display:inline-block;background:#111;border-radius:10px;padding:20px 24px;box-shadow:0 0 0 1px #222;font-family:Menlo,Monaco,Consolas,'Courier New',monospace;">\n  <div style="display:flex;align-items:center;font-size:18px;letter-spacing:0.5px;">\n    <span style="color:#888;margin-right:8px;">&gt;</span>\n    <span style="width:10px;height:10px;background:#ffcc00;border-radius:50%;margin-right:10px;box-shadow:0 0 6px rgba(255,204,0,0.6);flex-shrink:0;display:inline-block;"></span>\n    <span style="color:#f5f5f5;">tongatron.org</span>\n    <span style="display:inline-block;width:10px;height:18px;background:#ffcc00;margin-left:6px;vertical-align:middle;animation:terminal-blink 1s steps(1) infinite;"></span>\n  </div>\n</div>`;
 
   document.addEventListener('click', e => {
     const btn = e.target.closest('.copy-btn');
     if (!btn) return;
     if (btn.dataset.official) {
-      const text = btn.dataset.official === 'html' ? OFFICIAL_HTML : OFFICIAL_MD;
+      const text = btn.dataset.official === 'animated' ? ANIMATED_HTML
+        : btn.dataset.official === 'html' ? OFFICIAL_HTML : OFFICIAL_MD;
       copy(text, btn);
       return;
     }
