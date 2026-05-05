@@ -127,33 +127,6 @@
       opacity: 0.55;
     }
 
-    .balloons-dust {
-      position: fixed;
-      inset: 0;
-      overflow: hidden;
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    .balloons-layer {
-      position: fixed;
-      inset: 0;
-      overflow: hidden;
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    .dust-speck {
-      position: absolute;
-      width: 4px;
-      height: 4px;
-      border-radius: 50%;
-      background: rgba(255, 245, 210, 0.56);
-      box-shadow: 0 0 12px rgba(255, 220, 120, 0.34);
-      opacity: 0.68;
-      animation: dust-float linear infinite;
-    }
-
     a {
       color: var(--accent-soft);
       text-decoration: none;
@@ -217,337 +190,42 @@
       font-family: "Titillium Web", sans-serif;
     }
 
-    header .bi-balloon-fill {
-      color: var(--text);
+    .brand-terminal {
+      background: #111;
+      border-radius: 8px;
+      padding: 10px 16px;
+      font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
     }
 
-    .brand-logo {
-      display: inline-flex;
+    .brand-terminal-line {
+      display: flex;
       align-items: center;
-      gap: 0.55rem;
+      font-size: 18px;
+      letter-spacing: 0.5px;
+      color: #eaeaea;
     }
 
-    .brand-balloon-trigger {
-      position: relative;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: clamp(1.95rem, 3vw, 2.7rem);
-      height: clamp(2.35rem, 3.4vw, 3rem);
-      flex: 0 0 auto;
-      cursor: pointer;
-      user-select: none;
-      -webkit-user-select: none;
+    .brand-terminal-prompt {
+      color: #888;
+      margin-right: 8px;
     }
 
-    .brand-balloon-trigger:focus-visible {
-      outline: 2px solid rgba(148, 223, 255, 0.7);
-      outline-offset: 4px;
-      border-radius: 0.4rem;
-    }
-
-    .brand-balloon-trigger .brand-balloon-default {
-      font-size: clamp(1.85rem, 3vw, 2.55rem);
-      line-height: 1;
-      transition: transform 0.38s ease, opacity 0.26s ease, filter 0.3s ease;
-    }
-
-    .brand-balloon-trigger .brand-balloon-striped {
-      position: absolute;
-      left: 50%;
-      top: 48%;
-      width: 1.55rem;
-      height: 1.95rem;
-      border-radius: 52% 52% 48% 48% / 46% 46% 58% 58%;
-      background: #ffd338;
-      box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.05), 0 10px 18px rgba(0, 0, 0, 0.28);
-      transform: translate(-50%, -50%) scale(0.25);
-      opacity: 0;
-      transition: transform 0.42s ease, opacity 0.28s ease;
-    }
-
-    .brand-balloon-trigger .brand-balloon-striped::before {
-      content: "";
-      position: absolute;
-      left: 0.18rem;
-      right: 0.18rem;
-      top: 0.5rem;
-      height: 0.24rem;
-      border-radius: 999px;
-      background: #111111;
-      box-shadow: 0.05rem 0.68rem 0 #111111;
-      transform: rotate(-7deg);
-      transform-origin: center;
-    }
-
-    .brand-balloon-trigger .brand-balloon-striped::after {
-      content: "";
-      position: absolute;
-      left: 50%;
-      top: calc(100% - 0.02rem);
-      width: 1px;
-      height: 0.68rem;
-      background: rgba(255, 211, 56, 0.95);
-      box-shadow: -3px 0.42rem 0 -0.5px rgba(255, 211, 56, 0.85);
-      transform: translateX(-50%);
-      border-radius: 999px;
-    }
-
-    .brand-balloon-trigger.is-striped .brand-balloon-striped-knot {
-      opacity: 1;
-      transform: translateX(-50%) scale(1);
-    }
-
-    .brand-balloon-striped-knot {
-      position: absolute;
-      left: 50%;
-      top: calc(48% + 0.94rem);
-      width: 0.42rem;
-      height: 0.34rem;
-      background: #ffd338;
-      clip-path: polygon(50% 100%, 0 0, 100% 0);
-      transform: translateX(-50%) scale(0.2);
-      opacity: 0;
-      transition: transform 0.42s ease, opacity 0.28s ease;
-    }
-
-    .brand-balloon-trigger .brand-balloon-pop {
-      position: absolute;
-      inset: 50% auto auto 50%;
-      width: 0.1rem;
-      height: 0.1rem;
+    .brand-terminal-dot {
+      width: 10px;
+      height: 10px;
+      background: #ffcc00;
       border-radius: 50%;
-      border: 2px solid rgba(255, 255, 255, 0.75);
-      transform: translate(-50%, -50%) scale(0.2);
-      opacity: 0;
-      pointer-events: none;
+      margin-right: 10px;
+      box-shadow: 0 0 6px rgba(255, 204, 0, 0.6);
+      flex-shrink: 0;
     }
 
-    .brand-balloon-sparkles {
-      position: absolute;
-      inset: 50% auto auto 50%;
-      width: 0;
-      height: 0;
-      pointer-events: none;
+    .brand-terminal-text {
+      color: #f5f5f5;
     }
 
-    .brand-balloon-sparkles span {
-      position: absolute;
-      left: 0;
-      top: 0;
-      width: 0.38rem;
-      height: 0.52rem;
-      opacity: 0;
-      transform: translate(-50%, -50%) scale(0.2);
-      background: linear-gradient(180deg, rgba(255, 244, 184, 0.98), rgba(255, 211, 56, 0.98));
-      clip-path: polygon(50% 0%, 0% 100%, 100% 78%);
-      box-shadow: 0 0 14px rgba(255, 211, 56, 0.4);
-    }
-
-    .brand-balloon-sparkles span:nth-child(2n) {
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(238, 238, 238, 0.98));
-      box-shadow: 0 0 12px rgba(255, 255, 255, 0.3);
-    }
-
-    .brand-balloon-sparkles span:nth-child(1) { --sx: -2.5rem; --sy: -1.9rem; --rot: -40deg; animation-delay: 0s; }
-    .brand-balloon-sparkles span:nth-child(2) { --sx: -1.55rem; --sy: -2.35rem; --rot: -18deg; animation-delay: 0.008s; }
-    .brand-balloon-sparkles span:nth-child(3) { --sx: -0.15rem; --sy: -2.7rem; --rot: -3deg; animation-delay: 0.016s; }
-    .brand-balloon-sparkles span:nth-child(4) { --sx: 1.25rem; --sy: -2.45rem; --rot: 18deg; animation-delay: 0.024s; }
-    .brand-balloon-sparkles span:nth-child(5) { --sx: 2.45rem; --sy: -1.65rem; --rot: 42deg; animation-delay: 0.032s; }
-    .brand-balloon-sparkles span:nth-child(6) { --sx: 2.75rem; --sy: -0.25rem; --rot: 72deg; animation-delay: 0.04s; }
-    .brand-balloon-sparkles span:nth-child(7) { --sx: 2.2rem; --sy: 1.2rem; --rot: 112deg; animation-delay: 0.048s; }
-    .brand-balloon-sparkles span:nth-child(8) { --sx: 1.05rem; --sy: 2.35rem; --rot: 146deg; animation-delay: 0.056s; }
-    .brand-balloon-sparkles span:nth-child(9) { --sx: -0.3rem; --sy: 2.65rem; --rot: 178deg; animation-delay: 0.064s; }
-    .brand-balloon-sparkles span:nth-child(10) { --sx: -1.5rem; --sy: 2.2rem; --rot: 210deg; animation-delay: 0.072s; }
-    .brand-balloon-sparkles span:nth-child(11) { --sx: -2.45rem; --sy: 1.1rem; --rot: 244deg; animation-delay: 0.08s; }
-    .brand-balloon-sparkles span:nth-child(12) { --sx: -2.85rem; --sy: -0.3rem; --rot: -98deg; animation-delay: 0.088s; }
-    .brand-balloon-sparkles span:nth-child(13) { --sx: -1.95rem; --sy: -1.25rem; --rot: -128deg; animation-delay: 0.096s; }
-    .brand-balloon-sparkles span:nth-child(14) { --sx: 1.85rem; --sy: -1.05rem; --rot: 58deg; animation-delay: 0.104s; }
-
-    .brand-balloon-trigger.is-popping .brand-balloon-default {
-      transform: translateY(-0.28rem) scale(1.18);
-      filter: brightness(1.18);
-    }
-
-    .brand-balloon-trigger.is-burst .brand-balloon-default {
-      opacity: 0;
-      transform: translateY(-0.9rem) scale(0.25);
-    }
-
-    .brand-balloon-trigger.is-burst .brand-balloon-pop {
-      animation: brandBalloonPop 0.17s cubic-bezier(0.2, 0.82, 0.38, 1) forwards;
-    }
-
-    .brand-balloon-trigger.is-burst .brand-balloon-sparkles span {
-      animation: brandBalloonSparkle 0.24s cubic-bezier(0.15, 0.85, 0.25, 1) forwards;
-    }
-
-    .brand-balloon-trigger.is-striped .brand-balloon-striped {
-      opacity: 1;
-      transform: translate(-50%, -50%) scale(1);
-    }
-
-    .balloon {
-      position: absolute;
-      bottom: -12vh;
-      border-radius: 50%;
-      border: 1px solid rgba(255, 214, 79, 0.18);
-      background:
-        radial-gradient(circle at 31% 26%, rgba(255,255,255,0.18), rgba(255,255,255,0.04) 18%, rgba(0,0,0,0) 34%),
-        repeating-linear-gradient(115deg, rgba(255, 208, 49, 0.94) 0 18px, rgba(16, 16, 16, 0.96) 18px 36px);
-      box-shadow:
-        inset -10px -16px 26px rgba(0,0,0,0.22),
-        inset 10px 8px 16px rgba(255,255,255,0.04);
-      opacity: 0.82;
-      pointer-events: auto;
-      cursor: pointer;
-      will-change: transform, opacity;
-      animation-name: balloon-rise;
-      animation-timing-function: linear;
-      animation-iteration-count: 1;
-    }
-
-    .balloon.depth-near {
-      opacity: 0.78;
-      filter: none;
-      z-index: 3;
-    }
-
-    .balloon.depth-mid {
-      border-color: rgba(255, 214, 79, 0.12);
-      background:
-        radial-gradient(circle at 31% 26%, rgba(255,255,255,0.12), rgba(255,255,255,0.03) 16%, rgba(0,0,0,0) 32%),
-        repeating-linear-gradient(115deg, rgba(214, 170, 36, 0.68) 0 15px, rgba(24, 24, 24, 0.84) 15px 30px);
-      opacity: 0.46;
-      filter: blur(0.25px);
-      z-index: 2;
-    }
-
-    .balloon.depth-far {
-      border-color: rgba(255, 214, 79, 0.08);
-      background:
-        radial-gradient(circle at 31% 26%, rgba(255,255,255,0.08), rgba(255,255,255,0.02) 14%, rgba(0,0,0,0) 28%),
-        repeating-linear-gradient(115deg, rgba(132, 106, 26, 0.42) 0 12px, rgba(18, 18, 18, 0.72) 12px 24px);
-      box-shadow: inset -8px -12px 18px rgba(0,0,0,0.16);
-      opacity: 0.22;
-      filter: blur(0.7px);
-      z-index: 1;
-    }
-
-    .balloon::after {
-      content: "";
-      position: absolute;
-      left: 50%;
-      top: calc(100% - 2px);
-      width: 1px;
-      height: 56px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.28), rgba(255,255,255,0.02));
-      transform: translateX(-50%);
-      opacity: 0.52;
-    }
-
-    .balloon.depth-mid::after {
-      height: 44px;
-      opacity: 0.28;
-    }
-
-    .balloon.depth-far::after {
-      height: 34px;
-      opacity: 0.16;
-    }
-
-    .balloon.is-popping {
-      animation: balloon-pop 0.22s ease-out forwards;
-    }
-
-    @keyframes brandBalloonPop {
-      0% {
-        opacity: 0.8;
-        transform: translate(-50%, -50%) scale(0.2);
-      }
-      100% {
-        opacity: 0;
-        transform: translate(-50%, -50%) scale(1.85);
-      }
-    }
-
-    @keyframes brandBalloonSparkle {
-      0% {
-        opacity: 0;
-        transform: translate(-50%, -50%) scale(0.2) rotate(0deg);
-      }
-      18% {
-        opacity: 1;
-      }
-      100% {
-        opacity: 0;
-        transform: translate(calc(-50% + var(--sx)), calc(-50% + var(--sy))) scale(1.22) rotate(var(--rot));
-      }
-    }
-
-    @keyframes balloon-rise {
-      0% {
-        transform: translate3d(0, 0, 0);
-        opacity: 0;
-      }
-      8% {
-        opacity: 0.78;
-      }
-      100% {
-        transform: translate3d(var(--drift, 0px), -122vh, 0);
-        opacity: 0;
-      }
-    }
-
-    @keyframes balloon-pop {
-      0% {
-        transform: scale(1);
-        opacity: 0.9;
-      }
-      100% {
-        transform: scale(1.35);
-        opacity: 0;
-      }
-    }
-
-    @keyframes dust-float {
-      0% {
-        transform: translate3d(0, 0, 0);
-        opacity: 0;
-      }
-      10% {
-        opacity: 0.18;
-      }
-      100% {
-        transform: translate3d(var(--dust-drift, 0px), -105vh, 0);
-        opacity: 0;
-      }
-    }
-
-    .balloons-toast {
-      position: fixed;
-      top: 1rem;
-      left: 50%;
-      z-index: 4;
-      padding: 0.62rem 0.95rem;
-      border: 1px solid rgba(255, 211, 56, 0.26);
-      border-radius: 999px;
-      background: rgba(17, 17, 17, 0.92);
-      color: #fff0b3;
-      font-size: 0.86rem;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      transform: translate(-50%, -0.5rem);
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.28s ease, transform 0.28s ease;
-      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.26);
-    }
-
-    .balloons-toast.is-visible {
-      opacity: 1;
-      transform: translate(-50%, 0);
+    .brand-terminal-cursor {
+      color: #ffcc00;
     }
 
     .header-topbar {
@@ -1258,24 +936,13 @@ main {
   </style>
 </head>
 <body>
-  <div class="balloons-dust" id="balloons-dust" aria-hidden="true"></div>
-  <div class="balloons-layer" id="balloons-layer" aria-hidden="true"></div>
-  <div class="balloons-toast" id="balloons-toast" role="status" aria-live="polite">Balloons are coming</div>
   <header class="container py-4">
     <div class="pb-3 border-bottom header-topbar d-flex align-items-center justify-content-between">
-      <div class="d-flex align-items-center text-body-emphasis text-decoration-none brand-logo">
-        <span class="brand-balloon-trigger" role="button" tabindex="0" aria-label="Attiva animazione del palloncino">
-          <i class="bi bi-balloon-fill fs-1 brand-balloon-default" aria-hidden="true"></i>
-          <span class="brand-balloon-striped" aria-hidden="true"></span>
-          <span class="brand-balloon-striped-knot" aria-hidden="true"></span>
-          <span class="brand-balloon-pop" aria-hidden="true"></span>
-          <span class="brand-balloon-sparkles" aria-hidden="true">
-            <span></span><span></span><span></span><span></span><span></span>
-            <span></span><span></span><span></span><span></span><span></span>
-            <span></span><span></span><span></span><span></span>
-          </span>
-        </span>
-        <span class="fs-1 fw-semibold">tongatron</span>
+      <div class="brand-terminal">
+        <div class="brand-terminal-line">
+          <div class="brand-terminal-dot"></div>
+          <span class="brand-terminal-text">tongatron.org<span class="brand-terminal-cursor">_</span></span>
+        </div>
       </div>
       <a href="https://private.tongatron.org/admin" class="btn btn-outline-light btn-sm header-login" rel="nofollow">
         Login
@@ -1614,147 +1281,6 @@ main {
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
-  <script>
-    (() => {
-      const trigger = document.querySelector(".brand-balloon-trigger");
-      const dustLayer = document.getElementById("balloons-dust");
-      const layer = document.getElementById("balloons-layer");
-      const toast = document.getElementById("balloons-toast");
-      if (!trigger || !dustLayer || !layer || !toast) return;
-
-      let isAnimating = false;
-      let isStriped = false;
-      let sceneStarted = false;
-      let dustStarted = false;
-      let spawnTimer = null;
-      let dustTimer = null;
-      let toastTimer = null;
-      const active = new Set();
-      const activeDust = new Set();
-
-      const randomBetween = (min, max) => Math.random() * (max - min) + min;
-
-      const removeBalloon = (balloon) => {
-        active.delete(balloon);
-        balloon.remove();
-      };
-
-      const popBalloon = (balloon) => {
-        if (!balloon || balloon.classList.contains("is-popping")) return;
-        balloon.classList.add("is-popping");
-        window.setTimeout(() => removeBalloon(balloon), 220);
-      };
-
-      const createDust = () => {
-        const speck = document.createElement("span");
-        const size = randomBetween(3.2, 7.4);
-        speck.className = "dust-speck";
-        speck.style.width = `${size}px`;
-        speck.style.height = `${size}px`;
-        speck.style.left = `${randomBetween(0, 100)}%`;
-        speck.style.bottom = `${randomBetween(-8, 18)}vh`;
-        speck.style.animationDuration = `${randomBetween(16, 30)}s`;
-        speck.style.setProperty("--dust-drift", `${randomBetween(-56, 56).toFixed(1)}px`);
-        speck.addEventListener("animationend", () => {
-          activeDust.delete(speck);
-          speck.remove();
-        });
-        dustLayer.appendChild(speck);
-        activeDust.add(speck);
-      };
-
-      const scheduleDust = () => {
-        if (!dustStarted) return;
-        createDust();
-        dustTimer = window.setTimeout(scheduleDust, randomBetween(45, 110));
-      };
-
-      const spawnBalloon = () => {
-        if (!sceneStarted) return;
-        const depthRoll = Math.random();
-        const depth = depthRoll < 0.2 ? "depth-near" : depthRoll < 0.58 ? "depth-mid" : "depth-far";
-        const sizeRange = depth === "depth-near" ? [34, 86] : depth === "depth-mid" ? [20, 58] : [12, 36];
-        const durationRange = depth === "depth-near" ? [13, 22] : depth === "depth-mid" ? [19, 30] : [24, 40];
-        const balloon = document.createElement("button");
-        const size = randomBetween(sizeRange[0], sizeRange[1]);
-        const left = randomBetween(2, 94);
-        const duration = randomBetween(durationRange[0], durationRange[1]);
-        const driftRange = depth === "depth-near" ? 44 : depth === "depth-mid" ? 28 : 18;
-        balloon.type = "button";
-        balloon.className = `balloon ${depth}`;
-        balloon.setAttribute("aria-label", "Scoppia palloncino");
-        balloon.style.width = `${size}px`;
-        balloon.style.height = `${size * randomBetween(1.08, 1.24)}px`;
-        balloon.style.left = `${left}%`;
-        balloon.style.animationDuration = `${duration}s`;
-        balloon.style.setProperty("--drift", `${randomBetween(-driftRange, driftRange).toFixed(1)}px`);
-        balloon.addEventListener("click", () => popBalloon(balloon));
-        balloon.addEventListener("animationend", () => removeBalloon(balloon));
-        layer.appendChild(balloon);
-        active.add(balloon);
-      };
-
-      const scheduleSpawn = () => {
-        if (!sceneStarted) return;
-        spawnBalloon();
-        spawnTimer = window.setTimeout(scheduleSpawn, randomBetween(700, 1800));
-      };
-
-      const startDustScene = () => {
-        if (dustStarted) return;
-        dustStarted = true;
-        scheduleDust();
-        for (let i = 0; i < 44; i += 1) {
-          window.setTimeout(createDust, i * 24);
-        }
-      };
-
-      const startBackgroundScene = () => {
-        if (sceneStarted) return;
-        sceneStarted = true;
-        toast.classList.add("is-visible");
-        if (toastTimer) window.clearTimeout(toastTimer);
-        toastTimer = window.setTimeout(() => {
-          toast.classList.remove("is-visible");
-        }, 4400);
-        startDustScene();
-        scheduleSpawn();
-        for (let i = 0; i < 6; i += 1) {
-          window.setTimeout(spawnBalloon, i * 150);
-        }
-      };
-
-      const runAnimation = () => {
-        if (isAnimating || isStriped) return;
-        isAnimating = true;
-        trigger.classList.add("is-popping");
-
-        window.setTimeout(() => {
-          trigger.classList.add("is-burst");
-        }, 140);
-
-        window.setTimeout(() => {
-          trigger.classList.add("is-striped");
-          isStriped = true;
-          isAnimating = false;
-          startBackgroundScene();
-        }, 300);
-      };
-
-      trigger.addEventListener("click", (event) => {
-        event.preventDefault();
-        event.stopPropagation();
-        runAnimation();
-      });
-
-      trigger.addEventListener("keydown", (event) => {
-        if (event.key !== "Enter" && event.key !== " ") return;
-        event.preventDefault();
-        runAnimation();
-      });
-    })();
-  </script>
-
   <script>
     (() => {
       const API = 'https://api.tongatron.org/api/send-mail';
