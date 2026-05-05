@@ -526,6 +526,17 @@
       gap: var(--sp-2);
       margin-top: var(--sp-2);
     }
+    .proj-card__body:has(.proj-card__open) .proj-card__desc { flex: 0; }
+    .proj-card__open {
+      align-self: flex-start;
+      margin-top: 0;
+      font-size: var(--t-sm);
+      font-weight: 600;
+      color: var(--c-text-1);
+      text-decoration: none;
+      transition: color 0.18s ease;
+    }
+    .proj-card__open:hover { color: var(--c-accent); }
 
     /* Moore's Law cover: logo su sfondo neutro, stessa height */
     .proj-card__cover--contain {
@@ -550,7 +561,7 @@
       margin-bottom: 42px;
     }
     .iot-fablab__logo {
-      width: 66px;
+      width: 92px;
       height: auto;
       flex-shrink: 0;
       /* fablogo-white.png è già bianco: nessun filtro */
@@ -1054,23 +1065,101 @@
             </div>
           </article>
 
-          <!-- Moore's Law: card uguale alle altre, cover con object-fit contain -->
+        </div>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <!-- ============================================================
+         GIOCHI E SIMULATORI
+    ============================================================ -->
+    <section id="games" class="section" aria-labelledby="games-title">
+      <div class="wrap">
+        <div class="sec-head">
+          <span class="label">Esperimenti interattivi</span>
+          <h2 class="sec-head__title" id="games-title">Giochi e simulatori</h2>
+        </div>
+
+        <div class="project-grid editorial-grid">
+
           <article class="proj-card">
-            <a href="https://tongatron.org/projects/computing-timeline/" tabindex="-1">
-              <img
-                src="projects/computing-timeline/logo.png"
-                class="proj-card__cover proj-card__cover--contain"
-                alt="Moore's Law in Motion"
-                loading="lazy"
-              >
+            <a href="https://tongatron.org/games-utilities/morse/" tabindex="-1">
+              <div class="proj-card__cover proj-card__cover--contain" aria-hidden="true" style="display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-size:3rem;color:var(--c-text-1);letter-spacing:0.2em;">— · —</div>
             </a>
             <div class="proj-card__body">
-              <h3 class="proj-card__title"><a href="https://tongatron.org/projects/computing-timeline/">Moore's Law in Motion</a></h3>
-              <p class="proj-card__desc">Visualizzazione interattiva per confrontare la potenza computazionale delle macchine più famose nella storia del computing.</p>
-              <div class="proj-card__actions">
-                <a class="btn btn-primary btn-sm" href="https://tongatron.org/projects/computing-timeline/">Apri</a>
-                <a class="btn btn-secondary btn-sm" href="https://github.com/tongatron/tongatron.github.io/tree/main/projects/computing-timeline" target="_blank" rel="noopener">GitHub</a>
-              </div>
+              <h3 class="proj-card__title"><a href="https://tongatron.org/games-utilities/morse/">Morse</a></h3>
+              <p class="proj-card__desc">Trainer interattivo per imparare e praticare il codice Morse direttamente nel browser.</p>
+            </div>
+          </article>
+
+          <article class="proj-card">
+            <a href="https://tongatron.org/projects/password-analyzer/" tabindex="-1">
+              <div class="proj-card__cover proj-card__cover--contain" aria-hidden="true" style="display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-size:3rem;color:var(--c-text-1);">••••••</div>
+            </a>
+            <div class="proj-card__body">
+              <h3 class="proj-card__title"><a href="https://tongatron.org/projects/password-analyzer/">Password Analyzer</a></h3>
+              <p class="proj-card__desc">Strumento per valutare la robustezza di una password e visualizzarne le caratteristiche di sicurezza.</p>
+            </div>
+          </article>
+
+          <article class="proj-card">
+            <a href="https://tongatron.org/projects/computing-timeline/" tabindex="-1">
+              <img src="projects/computing-timeline/logo.png" class="proj-card__cover proj-card__cover--contain" alt="Computing Timeline" loading="lazy">
+            </a>
+            <div class="proj-card__body">
+              <h3 class="proj-card__title"><a href="https://tongatron.org/projects/computing-timeline/">Computing Timeline</a></h3>
+              <p class="proj-card__desc">Visualizzazione interattiva per confrontare la potenza computazionale delle macchine più famose nella storia.</p>
+            </div>
+          </article>
+
+          <article class="proj-card">
+            <a href="https://tongatron.org/games-utilities/dado/" tabindex="-1">
+              <img src="img/games/dado.svg" class="proj-card__cover proj-card__cover--contain" alt="Dado" loading="lazy">
+            </a>
+            <div class="proj-card__body">
+              <h3 class="proj-card__title"><a href="https://tongatron.org/games-utilities/dado/">Dado</a></h3>
+              <p class="proj-card__desc">Simulatore di lancio dei dadi con animazione, ideale per giochi da tavolo e prove di probabilità.</p>
+            </div>
+          </article>
+
+          <article class="proj-card">
+            <a href="https://tongatron.org/games-utilities/forza4/" tabindex="-1">
+              <img src="img/games/forza4.svg" class="proj-card__cover proj-card__cover--contain" alt="Forza 4" loading="lazy">
+            </a>
+            <div class="proj-card__body">
+              <h3 class="proj-card__title"><a href="https://tongatron.org/games-utilities/forza4/">Forza 4</a></h3>
+              <p class="proj-card__desc">Versione web del classico gioco da tavolo, giocabile da browser anche in modalità installabile.</p>
+            </div>
+          </article>
+
+          <article class="proj-card">
+            <a href="https://tongatron.org/games-utilities/memory/" tabindex="-1">
+              <img src="img/games/memory.png" class="proj-card__cover proj-card__cover--contain" alt="Memory" loading="lazy">
+            </a>
+            <div class="proj-card__body">
+              <h3 class="proj-card__title"><a href="https://tongatron.org/games-utilities/memory/">Memory</a></h3>
+              <p class="proj-card__desc">Gioco di memoria a carte coperte: trova le coppie nel minor numero di mosse possibile.</p>
+            </div>
+          </article>
+
+          <article class="proj-card">
+            <a href="https://tongatron.org/games-utilities/simon/" tabindex="-1">
+              <img src="img/games/simon.svg" class="proj-card__cover proj-card__cover--contain" alt="Simon" loading="lazy">
+            </a>
+            <div class="proj-card__body">
+              <h3 class="proj-card__title"><a href="https://tongatron.org/games-utilities/simon/">Simon</a></h3>
+              <p class="proj-card__desc">Riproduci la sequenza di colori e suoni: classico gioco di memoria a difficoltà crescente.</p>
+            </div>
+          </article>
+
+          <article class="proj-card">
+            <a href="https://tongatron.org/games-utilities/roulette/" tabindex="-1">
+              <img src="img/games/roulette.svg" class="proj-card__cover proj-card__cover--contain" alt="Roulette" loading="lazy">
+            </a>
+            <div class="proj-card__body">
+              <h3 class="proj-card__title"><a href="https://tongatron.org/games-utilities/roulette/">Roulette</a></h3>
+              <p class="proj-card__desc">Simulatore di roulette per giocate dimostrative e test di probabilità sul classico gioco da casinò.</p>
             </div>
           </article>
 
