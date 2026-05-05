@@ -494,23 +494,8 @@
 
     /* Riga superiore: fablab banner + spec grid affiancati */
     .iot-top {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: var(--sp-6);
+      display: block;
       margin-bottom: 54px;
-      align-items: start;
-    }
-
-    /* Fablab banner */
-    .iot-fablab {
-      display: flex;
-      align-items: center;
-      gap: var(--sp-4);
-      padding: 24px 26px;
-      border: 1px solid var(--c-border);
-      border-radius: var(--radius);
-      background: rgba(255,255,255,0.02);
-      align-self: center;
     }
     .iot-fablab__logo {
       width: 52px;
@@ -519,13 +504,16 @@
       /* fablogo-white.png è già bianco: nessun filtro */
       opacity: 0.75;
     }
-    .iot-fablab__text {
+    .iot-fablab__text,
+    .iot-spec-item--fablab span {
       font-size: var(--t-sm);
       color: var(--c-text-2);
       line-height: 1.6;
     }
-    .iot-fablab__text a { color: var(--c-text-2); }
-    .iot-fablab__text a:hover { color: var(--c-accent); }
+    .iot-fablab__text a,
+    .iot-spec-item--fablab span a { color: var(--c-text-2); }
+    .iot-fablab__text a:hover,
+    .iot-spec-item--fablab span a:hover { color: var(--c-accent); }
 
     /* Spec list */
     .iot-spec-list {
@@ -544,6 +532,12 @@
       border-bottom: 1px solid var(--c-border);
     }
     .iot-spec-item:last-child { border-bottom: none; }
+    .iot-spec-item--fablab {
+      grid-template-columns: auto 1fr;
+      align-items: center;
+      gap: 18px;
+      padding: 20px;
+    }
     .iot-spec-item strong {
       font-size: var(--t-xs);
       font-weight: 600;
@@ -749,8 +743,8 @@
       .project-grid { grid-template-columns: 1fr; }
       .iot-projects { grid-template-columns: 1fr; }
       .network-grid { grid-template-columns: 1fr; }
-      .iot-top { grid-template-columns: 1fr; }
       .iot-spec-item { grid-template-columns: 1fr; gap: var(--sp-1); }
+      .iot-spec-item--fablab { grid-template-columns: 1fr; gap: var(--sp-3); }
       .contacts-layout { grid-template-columns: 1fr; }
       .form-row { grid-template-columns: 1fr; }
       .site-footer__inner { flex-direction: column; align-items: flex-start; gap: var(--sp-3); }
@@ -795,7 +789,7 @@
 
           <img
             class="hero__photo"
-            src="img/giovanni-bindi-hero.jpg"
+            src="img/giovannibindi2.jpg"
             alt="Ritratto di Giovanni Bindi"
             loading="eager"
           >
@@ -1021,21 +1015,16 @@
           <h2 class="sec-head__title" id="iot-title">IoT e fabbricazione digitale</h2>
         </div>
 
-        <!-- Riga superiore: fablab + spec -->
         <div class="iot-top">
-
-          <div class="iot-fablab">
-            <img
-              src="img/fablogo-white.png"
-              alt="Logo Fablab Torino"
-              class="iot-fablab__logo"
-            >
-            <p class="iot-fablab__text">
-              Progetti ideati e sviluppati presso&nbsp;<a href="https://fablabtorino.org/">Fablab Torino</a>
-            </p>
-          </div>
-
           <ul class="iot-spec-list">
+            <li class="iot-spec-item iot-spec-item--fablab">
+              <img
+                src="img/fablogo-white.png"
+                alt="Logo Fablab Torino"
+                class="iot-fablab__logo"
+              >
+              <span>Progetti sviluppati presso <a href="https://fablabtorino.org/">Fablab Torino</a>.</span>
+            </li>
             <li class="iot-spec-item">
               <strong>Piattaforme di sviluppo</strong>
               <span>Arduino, Raspberry Pi</span>
@@ -1043,14 +1032,6 @@
             <li class="iot-spec-item">
               <strong>Strumenti di fabbricazione</strong>
               <span>Stampanti 3D, taglio laser, fresa CNC</span>
-            </li>
-            <li class="iot-spec-item">
-              <strong>Linguaggi di programmazione</strong>
-              <span>Arduino Wiring, Python, Processing, API web</span>
-            </li>
-            <li class="iot-spec-item">
-              <strong>Sistemi operativi</strong>
-              <span>Debian Linux, Raspberry Pi OS</span>
             </li>
           </ul>
 
