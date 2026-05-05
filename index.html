@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Tongatron | Software, utility web e prototipi IoT</title>
+  <title>Tongatron V2 | Software, utility web e prototipi IoT</title>
   <meta name="description" content="Tongatron progetta software, utility web, prototipi IoT e soluzioni digitali orientate all'esecuzione.">
   <link rel="icon" href="/favicon.ico" sizes="any">
   <link rel="icon" type="image/svg+xml" href="/img/tongatron-icon.svg">
@@ -84,7 +84,7 @@
     }
     img { display: block; max-width: 100%; }
     a { color: var(--c-accent); text-decoration: none; }
-    a:hover { color: var(--c-text-1); }
+    a:not(.btn):hover { color: var(--c-accent); }
 
     /* ============================================================
        LAYOUT
@@ -127,7 +127,6 @@
       white-space: nowrap;
       cursor: pointer;
       border-radius: var(--radius);
-      transition: background 0.18s, border-color 0.18s, color 0.18s, transform 0.18s;
       text-decoration: none;
       border: 1px solid transparent;
       padding: 10px 17px;
@@ -139,22 +138,10 @@
       border-color: var(--c-accent);
       color: var(--c-accent-fg);
     }
-    .btn-primary:hover {
-      background: var(--c-accent-dk);
-      border-color: var(--c-accent-dk);
-      color: var(--c-accent-fg);
-      transform: translateY(-1px);
-    }
     .btn-secondary {
       background: transparent;
       border-color: var(--c-border-hi);
       color: var(--c-text-1);
-    }
-    .btn-secondary:hover {
-      border-color: var(--c-text-2);
-      color: var(--c-text-1);
-      background: var(--c-surface-2);
-      transform: translateY(-1px);
     }
 
     /* ============================================================
@@ -195,15 +182,25 @@
     }
     .card-grid--3 { grid-template-columns: repeat(3, 1fr); }
     .card-grid--4 { grid-template-columns: repeat(4, 1fr); }
+    .services-grid {
+      gap: 0;
+      background: transparent;
+      border-top: none;
+      border-bottom: none;
+      border-left: 1px solid var(--c-border);
+      border-right: none;
+      border-radius: 0;
+      overflow: visible;
+    }
+    .services-grid .service-card + .service-card {
+      border-left: 1px solid var(--c-border);
+    }
     .project-grid {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 72px var(--sp-10);
     }
     .editorial-grid .proj-card {
-      background: transparent;
-    }
-    .editorial-grid .proj-card:hover {
       background: transparent;
     }
     .editorial-grid .proj-card__cover {
@@ -270,8 +267,6 @@
       color: var(--accent, var(--c-accent));
       margin-left: 1px;
     }
-    .site-badge:hover { color: var(--c-text-1); }
-
     .site-nav {
       display: flex;
       align-items: center;
@@ -283,23 +278,18 @@
       color: var(--c-text-2);
       padding: var(--sp-2) var(--sp-3);
       border-radius: var(--radius);
-      transition: color 0.18s, background 0.18s;
       text-decoration: none;
-    }
-    .site-nav__link:hover {
-      color: var(--c-text-1);
-      background: var(--c-surface-2);
     }
 
     /* ============================================================
        HERO
        ============================================================ */
-    .hero { padding: 104px 0 84px; }
+    .hero { padding: 56px 0 72px; }
     .hero__grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 88px;
-      align-items: center;
+      align-items: start;
     }
     .hero__photo {
       width: 100%;
@@ -331,7 +321,7 @@
     }
     .hero__name em {
       display: block;
-      color: var(--c-accent);
+      color: var(--c-text-1);
       font-style: normal;
     }
     .hero__role {
@@ -350,31 +340,51 @@
     .hero__meta {
       display: flex;
       flex-direction: column;
-      gap: var(--sp-3);
-      padding: 22px 24px;
-      background: rgba(255,255,255,0.02);
-      border: 1px solid var(--c-border);
+      gap: 0;
+      padding: 0;
+      background: #050505;
+      border: 1px solid #2d2d2d;
       border-radius: var(--radius);
       margin-bottom: 30px;
+      overflow: hidden;
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.04);
+    }
+    .hero__meta::before {
+      content: "tongatron.config";
+      display: block;
+      padding: 10px 16px;
+      border-bottom: 1px solid #202020;
+      color: var(--c-text-3);
+      font-size: 0.72rem;
+      letter-spacing: 0.02em;
+      background: #0b0b0b;
     }
     .hero__meta-row {
-      display: flex;
-      gap: var(--sp-4);
-      align-items: baseline;
+      display: grid;
+      grid-template-columns: 92px 1fr;
+      gap: 18px;
+      align-items: start;
+      padding: 12px 16px;
     }
+    .hero__meta-row + .hero__meta-row { border-top: 1px solid #171717; }
     .hero__meta-key {
-      font-size: var(--t-xs);
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--c-text-3);
-      min-width: 56px;
-      flex-shrink: 0;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: lowercase;
+      color: var(--c-accent);
     }
+    .hero__meta-key::before { content: "$ "; }
     .hero__meta-val {
-      font-size: var(--t-sm);
-      color: var(--c-text-2);
+      font-size: 0.82rem;
+      color: var(--c-text-soft);
+      line-height: 1.65;
     }
+    .hero__meta-val::before,
+    .hero__meta-val::after { color: var(--c-text-3); }
+    .hero__meta-val::before { content: "\""; }
+    .hero__meta-val::after { content: "\""; }
     .hero__actions {
       display: flex;
       gap: var(--sp-3);
@@ -396,24 +406,12 @@
       display: flex;
       flex-direction: column;
       gap: var(--sp-4);
-      transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
-    }
-    .service-card:hover {
-      background: #000;
-      transform: translateY(-5px);
-      box-shadow: 0 24px 50px rgba(0,0,0,0.26);
-    }
-    .service-card__num {
-      font-size: var(--t-xs);
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      color: var(--c-accent);
     }
     .service-card__title {
       font-family: var(--font-display);
       font-size: 2rem;
       font-weight: 600;
-      color: var(--c-text-1);
+      color: var(--c-accent);
       line-height: 0.95;
     }
     .service-card__body {
@@ -429,9 +427,7 @@
       background: var(--c-surface-1);
       display: flex;
       flex-direction: column;
-      transition: background 0.18s, transform 0.18s;
     }
-    .proj-card:hover { background: var(--c-surface-2); transform: translateY(-4px); }
 
     .proj-card__cover {
       width: 100%;
@@ -439,11 +435,6 @@
       object-fit: cover;
       filter: grayscale(60%);
       border-bottom: 1px solid var(--c-border);
-      transition: filter 0.25s, transform 0.35s ease;
-    }
-    .proj-card:hover .proj-card__cover {
-      filter: grayscale(0%);
-      transform: scale(1.015);
     }
 
     .proj-card__body {
@@ -452,9 +443,7 @@
       display: flex;
       flex-direction: column;
       gap: var(--sp-3);
-      transition: transform 0.18s;
     }
-    .proj-card:hover .proj-card__body { transform: translateY(-3px); }
     .proj-card__title {
       font-family: var(--font-display);
       font-size: 2.05rem;
@@ -463,7 +452,6 @@
       line-height: 0.94;
     }
     .proj-card__title a { color: inherit; text-decoration: none; }
-    .proj-card__title a:hover { color: var(--c-accent); }
     .proj-card__desc {
       font-size: 0.92rem;
       color: var(--c-text-2);
@@ -495,7 +483,7 @@
     /* Riga superiore: fablab banner + spec grid affiancati */
     .iot-top {
       display: block;
-      max-width: 620px;
+      max-width: 100%;
       margin-bottom: 42px;
     }
     .iot-fablab__logo {
@@ -523,35 +511,41 @@
       font-weight: 700;
       color: var(--c-text-soft);
       text-decoration: none;
-      transition: color 0.18s, transform 0.18s;
       letter-spacing: 0.08em;
       text-transform: uppercase;
     }
-    .iot-fablab__link:hover { color: var(--c-accent); transform: translateX(3px); }
 
     /* Spec list */
     .iot-spec-list {
       list-style: none;
+      display: grid;
+      grid-template-columns: minmax(280px, 0.95fr) minmax(360px, 1.35fr);
       border: 1px solid var(--c-border);
       border-radius: var(--radius);
       overflow: hidden;
       background: rgba(255,255,255,0.02);
-      max-width: 620px;
+      max-width: 100%;
     }
     .iot-spec-item {
       display: grid;
-      grid-template-columns: 1fr;
-      gap: 8px;
-      align-items: start;
-      padding: 18px 20px;
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: 8px 12px;
+      align-items: baseline;
+      padding: 22px 26px;
       border-bottom: 1px solid var(--c-border);
+    }
+    .iot-spec-item:not(.iot-spec-item--fablab) {
+      grid-column: 2;
     }
     .iot-spec-item:last-child { border-bottom: none; }
     .iot-spec-item--fablab {
       grid-template-columns: auto 1fr;
+      grid-row: 1 / span 2;
       align-items: center;
-      gap: 16px;
-      padding: 20px;
+      gap: 18px;
+      padding: 26px;
+      border-right: 1px solid var(--c-border);
+      border-bottom: none;
     }
     .iot-spec-item strong {
       font-size: var(--t-xs);
@@ -560,6 +554,7 @@
       text-transform: uppercase;
       color: var(--c-text-3);
     }
+    .iot-spec-item:not(.iot-spec-item--fablab) strong::after { content: ":"; }
     .iot-spec-item span {
       font-size: var(--t-sm);
       color: var(--c-text-2);
@@ -577,9 +572,7 @@
       display: flex;
       flex-direction: column;
       gap: var(--sp-3);
-      transition: transform 0.18s;
     }
-    .network-card:hover { transform: translateY(-4px); }
     .network-grid {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -603,11 +596,9 @@
       font-weight: 700;
       color: var(--c-text-soft);
       text-decoration: none;
-      transition: color 0.18s, transform 0.18s;
       letter-spacing: 0.08em;
       text-transform: uppercase;
     }
-    .network-card__link:hover { color: var(--c-accent); transform: translateX(3px); }
 
     /* ============================================================
        CONTACTS
@@ -620,33 +611,29 @@
     }
     .contact-list {
       list-style: none;
-      border: 1px solid var(--c-border);
-      border-radius: var(--radius);
-      overflow: hidden;
+      display: grid;
+      gap: 14px;
+      padding: 4px 0;
     }
     .contact-list__item {
-      display: flex;
+      display: grid;
+      grid-template-columns: 112px minmax(0, 1fr);
       align-items: baseline;
-      gap: var(--sp-4);
-      padding: var(--sp-4) var(--sp-5);
-      border-bottom: 1px solid var(--c-border);
+      gap: var(--sp-5);
+      padding: 0;
       font-size: var(--t-sm);
     }
-    .contact-list__item:last-child { border-bottom: none; }
     .contact-list__label {
       font-size: var(--t-xs);
       font-weight: 600;
       letter-spacing: 0.08em;
       text-transform: uppercase;
       color: var(--c-text-3);
-      min-width: 72px;
-      flex-shrink: 0;
     }
     .contact-list__value a {
       color: var(--c-text-2);
-      transition: color 0.15s;
+      overflow-wrap: anywhere;
     }
-    .contact-list__value a:hover { color: var(--c-accent); }
 
     /* Form */
     .form-stack { display: flex; flex-direction: column; gap: var(--sp-4); }
@@ -669,7 +656,6 @@
       font-family: inherit;
       font-size: var(--t-sm);
       line-height: 1.5;
-      transition: border-color 0.15s;
       resize: vertical;
     }
     .form-input::placeholder { color: var(--c-text-3); }
@@ -725,9 +711,7 @@
       font-size: var(--t-sm);
       color: var(--c-text-3);
       text-decoration: none;
-      transition: color 0.15s;
     }
-    .site-footer__links a:hover { color: var(--c-text-2); }
 
     /* ============================================================
        RESPONSIVE
@@ -742,12 +726,16 @@
     }
     @media (max-width: 767px) {
       :root { --sp-6: 20px; }
-      .hero { padding: var(--sp-12) 0 var(--sp-10); }
+      .hero { padding: var(--sp-8) 0 var(--sp-10); }
       .hero__grid { grid-template-columns: 1fr; gap: var(--sp-8); }
       .hero__photo { max-width: 320px; }
       .hero__name {
         font-size: clamp(3.2rem, 18vw, 4.8rem);
         line-height: 0.88;
+      }
+      .hero__meta-row {
+        grid-template-columns: 1fr;
+        gap: 4px;
       }
       .sec-head__title {
         font-size: clamp(2.1rem, 12vw, 3rem);
@@ -758,12 +746,29 @@
       .project-grid { grid-template-columns: 1fr; }
       .iot-projects { grid-template-columns: 1fr; }
       .network-grid { grid-template-columns: 1fr; }
+      .services-grid {
+        border-left: none;
+        border-right: none;
+      }
+      .services-grid .service-card + .service-card { border-left: none; }
+      .iot-spec-list { grid-template-columns: 1fr; }
       .iot-spec-item { grid-template-columns: 1fr; gap: var(--sp-1); }
       .iot-spec-item--fablab { grid-template-columns: 1fr; gap: var(--sp-3); }
+      .iot-spec-item:not(.iot-spec-item--fablab) { grid-column: auto; }
+      .iot-spec-item--fablab {
+        grid-row: auto;
+        border-right: none;
+        border-bottom: 1px solid var(--c-border);
+      }
       .contacts-layout { grid-template-columns: 1fr; }
+      .contact-list__item {
+        grid-template-columns: 1fr;
+        gap: 2px;
+      }
       .form-row { grid-template-columns: 1fr; }
       .site-footer__inner { flex-direction: column; align-items: flex-start; gap: var(--sp-3); }
     }
+
   </style>
 </head>
 <body>
@@ -810,17 +815,12 @@
           >
 
           <div>
-            <div class="hero__eyebrow">
-              <span class="label">Creative Technologist</span>
-              <span class="hero__eyebrow-line" aria-hidden="true"></span>
-            </div>
-
             <h1 class="hero__name">
               Giovanni
               <em>Bindi</em>
             </h1>
 
-            <p class="hero__role">Software Engineer · Consultant · Turin, Italy&nbsp;🇮🇹</p>
+            <p class="hero__role">Creative Technologist · Software Engineer · Consultant<br>Turin, Italy&nbsp;🇮🇹</p>
 
             <p class="hero__body">
               I design and build digital systems that actually ship —
@@ -840,8 +840,6 @@
             </div>
 
             <div class="hero__actions">
-              <a href="#contacts" class="btn btn-primary">Contattami</a>
-              <a href="#projects" class="btn btn-secondary">Vedi i progetti</a>
               <a
                 class="github-button"
                 href="https://github.com/tongatron"
@@ -869,24 +867,20 @@
           <h2 class="sec-head__title" id="services-title">Servizi</h2>
         </div>
 
-        <div class="card-grid card-grid--4">
+        <div class="card-grid card-grid--4 services-grid">
           <article class="service-card">
-            <span class="service-card__num">01</span>
             <h3 class="service-card__title">ICT Project Management</h3>
             <p class="service-card__body">Gestione end-to-end di progetti ICT: dalla definizione degli obiettivi alla consegna, con coordinamento di team multidisciplinari e controllo continuo di tempi, costi e qualità.</p>
           </article>
           <article class="service-card">
-            <span class="service-card__num">02</span>
             <h3 class="service-card__title">Consulenze in Innovazione Digitale</h3>
             <p class="service-card__body">Supporto strategico per introdurre soluzioni digitali concrete, semplificare i processi e rafforzare la governance tecnologica.</p>
           </article>
           <article class="service-card">
-            <span class="service-card__num">03</span>
             <h3 class="service-card__title">Progettazione e Sviluppo</h3>
             <p class="service-card__body">Progettazione e sviluppo di soluzioni software su misura, dal concept al rilascio, con un approccio iterativo e orientato ai risultati.</p>
           </article>
           <article class="service-card">
-            <span class="service-card__num">04</span>
             <h3 class="service-card__title">Formazione e Didattica</h3>
             <p class="service-card__body">Percorsi formativi su ICT, coding e innovazione digitale, progettati per trasferire competenze subito applicabili nei contesti reali.</p>
           </article>
