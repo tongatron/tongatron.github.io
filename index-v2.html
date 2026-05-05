@@ -84,6 +84,7 @@
     }
     img { display: block; max-width: 100%; }
     a { color: var(--c-accent); text-decoration: none; }
+    a:not(.btn):hover { color: var(--c-accent); }
 
     /* ============================================================
        LAYOUT
@@ -181,6 +182,13 @@
     }
     .card-grid--3 { grid-template-columns: repeat(3, 1fr); }
     .card-grid--4 { grid-template-columns: repeat(4, 1fr); }
+    .services-grid {
+      gap: var(--sp-10);
+      background: transparent;
+      border: none;
+      border-radius: 0;
+      overflow: visible;
+    }
     .project-grid {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -475,7 +483,7 @@
     /* Riga superiore: fablab banner + spec grid affiancati */
     .iot-top {
       display: block;
-      max-width: 620px;
+      max-width: 100%;
       margin-bottom: 42px;
     }
     .iot-fablab__logo {
@@ -510,26 +518,34 @@
     /* Spec list */
     .iot-spec-list {
       list-style: none;
+      display: grid;
+      grid-template-columns: minmax(280px, 0.95fr) minmax(360px, 1.35fr);
       border: 1px solid var(--c-border);
       border-radius: var(--radius);
       overflow: hidden;
       background: rgba(255,255,255,0.02);
-      max-width: 620px;
+      max-width: 100%;
     }
     .iot-spec-item {
       display: grid;
-      grid-template-columns: 1fr;
-      gap: 8px;
-      align-items: start;
-      padding: 18px 20px;
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: 8px 12px;
+      align-items: baseline;
+      padding: 22px 26px;
       border-bottom: 1px solid var(--c-border);
+    }
+    .iot-spec-item:not(.iot-spec-item--fablab) {
+      grid-column: 2;
     }
     .iot-spec-item:last-child { border-bottom: none; }
     .iot-spec-item--fablab {
       grid-template-columns: auto 1fr;
+      grid-row: 1 / span 2;
       align-items: center;
-      gap: 16px;
-      padding: 20px;
+      gap: 18px;
+      padding: 26px;
+      border-right: 1px solid var(--c-border);
+      border-bottom: none;
     }
     .iot-spec-item strong {
       font-size: var(--t-xs);
@@ -538,6 +554,7 @@
       text-transform: uppercase;
       color: var(--c-text-3);
     }
+    .iot-spec-item:not(.iot-spec-item--fablab) strong::after { content: ":"; }
     .iot-spec-item span {
       font-size: var(--t-sm);
       color: var(--c-text-2);
@@ -594,30 +611,28 @@
     }
     .contact-list {
       list-style: none;
-      border: 1px solid var(--c-border);
-      border-radius: var(--radius);
-      overflow: hidden;
+      display: grid;
+      gap: 14px;
+      padding: 4px 0;
     }
     .contact-list__item {
-      display: flex;
+      display: grid;
+      grid-template-columns: 112px minmax(0, 1fr);
       align-items: baseline;
-      gap: var(--sp-4);
-      padding: var(--sp-4) var(--sp-5);
-      border-bottom: 1px solid var(--c-border);
+      gap: var(--sp-5);
+      padding: 0;
       font-size: var(--t-sm);
     }
-    .contact-list__item:last-child { border-bottom: none; }
     .contact-list__label {
       font-size: var(--t-xs);
       font-weight: 600;
       letter-spacing: 0.08em;
       text-transform: uppercase;
       color: var(--c-text-3);
-      min-width: 72px;
-      flex-shrink: 0;
     }
     .contact-list__value a {
       color: var(--c-text-2);
+      overflow-wrap: anywhere;
     }
 
     /* Form */
@@ -731,9 +746,20 @@
       .project-grid { grid-template-columns: 1fr; }
       .iot-projects { grid-template-columns: 1fr; }
       .network-grid { grid-template-columns: 1fr; }
+      .iot-spec-list { grid-template-columns: 1fr; }
       .iot-spec-item { grid-template-columns: 1fr; gap: var(--sp-1); }
       .iot-spec-item--fablab { grid-template-columns: 1fr; gap: var(--sp-3); }
+      .iot-spec-item:not(.iot-spec-item--fablab) { grid-column: auto; }
+      .iot-spec-item--fablab {
+        grid-row: auto;
+        border-right: none;
+        border-bottom: 1px solid var(--c-border);
+      }
       .contacts-layout { grid-template-columns: 1fr; }
+      .contact-list__item {
+        grid-template-columns: 1fr;
+        gap: 2px;
+      }
       .form-row { grid-template-columns: 1fr; }
       .site-footer__inner { flex-direction: column; align-items: flex-start; gap: var(--sp-3); }
     }
@@ -809,7 +835,6 @@
             </div>
 
             <div class="hero__actions">
-              <a href="#contacts" class="btn btn-primary">Contattami</a>
               <a
                 class="github-button"
                 href="https://github.com/tongatron"
@@ -837,7 +862,7 @@
           <h2 class="sec-head__title" id="services-title">Servizi</h2>
         </div>
 
-        <div class="card-grid card-grid--4">
+        <div class="card-grid card-grid--4 services-grid">
           <article class="service-card">
             <span class="service-card__num">01</span>
             <h3 class="service-card__title">ICT Project Management</h3>
