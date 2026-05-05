@@ -195,6 +195,14 @@
     font-weight: 600;
   }
 
+  /* cursore: colore default accent, nero su sfondo giallo */
+  .badge-cursor { color: var(--accent); }
+  .A5 .badge-cursor, .B5 .badge-cursor, .C5 .badge-cursor,
+  .A9 .badge-cursor, .B9 .badge-cursor, .C9 .badge-cursor,
+  .D9 .badge-cursor, .E9 .badge-cursor, .F9 .badge-cursor,
+  .A11 .badge-cursor, .B11 .badge-cursor, .C11 .badge-cursor,
+  .D11 .badge-cursor, .E11 .badge-cursor, .F11 .badge-cursor { color: #000; }
+
   /* ===== VARIANTI NERO (A) ===== */
   .A1 { color: #fff; }
   .A2 { border: 1px solid var(--accent); padding: 6px 10px; border-radius: 6px; }
@@ -205,6 +213,12 @@
   .A6 { letter-spacing: 1px; text-transform: uppercase; }
   .A7 { border-bottom: 2px solid var(--accent); padding-bottom: 2px; }
   .A8 .mark { transform: scale(1.3); }
+  .A9 { background: var(--accent); color: #000; padding: 5px 12px; border-radius: 999px; font-weight: 700; }
+  .A9 .mark { background: #000; }
+  .A10 { border: 2px solid var(--accent); padding: 5px 12px; border-radius: 999px; color: #fff; }
+  .A11 { background: var(--accent); color: #000; padding: 4px 10px; border-radius: 4px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; font-size: 0.85em; }
+  .A11 .mark { background: #000; }
+  .A12 { color: var(--accent); border-left: 3px solid var(--accent); padding-left: 8px; }
 
   /* ===== VARIANTI SCURO (B) ===== */
   .B1 { color: #ddd; }
@@ -216,6 +230,12 @@
   .B6 { letter-spacing: 1px; text-transform: uppercase; }
   .B7 { border-bottom: 2px solid var(--accent); padding-bottom: 2px; }
   .B8 .mark { transform: scale(1.3); }
+  .B9 { background: var(--accent); color: #000; padding: 5px 12px; border-radius: 999px; font-weight: 700; }
+  .B9 .mark { background: #000; }
+  .B10 { border: 2px solid var(--accent); padding: 5px 12px; border-radius: 999px; color: #ddd; }
+  .B11 { background: var(--accent); color: #000; padding: 4px 10px; border-radius: 4px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; font-size: 0.85em; }
+  .B11 .mark { background: #000; }
+  .B12 { color: var(--accent); border-left: 3px solid var(--accent); padding-left: 8px; }
 
   /* ===== VARIANTI GRIGIO SCURO (C) ===== */
   .C1 { color: #fff; }
@@ -227,6 +247,12 @@
   .C6 { font-style: italic; }
   .C7 { border-bottom: 2px solid var(--accent); }
   .C8 .mark { opacity: 0.7; }
+  .C9 { background: var(--accent); color: #000; padding: 5px 12px; border-radius: 999px; font-weight: 700; }
+  .C9 .mark { background: #000; }
+  .C10 { border: 2px solid var(--accent); padding: 5px 12px; border-radius: 999px; color: #fff; }
+  .C11 { background: var(--accent); color: #000; padding: 4px 10px; border-radius: 4px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; font-size: 0.85em; }
+  .C11 .mark { background: #000; }
+  .C12 { color: var(--accent); border-left: 3px solid var(--accent); padding-left: 8px; }
 
   /* ===== VARIANTI GRIGIO CHIARO (D) ===== */
   .D1 { color: #000; }
@@ -237,6 +263,12 @@
   .D6 { letter-spacing: 0.5px; }
   .D7 { border-bottom: 2px solid #333; }
   .D8 .mark { opacity: 0.8; }
+  .D9 { background: var(--accent); color: #000; padding: 5px 12px; border-radius: 999px; font-weight: 700; }
+  .D9 .mark { background: #000; }
+  .D10 { border: 2px solid #333; padding: 5px 12px; border-radius: 999px; color: #000; }
+  .D11 { background: var(--accent); color: #000; padding: 4px 10px; border-radius: 4px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; font-size: 0.85em; }
+  .D11 .mark { background: #000; }
+  .D12 { color: #000; border-left: 3px solid #333; padding-left: 8px; }
 
   /* ===== VARIANTI BIANCO (E) ===== */
   .E1 { color: #222; }
@@ -247,6 +279,12 @@
   .E6 { letter-spacing: 0.5px; }
   .E7 { border-bottom: 2px solid #333; }
   .E8 .mark { opacity: 0.8; }
+  .E9 { background: var(--accent); color: #000; padding: 5px 12px; border-radius: 999px; font-weight: 700; }
+  .E9 .mark { background: #000; }
+  .E10 { border: 2px solid #333; padding: 5px 12px; border-radius: 999px; color: #222; }
+  .E11 { background: var(--accent); color: #000; padding: 4px 10px; border-radius: 4px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; font-size: 0.85em; }
+  .E11 .mark { background: #000; }
+  .E12 { color: #222; border-left: 3px solid #333; padding-left: 8px; }
 
   /* ===== VARIANTI CUSTOM (F) ===== */
   .F1 { color: #222; }
@@ -257,7 +295,53 @@
   .F6 { letter-spacing: 0.5px; }
   .F7 { border-bottom: 2px solid var(--accent); }
   .F8 .mark { opacity: 0.8; }
-  .L8 .mark { box-shadow: 0 0 4px rgba(255,204,0,0.5); }
+  .F9 { background: var(--accent); color: #000; padding: 5px 12px; border-radius: 999px; font-weight: 700; }
+  .F9 .mark { background: #000; }
+  .F10 { border: 2px solid rgba(0,0,0,0.4); padding: 5px 12px; border-radius: 999px; }
+  .F11 { background: var(--accent); color: #000; padding: 4px 10px; border-radius: 4px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; font-size: 0.85em; }
+  .F11 .mark { background: #000; }
+  .F12 { color: inherit; border-left: 3px solid var(--accent); padding-left: 8px; }
+
+  /* ===== OFFICIAL LOGO ===== */
+  .brand-terminal {
+    background: #111;
+    border-radius: 8px;
+    padding: 10px 16px;
+    font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+    display: inline-block;
+  }
+  .brand-terminal-line {
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    letter-spacing: 0.5px;
+    color: #eaeaea;
+  }
+  .brand-terminal-dot {
+    width: 10px;
+    height: 10px;
+    background: #ffcc00;
+    border-radius: 50%;
+    margin-right: 10px;
+    box-shadow: 0 0 6px rgba(255, 204, 0, 0.6);
+    flex-shrink: 0;
+  }
+  .brand-terminal-text { color: #f5f5f5; }
+  .brand-terminal-cursor { color: #ffcc00; }
+
+  .official-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #ffcc00;
+    color: #000;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 4px;
+  }
 
   .toast {
     position: fixed;
@@ -293,6 +377,7 @@
         <button data-shape="dot" class="active">Dot</button>
         <button data-shape="baloon">Baloon</button>
         <button data-shape="char">Carattere</button>
+        <button data-shape="none">None</button>
       </span>
     </label>
     <label id="char-label" style="display:none;">Simbolo
@@ -300,12 +385,17 @@
     </label>
     <label>Font
       <select id="font-select">
-        <option value="system-ui">System (default)</option>
-        <option value="'Courier Prime', monospace">Courier Prime</option>
-        <option value="'Space Mono', monospace">Space Mono</option>
-        <option value="'IBM Plex Mono', monospace">IBM Plex Mono</option>
-        <option value="'JetBrains Mono', monospace">JetBrains Mono</option>
-        <option value="Georgia, serif">Georgia (serif)</option>
+        <optgroup label="Standard">
+          <option value="system-ui">System (default)</option>
+          <option value="Courier, monospace">Courier</option>
+          <option value="Georgia, serif">Georgia (serif)</option>
+        </optgroup>
+        <optgroup label="Google Fonts">
+          <option value="'Courier Prime', monospace">Courier Prime</option>
+          <option value="'Space Mono', monospace">Space Mono</option>
+          <option value="'IBM Plex Mono', monospace">IBM Plex Mono</option>
+          <option value="'JetBrains Mono', monospace">JetBrains Mono</option>
+        </optgroup>
       </select>
     </label>
     <label>Dimensione
@@ -323,8 +413,79 @@
     <label>Sfondo custom
       <input type="text" id="custom-bg" placeholder="#hex o nome" value="#1e3a8a">
     </label>
+    <label>Logo giallo
+      <span class="seg" id="yellow-seg">
+        <button data-yellow="off" class="active">Off</button>
+        <button data-yellow="on">On</button>
+      </span>
+    </label>
+    <label>Cursore _
+      <span class="seg" id="cursor-seg">
+        <button data-cursor="off" class="active">Off</button>
+        <button data-cursor="on">On</button>
+      </span>
+    </label>
   </div>
 </header>
+
+<!-- OFFICIAL -->
+<div class="section" style="background:#000; color:#eee; border-bottom: 2px solid #ffcc00;">
+  <h2 style="display:flex; align-items:center; gap:10px;">
+    Logo ufficiale
+    <span class="official-badge">Official</span>
+  </h2>
+  <div style="display:flex; flex-wrap:wrap; gap:24px; align-items:flex-start;">
+
+    <div style="display:flex; flex-direction:column; gap:10px; align-items:flex-start;">
+      <span style="font-size:10px; letter-spacing:1px; text-transform:uppercase; opacity:0.5;">Nero</span>
+      <div style="background:#000; padding:20px 24px; border-radius:8px;">
+        <div class="brand-terminal" style="background:transparent;">
+          <div class="brand-terminal-line">
+            <div class="brand-terminal-dot"></div>
+            <span class="brand-terminal-text">tongatron.org<span class="brand-terminal-cursor">_</span></span>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex; gap:6px;">
+        <button class="copy-btn" data-official="html">Copia HTML</button>
+        <button class="copy-btn" data-official="md">Copia MD</button>
+      </div>
+    </div>
+
+    <div style="display:flex; flex-direction:column; gap:10px; align-items:flex-start;">
+      <span style="font-size:10px; letter-spacing:1px; text-transform:uppercase; opacity:0.5;">Grigio</span>
+      <div style="background:#555; padding:20px 24px; border-radius:8px;">
+        <div class="brand-terminal">
+          <div class="brand-terminal-line">
+            <div class="brand-terminal-dot"></div>
+            <span class="brand-terminal-text">tongatron.org<span class="brand-terminal-cursor">_</span></span>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex; gap:6px;">
+        <button class="copy-btn" data-official="html">Copia HTML</button>
+        <button class="copy-btn" data-official="md">Copia MD</button>
+      </div>
+    </div>
+
+    <div style="display:flex; flex-direction:column; gap:10px; align-items:flex-start;">
+      <span style="font-size:10px; letter-spacing:1px; text-transform:uppercase; opacity:0.5;">Bianco</span>
+      <div style="background:#fff; padding:20px 24px; border-radius:8px;">
+        <div class="brand-terminal">
+          <div class="brand-terminal-line">
+            <div class="brand-terminal-dot"></div>
+            <span class="brand-terminal-text">tongatron.org<span class="brand-terminal-cursor">_</span></span>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex; gap:6px;">
+        <button class="copy-btn" data-official="html">Copia HTML</button>
+        <button class="copy-btn" data-official="md">Copia MD</button>
+      </div>
+    </div>
+
+  </div>
+</div>
 
 <!-- NERO -->
 <div class="section" style="background:#000; color:#eee;">
@@ -365,7 +526,7 @@
 <div class="toast" id="toast">Copiato!</div>
 
 <script>
-  const VARIANTS = [1,2,3,4,5,6,7,8];
+  const VARIANTS = [1,2,3,4,5,6,7,8,9,10,11,12];
   const textInput = document.getElementById('text-input');
   const accentInput = document.getElementById('accent-input');
   const charInput = document.getElementById('char-input');
@@ -376,6 +537,8 @@
   const fontSelect = document.getElementById('font-select');
   const sizeInput = document.getElementById('size-input');
   const animSeg = document.getElementById('anim-seg');
+  const yellowSeg = document.getElementById('yellow-seg');
+  const cursorSeg = document.getElementById('cursor-seg');
   const toast = document.getElementById('toast');
 
   let state = {
@@ -387,10 +550,14 @@
     font: fontSelect.value,
     fontSize: parseInt(sizeInput.value),
     animations: 'over',
+    yellowLogo: false,
+    cursor: false,
   };
 
   function buildMarkHTML() {
-    if (state.shape === 'dot') {
+    if (state.shape === 'none') {
+      return '';
+    } else if (state.shape === 'dot') {
       return '<span class="mark mark-dot"></span>';
     } else if (state.shape === 'baloon') {
       return `<span class="mark mark-baloon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="var(--accent)" viewBox="0 0 16 16" aria-hidden="true"><path fill-rule="evenodd" d="M8.48 10.901C11.211 10.227 13 7.837 13 5A5 5 0 0 0 3 5c0 2.837 1.789 5.227 4.52 5.901l-.244.487a.25.25 0 1 0 .448.224l.04-.08c.009.17.024.315.051.45.068.344.208.622.448 1.102l.013.028c.212.422.182.85.05 1.246-.135.402-.366.751-.534 1.003a.25.25 0 0 0 .416.278l.004-.007c.166-.248.431-.646.588-1.115.16-.479.212-1.051-.076-1.629-.258-.515-.365-.732-.419-1.004a2 2 0 0 1-.037-.289l.008.017a.25.25 0 1 0 .448-.224zM4.352 3.356a4 4 0 0 1 3.15-2.325C7.774.997 8 1.224 8 1.5s-.226.496-.498.542c-.95.162-1.749.78-2.173 1.617a.6.6 0 0 1-.52.341c-.346 0-.599-.329-.457-.644"/></svg></span>`;
@@ -401,11 +568,13 @@
 
   function buildBadgeHTML(prefix, n, { inline = false } = {}) {
     const cls = prefix + n;
+    const yellowStyle = state.yellowLogo ? ' color:var(--accent);' : '';
     const styleAttr = inline
-      ? ` style="--accent:${state.accent}; font-family:${state.font}; font-size:${state.fontSize}px"`
-      : ` style="font-family:${state.font}; font-size:${state.fontSize}px"`;
+      ? ` style="--accent:${state.accent}; font-family:${state.font}; font-size:${state.fontSize}px;${yellowStyle}"`
+      : ` style="font-family:${state.font}; font-size:${state.fontSize}px;${yellowStyle}"`;
     const markHTML = buildMarkHTML();
-    return `<a class="site-badge ${cls}" href="https://${escapeAttr(state.text)}"${styleAttr}>${markHTML}${escapeHTML(state.text)}</a>`;
+    const cursorHTML = state.cursor ? `<span class="badge-cursor">_</span>` : '';
+    return `<a class="site-badge ${cls}" href="https://${escapeAttr(state.text)}"${styleAttr}>${markHTML}<span>${escapeHTML(state.text)}${cursorHTML}</span></a>`;
   }
 
   function escapeHTML(s){return s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
@@ -456,9 +625,17 @@
     toastTimer = setTimeout(() => toast.classList.remove('show'), 1200);
   }
 
+  const OFFICIAL_HTML = `<div class="brand-terminal">\n  <div class="brand-terminal-line">\n    <div class="brand-terminal-dot"></div>\n    <span class="brand-terminal-text">tongatron.org<span class="brand-terminal-cursor">_</span></span>\n  </div>\n</div>`;
+  const OFFICIAL_MD = `● [tongatron.org](https://tongatron.org)_`;
+
   document.addEventListener('click', e => {
     const btn = e.target.closest('.copy-btn');
     if (!btn) return;
+    if (btn.dataset.official) {
+      const text = btn.dataset.official === 'html' ? OFFICIAL_HTML : OFFICIAL_MD;
+      copy(text, btn);
+      return;
+    }
     const { copy: kind, prefix, n } = btn.dataset;
     const out = kind === 'html'
       ? buildBadgeHTML(prefix, +n, { inline: true })
@@ -487,6 +664,22 @@
     animSeg.querySelectorAll('button').forEach(x => x.classList.toggle('active', x === b));
     state.animations = b.dataset.anim;
     document.body.classList.toggle('with-animations', state.animations === 'over');
+  });
+
+  yellowSeg.addEventListener('click', e => {
+    const b = e.target.closest('button');
+    if (!b) return;
+    yellowSeg.querySelectorAll('button').forEach(x => x.classList.toggle('active', x === b));
+    state.yellowLogo = b.dataset.yellow === 'on';
+    render();
+  });
+
+  cursorSeg.addEventListener('click', e => {
+    const b = e.target.closest('button');
+    if (!b) return;
+    cursorSeg.querySelectorAll('button').forEach(x => x.classList.toggle('active', x === b));
+    state.cursor = b.dataset.cursor === 'on';
+    render();
   });
 
   // Initialize animations
