@@ -1,0 +1,1580 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TONGATRON // PLAYER SELECT</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Orbitron:wght@400;700;900&family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+
+  <style>
+    /* =============================================
+       TONGATRON // JP GAMING EDITION
+       ============================================= */
+
+    :root {
+      --pink:    #ff2d78;
+      --cyan:    #00f5ff;
+      --purple:  #b44fff;
+      --yellow:  #ffe600;
+      --green:   #39ff14;
+      --orange:  #ff7700;
+      --dark:    #06000f;
+      --dark2:   #0d0020;
+      --panel:   rgba(10, 0, 30, 0.88);
+      --border-glow: rgba(255,45,120,0.6);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--dark);
+      color: #fff;
+      font-family: "Noto Sans JP", sans-serif;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    /* ---- CANVAS BACKGROUND ---- */
+    #bg-canvas {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* ---- SAKURA ---- */
+    .sakura-wrap {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .petal {
+      position: absolute;
+      top: -40px;
+      width: 12px;
+      height: 12px;
+      border-radius: 0 50% 50% 50%;
+      background: var(--pink);
+      opacity: 0.7;
+      animation: fall linear infinite;
+      transform-origin: center;
+    }
+    @keyframes fall {
+      0%   { transform: translateY(0) rotate(0deg) translateX(0); opacity: 0.8; }
+      50%  { transform: translateY(50vh) rotate(180deg) translateX(40px); }
+      100% { transform: translateY(110vh) rotate(360deg) translateX(-20px); opacity: 0; }
+    }
+
+    /* ---- GRID LAYOUT ---- */
+    .page-wrap {
+      position: relative;
+      z-index: 2;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 1rem 4rem;
+    }
+
+    /* ---- SCANLINES OVERLAY ---- */
+    .page-wrap::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0,0,0,0.08) 2px,
+        rgba(0,0,0,0.08) 4px
+      );
+      pointer-events: none;
+      z-index: 100;
+    }
+
+    /* ========== HEADER ========== */
+    .site-header {
+      text-align: center;
+      padding: 2.5rem 1rem 1rem;
+      position: relative;
+    }
+
+    .header-jp-sub {
+      font-family: "Noto Sans JP", sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.5em;
+      color: var(--cyan);
+      text-transform: uppercase;
+      animation: glow-cyan 2s ease-in-out infinite alternate;
+      margin-bottom: 0.5rem;
+    }
+
+    .logo-text {
+      font-family: "Orbitron", sans-serif;
+      font-weight: 900;
+      font-size: clamp(2.8rem, 10vw, 6rem);
+      line-height: 1;
+      background: linear-gradient(135deg, var(--pink) 0%, var(--purple) 40%, var(--cyan) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      filter: drop-shadow(0 0 20px rgba(180, 79, 255, 0.8));
+      animation: logo-pulse 3s ease-in-out infinite alternate;
+      display: block;
+    }
+
+    @keyframes logo-pulse {
+      from { filter: drop-shadow(0 0 20px rgba(180,79,255,0.8)) drop-shadow(0 0 40px rgba(255,45,120,0.4)); }
+      to   { filter: drop-shadow(0 0 40px rgba(0,245,255,0.9)) drop-shadow(0 0 60px rgba(180,79,255,0.6)); }
+    }
+
+    .logo-kanji {
+      font-family: "Noto Sans JP", sans-serif;
+      font-size: clamp(0.8rem, 2vw, 1.1rem);
+      color: var(--yellow);
+      letter-spacing: 0.3em;
+      animation: glow-yellow 2s ease-in-out infinite alternate;
+      display: block;
+      margin-top: 0.4rem;
+    }
+
+    .header-tagline {
+      font-family: "Press Start 2P", monospace;
+      font-size: clamp(0.5rem, 1.5vw, 0.7rem);
+      color: var(--green);
+      letter-spacing: 0.1em;
+      margin-top: 1rem;
+      animation: glow-green 1.5s ease-in-out infinite alternate;
+    }
+
+    .insert-coin {
+      font-family: "Press Start 2P", monospace;
+      font-size: 0.65rem;
+      color: var(--yellow);
+      margin-top: 1.2rem;
+      animation: blink-anim 1s step-start infinite;
+      display: inline-block;
+    }
+    @keyframes blink-anim { 50% { opacity: 0; } }
+
+    /* NAV */
+    .site-nav {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 1.2rem 0;
+      border-top: 1px solid rgba(255,45,120,0.3);
+      border-bottom: 1px solid rgba(255,45,120,0.3);
+      margin: 1rem 0 0;
+    }
+    .site-nav a {
+      font-family: "Press Start 2P", monospace;
+      font-size: 0.55rem;
+      color: #fff;
+      text-decoration: none;
+      padding: 0.5rem 0.9rem;
+      border: 2px solid var(--pink);
+      background: rgba(255,45,120,0.1);
+      border-radius: 4px;
+      transition: all 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+    .site-nav a::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, var(--pink), var(--purple));
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .site-nav a:hover::before { opacity: 1; }
+    .site-nav a:hover { color: #fff; box-shadow: 0 0 20px var(--pink); transform: translateY(-2px); }
+    .site-nav a span { position: relative; z-index: 1; }
+
+    /* ========== PANEL BASE ========== */
+    .panel {
+      background: var(--panel);
+      border: 2px solid var(--pink);
+      border-radius: 8px;
+      padding: 1.5rem;
+      position: relative;
+      overflow: visible;
+      box-shadow:
+        0 0 0 1px rgba(255,45,120,0.15),
+        0 0 30px rgba(255,45,120,0.2),
+        inset 0 0 40px rgba(180,79,255,0.05);
+    }
+    .panel::before {
+      content: "";
+      position: absolute;
+      inset: -1px;
+      border-radius: 9px;
+      background: linear-gradient(135deg, rgba(255,45,120,0.5), transparent 40%, rgba(0,245,255,0.3) 100%);
+      z-index: -1;
+      opacity: 0.5;
+      filter: blur(4px);
+    }
+
+    .panel-title {
+      font-family: "Orbitron", sans-serif;
+      font-weight: 700;
+      font-size: clamp(1.1rem, 3vw, 1.6rem);
+      color: var(--yellow);
+      text-shadow: 0 0 12px var(--yellow), 0 0 24px rgba(255,230,0,0.4);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .panel-title .jp {
+      font-family: "Noto Sans JP", sans-serif;
+      font-size: 0.65em;
+      color: var(--pink);
+      font-weight: 700;
+      text-shadow: 0 0 8px var(--pink);
+    }
+
+    .corner-deco {
+      position: absolute;
+      width: 14px;
+      height: 14px;
+      border-color: var(--cyan);
+      border-style: solid;
+      border-width: 0;
+    }
+    .corner-deco.tl { top: 4px; left: 4px; border-top-width: 2px; border-left-width: 2px; }
+    .corner-deco.tr { top: 4px; right: 4px; border-top-width: 2px; border-right-width: 2px; }
+    .corner-deco.bl { bottom: 4px; left: 4px; border-bottom-width: 2px; border-left-width: 2px; }
+    .corner-deco.br { bottom: 4px; right: 4px; border-bottom-width: 2px; border-right-width: 2px; }
+
+    /* ========== HERO / BIO ========== */
+    .hero-section {
+      margin-top: 2rem;
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 1.5rem;
+      align-items: start;
+    }
+
+    /* PLAYER CARD */
+    .player-card {
+      text-align: center;
+    }
+    .player-photo-wrap {
+      position: relative;
+      display: inline-block;
+    }
+    .player-photo {
+      width: 100%;
+      max-width: 260px;
+      aspect-ratio: 1;
+      object-fit: cover;
+      border: 3px solid var(--pink);
+      border-radius: 8px;
+      filter: saturate(1.2) contrast(1.05);
+      box-shadow:
+        0 0 0 1px rgba(255,45,120,0.4),
+        0 0 30px rgba(255,45,120,0.5),
+        0 0 60px rgba(180,79,255,0.3);
+      display: block;
+      margin: 0 auto;
+    }
+    .player-photo-wrap::after {
+      content: "";
+      position: absolute;
+      inset: -4px;
+      border-radius: 10px;
+      background: linear-gradient(45deg, var(--pink), var(--purple), var(--cyan), var(--pink));
+      background-size: 300% 300%;
+      z-index: -1;
+      animation: border-spin 3s linear infinite;
+      filter: blur(4px);
+      opacity: 0.8;
+    }
+    @keyframes border-spin {
+      0%   { background-position: 0% 50%; }
+      50%  { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .player-tag {
+      font-family: "Press Start 2P", monospace;
+      font-size: 0.55rem;
+      color: var(--cyan);
+      margin-top: 0.8rem;
+      text-shadow: 0 0 8px var(--cyan);
+    }
+
+    /* STAT BARS */
+    .stat-bar-wrap {
+      margin-top: 1rem;
+    }
+    .stat-row {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+    .stat-label {
+      font-family: "Press Start 2P", monospace;
+      font-size: 0.42rem;
+      color: var(--pink);
+      width: 46px;
+      flex-shrink: 0;
+      text-align: right;
+    }
+    .stat-bar-outer {
+      flex: 1;
+      height: 8px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,45,120,0.3);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .stat-bar-inner {
+      height: 100%;
+      border-radius: 4px;
+      animation: bar-glow 2s ease-in-out infinite alternate;
+      position: relative;
+    }
+    .stat-bar-inner::after {
+      content: "";
+      position: absolute;
+      right: 0; top: 0; bottom: 0;
+      width: 4px;
+      background: rgba(255,255,255,0.8);
+      border-radius: 0 4px 4px 0;
+      filter: blur(2px);
+    }
+    @keyframes bar-glow {
+      from { filter: brightness(1); }
+      to   { filter: brightness(1.4) saturate(1.2); }
+    }
+    .bar-pink  { background: linear-gradient(90deg, #7700ff, var(--pink)); }
+    .bar-cyan  { background: linear-gradient(90deg, #0044ff, var(--cyan)); }
+    .bar-green { background: linear-gradient(90deg, #007700, var(--green)); }
+    .bar-yellow{ background: linear-gradient(90deg, #cc6600, var(--yellow)); }
+
+    .stat-val {
+      font-family: "Press Start 2P", monospace;
+      font-size: 0.4rem;
+      color: #fff;
+      width: 28px;
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    /* BIO PANEL */
+    .bio-panel .player-name {
+      font-family: "Orbitron", sans-serif;
+      font-weight: 900;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      background: linear-gradient(90deg, #fff 0%, var(--cyan) 60%, var(--purple) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      filter: drop-shadow(0 0 10px rgba(0,245,255,0.5));
+      line-height: 1.1;
+    }
+    .bio-panel .player-class {
+      font-family: "Press Start 2P", monospace;
+      font-size: 0.6rem;
+      color: var(--pink);
+      margin: 0.6rem 0 0.3rem;
+      text-shadow: 0 0 8px var(--pink);
+    }
+    .bio-panel .player-location {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.6);
+      margin-bottom: 1rem;
+    }
+
+    .lore-text {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.8);
+      line-height: 1.9;
+      border-left: 3px solid var(--purple);
+      padding-left: 1rem;
+      margin: 1rem 0;
+    }
+
+    .ability-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin: 1rem 0;
+    }
+    .ability-tag {
+      font-family: "Press Start 2P", monospace;
+      font-size: 0.45rem;
+      padding: 0.35rem 0.6rem;
+      border-radius: 4px;
+      border: 1px solid;
+      animation: tag-pulse 3s ease-in-out infinite alternate;
+    }
+    .ability-tag.a { border-color: var(--pink); color: var(--pink); background: rgba(255,45,120,0.1); animation-delay: 0s; }
+    .ability-tag.b { border-color: var(--cyan); color: var(--cyan); background: rgba(0,245,255,0.1); animation-delay: 0.4s; }
+    .ability-tag.c { border-color: var(--yellow); color: var(--yellow); background: rgba(255,230,0,0.1); animation-delay: 0.8s; }
+    .ability-tag.d { border-color: var(--green); color: var(--green); background: rgba(57,255,20,0.1); animation-delay: 1.2s; }
+    .ability-tag.e { border-color: var(--purple); color: var(--purple); background: rgba(180,79,255,0.1); animation-delay: 1.6s; }
+    @keyframes tag-pulse {
+      from { box-shadow: none; }
+      to   { box-shadow: 0 0 12px currentColor; }
+    }
+
+    .github-follow-wrap { margin-top: 1rem; }
+
+    /* ========== SECTION WRAPPER ========== */
+    .game-section {
+      margin-top: 2.5rem;
+    }
+
+    /* ========== SERVICES ========== */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .service-card {
+      background: rgba(10,0,30,0.7);
+      border: 1px solid rgba(180,79,255,0.4);
+      border-radius: 8px;
+      padding: 1.2rem;
+      transition: all 0.25s;
+      position: relative;
+      overflow: hidden;
+      cursor: default;
+    }
+    .service-card::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--purple), transparent);
+      animation: scan-line 3s ease-in-out infinite;
+    }
+    @keyframes scan-line {
+      0%, 100% { opacity: 0; transform: scaleX(0.3); }
+      50% { opacity: 1; transform: scaleX(1); }
+    }
+    .service-card:hover {
+      border-color: var(--pink);
+      box-shadow: 0 0 24px rgba(255,45,120,0.3), inset 0 0 20px rgba(255,45,120,0.05);
+      transform: translateY(-3px);
+    }
+    .service-icon {
+      font-size: 1.8rem;
+      margin-bottom: 0.6rem;
+      display: block;
+      animation: float 3s ease-in-out infinite alternate;
+    }
+    @keyframes float {
+      from { transform: translateY(0); }
+      to   { transform: translateY(-5px); }
+    }
+    .service-name {
+      font-family: "Orbitron", sans-serif;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--cyan);
+      text-shadow: 0 0 8px var(--cyan);
+      margin-bottom: 0.5rem;
+    }
+    .service-desc {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.6);
+      line-height: 1.7;
+    }
+    .service-num {
+      position: absolute;
+      top: 0.7rem;
+      right: 0.9rem;
+      font-family: "Press Start 2P", monospace;
+      font-size: 0.5rem;
+      color: rgba(255,255,255,0.15);
+    }
+
+    /* ========== PROJECTS ========== */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .proj-card {
+      background: rgba(5,0,20,0.9);
+      border: 1px solid rgba(255,45,120,0.3);
+      border-radius: 8px;
+      overflow: hidden;
+      transition: all 0.25s;
+      display: flex;
+      flex-direction: column;
+    }
+    .proj-card:hover {
+      border-color: var(--cyan);
+      box-shadow: 0 0 30px rgba(0,245,255,0.3);
+      transform: translateY(-4px) scale(1.02);
+    }
+    .proj-cover-wrap {
+      position: relative;
+      height: 140px;
+      overflow: hidden;
+    }
+    .proj-cover {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: saturate(1.3) hue-rotate(10deg);
+      transition: transform 0.4s, filter 0.4s;
+    }
+    .proj-card:hover .proj-cover {
+      transform: scale(1.08);
+      filter: saturate(1.6) hue-rotate(20deg) brightness(1.1);
+    }
+    .proj-cover-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 40%, rgba(5,0,20,0.9) 100%);
+    }
+    .proj-badge {
+      position: absolute;
+      top: 0.5rem;
+      right: 0.5rem;
+      font-family: "Press Start 2P", monospace;
+      font-size: 0.35rem;
+      padding: 0.25rem 0.45rem;
+      background: var(--pink);
+      color: #fff;
+      border-radius: 3px;
+      box-shadow: 0 0 10px var(--pink);
+    }
+    .proj-body {
+      padding: 0.8rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .proj-name {
+      font-family: "Orbitron", sans-serif;
+      font-weight: 700;
+      font-size: 0.85rem;
+      color: var(--yellow);
+      text-shadow: 0 0 8px rgba(255,230,0,0.4);
+      margin-bottom: 0.4rem;
+    }
+    .proj-desc {
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.55);
+      line-height: 1.6;
+      flex: 1;
+      margin-bottom: 0.8rem;
+    }
+    .proj-actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+    .btn-game {
+      font-family: "Press Start 2P", monospace;
+      font-size: 0.42rem;
+      padding: 0.4rem 0.65rem;
+      border-radius: 4px;
+      text-decoration: none;
+      border: 1.5px solid;
+      transition: all 0.2s;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+    .btn-game-primary {
+      background: linear-gradient(135deg, var(--pink), var(--purple));
+      border-color: var(--pink);
+      color: #fff;
+      box-shadow: 0 0 12px rgba(255,45,120,0.4);
+    }
+    .btn-game-primary:hover {
+      box-shadow: 0 0 20px rgba(255,45,120,0.8);
+      transform: scale(1.05);
+      color: #fff;
+    }
+    .btn-game-secondary {
+      background: rgba(255,255,255,0.05);
+      border-color: rgba(255,255,255,0.25);
+      color: rgba(255,255,255,0.7);
+    }
+    .btn-game-secondary:hover {
+      border-color: var(--cyan);
+      color: var(--cyan);
+      box-shadow: 0 0 12px rgba(0,245,255,0.4);
+    }
+
+    /* ========== IOT ========== */
+    .iot-grid-wrap {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-top: 1rem;
+    }
+    .iot-spec-panel {
+      background: rgba(0,10,5,0.8);
+      border: 1px solid rgba(57,255,20,0.3);
+      border-radius: 8px;
+      padding: 1.2rem;
+    }
+    .iot-spec-panel .spec-label {
+      font-family: "Press Start 2P", monospace;
+      font-size: 0.45rem;
+      color: var(--green);
+      text-shadow: 0 0 8px var(--green);
+      margin-bottom: 0.3rem;
+    }
+    .iot-spec-panel .spec-value {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.65);
+      margin-bottom: 0.9rem;
+    }
+    .iot-projects-mini {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    .iot-mini-card {
+      display: flex;
+      gap: 0.75rem;
+      align-items: center;
+      background: rgba(10,0,30,0.7);
+      border: 1px solid rgba(180,79,255,0.25);
+      border-radius: 6px;
+      overflow: hidden;
+      transition: all 0.25s;
+      text-decoration: none;
+    }
+    .iot-mini-card:hover {
+      border-color: var(--purple);
+      box-shadow: 0 0 20px rgba(180,79,255,0.3);
+    }
+    .iot-mini-img {
+      width: 80px;
+      height: 70px;
+      object-fit: cover;
+      flex-shrink: 0;
+      filter: saturate(1.2);
+    }
+    .iot-mini-body { padding: 0.5rem; }
+    .iot-mini-title {
+      font-family: "Orbitron", sans-serif;
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--purple);
+      text-shadow: 0 0 8px var(--purple);
+    }
+    .iot-mini-desc {
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.5;
+    }
+    .fablab-banner {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      background: rgba(0,20,5,0.7);
+      border: 1px solid rgba(57,255,20,0.25);
+      border-radius: 8px;
+      padding: 0.8rem 1.2rem;
+      margin-bottom: 1rem;
+    }
+    .fablab-logo {
+      width: 60px;
+      filter: brightness(1.5) drop-shadow(0 0 8px rgba(57,255,20,0.6));
+    }
+    .fablab-text {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.7);
+    }
+    .fablab-text a { color: var(--green); text-decoration: none; }
+    .fablab-text a:hover { text-shadow: 0 0 10px var(--green); }
+
+    /* ========== COLLABORAZIONI ========== */
+    .collab-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    .collab-card {
+      background: rgba(20,0,40,0.7);
+      border: 1px solid rgba(180,79,255,0.25);
+      border-radius: 8px;
+      padding: 1rem;
+      transition: all 0.25s;
+      text-decoration: none;
+      display: block;
+    }
+    .collab-card:hover {
+      border-color: var(--purple);
+      box-shadow: 0 0 20px rgba(180,79,255,0.4);
+      transform: translateY(-3px);
+    }
+    .collab-name {
+      font-family: "Orbitron", sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--purple);
+      text-shadow: 0 0 8px var(--purple);
+      margin-bottom: 0.4rem;
+    }
+    .collab-desc {
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.5;
+      margin-bottom: 0.5rem;
+    }
+    .collab-link {
+      font-family: "Press Start 2P", monospace;
+      font-size: 0.38rem;
+      color: var(--cyan);
+    }
+
+    /* ========== CONTACTS ========== */
+    .contacts-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 1.5rem;
+      margin-top: 1rem;
+    }
+    .contact-list-wrap { display: flex; flex-direction: column; gap: 0.6rem; }
+    .contact-item-card {
+      background: rgba(5,0,20,0.8);
+      border: 1px solid rgba(255,45,120,0.2);
+      border-radius: 6px;
+      padding: 0.7rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .contact-item-card:hover {
+      border-color: var(--pink);
+      box-shadow: 0 0 16px rgba(255,45,120,0.3);
+      transform: translateX(4px);
+    }
+    .contact-icon { font-size: 1.2rem; flex-shrink: 0; width: 26px; text-align: center; }
+    .contact-info { flex: 1; }
+    .contact-label {
+      font-family: "Press Start 2P", monospace;
+      font-size: 0.4rem;
+      color: var(--pink);
+      text-shadow: 0 0 6px var(--pink);
+      display: block;
+      margin-bottom: 0.2rem;
+    }
+    .contact-value {
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.7);
+    }
+
+    /* FORM */
+    .form-wrap { display: flex; flex-direction: column; gap: 0.75rem; }
+    .form-group { display: flex; flex-direction: column; gap: 0.3rem; }
+    .form-label {
+      font-family: "Press Start 2P", monospace;
+      font-size: 0.42rem;
+      color: var(--cyan);
+      text-shadow: 0 0 6px var(--cyan);
+    }
+    .form-input {
+      background: rgba(0,0,20,0.8);
+      border: 1.5px solid rgba(0,245,255,0.3);
+      border-radius: 4px;
+      padding: 0.55rem 0.75rem;
+      color: #fff;
+      font-size: 0.88rem;
+      font-family: "Noto Sans JP", sans-serif;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      resize: vertical;
+    }
+    .form-input::placeholder { color: rgba(255,255,255,0.25); }
+    .form-input:focus {
+      outline: none;
+      border-color: var(--cyan);
+      box-shadow: 0 0 12px rgba(0,245,255,0.3);
+    }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+    .contact-submit {
+      align-self: flex-end;
+      font-family: "Press Start 2P", monospace;
+      font-size: 0.55rem;
+      padding: 0.8rem 1.5rem;
+      background: linear-gradient(135deg, var(--pink), var(--purple));
+      border: none;
+      border-radius: 4px;
+      color: #fff;
+      cursor: pointer;
+      box-shadow: 0 0 20px rgba(255,45,120,0.4);
+      transition: all 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+    .contact-submit::before {
+      content: "";
+      position: absolute;
+      top: -50%; left: -50%;
+      width: 200%; height: 200%;
+      background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.2) 50%, transparent 70%);
+      animation: btn-shine 2.5s ease-in-out infinite;
+    }
+    @keyframes btn-shine {
+      from { transform: translateX(-100%) rotate(45deg); }
+      to   { transform: translateX(100%) rotate(45deg); }
+    }
+    .contact-submit:hover {
+      box-shadow: 0 0 30px rgba(255,45,120,0.7);
+      transform: scale(1.03);
+    }
+    .contact-status {
+      padding: 0.6rem 0.8rem;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      display: none;
+    }
+    .contact-status.ok {
+      background: rgba(57,255,20,0.1);
+      border: 1px solid rgba(57,255,20,0.4);
+      color: var(--green);
+      text-shadow: 0 0 8px var(--green);
+      display: block;
+    }
+    .contact-status.err {
+      background: rgba(255,45,120,0.1);
+      border: 1px solid rgba(255,45,120,0.4);
+      color: var(--pink);
+      text-shadow: 0 0 8px var(--pink);
+      display: block;
+    }
+
+    /* ========== FOOTER ========== */
+    .site-footer {
+      margin-top: 3rem;
+      text-align: center;
+      padding: 2rem 0 1rem;
+      border-top: 1px solid rgba(255,45,120,0.2);
+      position: relative;
+    }
+    .footer-logo {
+      font-family: "Orbitron", sans-serif;
+      font-size: 1.4rem;
+      font-weight: 900;
+      background: linear-gradient(90deg, var(--pink), var(--purple), var(--cyan));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .footer-copy {
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.3);
+      margin-top: 0.5rem;
+    }
+    .footer-copy a { color: rgba(255,255,255,0.3); }
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 1.2rem;
+      margin: 0.8rem 0;
+    }
+    .footer-links a {
+      font-family: "Press Start 2P", monospace;
+      font-size: 0.42rem;
+      color: rgba(255,255,255,0.4);
+      text-decoration: none;
+      transition: color 0.2s, text-shadow 0.2s;
+    }
+    .footer-links a:hover {
+      color: var(--cyan);
+      text-shadow: 0 0 8px var(--cyan);
+    }
+    .login-btn {
+      display: inline-block;
+      font-family: "Press Start 2P", monospace;
+      font-size: 0.5rem;
+      padding: 0.6rem 1.2rem;
+      border: 1.5px solid var(--yellow);
+      color: var(--yellow);
+      text-decoration: none;
+      border-radius: 4px;
+      background: rgba(255,230,0,0.07);
+      text-shadow: 0 0 6px var(--yellow);
+      box-shadow: 0 0 12px rgba(255,230,0,0.2);
+      transition: all 0.2s;
+      margin-top: 0.8rem;
+    }
+    .login-btn:hover {
+      background: rgba(255,230,0,0.15);
+      box-shadow: 0 0 24px rgba(255,230,0,0.5);
+    }
+
+    /* ========== GLOW UTILITIES ========== */
+    @keyframes glow-cyan {
+      from { text-shadow: 0 0 6px var(--cyan); }
+      to   { text-shadow: 0 0 16px var(--cyan), 0 0 30px rgba(0,245,255,0.4); }
+    }
+    @keyframes glow-yellow {
+      from { text-shadow: 0 0 6px var(--yellow); }
+      to   { text-shadow: 0 0 16px var(--yellow), 0 0 30px rgba(255,230,0,0.4); }
+    }
+    @keyframes glow-green {
+      from { text-shadow: 0 0 6px var(--green); }
+      to   { text-shadow: 0 0 16px var(--green), 0 0 30px rgba(57,255,20,0.4); }
+    }
+
+    /* ========== RESPONSIVE ========== */
+    @media (max-width: 900px) {
+      .hero-grid { grid-template-columns: 1fr; }
+      .player-photo { max-width: 200px; }
+      .projects-grid { grid-template-columns: repeat(2, 1fr); }
+      .collab-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 600px) {
+      .services-grid { grid-template-columns: 1fr; }
+      .projects-grid { grid-template-columns: 1fr; }
+      .collab-grid { grid-template-columns: 1fr 1fr; }
+      .iot-grid-wrap { grid-template-columns: 1fr; }
+      .contacts-grid { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+      .collab-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- CANVAS BACKGROUND -->
+<canvas id="bg-canvas"></canvas>
+
+<!-- SAKURA PETALS -->
+<div class="sakura-wrap" id="sakura"></div>
+
+<div class="page-wrap">
+
+  <!-- ===== HEADER ===== -->
+  <header class="site-header">
+    <div class="header-jp-sub">ソフトウェア &bull; ウェブユーティリティ &bull; IoTプロトタイプ</div>
+    <span class="logo-text">TONGATRON</span>
+    <span class="logo-kanji">トンガトロン // クリエイティブテクノロジスト</span>
+    <p class="header-tagline">SOFTWARE &bull; WEB UTILITY &bull; IoT PROTOTYPES &bull; TORINO 🇮🇹</p>
+    <span class="insert-coin">▶ PRESS START TO PLAY ◀</span>
+
+    <nav class="site-nav">
+      <a href="#bio"><span>👾 PLAYER</span></a>
+      <a href="#services"><span>⚔️ SERVIZI</span></a>
+      <a href="#projects"><span>🗂️ PROGETTI</span></a>
+      <a href="#iot"><span>🤖 IoT</span></a>
+      <a href="#collab"><span>🌐 NETWORK</span></a>
+      <a href="#contacts"><span>📡 CONTATTI</span></a>
+    </nav>
+  </header>
+
+  <!-- ===== HERO / BIO ===== -->
+  <section class="game-section hero-section" id="bio">
+    <div class="hero-grid">
+
+      <!-- PLAYER CARD -->
+      <div class="player-card">
+        <div class="panel" style="text-align:center; padding:1.2rem;">
+          <div class="corner-deco tl"></div><div class="corner-deco tr"></div>
+          <div class="corner-deco bl"></div><div class="corner-deco br"></div>
+
+          <p style="font-family:'Press Start 2P',monospace;font-size:0.5rem;color:var(--yellow);margin-bottom:0.8rem;text-shadow:0 0 8px var(--yellow);">
+            — PLAYER 01 —
+          </p>
+          <div class="player-photo-wrap">
+            <img src="/img/giovanni-bindi-hero.jpg" class="player-photo" alt="Giovanni Bindi">
+          </div>
+          <p class="player-tag" style="margin-top:0.8rem;">ジョバンニ・ビンディ</p>
+
+          <div class="stat-bar-wrap">
+            <div style="font-family:'Press Start 2P',monospace;font-size:0.4rem;color:rgba(255,255,255,0.4);margin-bottom:0.6rem;text-align:left;">— STATS —</div>
+            <div class="stat-row">
+              <span class="stat-label">CODE</span>
+              <div class="stat-bar-outer"><div class="stat-bar-inner bar-pink" style="width:92%"></div></div>
+              <span class="stat-val">92</span>
+            </div>
+            <div class="stat-row">
+              <span class="stat-label">UX</span>
+              <div class="stat-bar-outer"><div class="stat-bar-inner bar-cyan" style="width:85%"></div></div>
+              <span class="stat-val">85</span>
+            </div>
+            <div class="stat-row">
+              <span class="stat-label">IoT</span>
+              <div class="stat-bar-outer"><div class="stat-bar-inner bar-green" style="width:78%"></div></div>
+              <span class="stat-val">78</span>
+            </div>
+            <div class="stat-row">
+              <span class="stat-label">MGMT</span>
+              <div class="stat-bar-outer"><div class="stat-bar-inner bar-yellow" style="width:88%"></div></div>
+              <span class="stat-val">88</span>
+            </div>
+          </div>
+
+          <div style="margin-top:1rem;">
+            <a class="github-button" href="https://github.com/tongatron"
+               data-color-scheme="no-preference: dark; light: dark; dark: dark;"
+               data-size="large"
+               aria-label="Follow @tongatron on GitHub">Follow @tongatron</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- BIO PANEL -->
+      <div class="bio-panel panel">
+        <div class="corner-deco tl"></div><div class="corner-deco tr"></div>
+        <div class="corner-deco bl"></div><div class="corner-deco br"></div>
+
+        <h1 class="player-name">Giovanni<br>Bindi</h1>
+        <p class="player-class">★ CREATIVE TECHNOLOGIST LV.MAX ★</p>
+        <p class="player-location">📍 Turin, Italy &nbsp;|&nbsp; 🌐 tongatron.org</p>
+
+        <div class="lore-text">
+          Progetto e costruisco sistemi digitali che <strong style="color:var(--cyan)">funzionano davvero</strong>.
+          Piattaforme web, applicazioni real-time, tool mobile-first, prototipi IoT e interfacce sperimentali.
+        </div>
+
+        <p style="font-family:'Press Start 2P',monospace;font-size:0.5rem;color:var(--pink);margin:0.8rem 0 0.4rem;text-shadow:0 0 8px var(--pink);">
+          ABILITIES
+        </p>
+        <div class="ability-list">
+          <span class="ability-tag a">HTML / CSS</span>
+          <span class="ability-tag b">JavaScript</span>
+          <span class="ability-tag c">Node.js</span>
+          <span class="ability-tag d">Arduino</span>
+          <span class="ability-tag e">Raspberry Pi</span>
+          <span class="ability-tag a">ICT Management</span>
+          <span class="ability-tag b">IoT Prototyping</span>
+          <span class="ability-tag c">Digital Fabrication</span>
+          <span class="ability-tag d">Web Platforms</span>
+        </div>
+
+        <div style="margin-top:1rem;padding:0.8rem;background:rgba(255,230,0,0.05);border:1px solid rgba(255,230,0,0.2);border-radius:6px;">
+          <p style="font-family:'Press Start 2P',monospace;font-size:0.42rem;color:var(--yellow);margin-bottom:0.3rem;">⚡ FOCUS MISSIONE</p>
+          <p style="font-size:0.82rem;color:rgba(255,255,255,0.65);line-height:1.7;margin:0;">
+            Execution · Simplicity · Real-world Impact
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SERVIZI ===== -->
+  <section class="game-section" id="services">
+    <div class="panel">
+      <div class="corner-deco tl"></div><div class="corner-deco tr"></div>
+      <div class="corner-deco bl"></div><div class="corner-deco br"></div>
+      <h2 class="panel-title">⚔️ SERVIZI <span class="jp">サービス</span></h2>
+      <div class="services-grid">
+        <div class="service-card">
+          <span class="service-num">01</span>
+          <span class="service-icon" style="animation-delay:0s">📋</span>
+          <div class="service-name">ICT Project Management</div>
+          <div class="service-desc">Gestione end-to-end di progetti ICT: dalla definizione degli obiettivi alla consegna, con coordinamento di team multidisciplinari e controllo continuo di tempi, costi e qualità.</div>
+        </div>
+        <div class="service-card">
+          <span class="service-num">02</span>
+          <span class="service-icon" style="animation-delay:0.4s">💡</span>
+          <div class="service-name">Consulenze in Innovazione Digitale</div>
+          <div class="service-desc">Supporto strategico per introdurre soluzioni digitali concrete, semplificare i processi e rafforzare la governance tecnologica.</div>
+        </div>
+        <div class="service-card">
+          <span class="service-num">03</span>
+          <span class="service-icon" style="animation-delay:0.8s">⚙️</span>
+          <div class="service-name">Progettazione e Sviluppo</div>
+          <div class="service-desc">Progettazione e sviluppo di soluzioni software su misura, dal concept al rilascio, con un approccio iterativo e orientato ai risultati.</div>
+        </div>
+        <div class="service-card">
+          <span class="service-num">04</span>
+          <span class="service-icon" style="animation-delay:1.2s">🎓</span>
+          <div class="service-name">Formazione e Didattica</div>
+          <div class="service-desc">Percorsi formativi su ICT, coding e innovazione digitale, progettati per trasferire competenze subito applicabili nei contesti reali.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PROGETTI ===== -->
+  <section class="game-section" id="projects">
+    <div class="panel">
+      <div class="corner-deco tl"></div><div class="corner-deco tr"></div>
+      <div class="corner-deco bl"></div><div class="corner-deco br"></div>
+      <h2 class="panel-title">🗂️ PROGETTI RECENTI <span class="jp">最新プロジェクト</span></h2>
+      <div class="projects-grid">
+
+        <article class="proj-card">
+          <a href="https://tongatron.org/projects/ryanair-search">
+            <div class="proj-cover-wrap">
+              <img src="img/projects/ryanair-search.jpg" class="proj-cover" alt="Ryanair Search">
+              <div class="proj-cover-overlay"></div>
+              <span class="proj-badge">WEB TOOL</span>
+            </div>
+          </a>
+          <div class="proj-body">
+            <h3 class="proj-name">Ryanair Search</h3>
+            <p class="proj-desc">Utility web per cercare voli andata e ritorno con filtri su budget, durata, partenza e destinazione.</p>
+            <div class="proj-actions">
+              <a class="btn-game btn-game-primary" href="https://tongatron.org/projects/ryanair-search">▶ APRI</a>
+              <a class="btn-game btn-game-secondary" href="https://github.com/tongatron/tongatron.github.io/tree/main/projects/ryanair-search" target="_blank" rel="noopener">GH</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="proj-card">
+          <a href="https://tongatron.org/head-tracking">
+            <div class="proj-cover-wrap">
+              <img src="img/projects/head-tracking.jpg" class="proj-cover" alt="Head Tracking">
+              <div class="proj-cover-overlay"></div>
+              <span class="proj-badge">EXPERIMENT</span>
+            </div>
+          </a>
+          <div class="proj-body">
+            <h3 class="proj-name">Head Tracking</h3>
+            <p class="proj-desc">Esperimento web per testare interazioni basate sul movimento della testa direttamente nel browser.</p>
+            <div class="proj-actions">
+              <a class="btn-game btn-game-primary" href="https://tongatron.org/head-tracking">▶ APRI</a>
+              <a class="btn-game btn-game-secondary" href="https://github.com/tongatron/head-tracking" target="_blank" rel="noopener">GH</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="proj-card">
+          <a href="https://gtt-to.onrender.com/">
+            <div class="proj-cover-wrap">
+              <img src="img/projects/gtt-radar.jpg" class="proj-cover" alt="GTT Radar">
+              <div class="proj-cover-overlay"></div>
+              <span class="proj-badge">UTILITY</span>
+            </div>
+          </a>
+          <div class="proj-body">
+            <h3 class="proj-name">GTT Radar</h3>
+            <p class="proj-desc">Monitoraggio linee e passaggi del trasporto pubblico torinese, mobile-first.</p>
+            <div class="proj-actions">
+              <a class="btn-game btn-game-primary" href="https://gtt-to.onrender.com/">▶ APRI</a>
+              <a class="btn-game btn-game-secondary" href="https://github.com/tongatron/gtt-to" target="_blank" rel="noopener">GH</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="proj-card">
+          <a href="https://tongatron.github.io/pa-ninja/landing/">
+            <div class="proj-cover-wrap">
+              <img src="img/projects/pa-ninja.jpg" class="proj-cover" alt="PA Ninja">
+              <div class="proj-cover-overlay"></div>
+              <span class="proj-badge">LOCAL TOOL</span>
+            </div>
+          </a>
+          <div class="proj-body">
+            <h3 class="proj-name">PA Ninja</h3>
+            <p class="proj-desc">Strumento locale per consultare e organizzare info dai portali della Pubblica Amministrazione italiana.</p>
+            <div class="proj-actions">
+              <a class="btn-game btn-game-primary" href="https://tongatron.github.io/pa-ninja/landing/">▶ APRI</a>
+              <a class="btn-game btn-game-secondary" href="https://github.com/tongatron/pa-ninja" target="_blank" rel="noopener">GH</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="proj-card">
+          <a href="https://github.com/tongatron/gmail-stats">
+            <div class="proj-cover-wrap">
+              <img src="img/projects/gmail-stats.jpg" class="proj-cover" alt="Gmail Stats">
+              <div class="proj-cover-overlay"></div>
+              <span class="proj-badge">DASHBOARD</span>
+            </div>
+          </a>
+          <div class="proj-body">
+            <h3 class="proj-name">Gmail Stats</h3>
+            <p class="proj-desc">Dashboard locale per l'analisi delle email inviate: volumi, frequenza e pattern di comunicazione.</p>
+            <div class="proj-actions">
+              <a class="btn-game btn-game-primary" href="https://tongatron.org/gmail-stats/">▶ APRI</a>
+              <a class="btn-game btn-game-secondary" href="https://github.com/tongatron/gmail-stats" target="_blank" rel="noopener">GH</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="proj-card">
+          <a href="https://chat.tongatron.org/">
+            <div class="proj-cover-wrap">
+              <img src="img/projects/raspi-chat.jpg" class="proj-cover" alt="Raspi Chat">
+              <div class="proj-cover-overlay"></div>
+              <span class="proj-badge">SELF-HOSTED</span>
+            </div>
+          </a>
+          <div class="proj-body">
+            <h3 class="proj-name">Raspi Chat</h3>
+            <p class="proj-desc">Chat self-hosted per piccoli gruppi, con stanze private e notifiche web push.</p>
+            <div class="proj-actions">
+              <a class="btn-game btn-game-primary" href="https://chat.tongatron.org/">▶ APRI</a>
+              <a class="btn-game btn-game-secondary" href="https://github.com/tongatron/raspi-chat" target="_blank" rel="noopener">GH</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="proj-card" style="grid-column: 1 / -1;">
+          <a href="https://tongatron.org/projects/computing-timeline/">
+            <div class="proj-cover-wrap" style="height:100px;">
+              <img src="projects/computing-timeline/logo.png" class="proj-cover" alt="Moore's Law in Motion" style="object-fit:contain;background:#000;padding:0.5rem;">
+              <div class="proj-cover-overlay"></div>
+              <span class="proj-badge">INTERACTIVE VIZ</span>
+            </div>
+          </a>
+          <div class="proj-body">
+            <h3 class="proj-name">Moore's Law in Motion</h3>
+            <p class="proj-desc">Visualizzazione interattiva per confrontare la potenza computazionale delle macchine più famose nella storia del computing.</p>
+            <div class="proj-actions">
+              <a class="btn-game btn-game-primary" href="https://tongatron.org/projects/computing-timeline/">▶ APRI</a>
+              <a class="btn-game btn-game-secondary" href="https://github.com/tongatron/tongatron.github.io/tree/main/projects/computing-timeline" target="_blank" rel="noopener">GH</a>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== IoT ===== -->
+  <section class="game-section" id="iot">
+    <div class="panel" style="border-color:rgba(57,255,20,0.4);">
+      <div class="corner-deco tl" style="border-color:var(--green)"></div>
+      <div class="corner-deco tr" style="border-color:var(--green)"></div>
+      <div class="corner-deco bl" style="border-color:var(--green)"></div>
+      <div class="corner-deco br" style="border-color:var(--green)"></div>
+      <h2 class="panel-title" style="color:var(--green);text-shadow:0 0 12px var(--green),0 0 24px rgba(57,255,20,0.4);">🤖 IoT & DIGITAL FAB <span class="jp" style="color:var(--green);">デジタルファブリケーション</span></h2>
+
+      <div class="fablab-banner">
+        <img src="img/fablogo-white.png" alt="Fablab Torino" class="fablab-logo">
+        <div class="fablab-text">
+          Progetti ideati e sviluppati presso <a href="https://fablabtorino.org/">Fablab Torino</a>
+        </div>
+      </div>
+
+      <div class="iot-grid-wrap">
+        <div class="iot-spec-panel">
+          <div class="spec-label">PLATFORMS</div>
+          <div class="spec-value">Arduino, Raspberry Pi</div>
+          <div class="spec-label">DIGITAL FAB TOOLS</div>
+          <div class="spec-value">Stampanti 3D · Taglio laser · Fresa CNC</div>
+          <div class="spec-label">LANGUAGES</div>
+          <div class="spec-value">Arduino Wiring · Python · Processing · API web</div>
+          <div class="spec-label">OPERATING SYSTEMS</div>
+          <div class="spec-value">Debian Linux · Raspberry Pi OS</div>
+        </div>
+
+        <div class="iot-projects-mini">
+          <a class="iot-mini-card" href="https://tongatron.org/projects/robottino/robottino-site/index.html">
+            <img src="img/robottino.jpg" alt="Robottino" class="iot-mini-img">
+            <div class="iot-mini-body">
+              <div class="iot-mini-title">Robottino</div>
+              <div class="iot-mini-desc">Robot educativo STEM open source basato su Arduino — display, sensori, buzzer, RGB, ultrasonico, testa rotante.</div>
+            </div>
+          </a>
+          <a class="iot-mini-card" href="https://tongatron.org/projects/selfomatic/index.html">
+            <img src="img/contact.jpg" alt="Selfomatic" class="iot-mini-img">
+            <div class="iot-mini-body">
+              <div class="iot-mini-title">Selfomatic</div>
+              <div class="iot-mini-desc">Social camera per eventi con scatto automatico e pubblicazione in tempo reale.</div>
+            </div>
+          </a>
+          <a class="iot-mini-card" href="https://tongatron.org/projects/IKEA-hack/index.html">
+            <img src="projects/IKEA-hack/ikea.jpg" alt="IKEA Hack" class="iot-mini-img">
+            <div class="iot-mini-body">
+              <div class="iot-mini-title">IKEA Hack Nordli</div>
+              <div class="iot-mini-desc">Cassettiera Nordli personalizzata con tavolino estraibile tagliato a laser.</div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== COLLABORAZIONI ===== -->
+  <section class="game-section" id="collab">
+    <div class="panel" style="border-color:rgba(180,79,255,0.4);">
+      <div class="corner-deco tl" style="border-color:var(--purple)"></div>
+      <div class="corner-deco tr" style="border-color:var(--purple)"></div>
+      <div class="corner-deco bl" style="border-color:var(--purple)"></div>
+      <div class="corner-deco br" style="border-color:var(--purple)"></div>
+      <h2 class="panel-title" style="color:var(--purple);text-shadow:0 0 12px var(--purple);">🌐 NETWORK <span class="jp" style="color:var(--purple);">コラボレーション</span></h2>
+      <div class="collab-grid">
+        <a class="collab-card" href="http://www.fabersum.it/" target="_blank" rel="noopener">
+          <div class="collab-name">FaberSum</div>
+          <div class="collab-desc">Lavorazioni CNC e prototipazione digitale</div>
+          <div class="collab-link">fabersum.it ↗</div>
+        </a>
+        <a class="collab-card" href="https://www.peal.space/" target="_blank" rel="noopener">
+          <div class="collab-name">Pangrus</div>
+          <div class="collab-desc">Laboratorio di ricerca elettroacustica</div>
+          <div class="collab-link">peal.space ↗</div>
+        </a>
+        <a class="collab-card" href="https://fablabtorino.org/" target="_blank" rel="noopener">
+          <div class="collab-name">Fablab Torino</div>
+          <div class="collab-desc">Associazione e laboratorio di fabbricazione digitale</div>
+          <div class="collab-link">fablabtorino.org ↗</div>
+        </a>
+        <a class="collab-card" href="https://www.little-endian.it/" target="_blank" rel="noopener">
+          <div class="collab-name">LittleEndian</div>
+          <div class="collab-desc">Sviluppo software, sistemi embedded e IoT</div>
+          <div class="collab-link">little-endian.it ↗</div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CONTATTI ===== -->
+  <section class="game-section" id="contacts">
+    <div class="panel">
+      <div class="corner-deco tl"></div><div class="corner-deco tr"></div>
+      <div class="corner-deco bl"></div><div class="corner-deco br"></div>
+      <h2 class="panel-title">📡 CONTATTI <span class="jp">コンタクト</span></h2>
+      <div class="contacts-grid">
+
+        <div class="contact-list-wrap">
+          <a class="contact-item-card" href="mailto:giovanni.bindi@tongatron.org">
+            <span class="contact-icon">📧</span>
+            <div class="contact-info">
+              <span class="contact-label">MAIL</span>
+              <span class="contact-value">giovanni.bindi@tongatron.org</span>
+            </div>
+          </a>
+          <a class="contact-item-card" href="https://github.com/tongatron" target="_blank" rel="noopener">
+            <span class="contact-icon">🐙</span>
+            <div class="contact-info">
+              <span class="contact-label">GITHUB</span>
+              <span class="contact-value">github.com/tongatron</span>
+            </div>
+          </a>
+          <a class="contact-item-card" href="https://www.linkedin.com/in/giovannibindi/" target="_blank" rel="noopener">
+            <span class="contact-icon">💼</span>
+            <div class="contact-info">
+              <span class="contact-label">LINKEDIN</span>
+              <span class="contact-value">linkedin.com/in/giovannibindi</span>
+            </div>
+          </a>
+          <a class="contact-item-card" href="https://x.com/giobindi" target="_blank" rel="noopener">
+            <span class="contact-icon">𝕏</span>
+            <div class="contact-info">
+              <span class="contact-label">X / TWITTER</span>
+              <span class="contact-value">x.com/giobindi</span>
+            </div>
+          </a>
+          <a class="contact-item-card" href="https://hackaday.io/tongatron" target="_blank" rel="noopener">
+            <span class="contact-icon">🔧</span>
+            <div class="contact-info">
+              <span class="contact-label">HACKADAY</span>
+              <span class="contact-value">hackaday.io/tongatron</span>
+            </div>
+          </a>
+        </div>
+
+        <div>
+          <div id="contact-status" class="contact-status" role="alert"></div>
+          <form id="contact-form" class="form-wrap" novalidate>
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="cf-name">PLAYER NAME</label>
+                <input type="text" id="cf-name" class="form-input" placeholder="Il tuo nome" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="cf-email">PLAYER MAIL</label>
+                <input type="email" id="cf-email" class="form-input" placeholder="tua@email.com" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="cf-message">MESSAGGIO</label>
+              <textarea id="cf-message" class="form-input" rows="4" placeholder="Scrivi qui il tuo messaggio..." required></textarea>
+            </div>
+            <button type="submit" class="contact-submit" id="cf-btn">
+              ▶ INVIA MESSAGGIO
+            </button>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="site-footer">
+    <div class="footer-logo">TONGATRON</div>
+    <div class="footer-links">
+      <a href="https://github.com/tongatron">GitHub</a>
+      <a href="https://www.linkedin.com/in/giovannibindi/">LinkedIn</a>
+      <a href="https://x.com/giobindi">X</a>
+      <a href="https://hackaday.io/tongatron">Hackaday</a>
+    </div>
+    <p class="footer-copy">&copy; <a href="/pulsanti/" target="_blank" rel="noopener">2026</a> Tongatron — All rights reserved</p>
+    <a class="login-btn" href="https://private.tongatron.org/admin" rel="nofollow">⚡ LOGIN</a>
+  </footer>
+
+</div><!-- /page-wrap -->
+
+<!-- ============================================================
+     JAVASCRIPT
+============================================================ -->
+<script>
+/* ---- CANVAS STARFIELD + GRID ---- */
+(function() {
+  const canvas = document.getElementById('bg-canvas');
+  const ctx = canvas.getContext('2d');
+  let W, H, stars = [], grid = [];
+  const STAR_COUNT = 200;
+
+  function resize() {
+    W = canvas.width  = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+    stars = [];
+    for (let i = 0; i < STAR_COUNT; i++) {
+      stars.push({
+        x: Math.random() * W,
+        y: Math.random() * H,
+        r: Math.random() * 1.5 + 0.3,
+        speed: Math.random() * 0.3 + 0.05,
+        alpha: Math.random() * 0.7 + 0.2,
+        twinkle: Math.random() * Math.PI * 2
+      });
+    }
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  let t = 0;
+  function draw() {
+    t += 0.008;
+    ctx.clearRect(0, 0, W, H);
+
+    /* deep space gradient */
+    const grad = ctx.createRadialGradient(W/2, H/2, 0, W/2, H/2, Math.max(W,H)*0.7);
+    grad.addColorStop(0,   'rgba(20, 0, 50, 1)');
+    grad.addColorStop(0.5, 'rgba(10, 0, 30, 1)');
+    grad.addColorStop(1,   'rgba(3, 0, 10, 1)');
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, W, H);
+
+    /* grid */
+    ctx.strokeStyle = 'rgba(255, 45, 120, 0.06)';
+    ctx.lineWidth = 1;
+    const cell = 60;
+    const offY = (t * 20) % cell;
+    for (let y = -cell + offY; y < H + cell; y += cell) {
+      ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke();
+    }
+    for (let x = 0; x < W + cell; x += cell) {
+      ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke();
+    }
+
+    /* stars */
+    stars.forEach(s => {
+      s.y += s.speed;
+      if (s.y > H) { s.y = 0; s.x = Math.random() * W; }
+      const a = s.alpha * (0.6 + 0.4 * Math.sin(s.twinkle + t * 3));
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(255, 255, 255, ${a})`;
+      ctx.fill();
+    });
+
+    /* nebula blobs */
+    [[W*0.1, H*0.2, 200, 'rgba(180,79,255,0.04)'],
+     [W*0.85, H*0.6, 280, 'rgba(255,45,120,0.03)'],
+     [W*0.5,  H*0.8, 220, 'rgba(0,245,255,0.03)']].forEach(([x,y,r,c]) => {
+      const g = ctx.createRadialGradient(x, y, 0, x, y, r);
+      g.addColorStop(0, c); g.addColorStop(1, 'transparent');
+      ctx.fillStyle = g;
+      ctx.fillRect(0, 0, W, H);
+    });
+
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+/* ---- SAKURA PETALS ---- */
+(function() {
+  const wrap = document.getElementById('sakura');
+  const colors = ['#ff2d78', '#ff69b4', '#ffb6c1', '#b44fff', '#ff85c0'];
+  for (let i = 0; i < 18; i++) {
+    const p = document.createElement('div');
+    p.className = 'petal';
+    p.style.left = Math.random() * 100 + '%';
+    p.style.animationDuration = (Math.random() * 6 + 5) + 's';
+    p.style.animationDelay = -(Math.random() * 10) + 's';
+    p.style.width = p.style.height = (Math.random() * 8 + 6) + 'px';
+    p.style.background = colors[Math.floor(Math.random() * colors.length)];
+    p.style.opacity = Math.random() * 0.5 + 0.3;
+    p.style.borderRadius = Math.random() > 0.5 ? '0 50% 50% 50%' : '50% 0 50% 50%';
+    wrap.appendChild(p);
+  }
+})();
+
+/* ---- CONTACT FORM ---- */
+(function() {
+  const API = 'https://api.tongatron.org/api/send-mail';
+  const EMAIL_TO = 'giovanni.bindi@tongatron.org';
+  const form = document.getElementById('contact-form');
+  const btn  = document.getElementById('cf-btn');
+  const statusEl = document.getElementById('contact-status');
+  if (!form) return;
+
+  function showStatus(text, ok) {
+    statusEl.textContent = text;
+    statusEl.className = 'contact-status ' + (ok ? 'ok' : 'err');
+    statusEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+  function openMailFallback(payload) {
+    const s = encodeURIComponent('Messaggio dal sito da ' + payload.name);
+    const b = encodeURIComponent('Nome: ' + payload.name + '\nEmail: ' + payload.email + '\n\n' + payload.message);
+    window.location.href = 'mailto:' + EMAIL_TO + '?subject=' + s + '&body=' + b;
+  }
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const name    = document.getElementById('cf-name').value.trim();
+    const email   = document.getElementById('cf-email').value.trim();
+    const message = document.getElementById('cf-message').value.trim();
+    if (!name || !email || !message) {
+      showStatus('⚠️ Compila tutti i campi, eroe!', false);
+      return;
+    }
+    btn.textContent = '⏳ INVIO IN CORSO...';
+    btn.disabled = true;
+    statusEl.className = 'contact-status';
+
+    const payload = { name, email, message };
+    try {
+      const res  = await fetch(API, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+      const data = await res.json().catch(() => null);
+      if (res.ok && data && data.ok) {
+        showStatus('✅ MISSIONE COMPLETATA! Risposta in arrivo presto.', true);
+        form.reset();
+      } else {
+        openMailFallback(payload);
+        showStatus('⚠️ Server offline. Ho aperto la tua app email!', false);
+      }
+    } catch {
+      openMailFallback(payload);
+      showStatus('⚠️ Server non raggiungibile. Ho aperto la tua app email!', false);
+    } finally {
+      btn.textContent = '▶ INVIA MESSAGGIO';
+      btn.disabled = false;
+    }
+  });
+})();
+</script>
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+</body>
+</html>

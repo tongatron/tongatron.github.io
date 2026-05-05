@@ -1,0 +1,945 @@
+<!doctype html public "-//W3C//DTD HTML 3.2//EN">
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <title>~~*~~ TONGATRON ~~*~~ Software, Utility Web e Prototipi IoT</title>
+  <meta name="description" content="Tongatron progetta software, utility web, prototipi IoT e soluzioni digitali.">
+
+  <style>
+    /* ============================================
+       TONGATRON.ORG - VERSIONE ANNI '90
+       Ottimizzato per Netscape Navigator 4.0
+       Risoluzione consigliata: 800x600
+    ============================================ */
+
+    @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+
+    body {
+      background-color: #000080;
+      color: #ffff00;
+      font-family: "Comic Sans MS", "Courier New", monospace;
+      margin: 0;
+      padding: 0;
+    }
+
+    a { color: #00ffff; text-decoration: underline; }
+    a:visited { color: #ff00ff; }
+    a:hover { color: #ff0000; background: #ffff00; }
+
+    .page-wrap {
+      max-width: 800px;
+      margin: 0 auto;
+      background-color: #000033;
+      border: 4px ridge #00ffff;
+      padding: 0;
+    }
+
+    /* HEADER */
+    .site-header {
+      background: linear-gradient(180deg, #000000, #000080, #000000);
+      text-align: center;
+      padding: 10px 0 0 0;
+      border-bottom: 4px ridge #ffff00;
+    }
+
+    .site-header h1 {
+      font-family: "VT323", "Courier New", monospace;
+      font-size: 72px;
+      color: #ffcc00;
+      text-shadow: 4px 4px 0 #ff6600, 6px 6px 0 #ff0000;
+      margin: 0;
+      letter-spacing: 6px;
+    }
+
+    .blink {
+      animation: blink 0.8s step-start infinite;
+    }
+    @keyframes blink {
+      50% { opacity: 0; }
+    }
+
+    .rainbow {
+      background: linear-gradient(90deg,
+        #ff0000 0%, #ff7700 14%, #ffff00 28%,
+        #00ff00 42%, #0000ff 57%, #8b00ff 71%, #ff00ff 85%, #ff0000 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-weight: bold;
+    }
+
+    /* NAVIGATION */
+    .nav-bar {
+      background: #000000;
+      padding: 6px 0;
+      text-align: center;
+      border-bottom: 3px solid #00ff00;
+    }
+    .nav-bar a {
+      display: inline-block;
+      margin: 2px 8px;
+      padding: 3px 10px;
+      background: #000080;
+      border: 2px outset #00ffff;
+      color: #ffff00;
+      text-decoration: none;
+      font-size: 13px;
+      font-family: "Comic Sans MS", sans-serif;
+      font-weight: bold;
+    }
+    .nav-bar a:hover {
+      background: #ff0000;
+      color: #ffffff;
+      border-style: inset;
+    }
+
+    /* MARQUEE */
+    marquee {
+      background: #000000;
+      color: #00ff00;
+      font-family: "Courier New", monospace;
+      font-size: 13px;
+      padding: 4px 0;
+      border-top: 2px solid #00ff00;
+      border-bottom: 2px solid #00ff00;
+    }
+
+    /* SECTIONS */
+    .section {
+      padding: 16px 20px;
+      border-bottom: 3px ridge #00ffff;
+    }
+
+    .section h2 {
+      font-family: "VT323", "Courier New", monospace;
+      font-size: 38px;
+      color: #00ff00;
+      text-shadow: 2px 2px 0 #006600;
+      border-bottom: 2px dashed #00ff00;
+      padding-bottom: 6px;
+      margin-top: 0;
+    }
+
+    /* HERO */
+    .hero-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .hero-photo {
+      width: 220px;
+      border: 4px ridge #ffff00;
+      display: block;
+    }
+    .hero-bio {
+      padding-left: 20px;
+      vertical-align: top;
+    }
+    .hero-bio h2 {
+      font-family: "VT323", monospace;
+      font-size: 48px;
+      color: #ffcc00;
+      text-shadow: 3px 3px 0 #cc6600;
+      margin: 0 0 8px 0;
+      border: none;
+    }
+    .hero-bio p {
+      font-size: 14px;
+      line-height: 1.7;
+      color: #ccccff;
+    }
+    .status-badge {
+      display: inline-block;
+      background: #ff0000;
+      color: #ffffff;
+      border: 2px outset #ff8888;
+      padding: 2px 8px;
+      font-size: 11px;
+      font-weight: bold;
+      animation: blink 1.2s step-start infinite;
+    }
+
+    /* HR RAINBOW */
+    hr.rainbow-hr {
+      border: none;
+      height: 4px;
+      background: linear-gradient(90deg,
+        #ff0000, #ff7700, #ffff00, #00ff00, #0000ff, #8b00ff, #ff00ff, #ff0000);
+      margin: 12px 0;
+    }
+
+    /* SERVICES TABLE */
+    .services-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .services-table td {
+      vertical-align: top;
+      padding: 8px;
+      border: 2px groove #0000ff;
+      background: #000033;
+      width: 50%;
+    }
+    .services-table td h3 {
+      color: #ffcc00;
+      font-size: 15px;
+      margin: 0 0 6px 0;
+      font-family: "Comic Sans MS", sans-serif;
+    }
+    .services-table td p {
+      color: #aaaacc;
+      font-size: 12px;
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    /* PROJECTS */
+    .projects-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .projects-table td {
+      vertical-align: top;
+      padding: 10px 8px;
+      border: 1px solid #003366;
+      background: #000022;
+      width: 50%;
+    }
+    .projects-table td img {
+      width: 100%;
+      height: 120px;
+      object-fit: cover;
+      border: 3px ridge #00ffff;
+      display: block;
+      margin-bottom: 6px;
+    }
+    .projects-table td h3 {
+      color: #00ffff;
+      font-size: 15px;
+      margin: 4px 0;
+      font-family: "VT323", monospace;
+      font-size: 22px;
+    }
+    .projects-table td p {
+      color: #9999bb;
+      font-size: 11px;
+      margin: 0 0 8px;
+      line-height: 1.5;
+    }
+    .btn-90s {
+      display: inline-block;
+      background: #0000cc;
+      color: #ffff00;
+      border: 2px outset #6666ff;
+      padding: 2px 10px;
+      font-size: 12px;
+      font-weight: bold;
+      text-decoration: none;
+      cursor: pointer;
+      font-family: "Comic Sans MS", sans-serif;
+      margin-right: 4px;
+    }
+    .btn-90s:hover {
+      background: #ff0000;
+      color: #ffffff;
+      border-style: inset;
+    }
+    .btn-90s-yellow {
+      background: #ffcc00;
+      color: #000000;
+      border: 2px outset #ffee88;
+    }
+    .btn-90s-yellow:hover {
+      background: #cc9900;
+      color: #000000;
+    }
+
+    /* IOT */
+    .iot-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .iot-table td {
+      padding: 8px;
+      border: 1px solid #004400;
+      background: #001100;
+      vertical-align: top;
+    }
+    .iot-table td strong {
+      color: #00ff00;
+      display: block;
+      font-size: 12px;
+      margin-bottom: 3px;
+    }
+    .iot-table td span {
+      color: #668866;
+      font-size: 11px;
+    }
+
+    /* COLLABORAZIONI */
+    .collab-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .collab-table td {
+      vertical-align: top;
+      padding: 10px;
+      border: 2px groove #660066;
+      background: #110011;
+      width: 25%;
+    }
+    .collab-table td h3 {
+      color: #ff66ff;
+      font-size: 14px;
+      margin: 0 0 5px;
+      font-family: "VT323", monospace;
+      font-size: 20px;
+    }
+    .collab-table td p {
+      color: #aa88aa;
+      font-size: 11px;
+      margin: 0 0 5px;
+    }
+
+    /* CONTACTS */
+    .contacts-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .contacts-table td {
+      vertical-align: top;
+      padding: 10px;
+    }
+    .contact-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .contact-list li {
+      padding: 6px 0;
+      border-bottom: 1px dotted #333366;
+      font-size: 13px;
+    }
+    .contact-list li span {
+      color: #aaaacc;
+      display: block;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* FORM */
+    .form-90s input,
+    .form-90s textarea {
+      background: #000033;
+      color: #00ff00;
+      border: 2px inset #0000aa;
+      font-family: "Courier New", monospace;
+      font-size: 13px;
+      padding: 4px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    .form-90s label {
+      color: #aaaaff;
+      font-size: 12px;
+      display: block;
+      margin-bottom: 2px;
+    }
+    .form-90s .field { margin-bottom: 10px; }
+    .submit-btn {
+      background: #ffcc00;
+      color: #000000;
+      border: 3px outset #ffee88;
+      padding: 5px 20px;
+      font-family: "Comic Sans MS", sans-serif;
+      font-size: 14px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .submit-btn:hover {
+      border-style: inset;
+      background: #cc9900;
+    }
+
+    /* FOOTER */
+    .site-footer {
+      background: #000000;
+      text-align: center;
+      padding: 16px;
+      border-top: 4px ridge #ffff00;
+    }
+    .site-footer p {
+      font-size: 11px;
+      color: #888888;
+      margin: 4px 0;
+    }
+    .counter-box {
+      display: inline-block;
+      background: #000000;
+      border: 3px inset #666666;
+      padding: 4px 12px;
+      font-family: "VT323", "Courier New", monospace;
+      font-size: 22px;
+      color: #ff0000;
+      letter-spacing: 3px;
+      margin: 8px 0;
+    }
+
+    /* UNDER CONSTRUCTION */
+    .under-construction {
+      background: repeating-linear-gradient(
+        45deg,
+        #ffff00,
+        #ffff00 10px,
+        #000000 10px,
+        #000000 20px
+      );
+      color: #000000;
+      text-align: center;
+      padding: 8px;
+      font-weight: bold;
+      font-size: 13px;
+    }
+
+    .star-divider {
+      text-align: center;
+      color: #ffff00;
+      font-size: 18px;
+      margin: 8px 0;
+      letter-spacing: 6px;
+    }
+
+    .webring {
+      background: #000000;
+      border: 2px solid #333333;
+      padding: 8px 12px;
+      font-size: 11px;
+      color: #888888;
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    /* Animated stars background via CSS */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-image:
+        radial-gradient(1px 1px at 10% 15%, rgba(255,255,255,0.5), transparent),
+        radial-gradient(1px 1px at 35% 5%, rgba(255,255,255,0.4), transparent),
+        radial-gradient(1px 1px at 55% 25%, rgba(255,255,255,0.6), transparent),
+        radial-gradient(1px 1px at 78% 8%, rgba(255,255,255,0.3), transparent),
+        radial-gradient(1px 1px at 92% 45%, rgba(255,255,255,0.5), transparent),
+        radial-gradient(1px 1px at 20% 65%, rgba(255,255,255,0.3), transparent),
+        radial-gradient(1px 1px at 65% 80%, rgba(255,255,255,0.4), transparent),
+        radial-gradient(1px 1px at 5% 90%, rgba(255,255,255,0.5), transparent),
+        radial-gradient(1px 1px at 45% 55%, rgba(255,255,255,0.2), transparent),
+        radial-gradient(1px 1px at 88% 70%, rgba(255,255,255,0.4), transparent);
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    @media (max-width: 600px) {
+      .hero-table, .services-table, .projects-table,
+      .iot-table, .collab-table, .contacts-table {
+        display: block;
+      }
+      .hero-table td, .services-table td, .projects-table td,
+      .iot-table td, .collab-table td, .contacts-table td {
+        display: block;
+        width: 100% !important;
+      }
+      .hero-photo { width: 100%; height: auto; }
+      .hero-bio { padding-left: 0; padding-top: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="page-wrap">
+
+  <!-- HEADER -->
+  <div class="site-header">
+    <h1>&#x2605; TONGATRON &#x2605;</h1>
+    <p style="color:#00ffff; font-size:16px; margin:4px 0 0;">
+      <span class="rainbow">Software &bull; Utility Web &bull; Prototipi IoT</span>
+    </p>
+    <p style="color:#ff00ff; font-size:12px; margin:4px 0 8px;">
+      &#x2665; Benvenuto nel mio sito web personale &#x2665;
+      &nbsp;&nbsp;
+      <span class="status-badge">NUOVO!</span>
+    </p>
+
+    <!-- NAV -->
+    <div class="nav-bar">
+      <a href="#bio">[ HOME ]</a>
+      <a href="#services">[ SERVIZI ]</a>
+      <a href="#projects">[ PROGETTI ]</a>
+      <a href="#iot">[ IoT ]</a>
+      <a href="#collab">[ NETWORK ]</a>
+      <a href="#contacts">[ CONTATTI ]</a>
+      <a href="https://private.tongatron.org/admin" rel="nofollow">[ LOGIN ]</a>
+    </div>
+  </div>
+
+  <!-- MARQUEE -->
+  <marquee scrollamount="4" behavior="scroll">
+    ★★★ BENVENUTO SU TONGATRON.ORG ★★★ &nbsp;&nbsp;
+    Creative Technologist &bull; Software Engineer &bull; Consultant &bull; Torino, Italy &nbsp;&nbsp;
+    *** VISITA I MIEI PROGETTI *** &nbsp;&nbsp;
+    Ultimo aggiornamento: Maggio 2026 &nbsp;&nbsp;
+    ★ Sito ottimizzato per Netscape Navigator 4.0 a 800x600 ★ &nbsp;&nbsp;
+    *** SCRIVIMI A: giovanni.bindi@tongatron.org ***
+  </marquee>
+
+  <!-- UNDER CONSTRUCTION BANNER -->
+  <div class="under-construction">
+    ⚠️ &nbsp; SEZIONE PROGETTI IN CONTINUO AGGIORNAMENTO &nbsp; ⚠️
+  </div>
+
+  <!-- HERO / BIO -->
+  <div class="section" id="bio">
+    <h2>&#x266B; Chi Sono &#x266B;</h2>
+    <table class="hero-table">
+      <tr>
+        <td style="width:220px; vertical-align:top;">
+          <img src="/img/giovanni-bindi-hero.jpg" class="hero-photo" alt="Giovanni Bindi">
+          <p style="text-align:center; font-size:11px; color:#888888; margin:4px 0;">
+            &lt;&lt; Io &gt;&gt;
+          </p>
+          <div style="text-align:center; margin-top:8px;">
+            <a class="github-button" href="https://github.com/tongatron"
+               data-color-scheme="no-preference: dark; light: dark; dark: dark;"
+               data-size="large"
+               aria-label="Follow @tongatron on GitHub">Follow @tongatron</a>
+          </div>
+        </td>
+        <td class="hero-bio">
+          <h2>Giovanni Bindi</h2>
+          <p style="color:#ff00ff; font-size:13px; margin:0 0 8px;">
+            <b>Creative Technologist &bull; Software Engineer &bull; Consultant</b><br>
+            Turin, Italy &#127470;&#127481;
+          </p>
+          <hr class="rainbow-hr">
+          <p>
+            Progetto e costruisco sistemi digitali che <b style="color:#ffff00;">funzionano davvero</b>.<br>
+            Dalle piattaforme web alle applicazioni real-time, tool mobile-first,<br>
+            prototipi IoT e interfacce sperimentali.
+          </p>
+          <p>
+            <b style="color:#00ff00;">&#x26A1; FOCUS:</b>
+            <span style="color:#aaaacc;">execution, simplicity, real-world impact</span>
+          </p>
+          <p>
+            <b style="color:#00ff00;">&#x1F680; STACK:</b>
+            <span style="color:#aaaacc;">HTML, CSS, Javascript, Node e tutto il necessario</span>
+          </p>
+          <hr class="rainbow-hr">
+          <p style="font-size:11px; color:#888888; text-align:center;">
+            &#x2605; Pagina visitata da <b style="color:#ff0000;">&#x221E;</b> persone &#x2605;
+          </p>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="star-divider">&#x2605; &#x2606; &#x2605; &#x2606; &#x2605; &#x2606; &#x2605;</div>
+
+  <!-- SERVIZI -->
+  <div class="section" id="services">
+    <h2>&#x2692; Servizi &#x2692;</h2>
+    <p style="color:#aaaacc; font-size:13px;">Clicca su un servizio per saperne di piu!</p>
+    <table class="services-table">
+      <tr>
+        <td>
+          <h3>&#x1F4CC; ICT Project Management</h3>
+          <p>Gestione end-to-end di progetti ICT: dalla definizione degli obiettivi alla consegna, con coordinamento di team multidisciplinari e controllo continuo di tempi, costi e qualità.</p>
+        </td>
+        <td>
+          <h3>&#x1F4BB; Consulenze in Innovazione Digitale</h3>
+          <p>Supporto strategico per introdurre soluzioni digitali concrete, semplificare i processi e rafforzare la governance tecnologica.</p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <h3>&#x2699; Progettazione e Sviluppo</h3>
+          <p>Progettazione e sviluppo di soluzioni software su misura, dal concept al rilascio, con un approccio iterativo e orientato ai risultati.</p>
+        </td>
+        <td>
+          <h3>&#x1F393; Formazione e Didattica</h3>
+          <p>Percorsi formativi su ICT, coding e innovazione digitale, progettati per trasferire competenze subito applicabili nei contesti reali.</p>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <marquee scrollamount="2" behavior="alternate" style="background:#003300; color:#00ff00; font-size:12px; padding:3px 0; border:1px solid #00ff00;">
+    *** NOVITA' *** Scopri i miei nuovi progetti *** NOVITA' *** Contattami per una collaborazione *** NOVITA' ***
+  </marquee>
+
+  <!-- PROGETTI RECENTI -->
+  <div class="section" id="projects">
+    <h2>&#x1F4C1; Progetti Recenti &#x1F4C1;</h2>
+    <p style="color:#aaaacc; font-size:12px;">
+      Una selezione dei progetti in evidenza tra utility web, osservazione e prototipi interattivi.
+      <b style="color:#ff0000;">[ NUOVO! ]</b>
+    </p>
+
+    <table class="projects-table">
+      <tr>
+        <td>
+          <a href="https://tongatron.org/projects/ryanair-search">
+            <img src="img/projects/ryanair-search.jpg" alt="Ryanair Search">
+          </a>
+          <h3><a href="https://tongatron.org/projects/ryanair-search">Ryanair Search</a></h3>
+          <p>Utility web per cercare voli Ryanair andata e ritorno con filtri su budget, durata, partenza e destinazione.</p>
+          <a class="btn-90s btn-90s-yellow" href="https://tongatron.org/projects/ryanair-search">[ APRI ]</a>
+          <a class="btn-90s" href="https://github.com/tongatron/tongatron.github.io/tree/main/projects/ryanair-search" target="_blank">[ GITHUB ]</a>
+        </td>
+        <td>
+          <a href="https://tongatron.org/head-tracking">
+            <img src="img/projects/head-tracking.jpg" alt="Head Tracking">
+          </a>
+          <h3><a href="https://tongatron.org/head-tracking">Head Tracking</a></h3>
+          <p>Esperimento web che usa il browser per testare interazioni basate sul movimento della testa.</p>
+          <a class="btn-90s btn-90s-yellow" href="https://tongatron.org/head-tracking">[ APRI ]</a>
+          <a class="btn-90s" href="https://github.com/tongatron/head-tracking" target="_blank">[ GITHUB ]</a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="https://gtt-to.onrender.com/">
+            <img src="img/projects/gtt-radar.jpg" alt="GTT Radar">
+          </a>
+          <h3><a href="https://gtt-to.onrender.com/">GTT Radar</a></h3>
+          <p>Utility web per monitorare linee e passaggi del trasporto pubblico torinese, mobile-first.</p>
+          <a class="btn-90s btn-90s-yellow" href="https://gtt-to.onrender.com/">[ APRI ]</a>
+          <a class="btn-90s" href="https://github.com/tongatron/gtt-to" target="_blank">[ GITHUB ]</a>
+        </td>
+        <td>
+          <a href="https://tongatron.github.io/pa-ninja/landing/">
+            <img src="img/projects/pa-ninja.jpg" alt="PA Ninja">
+          </a>
+          <h3><a href="https://tongatron.github.io/pa-ninja/landing/">PA Ninja</a></h3>
+          <p>Strumento locale per consultare e organizzare informazioni dai portali della Pubblica Amministrazione italiana.</p>
+          <a class="btn-90s btn-90s-yellow" href="https://tongatron.github.io/pa-ninja/landing/">[ APRI ]</a>
+          <a class="btn-90s" href="https://github.com/tongatron/pa-ninja" target="_blank">[ GITHUB ]</a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="https://github.com/tongatron/gmail-stats">
+            <img src="img/projects/gmail-stats.jpg" alt="Gmail Stats">
+          </a>
+          <h3><a href="https://github.com/tongatron/gmail-stats">Gmail Stats</a></h3>
+          <p>Dashboard locale per l'analisi delle email inviate, con visualizzazioni su volumi, frequenza e pattern di comunicazione.</p>
+          <a class="btn-90s btn-90s-yellow" href="https://tongatron.org/gmail-stats/">[ APRI ]</a>
+          <a class="btn-90s" href="https://github.com/tongatron/gmail-stats" target="_blank">[ GITHUB ]</a>
+        </td>
+        <td>
+          <a href="https://chat.tongatron.org/">
+            <img src="img/projects/raspi-chat.jpg" alt="Raspi Chat">
+          </a>
+          <h3><a href="https://chat.tongatron.org/">Raspi Chat</a></h3>
+          <p>Progetto self-hosted per piccoli gruppi, con stanze private, notifiche web e amministrazione semplice.</p>
+          <a class="btn-90s btn-90s-yellow" href="https://chat.tongatron.org/">[ APRI ]</a>
+          <a class="btn-90s" href="https://github.com/tongatron/raspi-chat" target="_blank">[ GITHUB ]</a>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <a href="https://tongatron.org/projects/computing-timeline/">
+            <img src="projects/computing-timeline/logo.png" alt="Moore's Law in Motion" style="height:140px; object-fit:contain; background:#000;">
+          </a>
+          <h3><a href="https://tongatron.org/projects/computing-timeline/">Moore's Law in Motion</a></h3>
+          <p>Visualizzazione interattiva per confrontare la potenza computazionale di macchine famose nella storia del computing.</p>
+          <a class="btn-90s btn-90s-yellow" href="https://tongatron.org/projects/computing-timeline/">[ APRI ]</a>
+          <a class="btn-90s" href="https://github.com/tongatron/tongatron.github.io/tree/main/projects/computing-timeline" target="_blank">[ GITHUB ]</a>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="star-divider">&#x2605; &#x2606; &#x2605; &#x2606; &#x2605; &#x2606; &#x2605;</div>
+
+  <!-- IOT -->
+  <div class="section" id="iot">
+    <h2>&#x1F916; IoT e Fabbricazione Digitale &#x1F916;</h2>
+
+    <table style="width:100%; margin-bottom:12px;">
+      <tr>
+        <td style="vertical-align:middle; width:90px;">
+          <img src="img/fablogo-white.png" alt="Logo Fablab Torino" style="width:80px; border:2px solid #00ff00;">
+        </td>
+        <td style="vertical-align:middle; padding-left:12px; color:#aaaacc; font-size:13px;">
+          Progetti ideati e sviluppati presso
+          <a href="https://fablabtorino.org/">Fablab Torino</a>
+        </td>
+      </tr>
+    </table>
+
+    <table class="iot-table" style="margin-bottom:16px;">
+      <tr>
+        <td>
+          <strong>Piattaforme di sviluppo</strong>
+          <span>Arduino, Raspberry Pi</span>
+        </td>
+        <td>
+          <strong>Strumenti di fabbricazione digitale</strong>
+          <span>Stampanti 3D, taglio laser, fresa CNC</span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <strong>Linguaggi di programmazione</strong>
+          <span>Arduino Wiring, Python, Processing, API web</span>
+        </td>
+        <td>
+          <strong>Sistemi operativi</strong>
+          <span>Debian Linux, Raspberry Pi OS</span>
+        </td>
+      </tr>
+    </table>
+
+    <table class="projects-table">
+      <tr>
+        <td>
+          <a href="https://tongatron.org/projects/robottino/robottino-site/index.html">
+            <img src="img/robottino.jpg" alt="Robottino">
+          </a>
+          <h3><a href="https://tongatron.org/projects/robottino/robottino-site/index.html">Robottino</a></h3>
+          <p>Robot educativo STEM open source. Basato su Arduino, integra display, sensori ambientali, buzzer, luci RGB, sensore ultrasonico e testa rotante.</p>
+          <a class="btn-90s btn-90s-yellow" href="https://tongatron.org/projects/robottino/robottino-site/index.html">[ APRI ]</a>
+        </td>
+        <td>
+          <a href="https://tongatron.org/projects/selfomatic/index.html">
+            <img src="img/contact.jpg" alt="Selfomatic">
+          </a>
+          <h3><a href="https://tongatron.org/projects/selfomatic/index.html">Selfomatic</a></h3>
+          <p>Social camera per eventi con scatto automatico e pubblicazione in tempo reale. Per attivazioni, fiere e comunicazione live.</p>
+          <a class="btn-90s btn-90s-yellow" href="https://tongatron.org/projects/selfomatic/index.html">[ APRI ]</a>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <a href="https://tongatron.org/projects/IKEA-hack/index.html">
+            <img src="projects/IKEA-hack/ikea.jpg" alt="IKEA Hack Nordli">
+          </a>
+          <h3><a href="https://tongatron.org/projects/IKEA-hack/index.html">IKEA Hack Nordli</a></h3>
+          <p>Progetto FabLab: personalizzazione della cassettiera IKEA Nordli con tavolino estraibile realizzato tramite pannello tagliato a laser.</p>
+          <a class="btn-90s btn-90s-yellow" href="https://tongatron.org/projects/IKEA-hack/index.html">[ APRI ]</a>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- NETWORK / COLLABORAZIONI -->
+  <div class="section" id="collab">
+    <h2>&#x1F310; Collaborazioni &#x1F310;</h2>
+    <table class="collab-table">
+      <tr>
+        <td>
+          <h3>FaberSum</h3>
+          <p>Lavorazioni CNC e prototipazione digitale</p>
+          <a href="http://www.fabersum.it/">fabersum.it</a>
+        </td>
+        <td>
+          <h3>Pangrus</h3>
+          <p>Laboratorio di ricerca elettroacustica</p>
+          <a href="https://www.peal.space/">peal.space</a>
+        </td>
+        <td>
+          <h3>Fablab Torino</h3>
+          <p>Associazione e laboratorio di fabbricazione digitale</p>
+          <a href="https://fablabtorino.org/">fablabtorino.org</a>
+        </td>
+        <td>
+          <h3>LittleEndian</h3>
+          <p>Sviluppo software, sistemi embedded e IoT</p>
+          <a href="https://www.little-endian.it/">little-endian.it</a>
+        </td>
+      </tr>
+    </table>
+
+    <div class="webring">
+      &#x25C4; &nbsp;
+      <a href="#">[Prev]</a>
+      &nbsp; &#x2605; Italian WebRing &#x2605; &nbsp;
+      <a href="#">[Next]</a>
+      &nbsp; &#x25BA;
+      &nbsp;&nbsp;&nbsp;
+      <a href="#">[Random Site]</a>
+      &nbsp;
+      <a href="#">[List All]</a>
+    </div>
+  </div>
+
+  <div class="star-divider">&#x2605; &#x2606; &#x2605; &#x2606; &#x2605; &#x2606; &#x2605;</div>
+
+  <!-- CONTATTI -->
+  <div class="section" id="contacts">
+    <h2>&#x1F4E7; Contatti &#x1F4E7;</h2>
+    <table class="contacts-table">
+      <tr>
+        <td style="width:45%; vertical-align:top;">
+          <p style="color:#ffff00; font-size:13px; font-weight:bold;">
+            &#x261E; Scrivimi! Rispondo entro 24h &#x261E;
+          </p>
+          <ul class="contact-list">
+            <li>
+              <span>Mail</span>
+              <a href="mailto:giovanni.bindi@tongatron.org">giovanni.bindi@tongatron.org</a>
+            </li>
+            <li>
+              <span>GitHub</span>
+              <a href="https://github.com/tongatron">github.com/tongatron</a>
+            </li>
+            <li>
+              <span>LinkedIn</span>
+              <a href="https://www.linkedin.com/in/giovannibindi/">linkedin.com/in/giovannibindi</a>
+            </li>
+            <li>
+              <span>X (ex Twitter)</span>
+              <a href="https://x.com/giobindi">x.com/giobindi</a>
+            </li>
+            <li>
+              <span>Hackaday</span>
+              <a href="https://hackaday.io/tongatron">hackaday.io/tongatron</a>
+            </li>
+          </ul>
+          <p style="color:#ff0000; font-size:11px; margin-top:12px;">
+            <span class="blink">&#x26A0;</span>
+            NON SPAMMARE! Messaggi seri soltanto.
+            <span class="blink">&#x26A0;</span>
+          </p>
+        </td>
+        <td style="vertical-align:top; padding-left:16px;">
+          <p style="color:#ffff00; font-size:13px; font-weight:bold;">
+            Invia un messaggio:
+          </p>
+          <div id="contact-status" role="alert" style="display:none; margin-bottom:10px; padding:6px; border:2px solid #00ff00; color:#00ff00; font-size:12px;"></div>
+          <form id="contact-form" class="form-90s" novalidate>
+            <div class="field">
+              <label for="cf-name">Il tuo nome *</label>
+              <input type="text" id="cf-name" placeholder="Mario Rossi" required>
+            </div>
+            <div class="field">
+              <label for="cf-email">La tua email *</label>
+              <input type="email" id="cf-email" placeholder="mario@email.com" required>
+            </div>
+            <div class="field">
+              <label for="cf-message">Messaggio *</label>
+              <textarea id="cf-message" rows="4" placeholder="Scrivi qui il tuo messaggio..." required></textarea>
+            </div>
+            <button type="submit" class="submit-btn" id="cf-btn">
+              &gt;&gt; INVIA MESSAGGIO &lt;&lt;
+            </button>
+          </form>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="site-footer">
+    <hr class="rainbow-hr" style="margin:0 0 12px;">
+
+    <p style="color:#ffff00; font-size:13px;">
+      <b>VISITATORI:</b>
+    </p>
+    <div class="counter-box">0 0 0 1 3 3 7</div>
+
+    <div class="star-divider" style="margin:8px 0;">&#x2605; &#x2606; &#x2605;</div>
+
+    <p>
+      <a href="https://github.com/tongatron">GitHub</a> &nbsp;|&nbsp;
+      <a href="https://www.linkedin.com/in/giovannibindi/">LinkedIn</a> &nbsp;|&nbsp;
+      <a href="https://x.com/giobindi">X</a> &nbsp;|&nbsp;
+      <a href="https://hackaday.io/tongatron">Hackaday</a>
+    </p>
+
+    <p style="font-size:11px; color:#666666;">
+      &copy; <a href="/pulsanti/" target="_blank" rel="noopener" style="color:#666666;">2026</a> Tongatron &mdash; Tutti i diritti riservati
+    </p>
+    <p style="font-size:10px; color:#444444;">
+      Sito ottimizzato per Netscape Navigator 4.0 &bull; Risoluzione consigliata: 800x600 &bull; 16 bit colori
+    </p>
+    <p style="font-size:10px; color:#444444;">
+      Ultimo aggiornamento: Maggio 2026 &bull; HTML 3.2 Valid!
+    </p>
+
+    <div style="margin-top:10px;">
+      <a href="https://private.tongatron.org/admin" rel="nofollow"
+         style="display:inline-block; background:#000080; border:2px outset #0000ff; color:#ffff00; padding:3px 14px; font-size:12px; text-decoration:none; font-weight:bold;">
+        [ LOGIN AREA PRIVATA ]
+      </a>
+    </div>
+  </div>
+
+</div><!-- /page-wrap -->
+
+<script>
+  (() => {
+    const API = 'https://api.tongatron.org/api/send-mail';
+    const EMAIL_TO = 'giovanni.bindi@tongatron.org';
+    const form = document.getElementById('contact-form');
+    const btn  = document.getElementById('cf-btn');
+    const statusEl = document.getElementById('contact-status');
+    if (!form) return;
+
+    function showStatus(text, ok) {
+      statusEl.textContent = text;
+      statusEl.style.display = 'block';
+      statusEl.style.borderColor = ok ? '#00ff00' : '#ff0000';
+      statusEl.style.color = ok ? '#00ff00' : '#ff0000';
+    }
+
+    function openMailFallback(payload) {
+      const subject = encodeURIComponent('Messaggio dal sito da ' + payload.name);
+      const body = encodeURIComponent('Nome: ' + payload.name + '\nEmail: ' + payload.email + '\n\n' + payload.message);
+      window.location.href = 'mailto:' + EMAIL_TO + '?subject=' + subject + '&body=' + body;
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const name    = document.getElementById('cf-name').value.trim();
+      const email   = document.getElementById('cf-email').value.trim();
+      const message = document.getElementById('cf-message').value.trim();
+      if (!name || !email || !message) {
+        showStatus('>> ERRORE: Compila tutti i campi! <<', false);
+        return;
+      }
+
+      btn.textContent = '>> INVIO IN CORSO... <<';
+      btn.disabled = true;
+      statusEl.style.display = 'none';
+
+      const payload = { name, email, message };
+
+      try {
+        const res  = await fetch(API, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+        const data = await res.json().catch(() => null);
+        if (res.ok && data && data.ok) {
+          showStatus('>> MESSAGGIO INVIATO! Risposta entro 24h. <<', true);
+          form.reset();
+        } else {
+          openMailFallback(payload);
+          showStatus('>> Invio automatico fallito. Ho aperto la tua app email! <<', false);
+        }
+      } catch (err) {
+        openMailFallback(payload);
+        showStatus('>> Server non raggiungibile. Ho aperto la tua app email! <<', false);
+      } finally {
+        btn.textContent = '>> INVIA MESSAGGIO <<';
+        btn.disabled = false;
+      }
+    });
+  })();
+</script>
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+</body>
+</html>
