@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<title>Terminal Badge</title>
+
+<style>
+  body {
+    margin: 0;
+    background: #0b0b0b;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+  }
+
+  .terminal {
+    background: #111;
+    border-radius: 10px;
+    padding: 20px 24px;
+    color: #eaeaea;
+    box-shadow: 0 0 0 1px #222;
+    min-width: 320px;
+  }
+
+  .line {
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    letter-spacing: 0.5px;
+  }
+
+  .prompt {
+    color: #888;
+    margin-right: 8px;
+  }
+
+  .dot {
+    width: 10px;
+    height: 10px;
+    background: #ffcc00;
+    border-radius: 50%;
+    margin-right: 10px;
+    box-shadow: 0 0 6px rgba(255, 204, 0, 0.6);
+  }
+
+  .text {
+    color: #f5f5f5;
+  }
+
+  .cursor {
+    width: 10px;
+    height: 18px;
+    background: #ffcc00;
+    margin-left: 6px;
+    animation: blink 1s steps(1) infinite;
+  }
+
+  @keyframes blink {
+    50% { opacity: 0; }
+  }
+
+  .sub {
+    margin-top: 10px;
+    font-size: 13px;
+    color: #666;
+  }
+
+</style>
+</head>
+
+<body>
+
+<div class="terminal">
+  <div class="line">
+    <span class="prompt">></span>
+    <div class="dot"></div>
+    <span class="text">tongatron.org</span>
+    <div class="cursor"></div>
+  </div>
+
+  <div class="sub">
+    system status: online
+  </div>
+</div>
+
+</body>
+</html>
