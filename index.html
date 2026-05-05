@@ -4,1340 +4,1253 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Tongatron | Software, utility web e prototipi IoT</title>
-  <meta name="description" content="Tongatron progetta software, utility web, prototipi IoT e soluzioni digitali orientate all'esecuzione, tra sviluppo, consulenza e sperimentazione.">
-  <!-- SEO + Social -->
-  <meta name="robots" content="index, follow, max-image-preview:large">
-  <meta name="author" content="Tongatron">
+  <meta name="description" content="Tongatron progetta software, utility web, prototipi IoT e soluzioni digitali orientate all'esecuzione.">
   <link rel="icon" href="/favicon.ico" sizes="any">
   <link rel="icon" type="image/svg+xml" href="/img/tongatron-icon.svg">
-  <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png">
-  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
   <link rel="canonical" href="https://tongatron.org/">
-  <link rel="alternate" hreflang="it" href="https://tongatron.org/">
-  <link rel="alternate" hreflang="x-default" href="https://tongatron.org/">
-  <meta property="og:locale" content="it_IT">
-  <meta property="og:site_name" content="Tongatron">
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="Tongatron | Software, utility web e prototipi IoT">
-  <meta property="og:description" content="Tongatron progetta software, utility web, prototipi IoT e soluzioni digitali orientate all'esecuzione, tra sviluppo, consulenza e sperimentazione.">
-  <meta property="og:url" content="https://tongatron.org/">
-  <meta property="og:image" content="https://tongatron.org/img/tongatron-meta.jpg">
-  <meta property="og:image:alt" content="Tongatron preview image">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Tongatron | Software, utility web e prototipi IoT">
-  <meta name="twitter:description" content="Tongatron progetta software, utility web, prototipi IoT e soluzioni digitali orientate all'esecuzione, tra sviluppo, consulenza e sperimentazione.">
-  <meta name="twitter:image" content="https://tongatron.org/img/tongatron-meta.jpg">
-  <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebSite",
-      "name": "Tongatron",
-      "url": "https://tongatron.org/",
-      "inLanguage": "it",
-      "description": "Tongatron progetta software, utility web, prototipi IoT e soluzioni digitali orientate all'esecuzione, tra sviluppo, consulenza e sperimentazione.",
-      "publisher": {
-        "@type": "Organization",
-        "name": "Tongatron",
-        "url": "https://tongatron.org/",
-        "logo": {
-          "@type": "ImageObject",
-          "url": "https://tongatron.org/img/tongatron-icon-512.png"
-        }
-      }
-    }
-  </script>
-  <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Organization",
-      "name": "Tongatron",
-      "url": "https://tongatron.org/",
-      "logo": "https://tongatron.org/img/tongatron-icon-512.png",
-      "email": "giovanni.bindi@tongatron.org",
-      "sameAs": [
-        "https://github.com/tongatron",
-        "https://www.linkedin.com/in/giovannibindi/",
-        "https://x.com/giobindi",
-        "https://hackaday.io/tongatron"
-      ]
-    }
-  </script>
-
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300;400;600;700&display=swap" rel="stylesheet">
-
-
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" rel="stylesheet">
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-S4XSYK0QB7"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() { dataLayer.push(arguments); }
-    gtag('js', new Date());
-
-    gtag('config', 'G-S4XSYK0QB7');
-  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Cormorant+Garamond:wght@500;600;700&display=swap" rel="stylesheet">
 
   <style>
+    /* ============================================================
+       DESIGN TOKENS
+       ============================================================ */
     :root {
-      --bg: #050505;
-      --bg-soft: #111111;
-      --panel: rgba(16, 16, 16, 0.94);
-      --panel-soft: rgba(10, 10, 10, 0.96);
-      --line: rgba(255, 255, 255, 0.10);
-      --line-strong: rgba(255, 255, 255, 0.22);
-      --text: #f5f5f5;
-      --muted: #a5a5a5;
-      --accent: #ffcc00;
-      --accent-soft: #ffcc00;
-      --accent-warm: #d6d6d6;
-      --shadow: 0 24px 60px rgba(0, 0, 0, 0.32);
-      --radius-xl: 2rem;
-      --radius-lg: 1.4rem;
+      /* Palette */
+      --c-bg:        #000000;
+      --c-surface-0: #111111;
+      --c-surface-1: #161616;
+      --c-surface-2: #1e1e1e;
+      --c-border:    #242424;
+      --c-border-hi: #363636;
+      --c-text-1:    #f0f0f0;
+      --c-text-2:    #888888;
+      --c-text-3:    #4a4a4a;
+      --c-text-soft: #b5b0a4;
+      --c-accent:    #f5c400;
+      --c-accent-dk: #d4a900;
+      --c-accent-fg: #0c0c0c;
+      --c-ok:        #3d9970;
+      --c-err:       #c0392b;
+
+      /* Type scale */
+      --t-xs:   0.6875rem;   /* 11px */
+      --t-sm:   0.8125rem;   /* 13px */
+      --t-base: 0.9375rem;   /* 15px */
+      --t-md:   1.0625rem;   /* 17px */
+      --t-lg:   1.25rem;     /* 20px */
+      --t-xl:   1.625rem;    /* 26px */
+      --t-2xl:  2.125rem;    /* 34px */
+      --t-3xl:  3rem;        /* 48px */
+      --t-4xl:  4.25rem;     /* 68px */
+
+      /* Spacing */
+      --sp-1:  4px;
+      --sp-2:  8px;
+      --sp-3:  12px;
+      --sp-4:  16px;
+      --sp-5:  20px;
+      --sp-6:  24px;
+      --sp-8:  32px;
+      --sp-10: 40px;
+      --sp-12: 48px;
+      --sp-16: 64px;
+      --sp-20: 80px;
+
+      /* Geometry */
+      --radius: 6px;
+      --max-w:  1100px;
+      --font-ui: "Manrope", "Segoe UI", sans-serif;
+      --font-display: "Cormorant Garamond", Georgia, serif;
+
+      /* Cover height — fallback condiviso */
+      --cover-h: 170px;
     }
 
-    html {
-      scroll-behavior: smooth;
-    }
-
+    /* ============================================================
+       RESET + BASE
+       ============================================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
     body {
-      font-family: "Titillium Web", sans-serif;
-      color: var(--text);
-      background:
-        radial-gradient(circle at top left, rgba(255, 255, 255, 0.07), transparent 24%),
-        radial-gradient(circle at 84% 10%, rgba(255, 255, 255, 0.04), transparent 18%),
-        linear-gradient(180deg, #020202 0%, #070707 42%, #111111 100%);
-      min-height: 100vh;
-    }
-
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      background-image:
-        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-      background-size: 42px 42px;
-      mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.52), transparent 80%);
-      opacity: 0.55;
-    }
-
-    a {
-      color: var(--accent-soft);
-      text-decoration: none;
-    }
-
-    a:hover,
-    a:focus {
-      color: var(--text);
-    }
-
-    .content-link {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    .content-link:hover,
-    .content-link:focus {
-      color: var(--text);
-    }
-
-    body .container {
-      position: relative;
-      z-index: 1;
-    }
-
-    header.container {
-      padding-top: 1.25rem;
-    }
-
-    header .pb-3 {
-      padding: 0 0 1.2rem !important;
-      border: 0;
-      border-radius: 0;
-      background: transparent;
-      box-shadow: none;
-    }
-
-    .header-topbar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-    }
-
-    .hero-github-follow {
-      margin-top: 0.9rem;
-    }
-
-    header .border-bottom {
-      border-bottom: 1px solid var(--line-strong) !important;
-    }
-
-    header .text-body-emphasis {
-      color: var(--text) !important;
-    }
-
-    header .fs-1 {
-      font-size: clamp(1.85rem, 3vw, 2.55rem) !important;
-      font-weight: 700 !important;
-      letter-spacing: -0.04em;
-      font-family: "Titillium Web", sans-serif;
-    }
-
-    .brand-terminal {
-      background: #111;
-      border-radius: 8px;
-      padding: 10px 16px;
-      font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
-    }
-
-    .brand-terminal-line {
-      display: flex;
-      align-items: center;
-      font-size: 18px;
-      letter-spacing: 0.5px;
-      color: #eaeaea;
-    }
-
-    .brand-terminal-prompt {
-      color: #888;
-      margin-right: 8px;
-    }
-
-    .brand-terminal-dot {
-      width: 10px;
-      height: 10px;
-      background: #ffcc00;
-      border-radius: 50%;
-      margin-right: 10px;
-      box-shadow: 0 0 6px rgba(255, 204, 0, 0.6);
-      flex-shrink: 0;
-    }
-
-    .brand-terminal-text {
-      color: #f5f5f5;
-    }
-
-    .brand-terminal-cursor {
-      color: #ffcc00;
-    }
-
-    .header-topbar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
-
-main {
-      padding-top: 0.5rem;
-      padding-bottom: 2rem;
-    }
-
-    main > section.container:not(:first-child) {
-      position: relative;
-      margin-top: 2.25rem;
-      margin-bottom: 0;
-      padding: 2.1rem 0 0 !important;
-      border: 0;
-      background: transparent;
-      box-shadow: none;
-      overflow: visible;
-    }
-
-    .variant-hero-wrap::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      padding: 1px;
-      border-radius: inherit;
-      background: linear-gradient(135deg, rgba(255, 255, 255, 0.20), rgba(255,255,255,0.01), rgba(255, 255, 255, 0.08));
-      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-      -webkit-mask-composite: xor;
-      mask-composite: exclude;
-      pointer-events: none;
-    }
-
-    main > section.container.border-top {
-      border-top: 1px solid var(--line-strong) !important;
-    }
-
-    .section-title {
-      margin-bottom: 1.25rem;
-      color: var(--accent);
-      font-size: clamp(2rem, 3vw, 3.1rem);
-      letter-spacing: -0.04em;
-      font-weight: 700;
-      font-family: "Titillium Web", sans-serif;
-    }
-
-    .card-media {
-      width: 100%;
-      height: 240px;
-      object-fit: cover;
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 0;
-    }
-
-    .card,
-    .web-projects-shell,
-    .web-project-card {
-      position: relative;
-      border: 0 !important;
-      border-radius: 0;
-      background: transparent;
-      color: var(--text);
-      box-shadow: none;
-      overflow: visible;
-    }
-
-    .card-body {
-      padding: 1rem 0 0;
-    }
-
-    .card-title,
-    .card-body h3,
-    .card-body h4,
-    .card-body h6,
-    .web-project-card h4 {
-      color: var(--accent);
-      font-family: "Titillium Web", sans-serif;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-    }
-
-    .card-text,
-    .card-body p,
-    .web-project-card p,
-    .web-projects-intro,
-    .stack-list li {
-      color: var(--muted);
-      font-family: "Titillium Web", sans-serif;
-      line-height: 1.75;
-    }
-
-    .project-item {
-      padding: 1rem;
-      border: 0 !important;
-      border-radius: 1.1rem;
-      background: transparent;
-      box-shadow: none;
-      overflow: hidden;
-    }
-
-    .stack-list {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-    }
-
-    .stack-list li {
-      padding: 0.9rem 0;
-      border-top: 1px solid var(--line);
-    }
-
-    .stack-list li:first-child {
-      padding-top: 0;
-      border-top: 0;
-    }
-
-    .stack-list strong {
-      color: var(--text);
-    }
-
-    .service-item,
-    .network-item {
-      padding-top: 1rem;
-    }
-
-    .contact-item {
-      padding-top: 1rem;
-      border-top: 1px solid var(--line);
-    }
-
-    .service-item h3,
-    .network-item h3,
-    .contact-item h3 {
-      margin-bottom: 0.65rem;
-      color: var(--text);
-      font-size: 1.28rem;
-      font-weight: 700;
-    }
-
-    .network-item h3 {
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      font-size: 1.1rem;
-    }
-
-    .contact-item {
-      display: flex;
-      align-items: baseline;
-      gap: 0.85rem;
-      flex-wrap: wrap;
-      padding-top: 0;
-      border-top: 0;
-    }
-
-    .contact-item h3,
-    .contact-item p {
-      margin: 0;
-    }
-
-    .service-item .bi {
-      font-size: 1.25rem;
-      vertical-align: -0.08em;
-    }
-
-    .service-item p,
-    .network-item p,
-    .contact-item p {
-      margin-bottom: 0;
-      color: var(--muted);
-      line-height: 1.75;
-    }
-
-    .iot-intro-copy {
-      color: var(--muted);
-      line-height: 1.75;
-      max-width: 34rem;
-      margin: 0;
-    }
-
-    .iot-summary {
-      display: flex;
-      align-items: flex-start;
-      gap: 1.15rem;
-    }
-
-    .iot-logo-mark {
-      display: inline-block;
-      width: min(5rem, 100%);
-      flex-shrink: 0;
-      height: auto;
-      margin: 0.15rem 0 0;
-    }
-
-    .iot-spec-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 1rem 1.5rem;
-      margin: 0;
-      padding: 0;
-      list-style: none;
-    }
-
-    .iot-spec-item {
-      padding-top: 0.65rem;
-    }
-
-    .iot-spec-item strong {
-      display: block;
-      margin-bottom: 0.35rem;
-      color: var(--text);
-      font-size: 1rem;
-    }
-
-    .iot-spec-item span {
-      display: block;
-      color: var(--muted);
+      font-family: var(--font-ui);
+      font-size: var(--t-base);
       line-height: 1.6;
-    }
-
-    .iot-project-grid {
-      margin-top: 0.25rem;
-    }
-
-    .iot-project-grid .card-body {
-      padding: 0.95rem 0 0;
-      display: flex;
-      flex-direction: column;
-      height: 100%;
-    }
-
-    .iot-project-grid .card-text {
-      line-height: 1.65;
-    }
-
-    .iot-project-grid .card-media {
-      height: 210px;
-    }
-
-    .iot-project-grid .btn {
-      margin-top: auto;
-      width: 100%;
-      justify-content: center;
-    }
-
-    .iot-link-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.65rem 1.2rem;
-      margin: 0;
-      padding: 0;
-      list-style: none;
-    }
-
-    .iot-link-list a {
-      color: var(--accent-soft);
-      font-weight: 500;
-    }
-
-    .web-projects-shell {
-      padding: 0;
-    }
-
-    .web-projects-intro {
-      margin-bottom: 1rem;
-    }
-
-    .web-projects-cards {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 1rem;
-      align-items: start;
-    }
-
-    .web-project-card {
-      padding: 0.9rem 0.95rem;
-      display: flex;
-      flex-direction: column;
-      border: 0 !important;
-      border-radius: 1.1rem;
-      background: transparent;
-      box-shadow: none;
-      overflow: hidden;
-    }
-
-    .web-project-cover {
-      width: 100%;
-      height: 170px;
-      object-fit: cover;
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 0;
-      margin-bottom: 0.85rem;
-      background: rgba(255,255,255,0.02);
-    }
-
-    .web-project-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 0.75rem;
-      margin-bottom: 0.85rem;
-    }
-
-    .web-project-icon {
-      width: 56px;
-      height: 56px;
-      object-fit: contain;
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      padding: 0.45rem;
-      background: rgba(255,255,255,0.04);
-      flex-shrink: 0;
-    }
-
-    .web-project-tags {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-      gap: 0.35rem;
-    }
-
-    .web-project-tag {
-      border: 1px solid var(--line-strong);
-      border-radius: 999px;
-      padding: 0.18rem 0.55rem;
-      font-size: 0.7rem;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      font-weight: 600;
-      color: var(--text);
-      background: rgba(255,255,255,0.04);
-      font-family: "Titillium Web", sans-serif;
-    }
-
-    .web-project-card h4 {
-      font-size: 1.35rem;
-      margin: 0 0 0.4rem;
-      line-height: 1.2;
-    }
-
-    .web-project-card p {
-      margin: 0 0 0.7rem;
-    }
-
-    .project-action-button {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      align-self: flex-start;
-      gap: 0.42rem;
-      min-height: 2.45rem;
-      padding: 0.25rem 0.72rem 0.25rem 0.58rem;
-      border: 1.5px solid rgba(255,255,255,0.25);
-      border-radius: 6px;
-      background: #161b22;
-      color: #fff;
-      font-size: 0.78rem;
-      font-weight: 600;
-      letter-spacing: 0.01em;
-      line-height: 1;
-      white-space: nowrap;
-      text-decoration: none;
-      transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
-    }
-
-    .project-action-button::before {
-      font-family: bootstrap-icons;
-      font-style: normal;
-      font-weight: 400;
-      font-size: 1.05em;
-      line-height: 1;
+      color: var(--c-text-1);
+      background: var(--c-bg);
       -webkit-font-smoothing: antialiased;
     }
+    img { display: block; max-width: 100%; }
+    a { color: var(--c-accent); text-decoration: none; }
+    a:hover { color: var(--c-text-1); }
 
-    .project-action-open::before {
-      content: none;
-    }
-
-    .project-action-open {
-      background: #ffcc00;
-      border-color: #ffcc00;
-      color: #111;
-      padding-left: 0.72rem;
-    }
-
-    .project-action-open:hover,
-    .project-action-open:focus {
-      background: #e6b800;
-      border-color: #e6b800;
-      color: #111;
-    }
-
-    .project-action-github::before {
-      content: "\f3ed";
-      font-size: 1.15em;
-    }
-
-    .web-project-actions {
-      display: flex;
-      align-items: stretch;
-      gap: 0.75rem;
-      flex-wrap: wrap;
-      margin-top: auto;
-      padding-top: 0.15rem;
-    }
-    .web-project-actions .project-action-button {
-      flex: 0 0 auto;
-    }
-    .project-action-button:hover,
-    .project-action-button:focus {
-      background: #21262d;
-      border-color: rgba(255,255,255,0.5);
-      color: #fff;
-    }
-
-    .contact-label {
-      display: block;
-      font-size: 0.82rem;
-      font-weight: 700;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 0.4rem;
-    }
-    .contact-input {
-      display: block;
+    /* ============================================================
+       LAYOUT
+       ============================================================ */
+    .wrap {
       width: 100%;
-      padding: 0.55rem 0.75rem;
-      background: var(--bg-soft);
-      border: 1px solid var(--line-strong);
-      border-radius: 0.45rem;
-      color: var(--text);
-      font-size: 0.95rem;
-      font-family: inherit;
-      transition: border-color 0.18s ease;
-      resize: vertical;
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 var(--sp-6);
     }
-    .contact-input-sm { padding: 0.35rem 0.65rem; font-size: 0.88rem; }
-    .contact-input::placeholder { color: var(--muted); opacity: 0.7; }
-    .contact-input:focus {
-      outline: none;
-      border-color: var(--accent);
-    }
-    .was-validated .contact-input:invalid {
-      border-color: #f87171;
-    }
-    .contact-invalid {
-      display: none;
-      font-size: 0.8rem;
-      color: #f87171;
-      margin-top: 0.3rem;
-    }
-    .was-validated .contact-input:invalid ~ .contact-invalid {
-      display: block;
-    }
-    .header-login {
-      background: #ffcc00 !important;
-      border-color: #ffcc00 !important;
-      color: #111 !important;
-    }
-    .header-login:hover,
-    .header-login:focus {
-      background: #e6b800 !important;
-      border-color: #e6b800 !important;
-      color: #111 !important;
+    .divider {
+      border: none;
+      border-top: 1px solid var(--c-border);
+      margin: 0;
+      opacity: 0.7;
     }
 
-    .contact-submit {
-      min-height: 38px;
-      padding: 0.45rem 1.4rem;
-      background: #ffcc00;
-      border-color: #ffcc00;
-      color: #111;
-    }
-    .contact-submit:hover,
-    .contact-submit:focus {
-      background: #e6b800;
-      border-color: #e6b800;
-      color: #111;
-    }
-    .contact-feedback {
-      padding: 0.65rem 0.9rem;
-      border-radius: 0.45rem;
-      font-size: 0.9rem;
-      margin-bottom: 1rem;
-    }
-    .contact-feedback.ok {
-      background: rgba(74, 222, 128, 0.1);
-      border: 1px solid rgba(74, 222, 128, 0.35);
-      color: #4ade80;
-    }
-    .contact-feedback.err {
-      background: rgba(248, 113, 113, 0.1);
-      border: 1px solid rgba(248, 113, 113, 0.35);
-      color: #f87171;
-    }
-
-    .btn-outline-primary,
-    .variant-btn-primary,
-    .variant-btn-secondary {
-      font-family: "Titillium Web", sans-serif;
+    /* ============================================================
+       TYPE UTILITIES
+       ============================================================ */
+    .label {
+      font-size: var(--t-xs);
       font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--c-text-soft);
     }
 
-    .btn-outline-primary {
-      --bs-btn-color: var(--text);
-      --bs-btn-bg: rgba(255, 255, 255, 0.02);
-      --bs-btn-border-color: rgba(255, 255, 255, 0.26);
-      --bs-btn-hover-color: var(--text);
-      --bs-btn-hover-bg: rgba(255, 255, 255, 0.05);
-      --bs-btn-hover-border-color: rgba(255, 255, 255, 0.42);
-      --bs-btn-active-color: var(--text);
-      --bs-btn-active-bg: rgba(255, 255, 255, 0.08);
-      --bs-btn-active-border-color: rgba(255, 255, 255, 0.42);
-      border-radius: 0.55rem;
-      border-width: 2px;
-      padding: 0.62rem 1.2rem;
-      font-size: 1rem;
-      box-shadow: none;
-      transition:
-        background-color 0.22s ease,
-        border-color 0.22s ease,
-        color 0.22s ease,
-        transform 0.22s ease;
+    /* ============================================================
+       BUTTON SYSTEM — 2 varianti × 2 dimensioni
+       ============================================================ */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--sp-2);
+      font-family: inherit;
+      font-size: var(--t-sm);
+      font-weight: 700;
+      line-height: 1;
+      white-space: nowrap;
+      cursor: pointer;
+      border-radius: var(--radius);
+      transition: background 0.18s, border-color 0.18s, color 0.18s, transform 0.18s;
+      text-decoration: none;
+      border: 1px solid transparent;
+      padding: 10px 17px;
     }
+    .btn-sm { padding: 6px 12px; font-size: var(--t-xs); }
 
-    .btn-outline-primary:hover,
-    .btn-outline-primary:focus {
+    .btn-primary {
+      background: var(--c-accent);
+      border-color: var(--c-accent);
+      color: var(--c-accent-fg);
+    }
+    .btn-primary:hover {
+      background: var(--c-accent-dk);
+      border-color: var(--c-accent-dk);
+      color: var(--c-accent-fg);
+      transform: translateY(-1px);
+    }
+    .btn-secondary {
+      background: transparent;
+      border-color: var(--c-border-hi);
+      color: var(--c-text-1);
+    }
+    .btn-secondary:hover {
+      border-color: var(--c-text-2);
+      color: var(--c-text-1);
+      background: var(--c-surface-2);
       transform: translateY(-1px);
     }
 
-    .variant-hero-wrap {
-      position: relative;
-      border: 1px solid var(--line);
-      border-radius: 2rem;
-      background:
-        radial-gradient(circle at 84% 14%, rgba(255, 255, 255, 0.06), transparent 18%),
-        radial-gradient(circle at 18% 12%, rgba(255, 255, 255, 0.03), transparent 15%),
-        linear-gradient(180deg, #0b0b0b 0%, #111111 48%, #171717 100%);
-      box-shadow: var(--shadow);
-      color: var(--text);
-      overflow: hidden;
-      padding: clamp(1.4rem, 3vw, 2.5rem);
+    /* ============================================================
+       SECTION HEADER
+       ============================================================ */
+    .sec-head {
+      display: flex;
+      flex-direction: column;
+      gap: var(--sp-3);
+      margin-bottom: var(--sp-10);
     }
-
-    .variant-display,
-    .variant-mono,
-    .variant-hero-copy,
-    .variant-operating-copy,
-    .variant-btn-primary,
-    .variant-btn-secondary {
-      font-family: "Titillium Web", sans-serif;
-    }
-
-    .variant-display {
-      font-weight: 700;
-    }
-
-    .variant-mono {
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      font-size: 0.78rem;
-    }
-
-    .variant-hero-title {
-      font-size: clamp(3rem, 7vw, 5.6rem);
+    .sec-head__title {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 4.5vw, 3.4rem);
+      font-weight: 600;
+      letter-spacing: -0.035em;
+      color: var(--c-text-1);
       line-height: 0.95;
-      letter-spacing: -0.055em;
-      margin: 0;
-      color: var(--accent);
-      font-weight: 700;
+    }
+    .sec-head__desc {
+      font-size: var(--t-base);
+      color: var(--c-text-2);
+      max-width: 52ch;
+      line-height: 1.7;
     }
 
-    .variant-hero-photo {
-      display: block;
-      width: min(70%, 640px);
-      max-width: 640px;
-      aspect-ratio: 1;
-      object-fit: cover;
+    /* ============================================================
+       CARD GRID — pattern condiviso da servizi, iot e network
+       gap: 1px su sfondo border crea separatori sottili
+       ============================================================ */
+    .card-grid {
+      display: grid;
+      gap: 1px;
+      background: var(--c-border);
+      border: 1px solid var(--c-border);
+      border-radius: var(--radius);
+      overflow: hidden;
     }
-
-    .variant-hero-copy {
-      color: var(--muted);
-      font-size: 1.02rem;
-      line-height: 1.85;
-      max-width: 52rem;
+    .card-grid--3 { grid-template-columns: repeat(3, 1fr); }
+    .card-grid--4 { grid-template-columns: repeat(4, 1fr); }
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 72px var(--sp-10);
     }
-
-    .variant-operating-shell {
-      position: relative;
-      height: 100%;
-      border: 0;
-      border-radius: 0;
+    .editorial-grid .proj-card {
       background: transparent;
-      box-shadow: none;
-      padding: 0;
-      overflow: visible;
+    }
+    .editorial-grid .proj-card:hover {
+      background: transparent;
+    }
+    .editorial-grid .proj-card__cover {
+      height: auto;
+      aspect-ratio: 16 / 10;
+      object-fit: cover;
+      border: 1px solid var(--c-border);
+      background: #000;
+    }
+    .editorial-grid .proj-card__cover--contain {
+      object-fit: contain;
+      padding: var(--sp-4);
+    }
+    .editorial-grid .proj-card__body {
+      padding: 18px 0 0;
+    }
+    .editorial-grid .proj-card__title {
+      color: var(--c-accent);
     }
 
-    .variant-operating-label {
-      color: #d2d2d2;
-      margin-bottom: 1.25rem;
+    /* ============================================================
+       HEADER
+       ============================================================ */
+    .site-header {
+      border-bottom: 1px solid var(--c-border);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(12,12,12,0.88);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+    .site-header__inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 56px;
+      gap: var(--sp-4);
     }
 
-    .variant-operating-title {
-      font-size: clamp(2rem, 4vw, 3rem);
-      line-height: 1.15;
-      margin: 0;
-      color: var(--accent);
-      font-weight: 700;
+    .site-badge {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--c-text-1);
+      text-decoration: none;
     }
-
-    .variant-pill {
+    .site-badge span {
+      color: inherit;
+    }
+    .site-badge .mark {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      border-radius: 0.55rem;
-      border: 1px solid rgba(255, 255, 255, 0.14);
-      background: rgba(255,255,255,0.03);
-      color: var(--text);
-      padding: 0.62rem 1rem;
-      font-size: 0.8rem;
-      margin-top: 1.5rem;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
+      flex-shrink: 0;
+    }
+    .site-badge .mark-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent, var(--c-accent));
+    }
+    .site-badge .badge-cursor {
+      color: var(--accent, var(--c-accent));
+      margin-left: 1px;
+    }
+    .site-badge:hover { color: var(--c-text-1); }
+
+    .site-nav {
+      display: flex;
+      align-items: center;
+      gap: var(--sp-1);
+    }
+    .site-nav__link {
+      font-size: var(--t-sm);
+      font-weight: 700;
+      color: var(--c-text-2);
+      padding: var(--sp-2) var(--sp-3);
+      border-radius: var(--radius);
+      transition: color 0.18s, background 0.18s;
+      text-decoration: none;
+    }
+    .site-nav__link:hover {
+      color: var(--c-text-1);
+      background: var(--c-surface-2);
     }
 
-    .variant-operating-card {
-      position: relative;
-      border: 0;
-      border-radius: 0;
-      background: transparent;
-      padding: 1.15rem 0 0;
-      margin-top: 1.15rem;
-      overflow: visible;
+    /* ============================================================
+       HERO
+       ============================================================ */
+    .hero { padding: 104px 0 84px; }
+    .hero__grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 88px;
+      align-items: center;
     }
-
-    .variant-operating-copy {
-      color: var(--muted);
-      line-height: 1.65;
-      font-size: 0.98rem;
-      margin-bottom: 0;
+    .hero__photo {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      border-radius: var(--radius);
+      filter: grayscale(100%);
+      box-shadow: 0 30px 80px rgba(0,0,0,0.35);
     }
-
-    .variant-btn-primary {
-      background: #f5f5f5;
-      border-color: #f5f5f5;
-      color: #050505;
-      border-radius: 0.55rem;
-      padding: 1rem 1.45rem;
-      box-shadow: none;
+    .hero__eyebrow {
+      display: flex;
+      align-items: center;
+      gap: var(--sp-3);
+      margin-bottom: var(--sp-5);
     }
-
-    .variant-btn-primary:hover,
-    .variant-btn-primary:focus {
-      background: #dcdcdc;
-      border-color: #dcdcdc;
-      color: #050505;
+    .hero__eyebrow-line {
+      flex: 1;
+      height: 1px;
+      background: var(--c-border);
     }
-
-    .variant-btn-secondary {
+    .hero__name {
+      font-family: var(--font-display);
+      font-size: clamp(4.5rem, 9vw, 6.5rem);
+      font-weight: 600;
+      letter-spacing: -0.05em;
+      line-height: 0.84;
+      color: var(--c-text-1);
+      margin-bottom: var(--sp-5);
+    }
+    .hero__name em {
+      display: block;
+      color: var(--c-accent);
+      font-style: normal;
+    }
+    .hero__role {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--c-text-soft);
+      margin-bottom: 28px;
+    }
+    .hero__body {
+      font-size: 1rem;
+      color: var(--c-text-2);
+      line-height: 1.85;
+      margin-bottom: 30px;
+      max-width: 48ch;
+    }
+    .hero__meta {
+      display: flex;
+      flex-direction: column;
+      gap: var(--sp-3);
+      padding: 22px 24px;
       background: rgba(255,255,255,0.02);
-      border-color: rgba(255, 255, 255, 0.14);
-      color: var(--text);
-      border-radius: 0.55rem;
-      padding: 1rem 1.45rem;
+      border: 1px solid var(--c-border);
+      border-radius: var(--radius);
+      margin-bottom: 30px;
+    }
+    .hero__meta-row {
+      display: flex;
+      gap: var(--sp-4);
+      align-items: baseline;
+    }
+    .hero__meta-key {
+      font-size: var(--t-xs);
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--c-text-3);
+      min-width: 56px;
+      flex-shrink: 0;
+    }
+    .hero__meta-val {
+      font-size: var(--t-sm);
+      color: var(--c-text-2);
+    }
+    .hero__actions {
+      display: flex;
+      gap: var(--sp-3);
+      flex-wrap: wrap;
+      align-items: center;
     }
 
-    .variant-btn-secondary:hover,
-    .variant-btn-secondary:focus {
-      background: rgba(255,255,255,0.08);
-      border-color: rgba(255,255,255,0.3);
-      color: var(--text);
+    /* ============================================================
+       SECTION
+       ============================================================ */
+    .section { padding: 72px 0; }
+
+    /* ============================================================
+       SERVICES
+       ============================================================ */
+    .service-card {
+      background: #000;
+      padding: 28px 26px 30px;
+      display: flex;
+      flex-direction: column;
+      gap: var(--sp-4);
+      transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+    }
+    .service-card:hover {
+      background: #000;
+      transform: translateY(-5px);
+      box-shadow: 0 24px 50px rgba(0,0,0,0.26);
+    }
+    .service-card__num {
+      font-size: var(--t-xs);
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      color: var(--c-accent);
+    }
+    .service-card__title {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 600;
+      color: var(--c-text-1);
+      line-height: 0.95;
+    }
+    .service-card__body {
+      font-size: 0.92rem;
+      color: var(--c-text-2);
+      line-height: 1.8;
     }
 
-    footer .border-top {
-      border-top: 1px solid var(--line) !important;
+    /* ============================================================
+       PROJECT CARDS — cover height uniforme via --cover-h
+       ============================================================ */
+    .proj-card {
+      background: var(--c-surface-1);
+      display: flex;
+      flex-direction: column;
+      transition: background 0.18s, transform 0.18s;
+    }
+    .proj-card:hover { background: var(--c-surface-2); transform: translateY(-4px); }
+
+    .proj-card__cover {
+      width: 100%;
+      height: var(--cover-h);   /* ← unica dichiarazione, uguale per tutti */
+      object-fit: cover;
+      filter: grayscale(60%);
+      border-bottom: 1px solid var(--c-border);
+      transition: filter 0.25s, transform 0.35s ease;
+    }
+    .proj-card:hover .proj-card__cover {
+      filter: grayscale(0%);
+      transform: scale(1.015);
     }
 
-    .text-body-secondary {
-      color: var(--muted) !important;
+    .proj-card__body {
+      padding: var(--sp-5);
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: var(--sp-3);
+      transition: transform 0.18s;
+    }
+    .proj-card:hover .proj-card__body { transform: translateY(-3px); }
+    .proj-card__title {
+      font-family: var(--font-display);
+      font-size: 2.05rem;
+      font-weight: 600;
+      color: var(--c-text-1);
+      line-height: 0.94;
+    }
+    .proj-card__title a { color: inherit; text-decoration: none; }
+    .proj-card__title a:hover { color: var(--c-accent); }
+    .proj-card__desc {
+      font-size: 0.92rem;
+      color: var(--c-text-2);
+      line-height: 1.8;
+      flex: 1;
+    }
+    .proj-card__actions {
+      display: flex;
+      gap: var(--sp-2);
+      margin-top: var(--sp-2);
     }
 
-    @media (max-width: 991.98px) {
-      .web-projects-cards {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-
-      .variant-hero-title {
-        font-size: clamp(2.8rem, 12vw, 4.4rem);
-      }
+    /* Moore's Law cover: logo su sfondo neutro, stessa height */
+    .proj-card__cover--contain {
+      object-fit: contain;
+      background: var(--c-surface-2);
+      padding: var(--sp-6);
+    }
+    .iot-projects {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 64px var(--sp-8);
     }
 
-    @media (max-width: 767.98px) {
-      body .container {
-        --bs-gutter-x: 1.8rem;
-      }
+    /* ============================================================
+       IoT
+       ============================================================ */
 
-      .variant-hero-wrap,
-      .card,
-      .web-projects-shell,
-      .web-project-card,
-      header .pb-3 {
-        border-radius: 1.5rem;
-      }
+    /* Riga superiore: fablab banner + spec grid affiancati */
+    .iot-top {
+      display: block;
+      max-width: 620px;
+      margin-bottom: 42px;
+    }
+    .iot-fablab__logo {
+      width: 66px;
+      height: auto;
+      flex-shrink: 0;
+      /* fablogo-white.png è già bianco: nessun filtro */
+      opacity: 0.82;
+    }
+    .iot-fablab__content {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+    }
+    .iot-fablab__text,
+    .iot-fablab__copy,
+    .iot-spec-item--fablab span {
+      font-size: var(--t-sm);
+      color: var(--c-text-2);
+      line-height: 1.6;
+    }
+    .iot-fablab__link {
+      font-size: var(--t-xs);
+      font-weight: 700;
+      color: var(--c-text-soft);
+      text-decoration: none;
+      transition: color 0.18s, transform 0.18s;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .iot-fablab__link:hover { color: var(--c-accent); transform: translateX(3px); }
 
-      .variant-hero-copy,
-      .variant-operating-copy,
-      .card-text,
-      .card-body p,
-      .web-project-card p,
-      .web-projects-intro,
-      .stack-list li {
-        font-size: 0.98rem;
-      }
+    /* Spec list */
+    .iot-spec-list {
+      list-style: none;
+      border: 1px solid var(--c-border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      background: rgba(255,255,255,0.02);
+      max-width: 620px;
+    }
+    .iot-spec-item {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 8px;
+      align-items: start;
+      padding: 18px 20px;
+      border-bottom: 1px solid var(--c-border);
+    }
+    .iot-spec-item:last-child { border-bottom: none; }
+    .iot-spec-item--fablab {
+      grid-template-columns: auto 1fr;
+      align-items: center;
+      gap: 16px;
+      padding: 20px;
+    }
+    .iot-spec-item strong {
+      font-size: var(--t-xs);
+      font-weight: 600;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--c-text-3);
+    }
+    .iot-spec-item span {
+      font-size: var(--t-sm);
+      color: var(--c-text-2);
+    }
 
-      .variant-hero-photo {
-        width: min(100%, 420px);
-      }
+    /* IoT project cards: stessa struttura di proj-card,
+       reusano tutte le classi .proj-card esistenti */
 
-      .web-projects-cards {
-        grid-template-columns: 1fr;
-      }
+    /* ============================================================
+       NETWORK
+       ============================================================ */
+    .network-card {
+      background: transparent;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: var(--sp-3);
+      transition: transform 0.18s;
+    }
+    .network-card:hover { transform: translateY(-4px); }
+    .network-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 72px var(--sp-10);
+    }
+    .network-card__name {
+      font-family: var(--font-display);
+      font-size: 1.85rem;
+      font-weight: 600;
+      color: var(--c-accent);
+      line-height: 0.96;
+    }
+    .network-card__desc {
+      font-size: 0.92rem;
+      color: var(--c-text-2);
+      line-height: 1.75;
+      flex: 1;
+    }
+    .network-card__link {
+      font-size: var(--t-xs);
+      font-weight: 700;
+      color: var(--c-text-soft);
+      text-decoration: none;
+      transition: color 0.18s, transform 0.18s;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .network-card__link:hover { color: var(--c-accent); transform: translateX(3px); }
 
-      .iot-summary {
-        gap: 0.9rem;
-      }
+    /* ============================================================
+       CONTACTS
+       ============================================================ */
+    .contacts-layout {
+      display: grid;
+      grid-template-columns: 1fr 1.6fr;
+      gap: var(--sp-10);
+      align-items: start;
+    }
+    .contact-list {
+      list-style: none;
+      border: 1px solid var(--c-border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    .contact-list__item {
+      display: flex;
+      align-items: baseline;
+      gap: var(--sp-4);
+      padding: var(--sp-4) var(--sp-5);
+      border-bottom: 1px solid var(--c-border);
+      font-size: var(--t-sm);
+    }
+    .contact-list__item:last-child { border-bottom: none; }
+    .contact-list__label {
+      font-size: var(--t-xs);
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--c-text-3);
+      min-width: 72px;
+      flex-shrink: 0;
+    }
+    .contact-list__value a {
+      color: var(--c-text-2);
+      transition: color 0.15s;
+    }
+    .contact-list__value a:hover { color: var(--c-accent); }
 
-      .iot-spec-grid {
-        grid-template-columns: 1fr;
-        gap: 0.85rem;
-      }
+    /* Form */
+    .form-stack { display: flex; flex-direction: column; gap: var(--sp-4); }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-4); }
+    .form-group { display: flex; flex-direction: column; gap: var(--sp-2); }
+    .form-label {
+      font-size: var(--t-xs);
+      font-weight: 600;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--c-text-2);
+    }
+    .form-input {
+      width: 100%;
+      padding: 9px 12px;
+      background: var(--c-surface-1);
+      border: 1px solid var(--c-border);
+      border-radius: var(--radius);
+      color: var(--c-text-1);
+      font-family: inherit;
+      font-size: var(--t-sm);
+      line-height: 1.5;
+      transition: border-color 0.15s;
+      resize: vertical;
+    }
+    .form-input::placeholder { color: var(--c-text-3); }
+    .form-input:focus { outline: none; border-color: var(--c-accent); }
+    .was-validated .form-input:invalid { border-color: var(--c-err); }
+    .form-err {
+      display: none;
+      font-size: var(--t-xs);
+      color: var(--c-err);
+    }
+    .was-validated .form-input:invalid ~ .form-err { display: block; }
+    .form-footer { display: flex; justify-content: flex-end; }
+    .contact-feedback {
+      padding: 10px 14px;
+      border-radius: var(--radius);
+      font-size: var(--t-sm);
+      display: none;
+      border: 1px solid transparent;
+    }
+    .contact-feedback.ok {
+      display: block;
+      background: rgba(61,153,112,0.08);
+      border-color: rgba(61,153,112,0.3);
+      color: var(--c-ok);
+    }
+    .contact-feedback.err {
+      display: block;
+      background: rgba(192,57,43,0.08);
+      border-color: rgba(192,57,43,0.3);
+      color: var(--c-err);
+    }
 
-      .iot-project-grid .card-media {
-        height: 220px;
+    /* ============================================================
+       FOOTER
+       ============================================================ */
+    .site-footer {
+      border-top: 1px solid var(--c-border);
+      padding: var(--sp-6) 0;
+    }
+    .site-footer__inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--sp-4);
+    }
+    .site-footer__copy {
+      font-size: var(--t-sm);
+      color: var(--c-text-3);
+    }
+    .site-footer__copy a { color: var(--c-text-3); text-decoration: none; }
+    .site-footer__links { display: flex; gap: var(--sp-5); }
+    .site-footer__links a {
+      font-size: var(--t-sm);
+      color: var(--c-text-3);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .site-footer__links a:hover { color: var(--c-text-2); }
+
+    /* ============================================================
+       RESPONSIVE
+       ============================================================ */
+    @media (max-width: 1023px) {
+      .card-grid--4 { grid-template-columns: 1fr 1fr; }
+      .card-grid--3 { grid-template-columns: 1fr 1fr; }
+      .project-grid { grid-template-columns: 1fr 1fr; }
+      .iot-projects { grid-template-columns: 1fr 1fr; }
+      .network-grid { grid-template-columns: 1fr 1fr; }
+      .site-nav { display: none; }
+    }
+    @media (max-width: 767px) {
+      :root { --sp-6: 20px; }
+      .hero { padding: var(--sp-12) 0 var(--sp-10); }
+      .hero__grid { grid-template-columns: 1fr; gap: var(--sp-8); }
+      .hero__photo { max-width: 320px; }
+      .hero__name {
+        font-size: clamp(3.2rem, 18vw, 4.8rem);
+        line-height: 0.88;
       }
+      .sec-head__title {
+        font-size: clamp(2.1rem, 12vw, 3rem);
+        line-height: 0.98;
+      }
+      .card-grid--4 { grid-template-columns: 1fr; }
+      .card-grid--3 { grid-template-columns: 1fr; }
+      .project-grid { grid-template-columns: 1fr; }
+      .iot-projects { grid-template-columns: 1fr; }
+      .network-grid { grid-template-columns: 1fr; }
+      .iot-spec-item { grid-template-columns: 1fr; gap: var(--sp-1); }
+      .iot-spec-item--fablab { grid-template-columns: 1fr; gap: var(--sp-3); }
+      .contacts-layout { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+      .site-footer__inner { flex-direction: column; align-items: flex-start; gap: var(--sp-3); }
     }
   </style>
 </head>
 <body>
-  <header class="container py-4">
-    <div class="pb-3 border-bottom header-topbar d-flex align-items-center justify-content-between">
-      <div class="brand-terminal">
-        <div class="brand-terminal-line">
-          <div class="brand-terminal-dot"></div>
-          <span class="brand-terminal-text">tongatron.org<span class="brand-terminal-cursor">_</span></span>
-        </div>
+
+  <!-- ============================================================
+       HEADER
+  ============================================================ -->
+  <header class="site-header">
+    <div class="wrap">
+      <div class="site-header__inner">
+        <a class="site-badge A3" href="https://tongatron.org" aria-label="Tongatron homepage" style="--accent:#ffcc00; font-family:Courier, monospace; font-size:14px;">
+          <span class="mark mark-dot" aria-hidden="true"></span>
+          <span>tongatron.org<span class="badge-cursor">_</span></span>
+        </a>
+
+        <nav class="site-nav" aria-label="Navigazione principale">
+          <a class="site-nav__link" href="#services">Servizi</a>
+          <a class="site-nav__link" href="#projects">Progetti</a>
+          <a class="site-nav__link" href="#iot">IoT</a>
+          <a class="site-nav__link" href="#network">Network</a>
+          <a class="site-nav__link" href="#contacts">Contatti</a>
+        </nav>
+
+        <a href="https://private.tongatron.org/admin" class="btn btn-primary btn-sm" rel="nofollow">Login</a>
       </div>
-      <a href="https://private.tongatron.org/admin" class="btn btn-outline-light btn-sm header-login" rel="nofollow">
-        Login
-      </a>
     </div>
   </header>
 
-  <main class="pb-4">
 
-    <section class="container mb-5">
-      
-        <div class="row g-4 g-xl-5 align-items-start">
-          <div class="col-12 col-xl-7">
-            <img class="variant-hero-photo" src="img/giovanni-bindi-hero.jpg" alt="Ritratto in bianco e nero di Giovanni Bindi">
+  <main>
+
+    <!-- ============================================================
+         HERO
+    ============================================================ -->
+    <section class="hero">
+      <div class="wrap">
+        <div class="hero__grid">
+
+          <img
+            class="hero__photo"
+            src="img/giovannibindi2.jpg"
+            alt="Ritratto di Giovanni Bindi"
+            loading="eager"
+          >
+
+          <div>
+            <div class="hero__eyebrow">
+              <span class="label">Creative Technologist</span>
+              <span class="hero__eyebrow-line" aria-hidden="true"></span>
+            </div>
+
+            <h1 class="hero__name">
+              Giovanni
+              <em>Bindi</em>
+            </h1>
+
+            <p class="hero__role">Software Engineer · Consultant · Turin, Italy&nbsp;🇮🇹</p>
+
+            <p class="hero__body">
+              I design and build digital systems that actually ship —
+              from web platforms and real-time applications to mobile-first tools,
+              IoT prototypes and experimental interfaces.
+            </p>
+
+            <div class="hero__meta" role="list">
+              <div class="hero__meta-row" role="listitem">
+                <span class="hero__meta-key">Focus</span>
+                <span class="hero__meta-val">Execution, simplicity, real-world impact</span>
+              </div>
+              <div class="hero__meta-row" role="listitem">
+                <span class="hero__meta-key">Stack</span>
+                <span class="hero__meta-val">HTML, CSS, JavaScript, Node — and whatever gets the job done</span>
+              </div>
+            </div>
+
+            <div class="hero__actions">
+              <a href="#contacts" class="btn btn-primary">Contattami</a>
+              <a href="#projects" class="btn btn-secondary">Vedi i progetti</a>
+              <a
+                class="github-button"
+                href="https://github.com/tongatron"
+                data-color-scheme="no-preference: dark; light: dark; dark: dark;"
+                data-size="large"
+                aria-label="Follow @tongatron on GitHub"
+              >Follow @tongatron</a>
+            </div>
           </div>
-          <div class="col-12 col-xl-5">
-            <aside class="variant-operating-shell">
-              
-              <h2 class="variant-display variant-operating-title fw-bold">Giovanni Bindi</h2>
-              
+
+        </div>
+      </div>
+    </section>
+
+    <hr class="divider">
 
 
+    <!-- ============================================================
+         SERVIZI
+    ============================================================ -->
+    <section id="services" class="section" aria-labelledby="services-title">
+      <div class="wrap">
+        <div class="sec-head">
+          <span class="label">Cosa faccio</span>
+          <h2 class="sec-head__title" id="services-title">Servizi</h2>
+        </div>
 
-              <div class="variant-operating-card">
-                <p><strong>Creative Technologist · Software Engineer · Consultant</strong><br>
-                Turin, Italy 🇮🇹</p>
-                <div class="variant-hero-copy mt-4 mb-0">
-                  <p>I design and build digital systems that actually ship.
-                  From web platforms to real-time applications, mobile-first tools, IoT prototypes and experimental interfaces.</p>
-                  <p><strong>⚡ FOCUS: </strong>
-                  execution, simplicity, real-world impact</p>
-                  <p><strong>🚀 STACK: </strong>
-                  HTML, CSS; Javascript, Node and whatever gets the job done</p>
-                  <div class="hero-github-follow">
-                    <a class="github-button" href="https://github.com/tongatron" data-color-scheme="no-preference: light; light: light; dark: dark;" data-size="large" aria-label="Follow @tongatron on GitHub">Follow @tongatron</a>
-                  </div>
+        <div class="card-grid card-grid--4">
+          <article class="service-card">
+            <span class="service-card__num">01</span>
+            <h3 class="service-card__title">ICT Project Management</h3>
+            <p class="service-card__body">Gestione end-to-end di progetti ICT: dalla definizione degli obiettivi alla consegna, con coordinamento di team multidisciplinari e controllo continuo di tempi, costi e qualità.</p>
+          </article>
+          <article class="service-card">
+            <span class="service-card__num">02</span>
+            <h3 class="service-card__title">Consulenze in Innovazione Digitale</h3>
+            <p class="service-card__body">Supporto strategico per introdurre soluzioni digitali concrete, semplificare i processi e rafforzare la governance tecnologica.</p>
+          </article>
+          <article class="service-card">
+            <span class="service-card__num">03</span>
+            <h3 class="service-card__title">Progettazione e Sviluppo</h3>
+            <p class="service-card__body">Progettazione e sviluppo di soluzioni software su misura, dal concept al rilascio, con un approccio iterativo e orientato ai risultati.</p>
+          </article>
+          <article class="service-card">
+            <span class="service-card__num">04</span>
+            <h3 class="service-card__title">Formazione e Didattica</h3>
+            <p class="service-card__body">Percorsi formativi su ICT, coding e innovazione digitale, progettati per trasferire competenze subito applicabili nei contesti reali.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+
+    <!-- ============================================================
+         PROGETTI — griglia editoriale senza celle vuote
+    ============================================================ -->
+    <section id="projects" class="section" aria-labelledby="projects-title">
+      <div class="wrap">
+        <div class="sec-head">
+          <span class="label">Ultimi lavori</span>
+          <h2 class="sec-head__title" id="projects-title">Progetti recenti</h2>
+        </div>
+
+        <div class="project-grid editorial-grid">
+
+          <article class="proj-card">
+            <a href="https://tongatron.org/projects/ryanair-search" tabindex="-1">
+              <img src="img/projects/ryanair-search.jpg" class="proj-card__cover" alt="Ryanair Search" loading="lazy">
+            </a>
+            <div class="proj-card__body">
+              <h3 class="proj-card__title"><a href="https://tongatron.org/projects/ryanair-search">Ryanair Search</a></h3>
+              <p class="proj-card__desc">Utility web per cercare voli Ryanair andata e ritorno con filtri su budget, durata, partenza e destinazione.</p>
+              <div class="proj-card__actions">
+                <a class="btn btn-primary btn-sm" href="https://tongatron.org/projects/ryanair-search">Apri</a>
+                <a class="btn btn-secondary btn-sm" href="https://github.com/tongatron/tongatron.github.io/tree/main/projects/ryanair-search" target="_blank" rel="noopener">GitHub</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="proj-card">
+            <a href="https://tongatron.org/head-tracking" tabindex="-1">
+              <img src="img/projects/head-tracking.jpg" class="proj-card__cover" alt="Head Tracking" loading="lazy">
+            </a>
+            <div class="proj-card__body">
+              <h3 class="proj-card__title"><a href="https://tongatron.org/head-tracking">Head Tracking</a></h3>
+              <p class="proj-card__desc">Esperimento web per testare interazioni basate sul movimento della testa direttamente nel browser.</p>
+              <div class="proj-card__actions">
+                <a class="btn btn-primary btn-sm" href="https://tongatron.org/head-tracking">Apri</a>
+                <a class="btn btn-secondary btn-sm" href="https://github.com/tongatron/head-tracking" target="_blank" rel="noopener">GitHub</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="proj-card">
+            <a href="https://gtt-to.onrender.com/" tabindex="-1">
+              <img src="img/projects/gtt-radar.jpg" class="proj-card__cover" alt="GTT Radar" loading="lazy">
+            </a>
+            <div class="proj-card__body">
+              <h3 class="proj-card__title"><a href="https://gtt-to.onrender.com/">GTT Radar</a></h3>
+              <p class="proj-card__desc">Utility web per monitorare linee e passaggi del trasporto pubblico torinese, mobile-first.</p>
+              <div class="proj-card__actions">
+                <a class="btn btn-primary btn-sm" href="https://gtt-to.onrender.com/">Apri</a>
+                <a class="btn btn-secondary btn-sm" href="https://github.com/tongatron/gtt-to" target="_blank" rel="noopener">GitHub</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="proj-card">
+            <a href="https://tongatron.github.io/pa-ninja/landing/" tabindex="-1">
+              <img src="img/projects/pa-ninja.jpg" class="proj-card__cover" alt="PA Ninja" loading="lazy">
+            </a>
+            <div class="proj-card__body">
+              <h3 class="proj-card__title"><a href="https://tongatron.github.io/pa-ninja/landing/">PA Ninja</a></h3>
+              <p class="proj-card__desc">Strumento locale per consultare e organizzare informazioni dai portali della Pubblica Amministrazione italiana.</p>
+              <div class="proj-card__actions">
+                <a class="btn btn-primary btn-sm" href="https://tongatron.github.io/pa-ninja/landing/">Apri</a>
+                <a class="btn btn-secondary btn-sm" href="https://github.com/tongatron/pa-ninja" target="_blank" rel="noopener">GitHub</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="proj-card">
+            <a href="https://tongatron.org/gmail-stats/" tabindex="-1">
+              <img src="img/projects/gmail-stats.jpg" class="proj-card__cover" alt="Gmail Stats" loading="lazy">
+            </a>
+            <div class="proj-card__body">
+              <h3 class="proj-card__title"><a href="https://tongatron.org/gmail-stats/">Gmail Stats</a></h3>
+              <p class="proj-card__desc">Dashboard locale per l'analisi delle email inviate: volumi, frequenza e pattern di comunicazione.</p>
+              <div class="proj-card__actions">
+                <a class="btn btn-primary btn-sm" href="https://tongatron.org/gmail-stats/">Apri</a>
+                <a class="btn btn-secondary btn-sm" href="https://github.com/tongatron/gmail-stats" target="_blank" rel="noopener">GitHub</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="proj-card">
+            <a href="https://chat.tongatron.org/" tabindex="-1">
+              <img src="img/projects/raspi-chat.jpg" class="proj-card__cover" alt="Raspi Chat" loading="lazy">
+            </a>
+            <div class="proj-card__body">
+              <h3 class="proj-card__title"><a href="https://chat.tongatron.org/">Raspi Chat</a></h3>
+              <p class="proj-card__desc">Progetto self-hosted per piccoli gruppi, con stanze private, notifiche web e amministrazione semplice.</p>
+              <div class="proj-card__actions">
+                <a class="btn btn-primary btn-sm" href="https://chat.tongatron.org/">Apri</a>
+                <a class="btn btn-secondary btn-sm" href="https://github.com/tongatron/raspi-chat" target="_blank" rel="noopener">GitHub</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Moore's Law: card uguale alle altre, cover con object-fit contain -->
+          <article class="proj-card">
+            <a href="https://tongatron.org/projects/computing-timeline/" tabindex="-1">
+              <img
+                src="projects/computing-timeline/logo.png"
+                class="proj-card__cover proj-card__cover--contain"
+                alt="Moore's Law in Motion"
+                loading="lazy"
+              >
+            </a>
+            <div class="proj-card__body">
+              <h3 class="proj-card__title"><a href="https://tongatron.org/projects/computing-timeline/">Moore's Law in Motion</a></h3>
+              <p class="proj-card__desc">Visualizzazione interattiva per confrontare la potenza computazionale delle macchine più famose nella storia del computing.</p>
+              <div class="proj-card__actions">
+                <a class="btn btn-primary btn-sm" href="https://tongatron.org/projects/computing-timeline/">Apri</a>
+                <a class="btn btn-secondary btn-sm" href="https://github.com/tongatron/tongatron.github.io/tree/main/projects/computing-timeline" target="_blank" rel="noopener">GitHub</a>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+
+    <!-- ============================================================
+         IoT — spec in alto (2 col), progetti in riga (3 col)
+    ============================================================ -->
+    <section id="iot" class="section" aria-labelledby="iot-title">
+      <div class="wrap">
+        <div class="sec-head">
+          <span class="label">Hardware &amp; Making</span>
+          <h2 class="sec-head__title" id="iot-title">IoT e fabbricazione digitale</h2>
+        </div>
+
+        <div class="iot-top">
+          <ul class="iot-spec-list">
+            <li class="iot-spec-item iot-spec-item--fablab">
+              <img
+                src="img/fablogo-white.png"
+                alt="Logo Fablab Torino"
+                class="iot-fablab__logo"
+              >
+              <div class="iot-fablab__content">
+                <span class="iot-fablab__copy">Progetti sviluppati presso Fablab Torino:</span>
+                <a class="iot-fablab__link" href="https://fablabtorino.org/" target="_blank" rel="noopener">FABLABTORINO.ORG ↗</a>
+              </div>
+            </li>
+            <li class="iot-spec-item">
+              <strong>Piattaforme di sviluppo</strong>
+              <span>Arduino, Raspberry Pi</span>
+            </li>
+            <li class="iot-spec-item">
+              <strong>Strumenti di fabbricazione</strong>
+              <span>Stampanti 3D, taglio laser, fresa CNC</span>
+            </li>
+          </ul>
+
+        </div>
+
+        <!-- Progetti IoT: 3 card orizzontali (affiancate) -->
+        <div class="iot-projects editorial-grid">
+
+          <article class="proj-card">
+            <a href="https://tongatron.org/projects/robottino/robottino-site/index.html" tabindex="-1">
+              <img src="img/robottino.jpg" class="proj-card__cover" alt="Robottino" loading="lazy">
+            </a>
+            <div class="proj-card__body">
+              <h3 class="proj-card__title"><a href="https://tongatron.org/projects/robottino/robottino-site/index.html">Robottino</a></h3>
+              <p class="proj-card__desc">Robot educativo STEM open source. Basato su Arduino, integra display, sensori ambientali, buzzer, RGB, ultrasonico e testa rotante programmabile.</p>
+              <div class="proj-card__actions">
+                <a class="btn btn-primary btn-sm" href="https://tongatron.org/projects/robottino/robottino-site/index.html">Apri</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="proj-card">
+            <a href="https://tongatron.org/projects/selfomatic/index.html" tabindex="-1">
+              <img src="img/contact.jpg" class="proj-card__cover" alt="Selfomatic" loading="lazy">
+            </a>
+            <div class="proj-card__body">
+              <h3 class="proj-card__title"><a href="https://tongatron.org/projects/selfomatic/index.html">Selfomatic</a></h3>
+              <p class="proj-card__desc">Social camera per eventi con scatto automatico e pubblicazione in tempo reale. Ottimale per attivazioni, fiere e comunicazione live.</p>
+              <div class="proj-card__actions">
+                <a class="btn btn-primary btn-sm" href="https://tongatron.org/projects/selfomatic/index.html">Apri</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="proj-card">
+            <a href="https://tongatron.org/projects/IKEA-hack/index.html" tabindex="-1">
+              <img src="projects/IKEA-hack/ikea.jpg" class="proj-card__cover" alt="IKEA Hack Nordli" loading="lazy">
+            </a>
+            <div class="proj-card__body">
+              <h3 class="proj-card__title"><a href="https://tongatron.org/projects/IKEA-hack/index.html">IKEA Hack Nordli</a></h3>
+              <p class="proj-card__desc">Personalizzazione della cassettiera IKEA Nordli con tavolino estraibile realizzato tramite pannello tagliato a laser.</p>
+              <div class="proj-card__actions">
+                <a class="btn btn-primary btn-sm" href="https://tongatron.org/projects/IKEA-hack/index.html">Apri</a>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+
+    <!-- ============================================================
+         NETWORK
+    ============================================================ -->
+    <section id="network" class="section" aria-labelledby="network-title">
+      <div class="wrap">
+        <div class="sec-head">
+          <span class="label">Network</span>
+          <h2 class="sec-head__title" id="network-title">Collaborazioni</h2>
+        </div>
+
+        <div class="network-grid">
+          <article class="network-card">
+            <h3 class="network-card__name">FaberSum</h3>
+            <p class="network-card__desc">Lavorazioni CNC e prototipazione digitale</p>
+            <a class="network-card__link" href="http://www.fabersum.it/" target="_blank" rel="noopener">fabersum.it ↗</a>
+          </article>
+          <article class="network-card">
+            <h3 class="network-card__name">Pangrus</h3>
+            <p class="network-card__desc">Laboratorio di ricerca elettroacustica</p>
+            <a class="network-card__link" href="https://www.peal.space/" target="_blank" rel="noopener">peal.space ↗</a>
+          </article>
+          <article class="network-card">
+            <h3 class="network-card__name">Fablab Torino</h3>
+            <p class="network-card__desc">Associazione e laboratorio di fabbricazione digitale</p>
+            <a class="network-card__link" href="https://fablabtorino.org/" target="_blank" rel="noopener">fablabtorino.org ↗</a>
+          </article>
+          <article class="network-card">
+            <h3 class="network-card__name">LittleEndian</h3>
+            <p class="network-card__desc">Sviluppo software, sistemi embedded e IoT</p>
+            <a class="network-card__link" href="https://www.little-endian.it/" target="_blank" rel="noopener">little-endian.it ↗</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+
+    <!-- ============================================================
+         CONTATTI
+    ============================================================ -->
+    <section id="contacts" class="section" aria-labelledby="contacts-title">
+      <div class="wrap">
+        <div class="sec-head">
+          <h2 class="sec-head__title" id="contacts-title">Contatti</h2>
+        </div>
+
+        <div class="contacts-layout">
+
+          <ul class="contact-list">
+            <li class="contact-list__item">
+              <span class="contact-list__label">Mail</span>
+              <span class="contact-list__value"><a href="mailto:giovanni.bindi@tongatron.org">giovanni.bindi@tongatron.org</a></span>
+            </li>
+            <li class="contact-list__item">
+              <span class="contact-list__label">GitHub</span>
+              <span class="contact-list__value"><a href="https://github.com/tongatron" target="_blank" rel="noopener">github.com/tongatron</a></span>
+            </li>
+            <li class="contact-list__item">
+              <span class="contact-list__label">LinkedIn</span>
+              <span class="contact-list__value"><a href="https://www.linkedin.com/in/giovannibindi/" target="_blank" rel="noopener">linkedin.com/in/giovannibindi</a></span>
+            </li>
+            <li class="contact-list__item">
+              <span class="contact-list__label">X</span>
+              <span class="contact-list__value"><a href="https://x.com/giobindi" target="_blank" rel="noopener">x.com/giobindi</a></span>
+            </li>
+            <li class="contact-list__item">
+              <span class="contact-list__label">Hackaday</span>
+              <span class="contact-list__value"><a href="https://hackaday.io/tongatron" target="_blank" rel="noopener">hackaday.io/tongatron</a></span>
+            </li>
+          </ul>
+
+          <div>
+            <div id="contact-status" class="contact-feedback" role="alert"></div>
+            <form id="contact-form" class="form-stack" novalidate>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="cf-name" class="form-label">Nome</label>
+                  <input type="text" id="cf-name" class="form-input" placeholder="Il tuo nome" required>
+                  <span class="form-err">Inserisci il tuo nome.</span>
+                </div>
+                <div class="form-group">
+                  <label for="cf-email" class="form-label">Mail</label>
+                  <input type="email" id="cf-email" class="form-input" placeholder="tua@email.com" required>
+                  <span class="form-err">Inserisci un'email valida.</span>
                 </div>
               </div>
-            </aside>
-          </div>
-        </div>
-      
-    </section>
-
-    <section id="services" class="container py-4 border-top">
-      <h2 class="fw-bold section-title">Servizi</h2>
-      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
-        <div class="col">
-          <article class="service-item h-100">
-            <h3 class="h5"><i class="bi bi-signpost me-2"></i>ICT Project Management</h3>
-            <p>Gestione end-to-end di progetti ICT: dalla definizione degli obiettivi alla consegna, con coordinamento di team multidisciplinari e controllo continuo di tempi, costi e qualità.</p>
-          </article>
-        </div>
-        <div class="col">
-          <article class="service-item h-100">
-            <h3 class="h5"><i class="bi bi-code-square me-2"></i>Consulenze in Innovazione Digitale</h3>
-            <p>Supporto strategico per introdurre soluzioni digitali concrete, semplificare i processi e rafforzare la governance tecnologica.</p>
-          </article>
-        </div>
-        <div class="col">
-          <article class="service-item h-100">
-            <h3 class="h5"><i class="bi bi-cpu me-2"></i>Progettazione e Sviluppo</h3>
-            <p>Progettazione e sviluppo di soluzioni software su misura, dal concept al rilascio, con un approccio iterativo e orientato ai risultati.</p>
-          </article>
-        </div>
-        <div class="col">
-          <article class="service-item h-100">
-            <h3 class="h5"><i class="bi bi-bookmark-heart me-2"></i>Formazione e Didattica</h3>
-            <p>Percorsi formativi su ICT, coding e innovazione digitale, progettati per trasferire competenze subito applicabili nei contesti reali.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section id="web-mobile" class="container py-4 border-top">
-      <h2 class="fw-bold section-title">Progetti recenti</h2>
-      <p class="web-projects-intro">Una selezione dei progetti in evidenza pubblicati nella pagina Projects, tra utility web, osservazione e prototipi interattivi accessibili direttamente dal browser.</p>
-      <div class="web-projects-shell">
-        <div class="web-projects-cards">
-          <article class="web-project-card">
-            <a class="content-link" href="https://tongatron.org/projects/ryanair-search">
-              <img src="img/projects/ryanair-search.jpg" class="web-project-cover" alt="Anteprima Ryanair Search">
-            </a>
-            <h4 class="h2 fw-bold"><a class="content-link" href="https://tongatron.org/projects/ryanair-search">Ryanair Search</a></h4>
-            <p>Utility web per cercare voli Ryanair andata e ritorno con filtri su budget, durata, partenza e destinazione, ottimizzata anche per l'uso da smartphone.</p>
-            <div class="web-project-actions">
-              <a class="project-action-button project-action-open" href="https://tongatron.org/projects/ryanair-search">Apri</a>
-              <a class="project-action-button project-action-github" href="https://github.com/tongatron/tongatron.github.io/tree/main/projects/ryanair-search" target="_blank" rel="noopener">GitHub</a>
-            </div>
-          </article>
-
-          <article class="web-project-card">
-            <a class="content-link" href="https://tongatron.org/head-tracking">
-              <img src="img/projects/head-tracking.jpg" class="web-project-cover" alt="Anteprima Head Tracking">
-            </a>
-            <h4 class="h2 fw-bold"><a class="content-link" href="https://tongatron.org/head-tracking">Head Tracking</a></h4>
-            <p>Esperimento web che usa il browser per testare interazioni basate sul movimento della testa, con un'impostazione diretta e immediata da provare online.</p>
-            <div class="web-project-actions">
-              <a class="project-action-button project-action-open" href="https://tongatron.org/head-tracking">Apri</a>
-              <a class="project-action-button project-action-github" href="https://github.com/tongatron/head-tracking" target="_blank" rel="noopener">GitHub</a>
-            </div>
-          </article>
-
-          <article class="web-project-card">
-            <a class="content-link" href="https://gtt-to.onrender.com/">
-              <img src="img/projects/gtt-radar.jpg" class="web-project-cover" alt="Anteprima GTT Radar">
-            </a>
-            <h4 class="h2 fw-bold"><a class="content-link" href="https://gtt-to.onrender.com/">GTT Radar</a></h4>
-            <p>Utility web per monitorare linee e passaggi del trasporto pubblico torinese con un'interfaccia rapida da consultare e un uso mobile-first.</p>
-            <div class="web-project-actions">
-              <a class="project-action-button project-action-open" href="https://gtt-to.onrender.com/">Apri</a>
-              <a class="project-action-button project-action-github" href="https://github.com/tongatron/gtt-to" target="_blank" rel="noopener">GitHub</a>
-            </div>
-          </article>
-
-          <article class="web-project-card">
-            <a class="content-link" href="https://tongatron.github.io/pa-ninja/landing/">
-              <img src="img/projects/pa-ninja.jpg" class="web-project-cover" alt="Anteprima PA Ninja">
-            </a>
-            <h4 class="h2 fw-bold"><a class="content-link" href="https://tongatron.github.io/pa-ninja/landing/">PA Ninja</a></h4>
-            <p>Strumento locale per consultare, raccogliere e organizzare informazioni provenienti da portali della Pubblica Amministrazione italiana.</p>
-            <div class="web-project-actions">
-              <a class="project-action-button project-action-open" href="https://tongatron.github.io/pa-ninja/landing/">Apri</a>
-              <a class="project-action-button project-action-github" href="https://github.com/tongatron/pa-ninja" target="_blank" rel="noopener">GitHub</a>
-            </div>
-          </article>
-
-          <article class="web-project-card">
-            <a class="content-link" href="https://github.com/tongatron/gmail-stats">
-              <img src="img/projects/gmail-stats.jpg" class="web-project-cover" alt="Anteprima Gmail Stats">
-            </a>
-            <h4 class="h2 fw-bold"><a class="content-link" href="https://github.com/tongatron/gmail-stats">Gmail Stats</a></h4>
-            <p>Dashboard locale per l'analisi delle email inviate, con visualizzazioni su volumi, frequenza e pattern di comunicazione.</p>
-            <div class="web-project-actions">
-              <a class="project-action-button project-action-open" href="https://tongatron.org/gmail-stats/">Apri</a>
-              <a class="project-action-button project-action-github" href="https://github.com/tongatron/gmail-stats" target="_blank" rel="noopener">GitHub</a>
-            </div>
-          </article>
-
-          <article class="web-project-card">
-            <a class="content-link" href="https://chat.tongatron.org/">
-              <img src="img/projects/raspi-chat.jpg" class="web-project-cover" alt="Anteprima Raspi Chat">
-            </a>
-            <h4 class="h2 fw-bold"><a class="content-link" href="https://chat.tongatron.org/">Raspi Chat</a></h4>
-            <p>Progetto self-hosted per piccoli gruppi, con stanze private, notifiche web e un'amministrazione semplice da gestire.</p>
-            <div class="web-project-actions">
-              <a class="project-action-button project-action-open" href="https://chat.tongatron.org/">Apri</a>
-              <a class="project-action-button project-action-github" href="https://github.com/tongatron/raspi-chat" target="_blank" rel="noopener">GitHub</a>
-            </div>
-          </article>
-
-          <article class="web-project-card">
-            <a class="content-link" href="https://tongatron.org/projects/computing-timeline/">
-              <img src="projects/computing-timeline/logo.png" class="web-project-cover" alt="Anteprima Moore's Law in Motion">
-            </a>
-            <h4 class="h2 fw-bold"><a class="content-link" href="https://tongatron.org/projects/computing-timeline/">Moore's Law in Motion</a></h4>
-            <p>Visualizzazione interattiva per confrontare la potenza computazionale di macchine famose nella storia.</p>
-            <div class="web-project-actions">
-              <a class="project-action-button project-action-open" href="https://tongatron.org/projects/computing-timeline/">Apri</a>
-              <a class="project-action-button project-action-github" href="https://github.com/tongatron/tongatron.github.io/tree/main/projects/computing-timeline" target="_blank" rel="noopener">GitHub</a>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section id="iot" class="container py-4 border-top">
-      <h2 class="fw-bold section-title">IoT e fabbricazione digitale</h2>
-      <div class="row g-3 align-items-start mb-4">
-        <div class="col-12 col-lg-5">
-          <div class="iot-summary">
-            <img src="img/fablogo-white.png" alt="Logo Fablab Torino" class="iot-logo-mark">
-            <p class="iot-intro-copy">Progetti ideati e sviluppati<br>presso <a href="https://fablabtorino.org/">Fablab Torino</a></p>
-          </div>
-        </div>
-        <div class="col-12 col-lg-7">
-          <ul class="iot-spec-grid">
-            <li class="iot-spec-item"><strong>Piattaforme di sviluppo</strong><span>Arduino, Raspberry Pi</span></li>
-            <li class="iot-spec-item"><strong>Strumenti di fabbricazione digitale</strong><span>Stampanti 3D, taglio laser, fresa CNC</span></li>
-            <li class="iot-spec-item"><strong>Linguaggi di programmazione</strong><span>Arduino Wiring, Python, Processing, API web</span></li>
-            <li class="iot-spec-item"><strong>Sistemi operativi</strong><span>Debian Linux, Raspberry Pi OS</span></li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="row row-cols-1 row-cols-md-3 g-4 iot-project-grid">
-        <div class="col">
-          <article class="card project-item h-100 border-0 shadow-sm">
-            <a class="content-link" href="https://tongatron.org/projects/robottino/robottino-site/index.html">
-              <img src="img/robottino.jpg" class="card-img-top card-media" alt="Progetto Robottino">
-            </a>
-            <div class="card-body">
-              <h3 class="h5 card-title"><a class="content-link" href="https://tongatron.org/projects/robottino/robottino-site/index.html">Robottino</a></h3>
-              <p class="card-text">Robot educativo STEM open source. Basato su Arduino, integra display, sensori ambientali, buzzer, luci RGB, sensore ultrasonico e testa rotante programmabile.</p>
-              <a class="project-action-button project-action-open" href="https://tongatron.org/projects/robottino/robottino-site/index.html">Apri</a>
-            </div>
-          </article>
-        </div>
-        <div class="col">
-          <article class="card project-item h-100 border-0 shadow-sm">
-            <a class="content-link" href="https://tongatron.org/projects/selfomatic/index.html">
-              <img src="img/contact.jpg" class="card-img-top card-media" alt="Progetto Self-O-Matic">
-            </a>
-            <div class="card-body">
-              <h3 class="h5 card-title"><a class="content-link" href="https://tongatron.org/projects/selfomatic/index.html">Selfomatic</a></h3>
-              <p class="card-text">Social camera per eventi con scatto automatico e pubblicazione in tempo reale. Una soluzione efficace per attivazioni, fiere e comunicazione live.</p>
-              <a class="project-action-button project-action-open" href="https://tongatron.org/projects/selfomatic/index.html">Apri</a>
-            </div>
-          </article>
-        </div>
-        <div class="col">
-          <article class="card project-item h-100 border-0 shadow-sm">
-            <a class="content-link" href="https://tongatron.org/projects/IKEA-hack/index.html">
-              <img src="projects/IKEA-hack/ikea.jpg" class="card-img-top card-media" alt="Progetto IKEA Hack Nordli">
-            </a>
-            <div class="card-body">
-              <h3 class="h5 card-title"><a class="content-link" href="https://tongatron.org/projects/IKEA-hack/index.html">IKEA Hack Nordli</a></h3>
-              <p class="card-text">Progetto FabLab: personalizzazione della cassettiera IKEA Nordli con tavolino estraibile realizzato tramite pannello tagliato a laser.</p>
-              <a class="project-action-button project-action-open" href="https://tongatron.org/projects/IKEA-hack/index.html">Apri</a>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section id="network" class="container py-4 border-top">
-      <h2 class="fw-bold section-title">Collaborazioni</h2>
-      <div class="row row-cols-1 row-cols-sm-2 row-cols-xl-4 g-4">
-        <div class="col">
-          <article class="network-item h-100">
-            <h3 class="h5">FaberSum</h3>
-            <p class="mb-2">Lavorazioni CNC e prototipazione digitale</p>
-            <a href="http://www.fabersum.it/">fabersum.it</a>
-          </article>
-        </div>
-        <div class="col">
-          <article class="network-item h-100">
-            <h3 class="h5">Pangrus</h3>
-            <p class="mb-2">Laboratorio di ricerca elettroacustica</p>
-            <a href="https://www.peal.space/">peal.space</a>
-          </article>
-        </div>
-        <div class="col">
-          <article class="network-item h-100">
-            <h3 class="h5">Fablab Torino</h3>
-            <p class="mb-2">Associazione e laboratorio di fabbricazione digitale</p>
-            <a href="https://fablabtorino.org/">fablabtorino.org</a>
-          </article>
-        </div>
-        <div class="col">
-          <article class="network-item h-100">
-            <h3 class="h5">LittleEndian</h3>
-            <p class="mb-2">Sviluppo software, sistemi embedded e IoT</p>
-            <a href="https://www.little-endian.it/">little-endian.it</a>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section id="contacts" class="container py-4 border-top">
-      <h2 class="fw-bold section-title">Contatti</h2>
-      <div class="row g-4 align-items-start">
-
-        <div class="col-12 col-md-5">
-          <div class="row row-cols-1 g-3">
-            <div class="col">
-              <article class="contact-item">
-                <h3 class="h6 text-uppercase">Mail</h3>
-                <p><a href="mailto:giovanni.bindi@tongatron.org">giovanni.bindi@tongatron.org</a></p>
-              </article>
-            </div>
-            <div class="col">
-              <article class="contact-item">
-                <h3 class="h6 text-uppercase">GitHub</h3>
-                <p><a href="https://github.com/tongatron">github.com/tongatron</a></p>
-              </article>
-            </div>
-            <div class="col">
-              <article class="contact-item">
-                <h3 class="h6 text-uppercase">LinkedIn</h3>
-                <p><a href="https://www.linkedin.com/in/giovannibindi/">linkedin.com/in/giovannibindi</a></p>
-              </article>
-            </div>
-            <div class="col">
-              <article class="contact-item">
-                <h3 class="h6 text-uppercase">X</h3>
-                <p><a href="https://x.com/giobindi">x.com/giobindi</a></p>
-              </article>
-            </div>
-            <div class="col">
-              <article class="contact-item">
-                <h3 class="h6 text-uppercase">Hackaday</h3>
-                <p><a href="https://hackaday.io/tongatron">hackaday.io/tongatron</a></p>
-              </article>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-12 col-md-7">
-          <div id="contact-status" class="contact-feedback" role="alert" style="display:none;"></div>
-          <form id="contact-form" novalidate>
-            <div class="row g-2 mb-3 justify-content-end">
-              <div class="col-12 col-sm-5">
-                <label for="cf-name" class="contact-label text-end d-block">Nome</label>
-                <input type="text" id="cf-name" class="contact-input contact-input-sm" placeholder="Il tuo nome" required>
-                <div class="contact-invalid">Inserisci il tuo nome.</div>
+              <div class="form-group">
+                <label for="cf-message" class="form-label">Messaggio</label>
+                <textarea id="cf-message" class="form-input" rows="5" placeholder="Scrivi qui…" required></textarea>
+                <span class="form-err">Inserisci un messaggio.</span>
               </div>
-              <div class="col-12 col-sm-5">
-                <label for="cf-email" class="contact-label text-end d-block">Mail</label>
-                <input type="email" id="cf-email" class="contact-input contact-input-sm" placeholder="tua@email.com" required>
-                <div class="contact-invalid">Inserisci un'email valida.</div>
+              <div class="form-footer">
+                <button type="submit" class="btn btn-primary" id="cf-btn">
+                  <span class="cf-spinner" style="display:none;" aria-hidden="true">⏳</span>
+                  <span class="cf-label">Invia</span>
+                </button>
               </div>
-            </div>
-            <div class="mb-4">
-              <label for="cf-message" class="contact-label text-end d-block">Messaggio</label>
-              <textarea id="cf-message" class="contact-input" rows="4" placeholder="Scrivi qui..." required></textarea>
-              <div class="contact-invalid">Inserisci un messaggio.</div>
-            </div>
-            <div class="text-end">
-              <button type="submit" class="btn btn-outline-primary contact-submit" id="cf-btn">
-                <span class="cf-spinner spinner-border spinner-border-sm me-2" role="status" style="display:none;"></span>
-                <span class="cf-label">Invia</span>
-              </button>
-            </div>
-          </form>
-        </div>
+            </form>
+          </div>
 
+        </div>
       </div>
     </section>
+
   </main>
 
-  <footer class="container">
-    <div class="d-flex align-items-center py-3 my-4 border-top">
-      <p class="mb-0 text-body-secondary">&copy; <a href="/pulsanti/" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;">2026</a> Tongatron</p>
+
+  <!-- ============================================================
+       FOOTER
+  ============================================================ -->
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="site-footer__inner">
+        <p class="site-footer__copy">
+          &copy; <a href="/pulsanti/" target="_blank" rel="noopener">2026</a> Tongatron
+        </p>
+        <nav class="site-footer__links" aria-label="Link social">
+          <a href="https://github.com/tongatron" target="_blank" rel="noopener">GitHub</a>
+          <a href="https://www.linkedin.com/in/giovannibindi/" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="https://x.com/giobindi" target="_blank" rel="noopener">X</a>
+          <a href="https://hackaday.io/tongatron" target="_blank" rel="noopener">Hackaday</a>
+        </nav>
+      </div>
     </div>
   </footer>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+
   <script>
     (() => {
-      const API = 'https://api.tongatron.org/api/send-mail';
+      const API      = 'https://api.tongatron.org/api/send-mail';
       const EMAIL_TO = 'giovanni.bindi@tongatron.org';
-      const form = document.getElementById('contact-form');
-      const btn  = document.getElementById('cf-btn');
+      const form     = document.getElementById('contact-form');
+      const btn      = document.getElementById('cf-btn');
       const statusEl = document.getElementById('contact-status');
       if (!form) return;
 
       function showStatus(text, type) {
         statusEl.textContent = text;
-        statusEl.className = 'contact-feedback ' + type;
-        statusEl.style.display = 'block';
+        statusEl.className   = 'contact-feedback ' + type;
         statusEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
       }
 
-      function openMailFallback(payload) {
-        const subject = encodeURIComponent(`Messaggio dal sito da ${payload.name}`);
-        const body = encodeURIComponent(
-          `Nome: ${payload.name}\nEmail: ${payload.email}\n\n${payload.message}`
-        );
-        window.location.href = `mailto:${EMAIL_TO}?subject=${subject}&body=${body}`;
+      function openMailFallback(p) {
+        const s = encodeURIComponent(`Messaggio dal sito da ${p.name}`);
+        const b = encodeURIComponent(`Nome: ${p.name}\nEmail: ${p.email}\n\n${p.message}`);
+        window.location.href = `mailto:${EMAIL_TO}?subject=${s}&body=${b}`;
       }
 
       form.addEventListener('submit', async (e) => {
@@ -1347,10 +1260,10 @@ main {
 
         const spinner = btn.querySelector('.cf-spinner');
         const label   = btn.querySelector('.cf-label');
-        spinner.style.display = 'inline-block';
+        spinner.style.display = 'inline';
         label.textContent = 'Invio…';
         btn.disabled = true;
-        statusEl.style.display = 'none';
+        statusEl.className = 'contact-feedback';
 
         const payload = {
           name:    document.getElementById('cf-name').value.trim(),
@@ -1365,17 +1278,17 @@ main {
             body: JSON.stringify(payload),
           });
           const data = await res.json().catch(() => null);
-          if (res.ok && data && data.ok) {
-            showStatus('✅ Messaggio inviato! Ti rispondo il prima possibile.', 'ok');
+          if (res.ok && data?.ok) {
+            showStatus('Messaggio inviato. Ti rispondo il prima possibile.', 'ok');
             form.reset();
             form.classList.remove('was-validated');
           } else {
             openMailFallback(payload);
-            showStatus('⚠️ Invio automatico non disponibile. Ho aperto la tua app email con il messaggio gia compilato.', 'err');
+            showStatus('Invio automatico non disponibile. Ho aperto la tua app email.', 'err');
           }
-        } catch (err) {
+        } catch {
           openMailFallback(payload);
-          showStatus('⚠️ Server non raggiungibile. Ho aperto la tua app email con il messaggio gia compilato.', 'err');
+          showStatus('Server non raggiungibile. Ho aperto la tua app email.', 'err');
         } finally {
           spinner.style.display = 'none';
           label.textContent = 'Invia';
