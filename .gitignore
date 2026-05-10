@@ -1,3 +1,6 @@
+# macOS
+.DS_Store
+
 /.bundle/
 /vendor/
 /_site/
@@ -8,3 +11,4 @@
 /.claude/worktrees/clever-margulis/.github/workflows
 /.claude/worktrees/clever-margulis/_includes
 /.claude
+.DS_Store
