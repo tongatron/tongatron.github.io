@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Piemonte TU Exporter — Web</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&display=swap" />
+  <!-- SheetJS per export XLSX -->
+  <script src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:          #0d0f12;
+      --bg2:         #111418;
+      --bg3:         #161b22;
+      --border:      #21262d;
+      --green:       #00ff88;
+      --green-dim:   #00c866;
+      --green-muted: #00ff8820;
+      --cyan:        #00d4ff;
+      --yellow:      #f0c050;
+      --red:         #ff4d6d;
+      --blue:        #58a6ff;
+      --text:        #c9d1d9;
+      --text-dim:    #6e7681;
+      --text-bright: #e6edf3;
+      --font:        'JetBrains Mono', 'Fira Code', Consolas, monospace;
+      --radius:      6px;
+    }
+
+    html, body {
+      min-height: 100vh;
+      font-family: var(--font);
+      font-size: 12px;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: var(--bg2); }
+    ::-webkit-scrollbar-thumb { background: #30363d; border-radius: 99px; }
+
+    /* ── Layout ── */
+    .app { max-width: 860px; margin: 0 auto; padding: 24px 16px 48px; display: flex; flex-direction: column; gap: 12px; }
+
+    /* ── Header ── */
+    header {
+      display: flex; align-items: center; gap: 14px;
+      padding: 14px 20px;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+    }
+    header .icon { font-size: 20px; }
+    header h1 { font-size: 14px; font-weight: 700; color: var(--green); letter-spacing: 1px; text-transform: uppercase; }
+    header .sub { font-size: 10px; color: var(--text-dim); margin-top: 2px; }
+    header .badge { margin-left: auto; font-size: 9px; color: var(--text-dim); border: 1px solid var(--border); padding: 2px 8px; border-radius: 99px; }
+    header .cors-ok { font-size: 9px; color: var(--green); border: 1px solid var(--green-dim); padding: 2px 8px; border-radius: 99px; background: var(--green-muted); }
+
+    /* ── Section ── */
+    .section { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+    .section-hdr {
+      display: flex; align-items: center; gap: 8px;
+      padding: 7px 14px;
+      background: var(--bg3);
+      border-bottom: 1px solid var(--border);
+      font-size: 10px; font-weight: 700; color: var(--text-dim);
+      letter-spacing: 1.2px; text-transform: uppercase;
+    }
+    .dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+    .dot-green { background: var(--green); box-shadow: 0 0 6px var(--green); }
+    .dot-cyan  { background: var(--cyan);  box-shadow: 0 0 6px var(--cyan); }
+    .dot-yellow{ background: var(--yellow);box-shadow: 0 0 4px var(--yellow)60; }
+    .dot-blue  { background: var(--blue);  box-shadow: 0 0 4px var(--blue)60; }
+    .dot-idle  { background: #30363d; }
+    .section-body { padding: 12px 14px; }
+
+    /* ── Form grid ── */
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px 14px; }
+    .field { display: flex; flex-direction: column; gap: 4px; }
+    .field.full { grid-column: 1 / -1; }
+    label { font-size: 9.5px; font-weight: 500; color: var(--text-dim); letter-spacing: .8px; text-transform: uppercase; }
+    .hint { font-size: 9px; color: #3d444d; font-style: italic; }
+
+    input[type=text], input[type=number] {
+      background: var(--bg); border: 1px solid var(--border); border-radius: 4px;
+      padding: 6px 10px; font-family: var(--font); font-size: 12px;
+      color: var(--text-bright); width: 100%;
+      transition: border-color .15s, box-shadow .15s;
+      caret-color: var(--green);
+    }
+    input:focus { outline: none; border-color: var(--green-dim); box-shadow: 0 0 0 2px var(--green-muted), 0 0 10px var(--green-muted); }
+    input::placeholder { color: #3d444d; }
+
+    /* ── Checkbox ── */
+    .check-row { display: flex; flex-wrap: wrap; gap: 8px; }
+    .chk-lbl {
+      display: flex; align-items: center; gap: 6px; cursor: pointer;
+      font-size: 11px; color: var(--text);
+      padding: 5px 10px; border: 1px solid var(--border); border-radius: 4px;
+      transition: border-color .15s, background .15s; user-select: none;
+    }
+    .chk-lbl:hover { border-color: var(--green-dim); background: var(--green-muted); }
+    .chk-lbl.on { border-color: var(--green-dim); color: var(--green); background: var(--green-muted); }
+    .chk-lbl input { display: none; }
+
+    /* ── Radio formato ── */
+    .radio-row { display: flex; gap: 8px; }
+    .rad-lbl {
+      display: flex; align-items: center; gap: 6px; cursor: pointer;
+      font-size: 11px; color: var(--text);
+      padding: 5px 14px; border: 1px solid var(--border); border-radius: 4px;
+      transition: all .15s; user-select: none;
+    }
+    .rad-lbl input { display: none; }
+    .rad-lbl.on { border-color: var(--cyan); color: var(--cyan); background: #00d4ff12; box-shadow: 0 0 8px #00d4ff18; }
+
+    /* ── Advanced toggle ── */
+    .adv-hdr { cursor: pointer; }
+    .adv-hdr .chev { margin-left: auto; transition: transform .2s; font-size: 10px; }
+    .adv-hdr.open .chev { transform: rotate(180deg); }
+    .adv-body { display: none; padding: 12px 14px; }
+    .adv-body.open { display: block; }
+
+    /* ── Buttons ── */
+    .actions { display: flex; gap: 8px; flex-wrap: wrap; }
+    .btn {
+      font-family: var(--font); font-size: 11px; font-weight: 700;
+      letter-spacing: .8px; text-transform: uppercase;
+      padding: 9px 22px; border-radius: 4px; border: none; cursor: pointer;
+      transition: all .15s;
+    }
+    .btn:disabled { opacity: .3; cursor: not-allowed; }
+    .btn-primary {
+      background: transparent; color: var(--green);
+      border: 1px solid var(--green-dim); box-shadow: 0 0 10px var(--green-muted);
+    }
+    .btn-primary:hover:not(:disabled) { background: var(--green-muted); box-shadow: 0 0 20px #00ff8830; }
+    .btn-ghost {
+      background: transparent; color: var(--text-dim); border: 1px solid var(--border);
+    }
+    .btn-ghost:hover:not(:disabled) { color: var(--text); border-color: #3d444d; }
+
+    /* ── Progress ── */
+    .progress-wrap { padding: 10px 14px; display: flex; align-items: center; gap: 10px; }
+    .progress-track { flex: 1; height: 3px; background: var(--bg3); border-radius: 99px; overflow: hidden; }
+    .progress-fill {
+      height: 100%; width: 0%;
+      background: linear-gradient(90deg, var(--green-dim), var(--green));
+      border-radius: 99px; transition: width .35s ease;
+      box-shadow: 0 0 8px var(--green);
+    }
+    .progress-pct { font-size: 10px; color: var(--green-dim); min-width: 32px; text-align: right; }
+    .status-line { padding: 0 14px 10px; font-size: 10px; color: var(--text-dim); font-style: italic; }
+
+    /* ── Log ── */
+    .log-box {
+      font-family: var(--font); font-size: 11px; line-height: 1.7;
+      height: 200px; overflow-y: auto; padding: 10px 14px; background: var(--bg);
+    }
+    .log-line { display: block; white-space: pre-wrap; word-break: break-all; }
+    .log-line::before { content: '> '; opacity: .3; }
+    .log-line.info    { color: var(--blue); }
+    .log-line.warn    { color: var(--yellow); }
+    .log-line.error   { color: var(--red); }
+    .log-line.success { color: var(--green); font-weight: 700; }
+    .log-line.success::before { content: '✓ '; opacity: 1; }
+
+    @keyframes pulse {
+      0%,100% { box-shadow: 0 0 4px var(--green); }
+      50%      { box-shadow: 0 0 14px var(--green), 0 0 28px var(--green-dim); }
+    }
+    .dot-running { animation: pulse 1s ease-in-out infinite; }
+  </style>
+</head>
+<body>
+<div class="app">
+
+  <!-- Header -->
+  <header>
+    <span class="icon">⬡</span>
+    <div>
+      <h1>Piemonte TU Exporter</h1>
+      <div class="sub">PSLP · API JSON · Annunci lavoro · Web Edition</div>
+    </div>
+    <span class="cors-ok">✓ CORS aperto</span>
+    <span class="badge">v1.0.0</span>
+  </header>
+
+  <!-- Parametri -->
+  <div class="section">
+    <div class="section-hdr">
+      <span class="dot dot-idle" id="statusDot"></span>
+      Parametri ricerca
+    </div>
+    <div class="section-body">
+      <div class="grid">
+        <div class="field">
+          <label>Codice Comune</label>
+          <input type="text" id="idComune" value="L219" placeholder="es. L219 = Torino" />
+          <span class="hint">Codice catastale Belfiore</span>
+        </div>
+        <div class="field">
+          <label>Raggio (km)</label>
+          <input type="number" id="rangeKm" value="5" min="0" max="200" />
+        </div>
+        <div class="field">
+          <label>Ricerca testuale</label>
+          <input type="text" id="campoTestuale" placeholder="parola chiave…" />
+        </div>
+        <div class="field">
+          <label>Record / pagina API</label>
+          <input type="number" id="recForPage" value="100" min="10" max="500" />
+        </div>
+        <div class="field full">
+          <label>Filtri</label>
+          <div class="check-row">
+            <label class="chk-lbl on" id="lbl1"><input type="checkbox" id="flgL68Art1" checked /> L.68 Art.1</label>
+            <label class="chk-lbl"   id="lbl18"><input type="checkbox" id="flgL68Art18" /> L.68 Art.18</label>
+            <label class="chk-lbl"   id="lblTir"><input type="checkbox" id="tirocinio" /> Tirocinio</label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Output -->
+  <div class="section">
+    <div class="section-hdr">
+      <span class="dot dot-cyan"></span>
+      Output
+    </div>
+    <div class="section-body">
+      <div class="grid">
+        <div class="field">
+          <label>Formato</label>
+          <div class="radio-row">
+            <label class="rad-lbl on" id="lblXlsx"><input type="radio" name="fmt" value="xlsx" checked /> .xlsx</label>
+            <label class="rad-lbl"    id="lblCsv" ><input type="radio" name="fmt" value="csv"  /> .csv</label>
+          </div>
+        </div>
+        <div class="field">
+          <label>Nome file</label>
+          <input type="text" id="fileName" value="annunci_pslp" placeholder="nome file senza estensione" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Avanzate -->
+  <div class="section">
+    <div class="section-hdr adv-hdr" id="advToggle">
+      <span class="dot dot-yellow"></span>
+      Impostazioni avanzate
+      <span class="chev">▾</span>
+    </div>
+    <div class="adv-body" id="advBody">
+      <div class="grid">
+        <div class="field">
+          <label>Pausa tra richieste (ms)</label>
+          <input type="number" id="delay" value="350" min="100" max="5000" step="50" />
+          <span class="hint">Aumenta se ricevi errori 429</span>
+        </div>
+        <div class="field full">
+          <label>Cookie manuale (opzionale)</label>
+          <input type="text" id="cookie" placeholder="Incolla il cookie di sessione se l'API richiede auth…" />
+          <span class="hint">Lascia vuoto — le API PSLP sono pubbliche con CORS aperto</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Azioni -->
+  <div class="actions">
+    <button class="btn btn-primary" id="btnStart">[ ▶ avvia download ]</button>
+    <button class="btn btn-ghost"   id="btnStop" disabled>[ ■ interrompi ]</button>
+    <button class="btn btn-ghost"   id="btnClear">[ pulisci log ]</button>
+  </div>
+
+  <!-- Progress -->
+  <div class="section">
+    <div class="progress-wrap">
+      <div class="progress-track"><div class="progress-fill" id="bar"></div></div>
+      <div class="progress-pct" id="pct">0%</div>
+    </div>
+    <div class="status-line" id="statusLine">_ pronto.</div>
+  </div>
+
+  <!-- Log -->
+  <div class="section">
+    <div class="section-hdr">
+      <span class="dot dot-blue"></span>
+      Log operazioni
+    </div>
+    <div class="log-box" id="log"></div>
+  </div>
+
+</div>
+<script src="app.js"></script>
+</body>
+</html>
