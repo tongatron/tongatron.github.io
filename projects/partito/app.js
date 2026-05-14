@@ -64,6 +64,12 @@ const docs = [
     number: "10",
     title: "Matrice pubblici",
     description: "Pubblici potenziali, bisogni, linguaggi e spazio politico scoperto."
+  },
+  {
+    file: "11-confronto-partiti.md",
+    number: "11",
+    title: "Confronto partiti",
+    description: "Stress test dell'offerta esistente, scoring proposte e attacchi prevedibili."
   }
 ];
 

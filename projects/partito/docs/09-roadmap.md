@@ -1,6 +1,6 @@
 # Roadmap Del Progetto
 
-Versione 0.3 - 14 maggio 2026.
+Versione 0.4 - 14 maggio 2026.
 
 ## Obiettivo
 
@@ -18,7 +18,8 @@ Trasformare il quaderno in un progetto politico ipotetico studiabile, criticabil
 | Italia oggi | avanzato | diagnosi sociale, economica e internazionale v0.2 |
 | ipotesi politica | avanzato | posizionamento, pubblico, nome e simbolo v0.2 |
 | programma realistico | avanzato | schede operative v0.3 |
-| matrice pubblici | avviata | pubblici, bisogni, parole e spazio scoperto |
+| matrice pubblici | avanzato | pubblici, bisogni, parole e spazio scoperto |
+| confronto partiti | avviato | stress test, scoring e attacchi prevedibili |
 | fonti | avviato | registro fonti e fonti social da raffinare |
 
 ## Fase 1 - Base Analitica
@@ -33,7 +34,8 @@ Output prodotti:
 - fonti tracciate;
 - prima ipotesi di posizionamento;
 - programma realistico in schede;
-- matrice dei pubblici potenziali.
+- matrice dei pubblici potenziali;
+- confronto con partiti esistenti.
 
 Prossime azioni:
 
@@ -43,30 +45,28 @@ Prossime azioni:
 
 ## Fase 2 - Test Politico
 
-Stato: avviata con `10-matrice-pubblici.md`.
+Stato: avanzata con `10-matrice-pubblici.md` e `11-confronto-partiti.md`.
 
-Output attesi:
+Output prodotti:
 
 - confronto tra offerta dei partiti esistenti e temi scoperti;
-- 10 temi testabili;
-- parole forti, parole deboli, parole da evitare;
-- obiezioni prevedibili da destra, sinistra, centro, astensionisti;
-- scoring delle proposte per consenso, fattibilita, costo politico e distintivita.
+- scoring delle 10 proposte del programma;
+- attacchi prevedibili e risposte brevi;
+- prima selezione dei temi da prima linea.
 
-Domande:
+Output da completare:
 
-- quale tema mobilita gli astenuti senza spaventare i moderati?
-- quali proposte parlano insieme a lavoro e impresa?
-- quali temi sono troppo tecnici e vanno tradotti?
-- quali proposte rischiano di sembrare gia viste?
+- obiezioni piu dettagliate da destra, sinistra, centro e astensionisti;
+- test di linguaggio su slogan e frasi chiave;
+- tabella coperture/vincoli delle proposte principali.
 
 ## Fase 3 - Manifesto E Programma
 
-Stato: avviata con `07-programma-realistico.md`.
+Stato: pronto per il primo manifesto.
 
 Output da produrre:
 
-- manifesto breve in 10 punti;
+- `12-manifesto-breve.md`, massimo 10 punti;
 - programma di legislatura;
 - prime 10 misure dei primi 100 giorni;
 - schede tecniche con costi, vincoli e amministrazioni responsabili;
@@ -109,11 +109,11 @@ Output attesi:
 
 ## Prossimo Sprint Consigliato
 
-1. Creare `11-confronto-partiti.md` con una comparazione sistematica tra offerta dei partiti esistenti e spazio di Italia Comune.
-2. Estrarre da `10-matrice-pubblici.md` cinque pubblici prioritari e cinque pubblici secondari.
-3. Dare un punteggio alle 10 proposte del programma: consenso, fattibilita, costo politico, distintivita.
-4. Scrivere `12-manifesto-breve.md`, massimo 10 punti.
-5. Iniziare una pagina pubblica piu sintetica, distinta dal quaderno di lavoro.
+1. Scrivere `12-manifesto-breve.md`, massimo 10 punti.
+2. Estrarre da `11-confronto-partiti.md` la triade comunicativa: casa, lavoro, comuni.
+3. Creare una prima pagina pubblica sintetica separata dal quaderno.
+4. Iniziare una tabella costi/vincoli per le cinque proposte da prima linea.
+5. Disegnare una prima bozza del simbolo in SVG.
 
 ## Criterio Di Successo
 
