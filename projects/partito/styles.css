@@ -88,6 +88,35 @@ h1 {
   line-height: 1.55;
 }
 
+.publish-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 22px;
+  margin: 22px 0 0;
+  padding: 16px 0 0;
+  border-top: 1px solid var(--line);
+}
+
+.publish-meta div {
+  display: grid;
+  gap: 2px;
+}
+
+.publish-meta dt {
+  color: var(--accent);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.publish-meta dd {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.96rem;
+}
+
+
 .back-link {
   flex: 0 0 auto;
   padding-top: 8px;
