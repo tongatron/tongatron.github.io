@@ -1,6 +1,6 @@
 # Roadmap Del Progetto
 
-Versione 0.2 - 14 maggio 2026.
+Versione 0.3 - 14 maggio 2026.
 
 ## Obiettivo
 
@@ -13,11 +13,12 @@ Trasformare il quaderno in un progetto politico ipotetico studiabile, criticabil
 | metodo | avviato | criteri etici e uso fonti definiti |
 | prompt | avviato | prompt generale riformulato in fasi |
 | storia mondiale | da sviluppare | per ora e' solo indice ragionato |
-| Italia 1850-2026 | avanzato | aggiunta cronologia narrativa e implicazioni |
+| Italia 1850-2026 | avanzato | cronologia narrativa e implicazioni |
 | partiti e movimenti | avanzato | atlante storico-politico v0.2 |
 | Italia oggi | avanzato | diagnosi sociale, economica e internazionale v0.2 |
 | ipotesi politica | avanzato | posizionamento, pubblico, nome e simbolo v0.2 |
 | programma realistico | avanzato | schede operative v0.3 |
+| matrice pubblici | avviata | pubblici, bisogni, parole e spazio scoperto |
 | fonti | avviato | registro fonti e fonti social da raffinare |
 
 ## Fase 1 - Base Analitica
@@ -31,7 +32,8 @@ Output prodotti:
 - cronologia narrativa 1850-2026;
 - fonti tracciate;
 - prima ipotesi di posizionamento;
-- programma realistico in schede.
+- programma realistico in schede;
+- matrice dei pubblici potenziali.
 
 Prossime azioni:
 
@@ -41,15 +43,15 @@ Prossime azioni:
 
 ## Fase 2 - Test Politico
 
-Stato: prossima fase.
+Stato: avviata con `10-matrice-pubblici.md`.
 
 Output attesi:
 
-- matrice dei pubblici potenziali;
 - confronto tra offerta dei partiti esistenti e temi scoperti;
 - 10 temi testabili;
 - parole forti, parole deboli, parole da evitare;
-- obiezioni prevedibili da destra, sinistra, centro, astensionisti.
+- obiezioni prevedibili da destra, sinistra, centro, astensionisti;
+- scoring delle proposte per consenso, fattibilita, costo politico e distintivita.
 
 Domande:
 
@@ -107,10 +109,10 @@ Output attesi:
 
 ## Prossimo Sprint Consigliato
 
-1. Scrivere una **matrice elettorale**: giovani, famiglie, PMI, lavoratori poveri, amministratori locali, astenuti, moderati sfiduciati.
-2. Creare una pagina `10-matrice-pubblici.md`.
-3. Estrarre dal programma 5 messaggi pubblici prioritari.
-4. Disegnare una prima bozza testuale del manifesto.
+1. Creare `11-confronto-partiti.md` con una comparazione sistematica tra offerta dei partiti esistenti e spazio di Italia Comune.
+2. Estrarre da `10-matrice-pubblici.md` cinque pubblici prioritari e cinque pubblici secondari.
+3. Dare un punteggio alle 10 proposte del programma: consenso, fattibilita, costo politico, distintivita.
+4. Scrivere `12-manifesto-breve.md`, massimo 10 punti.
 5. Iniziare una pagina pubblica piu sintetica, distinta dal quaderno di lavoro.
 
 ## Criterio Di Successo

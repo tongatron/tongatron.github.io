@@ -58,6 +58,12 @@ const docs = [
     number: "09",
     title: "Roadmap",
     description: "Fasi operative per far avanzare analisi, programma e identita."
+  },
+  {
+    file: "10-matrice-pubblici.md",
+    number: "10",
+    title: "Matrice pubblici",
+    description: "Pubblici potenziali, bisogni, linguaggi e spazio politico scoperto."
   }
 ];
 
