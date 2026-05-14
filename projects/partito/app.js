@@ -52,6 +52,12 @@ const docs = [
     number: "08",
     title: "Fonti",
     description: "Registro di bibliografia, sitografia e fonti da tracciare."
+  },
+  {
+    file: "09-roadmap.md",
+    number: "09",
+    title: "Roadmap",
+    description: "Fasi operative per far avanzare analisi, programma e identita."
   }
 ];
 
