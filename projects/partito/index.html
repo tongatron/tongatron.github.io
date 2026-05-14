@@ -33,17 +33,34 @@
               </div>
             </dl>
           </div>
-          <a class="back-link" href="/projects/">Torna ai progetti</a>
+          <div class="site-actions">
+            <a id="epub-link" class="download-link" href="downloads/partito-quaderno.epub" download>
+              Scarica EPUB
+            </a>
+          </div>
         </div>
       </header>
 
       <main class="layout">
         <aside class="doc-list-panel" aria-labelledby="doc-list-title">
-          <div class="panel-head">
-            <p class="panel-kicker">Indice</p>
-            <h2 id="doc-list-title">Documenti</h2>
+          <div class="panel-head panel-head--toc">
+            <div>
+              <p class="panel-kicker">Indice</p>
+              <h2 id="doc-list-title">Documenti</h2>
+            </div>
+            <button
+              id="toc-toggle"
+              class="toc-toggle"
+              type="button"
+              aria-expanded="false"
+              aria-controls="doc-list-wrap"
+            >
+              Apri indice
+            </button>
           </div>
-          <nav id="doc-list" class="doc-list" aria-label="Elenco documenti"></nav>
+          <div id="doc-list-wrap" class="doc-list-wrap">
+            <nav id="doc-list" class="doc-list" aria-label="Elenco documenti"></nav>
+          </div>
         </aside>
 
         <section class="reader-panel" aria-live="polite">
@@ -62,4 +79,3 @@
     <script src="app.js"></script>
   </body>
 </html>
-

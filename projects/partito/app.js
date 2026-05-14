@@ -83,6 +83,12 @@ const listNode = document.querySelector("#doc-list");
 const titleNode = document.querySelector("#doc-title");
 const kickerNode = document.querySelector("#doc-kicker");
 const contentNode = document.querySelector("#doc-content");
+const docListPanelNode = document.querySelector(".doc-list-panel");
+const tocToggleNode = document.querySelector("#toc-toggle");
+const readerPanelNode = document.querySelector(".reader-panel");
+const mobileQuery = window.matchMedia("(max-width: 920px)");
+
+let isTocOpen = false;
 
 marked.setOptions({
   gfm: true,
@@ -104,6 +110,10 @@ function createList() {
     `;
     button.addEventListener("click", () => {
       location.hash = doc.file;
+      if (mobileQuery.matches) {
+        setTocOpen(false);
+        readerPanelNode.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
     });
     listNode.appendChild(button);
   });
@@ -118,6 +128,27 @@ function setActiveLink(file) {
   document.querySelectorAll(".doc-link").forEach((node) => {
     node.classList.toggle("is-active", node.dataset.file === file);
   });
+
+  const activeNode = document.querySelector(`.doc-link[data-file="${CSS.escape(file)}"]`);
+  if (activeNode) {
+    activeNode.scrollIntoView({ block: "nearest" });
+  }
+}
+
+function setTocOpen(nextState) {
+  isTocOpen = nextState;
+  docListPanelNode.classList.toggle("is-open", isTocOpen);
+  tocToggleNode.setAttribute("aria-expanded", String(isTocOpen));
+  tocToggleNode.textContent = isTocOpen ? "Chiudi indice" : "Apri indice";
+}
+
+function syncTocLayout(event) {
+  if (event.matches) {
+    setTocOpen(false);
+    return;
+  }
+
+  setTocOpen(true);
 }
 
 async function loadDoc() {
@@ -148,6 +179,10 @@ async function loadDoc() {
 }
 
 createList();
+syncTocLayout(mobileQuery);
+tocToggleNode.addEventListener("click", () => {
+  setTocOpen(!isTocOpen);
+});
+mobileQuery.addEventListener("change", syncTocLayout);
 window.addEventListener("hashchange", loadDoc);
 loadDoc();
-

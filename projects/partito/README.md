@@ -36,3 +36,12 @@ Nota importante: la parte sulle "insincerita" va riformulata. Invece di progetta
 
 Partire da `docs/01-prompt-adattato.md`, scegliere una fase, poi produrre una prima versione di `docs/03-italia-1850-2026.md` e `docs/04-partiti-e-movimenti.md` usando fonti tracciate in `docs/08-fonti.md`.
 
+## EPUB
+
+Per generare un file `epub` con tutti i documenti in ordine, esegui:
+
+```bash
+./scripts/generate-epub.sh
+```
+
+L'output viene salvato in `downloads/partito-quaderno.epub`.
