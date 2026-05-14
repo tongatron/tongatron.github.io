@@ -1,10 +1,22 @@
 # Roadmap Del Progetto
 
-Versione 0.4 - 14 maggio 2026.
+Versione 0.5 - 14 maggio 2026.
 
 ## Obiettivo
 
 Trasformare il quaderno in un progetto politico ipotetico studiabile, criticabile e presentabile pubblicamente.
+
+## Quanto Manca A Un Punto Solido
+
+Stima onesta:
+
+- **base analitica**: circa 75%;
+- **programma politico credibile**: circa 55%;
+- **identita pubblica**: circa 35%;
+- **prontezza per presentazione pubblica sintetica**: circa 45%;
+- **prontezza per una vera iniziativa politica**: circa 20%.
+
+Il progetto ha gia' una struttura solida come laboratorio: diagnosi, pubblici, confronto con partiti, programma e manifesto breve. Non e' ancora solido come proposta pubblica completa per tre motivi: mancano coperture piu precise, verifica del nome/simbolo e una pagina divulgativa separata dal quaderno.
 
 ## Stato Attuale
 
@@ -19,7 +31,8 @@ Trasformare il quaderno in un progetto politico ipotetico studiabile, criticabil
 | ipotesi politica | avanzato | posizionamento, pubblico, nome e simbolo v0.2 |
 | programma realistico | avanzato | schede operative v0.3 |
 | matrice pubblici | avanzato | pubblici, bisogni, parole e spazio scoperto |
-| confronto partiti | avviato | stress test, scoring e attacchi prevedibili |
+| confronto partiti | avanzato | stress test, scoring e attacchi prevedibili |
+| manifesto breve | avviato | dieci punti e primi impegni misurabili |
 | fonti | avviato | registro fonti e fonti social da raffinare |
 
 ## Fase 1 - Base Analitica
@@ -35,7 +48,8 @@ Output prodotti:
 - prima ipotesi di posizionamento;
 - programma realistico in schede;
 - matrice dei pubblici potenziali;
-- confronto con partiti esistenti.
+- confronto con partiti esistenti;
+- manifesto breve.
 
 Prossime azioni:
 
@@ -52,7 +66,8 @@ Output prodotti:
 - confronto tra offerta dei partiti esistenti e temi scoperti;
 - scoring delle 10 proposte del programma;
 - attacchi prevedibili e risposte brevi;
-- prima selezione dei temi da prima linea.
+- prima selezione dei temi da prima linea;
+- triade comunicativa: casa, lavoro, comuni.
 
 Output da completare:
 
@@ -62,13 +77,18 @@ Output da completare:
 
 ## Fase 3 - Manifesto E Programma
 
-Stato: pronto per il primo manifesto.
+Stato: avviata con `07-programma-realistico.md` e `12-manifesto-breve.md`.
+
+Output prodotti:
+
+- manifesto breve in 10 punti;
+- prime 5 misure dei primi 100 giorni;
+- cornice pubblica "casa, lavoro, comuni".
 
 Output da produrre:
 
-- `12-manifesto-breve.md`, massimo 10 punti;
-- programma di legislatura;
-- prime 10 misure dei primi 100 giorni;
+- programma di legislatura in forma pubblica;
+- prime 10 misure dei primi 100 giorni in forma definitiva;
 - schede tecniche con costi, vincoli e amministrazioni responsabili;
 - pagina "promesse misurabili".
 
@@ -82,7 +102,7 @@ Stato: abbozzata.
 
 Output da produrre:
 
-- nome definitivo;
+- verifica del nome definitivo;
 - simbolo;
 - palette;
 - tono di voce;
@@ -109,11 +129,11 @@ Output attesi:
 
 ## Prossimo Sprint Consigliato
 
-1. Scrivere `12-manifesto-breve.md`, massimo 10 punti.
-2. Estrarre da `11-confronto-partiti.md` la triade comunicativa: casa, lavoro, comuni.
-3. Creare una prima pagina pubblica sintetica separata dal quaderno.
-4. Iniziare una tabella costi/vincoli per le cinque proposte da prima linea.
-5. Disegnare una prima bozza del simbolo in SVG.
+1. Creare `13-costi-vincoli.md` con le cinque proposte da prima linea: casa, lavoro, sanita, Stato semplice, manutenzione.
+2. Creare una prima pagina pubblica sintetica separata dal quaderno.
+3. Disegnare una prima bozza del simbolo in SVG.
+4. Verificare nome "Italia Comune" su uso politico, dominio e possibili conflitti.
+5. Preparare FAQ di attacco/difesa piu robuste.
 
 ## Criterio Di Successo
 

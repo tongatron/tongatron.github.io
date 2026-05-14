@@ -70,6 +70,12 @@ const docs = [
     number: "11",
     title: "Confronto partiti",
     description: "Stress test dell'offerta esistente, scoring proposte e attacchi prevedibili."
+  },
+  {
+    file: "12-manifesto-breve.md",
+    number: "12",
+    title: "Manifesto breve",
+    description: "Promessa politica essenziale, dieci punti e primi impegni misurabili."
   }
 ];
 
