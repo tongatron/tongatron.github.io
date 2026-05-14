@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Partito | Quaderno di lavoro</title>
+    <meta name="description" content="Quaderno editoriale per consultare analisi, ricerca storica, programma e fonti di un progetto politico in formato Markdown.">
+    <meta name="theme-color" content="#f3efe6">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="site-header">
+        <p class="site-kicker">Progetto editoriale</p>
+        <div class="site-header__row">
+          <div>
+            <h1>Partito</h1>
+            <p class="site-intro">
+              Una pagina di consultazione per leggere i documenti Markdown del progetto
+              direttamente dal browser, con un impianto sobrio e leggibile.
+            </p>
+          </div>
+          <a class="back-link" href="/projects/">Torna ai progetti</a>
+        </div>
+      </header>
+
+      <main class="layout">
+        <aside class="doc-list-panel" aria-labelledby="doc-list-title">
+          <div class="panel-head">
+            <p class="panel-kicker">Indice</p>
+            <h2 id="doc-list-title">Documenti</h2>
+          </div>
+          <nav id="doc-list" class="doc-list" aria-label="Elenco documenti"></nav>
+        </aside>
+
+        <section class="reader-panel" aria-live="polite">
+          <div class="reader-meta">
+            <p id="doc-kicker" class="panel-kicker">Documento selezionato</p>
+            <h2 id="doc-title">Caricamento</h2>
+          </div>
+          <article id="doc-content" class="markdown-body">
+            <p>Sto caricando il contenuto del documento selezionato.</p>
+          </article>
+        </section>
+      </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
+
