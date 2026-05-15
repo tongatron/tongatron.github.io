@@ -366,6 +366,114 @@
     border-radius: 4px;
   }
 
+  /* ===== PAYPAL COMPONENTS ===== */
+  .paypal-lab {
+    background:
+      linear-gradient(rgba(21,21,21,.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(21,21,21,.035) 1px, transparent 1px),
+      #f4f1e8;
+    background-size: 24px 24px;
+    color: #151515;
+    border-top: 2px solid #151515;
+    border-bottom: 2px solid #151515;
+  }
+  .paypal-lab h2 { color: #151515; opacity: 0.72; }
+  .paypal-panel {
+    width: min(720px, 100%);
+    background: #fffaf0;
+    border: 2px solid #151515;
+    box-shadow: 10px 10px 0 #151515;
+    padding: clamp(24px, 5vw, 48px);
+  }
+  .paypal-label {
+    display: inline-block;
+    margin-bottom: 24px;
+    padding: 6px 10px;
+    border: 1px solid #151515;
+    background: #fff;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    transform: rotate(-1deg);
+  }
+  .paypal-title {
+    margin: 0 0 16px;
+    font-size: clamp(36px, 8vw, 72px);
+    line-height: .9;
+    letter-spacing: -0.06em;
+  }
+  .paypal-copy {
+    max-width: 560px;
+    margin: 0 0 28px;
+    color: #5f5a50;
+    font-size: clamp(17px, 2.4vw, 21px);
+    line-height: 1.45;
+  }
+  .paypal-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-height: 52px;
+    padding: 14px 22px;
+    background: #0070ba;
+    color: #fff;
+    border: 2px solid #151515;
+    box-shadow: 5px 5px 0 #151515;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 800;
+    border-radius: 8px;
+    transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+  }
+  .paypal-button:hover {
+    transform: translate(3px, 3px);
+    box-shadow: 2px 2px 0 #151515;
+    background: #003087;
+    color: #fff;
+  }
+  .paypal-button:focus-visible {
+    outline: 4px solid #d71920;
+    outline-offset: 4px;
+  }
+  .paypal-button--dark { background: #111; }
+  .paypal-button--dark:hover { background: #2a2a2a; }
+  .paypal-test {
+    margin-top: 40px;
+    padding-top: 28px;
+    border-top: 2px dashed #151515;
+  }
+  .paypal-test-label {
+    margin-bottom: 18px;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+  }
+  .paypal-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    align-items: center;
+  }
+  .paypal-copy-actions {
+    margin-top: 16px;
+    color: #151515;
+  }
+  .paypal-note {
+    margin-top: 28px;
+    padding-top: 18px;
+    border-top: 1px dashed #151515;
+    color: #5f5a50;
+    font-size: 13px;
+  }
+  @media (max-width: 560px) {
+    .paypal-panel { box-shadow: 6px 6px 0 #151515; }
+    .paypal-actions { align-items: stretch; }
+    .paypal-button { width: 100%; white-space: normal; text-align: center; }
+  }
+
   .toast {
     position: fixed;
     bottom: 20px;
@@ -526,6 +634,65 @@
   </div>
 </div>
 
+<!-- PAYPAL -->
+<div class="section paypal-lab">
+  <h2>PayPal</h2>
+  <div class="paypal-panel">
+    <span class="paypal-label">Contributo volontario</span>
+
+    <h3 class="paypal-title">Sostieni il progetto.</h3>
+
+    <p class="paypal-copy">
+      EPUB, esperimenti narrativi, satire burocratiche, interfacce improbabili
+      e esseri umani ancora parzialmente funzionanti.
+    </p>
+
+    <a
+      class="paypal-button"
+      href="https://www.paypal.com/paypalme/giovannibindi"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Sostieni il progetto con PayPal"
+    >
+      💳 Sostieni con PayPal
+    </a>
+
+    <div class="paypal-test">
+      <div class="paypal-test-label">Test pulsanti PayPal</div>
+
+      <div class="paypal-actions">
+        <a
+          class="paypal-button"
+          href="https://www.paypal.com/paypalme/giovannibindi"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          💳 PayPal.Me
+        </a>
+
+        <a
+          class="paypal-button paypal-button--dark"
+          href="https://www.paypal.com/donate/?hosted_button_id=AHBYVT7MMUPW2"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          ☕ Donate Button
+        </a>
+      </div>
+
+      <div class="card-actions paypal-copy-actions">
+        <button class="copy-btn" data-paypal="support">Copia sezione</button>
+        <button class="copy-btn" data-paypal="me">Copia PayPal.Me</button>
+        <button class="copy-btn" data-paypal="donate">Copia Donate</button>
+      </div>
+    </div>
+
+    <div class="paypal-note">
+      Test di due modalità differenti: PayPal.Me diretto e pulsante ufficiale Donate PayPal.
+    </div>
+  </div>
+</div>
+
 <!-- NERO -->
 <div class="section" style="background:#000; color:#eee;">
   <h2>Nero</h2>
@@ -648,12 +815,13 @@
 
   function copy(text, btn) {
     navigator.clipboard.writeText(text).then(() => {
+      if (!btn.dataset.label) btn.dataset.label = btn.textContent;
       btn.classList.add('copied');
       btn.textContent = '✓ Copiato';
       showToast();
       setTimeout(() => {
         btn.classList.remove('copied');
-        btn.textContent = btn.dataset.copy === 'html' ? 'Copia HTML' : 'Copia MD';
+        btn.textContent = btn.dataset.label;
       }, 1400);
     });
   }
@@ -667,6 +835,9 @@
   const OFFICIAL_HTML = `<div class="brand-terminal">\n  <div class="brand-terminal-line">\n    <div class="brand-terminal-dot"></div>\n    <span class="brand-terminal-text">tongatron.org<span class="brand-terminal-cursor">_</span></span>\n  </div>\n</div>`;
   const OFFICIAL_MD = `● [tongatron.org](https://tongatron.org)_`;
   const ANIMATED_HTML = `<style>@keyframes terminal-blink{50%{opacity:0}}</style>\n<div style="display:inline-block;background:#111;border-radius:10px;padding:20px 24px;box-shadow:0 0 0 1px #222;font-family:Menlo,Monaco,Consolas,'Courier New',monospace;">\n  <div style="display:flex;align-items:center;font-size:18px;letter-spacing:0.5px;">\n    <span style="color:#888;margin-right:8px;">&gt;</span>\n    <span style="width:10px;height:10px;background:#ffcc00;border-radius:50%;margin-right:10px;box-shadow:0 0 6px rgba(255,204,0,0.6);flex-shrink:0;display:inline-block;"></span>\n    <span style="color:#f5f5f5;">tongatron.org</span>\n    <span style="display:inline-block;width:10px;height:18px;background:#ffcc00;margin-left:6px;vertical-align:middle;animation:terminal-blink 1s steps(1) infinite;"></span>\n  </div>\n</div>`;
+  const PAYPAL_ME_HTML = `<a class="paypal-button" href="https://www.paypal.com/paypalme/giovannibindi" target="_blank" rel="noopener noreferrer">💳 PayPal.Me</a>`;
+  const PAYPAL_DONATE_HTML = `<a class="paypal-button paypal-button--dark" href="https://www.paypal.com/donate/?hosted_button_id=AHBYVT7MMUPW2" target="_blank" rel="noopener noreferrer">☕ Donate Button</a>`;
+  const PAYPAL_SUPPORT_HTML = `<section class="paypal-panel">\n  <span class="paypal-label">Contributo volontario</span>\n  <h3 class="paypal-title">Sostieni il progetto.</h3>\n  <p class="paypal-copy">EPUB, esperimenti narrativi, satire burocratiche, interfacce improbabili e esseri umani ancora parzialmente funzionanti.</p>\n  <a class="paypal-button" href="https://www.paypal.com/paypalme/giovannibindi" target="_blank" rel="noopener noreferrer" aria-label="Sostieni il progetto con PayPal">💳 Sostieni con PayPal</a>\n</section>`;
 
   document.addEventListener('click', e => {
     const btn = e.target.closest('.copy-btn');
@@ -675,6 +846,15 @@
       const text = btn.dataset.official === 'animated' ? ANIMATED_HTML
         : btn.dataset.official === 'html' ? OFFICIAL_HTML : OFFICIAL_MD;
       copy(text, btn);
+      return;
+    }
+    if (btn.dataset.paypal) {
+      const snippets = {
+        support: PAYPAL_SUPPORT_HTML,
+        me: PAYPAL_ME_HTML,
+        donate: PAYPAL_DONATE_HTML
+      };
+      copy(snippets[btn.dataset.paypal], btn);
       return;
     }
     const { copy: kind, prefix, n } = btn.dataset;
