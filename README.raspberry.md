@@ -1,6 +1,6 @@
 # Raspberry Services Inventory
 
-Snapshot: 2026-04-30
+Snapshot: 2026-05-17
 Host: `raspberrypi`
 Tailscale: `raspberrypi.tailce2514.ts.net`
 OS: Raspbian GNU/Linux 13 (trixie) — armv7l
@@ -16,8 +16,10 @@ Questo file documenta i servizi, le app e la topologia di rete del Raspberry. Va
 | Hostname | Tunnel | → Porta locale | Servizio |
 |---|---|---|---|
 | `chat.tongatron.org` | `cloudflared.service` | `localhost:80` (nginx) | raspi-chat / fastify-api |
-| `api.tongatron.org` | `cloudflared.service` | `localhost:3000` | fastify-api |
+| `api.tongatron.org` | `cloudflared.service` | `localhost:80` (nginx) → `3000` | fastify-api |
 | `private.tongatron.org` | `cloudflared.service` | `localhost:3200` | raspi-admin |
+| `library.tongatron.org` | `cloudflared.service` | `localhost:3201` | liberia (ISBN scanner) |
+| `alcol-monitor.tongatron.org` | `cloudflared.service` | `localhost:3400` | alcol-monitor |
 | `mhz.tongatron.org` | `cloudflared-magazzino.service` | `localhost:3100` | magazzino-sereno |
 
 Config tunnel principale: `/etc/cloudflared/config.yml` (tunnel ID: `8521f89c-9038-474b-886b-71fb4ae98bc6`)
@@ -31,9 +33,13 @@ Config tunnel magazzino: `~/.cloudflared/magazzino-config.yml` (tunnel ID: `e1fe
 |---|---|---|---|
 | `22` | `0.0.0.0` | `sshd` | accesso shell |
 | `80` | `0.0.0.0` | `nginx` | reverse proxy principale |
-| `3000` | `127.0.0.1` | `node` (fastify-api) | raspi-chat + API |
+| `3000` | `127.0.0.1` | `node` (tongatron-server.service) | mail API |
+| `3001` | `127.0.0.1` | `node` (my-scarpings-dashboard) | dashboard interna scarpings |
 | `3100` | `127.0.0.1` | `node` (magazzino.service) | magazzino-sereno |
 | `3200` | `127.0.0.1` | `node` (raspi-admin.service) | pannello admin |
+| `3201` | `127.0.0.1` | `node` (liberia.service) | ISBN scanner |
+| `3300` | `0.0.0.0` | `node` (my-scarpings.service) | monitor cambi sito |
+| `3400` | `127.0.0.1` | `node` (alcol-monitor.service) | alcol-monitor |
 | `139`, `445` | `0.0.0.0` | `smbd` | Samba |
 
 ---
@@ -191,3 +197,26 @@ cd ~/magazzino-sereno && git pull && sudo systemctl restart magazzino
 - `raspi-admin` è il pannello di controllo ufficiale: gestisce i servizi systemd, i log e i repo direttamente dalla UI web.
 - Variabili sensibili (password, token GitHub, chiavi mail) sono in `/srv/apps/fastify-api/.env` e `/srv/apps/raspi-admin/.env` — mai committare.
 - Aggiornare questo file ogni volta che si aggiunge un servizio, cambia porta, o si crea/modifica un tunnel Cloudflare.
+
+---
+
+## Analytics
+
+Tutte le pagine HTML servite sotto `tongatron.org` (anche le mini-app sul Pi via Cloudflare tunnel) caricano lo script centralizzato `https://tongatron.org/analytics.js`. Sorgente unica: `analytics.js` nella root del repo `tongatron.github.io`.
+
+Provider: Google Analytics 4 — property `G-S4XSYK0QB7`, Consent Mode v2 con default `denied` e opt-in via banner.
+
+Per aggiungere analytics a una nuova pagina/servizio: inserire prima di `</head>`:
+
+```html
+<script async src="https://tongatron.org/analytics.js"></script>
+```
+
+Pagine già coperte sul Pi (entry HTML):
+
+- `raspi-chat`: `/srv/apps/raspi-chat/public/{landing,chat-app,chat-register,chat,setup,unito,register-entry,chat-console}.html`
+- `magazzino-sereno`: `/home/giovanni/magazzino-sereno/client/index.html` + `client/dist/index.html`
+- `liberia`: `/home/giovanni/liberia/client/index.html` + `client/dist/index.html`
+- `alcol-monitor`: `/srv/apps/alcol-monitor/index.html` + `dist/index.html`
+
+Per gli SPA Vite (magazzino, liberia, alcol-monitor) lo script è sia nella sorgente che in `dist/` — futuri build manterranno l'include.
