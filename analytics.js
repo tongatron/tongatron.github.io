@@ -14,18 +14,7 @@
   window.__tongatronAnalyticsLoaded = true;
 
   var GA_ID = 'G-S4XSYK0QB7';
-  var CF_BEACON_TOKEN = ''; // paste token from Cloudflare Web Analytics dashboard
   var CONSENT_KEY = 'tongatron-consent-v1';
-
-  // Cloudflare Web Analytics — privacy-friendly, no cookies, no consent needed.
-  // Loaded unconditionally (independent of GA4 consent).
-  if (CF_BEACON_TOKEN) {
-    var cf = document.createElement('script');
-    cf.defer = true;
-    cf.src = 'https://static.cloudflareinsights.com/beacon.min.js';
-    cf.setAttribute('data-cf-beacon', JSON.stringify({ token: CF_BEACON_TOKEN }));
-    (document.head || document.documentElement).appendChild(cf);
-  }
 
   window.dataLayer = window.dataLayer || [];
   function gtag() { window.dataLayer.push(arguments); }
