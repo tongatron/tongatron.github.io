@@ -30,6 +30,7 @@
   <meta name="twitter:title" content="Projects | Tongatron">
   <meta name="twitter:description" content="Raccolta dei progetti Tongatron: utility web, simulatori, esperimenti interattivi e prototipi digitali.">
   <meta name="twitter:image" content="https://tongatron.org/img/tongatron-meta.jpg">
+  <script async src="https://tongatron.org/analytics.js"></script>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -360,12 +361,75 @@
 
     <hr class="divider">
 
-    <section id="tongatron-projects" class="section" aria-labelledby="tongatron-projects-title">
+    <section id="apps" class="section" aria-labelledby="apps-title">
       <div class="wrap">
         <div class="sec-head">
           <span class="label">Tongatron.org</span>
-          <h2 class="sec-head__title" id="tongatron-projects-title">Progetti locali</h2>
-          <p class="sec-head__desc">Selezione delle pagine presenti nella directory projects di questo sito.</p>
+          <h2 class="sec-head__title" id="apps-title">App e siti</h2>
+          <p class="sec-head__desc">Progetti pubblicati come siti autonomi sotto tongatron.org. Ognuno ha il proprio repository.</p>
+        </div>
+
+        <div class="project-grid">
+          <article class="project-card">
+            <span class="project-card__kicker">Astronomy</span>
+            <h3 class="project-card__title"><a href="https://tongatron.org/astri/">Astri</a></h3>
+            <p class="project-card__desc">App web interattiva per esplorare il cielo notturno: Sole, Luna, pianeti e sistema solare in 3D calcolati in tempo reale dalla posizione dell'utente.</p>
+            <a class="project-card__link" href="https://tongatron.org/astri/">Apri ↗</a>
+          </article>
+
+          <article class="project-card">
+            <span class="project-card__kicker">Editorial</span>
+            <h3 class="project-card__title"><a href="https://tongatron.org/ministero-delle-eccezioni/">Il Ministero delle Eccezioni</a></h3>
+            <p class="project-card__desc">Romanzo satirico di fantascienza: una commedia burocratica cosmica in cui la civiltà non è collassata, è semplicemente bloccata in attesa di approvazione.</p>
+            <a class="project-card__link" href="https://tongatron.org/ministero-delle-eccezioni/">Leggi ↗</a>
+          </article>
+
+          <article class="project-card">
+            <span class="project-card__kicker">Travel</span>
+            <h3 class="project-card__title"><a href="https://tongatron.org/projects/ryanair-search/">Ryanair Search</a></h3>
+            <p class="project-card__desc">Utility web per cercare voli Ryanair andata e ritorno con filtri su budget, durata, partenza e destinazione.</p>
+            <a class="project-card__link" href="https://tongatron.org/projects/ryanair-search/">Apri ↗</a>
+          </article>
+
+          <article class="project-card">
+            <span class="project-card__kicker">Vision</span>
+            <h3 class="project-card__title"><a href="https://tongatron.org/head-tracking/">Head Tracking</a></h3>
+            <p class="project-card__desc">Esperimento web per testare interazioni basate sul movimento della testa direttamente nel browser.</p>
+            <a class="project-card__link" href="https://tongatron.org/head-tracking/">Apri ↗</a>
+          </article>
+
+          <article class="project-card">
+            <span class="project-card__kicker">Mail</span>
+            <h3 class="project-card__title"><a href="https://tongatron.org/gmail-stats/">Gmail Stats</a></h3>
+            <p class="project-card__desc">Dashboard locale per l'analisi delle email inviate: volumi, frequenza e pattern di comunicazione.</p>
+            <a class="project-card__link" href="https://tongatron.org/gmail-stats/">Apri ↗</a>
+          </article>
+
+          <article class="project-card">
+            <span class="project-card__kicker">Public sector</span>
+            <h3 class="project-card__title"><a href="https://tongatron.org/pa-ninja/landing/">PA Ninja</a></h3>
+            <p class="project-card__desc">Strumento locale per consultare e organizzare informazioni dai portali della Pubblica Amministrazione italiana.</p>
+            <a class="project-card__link" href="https://tongatron.org/pa-ninja/landing/">Apri ↗</a>
+          </article>
+
+          <article class="project-card">
+            <span class="project-card__kicker">Transport</span>
+            <h3 class="project-card__title"><a href="https://gtt-to.onrender.com/">GTT Radar</a></h3>
+            <p class="project-card__desc">Utility web per monitorare linee e passaggi del trasporto pubblico torinese, mobile-first.</p>
+            <a class="project-card__link" href="https://gtt-to.onrender.com/">Apri ↗</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <section id="tongatron-projects" class="section" aria-labelledby="tongatron-projects-title">
+      <div class="wrap">
+        <div class="sec-head">
+          <span class="label">Directory /projects</span>
+          <h2 class="sec-head__title" id="tongatron-projects-title">Pagine locali</h2>
+          <p class="sec-head__desc">Pagine ospitate direttamente nel repository tongatron.github.io, sotto /projects.</p>
         </div>
 
         <div class="project-grid">
@@ -373,35 +437,91 @@
             <span class="project-card__kicker">Computing</span>
             <h3 class="project-card__title"><a href="/projects/computing-timeline/">Moore's Law in Motion</a></h3>
             <p class="project-card__desc">Timeline interattiva per confrontare ottant'anni di potenza computazionale, da ENIAC agli smartphone contemporanei.</p>
-            <a class="project-card__link" href="/projects/computing-timeline/">Apri progetto ↗</a>
+            <a class="project-card__link" href="/projects/computing-timeline/">Apri ↗</a>
           </article>
 
           <article class="project-card">
             <span class="project-card__kicker">Experiment</span>
             <h3 class="project-card__title"><a href="/projects/error/">Terminale Panico Estremo</a></h3>
             <p class="project-card__desc">Esperimento visuale in stile terminale catastrofico, costruito come pagina web teatrale e immediata.</p>
-            <a class="project-card__link" href="/projects/error/">Apri progetto ↗</a>
+            <a class="project-card__link" href="/projects/error/">Apri ↗</a>
           </article>
 
           <article class="project-card">
             <span class="project-card__kicker">Security</span>
             <h3 class="project-card__title"><a href="/projects/password-analyzer/">Password Analyzer</a></h3>
             <p class="project-card__desc">Audit client-side per analizzare struttura, rischio, scenari di attacco e raccomandazioni di sicurezza su una password.</p>
-            <a class="project-card__link" href="/projects/password-analyzer/">Apri progetto ↗</a>
+            <a class="project-card__link" href="/projects/password-analyzer/">Apri ↗</a>
           </article>
 
           <article class="project-card">
             <span class="project-card__kicker">Sound</span>
             <h3 class="project-card__title"><a href="/projects/kinetiklaboratories/">Kinetik Laboratories</a></h3>
             <p class="project-card__desc">Landing e documentazione web per PROTEAN, sorgente sonora modulare dedicata a texture elettroacustiche in movimento.</p>
-            <a class="project-card__link" href="/projects/kinetiklaboratories/">Apri progetto ↗</a>
+            <a class="project-card__link" href="/projects/kinetiklaboratories/">Apri ↗</a>
           </article>
 
           <article class="project-card">
             <span class="project-card__kicker">Editorial</span>
             <h3 class="project-card__title"><a href="/projects/partito/">Partito</a></h3>
             <p class="project-card__desc">Quaderno editoriale per consultare documenti Markdown su storia politica, analisi dell'Italia contemporanea e costruzione di un programma.</p>
-            <a class="project-card__link" href="/projects/partito/">Apri progetto ↗</a>
+            <a class="project-card__link" href="/projects/partito/">Apri ↗</a>
+          </article>
+
+          <article class="project-card">
+            <span class="project-card__kicker">Motion</span>
+            <h3 class="project-card__title"><a href="/projects/animations/">Animations</a></h3>
+            <p class="project-card__desc">Raccolta di effetti e mini-componenti animati per esplorare interazioni e transizioni in pagine web.</p>
+            <a class="project-card__link" href="/projects/animations/">Apri ↗</a>
+          </article>
+
+          <article class="project-card">
+            <span class="project-card__kicker">Health</span>
+            <h3 class="project-card__title"><a href="/projects/farmaci/">Farmaci</a></h3>
+            <p class="project-card__desc">Pagina di consultazione per informazioni farmaceutiche, primo prototipo statico di un archivio personale.</p>
+            <a class="project-card__link" href="/projects/farmaci/">Apri ↗</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <section id="iot" class="section" aria-labelledby="iot-title">
+      <div class="wrap">
+        <div class="sec-head">
+          <span class="label">Hardware / installazioni</span>
+          <h2 class="sec-head__title" id="iot-title">IoT e prototipi</h2>
+          <p class="sec-head__desc">Prototipi fisici e installazioni, ciascuno con la propria pagina di documentazione.</p>
+        </div>
+
+        <div class="project-grid">
+          <article class="project-card">
+            <span class="project-card__kicker">Robotics</span>
+            <h3 class="project-card__title"><a href="/projects/robottino/robottino-site/index.html">Robottino</a></h3>
+            <p class="project-card__desc">Mini-robot da scrivania con servomotori, sensori e pagina di presentazione dedicata al progetto.</p>
+            <a class="project-card__link" href="/projects/robottino/robottino-site/index.html">Apri ↗</a>
+          </article>
+
+          <article class="project-card">
+            <span class="project-card__kicker">Camera</span>
+            <h3 class="project-card__title"><a href="/projects/selfomatic/index.html">Selfomatic</a></h3>
+            <p class="project-card__desc">Cabina fotografica automatica documentata in una pagina riassuntiva di setup, foto e materiali.</p>
+            <a class="project-card__link" href="/projects/selfomatic/index.html">Apri ↗</a>
+          </article>
+
+          <article class="project-card">
+            <span class="project-card__kicker">Furniture</span>
+            <h3 class="project-card__title"><a href="/projects/IKEA-hack/index.html">IKEA Hack Nordli</a></h3>
+            <p class="project-card__desc">Modifica documentata della cassettiera IKEA Nordli: progetto, foto e note costruttive.</p>
+            <a class="project-card__link" href="/projects/IKEA-hack/index.html">Apri ↗</a>
+          </article>
+
+          <article class="project-card">
+            <span class="project-card__kicker">Archive</span>
+            <h3 class="project-card__title"><a href="/projects/magazzinoweb/">Magazzinoweb</a></h3>
+            <p class="project-card__desc">Vecchia versione web del catalogo magazzino, conservata come pagina d'archivio.</p>
+            <a class="project-card__link" href="/projects/magazzinoweb/">Apri ↗</a>
           </article>
         </div>
       </div>
@@ -414,82 +534,132 @@
         <div class="sec-head">
           <span class="label">Games utilities</span>
           <h2 class="sec-head__title" id="games-utilities-title">Giochi e utility</h2>
-          <p class="sec-head__desc">Pagine index.html rilevate nel repository games-utilities, escludendo build, dipendenze e output generati.</p>
+          <p class="sec-head__desc">Mini-app del repository games-utilities, una pagina per esperimento.</p>
         </div>
 
         <div class="project-grid">
           <article class="project-card">
             <span class="project-card__kicker">Camera</span>
-            <h3 class="project-card__title"><a href="https://tongatron.github.io/games-utilities/anonymous-pics/">Anonymous Pics</a></h3>
+            <h3 class="project-card__title"><a href="https://tongatron.org/games-utilities/anonymous-pics/">Anonymous Pics</a></h3>
             <p class="project-card__desc">Utility browser per acquisire immagini dalla fotocamera con un flusso rapido di anteprima e risultato.</p>
-            <a class="project-card__link" href="https://tongatron.github.io/games-utilities/anonymous-pics/">Apri demo ↗</a>
+            <a class="project-card__link" href="https://tongatron.org/games-utilities/anonymous-pics/">Apri ↗</a>
+          </article>
+
+          <article class="project-card">
+            <span class="project-card__kicker">Word game</span>
+            <h3 class="project-card__title"><a href="https://tongatron.org/games-utilities/anagrammatron/">Anagrammatron</a></h3>
+            <p class="project-card__desc">Generatore di anagrammi interattivo, con input rapido e suggerimenti in tempo reale.</p>
+            <a class="project-card__link" href="https://tongatron.org/games-utilities/anagrammatron/">Apri ↗</a>
           </article>
 
           <article class="project-card">
             <span class="project-card__kicker">Game</span>
-            <h3 class="project-card__title"><a href="https://tongatron.github.io/games-utilities/dado/">Dado</a></h3>
+            <h3 class="project-card__title"><a href="https://tongatron.org/games-utilities/dado/">Dado</a></h3>
             <p class="project-card__desc">Simulatore di dado con estetica monocromatica, animazione di lancio e layout ottimizzato per mobile.</p>
-            <a class="project-card__link" href="https://tongatron.github.io/games-utilities/dado/">Apri demo ↗</a>
+            <a class="project-card__link" href="https://tongatron.org/games-utilities/dado/">Apri ↗</a>
           </article>
 
           <article class="project-card">
             <span class="project-card__kicker">Game</span>
-            <h3 class="project-card__title"><a href="https://tongatron.github.io/games-utilities/forza4/">Connect Four</a></h3>
+            <h3 class="project-card__title"><a href="https://tongatron.org/games-utilities/forza4/">Connect Four</a></h3>
             <p class="project-card__desc">Forza Quattro da browser per partite veloci contro CPU, con interfaccia chiara e supporto touch.</p>
-            <a class="project-card__link" href="https://tongatron.github.io/games-utilities/forza4/">Apri demo ↗</a>
+            <a class="project-card__link" href="https://tongatron.org/games-utilities/forza4/">Apri ↗</a>
           </article>
 
           <article class="project-card">
             <span class="project-card__kicker">Game</span>
-            <h3 class="project-card__title"><a href="https://tongatron.github.io/games-utilities/memory/">Memory</a></h3>
+            <h3 class="project-card__title"><a href="https://tongatron.org/games-utilities/memory/">Memory</a></h3>
             <p class="project-card__desc">Memory game con timer, conteggio mosse e griglie variabili per sessioni rapide su desktop e mobile.</p>
-            <a class="project-card__link" href="https://tongatron.github.io/games-utilities/memory/">Apri demo ↗</a>
+            <a class="project-card__link" href="https://tongatron.org/games-utilities/memory/">Apri ↗</a>
           </article>
 
           <article class="project-card">
             <span class="project-card__kicker">Signal</span>
-            <h3 class="project-card__title"><a href="https://tongatron.github.io/games-utilities/morse/">Simulatore Morse</a></h3>
+            <h3 class="project-card__title"><a href="https://tongatron.org/games-utilities/morse/">Simulatore Morse</a></h3>
             <p class="project-card__desc">Simulatore telegrafico con schema circuitale animato, oscilloscopio canvas e audio Web Audio API.</p>
-            <a class="project-card__link" href="https://tongatron.github.io/games-utilities/morse/">Apri demo ↗</a>
+            <a class="project-card__link" href="https://tongatron.org/games-utilities/morse/">Apri ↗</a>
           </article>
 
           <article class="project-card">
             <span class="project-card__kicker">Sound</span>
-            <h3 class="project-card__title"><a href="https://tongatron.github.io/games-utilities/multi-simulator/">Multi Web Simulator</a></h3>
+            <h3 class="project-card__title"><a href="https://tongatron.org/games-utilities/multi-simulator/">Multi Web Simulator</a></h3>
             <p class="project-card__desc">Simulazione web della board open source MULTI, nata per tradurre in browser un dispositivo Pangrus.</p>
-            <a class="project-card__link" href="https://tongatron.github.io/games-utilities/multi-simulator/">Apri demo ↗</a>
+            <a class="project-card__link" href="https://tongatron.org/games-utilities/multi-simulator/">Apri ↗</a>
           </article>
 
           <article class="project-card">
             <span class="project-card__kicker">Utility</span>
-            <h3 class="project-card__title"><a href="https://tongatron.github.io/games-utilities/qrscanner/">QR Scanner Mobile</a></h3>
+            <h3 class="project-card__title"><a href="https://tongatron.org/games-utilities/qrscanner/">QR Scanner Mobile</a></h3>
             <p class="project-card__desc">Scanner QR mobile-first con accesso alla fotocamera e output testuale immediato direttamente nel browser.</p>
-            <a class="project-card__link" href="https://tongatron.github.io/games-utilities/qrscanner/">Apri demo ↗</a>
+            <a class="project-card__link" href="https://tongatron.org/games-utilities/qrscanner/">Apri ↗</a>
           </article>
 
           <article class="project-card">
             <span class="project-card__kicker">Game</span>
-            <h3 class="project-card__title"><a href="https://tongatron.github.io/games-utilities/roulette/">Roulette</a></h3>
+            <h3 class="project-card__title"><a href="https://tongatron.org/games-utilities/roulette/">Roulette</a></h3>
             <p class="project-card__desc">Simulatore casino-style con ruota animata, puntate multiple, bilancio e storico degli spin.</p>
-            <a class="project-card__link" href="https://tongatron.github.io/games-utilities/roulette/">Apri demo ↗</a>
+            <a class="project-card__link" href="https://tongatron.org/games-utilities/roulette/">Apri ↗</a>
           </article>
 
           <article class="project-card">
             <span class="project-card__kicker">Audio</span>
-            <h3 class="project-card__title"><a href="https://tongatron.github.io/games-utilities/rumorebianco/">Rumore Bianco</a></h3>
+            <h3 class="project-card__title"><a href="https://tongatron.org/games-utilities/rumorebianco/">Rumore Bianco</a></h3>
             <p class="project-card__desc">Generatore audio per rumore bianco e varianti controllabili in tempo reale tramite parametri essenziali.</p>
-            <a class="project-card__link" href="https://tongatron.github.io/games-utilities/rumorebianco/">Apri demo ↗</a>
+            <a class="project-card__link" href="https://tongatron.org/games-utilities/rumorebianco/">Apri ↗</a>
           </article>
 
           <article class="project-card">
             <span class="project-card__kicker">Game</span>
-            <h3 class="project-card__title"><a href="https://tongatron.github.io/games-utilities/simon/">Simon Simulator</a></h3>
+            <h3 class="project-card__title"><a href="https://tongatron.org/games-utilities/simon/">Simon Simulator</a></h3>
             <p class="project-card__desc">Versione web del classico Simon con sequenze colore, feedback audiovisivo e modalità strict.</p>
-            <a class="project-card__link" href="https://tongatron.github.io/games-utilities/simon/">Apri demo ↗</a>
+            <a class="project-card__link" href="https://tongatron.org/games-utilities/simon/">Apri ↗</a>
           </article>
         </div>
       </div>
     </section>
+
+    <hr class="divider">
+
+    <section id="services" class="section" aria-labelledby="services-title">
+      <div class="wrap">
+        <div class="sec-head">
+          <span class="label">Sottodomini / Raspberry Pi</span>
+          <h2 class="sec-head__title" id="services-title">Servizi self-hosted</h2>
+          <p class="sec-head__desc">Servizi pubblicati sotto sottodomini di tongatron.org, serviti dal Raspberry tramite Cloudflare Tunnel.</p>
+        </div>
+
+        <div class="project-grid">
+          <article class="project-card">
+            <span class="project-card__kicker">Chat</span>
+            <h3 class="project-card__title"><a href="https://chat.tongatron.org/">Raspi Chat</a></h3>
+            <p class="project-card__desc">Chat self-hosted per piccoli gruppi, con stanze private, notifiche web e amministrazione semplice.</p>
+            <a class="project-card__link" href="https://chat.tongatron.org/">Apri ↗</a>
+          </article>
+
+          <article class="project-card">
+            <span class="project-card__kicker">Archive</span>
+            <h3 class="project-card__title"><a href="https://mhz.tongatron.org/">Magazzino Sereno</a></h3>
+            <p class="project-card__desc">Catalogo personale di oggetti e archivio, ospitato sul Raspberry e accessibile via Cloudflare Tunnel.</p>
+            <a class="project-card__link" href="https://mhz.tongatron.org/">Apri ↗</a>
+          </article>
+
+          <article class="project-card">
+            <span class="project-card__kicker">Books</span>
+            <h3 class="project-card__title"><a href="https://library.tongatron.org/">Liberia</a></h3>
+            <p class="project-card__desc">Scanner ISBN e libreria personale per inventariare libri direttamente dalla fotocamera del telefono.</p>
+            <a class="project-card__link" href="https://library.tongatron.org/">Apri ↗</a>
+          </article>
+
+          <article class="project-card">
+            <span class="project-card__kicker">Health</span>
+            <h3 class="project-card__title"><a href="https://alcol-monitor.tongatron.org/">Alcol Monitor</a></h3>
+            <p class="project-card__desc">Tracker personale per consumi di alcol con storico, grafici e indicatori giornalieri.</p>
+            <a class="project-card__link" href="https://alcol-monitor.tongatron.org/">Apri ↗</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
   </main>
 
   <footer class="site-footer">
