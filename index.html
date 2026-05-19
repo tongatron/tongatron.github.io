@@ -282,6 +282,71 @@
     }
 
     /* ============================================================
+       AVAILABILITY BANNER
+       ============================================================ */
+    .avail-bar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--sp-3);
+      padding: 9px var(--sp-6);
+      background: var(--c-accent);
+      color: var(--c-accent-fg);
+      font-size: var(--t-sm);
+      font-weight: 600;
+      text-decoration: none;
+      line-height: 1.4;
+      text-align: center;
+      transition: background-color 0.18s ease;
+      position: relative;
+    }
+    .avail-bar:hover { background: var(--c-accent-dk); color: var(--c-accent-fg); }
+    .avail-bar__dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--c-accent-fg);
+      flex-shrink: 0;
+      animation: avail-pulse 2.2s ease-in-out infinite;
+    }
+    @keyframes avail-pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.45; transform: scale(0.85); }
+    }
+    .avail-bar__cta {
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      text-decoration-thickness: 1px;
+    }
+    .avail-bar__close {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 26px;
+      height: 26px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      background: transparent;
+      color: var(--c-accent-fg);
+      font-size: 18px;
+      line-height: 1;
+      cursor: pointer;
+      border-radius: 4px;
+      opacity: 0.7;
+      transition: opacity 0.18s ease, background-color 0.18s ease;
+    }
+    .avail-bar__close:hover { opacity: 1; background: rgba(0,0,0,0.08); }
+    @media (max-width: 520px) {
+      .avail-bar { font-size: var(--t-xs); padding: 8px 36px 8px var(--sp-4); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .avail-bar__dot { animation: none; }
+    }
+
+    /* ============================================================
        HEADER
        ============================================================ */
     .site-header {
@@ -851,6 +916,15 @@
   </style>
 </head>
 <body>
+
+  <!-- ============================================================
+       AVAILABILITY BANNER
+  ============================================================ -->
+  <a id="avail-bar" class="avail-bar" href="#contacts" hidden>
+    <span class="avail-bar__dot" aria-hidden="true"></span>
+    <span>Disponibile per nuovi progetti e collaborazioni digitali — <span class="avail-bar__cta">contattami</span></span>
+    <button type="button" id="avail-bar-close" class="avail-bar__close" aria-label="Chiudi avviso">×</button>
+  </a>
 
   <!-- ============================================================
        HEADER
@@ -1467,6 +1541,23 @@
           label.textContent = 'Invia';
           btn.disabled = false;
         }
+      });
+    })();
+  </script>
+  <script>
+    (() => {
+      const KEY = 'avail-bar-dismissed-v1';
+      const bar = document.getElementById('avail-bar');
+      const close = document.getElementById('avail-bar-close');
+      if (!bar) return;
+      try {
+        if (localStorage.getItem(KEY) !== '1') bar.hidden = false;
+      } catch { bar.hidden = false; }
+      close?.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        bar.hidden = true;
+        try { localStorage.setItem(KEY, '1'); } catch {}
       });
     })();
   </script>
