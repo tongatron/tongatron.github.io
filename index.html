@@ -285,65 +285,146 @@
        AVAILABILITY BANNER
        ============================================================ */
     .avail-bar {
+      position: relative;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: var(--sp-3);
-      padding: 9px var(--sp-6);
-      background: var(--c-accent);
-      color: var(--c-accent-fg);
-      font-size: var(--t-sm);
-      font-weight: 600;
-      text-decoration: none;
-      line-height: 1.4;
-      text-align: center;
-      transition: background-color 0.18s ease;
-      position: relative;
+      padding: 10px var(--sp-6);
+      background:
+        radial-gradient(circle at 0% 50%, rgba(74, 222, 128, 0.16), transparent 28%),
+        linear-gradient(90deg, #0b0f0c 0%, #131913 52%, #171308 100%);
+      border-bottom: 1px solid rgba(245, 196, 0, 0.16);
+      overflow: hidden;
     }
-    .avail-bar:hover { background: var(--c-accent-dk); color: var(--c-accent-fg); }
+    .avail-bar::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, transparent 0%, rgba(245, 196, 0, 0.1) 50%, transparent 100%);
+      opacity: 0;
+      transition: opacity 0.22s ease;
+      pointer-events: none;
+    }
+    .avail-bar:hover::before { opacity: 1; }
+    .avail-bar__link {
+      width: min(100%, 820px);
+      display: grid;
+      grid-template-columns: auto 1fr;
+      align-items: center;
+      gap: var(--sp-4);
+      color: var(--c-text-1);
+      text-decoration: none;
+      line-height: 1.35;
+      transition: transform 0.18s ease, color 0.18s ease;
+    }
+    .avail-bar__link:hover {
+      color: #fff7cc;
+      transform: translateY(-1px);
+    }
+    .avail-bar__status {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: var(--t-xs);
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #b9f5cd;
+      white-space: nowrap;
+    }
     .avail-bar__dot {
-      width: 8px;
-      height: 8px;
+      width: 10px;
+      height: 10px;
       border-radius: 50%;
-      background: var(--c-accent-fg);
+      background: #3ddc84;
+      box-shadow: 0 0 0 0 rgba(61, 220, 132, 0.65);
       flex-shrink: 0;
-      animation: avail-pulse 2.2s ease-in-out infinite;
+      animation: avail-pulse 1.8s ease-out infinite;
     }
     @keyframes avail-pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.45; transform: scale(0.85); }
+      0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(61, 220, 132, 0.65); }
+      70% { transform: scale(1.08); box-shadow: 0 0 0 10px rgba(61, 220, 132, 0); }
+      100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(61, 220, 132, 0); }
+    }
+    .avail-bar__text {
+      display: flex;
+      align-items: center;
+      gap: var(--sp-2);
+      min-width: 0;
+      font-size: var(--t-sm);
+      font-weight: 600;
+    }
+    .avail-bar__title {
+      color: inherit;
     }
     .avail-bar__cta {
-      text-decoration: underline;
-      text-underline-offset: 3px;
-      text-decoration-thickness: 1px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 12px;
+      border: 1px solid rgba(245, 196, 0, 0.28);
+      border-radius: 999px;
+      background: rgba(245, 196, 0, 0.1);
+      color: var(--c-accent);
+      font-size: var(--t-xs);
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      white-space: nowrap;
+      transition: background-color 0.18s ease, border-color 0.18s ease, color 0.18s ease;
+    }
+    .avail-bar__link:hover .avail-bar__cta {
+      background: rgba(245, 196, 0, 0.22);
+      border-color: rgba(245, 196, 0, 0.42);
+      color: #fff3a8;
+    }
+    .avail-bar__arrow {
+      font-size: 14px;
+      line-height: 1;
     }
     .avail-bar__close {
       position: absolute;
       right: 10px;
       top: 50%;
       transform: translateY(-50%);
-      width: 26px;
-      height: 26px;
+      width: 28px;
+      height: 28px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      border: none;
+      border: 1px solid transparent;
       background: transparent;
-      color: var(--c-accent-fg);
+      color: rgba(240, 240, 240, 0.78);
       font-size: 18px;
       line-height: 1;
       cursor: pointer;
-      border-radius: 4px;
-      opacity: 0.7;
-      transition: opacity 0.18s ease, background-color 0.18s ease;
+      border-radius: 999px;
+      transition: color 0.18s ease, background-color 0.18s ease, border-color 0.18s ease;
     }
-    .avail-bar__close:hover { opacity: 1; background: rgba(0,0,0,0.08); }
-    @media (max-width: 520px) {
-      .avail-bar { font-size: var(--t-xs); padding: 8px 36px 8px var(--sp-4); }
+    .avail-bar__close:hover {
+      color: #ffffff;
+      background: rgba(255,255,255,0.08);
+      border-color: rgba(255,255,255,0.12);
+    }
+    @media (max-width: 640px) {
+      .avail-bar {
+        padding: 12px 44px 12px var(--sp-4);
+        justify-content: flex-start;
+      }
+      .avail-bar__link {
+        grid-template-columns: 1fr;
+        gap: 6px;
+      }
+      .avail-bar__text {
+        flex-wrap: wrap;
+        font-size: var(--t-xs);
+      }
+      .avail-bar__status { letter-spacing: 0.12em; }
     }
     @media (prefers-reduced-motion: reduce) {
       .avail-bar__dot { animation: none; }
+      .avail-bar__link { transition: none; }
+      .avail-bar::before { transition: none; }
     }
 
     /* ============================================================
@@ -920,11 +1001,19 @@
   <!-- ============================================================
        AVAILABILITY BANNER
   ============================================================ -->
-  <a id="avail-bar" class="avail-bar" href="#contacts" hidden>
-    <span class="avail-bar__dot" aria-hidden="true"></span>
-    <span>Disponibile per nuovi progetti e collaborazioni digitali — <span class="avail-bar__cta">contattami</span></span>
+  <div id="avail-bar" class="avail-bar" hidden>
+    <a class="avail-bar__link" href="#contacts" aria-label="Disponibile per nuovi progetti e collaborazioni digitali, vai ai contatti">
+      <span class="avail-bar__status">
+        <span class="avail-bar__dot" aria-hidden="true"></span>
+        Disponibile ora
+      </span>
+      <span class="avail-bar__text">
+        <span class="avail-bar__title">Nuovi progetti, collaborazioni digitali e prototipi su misura.</span>
+        <span class="avail-bar__cta">Contattami <span class="avail-bar__arrow" aria-hidden="true">↗</span></span>
+      </span>
+    </a>
     <button type="button" id="avail-bar-close" class="avail-bar__close" aria-label="Chiudi avviso">×</button>
-  </a>
+  </div>
 
   <!-- ============================================================
        HEADER
