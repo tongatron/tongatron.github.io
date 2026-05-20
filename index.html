@@ -291,16 +291,16 @@
       justify-content: center;
       padding: 10px var(--sp-6);
       background:
-        radial-gradient(circle at 0% 50%, rgba(74, 222, 128, 0.16), transparent 28%),
-        linear-gradient(90deg, #0b0f0c 0%, #131913 52%, #171308 100%);
-      border-bottom: 1px solid rgba(245, 196, 0, 0.16);
+        radial-gradient(circle at 12% 50%, rgba(255, 255, 255, 0.32), transparent 18%),
+        linear-gradient(90deg, #ffcf00 0%, #f5c400 45%, #eab308 100%);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.14);
       overflow: hidden;
     }
     .avail-bar::before {
       content: "";
       position: absolute;
       inset: 0;
-      background: linear-gradient(90deg, transparent 0%, rgba(245, 196, 0, 0.1) 50%, transparent 100%);
+      background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.24) 50%, transparent 100%);
       opacity: 0;
       transition: opacity 0.22s ease;
       pointer-events: none;
@@ -312,13 +312,13 @@
       grid-template-columns: auto 1fr;
       align-items: center;
       gap: var(--sp-4);
-      color: var(--c-text-1);
+      color: #13110b;
       text-decoration: none;
       line-height: 1.35;
       transition: transform 0.18s ease, color 0.18s ease;
     }
     .avail-bar__link:hover {
-      color: #fff7cc;
+      color: #000000;
       transform: translateY(-1px);
     }
     .avail-bar__status {
@@ -329,7 +329,7 @@
       font-weight: 700;
       letter-spacing: 0.16em;
       text-transform: uppercase;
-      color: #b9f5cd;
+      color: #175b34;
       white-space: nowrap;
     }
     .avail-bar__dot {
@@ -362,10 +362,10 @@
       align-items: center;
       gap: 8px;
       padding: 7px 12px;
-      border: 1px solid rgba(245, 196, 0, 0.28);
+      border: 1px solid rgba(0, 0, 0, 0.16);
       border-radius: 999px;
-      background: rgba(245, 196, 0, 0.1);
-      color: var(--c-accent);
+      background: rgba(0, 0, 0, 0.08);
+      color: #111111;
       font-size: var(--t-xs);
       font-weight: 700;
       letter-spacing: 0.08em;
@@ -374,13 +374,9 @@
       transition: background-color 0.18s ease, border-color 0.18s ease, color 0.18s ease;
     }
     .avail-bar__link:hover .avail-bar__cta {
-      background: rgba(245, 196, 0, 0.22);
-      border-color: rgba(245, 196, 0, 0.42);
-      color: #fff3a8;
-    }
-    .avail-bar__arrow {
-      font-size: 14px;
-      line-height: 1;
+      background: rgba(0, 0, 0, 0.14);
+      border-color: rgba(0, 0, 0, 0.22);
+      color: #000000;
     }
     .avail-bar__close {
       position: absolute;
@@ -394,7 +390,7 @@
       justify-content: center;
       border: 1px solid transparent;
       background: transparent;
-      color: rgba(240, 240, 240, 0.78);
+      color: rgba(0, 0, 0, 0.62);
       font-size: 18px;
       line-height: 1;
       cursor: pointer;
@@ -402,9 +398,9 @@
       transition: color 0.18s ease, background-color 0.18s ease, border-color 0.18s ease;
     }
     .avail-bar__close:hover {
-      color: #ffffff;
-      background: rgba(255,255,255,0.08);
-      border-color: rgba(255,255,255,0.12);
+      color: #000000;
+      background: rgba(0,0,0,0.08);
+      border-color: rgba(0,0,0,0.12);
     }
     @media (max-width: 640px) {
       .avail-bar {
@@ -1009,7 +1005,7 @@
       </span>
       <span class="avail-bar__text">
         <span class="avail-bar__title">Nuovi progetti, collaborazioni digitali e prototipi su misura.</span>
-        <span class="avail-bar__cta">Contattami <span class="avail-bar__arrow" aria-hidden="true">↗</span></span>
+        <span class="avail-bar__cta">Contattami</span>
       </span>
     </a>
     <button type="button" id="avail-bar-close" class="avail-bar__close" aria-label="Chiudi avviso">×</button>
