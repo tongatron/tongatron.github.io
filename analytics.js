@@ -15,6 +15,80 @@
 
   var GA_ID = 'G-S4XSYK0QB7';
   var CONSENT_KEY = 'tongatron-consent-v1';
+  var INTERNAL_KEY = 'tongatron-analytics-disabled';
+  var INTERNAL_PARAM = 'noanalytics';
+  var INTERNAL_RESET_PARAM = 'analytics';
+  var SHARED_DOMAIN = '.tongatron.org';
+
+  function getSearchParams() {
+    try { return new URLSearchParams(window.location.search); } catch (e) { return null; }
+  }
+
+  function getCookie(name) {
+    try {
+      var prefix = name + '=';
+      var cookies = document.cookie ? document.cookie.split(';') : [];
+      for (var i = 0; i < cookies.length; i += 1) {
+        var cookie = cookies[i].trim();
+        if (cookie.indexOf(prefix) === 0) return cookie.slice(prefix.length);
+      }
+    } catch (e) {}
+    return null;
+  }
+
+  function setCookie(name, value, maxAge) {
+    try {
+      document.cookie = [
+        name + '=' + value,
+        'path=/',
+        'domain=' + SHARED_DOMAIN,
+        'max-age=' + maxAge,
+        'SameSite=Lax',
+        'Secure'
+      ].join(';');
+    } catch (e) {}
+  }
+
+  function persistInternalPreference(value) {
+    try {
+      if (value) {
+        localStorage.setItem(INTERNAL_KEY, 'true');
+      } else {
+        localStorage.removeItem(INTERNAL_KEY);
+      }
+    } catch (e) {}
+
+    if (value) {
+      setCookie(INTERNAL_KEY, 'true', 60 * 60 * 24 * 365 * 2);
+    } else {
+      setCookie(INTERNAL_KEY, '', 0);
+    }
+  }
+
+  function shouldDisableAnalytics() {
+    var params = getSearchParams();
+    if (params) {
+      if (params.get(INTERNAL_PARAM) === '1') {
+        persistInternalPreference(true);
+        return true;
+      }
+      if (params.get(INTERNAL_RESET_PARAM) === '1') {
+        persistInternalPreference(false);
+      }
+    }
+
+    try {
+      if (localStorage.getItem(INTERNAL_KEY) === 'true') return true;
+    } catch (e) {
+    }
+
+    return getCookie(INTERNAL_KEY) === 'true';
+  }
+
+  if (shouldDisableAnalytics()) {
+    window['ga-disable-' + GA_ID] = true;
+    return;
+  }
 
   window.dataLayer = window.dataLayer || [];
   function gtag() { window.dataLayer.push(arguments); }
