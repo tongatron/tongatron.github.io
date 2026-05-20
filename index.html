@@ -291,8 +291,8 @@
       justify-content: center;
       padding: 10px var(--sp-6);
       background:
-        radial-gradient(circle at 12% 50%, rgba(255, 255, 255, 0.32), transparent 18%),
-        linear-gradient(90deg, #ffcf00 0%, #f5c400 45%, #eab308 100%);
+        radial-gradient(circle at 50% 50%, rgba(255, 244, 214, 0.34), transparent 22%),
+        linear-gradient(90deg, #ff9f1c 0%, #ff8c1a 48%, #f97316 100%);
       border-bottom: 1px solid rgba(0, 0, 0, 0.14);
       overflow: hidden;
     }
@@ -308,6 +308,8 @@
     .avail-bar:hover::before { opacity: 1; }
     .avail-bar__link {
       width: min(100%, 820px);
+      margin: 0 auto;
+      padding: 0 40px;
       display: grid;
       grid-template-columns: auto 1fr;
       align-items: center;
@@ -408,6 +410,7 @@
         justify-content: flex-start;
       }
       .avail-bar__link {
+        padding: 0;
         grid-template-columns: 1fr;
         gap: 6px;
       }
