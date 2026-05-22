@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Tongatron AI | Sviluppo software AI-assisted, utility web e prototipi</title>
-  <meta name="description" content="Giovanni Bindi sviluppa applicazioni web, utility, prototipi digitali e workflow AI-assisted con un approccio pratico, rapido e orientato al rilascio.">
+  <title>Tongatron | Software, utility web e prototipi IoT</title>
+  <meta name="description" content="Tongatron progetta software, utility web, prototipi IoT e soluzioni digitali orientate all'esecuzione.">
   <meta name="robots" content="index, follow, max-image-preview:large">
   <meta name="author" content="Giovanni Bindi">
   <meta name="theme-color" content="#000000">
@@ -14,20 +14,20 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png">
   <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
-  <link rel="canonical" href="https://tongatron.org/index-ai.html">
-  <link rel="alternate" hreflang="it" href="https://tongatron.org/index-ai.html">
-  <link rel="alternate" hreflang="x-default" href="https://tongatron.org/index-ai.html">
+  <link rel="canonical" href="https://tongatron.org/">
+  <link rel="alternate" hreflang="it" href="https://tongatron.org/">
+  <link rel="alternate" hreflang="x-default" href="https://tongatron.org/">
   <meta property="og:locale" content="it_IT">
   <meta property="og:site_name" content="Tongatron">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Tongatron AI | Sviluppo software AI-assisted, utility web e prototipi">
-  <meta property="og:description" content="Giovanni Bindi sviluppa applicazioni web, utility, prototipi digitali e workflow AI-assisted con un approccio pratico, rapido e orientato al rilascio.">
-  <meta property="og:url" content="https://tongatron.org/index-ai.html">
+  <meta property="og:title" content="Tongatron | Software, utility web e prototipi IoT">
+  <meta property="og:description" content="Tongatron progetta software, utility web, prototipi IoT e soluzioni digitali orientate all'esecuzione.">
+  <meta property="og:url" content="https://tongatron.org/">
   <meta property="og:image" content="https://tongatron.org/img/tongatron-meta.jpg">
   <meta property="og:image:alt" content="Tongatron preview image">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Tongatron AI | Sviluppo software AI-assisted, utility web e prototipi">
-  <meta name="twitter:description" content="Giovanni Bindi sviluppa applicazioni web, utility, prototipi digitali e workflow AI-assisted con un approccio pratico, rapido e orientato al rilascio.">
+  <meta name="twitter:title" content="Tongatron | Software, utility web e prototipi IoT">
+  <meta name="twitter:description" content="Tongatron progetta software, utility web, prototipi IoT e soluzioni digitali orientate all'esecuzione.">
   <meta name="twitter:image" content="https://tongatron.org/img/tongatron-meta.jpg">
   <script async src="https://tongatron.org/analytics.js"></script>
   <script type="application/ld+json">
@@ -35,9 +35,9 @@
       "@context": "https://schema.org",
       "@type": "Person",
       "name": "Giovanni Bindi",
-      "url": "https://tongatron.org/index-ai.html",
+      "url": "https://tongatron.org/",
       "image": "https://tongatron.org/img/giovanni-bindi-hero.jpg",
-      "jobTitle": "Creative Technologist, Digital Transformation Lead, AI-assisted Software Builder, IT Consultant",
+      "jobTitle": "Creative Technologist, Digital Transformation Lead, Software Engineer, IT Consultant",
       "email": "giovanni.bindi@tongatron.org",
       "sameAs": [
         "https://github.com/tongatron",
@@ -278,7 +278,7 @@
       padding: 18px 0 0;
     }
     .editorial-grid .proj-card__title {
-      color: var(--c-text-1);
+      color: var(--c-accent);
     }
 
     /* ============================================================
@@ -297,47 +297,23 @@
       text-decoration: none;
       line-height: 1.4;
       text-align: center;
-      transition: background-color 0.18s ease, color 0.18s ease;
+      transition: background-color 0.18s ease;
       position: relative;
     }
-    a.avail-bar,
-    a.avail-bar:visited,
-    a.avail-bar:hover,
-    a.avail-bar:active {
-      color: #0c0c0c;
-    }
-    a.avail-bar:hover {
-      background: #e1b200;
-    }
-    .avail-bar__text {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.45em;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-    .avail-bar__lead {
-      font-weight: 700;
-    }
-    .avail-bar__sep {
-      opacity: 0.5;
-    }
+    .avail-bar:hover { background: var(--c-accent-dk); color: var(--c-accent-fg); }
     .avail-bar__dot {
       width: 8px;
       height: 8px;
       border-radius: 50%;
-      background: #39d353;
-      box-shadow: 0 0 0 0 rgba(57,211,83,0.6);
+      background: var(--c-accent-fg);
       flex-shrink: 0;
-      animation: avail-pulse 2s ease-in-out infinite;
+      animation: avail-pulse 2.2s ease-in-out infinite;
     }
     @keyframes avail-pulse {
-      0% { opacity: 1; transform: scale(1); box-shadow: 0 0 0 0 rgba(57,211,83,0.55); }
-      70% { opacity: 1; transform: scale(1); box-shadow: 0 0 0 10px rgba(57,211,83,0); }
-      100% { opacity: 1; transform: scale(1); box-shadow: 0 0 0 0 rgba(57,211,83,0); }
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.45; transform: scale(0.85); }
     }
     .avail-bar__cta {
-      color: inherit;
       text-decoration: underline;
       text-underline-offset: 3px;
       text-decoration-thickness: 1px;
@@ -490,18 +466,59 @@
       margin-bottom: 30px;
       max-width: 48ch;
     }
+    .hero__meta {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      padding: 0;
+      background: #050505;
+      border: 1px solid #2d2d2d;
+      border-radius: var(--radius);
+      margin-bottom: 30px;
+      overflow: hidden;
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.04);
+    }
+    .hero__meta::before {
+      content: "tongatron.config";
+      display: block;
+      padding: 10px 16px;
+      border-bottom: 1px solid #202020;
+      color: var(--c-text-3);
+      font-size: 0.72rem;
+      letter-spacing: 0.02em;
+      background: #0b0b0b;
+    }
+    .hero__meta-row {
+      display: grid;
+      grid-template-columns: 92px 1fr;
+      gap: 18px;
+      align-items: start;
+      padding: 12px 16px;
+    }
+    .hero__meta-row + .hero__meta-row { border-top: 1px solid #171717; }
+    .hero__meta-key {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: lowercase;
+      color: var(--c-accent);
+    }
+    .hero__meta-key::before { content: "$ "; }
+    .hero__meta-val {
+      font-size: 0.82rem;
+      color: var(--c-text-soft);
+      line-height: 1.65;
+    }
+    .hero__meta-val::before,
+    .hero__meta-val::after { color: var(--c-text-3); }
+    .hero__meta-val::before { content: "\""; }
+    .hero__meta-val::after { content: "\""; }
     .hero__actions {
       display: flex;
       gap: var(--sp-3);
       flex-wrap: wrap;
       align-items: center;
-    }
-
-    .hero__note {
-      font-size: var(--t-sm);
-      color: var(--c-text-2);
-      line-height: 1.75;
-      max-width: 56ch;
     }
 
     /* ============================================================
@@ -528,133 +545,6 @@
     }
     .service-card__body {
       font-size: 0.92rem;
-      color: var(--c-text-2);
-      line-height: 1.8;
-    }
-
-    /* ============================================================
-       AI SECTION
-       ============================================================ */
-    .ai-layout {
-      display: grid;
-      grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
-      gap: var(--sp-10);
-      align-items: start;
-    }
-    .ai-panel {
-      border: 1px solid var(--c-border);
-      border-radius: var(--radius);
-      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-      overflow: hidden;
-    }
-    .ai-panel__block {
-      padding: 24px 26px;
-      border-top: 1px solid var(--c-border);
-    }
-    .ai-panel__block:first-child {
-      border-top: none;
-    }
-    .ai-panel__title {
-      font-family: var(--font-display);
-      font-size: 2rem;
-      line-height: 0.98;
-      color: var(--c-accent);
-      margin-bottom: var(--sp-4);
-    }
-    .ai-panel__body {
-      font-size: 0.96rem;
-      color: var(--c-text-2);
-      line-height: 1.85;
-      max-width: 60ch;
-    }
-    .ai-points {
-      list-style: none;
-      display: grid;
-      gap: 12px;
-      margin-top: var(--sp-5);
-    }
-    .ai-points li {
-      padding-left: 18px;
-      position: relative;
-      color: var(--c-text-soft);
-      line-height: 1.7;
-      font-size: 0.92rem;
-    }
-    .ai-points li::before {
-      content: "";
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: var(--c-accent);
-      position: absolute;
-      left: 0;
-      top: 0.65em;
-      transform: translateY(-50%);
-    }
-    .ai-side {
-      display: grid;
-      gap: 1px;
-      border: 1px solid var(--c-border);
-      border-radius: var(--radius);
-      overflow: hidden;
-      background: var(--c-border);
-    }
-    .ai-side__card {
-      background: #050505;
-      padding: 24px 24px 26px;
-    }
-    .ai-side__label {
-      display: inline-block;
-      font-size: var(--t-xs);
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--c-text-3);
-      margin-bottom: var(--sp-3);
-    }
-    .ai-side__title {
-      font-family: var(--font-display);
-      font-size: 1.75rem;
-      line-height: 0.98;
-      color: var(--c-text-1);
-      margin-bottom: var(--sp-3);
-    }
-    .ai-side__body {
-      font-size: 0.9rem;
-      color: var(--c-text-2);
-      line-height: 1.8;
-    }
-    .ai-proof {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 1px;
-      margin-top: 42px;
-      border: 1px solid var(--c-border);
-      border-radius: var(--radius);
-      overflow: hidden;
-      background: var(--c-border);
-    }
-    .ai-proof__item {
-      background: #050505;
-      padding: 22px 24px 24px;
-    }
-    .ai-proof__kicker {
-      font-size: var(--t-xs);
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--c-text-3);
-      margin-bottom: var(--sp-3);
-    }
-    .ai-proof__title {
-      font-family: var(--font-display);
-      font-size: 1.6rem;
-      line-height: 0.98;
-      color: var(--c-accent);
-      margin-bottom: var(--sp-3);
-    }
-    .ai-proof__body {
-      font-size: 0.9rem;
       color: var(--c-text-2);
       line-height: 1.8;
     }
@@ -689,22 +579,8 @@
       font-weight: 600;
       color: var(--c-text-1);
       line-height: 0.94;
-      transition: color 0.18s ease;
     }
     .proj-card__title a { color: inherit; text-decoration: none; }
-    .proj-card:hover .proj-card__title,
-    .proj-card:focus-within .proj-card__title {
-      color: var(--c-accent);
-    }
-    .proj-card__kicker {
-      display: inline-block;
-      font-size: var(--t-xs);
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--c-accent);
-      margin-bottom: var(--sp-2);
-    }
     .proj-card__desc {
       font-size: 0.92rem;
       color: var(--c-text-2);
@@ -980,8 +856,6 @@
       .project-grid { grid-template-columns: 1fr 1fr; }
       .iot-projects { grid-template-columns: 1fr 1fr; }
       .network-grid { grid-template-columns: 1fr 1fr; }
-      .ai-layout { grid-template-columns: 1fr; }
-      .ai-proof { grid-template-columns: 1fr; }
       .site-nav { display: none; }
     }
     @media (max-width: 767px) {
@@ -992,6 +866,10 @@
       .hero__name {
         font-size: clamp(3.2rem, 18vw, 4.8rem);
         line-height: 0.88;
+      }
+      .hero__meta-row {
+        grid-template-columns: 1fr;
+        gap: 4px;
       }
       .sec-head__title {
         font-size: clamp(2.1rem, 12vw, 3rem);
@@ -1044,11 +922,7 @@
   ============================================================ -->
   <a id="avail-bar" class="avail-bar" href="#contacts" hidden>
     <span class="avail-bar__dot" aria-hidden="true"></span>
-    <span class="avail-bar__text">
-      <span class="avail-bar__lead">Disponibile per nuovi progetti</span>
-      <span class="avail-bar__sep" aria-hidden="true">·</span>
-      <span class="avail-bar__cta">Parliamone</span>
-    </span>
+    <span>Disponibile per nuovi progetti e collaborazioni digitali — <span class="avail-bar__cta">contattami</span></span>
     <button type="button" id="avail-bar-close" class="avail-bar__close" aria-label="Chiudi avviso">×</button>
   </a>
 
@@ -1058,19 +932,20 @@
   <header class="site-header">
     <div class="wrap">
       <div class="site-header__inner">
-        <a class="site-badge A3" href="https://tongatron.org/index-ai.html" aria-label="Tongatron AI homepage" style="--accent:#ffcc00; font-family:Courier, monospace; font-size:20px;">
+        <a class="site-badge A3" href="https://tongatron.org" aria-label="Tongatron homepage" style="--accent:#ffcc00; font-family:Courier, monospace; font-size:20px;">
           <span class="mark mark-dot" aria-hidden="true"></span>
           <span>tongatron.org<span class="badge-cursor">_</span></span>
         </a>
 
         <nav class="site-nav" aria-label="Navigazione principale">
           <a class="site-nav__link" href="#services">Servizi</a>
-          <a class="site-nav__link" href="#ai">AI</a>
           <a class="site-nav__link" href="#projects">Progetti</a>
           <a class="site-nav__link" href="#iot">IoT</a>
           <a class="site-nav__link" href="#network">Network</a>
           <a class="site-nav__link" href="#contacts">Contatti</a>
         </nav>
+
+        <a href="https://private.tongatron.org/admin" class="btn btn-primary btn-sm" rel="nofollow">Login</a>
       </div>
     </div>
   </header>
@@ -1098,12 +973,24 @@
               <em>Bindi</em>
             </h1>
 
-            <p class="hero__role">Creative Technologist · AI-assisted Software Builder · Digital Transformation Lead<br>Turin, Italy&nbsp;🇮🇹</p>
+            <p class="hero__role">Creative Technologist · Digital Transformation Lead · Consultant<br>Turin, Italy&nbsp;🇮🇹</p>
 
             <p class="hero__body">
-              Progetto e sviluppo software AI-assisted per trasformare bisogni concreti in applicazioni, utility e
-              prototipi rapidi da realizzare, utili da usare e sostenibili da mantenere.
+              I design and build digital systems that actually ship —
+              from web platforms and real-time applications to mobile-first tools,
+              IoT prototypes and experimental interfaces.
             </p>
+
+            <div class="hero__meta" role="list">
+              <div class="hero__meta-row" role="listitem">
+                <span class="hero__meta-key">Focus</span>
+                <span class="hero__meta-val">Execution, simplicity, real-world impact</span>
+              </div>
+              <div class="hero__meta-row" role="listitem">
+                <span class="hero__meta-key">Stack</span>
+                <span class="hero__meta-val">HTML, CSS, JavaScript, Node — and whatever gets the job done</span>
+              </div>
+            </div>
 
             <div class="hero__actions">
               <a
@@ -1139,101 +1026,16 @@
             <p class="service-card__body">Gestione end-to-end di progetti ICT: dalla definizione degli obiettivi alla consegna, con coordinamento di team multidisciplinari e controllo continuo di tempi, costi e qualità.</p>
           </article>
           <article class="service-card">
-            <h3 class="service-card__title">AI-assisted Development</h3>
-            <p class="service-card__body">Sviluppo software e prototipazione con workflow AI-assisted: generazione guidata, debugging, refactoring, integrazione rapida e validazione manuale dei risultati.</p>
+            <h3 class="service-card__title">Consulenze in Innovazione Digitale</h3>
+            <p class="service-card__body">Supporto strategico per introdurre soluzioni digitali concrete, semplificare i processi e rafforzare la governance tecnologica.</p>
           </article>
           <article class="service-card">
             <h3 class="service-card__title">Progettazione e Sviluppo</h3>
             <p class="service-card__body">Progettazione e sviluppo di soluzioni software su misura, dal concept al rilascio, con un approccio iterativo e orientato ai risultati.</p>
           </article>
           <article class="service-card">
-            <h3 class="service-card__title">Automazione e Didattica</h3>
-            <p class="service-card__body">Strumenti operativi, utility didattiche e workflow personalizzati per organizzare informazioni, velocizzare attività ripetitive e rendere i processi più accessibili.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <hr class="divider">
-
-
-    <!-- ============================================================
-         AI-ASSISTED
-    ============================================================ -->
-    <section id="ai" class="section" aria-labelledby="ai-title">
-      <div class="wrap">
-        <div class="sec-head">
-          <h2 class="sec-head__title" id="ai-title">Sviluppo e sperimentazione AI-assisted</h2>
-          <p class="sec-head__desc">
-            Lavoro con piattaforme di AI generativa e coding assistant come strumenti operativi di sviluppo:
-            non come vetrina, ma come acceleratori per progettare, scrivere, correggere e rifinire software utile.
-          </p>
-        </div>
-
-        <div class="ai-layout">
-          <div class="ai-panel">
-            <div class="ai-panel__block">
-              <h3 class="ai-panel__title">Come uso l'AI nel lavoro quotidiano</h3>
-              <p class="ai-panel__body">
-                Sviluppo applicazioni personali, utility web, prototipi interattivi e strumenti gestionali usando
-                un flusso di lavoro basato su iterazione rapida, verifica manuale e messa in produzione pragmatica.
-                L'AI mi aiuta a comprimere il tempo tra idea, prima versione funzionante e rifinitura tecnica.
-              </p>
-              <ul class="ai-points">
-                <li>Sviluppo rapido di applicazioni web e tool verticali.</li>
-                <li>Automazione di processi, routine e workflow ripetitivi.</li>
-                <li>Debugging, analisi del codice e refactoring assistito.</li>
-                <li>Prototipazione UI/UX e validazione veloce di interfacce.</li>
-                <li>Strumenti didattici, organizzativi e gestionali costruiti su misura.</li>
-                <li>Integrazione tra servizi web, database, API e sistemi locali.</li>
-              </ul>
-            </div>
-          </div>
-
-          <div class="ai-side">
-            <article class="ai-side__card">
-              <span class="ai-side__label">Tooling</span>
-              <h3 class="ai-side__title">Stack AI operativo</h3>
-              <p class="ai-side__body">
-                Uso in modo pratico Claude, Codex, Gemini, Ollama e altri strumenti AI per scrittura di codice,
-                revisione, ragionamento su architetture, generazione di alternative e accelerazione del lavoro tecnico.
-              </p>
-            </article>
-            <article class="ai-side__card">
-              <span class="ai-side__label">Metodo</span>
-              <h3 class="ai-side__title">Controllo umano, output concreti</h3>
-              <p class="ai-side__body">
-                Mantengo io le decisioni finali su struttura, qualità, sicurezza, priorità e rilascio.
-                L'AI è una leva di velocità e ampiezza esplorativa, non un sostituto del giudizio tecnico.
-              </p>
-            </article>
-          </div>
-        </div>
-
-        <div class="ai-proof">
-          <article class="ai-proof__item">
-            <span class="ai-proof__kicker">Rapid prototyping</span>
-            <h3 class="ai-proof__title">Dall'idea alla demo in tempi brevi</h3>
-            <p class="ai-proof__body">
-              Uso workflow AI-assisted per passare più velocemente da un'esigenza concreta a una prima versione testabile,
-              utile per validare idee, interfacce e processi prima di investire in sviluppo esteso.
-            </p>
-          </article>
-          <article class="ai-proof__item">
-            <span class="ai-proof__kicker">Debug e refactor</span>
-            <h3 class="ai-proof__title">Miglioro codice esistente con più velocità</h3>
-            <p class="ai-proof__body">
-              L'AI mi supporta nell'analisi di bug, nella riscrittura di parti complesse e nel confronto tra alternative,
-              riducendo tempi di iterazione senza perdere leggibilità e controllo del codice.
-            </p>
-          </article>
-          <article class="ai-proof__item">
-            <span class="ai-proof__kicker">Integrazioni</span>
-            <h3 class="ai-proof__title">Collego servizi, dati e sistemi locali</h3>
-            <p class="ai-proof__body">
-              Applico questi strumenti soprattutto dove serve mettere insieme API, automazioni, utility locali,
-              dashboard operative e piccoli sistemi che devono semplicemente funzionare bene.
-            </p>
+            <h3 class="service-card__title">Formazione e Didattica</h3>
+            <p class="service-card__body">Percorsi formativi su ICT, coding e innovazione digitale, progettati per trasferire competenze subito applicabili nei contesti reali.</p>
           </article>
         </div>
       </div>
@@ -1248,12 +1050,8 @@
     <section id="projects" class="section" aria-labelledby="projects-title">
       <div class="wrap">
         <div class="sec-head">
-          <span class="label">Portfolio operativo</span>
-          <h2 class="sec-head__title" id="projects-title">Progetti e sperimentazioni</h2>
-          <p class="sec-head__desc">
-            Una selezione di applicazioni, utility e prototipi pubblicati. Non tutti sono progetti AI in senso stretto,
-            ma insieme raccontano bene il mio modo di lavorare: rapido, concreto e orientato a costruire strumenti reali.
-          </p>
+          <span class="label">Ultimi lavori</span>
+          <h2 class="sec-head__title" id="projects-title">Progetti recenti</h2>
         </div>
 
         <div class="project-grid editorial-grid">
@@ -1263,7 +1061,6 @@
               <img src="img/projects/astri.jpg" class="proj-card__cover" alt="Astri" loading="lazy">
             </a>
             <div class="proj-card__body">
-              <span class="proj-card__kicker">Interactive 3D tool</span>
               <h3 class="proj-card__title"><a href="https://tongatron.org/astri/">Astri</a></h3>
               <p class="proj-card__desc">App web interattiva per esplorare il cielo notturno: Sole, Luna, pianeti e sistema solare in 3D calcolati in tempo reale dalla posizione dell'utente.</p>
               <div class="proj-card__actions">
@@ -1292,7 +1089,6 @@
               <img src="img/projects/ryanair-search.jpg" class="proj-card__cover" alt="Ryanair Search" loading="lazy">
             </a>
             <div class="proj-card__body">
-              <span class="proj-card__kicker">Utility web</span>
               <h3 class="proj-card__title"><a href="https://tongatron.org/projects/ryanair-search">Ryanair Search</a></h3>
               <p class="proj-card__desc">Utility web per cercare voli Ryanair andata e ritorno con filtri su budget, durata, partenza e destinazione.</p>
               <div class="proj-card__actions">
@@ -1321,7 +1117,6 @@
               <img src="img/projects/gtt-radar.jpg" class="proj-card__cover" alt="GTT Radar" loading="lazy">
             </a>
             <div class="proj-card__body">
-              <span class="proj-card__kicker">Mobile-first dashboard</span>
               <h3 class="proj-card__title"><a href="https://gtt-to.onrender.com/">GTT Radar</a></h3>
               <p class="proj-card__desc">Utility web per monitorare linee e passaggi del trasporto pubblico torinese, mobile-first.</p>
               <div class="proj-card__actions">
@@ -1336,7 +1131,6 @@
               <img src="img/projects/pa-ninja.jpg" class="proj-card__cover" alt="PA Ninja" loading="lazy">
             </a>
             <div class="proj-card__body">
-              <span class="proj-card__kicker">Workflow tool</span>
               <h3 class="proj-card__title"><a href="https://tongatron.github.io/pa-ninja/landing/">PA Ninja</a></h3>
               <p class="proj-card__desc">Strumento locale per consultare e organizzare informazioni dai portali della Pubblica Amministrazione italiana.</p>
               <div class="proj-card__actions">
@@ -1351,7 +1145,6 @@
               <img src="img/projects/gmail-stats.jpg" class="proj-card__cover" alt="Gmail Stats" loading="lazy">
             </a>
             <div class="proj-card__body">
-              <span class="proj-card__kicker">Local analytics</span>
               <h3 class="proj-card__title"><a href="https://tongatron.org/gmail-stats/">Gmail Stats</a></h3>
               <p class="proj-card__desc">Dashboard locale per l'analisi delle email inviate: volumi, frequenza e pattern di comunicazione.</p>
               <div class="proj-card__actions">
@@ -1366,7 +1159,6 @@
               <img src="img/projects/raspi-chat.jpg" class="proj-card__cover" alt="Raspi Chat" loading="lazy">
             </a>
             <div class="proj-card__body">
-              <span class="proj-card__kicker">Self-hosted</span>
               <h3 class="proj-card__title"><a href="https://chat.tongatron.org/">Raspi Chat</a></h3>
               <p class="proj-card__desc">Progetto self-hosted per piccoli gruppi, con stanze private, notifiche web e amministrazione semplice.</p>
               <div class="proj-card__actions">
