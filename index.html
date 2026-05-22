@@ -1670,7 +1670,7 @@
     <div class="wrap">
       <div class="site-footer__inner">
         <p class="site-footer__copy">
-          &copy; <a href="/pulsanti/" target="_blank" rel="noopener">2026</a> <a href="https://tongatron.org/projects/" style="color:inherit;text-decoration:none;">Tongatron</a>
+          &copy; <a href="/pulsanti/" target="_blank" rel="noopener">2026</a> <a href="https://tongatron.org/projects/" style="color:inherit;text-decoration:none;">Tongatron</a> · versione <span id="version-date"></span>
         </p>
       </div>
     </div>
@@ -1760,5 +1760,20 @@
     })();
   </script>
   <script async defer src="https://buttons.github.io/buttons.js"></script>
+  <script>
+    (() => {
+      const versionEl = document.getElementById('version-date');
+      if (!versionEl) return;
+
+      const now = new Date();
+      const day = String(now.getDate()).padStart(2, '0');
+      const month = String(now.getMonth() + 1).padStart(2, '0');
+      const year = now.getFullYear();
+      const hours = String(now.getHours()).padStart(2, '0');
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+
+      versionEl.textContent = `${day}/${month}/${year} ${hours}:${minutes}`;
+    })();
+  </script>
 </body>
 </html>
