@@ -53,6 +53,18 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://tongatron.org/objects3D/</loc>
+    <lastmod>2026-07-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://tongatron.org/RAL-lordo-netto/</loc>
+    <lastmod>2026-07-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://tongatron.org/projects/computing-timeline/</loc>
     <lastmod>2026-05-17</lastmod>
     <changefreq>monthly</changefreq>
@@ -195,6 +207,18 @@
     <lastmod>2026-05-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://meteo.tongatron.org/</loc>
+    <lastmod>2026-07-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://deviceinspector.tongatron.org/</loc>
+    <lastmod>2026-07-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
   </url>
 
 </urlset>
