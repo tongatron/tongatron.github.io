@@ -1,0 +1,1605 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Giovanni Bindi — Creative Technologist &amp; AI-assisted Software Builder</title>
+  <meta name="description" content="Portfolio esperienziale di Giovanni Bindi: AI generativa applicata a software, prototipi e trasformazione digitale. Torino, Italia.">
+  <meta name="robots" content="noindex, follow">
+  <meta name="author" content="Giovanni Bindi">
+  <meta name="theme-color" content="#050505">
+  <meta name="color-scheme" content="dark">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/svg+xml" href="/img/tongatron-icon.svg">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+  <link rel="canonical" href="https://tongatron.org/">
+  <meta property="og:locale" content="it_IT">
+  <meta property="og:site_name" content="Tongatron">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Giovanni Bindi — Creative Technologist &amp; AI-assisted Software Builder">
+  <meta property="og:description" content="Portfolio esperienziale: AI generativa applicata a software, prototipi e trasformazione digitale.">
+  <meta property="og:url" content="https://tongatron.org/index-fable.html">
+  <meta property="og:image" content="https://tongatron.org/img/giovannibindi2.jpg">
+  <script async src="https://tongatron.org/analytics.js"></script>
+  <link rel="preload" as="image" href="/img/giovannibindi2.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@500;600;700;800&family=Space+Grotesk:wght@300;400;500;700&family=Space+Mono&display=swap" rel="stylesheet">
+
+  <style>
+    /* ================================================================
+       TOKENS
+    ================================================================ */
+    :root {
+      --bg:        #060606;
+      --bg-2:      #0c0c0b;
+      --ink:       #f2efe6;
+      --ink-dim:   #98937f;
+      --ink-faint: #3a382f;
+      --line:      rgba(242, 239, 230, 0.12);
+      --accent:    #f5c400;
+      --accent-fg: #0a0a08;
+      --font-d:    "Syne", sans-serif;
+      --font-b:    "Space Grotesk", sans-serif;
+      --font-m:    "Space Mono", monospace;
+      --pad:       clamp(20px, 4vw, 64px);
+      --ease-out:  cubic-bezier(0.19, 1, 0.22, 1);
+    }
+
+    /* ================================================================
+       RESET / BASE
+    ================================================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      overflow-x: clip;
+      font-family: var(--font-b);
+      background: var(--bg);
+      color: var(--ink);
+      font-size: 1rem;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    img { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+    button { font-family: inherit; background: none; border: none; color: inherit; cursor: pointer; }
+    ::selection { background: var(--accent); color: var(--accent-fg); }
+    a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
+    }
+
+    /* ================================================================
+       CURSOR
+    ================================================================ */
+    .cursor-dot, .cursor-ring {
+      position: fixed; top: 0; left: 0;
+      pointer-events: none;
+      z-index: 9999;
+      border-radius: 50%;
+      transform: translate(-100px, -100px);
+      will-change: transform;
+    }
+    .cursor-dot { width: 8px; height: 8px; background: var(--accent); }
+    .cursor-ring {
+      width: 40px; height: 40px;
+      border: 1px solid rgba(245, 196, 0, 0.55);
+      display: flex; align-items: center; justify-content: center;
+      transition: width 0.35s var(--ease-out), height 0.35s var(--ease-out),
+                  background-color 0.35s, border-color 0.35s;
+    }
+    .cursor-ring span {
+      font-family: var(--font-m); font-size: 9px; letter-spacing: 0.14em;
+      color: var(--accent-fg); opacity: 0; transition: opacity 0.25s;
+      text-transform: uppercase; white-space: nowrap;
+    }
+    .cursor-ring.is-link { width: 64px; height: 64px; background: rgba(245, 196, 0, 0.14); }
+    .cursor-ring.is-label { width: 84px; height: 84px; background: var(--accent); border-color: var(--accent); }
+    .cursor-ring.is-label span { opacity: 1; }
+    @media (hover: none), (prefers-reduced-motion: reduce) {
+      .cursor-dot, .cursor-ring { display: none; }
+    }
+
+    /* ================================================================
+       PRELOADER
+    ================================================================ */
+    .preloader {
+      position: fixed; inset: 0; z-index: 9000;
+      display: flex; flex-direction: column; justify-content: space-between;
+      padding: var(--pad);
+      background: var(--bg);
+    }
+    .preloader__brand {
+      font-family: var(--font-m); font-size: 12px; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--ink-dim);
+    }
+    .preloader__count {
+      font-family: var(--font-d); font-weight: 800;
+      font-size: clamp(5rem, 18vw, 15rem);
+      line-height: 0.85; color: var(--ink);
+      align-self: flex-end;
+      font-variant-numeric: tabular-nums;
+    }
+    .preloader__count sup { font-size: 0.25em; color: var(--accent); font-family: var(--font-m); font-weight: 400; }
+    .preloader__bar {
+      position: absolute; left: 0; bottom: 0; height: 3px; width: 100%;
+      background: var(--accent); transform: scaleX(0); transform-origin: left;
+    }
+
+    /* ================================================================
+       HEADER
+    ================================================================ */
+    .hdr {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 500;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px var(--pad);
+      mix-blend-mode: difference;
+      color: #fff;
+    }
+    .hdr__logo { font-family: var(--font-m); font-size: 14px; letter-spacing: 0.06em; }
+    .hdr__logo .tick { animation: blink 1.1s steps(1) infinite; }
+    @keyframes blink { 50% { opacity: 0; } }
+    .hdr__meta {
+      display: flex; align-items: center; gap: 28px;
+      font-family: var(--font-m); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+    }
+    .hdr__clock { opacity: 0.75; }
+    .hdr__menu-btn {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-family: var(--font-m); font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase;
+    }
+    .hdr__menu-btn .burger { position: relative; width: 26px; height: 10px; }
+    .hdr__menu-btn .burger::before, .hdr__menu-btn .burger::after {
+      content: ""; position: absolute; left: 0; width: 100%; height: 1.5px; background: currentColor;
+      transition: transform 0.4s var(--ease-out), top 0.4s var(--ease-out);
+    }
+    .hdr__menu-btn .burger::before { top: 0; }
+    .hdr__menu-btn .burger::after { top: 8px; }
+    body.menu-open .hdr__menu-btn .burger::before { top: 4px; transform: rotate(45deg); }
+    body.menu-open .hdr__menu-btn .burger::after { top: 4px; transform: rotate(-45deg); }
+    @media (max-width: 700px) { .hdr__clock { display: none; } }
+
+    /* ================================================================
+       MENU OVERLAY
+    ================================================================ */
+    .menu {
+      position: fixed; inset: 0; z-index: 400;
+      background: var(--accent); color: var(--accent-fg);
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 0 var(--pad);
+      clip-path: inset(0 0 100% 0);
+      visibility: hidden;
+    }
+    .menu__list { list-style: none; }
+    .menu__link {
+      display: flex; align-items: baseline; gap: 20px;
+      font-family: var(--font-d); font-weight: 800;
+      font-size: clamp(2.2rem, 7.5vh, 4.6rem);
+      line-height: 1.12;
+      text-transform: uppercase; letter-spacing: -0.02em;
+      transition: letter-spacing 0.4s var(--ease-out), opacity 0.3s;
+    }
+    .menu__link:hover { letter-spacing: 0.02em; }
+    .menu__list:hover .menu__link:not(:hover) { opacity: 0.3; }
+    .menu__idx { font-family: var(--font-m); font-size: 0.9rem; font-weight: 400; opacity: 0.55; }
+    .menu__foot {
+      position: absolute; bottom: 28px; left: var(--pad); right: var(--pad);
+      display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+      font-family: var(--font-m); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase;
+    }
+    .menu__foot a { border-bottom: 1px solid transparent; }
+    .menu__foot a:hover { border-bottom-color: currentColor; }
+
+    /* ================================================================
+       HERO
+    ================================================================ */
+    .hero {
+      position: relative;
+      min-height: 100svh;
+      display: flex; flex-direction: column; justify-content: flex-end;
+      padding: 90px var(--pad) clamp(28px, 5vh, 64px);
+      overflow: hidden;
+    }
+    #webgl {
+      position: absolute; inset: 0; z-index: 0;
+      pointer-events: none;
+    }
+    .hero__inner { position: relative; z-index: 2; }
+    .hero__topline {
+      display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px;
+      font-family: var(--font-m); font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--ink-dim);
+      margin-bottom: clamp(16px, 3vh, 36px);
+      border-top: 1px solid var(--line);
+      padding-top: 14px;
+    }
+    .hero__title {
+      font-family: var(--font-d); font-weight: 800;
+      font-size: clamp(2.6rem, 10vw, 10rem);
+      line-height: 0.9; letter-spacing: -0.03em;
+      text-transform: uppercase;
+      color: var(--ink);
+      white-space: nowrap;
+    }
+    .hero__title .row { display: block; overflow: hidden; }
+    .hero__title .row + .row { margin-top: 0.02em; }
+    .hero__title .row--outline {
+      color: transparent;
+      -webkit-text-stroke: 1.5px var(--ink);
+      padding-left: clamp(1.5rem, 9vw, 9rem);
+    }
+    .hero__title .char { display: inline-block; will-change: transform; }
+    .hero__bottom {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+      gap: clamp(20px, 4vw, 60px);
+      align-items: end;
+      margin-top: clamp(24px, 4vh, 48px);
+    }
+    .hero__desc { max-width: 46ch; color: var(--ink-dim); font-size: clamp(0.95rem, 1.2vw, 1.1rem); font-weight: 300; }
+    .hero__desc strong { color: var(--ink); font-weight: 500; }
+    .hero__roles {
+      font-family: var(--font-m); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--accent); margin-top: 14px;
+    }
+    .hero__scrollcue {
+      justify-self: end;
+      display: inline-flex; align-items: center; gap: 12px;
+      font-family: var(--font-m); font-size: 10px; letter-spacing: 0.26em; text-transform: uppercase; color: var(--ink-dim);
+    }
+    .hero__scrollcue .dotline {
+      width: 1px; height: 48px; background: var(--line); position: relative; overflow: hidden;
+    }
+    .hero__scrollcue .dotline::after {
+      content: ""; position: absolute; left: 0; top: -30%; width: 100%; height: 30%;
+      background: var(--accent);
+      animation: fall 1.8s var(--ease-out) infinite;
+    }
+    @keyframes fall { to { top: 130%; } }
+
+    /* Ritratto flottante */
+    .hero__portrait {
+      position: absolute;
+      z-index: 1;
+      right: clamp(16px, 7vw, 120px);
+      top: clamp(70px, 12vh, 140px);
+      width: clamp(180px, 24vw, 340px);
+      aspect-ratio: 3 / 4;
+      overflow: hidden;
+      border-radius: 4px;
+    }
+    .hero__portrait img {
+      width: 100%; height: 115%; object-fit: cover;
+      filter: grayscale(1) contrast(1.05);
+      transition: filter 0.7s var(--ease-out), transform 0.7s var(--ease-out);
+      will-change: transform;
+    }
+    .hero__portrait:hover img { filter: grayscale(0); transform: scale(1.04); }
+    .hero__portrait::after {
+      content: "TORINO — 45.07°N 7.68°E";
+      position: absolute; left: 10px; bottom: 10px;
+      font-family: var(--font-m); font-size: 9px; letter-spacing: 0.18em;
+      color: rgba(242, 239, 230, 0.85);
+      background: rgba(6, 6, 6, 0.55); padding: 4px 8px; backdrop-filter: blur(4px);
+    }
+    @media (max-width: 900px) {
+      .hero__portrait { position: relative; inset: auto; width: min(62vw, 300px); margin: 90px 0 26px; }
+      .hero__bottom { grid-template-columns: 1fr; }
+      .hero__scrollcue { justify-self: start; }
+    }
+
+    /* ================================================================
+       MARQUEE
+    ================================================================ */
+    .marquee {
+      overflow: hidden; white-space: nowrap;
+      border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+      padding: clamp(14px, 2.4vh, 26px) 0;
+      background: var(--bg-2);
+    }
+    .marquee__track { display: inline-flex; will-change: transform; }
+    .marquee__item {
+      font-family: var(--font-d); font-weight: 700; text-transform: uppercase;
+      font-size: clamp(1.6rem, 3.6vw, 3.2rem); letter-spacing: 0.01em;
+      padding-right: 1.2em;
+      color: var(--ink);
+    }
+    .marquee__item em { font-style: normal; color: transparent; -webkit-text-stroke: 1px var(--ink-dim); }
+    .marquee__item .star { color: var(--accent); }
+
+    /* ================================================================
+       COMMON SECTION PARTS
+    ================================================================ */
+    .section { padding: clamp(80px, 14vh, 160px) var(--pad); position: relative; }
+    .sec-label {
+      font-family: var(--font-m); font-size: 11px; letter-spacing: 0.26em; text-transform: uppercase;
+      color: var(--accent);
+      display: flex; align-items: center; gap: 12px;
+      margin-bottom: 22px;
+    }
+    .sec-label::before { content: ""; width: 34px; height: 1px; background: var(--accent); }
+    .sec-title {
+      font-family: var(--font-d); font-weight: 800; text-transform: uppercase;
+      font-size: clamp(2.4rem, 6.5vw, 5.6rem);
+      line-height: 0.95; letter-spacing: -0.02em;
+      margin-bottom: clamp(30px, 6vh, 70px);
+    }
+    .sec-title .line { display: block; overflow: hidden; }
+    .sec-title .line > span { display: inline-block; will-change: transform; }
+
+    /* ================================================================
+       COMPETENZE — righe interattive
+    ================================================================ */
+    .svc { border-top: 1px solid var(--line); }
+    .svc__row {
+      position: relative;
+      display: grid;
+      grid-template-columns: 80px minmax(0, 1.1fr) minmax(0, 1.6fr);
+      gap: clamp(14px, 3vw, 48px);
+      align-items: center;
+      padding: clamp(26px, 4.5vh, 46px) 0;
+      border-bottom: 1px solid var(--line);
+      overflow: hidden;
+    }
+    .svc__fill {
+      position: absolute; inset: 0; background: var(--accent);
+      transform: scaleY(0); transform-origin: bottom;
+      transition: transform 0.5s var(--ease-out);
+      z-index: 0;
+    }
+    .svc__row:hover .svc__fill { transform: scaleY(1); }
+    .svc__row > * { position: relative; z-index: 1; transition: color 0.35s; }
+    .svc__num { font-family: var(--font-m); font-size: 0.85rem; color: var(--ink-dim); }
+    .svc__name {
+      font-family: var(--font-d); font-weight: 700; text-transform: uppercase;
+      font-size: clamp(1.3rem, 3vw, 2.2rem); line-height: 1.05;
+      transition: transform 0.45s var(--ease-out), color 0.35s;
+    }
+    .svc__body { color: var(--ink-dim); max-width: 58ch; font-weight: 300; }
+    .svc__row:hover .svc__num, .svc__row:hover .svc__name, .svc__row:hover .svc__body { color: var(--accent-fg); }
+    .svc__row:hover .svc__name { transform: translateX(12px); }
+    @media (max-width: 800px) {
+      .svc__row { grid-template-columns: 48px 1fr; }
+      .svc__body { grid-column: 2; }
+    }
+
+    /* ================================================================
+       AI — manifesto scrub + prove
+    ================================================================ */
+    .ai-manifesto {
+      font-family: var(--font-d); font-weight: 600;
+      font-size: clamp(1.5rem, 3.6vw, 3.1rem);
+      line-height: 1.28; letter-spacing: -0.01em;
+      max-width: 26em;
+      margin-bottom: clamp(50px, 9vh, 110px);
+    }
+    .ai-manifesto .w { color: var(--ink-faint); transition: color 0.3s linear; }
+    .ai-manifesto .w.lit { color: var(--ink); }
+    .ai-manifesto .w.hl.lit { color: var(--accent); }
+    .ai-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px;
+      background: var(--line); border: 1px solid var(--line);
+    }
+    .ai-card { background: var(--bg); padding: clamp(24px, 3vw, 40px); position: relative; overflow: hidden; }
+    .ai-card::before {
+      content: ""; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: var(--accent); transform: scaleX(0); transform-origin: left;
+      transition: transform 0.6s var(--ease-out);
+    }
+    .ai-card:hover::before { transform: scaleX(1); }
+    .ai-card__kicker {
+      font-family: var(--font-m); font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase;
+      color: var(--accent); display: block; margin-bottom: 16px;
+    }
+    .ai-card__title { font-family: var(--font-d); font-weight: 700; font-size: 1.25rem; margin-bottom: 10px; }
+    .ai-card__body { color: var(--ink-dim); font-size: 0.95rem; font-weight: 300; }
+    .ai-points { list-style: none; margin-top: 14px; }
+    .ai-points li {
+      position: relative; padding-left: 22px; margin-top: 8px;
+      color: var(--ink-dim); font-size: 0.92rem; font-weight: 300;
+    }
+    .ai-points li::before { content: "→"; position: absolute; left: 0; color: var(--accent); }
+    .ai-card--wide { grid-column: span 3; display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1.4fr); gap: clamp(20px,3vw,48px); }
+    @media (max-width: 900px) {
+      .ai-grid { grid-template-columns: 1fr; }
+      .ai-card--wide { grid-column: span 1; grid-template-columns: 1fr; }
+    }
+
+    /* ================================================================
+       PROGETTI — scroll orizzontale pinnato
+    ================================================================ */
+    .work { padding: clamp(80px, 14vh, 160px) 0 0; overflow: hidden; }
+    .work__head { padding: 0 var(--pad); }
+    .work__stage { position: relative; }
+    .work__track {
+      display: flex; gap: clamp(18px, 2.4vw, 36px);
+      padding: 0 var(--pad) clamp(60px, 10vh, 120px);
+      width: max-content;
+      will-change: transform;
+    }
+    .wcard {
+      position: relative;
+      width: clamp(280px, 34vw, 460px);
+      flex: none;
+      border: 1px solid var(--line);
+      background: var(--bg-2);
+      display: flex; flex-direction: column;
+      transition: border-color 0.4s;
+    }
+    .wcard:hover { border-color: rgba(245, 196, 0, 0.5); }
+    .wcard__media {
+      position: relative; aspect-ratio: 4 / 3; overflow: hidden;
+      background: var(--bg-2);
+    }
+    .wcard__media img, .wcard__media .ph {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      object-fit: cover;
+      filter: saturate(0.85);
+      transition: transform 0.8s var(--ease-out), filter 0.5s;
+      will-change: transform;
+    }
+    .wcard:hover .wcard__media img, .wcard:hover .wcard__media .ph { transform: scale(1.06); filter: saturate(1.1); }
+    .wcard__media .ph { display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-d); font-size: 2rem; font-weight: 700; color: #fff; }
+    .wcard__idx {
+      position: absolute; top: 12px; left: 14px; z-index: 2;
+      font-family: var(--font-m); font-size: 10px; letter-spacing: 0.2em;
+      color: var(--ink); background: rgba(6,6,6,0.6); padding: 4px 9px; backdrop-filter: blur(4px);
+    }
+    .wcard__body { padding: 20px 22px 24px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
+    .wcard__title {
+      font-family: var(--font-d); font-weight: 700; font-size: 1.4rem; text-transform: uppercase;
+      display: flex; align-items: baseline; justify-content: space-between; gap: 10px;
+    }
+    .wcard__title .arr { font-family: var(--font-b); font-weight: 300; color: var(--accent); transition: transform 0.4s var(--ease-out); }
+    .wcard:hover .wcard__title .arr { transform: translate(4px, -4px); }
+    .wcard__desc { color: var(--ink-dim); font-size: 0.9rem; font-weight: 300; flex: 1; }
+    .wcard__links { display: flex; gap: 16px; font-family: var(--font-m); font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; }
+    .wcard__links a { color: var(--accent); border-bottom: 1px solid transparent; padding-bottom: 2px; }
+    .wcard__links a:hover { border-bottom-color: var(--accent); }
+    .wcard > a.wcard__cover-link { position: absolute; inset: 0; z-index: 1; }
+    .wcard__body { position: relative; z-index: 2; pointer-events: none; }
+    .wcard__links { pointer-events: auto; }
+    .work__progress {
+      margin: 0 var(--pad); height: 2px; background: var(--line);
+      position: relative; overflow: hidden;
+    }
+    .work__progress i { position: absolute; inset: 0; background: var(--accent); transform: scaleX(0); transform-origin: left; display: block; }
+    @media (max-width: 1023px) {
+      .work__track {
+        overflow-x: auto; width: auto;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+      }
+      .wcard { scroll-snap-align: start; width: min(78vw, 380px); }
+      .work__progress { display: none; }
+    }
+
+    /* ================================================================
+       GIOCHI — index list
+    ================================================================ */
+    .games__list { border-top: 1px solid var(--line); counter-reset: game; }
+    .game-row {
+      position: relative;
+      display: grid; grid-template-columns: 64px minmax(0, 1fr) minmax(0, 1.3fr) 40px;
+      align-items: center; gap: clamp(12px, 2.5vw, 40px);
+      padding: 22px 0;
+      border-bottom: 1px solid var(--line);
+      transition: padding-left 0.45s var(--ease-out);
+    }
+    .game-row:hover { padding-left: 18px; }
+    .game-row::before {
+      counter-increment: game;
+      content: "0" counter(game);
+      font-family: var(--font-m); font-size: 0.8rem; color: var(--ink-dim);
+    }
+    .game-row__name {
+      font-family: var(--font-d); font-weight: 700; text-transform: uppercase;
+      font-size: clamp(1.15rem, 2.4vw, 1.8rem);
+      transition: color 0.3s;
+    }
+    .game-row:hover .game-row__name { color: var(--accent); }
+    .game-row__desc { color: var(--ink-dim); font-size: 0.92rem; font-weight: 300; }
+    .game-row__arr { color: var(--ink-dim); font-size: 1.3rem; transition: transform 0.4s var(--ease-out), color 0.3s; }
+    .game-row:hover .game-row__arr { transform: translateX(8px); color: var(--accent); }
+    @media (max-width: 700px) {
+      .game-row { grid-template-columns: 40px 1fr 24px; }
+      .game-row__desc { display: none; }
+    }
+
+    /* ================================================================
+       IOT
+    ================================================================ */
+    .iot-spec {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px;
+      background: var(--line); border: 1px solid var(--line);
+      margin-bottom: clamp(30px, 5vh, 60px);
+    }
+    .iot-spec__cell { background: var(--bg); padding: 24px; }
+    .iot-spec__cell strong { display: block; font-family: var(--font-m); font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; font-weight: 400; }
+    .iot-spec__cell span { color: var(--ink-dim); font-weight: 300; }
+    .iot-spec__cell img { height: 34px; width: auto; margin-bottom: 12px; opacity: 0.9; }
+    .iot-spec__cell a { color: var(--ink); font-family: var(--font-m); font-size: 11px; letter-spacing: 0.14em; border-bottom: 1px solid var(--accent); }
+    .iot-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(16px, 2vw, 28px); }
+    .iot-card { border: 1px solid var(--line); background: var(--bg-2); overflow: hidden; transition: border-color 0.4s; position: relative; }
+    .iot-card:hover { border-color: rgba(245,196,0,0.5); }
+    .iot-card__media { aspect-ratio: 16 / 10; overflow: hidden; }
+    .iot-card__media img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s var(--ease-out); }
+    .iot-card:hover .iot-card__media img { transform: scale(1.05); }
+    .iot-card__body { padding: 20px 22px 24px; }
+    .iot-card__title { font-family: var(--font-d); font-weight: 700; font-size: 1.25rem; text-transform: uppercase; margin-bottom: 8px; }
+    .iot-card__desc { color: var(--ink-dim); font-size: 0.9rem; font-weight: 300; }
+    @media (max-width: 900px) {
+      .iot-spec, .iot-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ================================================================
+       NETWORK
+    ================================================================ */
+    .net-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); }
+    .net-card { background: var(--bg); padding: clamp(24px, 3vw, 40px); min-height: 200px; display: flex; flex-direction: column; justify-content: space-between; gap: 20px; position: relative; overflow: hidden; }
+    .net-card::after {
+      content: ""; position: absolute; inset: 0; background: var(--accent);
+      transform: translateY(101%); transition: transform 0.5s var(--ease-out); z-index: 0;
+    }
+    .net-card:hover::after { transform: translateY(0); }
+    .net-card > * { position: relative; z-index: 1; transition: color 0.35s; }
+    .net-card__name { font-family: var(--font-d); font-weight: 700; font-size: 1.4rem; text-transform: uppercase; }
+    .net-card__desc { color: var(--ink-dim); font-size: 0.9rem; font-weight: 300; flex: 1; margin-top: 8px; }
+    .net-card__link { font-family: var(--font-m); font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); }
+    .net-card:hover .net-card__name, .net-card:hover .net-card__desc, .net-card:hover .net-card__link { color: var(--accent-fg); }
+    @media (max-width: 900px) { .net-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 560px) { .net-grid { grid-template-columns: 1fr; } }
+
+    /* ================================================================
+       CONTATTI
+    ================================================================ */
+    .contact { border-top: 1px solid var(--line); }
+    .contact__cta {
+      display: block;
+      font-family: var(--font-d); font-weight: 800; text-transform: uppercase;
+      font-size: clamp(2.6rem, 9vw, 8.5rem);
+      line-height: 0.95; letter-spacing: -0.02em;
+      margin-bottom: clamp(40px, 8vh, 90px);
+    }
+    .contact__cta .swap { position: relative; display: inline-block; overflow: hidden; vertical-align: bottom; }
+    .contact__cta .swap > span { display: block; transition: transform 0.55s var(--ease-out); }
+    .contact__cta .swap > span.alt {
+      position: absolute; inset: 0; transform: translateY(105%); color: var(--accent);
+    }
+    .contact__cta:hover .swap > span.base { transform: translateY(-105%); }
+    .contact__cta:hover .swap > span.alt { transform: translateY(0); }
+    .contact__grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr); gap: clamp(30px, 5vw, 80px); }
+    .contact-list { list-style: none; }
+    .contact-list li {
+      display: flex; justify-content: space-between; align-items: baseline; gap: 16px;
+      padding: 16px 0; border-bottom: 1px solid var(--line);
+    }
+    .contact-list .k { font-family: var(--font-m); font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--ink-dim); }
+    .contact-list .v a { border-bottom: 1px solid transparent; transition: border-color 0.3s, color 0.3s; }
+    .contact-list .v a:hover { color: var(--accent); border-bottom-color: var(--accent); }
+    .form-stack { display: flex; flex-direction: column; gap: 20px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .form-group { display: flex; flex-direction: column; gap: 8px; }
+    .form-label { font-family: var(--font-m); font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--ink-dim); }
+    .form-input {
+      background: transparent; border: none; border-bottom: 1px solid var(--line);
+      color: var(--ink); font-family: var(--font-b); font-size: 1rem; font-weight: 300;
+      padding: 10px 2px; border-radius: 0;
+      transition: border-color 0.3s;
+    }
+    .form-input:focus { outline: none; border-bottom-color: var(--accent); }
+    .form-input::placeholder { color: var(--ink-faint); }
+    textarea.form-input { resize: vertical; min-height: 110px; }
+    .form-err { display: none; color: #e2574c; font-size: 0.8rem; }
+    .was-validated .form-input:invalid { border-bottom-color: #e2574c; }
+    .was-validated .form-input:invalid ~ .form-err { display: block; }
+    .btn-send {
+      align-self: flex-start;
+      display: inline-flex; align-items: center; gap: 12px;
+      font-family: var(--font-m); font-size: 12px; letter-spacing: 0.24em; text-transform: uppercase;
+      color: var(--accent-fg); background: var(--accent);
+      padding: 16px 34px; border-radius: 100px;
+      transition: transform 0.3s var(--ease-out), background-color 0.3s;
+      will-change: transform;
+    }
+    .btn-send:hover { background: #ffd633; }
+    .btn-send:disabled { opacity: 0.6; cursor: wait; }
+    .contact-feedback { display: none; padding: 12px 16px; margin-bottom: 18px; font-size: 0.9rem; border: 1px solid var(--line); }
+    .contact-feedback.ok { display: block; border-color: #3d9970; color: #7fd4ac; }
+    .contact-feedback.err { display: block; border-color: #c0392b; color: #e2938a; }
+    @media (max-width: 900px) {
+      .contact__grid { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+
+    /* ================================================================
+       FOOTER
+    ================================================================ */
+    .footer {
+      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px;
+      padding: 26px var(--pad) 30px;
+      border-top: 1px solid var(--line);
+      font-family: var(--font-m); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--ink-dim);
+    }
+    .footer a { color: inherit; }
+    .footer a:hover { color: var(--accent); }
+    .footer__top { display: inline-flex; align-items: center; gap: 8px; letter-spacing: inherit; text-transform: inherit; font-size: inherit; font-family: inherit; }
+    .footer__top:hover { color: var(--accent); }
+
+    /* ================================================================
+       REDUCED MOTION
+    ================================================================ */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- CURSOR -->
+  <div class="cursor-dot" aria-hidden="true"></div>
+  <div class="cursor-ring" aria-hidden="true"><span>scroll</span></div>
+
+  <!-- PRELOADER -->
+  <div class="preloader" id="preloader" aria-hidden="true">
+    <div class="preloader__brand">tongatron.org — portfolio 2026</div>
+    <div class="preloader__count"><span id="pre-count">0</span><sup>%</sup></div>
+    <div class="preloader__bar" id="pre-bar"></div>
+  </div>
+
+  <!-- HEADER -->
+  <header class="hdr">
+    <a class="hdr__logo" href="https://tongatron.org/">tongatron.org<span class="tick">_</span></a>
+    <div class="hdr__meta">
+      <span class="hdr__clock">Torino&nbsp;<span id="clock">--:--:--</span></span>
+      <button class="hdr__menu-btn" id="menu-btn" aria-expanded="false" aria-controls="menu">
+        <span id="menu-btn-label">Menu</span>
+        <span class="burger" aria-hidden="true"></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- MENU OVERLAY -->
+  <nav class="menu" id="menu" aria-label="Navigazione principale" aria-hidden="true">
+    <ul class="menu__list">
+      <li><a class="menu__link" href="#competenze" data-cursor="link"><span class="menu__idx">01</span>Competenze</a></li>
+      <li><a class="menu__link" href="#ai" data-cursor="link"><span class="menu__idx">02</span>AI &amp; Metodo</a></li>
+      <li><a class="menu__link" href="#progetti" data-cursor="link"><span class="menu__idx">03</span>Progetti</a></li>
+      <li><a class="menu__link" href="#giochi" data-cursor="link"><span class="menu__idx">04</span>Giochi</a></li>
+      <li><a class="menu__link" href="#iot" data-cursor="link"><span class="menu__idx">05</span>IoT</a></li>
+      <li><a class="menu__link" href="#contatti" data-cursor="link"><span class="menu__idx">06</span>Contatti</a></li>
+    </ul>
+    <div class="menu__foot">
+      <span>Giovanni Bindi — Torino, IT 🇮🇹</span>
+      <span>
+        <a href="https://github.com/tongatron" target="_blank" rel="noopener">GitHub</a> ·
+        <a href="https://www.linkedin.com/in/giovannibindi/" target="_blank" rel="noopener">LinkedIn</a> ·
+        <a href="https://x.com/giobindi" target="_blank" rel="noopener">X</a> ·
+        <a href="https://hackaday.io/tongatron" target="_blank" rel="noopener">Hackaday</a>
+      </span>
+    </div>
+  </nav>
+
+  <main>
+
+    <!-- ============================================================
+         HERO
+    ============================================================ -->
+    <section class="hero" id="hero">
+      <canvas id="webgl" aria-hidden="true"></canvas>
+
+      <figure class="hero__portrait" id="portrait" data-cursor="link">
+        <img src="img/giovannibindi2.jpg" alt="Ritratto di Giovanni Bindi" id="portrait-img">
+      </figure>
+
+      <div class="hero__inner">
+        <div class="hero__topline" data-reveal>
+          <span>Portfolio — 2026</span>
+          <span>AI-assisted builder</span>
+          <span>Torino, Italia 🇮🇹</span>
+        </div>
+
+        <h1 class="hero__title" id="hero-title">
+          <span class="row" data-split>Giovanni</span>
+          <span class="row row--outline" data-split>Bindi</span>
+        </h1>
+
+        <div class="hero__bottom">
+          <div data-reveal>
+            <p class="hero__desc">
+              Porto l'<strong>AI generativa</strong> dentro processi, prodotti e team con un approccio pratico:
+              capisco il problema, costruisco <strong>soluzioni funzionanti</strong> e accompagno il passaggio
+              dall'idea al rilascio.
+            </p>
+            <p class="hero__roles">Software Builder · Digital Transformation Lead · Creative Technologist</p>
+          </div>
+          <div class="hero__scrollcue" data-reveal>
+            <span>Scroll</span>
+            <span class="dotline" aria-hidden="true"></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MARQUEE -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee__track" id="marquee-track">
+        <span class="marquee__item">AI-Assisted Development <span class="star">✦</span> <em>Digital Transformation</em> <span class="star">✦</span> Rapid Prototyping <span class="star">✦</span> <em>Creative Technology</em> <span class="star">✦</span>&nbsp;</span>
+      </div>
+    </div>
+
+    <!-- ============================================================
+         COMPETENZE
+    ============================================================ -->
+    <section class="section" id="competenze" aria-labelledby="competenze-title">
+      <p class="sec-label">Cosa faccio</p>
+      <h2 class="sec-title" id="competenze-title"><span class="line"><span>Competenze</span></span></h2>
+
+      <div class="svc">
+        <article class="svc__row">
+          <span class="svc__fill" aria-hidden="true"></span>
+          <span class="svc__num">/01</span>
+          <h3 class="svc__name">ICT Project Management</h3>
+          <p class="svc__body">Guido progetti digitali dalla definizione degli obiettivi alla consegna, coordinando stakeholder, priorità, tempi e qualità del risultato.</p>
+        </article>
+        <article class="svc__row">
+          <span class="svc__fill" aria-hidden="true"></span>
+          <span class="svc__num">/02</span>
+          <h3 class="svc__name">AI-assisted Development</h3>
+          <p class="svc__body">Uso coding assistant e modelli generativi per accelerare sviluppo, debugging, refactoring e documentazione, mantenendo controllo tecnico sugli output.</p>
+        </article>
+        <article class="svc__row">
+          <span class="svc__fill" aria-hidden="true"></span>
+          <span class="svc__num">/03</span>
+          <h3 class="svc__name">Progettazione e Sviluppo</h3>
+          <p class="svc__body">Realizzo web app, dashboard, utility interne e prototipi interattivi, privilegiando architetture semplici, manutenzione chiara e iterazioni rapide.</p>
+        </article>
+        <article class="svc__row">
+          <span class="svc__fill" aria-hidden="true"></span>
+          <span class="svc__num">/04</span>
+          <h3 class="svc__name">Automazione e Didattica</h3>
+          <p class="svc__body">Disegno strumenti e workflow per ridurre lavoro ripetitivo, organizzare informazioni e rendere processi complessi più accessibili a persone e team.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         AI
+    ============================================================ -->
+    <section class="section" id="ai" aria-labelledby="ai-title">
+      <p class="sec-label">AI applicata al lavoro reale</p>
+      <h2 class="sec-title" id="ai-title"><span class="line"><span>AI &amp; Metodo</span></span></h2>
+
+      <p class="ai-manifesto" id="manifesto">
+        Uso l'AI come <b>leva operativa</b> per aumentare velocità, qualità esplorativa e capacità di delivery.
+        Il valore non è nello strumento in sé, ma nel <b>metodo</b> con cui viene integrato nel ciclo di lavoro.
+        Le decisioni su struttura, priorità, sicurezza e rilascio restano <b>umane</b>.
+      </p>
+
+      <div class="ai-grid">
+        <article class="ai-card ai-card--wide" data-reveal>
+          <div>
+            <span class="ai-card__kicker">Metodo</span>
+            <h3 class="ai-card__title">Dal bisogno al rilascio</h3>
+            <p class="ai-card__body">
+              Parto da un bisogno concreto, lo traduco in requisiti essenziali e costruisco una prima versione
+              verificabile. Uso l'AI per esplorare alternative, scrivere codice, analizzare problemi e produrre
+              documentazione tecnica, poi valido manualmente scelte, sicurezza, leggibilità e comportamento.
+            </p>
+          </div>
+          <ul class="ai-points">
+            <li>Analisi rapida di requisiti, vincoli e casi d'uso.</li>
+            <li>Prototipazione di interfacce e flussi applicativi.</li>
+            <li>Sviluppo, test manuale, debugging e refactoring assistito.</li>
+            <li>Integrazione di API, database, servizi web e sistemi locali.</li>
+            <li>Documentazione, handover e supporto alla manutenzione.</li>
+          </ul>
+        </article>
+        <article class="ai-card" data-reveal>
+          <span class="ai-card__kicker">Tooling</span>
+          <h3 class="ai-card__title">Stack operativo</h3>
+          <p class="ai-card__body">Lavoro con Claude, Codex, Gemini, Ollama e strumenti locali/remoti per coding, revisione, ragionamento architetturale, automazione e analisi di contenuti tecnici.</p>
+        </article>
+        <article class="ai-card" data-reveal>
+          <span class="ai-card__kicker">Rapid prototyping</span>
+          <h3 class="ai-card__title">Dal problema alla demo</h3>
+          <p class="ai-card__body">Trasformo esigenze poco definite in prototipi navigabili, utili per allineare team, validare scelte e decidere dove investire.</p>
+        </article>
+        <article class="ai-card" data-reveal>
+          <span class="ai-card__kicker">Integrazioni</span>
+          <h3 class="ai-card__title">Sistemi che dialogano</h3>
+          <p class="ai-card__body">Collego dati, API e strumenti locali in soluzioni leggere: dashboard, automazioni e utility pensate per essere usate davvero.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         PROGETTI — orizzontale pinnato
+    ============================================================ -->
+    <section class="work" id="progetti" aria-labelledby="progetti-title">
+      <div class="work__head">
+        <p class="sec-label">Portfolio</p>
+        <h2 class="sec-title" id="progetti-title"><span class="line"><span>Progetti</span></span></h2>
+      </div>
+
+      <div class="work__stage" id="work-stage" data-cursor="label">
+        <div class="work__track" id="work-track">
+
+          <article class="wcard">
+            <a class="wcard__cover-link" href="https://tongatron.org/paperplane/" aria-label="Paperplane"></a>
+            <div class="wcard__media"><div class="ph" style="background:linear-gradient(135deg,#0B2E4F,#2E7D5B);">✈️ Paperplane</div><span class="wcard__idx">01 / 12</span></div>
+            <div class="wcard__body">
+              <h3 class="wcard__title">Paperplane <span class="arr">↗</span></h3>
+              <p class="wcard__desc">Prototipo interattivo in continua evoluzione, pensato per esplorare idee in modo rapido e leggero.</p>
+              <div class="wcard__links"><a href="https://tongatron.org/paperplane/">Apri</a></div>
+            </div>
+          </article>
+
+          <article class="wcard">
+            <a class="wcard__cover-link" href="https://tongatron.org/astri/" aria-label="Astri"></a>
+            <div class="wcard__media"><img src="img/projects/astri.jpg" alt="Astri" loading="lazy"><span class="wcard__idx">02 / 12</span></div>
+            <div class="wcard__body">
+              <h3 class="wcard__title">Astri <span class="arr">↗</span></h3>
+              <p class="wcard__desc">Cielo notturno, Sole, Luna, pianeti e sistema solare in 3D, con calcoli in tempo reale basati sulla posizione dell'utente.</p>
+              <div class="wcard__links"><a href="https://tongatron.org/astri/">Apri</a><a href="https://github.com/tongatron/astri" target="_blank" rel="noopener">GitHub</a></div>
+            </div>
+          </article>
+
+          <article class="wcard">
+            <a class="wcard__cover-link" href="https://tongatron.org/ministero-delle-eccezioni/" aria-label="Il Ministero delle Eccezioni"></a>
+            <div class="wcard__media"><img src="img/projects/ministero-delle-eccezioni.png" alt="Il Ministero delle Eccezioni" loading="lazy" style="object-fit:contain;background:#111;"><span class="wcard__idx">03 / 12</span></div>
+            <div class="wcard__body">
+              <h3 class="wcard__title">Ministero delle Eccezioni <span class="arr">↗</span></h3>
+              <p class="wcard__desc">Fantascienza satirica: esperimento di scrittura, pubblicazione web e costruzione di un immaginario narrativo coerente.</p>
+              <div class="wcard__links"><a href="https://tongatron.org/ministero-delle-eccezioni/">Leggi</a><a href="https://github.com/tongatron/ministero-delle-eccezioni" target="_blank" rel="noopener">GitHub</a></div>
+            </div>
+          </article>
+
+          <article class="wcard">
+            <a class="wcard__cover-link" href="https://tongatron.org/projects/ryanair-search" aria-label="Ryanair Search"></a>
+            <div class="wcard__media"><img src="img/projects/ryanair-search.jpg" alt="Ryanair Search" loading="lazy"><span class="wcard__idx">04 / 12</span></div>
+            <div class="wcard__body">
+              <h3 class="wcard__title">Ryanair Search <span class="arr">↗</span></h3>
+              <p class="wcard__desc">Confronta voli andata e ritorno filtrando budget, durata, aeroporti di partenza e destinazioni.</p>
+              <div class="wcard__links"><a href="https://tongatron.org/projects/ryanair-search">Apri</a><a href="https://github.com/tongatron/tongatron.github.io/tree/main/projects/ryanair-search" target="_blank" rel="noopener">GitHub</a></div>
+            </div>
+          </article>
+
+          <article class="wcard">
+            <a class="wcard__cover-link" href="https://tongatron.org/head-tracking" aria-label="Head Tracking"></a>
+            <div class="wcard__media"><img src="img/projects/head-tracking.jpg" alt="Head Tracking" loading="lazy"><span class="wcard__idx">05 / 12</span></div>
+            <div class="wcard__body">
+              <h3 class="wcard__title">Head Tracking <span class="arr">↗</span></h3>
+              <p class="wcard__desc">Interazioni controllate dal movimento della testa, direttamente nel browser e senza hardware dedicato.</p>
+              <div class="wcard__links"><a href="https://tongatron.org/head-tracking">Apri</a><a href="https://github.com/tongatron/head-tracking" target="_blank" rel="noopener">GitHub</a></div>
+            </div>
+          </article>
+
+          <article class="wcard">
+            <a class="wcard__cover-link" href="https://tongatron.org/objects3D/" aria-label="Objects3D"></a>
+            <div class="wcard__media"><img src="https://tongatron.org/objects3D/og-image.jpg" alt="Objects3D" loading="lazy"><span class="wcard__idx">06 / 12</span></div>
+            <div class="wcard__body">
+              <h3 class="wcard__title">Objects3D <span class="arr">↗</span></h3>
+              <p class="wcard__desc">Scena 3D interattiva: campi di fiori, erba mossa dal vento, mostriciattoli pelosi e un tagliaerba comandabile.</p>
+              <div class="wcard__links"><a href="https://tongatron.org/objects3D/">Apri</a><a href="https://github.com/tongatron/objects3D" target="_blank" rel="noopener">GitHub</a></div>
+            </div>
+          </article>
+
+          <article class="wcard">
+            <a class="wcard__cover-link" href="https://tongatron.org/RAL-lordo-netto/" aria-label="RAL lordo/netto"></a>
+            <div class="wcard__media"><img src="img/projects/ral-lordo-netto.jpg" alt="RAL lordo/netto" loading="lazy"><span class="wcard__idx">07 / 12</span></div>
+            <div class="wcard__body">
+              <h3 class="wcard__title">RAL lordo/netto <span class="arr">↗</span></h3>
+              <p class="wcard__desc">Dallo stipendio lordo al netto: IRPEF a scaglioni, detrazioni e addizionali aggiornate al 2025.</p>
+              <div class="wcard__links"><a href="https://tongatron.org/RAL-lordo-netto/">Apri</a><a href="https://github.com/tongatron/RAL-lordo-netto" target="_blank" rel="noopener">GitHub</a></div>
+            </div>
+          </article>
+
+          <article class="wcard">
+            <a class="wcard__cover-link" href="https://meteo.tongatron.org/" aria-label="Meteo Piemonte"></a>
+            <div class="wcard__media"><img src="https://meteo.tongatron.org/img/og.png" alt="Meteo Piemonte" loading="lazy"><span class="wcard__idx">08 / 12</span></div>
+            <div class="wcard__body">
+              <h3 class="wcard__title">Meteo Piemonte <span class="arr">↗</span></h3>
+              <p class="wcard__desc">Mappa meteo interattiva del Piemonte con ricerca città, layer meteorologici e radar timelapse.</p>
+              <div class="wcard__links"><a href="https://meteo.tongatron.org/">Apri</a></div>
+            </div>
+          </article>
+
+          <article class="wcard">
+            <a class="wcard__cover-link" href="https://deviceinspector.tongatron.org/" aria-label="Device Inspector"></a>
+            <div class="wcard__media"><img src="img/projects/device-inspector.jpg" alt="Device Inspector" loading="lazy"><span class="wcard__idx">09 / 12</span></div>
+            <div class="wcard__body">
+              <h3 class="wcard__title">Device Inspector <span class="arr">↗</span></h3>
+              <p class="wcard__desc">Cosa sa di te il browser senza permessi speciali: analisi in locale, con un Cookie e Privacy Lab.</p>
+              <div class="wcard__links"><a href="https://deviceinspector.tongatron.org/">Apri</a></div>
+            </div>
+          </article>
+
+          <article class="wcard">
+            <a class="wcard__cover-link" href="https://tongatron.org/gmail-stats/" aria-label="Gmail Stats"></a>
+            <div class="wcard__media"><img src="img/projects/gmail-stats.jpg" alt="Gmail Stats" loading="lazy"><span class="wcard__idx">10 / 12</span></div>
+            <div class="wcard__body">
+              <h3 class="wcard__title">Gmail Stats <span class="arr">↗</span></h3>
+              <p class="wcard__desc">Dashboard locale per analizzare email inviate, volumi, frequenze e pattern di comunicazione.</p>
+              <div class="wcard__links"><a href="https://tongatron.org/gmail-stats/">Apri</a><a href="https://github.com/tongatron/gmail-stats" target="_blank" rel="noopener">GitHub</a></div>
+            </div>
+          </article>
+
+          <article class="wcard">
+            <a class="wcard__cover-link" href="https://tongatron.org/birth-lottery/" aria-label="Birth-Lottery"></a>
+            <div class="wcard__media"><img src="https://tongatron.org/birth-lottery/og-image.jpg" alt="Birth Lottery" loading="lazy"><span class="wcard__idx">11 / 12</span></div>
+            <div class="wcard__body">
+              <h3 class="wcard__title">Birth-Lottery <span class="arr">↗</span></h3>
+              <p class="wcard__desc">Quanto luogo e condizioni di nascita influenzano opportunità, diritti e traiettorie di vita.</p>
+              <div class="wcard__links"><a href="https://tongatron.org/birth-lottery/">Apri</a></div>
+            </div>
+          </article>
+
+          <article class="wcard">
+            <a class="wcard__cover-link" href="https://chat.tongatron.org/" aria-label="Raspi Chat"></a>
+            <div class="wcard__media"><img src="img/projects/raspi-chat.jpg" alt="Raspi Chat" loading="lazy"><span class="wcard__idx">12 / 12</span></div>
+            <div class="wcard__body">
+              <h3 class="wcard__title">Raspi Chat <span class="arr">↗</span></h3>
+              <p class="wcard__desc">Chat self-hosted per piccoli gruppi, con stanze private, notifiche web e amministrazione essenziale.</p>
+              <div class="wcard__links"><a href="https://chat.tongatron.org/">Apri</a><a href="https://github.com/tongatron/raspi-chat" target="_blank" rel="noopener">GitHub</a></div>
+            </div>
+          </article>
+
+        </div>
+      </div>
+      <div class="work__progress" aria-hidden="true"><i id="work-progress-bar"></i></div>
+    </section>
+
+    <!-- ============================================================
+         GIOCHI
+    ============================================================ -->
+    <section class="section" id="giochi" aria-labelledby="giochi-title">
+      <p class="sec-label">Interazione</p>
+      <h2 class="sec-title" id="giochi-title"><span class="line"><span>Giochi &amp; Trainer</span></span></h2>
+
+      <div class="games__list">
+        <a class="game-row" href="https://tongatron.org/games-utilities/morse/">
+          <span class="game-row__name">Morse</span>
+          <span class="game-row__desc">Trainer browser-based per imparare e praticare il codice Morse.</span>
+          <span class="game-row__arr" aria-hidden="true">→</span>
+        </a>
+        <a class="game-row" href="https://tongatron.org/projects/password-analyzer/">
+          <span class="game-row__name">Password Analyzer</span>
+          <span class="game-row__desc">Valuta robustezza, struttura e caratteristiche di sicurezza di una password.</span>
+          <span class="game-row__arr" aria-hidden="true">→</span>
+        </a>
+        <a class="game-row" href="https://tongatron.org/projects/computing-timeline/">
+          <span class="game-row__name">Computing Timeline</span>
+          <span class="game-row__desc">Confronta la potenza computazionale di macchine storiche e moderne.</span>
+          <span class="game-row__arr" aria-hidden="true">→</span>
+        </a>
+        <a class="game-row" href="https://tongatron.org/games-utilities/dado/">
+          <span class="game-row__name">Dado</span>
+          <span class="game-row__desc">Simulatore di lancio dei dadi con animazione, per giochi da tavolo e probabilità.</span>
+          <span class="game-row__arr" aria-hidden="true">→</span>
+        </a>
+        <a class="game-row" href="https://tongatron.org/games-utilities/forza4/">
+          <span class="game-row__name">Forza 4</span>
+          <span class="game-row__desc">Versione web installabile del classico gioco da tavolo.</span>
+          <span class="game-row__arr" aria-hidden="true">→</span>
+        </a>
+        <a class="game-row" href="https://tongatron.org/games-utilities/memory/">
+          <span class="game-row__name">Memory</span>
+          <span class="game-row__desc">Gioco di memoria a carte coperte, progettato per partite rapide da browser.</span>
+          <span class="game-row__arr" aria-hidden="true">→</span>
+        </a>
+        <a class="game-row" href="https://tongatron.org/games-utilities/simon/">
+          <span class="game-row__name">Simon</span>
+          <span class="game-row__desc">Sequenze di colori e suoni a difficoltà crescente.</span>
+          <span class="game-row__arr" aria-hidden="true">→</span>
+        </a>
+        <a class="game-row" href="https://tongatron.org/games-utilities/roulette/">
+          <span class="game-row__name">Roulette</span>
+          <span class="game-row__desc">Simulatore di roulette per dimostrazioni e test di probabilità.</span>
+          <span class="game-row__arr" aria-hidden="true">→</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         IOT
+    ============================================================ -->
+    <section class="section" id="iot" aria-labelledby="iot-title">
+      <p class="sec-label">Hardware</p>
+      <h2 class="sec-title" id="iot-title"><span class="line"><span>IoT &amp; Fabbricazione</span></span></h2>
+
+      <div class="iot-spec" data-reveal>
+        <div class="iot-spec__cell">
+          <img src="img/fablogo-white.png" alt="Logo Fablab Torino">
+          <span>Progetti sviluppati presso Fablab Torino — </span>
+          <a href="https://fablabtorino.org/" target="_blank" rel="noopener">fablabtorino.org ↗</a>
+        </div>
+        <div class="iot-spec__cell">
+          <strong>Piattaforme di sviluppo</strong>
+          <span>Arduino, Raspberry Pi</span>
+        </div>
+        <div class="iot-spec__cell">
+          <strong>Strumenti di fabbricazione</strong>
+          <span>Stampanti 3D, taglio laser, fresa CNC</span>
+        </div>
+      </div>
+
+      <div class="iot-grid">
+        <article class="iot-card" data-reveal>
+          <a href="https://tongatron.org/projects/robottino/robottino-site/">
+            <div class="iot-card__media"><img src="img/robottino.jpg" alt="Robottino" loading="lazy"></div>
+            <div class="iot-card__body">
+              <h3 class="iot-card__title">Robottino</h3>
+              <p class="iot-card__desc">Robot educativo STEM open source basato su Arduino, con display, sensori ambientali, LED RGB, ultrasuoni e testa rotante programmabile.</p>
+            </div>
+          </a>
+        </article>
+        <article class="iot-card" data-reveal>
+          <a href="https://tongatron.org/projects/selfomatic/">
+            <div class="iot-card__media"><img src="img/contact.jpg" alt="Selfomatic" loading="lazy"></div>
+            <div class="iot-card__body">
+              <h3 class="iot-card__title">Selfomatic</h3>
+              <p class="iot-card__desc">Social camera per eventi con scatto automatico e pubblicazione in tempo reale, per attivazioni, fiere e comunicazione live.</p>
+            </div>
+          </a>
+        </article>
+        <article class="iot-card" data-reveal>
+          <a href="https://tongatron.org/projects/IKEA-hack/">
+            <div class="iot-card__media"><img src="projects/IKEA-hack/ikea.jpg" alt="IKEA Hack Nordli" loading="lazy"></div>
+            <div class="iot-card__body">
+              <h3 class="iot-card__title">IKEA Hack Nordli</h3>
+              <p class="iot-card__desc">Cassettiera IKEA Nordli personalizzata con tavolino estraibile realizzato tramite pannello tagliato al laser.</p>
+            </div>
+          </a>
+        </article>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         NETWORK
+    ============================================================ -->
+    <section class="section" id="network" aria-labelledby="network-title">
+      <p class="sec-label">Network</p>
+      <h2 class="sec-title" id="network-title"><span class="line"><span>Collaborazioni</span></span></h2>
+
+      <div class="net-grid">
+        <a class="net-card" href="http://www.fabersum.it/" target="_blank" rel="noopener" data-reveal>
+          <h3 class="net-card__name">FaberSum</h3>
+          <p class="net-card__desc">Lavorazioni CNC e prototipazione digitale</p>
+          <span class="net-card__link">fabersum.it ↗</span>
+        </a>
+        <a class="net-card" href="https://www.peal.space/" target="_blank" rel="noopener" data-reveal>
+          <h3 class="net-card__name">Pangrus</h3>
+          <p class="net-card__desc">Laboratorio di ricerca elettroacustica</p>
+          <span class="net-card__link">peal.space ↗</span>
+        </a>
+        <a class="net-card" href="https://fablabtorino.org/" target="_blank" rel="noopener" data-reveal>
+          <h3 class="net-card__name">Fablab Torino</h3>
+          <p class="net-card__desc">Associazione e laboratorio di fabbricazione digitale</p>
+          <span class="net-card__link">fablabtorino.org ↗</span>
+        </a>
+        <a class="net-card" href="https://www.little-endian.it/" target="_blank" rel="noopener" data-reveal>
+          <h3 class="net-card__name">LittleEndian</h3>
+          <p class="net-card__desc">Sviluppo software, sistemi embedded e IoT</p>
+          <span class="net-card__link">little-endian.it ↗</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         CONTATTI
+    ============================================================ -->
+    <section class="section contact" id="contatti" aria-labelledby="contatti-title">
+      <p class="sec-label" id="contatti-title">Contatti</p>
+      <a class="contact__cta" href="mailto:giovanni.bindi@tongatron.org" data-magnetic data-cursor="link">
+        Hai un progetto?<br>
+        <span class="swap"><span class="base">Parliamone&nbsp;→</span><span class="alt" aria-hidden="true">Scrivimi&nbsp;→</span></span>
+      </a>
+
+      <div class="contact__grid">
+        <ul class="contact-list" data-reveal>
+          <li><span class="k">Mail</span><span class="v"><a href="mailto:giovanni.bindi@tongatron.org">giovanni.bindi@tongatron.org</a></span></li>
+          <li><span class="k">GitHub</span><span class="v"><a href="https://github.com/tongatron" target="_blank" rel="noopener">github.com/tongatron</a></span></li>
+          <li><span class="k">LinkedIn</span><span class="v"><a href="https://www.linkedin.com/in/giovannibindi/" target="_blank" rel="noopener">linkedin.com/in/giovannibindi</a></span></li>
+          <li><span class="k">X</span><span class="v"><a href="https://x.com/giobindi" target="_blank" rel="noopener">x.com/giobindi</a></span></li>
+          <li><span class="k">Hackaday</span><span class="v"><a href="https://hackaday.io/tongatron" target="_blank" rel="noopener">hackaday.io/tongatron</a></span></li>
+        </ul>
+
+        <div data-reveal>
+          <div id="contact-status" class="contact-feedback" role="alert"></div>
+          <form id="contact-form" class="form-stack" novalidate>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="cf-name" class="form-label">Nome</label>
+                <input type="text" id="cf-name" class="form-input" placeholder="Il tuo nome" required>
+                <span class="form-err">Inserisci il tuo nome.</span>
+              </div>
+              <div class="form-group">
+                <label for="cf-email" class="form-label">Mail</label>
+                <input type="email" id="cf-email" class="form-input" placeholder="tua@email.com" required>
+                <span class="form-err">Inserisci un'email valida.</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="cf-message" class="form-label">Messaggio</label>
+              <textarea id="cf-message" class="form-input" rows="5" placeholder="Scrivi qui…" required></textarea>
+              <span class="form-err">Inserisci un messaggio.</span>
+            </div>
+            <button type="submit" class="btn-send" id="cf-btn" data-magnetic>
+              <span class="cf-label">Invia il messaggio</span>
+              <span aria-hidden="true">→</span>
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <span>&copy; <a href="/pulsanti/" target="_blank" rel="noopener">2026</a> <a href="https://tongatron.org/projects/">Tongatron</a> · versione <span id="version-date"></span></span>
+    <span>Design sperimentale — <a href="/index.html">torna alla home classica</a></span>
+    <button class="footer__top" id="back-top">Torna su <span aria-hidden="true">↑</span></button>
+  </footer>
+
+  <!-- ============================================================
+       LIBS
+  ============================================================ -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://unpkg.com/three@0.128.0/build/three.min.js"></script>
+
+  <script>
+  (() => {
+    'use strict';
+
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      || new URLSearchParams(location.search).has('static');
+    const hasGsap = typeof window.gsap !== 'undefined' && typeof window.ScrollTrigger !== 'undefined';
+    const isTouch = window.matchMedia('(hover: none)').matches;
+
+    /* ------------------------------------------------------------
+       Preloader failsafe: sparisce comunque, anche senza GSAP
+    ------------------------------------------------------------ */
+    const preloader = document.getElementById('preloader');
+    const killPreloader = () => { if (preloader && preloader.parentNode) preloader.remove(); };
+    if (!hasGsap || reduceMotion) setTimeout(killPreloader, 300);
+    setTimeout(killPreloader, 6000); // hard failsafe
+
+    /* ------------------------------------------------------------
+       Orologio Torino
+    ------------------------------------------------------------ */
+    const clockEl = document.getElementById('clock');
+    if (clockEl) {
+      const fmt = new Intl.DateTimeFormat('it-IT', { timeZone: 'Europe/Rome', hour: '2-digit', minute: '2-digit', second: '2-digit' });
+      const tickClock = () => { clockEl.textContent = fmt.format(new Date()); };
+      tickClock();
+      setInterval(tickClock, 1000);
+    }
+
+    /* ------------------------------------------------------------
+       Version date footer
+    ------------------------------------------------------------ */
+    const versionEl = document.getElementById('version-date');
+    if (versionEl) {
+      const now = new Date();
+      const p = n => String(n).padStart(2, '0');
+      versionEl.textContent = `${p(now.getDate())}/${p(now.getMonth() + 1)}/${now.getFullYear()} ${p(now.getHours())}:${p(now.getMinutes())}`;
+    }
+
+    /* ------------------------------------------------------------
+       Split chars util
+    ------------------------------------------------------------ */
+    const splitChars = (el) => {
+      const text = el.textContent;
+      el.textContent = '';
+      const frag = document.createDocumentFragment();
+      for (const ch of text) {
+        const s = document.createElement('span');
+        s.className = 'char';
+        s.textContent = ch;
+        frag.appendChild(s);
+      }
+      el.appendChild(frag);
+      return [...el.querySelectorAll('.char')];
+    };
+
+    /* ------------------------------------------------------------
+       Scroll helper (nativo, smooth)
+    ------------------------------------------------------------ */
+    const scrollToTarget = (target) => {
+      if (typeof target === 'number') window.scrollTo({ top: target, behavior: reduceMotion ? 'auto' : 'smooth' });
+      else document.querySelector(target)?.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth' });
+    };
+
+    /* ------------------------------------------------------------
+       Cursore custom
+    ------------------------------------------------------------ */
+    if (!isTouch && !reduceMotion) {
+      const dot = document.querySelector('.cursor-dot');
+      const ring = document.querySelector('.cursor-ring');
+      let mx = -100, my = -100, rx = -100, ry = -100;
+      window.addEventListener('pointermove', (e) => { mx = e.clientX; my = e.clientY; }, { passive: true });
+      const loop = () => {
+        rx += (mx - rx) * 0.16;
+        ry += (my - ry) * 0.16;
+        dot.style.transform = `translate(${mx - 4}px, ${my - 4}px)`;
+        const half = ring.offsetWidth / 2;
+        ring.style.transform = `translate(${rx - half}px, ${ry - half}px)`;
+        requestAnimationFrame(loop);
+      };
+      loop();
+      document.addEventListener('pointerover', (e) => {
+        const t = e.target.closest('a, button, [data-cursor]');
+        ring.classList.toggle('is-link', !!t && t.dataset.cursor !== 'label');
+        ring.classList.toggle('is-label', !!t && t.dataset.cursor === 'label');
+      });
+    }
+
+    /* ------------------------------------------------------------
+       Bottoni magnetici
+    ------------------------------------------------------------ */
+    if (!isTouch && !reduceMotion && hasGsap) {
+      document.querySelectorAll('[data-magnetic]').forEach((el) => {
+        const strength = 0.3;
+        el.addEventListener('pointermove', (e) => {
+          const r = el.getBoundingClientRect();
+          gsap.to(el, {
+            x: (e.clientX - r.left - r.width / 2) * strength,
+            y: (e.clientY - r.top - r.height / 2) * strength,
+            duration: 0.4, ease: 'power3.out'
+          });
+        });
+        el.addEventListener('pointerleave', () => {
+          gsap.to(el, { x: 0, y: 0, duration: 0.6, ease: 'elastic.out(1, 0.4)' });
+        });
+      });
+    }
+
+    /* ------------------------------------------------------------
+       Menu overlay
+    ------------------------------------------------------------ */
+    const menu = document.getElementById('menu');
+    const menuBtn = document.getElementById('menu-btn');
+    const menuBtnLabel = document.getElementById('menu-btn-label');
+    let menuOpen = false;
+    let menuTl = null;
+    if (hasGsap && menu && !reduceMotion) {
+      menuTl = gsap.timeline({ paused: true })
+        .set(menu, { visibility: 'visible' })
+        .to(menu, { clipPath: 'inset(0% 0 0% 0)', duration: 0.7, ease: 'power4.inOut' })
+        .from(menu.querySelectorAll('.menu__link'), {
+          yPercent: 60, opacity: 0, stagger: 0.055, duration: 0.5, ease: 'power3.out'
+        }, '-=0.25')
+        .from(menu.querySelector('.menu__foot'), { opacity: 0, y: 14, duration: 0.4 }, '-=0.3');
+    }
+    const setMenu = (open) => {
+      menuOpen = open;
+      document.body.classList.toggle('menu-open', open);
+      menuBtn.setAttribute('aria-expanded', String(open));
+      menu.setAttribute('aria-hidden', String(!open));
+      menuBtnLabel.textContent = open ? 'Chiudi' : 'Menu';
+      if (menuTl) {
+        open ? menuTl.timeScale(1).play() : menuTl.timeScale(1.6).reverse();
+      } else {
+        menu.style.visibility = open ? 'visible' : 'hidden';
+        menu.style.clipPath = open ? 'inset(0% 0 0% 0)' : 'inset(0 0 100% 0)';
+      }
+      document.documentElement.style.overflowY = open ? 'hidden' : '';
+    };
+    menuBtn?.addEventListener('click', () => setMenu(!menuOpen));
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && menuOpen) setMenu(false); });
+    menu?.querySelectorAll('a[href^="#"]').forEach((a) => {
+      a.addEventListener('click', (e) => {
+        e.preventDefault();
+        setMenu(false);
+        setTimeout(() => scrollToTarget(a.getAttribute('href')), reduceMotion ? 0 : 500);
+      });
+    });
+
+    /* ------------------------------------------------------------
+       Back to top
+    ------------------------------------------------------------ */
+    document.getElementById('back-top')?.addEventListener('click', () => scrollToTarget(0));
+
+    /* ------------------------------------------------------------
+       WebGL hero — campo di punti ondulato (three.js)
+    ------------------------------------------------------------ */
+    (() => {
+      const canvas = document.getElementById('webgl');
+      if (!canvas || reduceMotion || typeof window.THREE === 'undefined') return;
+      let renderer;
+      try {
+        renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: false, powerPreference: 'low-power' });
+      } catch { return; }
+      const hero = document.getElementById('hero');
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.8));
+
+      const scene = new THREE.Scene();
+      scene.fog = new THREE.FogExp2(0x060606, 0.045);
+      const camera = new THREE.PerspectiveCamera(55, 1, 0.1, 100);
+      camera.position.set(0, 3.2, 9);
+      camera.lookAt(0, 0, 0);
+
+      const COLS = 110, ROWS = 60, GAP = 0.42;
+      const count = COLS * ROWS;
+      const positions = new Float32Array(count * 3);
+      const colors = new Float32Array(count * 3);
+      const cA = new THREE.Color(0xf5c400);
+      const cB = new THREE.Color(0x8a8578);
+      let i3 = 0;
+      for (let r = 0; r < ROWS; r++) {
+        for (let c = 0; c < COLS; c++) {
+          positions[i3]     = (c - COLS / 2) * GAP;
+          positions[i3 + 1] = 0;
+          positions[i3 + 2] = (r - ROWS / 2) * GAP;
+          const mix = Math.random() * 0.85;
+          const col = cB.clone().lerp(cA, mix * mix);
+          colors[i3] = col.r; colors[i3 + 1] = col.g; colors[i3 + 2] = col.b;
+          i3 += 3;
+        }
+      }
+      const geo = new THREE.BufferGeometry();
+      geo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+      geo.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+      const mat = new THREE.PointsMaterial({
+        size: 0.045, vertexColors: true, transparent: true, opacity: 0.85,
+        sizeAttenuation: true, depthWrite: false
+      });
+      const points = new THREE.Points(geo, mat);
+      points.position.y = -1.4;
+      scene.add(points);
+
+      let targetRX = 0, targetRY = 0;
+      window.addEventListener('pointermove', (e) => {
+        targetRY = (e.clientX / window.innerWidth - 0.5) * 0.25;
+        targetRX = (e.clientY / window.innerHeight - 0.5) * 0.12;
+      }, { passive: true });
+
+      const resize = () => {
+        const w = hero.offsetWidth, h = hero.offsetHeight;
+        renderer.setSize(w, h, false);
+        camera.aspect = w / h;
+        camera.updateProjectionMatrix();
+      };
+      resize();
+      window.addEventListener('resize', resize);
+
+      let visible = true;
+      new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; }, { threshold: 0 }).observe(hero);
+
+      const pos = geo.attributes.position.array;
+      const clockT = new THREE.Clock();
+      const animate = () => {
+        requestAnimationFrame(animate);
+        if (!visible) return;
+        const t = clockT.getElapsedTime();
+        let k = 0;
+        for (let r = 0; r < ROWS; r++) {
+          for (let c = 0; c < COLS; c++) {
+            const x = pos[k], z = pos[k + 2];
+            pos[k + 1] =
+              Math.sin(x * 0.55 + t * 0.9) * 0.32 +
+              Math.cos(z * 0.5 + t * 0.6) * 0.28 +
+              Math.sin((x + z) * 0.22 + t * 0.35) * 0.42;
+            k += 3;
+          }
+        }
+        geo.attributes.position.needsUpdate = true;
+        points.rotation.y += (targetRY - points.rotation.y) * 0.04;
+        points.rotation.x += (targetRX - points.rotation.x) * 0.04;
+        renderer.render(scene, camera);
+      };
+      animate();
+    })();
+
+    /* ------------------------------------------------------------
+       Animazioni GSAP
+    ------------------------------------------------------------ */
+    if (hasGsap && !reduceMotion) {
+      gsap.registerPlugin(ScrollTrigger);
+
+      /* --- Intro: preloader → hero --- */
+      const heroChars = [];
+      document.querySelectorAll('[data-split]').forEach((row) => {
+        heroChars.push(...splitChars(row));
+      });
+
+      const countObj = { v: 0 };
+      const countEl = document.getElementById('pre-count');
+      const intro = gsap.timeline();
+      intro
+        .to(countObj, {
+          v: 100, duration: 1.4, ease: 'power2.inOut',
+          onUpdate: () => { if (countEl) countEl.textContent = Math.round(countObj.v); }
+        })
+        .to('#pre-bar', { scaleX: 1, duration: 1.4, ease: 'power2.inOut' }, 0)
+        .to(preloader, {
+          yPercent: -100, duration: 0.85, ease: 'power4.inOut',
+          onComplete: killPreloader
+        }, '+=0.15')
+        .from(heroChars, {
+          yPercent: 118, duration: 1, ease: 'power4.out', stagger: 0.028
+        }, '-=0.45')
+        .from('.hero [data-reveal]', {
+          y: 30, opacity: 0, duration: 0.8, ease: 'power3.out', stagger: 0.12
+        }, '-=0.6')
+        .from('#portrait', {
+          clipPath: 'inset(100% 0 0 0)', duration: 1.1, ease: 'power4.inOut'
+        }, '-=0.9');
+
+      /* --- Hero parallax on scroll --- */
+      gsap.to('#hero-title', {
+        yPercent: 18, opacity: 0.25, ease: 'none',
+        scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom top', scrub: true }
+      });
+      gsap.to('#portrait-img', {
+        yPercent: -12, ease: 'none',
+        scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom top', scrub: true }
+      });
+
+      /* --- Marquee infinito --- */
+      const track = document.getElementById('marquee-track');
+      if (track) {
+        const item = track.children[0];
+        for (let i = 0; i < 3; i++) track.appendChild(item.cloneNode(true));
+        const w = item.offsetWidth;
+        const tween = gsap.to(track, { x: -w, duration: 22, ease: 'none', repeat: -1 });
+        ScrollTrigger.create({
+          trigger: document.body, start: 'top top', end: 'max',
+          onUpdate: (self) => { tween.timeScale(self.direction >= 0 ? 1 : -1); }
+        });
+      }
+
+      /* --- Titoli sezione: slide-up mask --- */
+      document.querySelectorAll('.sec-title .line > span').forEach((span) => {
+        gsap.from(span, {
+          yPercent: 115, duration: 1, ease: 'power4.out',
+          scrollTrigger: { trigger: span, start: 'top 88%' }
+        });
+      });
+
+      /* --- Reveal generici --- */
+      document.querySelectorAll('[data-reveal]').forEach((el) => {
+        if (el.closest('.hero')) return; // già gestiti nell'intro
+        gsap.from(el, {
+          y: 44, opacity: 0, duration: 0.9, ease: 'power3.out',
+          scrollTrigger: { trigger: el, start: 'top 90%' }
+        });
+      });
+
+      /* --- Manifesto AI: scrub parola per parola --- */
+      const manifesto = document.getElementById('manifesto');
+      if (manifesto) {
+        const walk = (node) => {
+          [...node.childNodes].forEach((child) => {
+            if (child.nodeType === 3) {
+              const frag = document.createDocumentFragment();
+              child.textContent.split(/\s+/).filter(Boolean).forEach((word) => {
+                const s = document.createElement('span');
+                s.className = 'w' + (node.tagName === 'B' ? ' hl' : '');
+                s.textContent = word;
+                frag.appendChild(s);
+                frag.appendChild(document.createTextNode(' '));
+              });
+              node.replaceChild(frag, child);
+            } else if (child.nodeType === 1) walk(child);
+          });
+        };
+        walk(manifesto);
+        const words = manifesto.querySelectorAll('.w');
+        ScrollTrigger.create({
+          trigger: manifesto, start: 'top 78%', end: 'bottom 45%', scrub: 0.4,
+          onUpdate: (self) => {
+            const n = Math.floor(self.progress * words.length);
+            words.forEach((w, i) => w.classList.toggle('lit', i <= n));
+          }
+        });
+      }
+
+      /* --- Progetti: scroll orizzontale pinnato (solo desktop) --- */
+      ScrollTrigger.matchMedia({
+        '(min-width: 1024px)': () => {
+          const stage = document.getElementById('work-stage');
+          const workTrack = document.getElementById('work-track');
+          const bar = document.getElementById('work-progress-bar');
+          if (!stage || !workTrack) return;
+          const getDist = () => workTrack.scrollWidth - window.innerWidth;
+          gsap.to(workTrack, {
+            x: () => -getDist(),
+            ease: 'none',
+            scrollTrigger: {
+              trigger: stage,
+              start: 'top 12%',
+              end: () => '+=' + getDist(),
+              scrub: 1,
+              pin: true,
+              anticipatePin: 1,
+              invalidateOnRefresh: true,
+              onUpdate: (self) => { if (bar) bar.style.transform = `scaleX(${self.progress})`; }
+            }
+          });
+        }
+      });
+
+      /* --- Righe servizi/giochi: stagger leggero al reveal --- */
+      gsap.utils.toArray('.svc__row, .game-row').forEach((row) => {
+        gsap.from(row.children, {
+          y: 16, opacity: 0, duration: 0.55, ease: 'power2.out', stagger: 0.06,
+          scrollTrigger: { trigger: row, start: 'top 92%' }
+        });
+      });
+
+      window.addEventListener('load', () => ScrollTrigger.refresh());
+    }
+
+    /* ------------------------------------------------------------
+       Form contatti (stessa API della home)
+    ------------------------------------------------------------ */
+    (() => {
+      const API      = 'https://api.tongatron.org/api/send-mail';
+      const EMAIL_TO = 'giovanni.bindi@tongatron.org';
+      const form     = document.getElementById('contact-form');
+      const btn      = document.getElementById('cf-btn');
+      const statusEl = document.getElementById('contact-status');
+      if (!form) return;
+
+      const showStatus = (text, type) => {
+        statusEl.textContent = text;
+        statusEl.className   = 'contact-feedback ' + type;
+        statusEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      };
+      const openMailFallback = (p) => {
+        const s = encodeURIComponent(`Messaggio dal sito da ${p.name}`);
+        const b = encodeURIComponent(`Nome: ${p.name}\nEmail: ${p.email}\n\n${p.message}`);
+        window.location.href = `mailto:${EMAIL_TO}?subject=${s}&body=${b}`;
+      };
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        form.classList.add('was-validated');
+        if (!form.checkValidity()) return;
+
+        const label = btn.querySelector('.cf-label');
+        label.textContent = 'Invio…';
+        btn.disabled = true;
+        statusEl.className = 'contact-feedback';
+
+        const payload = {
+          name:    document.getElementById('cf-name').value.trim(),
+          email:   document.getElementById('cf-email').value.trim(),
+          message: document.getElementById('cf-message').value.trim(),
+        };
+
+        try {
+          const res  = await fetch(API, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload),
+          });
+          const data = await res.json().catch(() => null);
+          if (res.ok && data?.ok) {
+            showStatus('Messaggio inviato. Ti rispondo il prima possibile.', 'ok');
+            form.reset();
+            form.classList.remove('was-validated');
+          } else {
+            openMailFallback(payload);
+            showStatus('Invio automatico non disponibile. Ho aperto la tua app email.', 'err');
+          }
+        } catch {
+          openMailFallback(payload);
+          showStatus('Server non raggiungibile. Ho aperto la tua app email.', 'err');
+        } finally {
+          label.textContent = 'Invia il messaggio';
+          btn.disabled = false;
+        }
+      });
+    })();
+
+  })();
+  </script>
+</body>
+</html>
