@@ -458,6 +458,52 @@
       filter: grayscale(100%);
       box-shadow: 0 30px 80px rgba(0,0,0,0.35);
     }
+    /* --- Hero: 3D Tilt + Spotlight --- */
+    .hero__tilt-scene { perspective: 900px; }
+    .hero__photo--tilt {
+      position: relative;
+      overflow: hidden;
+      filter: none;
+      --mx: 50%; --my: 50%; --rx: 0deg; --ry: 0deg;
+      transform: rotateX(var(--rx)) rotateY(var(--ry));
+      transition: transform 0.15s ease-out;
+      transform-style: preserve-3d;
+      animation: tiltFloat 6s ease-in-out infinite;
+    }
+    .hero__photo--tilt .tilt-img {
+      position: absolute;
+      inset: 0;
+      background-image: url("img/giovannibindi2.jpg");
+      background-size: cover;
+      background-position: center;
+    }
+    .tilt-img--bw { filter: grayscale(100%); }
+    .tilt-img--color {
+      filter: none;
+      /* spotlight a colori che segue il cursore */
+      -webkit-mask-image: radial-gradient(circle 180px at var(--mx) var(--my), #000 0%, rgba(0,0,0,0.55) 55%, transparent 100%);
+      mask-image: radial-gradient(circle 180px at var(--mx) var(--my), #000 0%, rgba(0,0,0,0.55) 55%, transparent 100%);
+      opacity: 0;
+      transition: opacity 0.35s ease;
+    }
+    .hero__photo--tilt:hover .tilt-img--color { opacity: 1; }
+    .tilt-glare {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: radial-gradient(circle 260px at var(--mx) var(--my), rgba(255,255,255,0.14), transparent 70%);
+      opacity: 0;
+      transition: opacity 0.35s ease;
+    }
+    .hero__photo--tilt:hover .tilt-glare { opacity: 1; }
+    @keyframes tiltFloat {
+      0%, 100% { box-shadow: 0 30px 80px rgba(0,0,0,0.35); }
+      50%      { box-shadow: 0 44px 96px rgba(0,0,0,0.45); }
+    }
+    .hero__photo--tilt:hover { animation-play-state: paused; }
+    @media (prefers-reduced-motion: reduce) {
+      .hero__photo--tilt { animation: none; transform: none; transition: none; }
+    }
     .hero__eyebrow {
       display: flex;
       align-items: center;
@@ -1034,6 +1080,198 @@
 
   </style>
   <script defer src="https://analytics.tongatron.org/script.js" data-website-id="075708c0-94bb-46b0-8038-06f1a0a85fbd"></script>
+
+  <!-- ============================================================
+       LAYER DINAMICO — progressivo, degrada senza JS
+  ============================================================ -->
+  <style>
+    /* Barra di progresso scroll */
+    .scroll-progress {
+      position: fixed;
+      top: 0; left: 0;
+      height: 3px;
+      width: 100%;
+      transform-origin: 0 50%;
+      transform: scaleX(0);
+      background: linear-gradient(90deg, var(--c-accent), #ff8a00);
+      z-index: 300;
+      pointer-events: none;
+    }
+
+    /* Header sticky con blur */
+    .enhanced .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      background: rgba(0, 0, 0, 0.72);
+      -webkit-backdrop-filter: blur(14px);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.3s ease, background-color 0.3s ease;
+    }
+    .enhanced .site-header.is-scrolled {
+      border-bottom-color: var(--c-border);
+    }
+    .enhanced .site-nav__link { position: relative; }
+    .enhanced .site-nav__link::after {
+      content: "";
+      position: absolute;
+      left: 0; right: 100%;
+      bottom: -4px;
+      height: 2px;
+      background: var(--c-accent);
+      transition: right 0.25s ease;
+    }
+    .enhanced .site-nav__link:hover::after,
+    .enhanced .site-nav__link.is-active::after { right: 0; }
+    .enhanced .site-nav__link.is-active { color: var(--c-accent); }
+
+    /* Hero: canvas costellazione + shimmer sul nome */
+    .hero { position: relative; overflow: hidden; }
+    #hero-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      opacity: 0.55;
+    }
+    .hero .wrap { position: relative; }
+    .enhanced .hero__name em {
+      background: linear-gradient(110deg, var(--c-accent) 20%, #fff2b8 40%, var(--c-accent) 60%);
+      background-size: 200% 100%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: shimmer 5s linear infinite;
+    }
+    @keyframes shimmer {
+      to { background-position: -200% 0; }
+    }
+    .hero__photo { transition: transform 0.5s ease, box-shadow 0.5s ease; }
+    .enhanced .hero__photo:hover {
+      transform: scale(1.02) rotate(-1deg);
+      box-shadow: 0 20px 60px rgba(245, 196, 0, 0.12);
+    }
+    /* il tilt 3D gestisce da sé il transform in hover */
+    .enhanced .hero__photo--tilt,
+    .enhanced .hero__photo--tilt:hover {
+      transform: rotateX(var(--rx)) rotateY(var(--ry));
+      transition: transform 0.15s ease-out;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.35);
+    }
+
+    /* Tagline rotante */
+    .hero-rotator {
+      display: flex;
+      align-items: baseline;
+      gap: 0.5ch;
+      margin-top: var(--sp-4);
+      font-size: var(--t-md);
+      color: var(--c-text-2);
+      min-height: 1.8em;
+    }
+    .hero-rotator__word {
+      color: var(--c-accent);
+      font-weight: 600;
+      border-right: 2px solid var(--c-accent);
+      padding-right: 3px;
+      white-space: nowrap;
+    }
+
+    /* Reveal on scroll */
+    .enhanced .reveal {
+      opacity: 0;
+      transform: translateY(26px);
+      transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+      transition-delay: var(--reveal-delay, 0s);
+      will-change: opacity, transform;
+    }
+    .enhanced .reveal.is-visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* Card progetti: tilt 3D + spotlight */
+    .enhanced .proj-card {
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.25s ease;
+    }
+    .enhanced .proj-card::before {
+      content: "";
+      position: absolute;
+      inset: -12px;
+      border-radius: var(--radius);
+      background: radial-gradient(320px circle at var(--mx, 50%) var(--my, 50%), rgba(245, 196, 0, 0.10), transparent 65%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+      z-index: -1;
+    }
+    .enhanced .proj-card:hover::before { opacity: 1; }
+    .enhanced .proj-card .proj-card__cover {
+      transition: transform 0.5s ease, border-color 0.3s ease;
+    }
+    .enhanced .proj-card:hover .proj-card__cover {
+      transform: translateZ(18px) scale(1.015);
+      border-color: var(--c-border-hi);
+    }
+
+    /* Service card: linea accent animata */
+    .enhanced .service-card { position: relative; overflow: hidden; }
+    .enhanced .service-card::after {
+      content: "";
+      position: absolute;
+      left: 0; bottom: 0;
+      width: 100%;
+      height: 2px;
+      background: var(--c-accent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.35s ease;
+    }
+    .enhanced .service-card:hover::after { transform: scaleX(1); }
+
+    /* Back to top */
+    .back-top {
+      position: fixed;
+      right: 22px;
+      bottom: 22px;
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      border: 1px solid var(--c-border-hi);
+      background: rgba(17, 17, 17, 0.85);
+      -webkit-backdrop-filter: blur(8px);
+      backdrop-filter: blur(8px);
+      color: var(--c-accent);
+      font-size: 18px;
+      cursor: pointer;
+      opacity: 0;
+      transform: translateY(12px);
+      pointer-events: none;
+      transition: opacity 0.3s ease, transform 0.3s ease, border-color 0.3s ease;
+      z-index: 250;
+    }
+    .back-top.is-visible {
+      opacity: 1;
+      transform: none;
+      pointer-events: auto;
+    }
+    .back-top:hover { border-color: var(--c-accent); }
+
+    /* Riduzione movimento */
+    @media (prefers-reduced-motion: reduce) {
+      .enhanced .reveal { opacity: 1; transform: none; transition: none; }
+      .enhanced .hero__name em { animation: none; }
+      #hero-canvas { display: none; }
+      .scroll-progress { display: none; }
+    }
+  </style>
 </head>
 <body>
 
@@ -1083,12 +1321,39 @@
       <div class="wrap">
         <div class="hero__grid">
 
-          <img
-            class="hero__photo"
-            src="img/giovannibindi2.jpg"
-            alt="Ritratto di Giovanni Bindi"
-            loading="eager"
-          >
+          <div class="hero__tilt-scene">
+            <div class="hero__photo hero__photo--tilt" id="tilt-card" role="img" aria-label="Ritratto di Giovanni Bindi">
+              <span class="tilt-img tilt-img--bw"></span>
+              <span class="tilt-img tilt-img--color"></span>
+              <span class="tilt-glare"></span>
+            </div>
+          </div>
+          <script>
+            (function () {
+              var card = document.getElementById('tilt-card');
+              if (!card || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+              var raf = null;
+              function onMove(e) {
+                var r = card.getBoundingClientRect();
+                var x = (e.clientX - r.left) / r.width;
+                var y = (e.clientY - r.top) / r.height;
+                if (raf) cancelAnimationFrame(raf);
+                raf = requestAnimationFrame(function () {
+                  card.style.setProperty('--mx', (x * 100) + '%');
+                  card.style.setProperty('--my', (y * 100) + '%');
+                  card.style.setProperty('--rx', ((0.5 - y) * 14) + 'deg');
+                  card.style.setProperty('--ry', ((x - 0.5) * 14) + 'deg');
+                });
+              }
+              function onLeave() {
+                if (raf) cancelAnimationFrame(raf);
+                card.style.setProperty('--rx', '0deg');
+                card.style.setProperty('--ry', '0deg');
+              }
+              card.addEventListener('mousemove', onMove);
+              card.addEventListener('mouseleave', onLeave);
+            })();
+          </script>
 
           <div>
             <h1 class="hero__name">
@@ -1374,20 +1639,6 @@
               <p class="proj-card__desc">Mostra cosa il browser sa di te senza permessi speciali: tutto viene analizzato in locale, con un Cookie e Privacy Lab per capire il tracciamento.</p>
               <div class="proj-card__actions">
                 <a class="btn btn-primary btn-sm" href="https://deviceinspector.tongatron.org/">Apri</a>
-              </div>
-            </div>
-          </article>
-
-          <article class="proj-card">
-            <a href="https://tongatron.github.io/pa-ninja/landing/" tabindex="-1">
-              <img src="img/projects/pa-ninja.jpg" class="proj-card__cover" alt="PA Ninja" loading="lazy">
-            </a>
-            <div class="proj-card__body">
-              <h3 class="proj-card__title"><a href="https://tongatron.github.io/pa-ninja/landing/">PA Ninja</a></h3>
-              <p class="proj-card__desc">Strumento locale per raccogliere, consultare e organizzare informazioni dai portali della Pubblica Amministrazione italiana.</p>
-              <div class="proj-card__actions">
-                <a class="btn btn-primary btn-sm" href="https://tongatron.github.io/pa-ninja/landing/">Apri</a>
-                <a class="btn btn-secondary btn-sm" href="https://github.com/tongatron/pa-ninja" target="_blank" rel="noopener">GitHub</a>
               </div>
             </div>
           </article>
@@ -1840,6 +2091,178 @@
       const minutes = String(now.getMinutes()).padStart(2, '0');
 
       versionEl.textContent = `${day}/${month}/${year} ${hours}:${minutes}`;
+    })();
+  </script>
+
+  <!-- ============================================================
+       LAYER DINAMICO — script (progressive enhancement)
+  ============================================================ -->
+  <script>
+    (() => {
+      const root = document.documentElement;
+      root.classList.add('enhanced');
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      /* --- Barra di progresso scroll --- */
+      const bar = document.createElement('div');
+      bar.className = 'scroll-progress';
+      document.body.appendChild(bar);
+
+      /* --- Back to top --- */
+      const backTop = document.createElement('button');
+      backTop.className = 'back-top';
+      backTop.setAttribute('aria-label', 'Torna in cima');
+      backTop.innerHTML = '&#8593;';
+      backTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' }));
+      document.body.appendChild(backTop);
+
+      /* --- Scroll: progress + header + back-to-top --- */
+      const header = document.querySelector('.site-header');
+      let ticking = false;
+      const onScroll = () => {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(() => {
+          const max = document.documentElement.scrollHeight - window.innerHeight;
+          bar.style.transform = `scaleX(${max > 0 ? window.scrollY / max : 0})`;
+          if (header) header.classList.toggle('is-scrolled', window.scrollY > 10);
+          backTop.classList.toggle('is-visible', window.scrollY > 600);
+          ticking = false;
+        });
+      };
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+
+      /* --- Reveal on scroll (staggered) --- */
+      const revealTargets = document.querySelectorAll(
+        '.sec-head, .service-card, .proj-card, .ai-panel, .ai-side__card, .ai-proof__item, .net-card, .iot-card, .contact-block'
+      );
+      revealTargets.forEach(el => el.classList.add('reveal'));
+      if ('IntersectionObserver' in window && !reduceMotion) {
+        const io = new IntersectionObserver(entries => {
+          entries.forEach(entry => {
+            if (!entry.isIntersecting) return;
+            const el = entry.target;
+            const siblings = [...el.parentElement.children].filter(c => c.classList.contains('reveal'));
+            el.style.setProperty('--reveal-delay', `${(siblings.indexOf(el) % 4) * 0.09}s`);
+            el.classList.add('is-visible');
+            io.unobserve(el);
+          });
+        }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+        revealTargets.forEach(el => io.observe(el));
+      } else {
+        revealTargets.forEach(el => el.classList.add('is-visible'));
+      }
+
+      /* --- Scrollspy nav --- */
+      const navLinks = [...document.querySelectorAll('.site-nav__link[href^="#"]')];
+      const sections = navLinks
+        .map(a => document.getElementById(a.getAttribute('href').slice(1)))
+        .filter(Boolean);
+      if (sections.length && 'IntersectionObserver' in window) {
+        const spy = new IntersectionObserver(entries => {
+          entries.forEach(entry => {
+            if (!entry.isIntersecting) return;
+            navLinks.forEach(a =>
+              a.classList.toggle('is-active', a.getAttribute('href') === '#' + entry.target.id)
+            );
+          });
+        }, { rootMargin: '-35% 0px -55% 0px' });
+        sections.forEach(s => spy.observe(s));
+      }
+
+      /* --- Tagline rotante nel hero --- */
+      const heroBody = document.querySelector('.hero__body');
+      if (heroBody && !reduceMotion) {
+        const words = ['web app', 'prototipi AI', 'dashboard', 'automazioni', 'esperimenti IoT'];
+        const rot = document.createElement('p');
+        rot.className = 'hero-rotator';
+        rot.innerHTML = 'In questo momento sto costruendo <span class="hero-rotator__word"></span>';
+        heroBody.after(rot);
+        const wordEl = rot.querySelector('.hero-rotator__word');
+        let wi = 0, ci = 0, deleting = false;
+        const tick = () => {
+          const w = words[wi];
+          ci += deleting ? -1 : 1;
+          wordEl.textContent = w.slice(0, ci);
+          let delay = deleting ? 45 : 95;
+          if (!deleting && ci === w.length) { delay = 2000; deleting = true; }
+          else if (deleting && ci === 0) { deleting = false; wi = (wi + 1) % words.length; delay = 350; }
+          setTimeout(tick, delay);
+        };
+        tick();
+      }
+
+      /* --- Canvas costellazione nel hero --- */
+      const hero = document.querySelector('.hero');
+      if (hero && !reduceMotion) {
+        const canvas = document.createElement('canvas');
+        canvas.id = 'hero-canvas';
+        canvas.setAttribute('aria-hidden', 'true');
+        hero.prepend(canvas);
+        const ctx = canvas.getContext('2d');
+        let W, H, dots = [];
+        const resize = () => {
+          W = canvas.width = hero.offsetWidth;
+          H = canvas.height = hero.offsetHeight;
+          const n = Math.min(70, Math.floor(W / 20));
+          dots = Array.from({ length: n }, () => ({
+            x: Math.random() * W,
+            y: Math.random() * H,
+            vx: (Math.random() - 0.5) * 0.35,
+            vy: (Math.random() - 0.5) * 0.35,
+            r: Math.random() * 1.6 + 0.4
+          }));
+        };
+        resize();
+        window.addEventListener('resize', resize);
+        const draw = () => {
+          ctx.clearRect(0, 0, W, H);
+          for (const d of dots) {
+            d.x += d.vx; d.y += d.vy;
+            if (d.x < 0 || d.x > W) d.vx *= -1;
+            if (d.y < 0 || d.y > H) d.vy *= -1;
+            ctx.beginPath();
+            ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2);
+            ctx.fillStyle = 'rgba(245, 196, 0, 0.5)';
+            ctx.fill();
+          }
+          for (let i = 0; i < dots.length; i++) {
+            for (let j = i + 1; j < dots.length; j++) {
+              const dx = dots[i].x - dots[j].x, dy = dots[i].y - dots[j].y;
+              const dist = Math.hypot(dx, dy);
+              if (dist < 130) {
+                ctx.strokeStyle = `rgba(245, 196, 0, ${0.14 * (1 - dist / 130)})`;
+                ctx.lineWidth = 1;
+                ctx.beginPath();
+                ctx.moveTo(dots[i].x, dots[i].y);
+                ctx.lineTo(dots[j].x, dots[j].y);
+                ctx.stroke();
+              }
+            }
+          }
+          requestAnimationFrame(draw);
+        };
+        draw();
+      }
+
+      /* --- Tilt 3D + spotlight sulle card progetti --- */
+      if (!reduceMotion && matchMedia('(hover: hover)').matches) {
+        document.querySelectorAll('.proj-card').forEach(card => {
+          card.addEventListener('pointermove', e => {
+            const r = card.getBoundingClientRect();
+            const px = (e.clientX - r.left) / r.width;
+            const py = (e.clientY - r.top) / r.height;
+            card.style.transform =
+              `perspective(900px) rotateY(${(px - 0.5) * 6}deg) rotateX(${(0.5 - py) * 6}deg)`;
+            card.style.setProperty('--mx', `${px * 100}%`);
+            card.style.setProperty('--my', `${py * 100}%`);
+          });
+          card.addEventListener('pointerleave', () => {
+            card.style.transform = '';
+          });
+        });
+      }
     })();
   </script>
 </body>
