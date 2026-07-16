@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Anteprima temi — tongatron</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --panel-w: 340px;
+    --ui: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+  html, body { height: 100%; }
+  body {
+    font-family: var(--ui);
+    background: #0a0a0a;
+    color: #eee;
+    overflow: hidden;
+  }
+
+  /* --- Iframe col sito reale --- */
+  #stage {
+    position: fixed;
+    inset: 0 var(--panel-w) 0 0;
+    background: #000;
+    transition: inset .28s cubic-bezier(.19,1,.22,1);
+  }
+  body.collapsed #stage { inset: 0 0 0 0; }
+  #site {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    display: block;
+  }
+
+  /* --- Pannello controlli --- */
+  #panel {
+    position: fixed;
+    top: 0; right: 0; bottom: 0;
+    width: var(--panel-w);
+    background: #101012;
+    border-left: 1px solid #262626;
+    display: flex;
+    flex-direction: column;
+    transition: transform .28s cubic-bezier(.19,1,.22,1);
+    z-index: 10;
+  }
+  body.collapsed #panel { transform: translateX(100%); }
+
+  #panel header {
+    padding: 18px 20px 14px;
+    border-bottom: 1px solid #262626;
+  }
+  #panel h1 {
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: .01em;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  #panel h1 .dot { width: 9px; height: 9px; border-radius: 50%; background: #f5c400; }
+  #panel .sub {
+    margin-top: 6px;
+    font-size: 12px;
+    line-height: 1.5;
+    color: #8a8a8a;
+  }
+
+  #themes {
+    flex: 1;
+    overflow-y: auto;
+    padding: 14px 16px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .theme {
+    border: 1px solid #2a2a2a;
+    border-radius: 10px;
+    padding: 12px 13px;
+    cursor: pointer;
+    background: #161618;
+    transition: border-color .15s, transform .15s;
+    text-align: left;
+    color: inherit;
+    font-family: inherit;
+  }
+  .theme:hover { border-color: #444; }
+  .theme.active { border-color: #f5c400; background: #1b1a14; }
+
+  .theme .row1 {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+  }
+  .theme .name { font-size: 13.5px; font-weight: 600; }
+  .theme.active .name::after {
+    content: "attivo";
+    margin-left: 8px;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: #f5c400;
+    vertical-align: middle;
+  }
+  .swatches { display: flex; gap: 5px; }
+  .swatches i {
+    width: 16px; height: 16px; border-radius: 4px;
+    border: 1px solid rgba(255,255,255,.14);
+    display: block;
+  }
+  .theme .fonts {
+    margin-top: 9px;
+    font-size: 11px;
+    color: #8f8f8f;
+    line-height: 1.5;
+  }
+  .theme .fonts b { color: #c9c9c9; font-weight: 600; }
+  .theme .desc {
+    margin-top: 4px;
+    font-size: 11px;
+    color: #6f6f6f;
+    line-height: 1.45;
+  }
+
+  #panel footer {
+    padding: 12px 16px 16px;
+    border-top: 1px solid #262626;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .btn {
+    font-family: inherit;
+    font-size: 12.5px;
+    padding: 9px 12px;
+    border-radius: 8px;
+    border: 1px solid #333;
+    background: #1a1a1c;
+    color: #ddd;
+    cursor: pointer;
+    text-align: center;
+    transition: border-color .15s, background .15s;
+  }
+  .btn:hover { border-color: #555; }
+  .btn.ghost { background: transparent; }
+  .hint { font-size: 11px; color: #6f6f6f; line-height: 1.5; }
+  .hint b { color: #f5c400; font-weight: 600; }
+
+  /* --- Toggle pannello --- */
+  #toggle {
+    position: fixed;
+    top: 14px; right: 14px;
+    z-index: 20;
+    width: 38px; height: 38px;
+    border-radius: 9px;
+    border: 1px solid #333;
+    background: #16161890;
+    backdrop-filter: blur(6px);
+    color: #eee;
+    font-size: 17px;
+    cursor: pointer;
+    display: none;
+    align-items: center;
+    justify-content: center;
+  }
+  body.collapsed #toggle { display: flex; }
+
+  #collapseBtn {
+    background: none; border: 0; color: #777; cursor: pointer;
+    font-size: 12px; padding: 4px 6px; border-radius: 6px;
+  }
+  #collapseBtn:hover { color: #ccc; }
+  .hdr-row { display: flex; align-items: center; justify-content: space-between; }
+</style>
+</head>
+<body>
+
+<div id="stage">
+  <iframe id="site" src="index.html" title="Anteprima sito"></iframe>
+</div>
+
+<button id="toggle" title="Mostra pannello">☰</button>
+
+<aside id="panel">
+  <header>
+    <div class="hdr-row">
+      <h1><span class="dot"></span> Anteprima temi</h1>
+      <button id="collapseBtn" title="Nascondi pannello">nascondi ✕</button>
+    </div>
+    <p class="sub">Clic su un tema per riverniciare il sito reale qui accanto. Struttura e animazioni restano identiche. <b style="color:#c9c9c9">Non modifica index.html.</b></p>
+  </header>
+
+  <div id="themes"><!-- generato via JS --></div>
+
+  <footer>
+    <button class="btn ghost" data-theme="__orig">↺ Torna all'originale</button>
+    <p class="hint">Quando hai scelto, dimmi ad es. <b>“applica il Cobalto”</b> — oppure mixa: <b>“Cobalto ma i font dell'Ambra”</b>. Applico io il tema definitivo a <b>index.html</b>.</p>
+  </footer>
+</aside>
+
+<script>
+/* ============================================================
+   TEMI — ognuno sovrascrive le variabili CSS del sito
+   (set principale --c-* e set "fable" --fb-*) + i font.
+   Sfondo scuro non-nero, giallo mantenuto, animazioni intatte.
+   ============================================================ */
+const THEMES = [
+  {
+    id: "ambra",
+    name: "Ambra Notturna",
+    desc: "Espresso caldo + serif editoriale. Elegante, magazine.",
+    fontDisplay: "Fraunces", fontUi: "Manrope",
+    fontsHref: "https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Manrope:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap",
+    swatches: ["#15110b", "#221b12", "#f5c400", "#f4ecdb"],
+    vars: {
+      "--c-bg":"#15110b","--c-surface-0":"#1b1610","--c-surface-1":"#221b12","--c-surface-2":"#2a2216",
+      "--c-border":"#322a1c","--c-border-hi":"#463a26",
+      "--c-text-1":"#f4ecdb","--c-text-2":"#a2937a","--c-text-3":"#5c5342","--c-text-soft":"#cdbfa4",
+      "--c-accent":"#f5c400","--c-accent-dk":"#d4a900","--c-accent-fg":"#1a1305",
+      "--font-ui":'"Manrope", sans-serif',"--font-display":'"Fraunces", Georgia, serif',
+      "--fb-bg":"#15110b","--fb-ink":"#f4ecdb","--fb-ink-dim":"#a2937a",
+      "--fb-line":"rgba(244,236,219,0.12)","--fb-accent":"#f5c400","--fb-accent-fg":"#1a1305",
+      "--font-syne":'"Fraunces", serif',"--font-grotesk":'"Manrope", sans-serif',"--font-mono":'"JetBrains Mono", monospace'
+    }
+  },
+  {
+    id: "cobalto",
+    name: "Blu Cobalto",
+    desc: "Blu notte profondo, tech e nitido. Giallo brillante che pop.",
+    fontDisplay: "Sora", fontUi: "Space Grotesk",
+    fontsHref: "https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono&display=swap",
+    swatches: ["#0a0f1e", "#131a30", "#ffd23f", "#eaf0ff"],
+    vars: {
+      "--c-bg":"#0a0f1e","--c-surface-0":"#0f1528","--c-surface-1":"#131a30","--c-surface-2":"#19223d",
+      "--c-border":"#202a47","--c-border-hi":"#2d3a5e",
+      "--c-text-1":"#eaf0ff","--c-text-2":"#8792ad","--c-text-3":"#4a5470","--c-text-soft":"#b9c2db",
+      "--c-accent":"#ffd23f","--c-accent-dk":"#e6b52f","--c-accent-fg":"#0a0f1e",
+      "--font-ui":'"Space Grotesk", sans-serif',"--font-display":'"Sora", sans-serif',
+      "--fb-bg":"#0a0f1e","--fb-ink":"#eaf0ff","--fb-ink-dim":"#8792ad",
+      "--fb-line":"rgba(234,240,255,0.12)","--fb-accent":"#ffd23f","--fb-accent-fg":"#0a0f1e",
+      "--font-syne":'"Sora", sans-serif',"--font-grotesk":'"Space Grotesk", sans-serif',"--font-mono":'"Space Mono", monospace'
+    }
+  },
+  {
+    id: "bosco",
+    name: "Verde Bosco",
+    desc: "Verde-nero profondo + serif Newsreader. Sobrio, naturale.",
+    fontDisplay: "Newsreader", fontUi: "IBM Plex Sans",
+    fontsHref: "https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600;6..72,700&display=swap",
+    swatches: ["#0b120e", "#142019", "#f5c400", "#e8f1ea"],
+    vars: {
+      "--c-bg":"#0b120e","--c-surface-0":"#101a14","--c-surface-1":"#142019","--c-surface-2":"#1a2a20",
+      "--c-border":"#21332a","--c-border-hi":"#2f4638",
+      "--c-text-1":"#e8f1ea","--c-text-2":"#86988c","--c-text-3":"#495a4f","--c-text-soft":"#b6c7ba",
+      "--c-accent":"#f5c400","--c-accent-dk":"#d4a900","--c-accent-fg":"#0b120e",
+      "--font-ui":'"IBM Plex Sans", sans-serif',"--font-display":'"Newsreader", Georgia, serif',
+      "--fb-bg":"#0b120e","--fb-ink":"#e8f1ea","--fb-ink-dim":"#86988c",
+      "--fb-line":"rgba(232,241,234,0.12)","--fb-accent":"#f5c400","--fb-accent-fg":"#0b120e",
+      "--font-syne":'"Newsreader", serif',"--font-grotesk":'"IBM Plex Sans", sans-serif',"--font-mono":'"IBM Plex Mono", monospace'
+    }
+  },
+  {
+    id: "grafite",
+    name: "Grafite Svizzero",
+    desc: "Grigio antracite neutro, tutto sans. Brutalista, contrasto alto.",
+    fontDisplay: "Archivo", fontUi: "Inter Tight",
+    fontsHref: "https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=Inter+Tight:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap",
+    swatches: ["#131313", "#1f1f1f", "#f5c400", "#f2f2f2"],
+    vars: {
+      "--c-bg":"#131313","--c-surface-0":"#191919","--c-surface-1":"#1f1f1f","--c-surface-2":"#262626",
+      "--c-border":"#2e2e2e","--c-border-hi":"#3f3f3f",
+      "--c-text-1":"#f2f2f2","--c-text-2":"#8f8f8f","--c-text-3":"#565656","--c-text-soft":"#c2c2c2",
+      "--c-accent":"#f5c400","--c-accent-dk":"#d4a900","--c-accent-fg":"#121212",
+      "--font-ui":'"Inter Tight", sans-serif',"--font-display":'"Archivo", sans-serif',
+      "--fb-bg":"#131313","--fb-ink":"#f2f2f2","--fb-ink-dim":"#8f8f8f",
+      "--fb-line":"rgba(242,242,242,0.12)","--fb-accent":"#f5c400","--fb-accent-fg":"#121212",
+      "--font-syne":'"Archivo", sans-serif',"--font-grotesk":'"Inter Tight", sans-serif',"--font-mono":'"IBM Plex Mono", monospace'
+    }
+  },
+  {
+    id: "prugna",
+    name: "Prugna Notte",
+    desc: "Melanzana profondo + serif Playfair. Ricercato, il giallo brilla.",
+    fontDisplay: "Playfair Display", fontUi: "Outfit",
+    fontsHref: "https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:wght@500;600;700;800;900&family=Space+Mono&display=swap",
+    swatches: ["#150e1a", "#22182a", "#f5c400", "#f1e9f5"],
+    vars: {
+      "--c-bg":"#150e1a","--c-surface-0":"#1c1322","--c-surface-1":"#22182a","--c-surface-2":"#2b1f36",
+      "--c-border":"#342642","--c-border-hi":"#493557",
+      "--c-text-1":"#f1e9f5","--c-text-2":"#9a8ba6","--c-text-3":"#574a63","--c-text-soft":"#c8bad2",
+      "--c-accent":"#f5c400","--c-accent-dk":"#d4a900","--c-accent-fg":"#150e1a",
+      "--font-ui":'"Outfit", sans-serif',"--font-display":'"Playfair Display", Georgia, serif',
+      "--fb-bg":"#150e1a","--fb-ink":"#f1e9f5","--fb-ink-dim":"#9a8ba6",
+      "--fb-line":"rgba(241,233,245,0.12)","--fb-accent":"#f5c400","--fb-accent-fg":"#150e1a",
+      "--font-syne":'"Playfair Display", serif',"--font-grotesk":'"Outfit", sans-serif',"--font-mono":'"Space Mono", monospace'
+    }
+  }
+];
+
+const iframe = document.getElementById("site");
+const themesEl = document.getElementById("themes");
+let currentId = "ambra";
+
+/* Costruisce il CSS iniettato: variabili + override delle superfici hardcoded */
+function buildCss(t){
+  let root = ":root{";
+  for (const k in t.vars) root += k + ":" + t.vars[k] + ";";
+  root += "}";
+  const surfaces = `
+    .service-card{background:var(--c-surface-0)!important;}
+    .ai-side__card,.ai-proof__item{background:var(--c-surface-0)!important;}
+  `;
+  return root + surfaces;
+}
+
+function applyTheme(t){
+  const doc = iframe.contentDocument;
+  if (!doc || !doc.head) return;
+  if (t === "__orig") {
+    const s = doc.getElementById("theme-override"); if (s) s.remove();
+    const f = doc.getElementById("theme-fonts");    if (f) f.remove();
+    return;
+  }
+  let fl = doc.getElementById("theme-fonts");
+  if (!fl){ fl = doc.createElement("link"); fl.id = "theme-fonts"; fl.rel = "stylesheet"; doc.head.appendChild(fl); }
+  fl.href = t.fontsHref;
+
+  let st = doc.getElementById("theme-override");
+  if (!st){ st = doc.createElement("style"); st.id = "theme-override"; doc.head.appendChild(st); }
+  st.textContent = buildCss(t);
+}
+
+function reapply(){
+  if (currentId === "__orig") { applyTheme("__orig"); return; }
+  const t = THEMES.find(x => x.id === currentId);
+  if (t) applyTheme(t);
+}
+
+/* Render pannello */
+THEMES.forEach(t => {
+  const b = document.createElement("button");
+  b.className = "theme" + (t.id === currentId ? " active" : "");
+  b.dataset.theme = t.id;
+  b.innerHTML = `
+    <div class="row1">
+      <span class="name">${t.name}</span>
+      <span class="swatches">${t.swatches.map(c=>`<i style="background:${c}"></i>`).join("")}</span>
+    </div>
+    <div class="fonts">Titoli <b>${t.fontDisplay}</b> · Testo <b>${t.fontUi}</b></div>
+    <div class="desc">${t.desc}</div>`;
+  themesEl.appendChild(b);
+});
+
+document.body.addEventListener("click", e => {
+  const el = e.target.closest("[data-theme]");
+  if (!el) return;
+  currentId = el.dataset.theme;
+  document.querySelectorAll(".theme").forEach(x =>
+    x.classList.toggle("active", x.dataset.theme === currentId));
+  reapply();
+});
+
+/* Riapplica ad ogni caricamento dell'iframe (anche navigazione interna) */
+iframe.addEventListener("load", reapply);
+
+/* Toggle pannello */
+document.getElementById("toggle").addEventListener("click", () => document.body.classList.remove("collapsed"));
+document.getElementById("collapseBtn").addEventListener("click", () => document.body.classList.add("collapsed"));
+</script>
+</body>
+</html>
