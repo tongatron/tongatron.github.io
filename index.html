@@ -52,6 +52,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300;400;600;700;900&amp;family=Cormorant+Garamond:wght@500;600;700&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&amp;family=Space+Grotesk:wght@300;400;500&amp;family=Space+Mono&amp;display=swap" rel="stylesheet">
 
   <style>
     /* ============================================================
@@ -1271,6 +1272,93 @@
       #hero-canvas { display: none; }
       .scroll-progress { display: none; }
     }
+
+    /* ============================================================
+       SEZIONI FABLE — AI grid, IoT, Collaborazioni (da index-fable)
+    ============================================================ */
+    :root {
+      --fb-bg:        #060606;
+      --fb-ink:       #f2efe6;
+      --fb-ink-dim:   #98937f;
+      --fb-line:      rgba(242, 239, 230, 0.12);
+      --fb-accent:    #f5c400;
+      --fb-accent-fg: #0a0a08;
+      --font-syne:    "Syne", sans-serif;
+      --font-grotesk: "Space Grotesk", sans-serif;
+      --font-mono:    "Space Mono", monospace;
+      --ease-fb:      cubic-bezier(0.19, 1, 0.22, 1);
+    }
+
+    /* --- AI grid --- */
+    .ai-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px;
+      background: var(--fb-line); border: 1px solid var(--fb-line);
+    }
+    .ai-card { background: var(--fb-bg); padding: clamp(24px, 3vw, 40px); position: relative; overflow: hidden; }
+    .ai-card::before {
+      content: ""; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: var(--fb-accent); transform: scaleX(0); transform-origin: left;
+      transition: transform 0.6s var(--ease-fb);
+    }
+    .ai-card:hover::before { transform: scaleX(1); }
+    .ai-card__kicker {
+      font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase;
+      color: var(--fb-accent); display: block; margin-bottom: 16px;
+    }
+    .ai-card__title { font-family: var(--font-syne); font-weight: 700; font-size: 1.35rem; margin-bottom: 12px; color: var(--fb-ink); line-height: 1.15; letter-spacing: -0.01em; }
+    .ai-card__body { color: var(--fb-ink-dim); font-size: 0.95rem; font-weight: 300; font-family: var(--font-grotesk); line-height: 1.55; }
+    .fb-points { list-style: none; margin: 14px 0 0; padding: 0; }
+    .fb-points li {
+      position: relative; padding-left: 26px; margin-top: 12px;
+      color: var(--fb-ink-dim); font-size: 0.95rem; font-weight: 300; font-family: var(--font-grotesk);
+    }
+    .fb-points li::before { content: "→"; position: absolute; left: 0; color: var(--fb-accent); }
+    .ai-card--wide { grid-column: span 3; display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1.4fr); gap: clamp(20px,3vw,48px); }
+    @media (max-width: 900px) {
+      .ai-grid { grid-template-columns: 1fr; }
+      .ai-card--wide { grid-column: span 1; grid-template-columns: 1fr; }
+    }
+
+    /* --- IoT --- */
+    .iot-spec {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px;
+      background: var(--fb-line); border: 1px solid var(--fb-line);
+      margin-bottom: clamp(30px, 5vh, 60px);
+    }
+    .iot-spec__cell { background: var(--fb-bg); padding: 28px 24px; }
+    .iot-spec__cell strong { display: block; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--fb-accent); margin-bottom: 12px; font-weight: 400; }
+    .iot-spec__cell span { color: var(--fb-ink-dim); font-weight: 300; font-family: var(--font-grotesk); }
+    .iot-spec__cell img { height: 34px; width: auto; margin-bottom: 14px; opacity: 0.9; }
+    .iot-spec__cell a { color: var(--fb-ink); font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.14em; border-bottom: 1px solid var(--fb-accent); }
+    .iot-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(16px, 2vw, 28px); }
+    .iot-card { border: 1px solid var(--fb-line); background: var(--fb-bg); overflow: hidden; transition: border-color 0.4s; position: relative; }
+    .iot-card:hover { border-color: rgba(245, 196, 0, 0.5); }
+    .iot-card a { display: block; color: inherit; text-decoration: none; }
+    .iot-card__media { aspect-ratio: 16 / 10; overflow: hidden; }
+    .iot-card__media img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s var(--ease-fb); }
+    .iot-card:hover .iot-card__media img { transform: scale(1.05); }
+    .iot-card__body { padding: 22px 24px 26px; }
+    .iot-card__title { font-family: var(--font-syne); font-weight: 700; font-size: 1.3rem; text-transform: uppercase; margin-bottom: 10px; color: var(--fb-ink); letter-spacing: -0.01em; }
+    .iot-card__desc { color: var(--fb-ink-dim); font-size: 0.92rem; font-weight: 300; font-family: var(--font-grotesk); line-height: 1.55; }
+    @media (max-width: 900px) {
+      .iot-spec, .iot-grid { grid-template-columns: 1fr; }
+    }
+
+    /* --- Collaborazioni --- */
+    .net-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--fb-line); border: 1px solid var(--fb-line); }
+    .net-card { background: var(--fb-bg); padding: clamp(24px, 3vw, 40px); min-height: 210px; display: flex; flex-direction: column; justify-content: space-between; gap: 20px; position: relative; overflow: hidden; text-decoration: none; }
+    .net-card::after {
+      content: ""; position: absolute; inset: 0; background: var(--fb-accent);
+      transform: translateY(101%); transition: transform 0.5s var(--ease-fb); z-index: 0;
+    }
+    .net-card:hover::after { transform: translateY(0); }
+    .net-card > * { position: relative; z-index: 1; transition: color 0.35s; }
+    .net-card__name { font-family: var(--font-syne); font-weight: 700; font-size: 1.5rem; text-transform: uppercase; color: var(--fb-ink); letter-spacing: -0.01em; }
+    .net-card__desc { color: var(--fb-ink-dim); font-size: 0.92rem; font-weight: 300; font-family: var(--font-grotesk); flex: 1; margin-top: 8px; line-height: 1.5; }
+    .net-card__link { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--fb-accent); }
+    .net-card:hover .net-card__name, .net-card:hover .net-card__desc, .net-card:hover .net-card__link { color: var(--fb-accent-fg); }
+    @media (max-width: 900px) { .net-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 560px) { .net-grid { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
@@ -1433,69 +1521,39 @@
           </p>
         </div>
 
-        <div class="ai-layout">
-          <div class="ai-panel">
-            <div class="ai-panel__block">
-              <h3 class="ai-panel__title">Metodo</h3>
-              <p class="ai-panel__body">
+        <div class="ai-grid">
+          <article class="ai-card ai-card--wide">
+            <div>
+              <span class="ai-card__kicker">Metodo</span>
+              <h3 class="ai-card__title">Dal bisogno al rilascio</h3>
+              <p class="ai-card__body">
                 Parto da un bisogno concreto, lo traduco in requisiti essenziali e costruisco una prima versione
                 verificabile. Uso l'AI per esplorare alternative, scrivere codice, analizzare problemi e produrre
                 documentazione tecnica, poi valido manualmente scelte, sicurezza, leggibilità e comportamento.
               </p>
-              <ul class="ai-points">
-                <li>Analisi rapida di requisiti, vincoli e casi d'uso.</li>
-                <li>Prototipazione di interfacce e flussi applicativi.</li>
-                <li>Sviluppo, test manuale, debugging e refactoring assistito.</li>
-                <li>Integrazione di API, database, servizi web e sistemi locali.</li>
-                <li>Documentazione, handover e supporto alla manutenzione.</li>
-              </ul>
             </div>
-          </div>
-
-          <div class="ai-side">
-            <article class="ai-side__card">
-              <span class="ai-side__label">Tooling</span>
-              <h3 class="ai-side__title">Stack operativo</h3>
-              <p class="ai-side__body">
-                Lavoro con Claude, Codex, Gemini, Ollama e strumenti locali/remoti per coding, revisione,
-                ragionamento architetturale, automazione e analisi di contenuti tecnici.
-              </p>
-            </article>
-            <article class="ai-side__card">
-              <span class="ai-side__label">Metodo</span>
-              <h3 class="ai-side__title">Controllo umano, output concreti</h3>
-              <p class="ai-side__body">
-                Le decisioni su struttura, priorità, sicurezza e rilascio restano umane.
-                L'AI accelera il lavoro, ma il risultato deve essere leggibile, verificabile e utile.
-              </p>
-            </article>
-          </div>
-        </div>
-
-        <div class="ai-proof">
-          <article class="ai-proof__item">
-            <span class="ai-proof__kicker">Rapid prototyping</span>
-            <h3 class="ai-proof__title">Dal problema alla demo</h3>
-            <p class="ai-proof__body">
-              Trasformo esigenze poco definite in prototipi navigabili, utili per allineare team, validare scelte
-              e decidere dove investire.
-            </p>
+            <ul class="fb-points">
+              <li>Analisi rapida di requisiti, vincoli e casi d'uso.</li>
+              <li>Prototipazione di interfacce e flussi applicativi.</li>
+              <li>Sviluppo, test manuale, debugging e refactoring assistito.</li>
+              <li>Integrazione di API, database, servizi web e sistemi locali.</li>
+              <li>Documentazione, handover e supporto alla manutenzione.</li>
+            </ul>
           </article>
-          <article class="ai-proof__item">
-            <span class="ai-proof__kicker">Debug e refactor</span>
-            <h3 class="ai-proof__title">Codice più chiaro</h3>
-            <p class="ai-proof__body">
-              Analizzo bug, debito tecnico e parti fragili del codice per proporre interventi mirati,
-              senza introdurre complessità non necessaria.
-            </p>
+          <article class="ai-card">
+            <span class="ai-card__kicker">Tooling</span>
+            <h3 class="ai-card__title">Stack operativo</h3>
+            <p class="ai-card__body">Lavoro con Claude, Codex, Gemini, Ollama e strumenti locali/remoti per coding, revisione, ragionamento architetturale, automazione e analisi di contenuti tecnici.</p>
           </article>
-          <article class="ai-proof__item">
-            <span class="ai-proof__kicker">Integrazioni</span>
-            <h3 class="ai-proof__title">Sistemi che dialogano</h3>
-            <p class="ai-proof__body">
-              Collego dati, API e strumenti locali in soluzioni leggere: dashboard, automazioni e utility
-              pensate per essere usate davvero.
-            </p>
+          <article class="ai-card">
+            <span class="ai-card__kicker">Rapid prototyping</span>
+            <h3 class="ai-card__title">Dal problema alla demo</h3>
+            <p class="ai-card__body">Trasformo esigenze poco definite in prototipi navigabili, utili per allineare team, validare scelte e decidere dove investire.</p>
+          </article>
+          <article class="ai-card">
+            <span class="ai-card__kicker">Integrazioni</span>
+            <h3 class="ai-card__title">Sistemi che dialogano</h3>
+            <p class="ai-card__body">Collego dati, API e strumenti locali in soluzioni leggere: dashboard, automazioni e utility pensate per essere usate davvero.</p>
           </article>
         </div>
       </div>
@@ -1799,73 +1857,51 @@
           <h2 class="sec-head__title" id="iot-title">IoT e fabbricazione digitale</h2>
         </div>
 
-        <div class="iot-top">
-          <ul class="iot-spec-list">
-            <li class="iot-spec-item iot-spec-item--fablab">
-              <img
-                src="img/fablogo-white.png"
-                alt="Logo Fablab Torino"
-                class="iot-fablab__logo"
-              >
-              <div class="iot-fablab__content">
-                <span class="iot-fablab__copy">Progetti sviluppati presso Fablab Torino:</span>
-                <a class="iot-fablab__link" href="https://fablabtorino.org/" target="_blank" rel="noopener">FABLABTORINO.ORG ↗</a>
-              </div>
-            </li>
-            <li class="iot-spec-item">
-              <strong>Piattaforme di sviluppo</strong>
-              <span>Arduino, Raspberry Pi</span>
-            </li>
-            <li class="iot-spec-item">
-              <strong>Strumenti di fabbricazione</strong>
-              <span>Stampanti 3D, taglio laser, fresa CNC</span>
-            </li>
-          </ul>
-
+        <div class="iot-spec">
+          <div class="iot-spec__cell">
+            <img src="img/fablogo-white.png" alt="Logo Fablab Torino">
+            <span>Progetti sviluppati presso Fablab Torino — </span>
+            <a href="https://fablabtorino.org/" target="_blank" rel="noopener">fablabtorino.org ↗</a>
+          </div>
+          <div class="iot-spec__cell">
+            <strong>Piattaforme di sviluppo</strong>
+            <span>Arduino, Raspberry Pi</span>
+          </div>
+          <div class="iot-spec__cell">
+            <strong>Strumenti di fabbricazione</strong>
+            <span>Stampanti 3D, taglio laser, fresa CNC</span>
+          </div>
         </div>
 
-        <!-- Progetti IoT: 3 card orizzontali (affiancate) -->
-        <div class="iot-projects editorial-grid">
-
-          <article class="proj-card">
-            <a href="https://tongatron.org/projects/robottino/robottino-site/" tabindex="-1">
-              <img src="img/robottino.jpg" class="proj-card__cover" alt="Robottino" loading="lazy">
-            </a>
-            <div class="proj-card__body">
-              <h3 class="proj-card__title"><a href="https://tongatron.org/projects/robottino/robottino-site/">Robottino</a></h3>
-              <p class="proj-card__desc">Robot educativo STEM open source basato su Arduino, con display, sensori ambientali, buzzer, LED RGB, ultrasuoni e testa rotante programmabile.</p>
-              <div class="proj-card__actions">
-                <a class="btn btn-primary btn-sm" href="https://tongatron.org/projects/robottino/robottino-site/">Apri</a>
+        <!-- Progetti IoT: 3 card in stile fable -->
+        <div class="iot-grid">
+          <article class="iot-card">
+            <a href="https://tongatron.org/projects/robottino/robottino-site/">
+              <div class="iot-card__media"><img src="img/robottino.jpg" alt="Robottino" loading="lazy"></div>
+              <div class="iot-card__body">
+                <h3 class="iot-card__title">Robottino</h3>
+                <p class="iot-card__desc">Robot educativo STEM open source basato su Arduino, con display, sensori ambientali, LED RGB, ultrasuoni e testa rotante programmabile.</p>
               </div>
-            </div>
-          </article>
-
-          <article class="proj-card">
-            <a href="https://tongatron.org/projects/selfomatic/" tabindex="-1">
-              <img src="img/contact.jpg" class="proj-card__cover" alt="Selfomatic" loading="lazy">
             </a>
-            <div class="proj-card__body">
-              <h3 class="proj-card__title"><a href="https://tongatron.org/projects/selfomatic/">Selfomatic</a></h3>
-              <p class="proj-card__desc">Social camera per eventi con scatto automatico e pubblicazione in tempo reale, pensata per attivazioni, fiere e comunicazione live.</p>
-              <div class="proj-card__actions">
-                <a class="btn btn-primary btn-sm" href="https://tongatron.org/projects/selfomatic/">Apri</a>
-              </div>
-            </div>
           </article>
-
-          <article class="proj-card">
-            <a href="https://tongatron.org/projects/IKEA-hack/" tabindex="-1">
-              <img src="projects/IKEA-hack/ikea.jpg" class="proj-card__cover" alt="IKEA Hack Nordli" loading="lazy">
+          <article class="iot-card">
+            <a href="https://tongatron.org/projects/selfomatic/">
+              <div class="iot-card__media"><img src="img/contact.jpg" alt="Selfomatic" loading="lazy"></div>
+              <div class="iot-card__body">
+                <h3 class="iot-card__title">Selfomatic</h3>
+                <p class="iot-card__desc">Social camera per eventi con scatto automatico e pubblicazione in tempo reale, per attivazioni, fiere e comunicazione live.</p>
+              </div>
             </a>
-            <div class="proj-card__body">
-              <h3 class="proj-card__title"><a href="https://tongatron.org/projects/IKEA-hack/">IKEA Hack Nordli</a></h3>
-              <p class="proj-card__desc">Personalizzazione della cassettiera IKEA Nordli con tavolino estraibile realizzato tramite pannello tagliato al laser.</p>
-              <div class="proj-card__actions">
-                <a class="btn btn-primary btn-sm" href="https://tongatron.org/projects/IKEA-hack/">Apri</a>
-              </div>
-            </div>
           </article>
-
+          <article class="iot-card">
+            <a href="https://tongatron.org/projects/IKEA-hack/">
+              <div class="iot-card__media"><img src="projects/IKEA-hack/ikea.jpg" alt="IKEA Hack Nordli" loading="lazy"></div>
+              <div class="iot-card__body">
+                <h3 class="iot-card__title">IKEA Hack Nordli</h3>
+                <p class="iot-card__desc">Cassettiera IKEA Nordli personalizzata con tavolino estraibile realizzato tramite pannello tagliato al laser.</p>
+              </div>
+            </a>
+          </article>
         </div>
       </div>
     </section>
@@ -1883,27 +1919,27 @@
           <h2 class="sec-head__title" id="network-title">Collaborazioni</h2>
         </div>
 
-        <div class="network-grid">
-          <article class="network-card">
-            <h3 class="network-card__name">FaberSum</h3>
-            <p class="network-card__desc">Lavorazioni CNC e prototipazione digitale</p>
-            <a class="network-card__link" href="http://www.fabersum.it/" target="_blank" rel="noopener">fabersum.it ↗</a>
-          </article>
-          <article class="network-card">
-            <h3 class="network-card__name">Pangrus</h3>
-            <p class="network-card__desc">Laboratorio di ricerca elettroacustica</p>
-            <a class="network-card__link" href="https://www.peal.space/" target="_blank" rel="noopener">peal.space ↗</a>
-          </article>
-          <article class="network-card">
-            <h3 class="network-card__name">Fablab Torino</h3>
-            <p class="network-card__desc">Associazione e laboratorio di fabbricazione digitale</p>
-            <a class="network-card__link" href="https://fablabtorino.org/" target="_blank" rel="noopener">fablabtorino.org ↗</a>
-          </article>
-          <article class="network-card">
-            <h3 class="network-card__name">LittleEndian</h3>
-            <p class="network-card__desc">Sviluppo software, sistemi embedded e IoT</p>
-            <a class="network-card__link" href="https://www.little-endian.it/" target="_blank" rel="noopener">little-endian.it ↗</a>
-          </article>
+        <div class="net-grid">
+          <a class="net-card" href="http://www.fabersum.it/" target="_blank" rel="noopener">
+            <h3 class="net-card__name">FaberSum</h3>
+            <p class="net-card__desc">Lavorazioni CNC e prototipazione digitale</p>
+            <span class="net-card__link">fabersum.it ↗</span>
+          </a>
+          <a class="net-card" href="https://www.peal.space/" target="_blank" rel="noopener">
+            <h3 class="net-card__name">Pangrus</h3>
+            <p class="net-card__desc">Laboratorio di ricerca elettroacustica</p>
+            <span class="net-card__link">peal.space ↗</span>
+          </a>
+          <a class="net-card" href="https://fablabtorino.org/" target="_blank" rel="noopener">
+            <h3 class="net-card__name">Fablab Torino</h3>
+            <p class="net-card__desc">Associazione e laboratorio di fabbricazione digitale</p>
+            <span class="net-card__link">fablabtorino.org ↗</span>
+          </a>
+          <a class="net-card" href="https://www.little-endian.it/" target="_blank" rel="noopener">
+            <h3 class="net-card__name">LittleEndian</h3>
+            <p class="net-card__desc">Sviluppo software, sistemi embedded e IoT</p>
+            <span class="net-card__link">little-endian.it ↗</span>
+          </a>
         </div>
       </div>
     </section>
@@ -2135,7 +2171,7 @@
 
       /* --- Reveal on scroll (staggered) --- */
       const revealTargets = document.querySelectorAll(
-        '.sec-head, .service-card, .proj-card, .ai-panel, .ai-side__card, .ai-proof__item, .net-card, .iot-card, .contact-block'
+        '.sec-head, .service-card, .proj-card, .ai-card, .net-card, .iot-card, .contact-block'
       );
       revealTargets.forEach(el => el.classList.add('reveal'));
       if ('IntersectionObserver' in window && !reduceMotion) {
