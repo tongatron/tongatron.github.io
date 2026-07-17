@@ -50,8 +50,8 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300;400;600;700;900&amp;family=Cormorant+Garamond:wght@500;600;700&amp;display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&amp;family=Space+Grotesk:wght@300;400;500&amp;family=Space+Mono&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&amp;family=Manrope:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet">
 
   <style>
     /* ============================================================
@@ -59,19 +59,19 @@
        ============================================================ */
     :root {
       /* Palette */
-      --c-bg:        #000000;
-      --c-surface-0: #111111;
-      --c-surface-1: #161616;
-      --c-surface-2: #1e1e1e;
-      --c-border:    #242424;
-      --c-border-hi: #363636;
-      --c-text-1:    #f0f0f0;
-      --c-text-2:    #888888;
-      --c-text-3:    #4a4a4a;
-      --c-text-soft: #b5b0a4;
+      --c-bg:        #131313;
+      --c-surface-0: #191919;
+      --c-surface-1: #1f1f1f;
+      --c-surface-2: #262626;
+      --c-border:    #2e2e2e;
+      --c-border-hi: #3f3f3f;
+      --c-text-1:    #f2f2f2;
+      --c-text-2:    #8f8f8f;
+      --c-text-3:    #565656;
+      --c-text-soft: #c2c2c2;
       --c-accent:    #f5c400;
       --c-accent-dk: #d4a900;
-      --c-accent-fg: #0c0c0c;
+      --c-accent-fg: #121212;
       --c-ok:        #3d9970;
       --c-err:       #c0392b;
 
@@ -102,8 +102,8 @@
       /* Geometry */
       --radius: 6px;
       --max-w:  1100px;
-      --font-ui: "Titillium Web", "Segoe UI", sans-serif;
-      --font-display: "Cormorant Garamond", Georgia, serif;
+      --font-ui: "Manrope", sans-serif;
+      --font-display: "Fraunces", Georgia, serif;
 
       /* Cover height — fallback condiviso */
       --cover-h: 170px;
@@ -268,7 +268,7 @@
       aspect-ratio: 16 / 10;
       object-fit: cover;
       border: 1px solid var(--c-border);
-      background: #000;
+      background: var(--c-surface-0);
     }
     .editorial-grid .proj-card__cover--contain {
       object-fit: contain;
@@ -565,7 +565,7 @@
        SERVICES
        ============================================================ */
     .service-card {
-      background: #000;
+      background: var(--c-surface-0);
       padding: 28px 26px 30px;
       display: flex;
       flex-direction: column;
@@ -652,7 +652,7 @@
       background: var(--c-border);
     }
     .ai-side__card {
-      background: #050505;
+      background: var(--c-surface-0);
       padding: 24px 24px 26px;
     }
     .ai-side__label {
@@ -687,7 +687,7 @@
       background: var(--c-border);
     }
     .ai-proof__item {
-      background: #050505;
+      background: var(--c-surface-0);
       padding: 22px 24px 24px;
     }
     .ai-proof__kicker {
@@ -1276,15 +1276,15 @@
        SEZIONI FABLE — AI grid, IoT, Collaborazioni (da index-fable)
     ============================================================ */
     :root {
-      --fb-bg:        #060606;
-      --fb-ink:       #f2efe6;
-      --fb-ink-dim:   #98937f;
-      --fb-line:      rgba(242, 239, 230, 0.12);
+      --fb-bg:        #131313;
+      --fb-ink:       #f2f2f2;
+      --fb-ink-dim:   #8f8f8f;
+      --fb-line:      rgba(242, 242, 242, 0.12);
       --fb-accent:    #f5c400;
-      --fb-accent-fg: #0a0a08;
-      --font-syne:    "Syne", sans-serif;
-      --font-grotesk: "Space Grotesk", sans-serif;
-      --font-mono:    "Space Mono", monospace;
+      --fb-accent-fg: #121212;
+      --font-syne:    "Fraunces", serif;
+      --font-grotesk: "Manrope", sans-serif;
+      --font-mono:    "JetBrains Mono", monospace;
       --ease-fb:      cubic-bezier(0.19, 1, 0.22, 1);
     }
 
