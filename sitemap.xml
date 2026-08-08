@@ -65,6 +65,12 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://copyandpaste.tongatron.org/</loc>
+    <lastmod>2026-08-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://tongatron.org/projects/computing-timeline/</loc>
     <lastmod>2026-05-17</lastmod>
     <changefreq>monthly</changefreq>
