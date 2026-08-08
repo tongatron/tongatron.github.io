@@ -280,6 +280,18 @@
     .editorial-grid .proj-card__title {
       color: var(--c-text-1);
     }
+    .editorial-grid .proj-card[data-updated] .proj-card__title::after {
+      content: "Aggiornato il " attr(data-updated);
+      display: block;
+      margin-top: 6px;
+      color: var(--c-text-2);
+      font-family: var(--font-mono);
+      font-size: 0.625rem;
+      font-weight: 500;
+      letter-spacing: 0.03em;
+      line-height: 1.2;
+      text-transform: uppercase;
+    }
 
     /* ============================================================
        AVAILABILITY BANNER
@@ -1577,7 +1589,20 @@
 
         <div class="project-grid editorial-grid">
 
-          <article class="proj-card" style="order: 1">
+          <article class="proj-card" style="order: 0" data-updated="08 agosto 26">
+            <a href="https://eclisse-12-08-2026.tongatron.org/" tabindex="-1">
+              <img src="https://eclisse-12-08-2026.tongatron.org/eclisse-20260808.png" class="proj-card__cover" alt="Punto Eclissi: mappa della visibilità dell'eclissi solare del 12 agosto 2026" loading="lazy">
+            </a>
+            <div class="proj-card__body">
+              <h3 class="proj-card__title"><a href="https://eclisse-12-08-2026.tongatron.org/">Punto Eclissi</a></h3>
+              <p class="proj-card__desc">Mappa interattiva della visibilità reale dell'eclissi solare parziale del 12 agosto 2026 in Italia, con orizzonte e simulazione locale.</p>
+              <div class="proj-card__actions">
+                <a class="btn btn-primary btn-sm" href="https://eclisse-12-08-2026.tongatron.org/">Apri</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="proj-card" style="order: 1" data-updated="07 agosto 26">
             <a href="https://optical-transfer.tongatron.org/" tabindex="-1">
               <img src="img/projects/optical-transfer.jpg" class="proj-card__cover proj-card__cover--contain" alt="Optical Transfer" loading="lazy">
             </a>
@@ -1590,7 +1615,7 @@
             </div>
           </article>
 
-          <article class="proj-card" style="order: 2">
+          <article class="proj-card" style="order: 2" data-updated="07 agosto 26">
             <a href="https://copyandpaste.tongatron.org/" tabindex="-1">
               <div class="proj-card__cover proj-card__cover--contain" aria-hidden="true" style="display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#18202a,#31536a);color:#fff;font-family:var(--font-display);font-size:2.25rem;letter-spacing:0.04em;">Copy &amp; Paste</div>
             </a>
@@ -1603,7 +1628,7 @@
             </div>
           </article>
 
-          <article class="proj-card" style="order: 3">
+          <article class="proj-card" style="order: 3" data-updated="02 agosto 26">
             <a href="https://chat.tongatron.org/" tabindex="-1">
               <img src="img/projects/raspi-chat.jpg" class="proj-card__cover" alt="Raspi Chat" loading="lazy">
             </a>
@@ -1616,7 +1641,7 @@
             </div>
           </article>
 
-          <article class="proj-card" style="order: 4">
+          <article class="proj-card" style="order: 4" data-updated="27 luglio 26">
             <a href="https://tongatron.org/astri/" tabindex="-1">
               <img src="img/projects/astri.jpg" class="proj-card__cover" alt="Astri" loading="lazy">
             </a>
@@ -1629,7 +1654,7 @@
             </div>
           </article>
 
-          <article class="proj-card" style="order: 10">
+          <article class="proj-card" style="order: 10" data-updated="22 maggio 26">
             <a href="https://tongatron.org/projects/ryanair-search" tabindex="-1">
               <img src="img/projects/ryanair-search.jpg" class="proj-card__cover" alt="Ryanair Search" loading="lazy">
             </a>
@@ -1642,7 +1667,7 @@
             </div>
           </article>
 
-          <article class="proj-card" style="order: 7">
+          <article class="proj-card" style="order: 7" data-updated="13 luglio 26">
             <a href="https://tongatron.org/head-tracking" tabindex="-1">
               <img src="img/projects/head-tracking.jpg" class="proj-card__cover" alt="Head Tracking" loading="lazy">
             </a>
@@ -1655,7 +1680,7 @@
             </div>
           </article>
 
-          <article class="proj-card" style="order: 6">
+          <article class="proj-card" style="order: 6" data-updated="14 luglio 26">
             <a href="https://tongatron.org/objects3D/" tabindex="-1">
               <img src="https://tongatron.org/objects3D/og-image.jpg" class="proj-card__cover" alt="Objects3D" loading="lazy">
             </a>
@@ -1668,7 +1693,7 @@
             </div>
           </article>
 
-          <article class="proj-card" style="order: 5">
+          <article class="proj-card" style="order: 5" data-updated="17 luglio 26">
             <a href="https://tongatron.org/RAL-lordo-netto/" tabindex="-1">
               <img src="img/projects/ral-lordo-netto.jpg" class="proj-card__cover" alt="RAL lordo/netto" loading="lazy">
             </a>
@@ -1707,7 +1732,7 @@
             </div>
           </article>
 
-          <article class="proj-card" style="order: 8">
+          <article class="proj-card" style="order: 8" data-updated="13 luglio 26">
             <a href="https://tongatron.org/gmail-stats/" tabindex="-1">
               <img src="img/projects/gmail-stats.jpg" class="proj-card__cover" alt="Gmail Stats" loading="lazy">
             </a>
@@ -1720,7 +1745,7 @@
             </div>
           </article>
 
-          <article class="proj-card" style="order: 9">
+          <article class="proj-card" style="order: 9" data-updated="13 luglio 26">
             <a href="https://tongatron.org/birth-lottery/" tabindex="-1">
               <img src="https://tongatron.org/birth-lottery/og-image.jpg" class="proj-card__cover" alt="Birth Lottery" loading="lazy">
             </a>

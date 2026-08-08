@@ -11,6 +11,12 @@
 
   <!-- Progetti recenti -->
   <url>
+    <loc>https://eclisse-12-08-2026.tongatron.org/</loc>
+    <lastmod>2026-08-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://tongatron.org/astri/</loc>
     <lastmod>2026-05-17</lastmod>
     <changefreq>monthly</changefreq>
