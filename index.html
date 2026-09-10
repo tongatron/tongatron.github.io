@@ -46,7 +46,6 @@
       ]
     }
   </script>
-  <link rel="preload" as="image" href="img/giovannibindi2.jpg">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -458,63 +457,124 @@
     .hero { padding: 56px 0 72px; }
     .hero__grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 88px;
-      align-items: start;
+      grid-template-columns: 1.02fr 0.98fr;
+      gap: 64px;
+      align-items: center;
     }
-    .hero__photo {
-      width: 100%;
-      aspect-ratio: 1 / 1;
-      object-fit: cover;
-      border-radius: var(--radius);
-      filter: grayscale(100%);
-      box-shadow: 0 30px 80px rgba(0,0,0,0.35);
-    }
-    /* --- Hero: 3D Tilt + Spotlight --- */
-    .hero__tilt-scene { perspective: 900px; }
-    .hero__photo--tilt {
-      position: relative;
+    /* --- Hero: card terminale --- */
+    .hero__term {
+      border: 1px solid var(--c-border);
+      border-radius: 8px;
+      background: var(--c-surface-0);
       overflow: hidden;
-      filter: none;
-      --mx: 50%; --my: 50%; --rx: 0deg; --ry: 0deg;
-      transform: rotateX(var(--rx)) rotateY(var(--ry));
-      transition: transform 0.15s ease-out;
-      transform-style: preserve-3d;
-      animation: tiltFloat 6s ease-in-out infinite;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.4);
+      font-family: var(--font-mono);
     }
-    .hero__photo--tilt .tilt-img {
-      position: absolute;
-      inset: 0;
-      background-image: url("img/giovannibindi2.jpg");
-      background-size: cover;
-      background-position: center;
+    .hero__term-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 11px 14px;
+      border-bottom: 1px solid var(--c-border);
+      background: var(--c-surface-1);
     }
-    .tilt-img--bw { filter: grayscale(100%); }
-    .tilt-img--color {
-      filter: none;
-      /* spotlight a colori che segue il cursore */
-      -webkit-mask-image: radial-gradient(circle 180px at var(--mx) var(--my), #000 0%, rgba(0,0,0,0.55) 55%, transparent 100%);
-      mask-image: radial-gradient(circle 180px at var(--mx) var(--my), #000 0%, rgba(0,0,0,0.55) 55%, transparent 100%);
-      opacity: 0;
-      transition: opacity 0.35s ease;
+    .hero__term-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--c-border-hi);
     }
-    .hero__photo--tilt:hover .tilt-img--color { opacity: 1; }
-    .tilt-glare {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      background: radial-gradient(circle 260px at var(--mx) var(--my), rgba(255,255,255,0.14), transparent 70%);
-      opacity: 0;
-      transition: opacity 0.35s ease;
+    .hero__term-dot:nth-of-type(3) {
+      background: var(--c-accent);
+      opacity: 0.65;
     }
-    .hero__photo--tilt:hover .tilt-glare { opacity: 1; }
-    @keyframes tiltFloat {
-      0%, 100% { box-shadow: 0 30px 80px rgba(0,0,0,0.35); }
-      50%      { box-shadow: 0 44px 96px rgba(0,0,0,0.45); }
+    .hero__term-path {
+      margin-left: 8px;
+      font-size: var(--t-xs);
+      color: var(--c-text-3);
+      letter-spacing: 0.04em;
     }
-    .hero__photo--tilt:hover { animation-play-state: paused; }
+    .hero__term-body { padding: 20px 20px 22px; }
+    .hero__term-cmd {
+      font-size: var(--t-sm);
+      color: var(--c-text-2);
+      margin-bottom: 16px;
+    }
+    .hero__term-cmd b,
+    .hero__term-prompt b {
+      color: var(--c-accent);
+      font-weight: 700;
+    }
+    .hero__term-row {
+      display: grid;
+      grid-template-columns: 104px minmax(0, 1fr);
+      gap: 10px 14px;
+      padding: 9px 0;
+      border-top: 1px solid var(--c-border);
+      font-size: var(--t-sm);
+    }
+    .hero__term-row:first-of-type { border-top: none; }
+    .hero__term-k {
+      font-size: var(--t-xs);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--c-text-3);
+      padding-top: 2px;
+    }
+    .hero__term-v { color: var(--c-text-soft); }
+    .hero__term-v em {
+      font-style: normal;
+      color: var(--c-accent);
+    }
+    .hero__term-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .hero__term-tags span {
+      border: 1px solid var(--c-border-hi);
+      border-radius: 3px;
+      padding: 2px 7px;
+      font-size: var(--t-xs);
+      color: var(--c-text-2);
+    }
+    .hero__term-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--c-ok);
+      font-weight: 700;
+    }
+    .hero__term-pulse {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--c-ok);
+      flex-shrink: 0;
+      animation: termPulse 1.9s ease-in-out infinite;
+    }
+    @keyframes termPulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(61,153,112,0.55); }
+      70%      { box-shadow: 0 0 0 7px rgba(61,153,112,0); }
+    }
+    .hero__term-prompt {
+      margin-top: 18px;
+      padding-top: 14px;
+      border-top: 1px solid var(--c-border);
+      font-size: var(--t-sm);
+      color: var(--c-text-2);
+    }
+    .hero__term-caret {
+      display: inline-block;
+      width: 8px;
+      background: var(--c-accent);
+      color: transparent;
+      animation: termBlink 1.05s steps(1) infinite;
+    }
+    @keyframes termBlink { 50% { opacity: 0; } }
     @media (prefers-reduced-motion: reduce) {
-      .hero__photo--tilt { animation: none; transform: none; transition: none; }
+      .hero__term-pulse,
+      .hero__term-caret { animation: none; }
     }
     .hero__eyebrow {
       display: flex;
@@ -526,6 +586,14 @@
       flex: 1;
       height: 1px;
       background: var(--c-border);
+    }
+    .hero__eyebrow-label {
+      font-family: var(--font-mono);
+      font-size: var(--t-xs);
+      font-weight: 400;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--c-text-3);
     }
     .hero__name {
       font-family: var(--font-display);
@@ -1044,15 +1112,19 @@
       .ai-layout { grid-template-columns: 1fr; }
       .ai-proof { grid-template-columns: 1fr; }
       .site-nav { display: none; }
+      .hero__grid { grid-template-columns: 1fr; gap: var(--sp-10); }
     }
     @media (max-width: 767px) {
       :root { --sp-6: 20px; }
       .hero { padding: var(--sp-8) 0 var(--sp-10); }
       .hero__grid { grid-template-columns: 1fr; gap: var(--sp-8); }
-      .hero__photo { max-width: 320px; }
       .hero__name {
         font-size: clamp(3.2rem, 18vw, 4.8rem);
         line-height: 0.88;
+      }
+      .hero__term-row {
+        grid-template-columns: 1fr;
+        gap: 4px;
       }
       .sec-head__title {
         font-size: clamp(2.1rem, 12vw, 3rem);
@@ -1166,35 +1238,10 @@
     @keyframes shimmer {
       to { background-position: -200% 0; }
     }
-    .hero__photo { transition: transform 0.5s ease, box-shadow 0.5s ease; }
-    .enhanced .hero__photo:hover {
-      transform: scale(1.02) rotate(-1deg);
-      box-shadow: 0 20px 60px rgba(245, 196, 0, 0.12);
-    }
-    /* il tilt 3D gestisce da sé il transform in hover */
-    .enhanced .hero__photo--tilt,
-    .enhanced .hero__photo--tilt:hover {
-      transform: rotateX(var(--rx)) rotateY(var(--ry));
-      transition: transform 0.15s ease-out;
-      box-shadow: 0 30px 80px rgba(0,0,0,0.35);
-    }
-
-    /* Tagline rotante */
-    .hero-rotator {
-      display: flex;
-      align-items: baseline;
-      gap: 0.5ch;
-      margin-top: var(--sp-4);
-      font-size: var(--t-md);
-      color: var(--c-text-2);
-      min-height: 1.8em;
-    }
-    .hero-rotator__word {
-      color: var(--c-accent);
-      font-weight: 600;
-      border-right: 2px solid var(--c-accent);
-      padding-right: 3px;
-      white-space: nowrap;
+    .hero__term { transition: transform 0.5s ease, box-shadow 0.5s ease; }
+    .enhanced .hero__term:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 36px 90px rgba(0,0,0,0.5);
     }
 
     /* Reveal on scroll */
@@ -1426,47 +1473,18 @@
       <div class="wrap">
         <div class="hero__grid">
 
-          <div class="hero__tilt-scene">
-            <div class="hero__photo hero__photo--tilt" id="tilt-card" role="img" aria-label="Ritratto di Giovanni Bindi">
-              <span class="tilt-img tilt-img--bw"></span>
-              <span class="tilt-img tilt-img--color"></span>
-              <span class="tilt-glare"></span>
-            </div>
-          </div>
-          <script>
-            (function () {
-              var card = document.getElementById('tilt-card');
-              if (!card || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-              var raf = null;
-              function onMove(e) {
-                var r = card.getBoundingClientRect();
-                var x = (e.clientX - r.left) / r.width;
-                var y = (e.clientY - r.top) / r.height;
-                if (raf) cancelAnimationFrame(raf);
-                raf = requestAnimationFrame(function () {
-                  card.style.setProperty('--mx', (x * 100) + '%');
-                  card.style.setProperty('--my', (y * 100) + '%');
-                  card.style.setProperty('--rx', ((0.5 - y) * 14) + 'deg');
-                  card.style.setProperty('--ry', ((x - 0.5) * 14) + 'deg');
-                });
-              }
-              function onLeave() {
-                if (raf) cancelAnimationFrame(raf);
-                card.style.setProperty('--rx', '0deg');
-                card.style.setProperty('--ry', '0deg');
-              }
-              card.addEventListener('mousemove', onMove);
-              card.addEventListener('mouseleave', onLeave);
-            })();
-          </script>
-
           <div>
+            <div class="hero__eyebrow">
+              <span class="hero__eyebrow-label">Portfolio</span>
+              <span class="hero__eyebrow-line" aria-hidden="true"></span>
+            </div>
+
             <h1 class="hero__name">
               Giovanni
               <em>Bindi</em>
             </h1>
 
-            <p class="hero__role">Project Manager - AI-assisted Software Builder · Digital Transformation Lead · Creative Technologist<br>Turin, Italy&nbsp;🇮🇹</p>
+            <p class="hero__role">Project Manager · AI-assisted Software Builder<br>Digital Transformation Lead · Creative Technologist</p>
 
             <p class="hero__body">
               Gestisco progetti digitali end-to-end: definizione del problema, coordinamento di team e stakeholder,
@@ -1474,13 +1492,49 @@
             </p>
 
             <div class="hero__actions">
-              <a
-                class="github-button"
-                href="https://github.com/tongatron"
-                data-color-scheme="no-preference: dark; light: dark; dark: dark;"
-                data-size="large"
-                aria-label="Follow @tongatron on GitHub"
-              >Follow @tongatron</a>
+              <a class="btn btn-primary" href="https://github.com/tongatron" rel="noopener" aria-label="Segui @tongatron su GitHub">Follow @tongatron</a>
+              <a class="btn btn-secondary" href="#contacts">Scrivimi</a>
+            </div>
+          </div>
+
+          <div class="hero__term">
+            <div class="hero__term-bar">
+              <span class="hero__term-dot" aria-hidden="true"></span>
+              <span class="hero__term-dot" aria-hidden="true"></span>
+              <span class="hero__term-dot" aria-hidden="true"></span>
+              <span class="hero__term-path">~/giovanni-bindi — whoami</span>
+            </div>
+            <div class="hero__term-body">
+              <p class="hero__term-cmd"><b aria-hidden="true">$</b> cat profile.json</p>
+
+              <div class="hero__term-row">
+                <span class="hero__term-k">Ruolo</span>
+                <span class="hero__term-v">Project Manager · <em>AI-assisted Software Builder</em></span>
+              </div>
+              <div class="hero__term-row">
+                <span class="hero__term-k">Base</span>
+                <span class="hero__term-v">Torino, Italia&nbsp;🇮🇹 · remote-friendly</span>
+              </div>
+              <div class="hero__term-row">
+                <span class="hero__term-k">Focus</span>
+                <span class="hero__term-v">Digital transformation, delivery end-to-end</span>
+              </div>
+              <div class="hero__term-row">
+                <span class="hero__term-k">Stack</span>
+                <span class="hero__term-v">
+                  <span class="hero__term-tags">
+                    <span>AI generativa</span><span>Web</span><span>IoT</span><span>Automazioni</span><span>Dashboard</span>
+                  </span>
+                </span>
+              </div>
+              <div class="hero__term-row">
+                <span class="hero__term-k">Status</span>
+                <span class="hero__term-v">
+                  <span class="hero__term-status"><span class="hero__term-pulse" aria-hidden="true"></span>Disponibile per nuovi progetti</span>
+                </span>
+              </div>
+
+              <p class="hero__term-prompt"><b aria-hidden="true">$</b> building <span id="hero-build-word"></span><span class="hero__term-caret" aria-hidden="true">.</span></p>
             </div>
           </div>
 
@@ -2148,7 +2202,6 @@
       });
     })();
   </script>
-  <script async defer src="https://buttons.github.io/buttons.js"></script>
   <script>
     (() => {
       const versionEl = document.getElementById('version-date');
@@ -2242,15 +2295,11 @@
         sections.forEach(s => spy.observe(s));
       }
 
-      /* --- Tagline rotante nel hero --- */
-      const heroBody = document.querySelector('.hero__body');
-      if (heroBody && !reduceMotion) {
-        const words = ['web app', 'prototipi AI', 'dashboard', 'automazioni', 'esperimenti IoT'];
-        const rot = document.createElement('p');
-        rot.className = 'hero-rotator';
-        rot.innerHTML = 'In questo momento sto costruendo <span class="hero-rotator__word"></span>';
-        heroBody.after(rot);
-        const wordEl = rot.querySelector('.hero-rotator__word');
+      /* --- Tagline rotante nel prompt del terminale --- */
+      const wordEl = document.getElementById('hero-build-word');
+      const words = ['web app', 'prototipi AI', 'dashboard', 'automazioni', 'esperimenti IoT'];
+      if (wordEl && reduceMotion) wordEl.textContent = words[0];
+      if (wordEl && !reduceMotion) {
         let wi = 0, ci = 0, deleting = false;
         const tick = () => {
           const w = words[wi];
