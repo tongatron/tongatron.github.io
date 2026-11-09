@@ -291,6 +291,49 @@
       line-height: 1.2;
       text-transform: uppercase;
     }
+    /* Utenti attivi: dato in evidenza sotto la data di aggiornamento */
+    .proj-card__stat {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--c-accent);
+      font-family: var(--font-mono);
+      font-size: 0.6875rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      line-height: 1.2;
+      text-transform: uppercase;
+    }
+    .proj-card__stat::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: currentColor;
+      flex: none;
+    }
+    /* Etichette dei gruppi di progetti (Musica / altri) */
+    .proj-group__label {
+      display: flex;
+      align-items: center;
+      gap: var(--sp-4);
+      margin-bottom: var(--sp-6);
+      color: var(--c-text-2);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+    .proj-group__label::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: var(--c-border);
+    }
+    .project-grid + .proj-group__label { margin-top: 72px; }
+    .proj-group__label--music { color: var(--c-accent); }
+    .proj-group__label--music::after { background: var(--c-accent); opacity: 0.45; }
 
     /* ============================================================
        AVAILABILITY BANNER
@@ -1647,7 +1690,8 @@
           </p>
         </div>
 
-        <div class="project-grid editorial-grid">
+        <p class="proj-group__label proj-group__label--music" id="proj-group-music">Musica</p>
+        <div class="project-grid editorial-grid" role="group" aria-labelledby="proj-group-music">
 
           <article class="proj-card" style="order: 0" data-updated="09 novembre 26">
             <a href="https://metronome.tongatron.org/" tabindex="-1">
@@ -1681,6 +1725,7 @@
             </a>
             <div class="proj-card__body">
               <h3 class="proj-card__title" data-updated="28 ottobre 26"><a href="https://zoom.tongatron.org/landing/">ZOOM MultiStomp Patch Studio</a></h3>
+              <p class="proj-card__stat">Circa 50 utenti attivi</p>
               <p class="proj-card__desc">Il pedale ZOOM MS-60B+ (basso) e MS-50G+ (chitarra) su schermo grande: libreria effetti, patch builder con carico DSP in tempo reale, consigli ed export .zptc per Handy Guitar Lab.</p>
               <div class="proj-card__actions">
                 <a class="btn btn-primary btn-sm" href="https://zoom.tongatron.org/landing/">Apri</a>
@@ -1688,28 +1733,34 @@
             </div>
           </article>
 
-          <article class="proj-card" style="order: 3" data-updated="14 ottobre 26">
-            <a href="https://annuncicpi.tongatron.org/" tabindex="-1">
-              <img src="img/projects/annunci-cpi.jpg" class="proj-card__cover" alt="Annunci Lavoro Piemonte: elenco di annunci di lavoro a Torino con notifiche Telegram" loading="lazy">
-            </a>
-            <div class="proj-card__body">
-              <h3 class="proj-card__title" data-updated="14 ottobre 26"><a href="https://annuncicpi.tongatron.org/">Annunci Lavoro Piemonte</a></h3>
-              <p class="proj-card__desc">Gli annunci del Centro per l'Impiego di Torino in un elenco consultabile e filtrabile, aggiornato dal portale Piemonte Lavoro, con notifiche personalizzate via Telegram.</p>
-              <div class="proj-card__actions">
-                <a class="btn btn-primary btn-sm" href="https://annuncicpi.tongatron.org/">Apri</a>
-              </div>
-            </div>
-          </article>
-
-          <article class="proj-card" style="order: 4" data-updated="12 ottobre 26">
+          <article class="proj-card" style="order: 3" data-updated="12 ottobre 26">
             <a href="https://patternmachine.tongatron.org/" tabindex="-1">
               <img src="img/projects/pattern-machine.jpg" class="proj-card__cover" alt="Pattern Machine: drum machine a step con SP-1200, TR-808, TR-909 e altre macchine classiche" loading="lazy">
             </a>
             <div class="proj-card__body">
               <h3 class="proj-card__title" data-updated="12 ottobre 26"><a href="https://patternmachine.tongatron.org/">Pattern Machine</a></h3>
+              <p class="proj-card__stat">Circa 40 utenti attivi</p>
               <p class="proj-card__desc">Groovebox a step ispirata all'SP-1200 con 14 drum machine classiche: pattern, song ed export MIDI, WAV e MP3. Nel browser, come app desktop e come plug-in per Logic Pro.</p>
               <div class="proj-card__actions">
                 <a class="btn btn-primary btn-sm" href="https://patternmachine.tongatron.org/">Apri</a>
+              </div>
+            </div>
+          </article>
+
+        </div>
+
+        <p class="proj-group__label" id="proj-group-other">Web app ed esperimenti</p>
+        <div class="project-grid editorial-grid" role="group" aria-labelledby="proj-group-other">
+
+          <article class="proj-card" style="order: 4" data-updated="19 settembre 26">
+            <a href="https://annuncicpi.tongatron.org/" tabindex="-1">
+              <img src="img/projects/annunci-cpi.jpg" class="proj-card__cover" alt="Annunci Lavoro Piemonte: elenco di annunci di lavoro a Torino con notifiche Telegram" loading="lazy">
+            </a>
+            <div class="proj-card__body">
+              <h3 class="proj-card__title" data-updated="19 settembre 26"><a href="https://annuncicpi.tongatron.org/">Annunci Lavoro Piemonte</a></h3>
+              <p class="proj-card__desc">Gli annunci del Centro per l'Impiego di Torino in un elenco consultabile e filtrabile, aggiornato dal portale Piemonte Lavoro, con notifiche personalizzate via Telegram.</p>
+              <div class="proj-card__actions">
+                <a class="btn btn-primary btn-sm" href="https://annuncicpi.tongatron.org/">Apri</a>
               </div>
             </div>
           </article>
