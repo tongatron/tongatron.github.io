@@ -339,20 +339,28 @@
     .project-card__link {
       display: inline-block;
       width: fit-content;
+      font-family: inherit;
       padding: 6px 12px;
       border: 1px solid var(--c-accent);
       border-radius: var(--radius);
-      color: var(--c-accent-fg);
+      color: var(--c-accent-fg) !important;
       background: var(--c-accent);
       font-size: 0.6875rem;
       font-weight: 700;
+      line-height: 1;
       letter-spacing: 0.04em;
       text-transform: uppercase;
-      transition: background-color 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
+      text-decoration: none;
+      transition: background-color 0.18s ease, border-color 0.18s ease, color 0.18s ease, transform 0.18s ease;
     }
-    .project-card__link:hover {
+    .project-card__link:hover,
+    .project-card__link:focus-visible,
+    .project-card__link:visited {
+      color: var(--c-accent-fg) !important;
+    }
+    .project-card__link:hover,
+    .project-card__link:focus-visible {
       border-color: var(--c-accent-dk);
-      color: var(--c-accent-fg);
       background: var(--c-accent-dk);
       transform: translateY(-1px);
     }
@@ -520,7 +528,7 @@
 
           <div class="hero-stats" aria-label="Riepilogo progetti">
             <div class="hero-stat"><span class="hero-stat__number" data-count="33">0</span><span class="hero-stat__label">progetti</span></div>
-            <div class="hero-stat"><span class="hero-stat__number" data-count="4">0</span><span class="hero-stat__label">progetti self-hosted</span></div>
+            <div class="hero-stat"><span class="hero-stat__number" data-count="12">0</span><span class="hero-stat__label">progetti self-hosted</span></div>
             <div class="hero-stat"><span class="hero-stat__number" data-count="3">0</span><span class="hero-stat__label">progetti in corso</span></div>
           </div>
         </div>
@@ -557,19 +565,19 @@
         <div class="project-grid">
           <article class="project-card"><a class="project-card__media" href="https://annuncicpi.tongatron.org/"><img src="/img/projects/annunci-cpi.jpg" alt="Annunci Lavoro Piemonte"></a><div class="project-card__body"><span class="project-card__kicker">Public sector</span><h3 class="project-card__title"><a href="https://annuncicpi.tongatron.org/">Annunci Lavoro Piemonte</a></h3><p class="project-card__desc">Annunci del Centro per l'Impiego di Torino in un elenco consultabile, con notifiche Telegram.</p><a class="project-card__link" href="https://annuncicpi.tongatron.org/">Apri ↗</a></div></article>
           <article class="project-card"><a class="project-card__media" href="https://excel-lizeme.tongatron.org/"><img src="/img/projects/excel-lizeme.jpg" alt="Excel-LizeMe"></a><div class="project-card__body"><span class="project-card__kicker">Utility</span><h3 class="project-card__title"><a href="https://excel-lizeme.tongatron.org/">Excel-LizeMe</a></h3><p class="project-card__desc">Trasforma una foto in un foglio Excel composto da celle colorate, interamente nel browser.</p><a class="project-card__link" href="https://excel-lizeme.tongatron.org/">Apri ↗</a></div></article>
-          <article class="project-card"><a class="project-card__media" href="https://eclisse-12-08-2026.tongatron.org/"><span class="game-card__preview">ECLISSI</span></a><div class="project-card__body"><span class="project-card__kicker">Astronomy</span><h3 class="project-card__title"><a href="https://eclisse-12-08-2026.tongatron.org/">Punto Eclissi</a></h3><p class="project-card__desc">Mappa interattiva della visibilità dell'eclissi solare del 12 agosto 2026 in Italia.</p><a class="project-card__link" href="https://eclisse-12-08-2026.tongatron.org/">Apri ↗</a></div></article>
+          <article class="project-card"><a class="project-card__media" href="https://eclisse-12-08-2026.tongatron.org/"><img src="https://eclisse-12-08-2026.tongatron.org/eclisse-20260808.png" alt="Punto Eclissi"></a><div class="project-card__body"><span class="project-card__kicker">Astronomy</span><h3 class="project-card__title"><a href="https://eclisse-12-08-2026.tongatron.org/">Punto Eclissi</a></h3><p class="project-card__desc">Mappa interattiva della visibilità dell'eclissi solare del 12 agosto 2026 in Italia.</p><a class="project-card__link" href="https://eclisse-12-08-2026.tongatron.org/">Apri ↗</a></div></article>
           <article class="project-card"><a class="project-card__media" href="https://optical-transfer.tongatron.org/"><img src="/img/projects/optical-transfer.jpg" alt="Optical Transfer"></a><div class="project-card__body"><span class="project-card__kicker">Signal</span><h3 class="project-card__title"><a href="https://optical-transfer.tongatron.org/">Optical Transfer</a></h3><p class="project-card__desc">Trasferimento file tra schermo e fotocamera tramite stream animato di QR code.</p><a class="project-card__link" href="https://optical-transfer.tongatron.org/">Apri ↗</a></div></article>
           <article class="project-card"><a class="project-card__media" href="https://copyandpaste.tongatron.org/"><span class="game-card__preview">COPY</span></a><div class="project-card__body"><span class="project-card__kicker">Privacy tool</span><h3 class="project-card__title"><a href="https://copyandpaste.tongatron.org/">Copy and Paste</a></h3><p class="project-card__desc">Clipboard temporanea e cifrata end-to-end per trasferire testo tra dispositivi.</p><a class="project-card__link" href="https://copyandpaste.tongatron.org/">Apri ↗</a></div></article>
           <article class="project-card"><a class="project-card__media" href="https://chat.tongatron.org/"><img src="/img/projects/raspi-chat.jpg" alt="Raspi Chat"></a><div class="project-card__body"><span class="project-card__kicker">Self-hosted</span><h3 class="project-card__title"><a href="https://chat.tongatron.org/">Raspi Chat</a></h3><p class="project-card__desc">Chat self-hosted per piccoli gruppi, con stanze private e notifiche web.</p><a class="project-card__link" href="https://chat.tongatron.org/">Apri ↗</a></div></article>
           <article class="project-card"><a class="project-card__media" href="https://tongatron.org/astri/"><img src="/img/projects/astri.jpg" alt="Astri"></a><div class="project-card__body"><span class="project-card__kicker">Astronomy</span><h3 class="project-card__title"><a href="https://tongatron.org/astri/">Astri</a></h3><p class="project-card__desc">Esplorazione 3D del cielo notturno, con calcoli in tempo reale dalla posizione dell'utente.</p><a class="project-card__link" href="https://tongatron.org/astri/">Apri ↗</a></div></article>
           <article class="project-card"><a class="project-card__media" href="https://tongatron.org/projects/ryanair-search/"><img src="/img/projects/ryanair-search.jpg" alt="Ryanair Search"></a><div class="project-card__body"><span class="project-card__kicker">Travel</span><h3 class="project-card__title"><a href="https://tongatron.org/projects/ryanair-search/">Ryanair Search</a></h3><p class="project-card__desc">Ricerca di voli andata e ritorno con filtri su budget, durata, partenza e destinazione.</p><a class="project-card__link" href="https://tongatron.org/projects/ryanair-search/">Apri ↗</a></div></article>
           <article class="project-card"><a class="project-card__media" href="https://tongatron.org/head-tracking/"><img src="/img/projects/head-tracking.jpg" alt="Head Tracking"></a><div class="project-card__body"><span class="project-card__kicker">Vision</span><h3 class="project-card__title"><a href="https://tongatron.org/head-tracking/">Head Tracking</a></h3><p class="project-card__desc">Esperimento browser-based per interazioni controllate dal movimento della testa.</p><a class="project-card__link" href="https://tongatron.org/head-tracking/">Apri ↗</a></div></article>
-          <article class="project-card"><a class="project-card__media" href="https://tongatron.org/objects3D/"><span class="game-card__preview">3D</span></a><div class="project-card__body"><span class="project-card__kicker">Experiment</span><h3 class="project-card__title"><a href="https://tongatron.org/objects3D/">Objects3D</a></h3><p class="project-card__desc">Scena 3D interattiva con campi, vento, mostriciattoli e tagliaerba comandabile.</p><a class="project-card__link" href="https://tongatron.org/objects3D/">Apri ↗</a></div></article>
+          <article class="project-card"><a class="project-card__media" href="https://tongatron.org/objects3D/"><img src="https://tongatron.org/objects3D/og-image.jpg" alt="Objects3D"></a><div class="project-card__body"><span class="project-card__kicker">Experiment</span><h3 class="project-card__title"><a href="https://tongatron.org/objects3D/">Objects3D</a></h3><p class="project-card__desc">Scena 3D interattiva con campi, vento, mostriciattoli e tagliaerba comandabile.</p><a class="project-card__link" href="https://tongatron.org/objects3D/">Apri ↗</a></div></article>
           <article class="project-card"><a class="project-card__media" href="https://tongatron.org/RAL-lordo-netto/"><img src="/img/projects/ral-lordo-netto.jpg" alt="RAL lordo netto"></a><div class="project-card__body"><span class="project-card__kicker">Utility</span><h3 class="project-card__title"><a href="https://tongatron.org/RAL-lordo-netto/">RAL lordo/netto</a></h3><p class="project-card__desc">Calcolatore dello stipendio netto annuo, mensile e orario a partire dalla RAL.</p><a class="project-card__link" href="https://tongatron.org/RAL-lordo-netto/">Apri ↗</a></div></article>
-          <article class="project-card"><a class="project-card__media" href="https://meteo.tongatron.org/"><span class="game-card__preview">METEO</span></a><div class="project-card__body"><span class="project-card__kicker">Weather</span><h3 class="project-card__title"><a href="https://meteo.tongatron.org/">Meteo Piemonte</a></h3><p class="project-card__desc">Mappa meteo interattiva del Piemonte con ricerca città, layer e radar timelapse.</p><a class="project-card__link" href="https://meteo.tongatron.org/">Apri ↗</a></div></article>
+          <article class="project-card"><a class="project-card__media" href="https://meteo.tongatron.org/"><img src="https://meteo.tongatron.org/img/og.png" alt="Meteo Piemonte"></a><div class="project-card__body"><span class="project-card__kicker">Weather</span><h3 class="project-card__title"><a href="https://meteo.tongatron.org/">Meteo Piemonte</a></h3><p class="project-card__desc">Mappa meteo interattiva del Piemonte con ricerca città, layer e radar timelapse.</p><a class="project-card__link" href="https://meteo.tongatron.org/">Apri ↗</a></div></article>
           <article class="project-card"><a class="project-card__media" href="https://deviceinspector.tongatron.org/"><img src="/img/projects/device-inspector.jpg" alt="Device Inspector"></a><div class="project-card__body"><span class="project-card__kicker">Security</span><h3 class="project-card__title"><a href="https://deviceinspector.tongatron.org/">Device Inspector</a></h3><p class="project-card__desc">Mostra cosa il browser sa di te, con analisi locale e Cookie e Privacy Lab.</p><a class="project-card__link" href="https://deviceinspector.tongatron.org/">Apri ↗</a></div></article>
           <article class="project-card"><a class="project-card__media" href="https://tongatron.org/gmail-stats/"><img src="/img/projects/gmail-stats.jpg" alt="Gmail Stats"></a><div class="project-card__body"><span class="project-card__kicker">Mail</span><h3 class="project-card__title"><a href="https://tongatron.org/gmail-stats/">Gmail Stats</a></h3><p class="project-card__desc">Dashboard locale per analizzare volumi, frequenze e pattern delle email.</p><a class="project-card__link" href="https://tongatron.org/gmail-stats/">Apri ↗</a></div></article>
-          <article class="project-card"><a class="project-card__media" href="https://tongatron.org/birth-lottery/"><span class="game-card__preview">BIRTH</span></a><div class="project-card__body"><span class="project-card__kicker">Experiment</span><h3 class="project-card__title"><a href="https://tongatron.org/birth-lottery/">Birth-Lottery</a></h3><p class="project-card__desc">Esperimento interattivo su luogo, condizioni di nascita e traiettorie di vita.</p><a class="project-card__link" href="https://tongatron.org/birth-lottery/">Apri ↗</a></div></article>
+          <article class="project-card"><a class="project-card__media" href="https://tongatron.org/birth-lottery/"><img src="https://tongatron.org/birth-lottery/og-image.jpg" alt="Birth-Lottery"></a><div class="project-card__body"><span class="project-card__kicker">Experiment</span><h3 class="project-card__title"><a href="https://tongatron.org/birth-lottery/">Birth-Lottery</a></h3><p class="project-card__desc">Esperimento interattivo su luogo, condizioni di nascita e traiettorie di vita.</p><a class="project-card__link" href="https://tongatron.org/birth-lottery/">Apri ↗</a></div></article>
         </div>
       </div>
     </section>
