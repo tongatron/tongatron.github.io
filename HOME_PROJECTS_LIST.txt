@@ -1,0 +1,32 @@
+PROGETTI E SPERIMENTAZIONI
+
+MUSICA
+
+ZOOM MultiStomp Patch Studio
+Pattern Machine
+Sampler Mobile
+Metronome
+
+WEB APP ED ESPERIMENTI
+
+Annunci Lavoro Piemonte
+Excel-LizeMe
+Punto Eclissi
+Optical Transfer
+Copy and Paste
+Raspi Chat
+Astri
+Ryanair Search
+Head Tracking
+Objects3D
+RAL lordo/netto
+Meteo Piemonte
+Device Inspector
+Gmail Stats
+Birth-Lottery
+
+IOT E FABBRICAZIONE DIGITALE
+
+Robottino
+Selfomatic
+IKEA Hack Nordli

@@ -207,6 +207,36 @@
       font-size: 0.82rem;
       line-height: 1.65;
     }
+    .hero-stats {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1px;
+      overflow: hidden;
+      border: 1px solid var(--c-border-hi);
+      border-radius: var(--radius);
+      background: var(--c-border);
+    }
+    .hero-stat {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: var(--sp-4);
+      padding: 17px 20px;
+      background: #050505;
+      font-family: "SFMono-Regular", Consolas, monospace;
+    }
+    .hero-stat__number {
+      color: var(--c-accent);
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      font-weight: 700;
+      line-height: 1;
+      min-width: 2ch;
+    }
+    .hero-stat__label {
+      color: var(--c-text-soft);
+      font-size: 0.78rem;
+      text-align: right;
+    }
 
     .section {
       padding: 72px 0;
@@ -235,6 +265,142 @@
       grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 56px var(--sp-10);
     }
+    .legacy-section { display: none; }
+    .project-card__media {
+      display: block;
+      aspect-ratio: 16 / 10;
+      overflow: hidden;
+      border: 1px solid var(--c-border);
+      border-radius: var(--radius);
+      background: var(--c-surface-1);
+    }
+    .project-card__media img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 220ms ease;
+    }
+    .project-card:hover .project-card__media img { transform: scale(1.035); }
+    .project-card__body {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+      gap: var(--sp-3);
+    }
+    .project-card__body .project-card__link { margin-top: auto; }
+    .project-card__title[data-updated]::after {
+      content: "Aggiornato il " attr(data-updated);
+      display: block;
+      margin-top: 6px;
+      color: var(--c-text-2);
+      font-family: "SFMono-Regular", Consolas, monospace;
+      font-size: 0.625rem;
+      font-weight: 500;
+      letter-spacing: 0.03em;
+      line-height: 1.2;
+      text-transform: uppercase;
+    }
+    .project-card__stat {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--c-accent);
+      font-family: "SFMono-Regular", Consolas, monospace;
+      font-size: 0.6875rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      line-height: 1.2;
+      text-transform: uppercase;
+    }
+    .project-card__stat::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: currentColor;
+      flex: none;
+    }
+    .project-card__status {
+      display: inline-block;
+      width: fit-content;
+      padding: 3px 7px;
+      border: 1px solid #2d8b57;
+      border-radius: 999px;
+      color: #66d391;
+      background: rgba(45, 139, 87, 0.12);
+      font-family: "SFMono-Regular", Consolas, monospace;
+      font-size: 0.625rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      line-height: 1.1;
+      text-transform: uppercase;
+    }
+    .project-card__link {
+      display: inline-block;
+      width: fit-content;
+      padding: 6px 12px;
+      border: 1px solid var(--c-accent);
+      border-radius: var(--radius);
+      color: var(--c-accent-fg);
+      background: var(--c-accent);
+      font-size: 0.6875rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      transition: background-color 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
+    }
+    .project-card__link:hover {
+      border-color: var(--c-accent-dk);
+      color: var(--c-accent-fg);
+      background: var(--c-accent-dk);
+      transform: translateY(-1px);
+    }
+    .games-grid {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: var(--sp-8) var(--sp-5);
+    }
+    .game-card {
+      display: flex;
+      min-width: 0;
+      flex-direction: column;
+      gap: var(--sp-3);
+    }
+    .game-card__preview {
+      display: grid;
+      aspect-ratio: 1;
+      place-items: center;
+      overflow: hidden;
+      border: 1px solid var(--c-border);
+      border-radius: var(--radius);
+      background: linear-gradient(145deg, #171717, #050505);
+      color: var(--c-accent);
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 600;
+    }
+    .game-card__preview img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .game-card__title {
+      color: var(--c-text-1);
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      line-height: 1;
+    }
+    .game-card__title a { color: inherit; text-decoration: none; }
+    .game-card__link {
+      color: var(--c-text-soft);
+      font-size: 0.6875rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .game-card__link:hover { color: var(--c-accent); }
     .project-card {
       display: flex;
       flex-direction: column;
@@ -293,6 +459,7 @@
     @media (max-width: 1023px) {
       .hero__grid { grid-template-columns: 1fr; gap: var(--sp-8); }
       .project-grid { grid-template-columns: 1fr 1fr; }
+      .games-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
       .site-nav { display: none; }
     }
     @media (max-width: 767px) {
@@ -300,8 +467,11 @@
       .hero { padding: var(--sp-8) 0 var(--sp-10); }
       .hero__title { font-size: clamp(3.4rem, 19vw, 5rem); }
       .hero__meta-row { grid-template-columns: 1fr; gap: 4px; }
+      .hero-stat { align-items: flex-start; flex-direction: column; gap: 6px; }
+      .hero-stat__label { text-align: left; }
       .section { padding: 56px 0; }
       .project-grid { grid-template-columns: 1fr; gap: var(--sp-10); }
+      .games-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--sp-6) var(--sp-4); }
       .sec-head__title { font-size: clamp(2.1rem, 12vw, 3rem); }
     }
     @media (prefers-reduced-motion: reduce) {
@@ -326,8 +496,10 @@
 
         <nav class="site-nav" aria-label="Navigazione principale">
           <a class="site-nav__link" href="/">Home</a>
-          <a class="site-nav__link" href="#tongatron-projects">Tongatron</a>
-          <a class="site-nav__link" href="#games-utilities">Games &amp; utilities</a>
+          <a class="site-nav__link" href="#music">Musica</a>
+          <a class="site-nav__link" href="#web-apps">Web app</a>
+          <a class="site-nav__link" href="#iot-new">IoT</a>
+          <a class="site-nav__link" href="#games-utilities-new">Games &amp; utilities</a>
         </nav>
       </div>
     </div>
@@ -346,15 +518,10 @@
             </p>
           </div>
 
-          <div class="hero__meta" aria-label="Riepilogo archivio">
-            <div class="hero__meta-row">
-              <span class="hero__meta-key">local</span>
-              <span class="hero__meta-val">5 progetti da tongatron.org/projects</span>
-            </div>
-            <div class="hero__meta-row">
-              <span class="hero__meta-key">games</span>
-              <span class="hero__meta-val">10 pagine da games-utilities</span>
-            </div>
+          <div class="hero-stats" aria-label="Riepilogo progetti">
+            <div class="hero-stat"><span class="hero-stat__number" data-count="33">0</span><span class="hero-stat__label">progetti</span></div>
+            <div class="hero-stat"><span class="hero-stat__number" data-count="4">0</span><span class="hero-stat__label">progetti self-hosted</span></div>
+            <div class="hero-stat"><span class="hero-stat__number" data-count="3">0</span><span class="hero-stat__label">progetti in corso</span></div>
           </div>
         </div>
       </div>
@@ -362,7 +529,94 @@
 
     <hr class="divider">
 
-    <section id="apps" class="section" aria-labelledby="apps-title">
+    <section id="music" class="section" aria-labelledby="music-title">
+      <div class="wrap">
+        <div class="sec-head">
+          <span class="label">Portfolio / sound</span>
+          <h2 class="sec-head__title" id="music-title">Musica</h2>
+          <p class="sec-head__desc">Strumenti musicali, patch studio e macchine sonore progettate per essere usate direttamente nel browser.</p>
+        </div>
+        <div class="project-grid">
+          <article class="project-card"><a class="project-card__media" href="https://zoom.tongatron.org/landing/"><img src="/img/projects/zoom-multistomp.jpg" alt="ZOOM MultiStomp Patch Studio"></a><div class="project-card__body"><span class="project-card__kicker">Sound tool</span><h3 class="project-card__title" data-updated="28 ottobre 26"><a href="https://zoom.tongatron.org/landing/">ZOOM MultiStomp Patch Studio</a></h3><p class="project-card__stat">Oltre 100 utenti attivi</p><span class="project-card__status">In corso</span><p class="project-card__desc">Libreria effetti, patch builder con carico DSP in tempo reale ed export per i pedali ZOOM.</p><a class="project-card__link" href="https://zoom.tongatron.org/landing/">Apri ↗</a></div></article>
+          <article class="project-card"><a class="project-card__media" href="https://patternmachine.tongatron.org/"><img src="/img/projects/pattern-machine.jpg" alt="Pattern Machine"></a><div class="project-card__body"><span class="project-card__kicker">Groovebox</span><h3 class="project-card__title" data-updated="12 ottobre 26"><a href="https://patternmachine.tongatron.org/">Pattern Machine</a></h3><p class="project-card__stat">Oltre 100 utenti attivi</p><span class="project-card__status">In corso</span><p class="project-card__desc">Drum machine a step con pattern, song ed export MIDI, WAV e MP3.</p><a class="project-card__link" href="https://patternmachine.tongatron.org/">Apri ↗</a></div></article>
+          <article class="project-card"><a class="project-card__media" href="https://samplermobile.tongatron.org/"><img src="/img/projects/sampler-mobile.jpg" alt="Sampler Mobile"></a><div class="project-card__body"><span class="project-card__kicker">Sampler</span><h3 class="project-card__title" data-updated="09 novembre 26"><a href="https://samplermobile.tongatron.org/">Sampler Mobile</a></h3><span class="project-card__status">In corso</span><p class="project-card__desc">Campionatore nel browser per registrare, modificare e suonare dal vivo i propri suoni.</p><a class="project-card__link" href="https://samplermobile.tongatron.org/">Apri ↗</a></div></article>
+          <article class="project-card"><a class="project-card__media" href="https://metronome.tongatron.org/"><img src="/img/projects/metronome.jpg" alt="Metronome"></a><div class="project-card__body"><span class="project-card__kicker">Practice tool</span><h3 class="project-card__title" data-updated="09 novembre 26"><a href="https://metronome.tongatron.org/">Metronome</a></h3><p class="project-card__desc">Metronomo PWA con tap tempo, metriche, suddivisioni, suoni e modalità palco.</p><a class="project-card__link" href="https://metronome.tongatron.org/">Apri ↗</a></div></article>
+        </div>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <section id="web-apps" class="section" aria-labelledby="web-apps-title">
+      <div class="wrap">
+        <div class="sec-head">
+          <span class="label">Portfolio / web</span>
+          <h2 class="sec-head__title" id="web-apps-title">Web app ed esperimenti</h2>
+          <p class="sec-head__desc">Utility pubbliche, strumenti personali ed esperimenti interattivi eseguibili direttamente dal browser.</p>
+        </div>
+        <div class="project-grid">
+          <article class="project-card"><a class="project-card__media" href="https://annuncicpi.tongatron.org/"><img src="/img/projects/annunci-cpi.jpg" alt="Annunci Lavoro Piemonte"></a><div class="project-card__body"><span class="project-card__kicker">Public sector</span><h3 class="project-card__title"><a href="https://annuncicpi.tongatron.org/">Annunci Lavoro Piemonte</a></h3><p class="project-card__desc">Annunci del Centro per l'Impiego di Torino in un elenco consultabile, con notifiche Telegram.</p><a class="project-card__link" href="https://annuncicpi.tongatron.org/">Apri ↗</a></div></article>
+          <article class="project-card"><a class="project-card__media" href="https://excel-lizeme.tongatron.org/"><img src="/img/projects/excel-lizeme.jpg" alt="Excel-LizeMe"></a><div class="project-card__body"><span class="project-card__kicker">Utility</span><h3 class="project-card__title"><a href="https://excel-lizeme.tongatron.org/">Excel-LizeMe</a></h3><p class="project-card__desc">Trasforma una foto in un foglio Excel composto da celle colorate, interamente nel browser.</p><a class="project-card__link" href="https://excel-lizeme.tongatron.org/">Apri ↗</a></div></article>
+          <article class="project-card"><a class="project-card__media" href="https://eclisse-12-08-2026.tongatron.org/"><span class="game-card__preview">ECLISSI</span></a><div class="project-card__body"><span class="project-card__kicker">Astronomy</span><h3 class="project-card__title"><a href="https://eclisse-12-08-2026.tongatron.org/">Punto Eclissi</a></h3><p class="project-card__desc">Mappa interattiva della visibilità dell'eclissi solare del 12 agosto 2026 in Italia.</p><a class="project-card__link" href="https://eclisse-12-08-2026.tongatron.org/">Apri ↗</a></div></article>
+          <article class="project-card"><a class="project-card__media" href="https://optical-transfer.tongatron.org/"><img src="/img/projects/optical-transfer.jpg" alt="Optical Transfer"></a><div class="project-card__body"><span class="project-card__kicker">Signal</span><h3 class="project-card__title"><a href="https://optical-transfer.tongatron.org/">Optical Transfer</a></h3><p class="project-card__desc">Trasferimento file tra schermo e fotocamera tramite stream animato di QR code.</p><a class="project-card__link" href="https://optical-transfer.tongatron.org/">Apri ↗</a></div></article>
+          <article class="project-card"><a class="project-card__media" href="https://copyandpaste.tongatron.org/"><span class="game-card__preview">COPY</span></a><div class="project-card__body"><span class="project-card__kicker">Privacy tool</span><h3 class="project-card__title"><a href="https://copyandpaste.tongatron.org/">Copy and Paste</a></h3><p class="project-card__desc">Clipboard temporanea e cifrata end-to-end per trasferire testo tra dispositivi.</p><a class="project-card__link" href="https://copyandpaste.tongatron.org/">Apri ↗</a></div></article>
+          <article class="project-card"><a class="project-card__media" href="https://chat.tongatron.org/"><img src="/img/projects/raspi-chat.jpg" alt="Raspi Chat"></a><div class="project-card__body"><span class="project-card__kicker">Self-hosted</span><h3 class="project-card__title"><a href="https://chat.tongatron.org/">Raspi Chat</a></h3><p class="project-card__desc">Chat self-hosted per piccoli gruppi, con stanze private e notifiche web.</p><a class="project-card__link" href="https://chat.tongatron.org/">Apri ↗</a></div></article>
+          <article class="project-card"><a class="project-card__media" href="https://tongatron.org/astri/"><img src="/img/projects/astri.jpg" alt="Astri"></a><div class="project-card__body"><span class="project-card__kicker">Astronomy</span><h3 class="project-card__title"><a href="https://tongatron.org/astri/">Astri</a></h3><p class="project-card__desc">Esplorazione 3D del cielo notturno, con calcoli in tempo reale dalla posizione dell'utente.</p><a class="project-card__link" href="https://tongatron.org/astri/">Apri ↗</a></div></article>
+          <article class="project-card"><a class="project-card__media" href="https://tongatron.org/projects/ryanair-search/"><img src="/img/projects/ryanair-search.jpg" alt="Ryanair Search"></a><div class="project-card__body"><span class="project-card__kicker">Travel</span><h3 class="project-card__title"><a href="https://tongatron.org/projects/ryanair-search/">Ryanair Search</a></h3><p class="project-card__desc">Ricerca di voli andata e ritorno con filtri su budget, durata, partenza e destinazione.</p><a class="project-card__link" href="https://tongatron.org/projects/ryanair-search/">Apri ↗</a></div></article>
+          <article class="project-card"><a class="project-card__media" href="https://tongatron.org/head-tracking/"><img src="/img/projects/head-tracking.jpg" alt="Head Tracking"></a><div class="project-card__body"><span class="project-card__kicker">Vision</span><h3 class="project-card__title"><a href="https://tongatron.org/head-tracking/">Head Tracking</a></h3><p class="project-card__desc">Esperimento browser-based per interazioni controllate dal movimento della testa.</p><a class="project-card__link" href="https://tongatron.org/head-tracking/">Apri ↗</a></div></article>
+          <article class="project-card"><a class="project-card__media" href="https://tongatron.org/objects3D/"><span class="game-card__preview">3D</span></a><div class="project-card__body"><span class="project-card__kicker">Experiment</span><h3 class="project-card__title"><a href="https://tongatron.org/objects3D/">Objects3D</a></h3><p class="project-card__desc">Scena 3D interattiva con campi, vento, mostriciattoli e tagliaerba comandabile.</p><a class="project-card__link" href="https://tongatron.org/objects3D/">Apri ↗</a></div></article>
+          <article class="project-card"><a class="project-card__media" href="https://tongatron.org/RAL-lordo-netto/"><img src="/img/projects/ral-lordo-netto.jpg" alt="RAL lordo netto"></a><div class="project-card__body"><span class="project-card__kicker">Utility</span><h3 class="project-card__title"><a href="https://tongatron.org/RAL-lordo-netto/">RAL lordo/netto</a></h3><p class="project-card__desc">Calcolatore dello stipendio netto annuo, mensile e orario a partire dalla RAL.</p><a class="project-card__link" href="https://tongatron.org/RAL-lordo-netto/">Apri ↗</a></div></article>
+          <article class="project-card"><a class="project-card__media" href="https://meteo.tongatron.org/"><span class="game-card__preview">METEO</span></a><div class="project-card__body"><span class="project-card__kicker">Weather</span><h3 class="project-card__title"><a href="https://meteo.tongatron.org/">Meteo Piemonte</a></h3><p class="project-card__desc">Mappa meteo interattiva del Piemonte con ricerca città, layer e radar timelapse.</p><a class="project-card__link" href="https://meteo.tongatron.org/">Apri ↗</a></div></article>
+          <article class="project-card"><a class="project-card__media" href="https://deviceinspector.tongatron.org/"><img src="/img/projects/device-inspector.jpg" alt="Device Inspector"></a><div class="project-card__body"><span class="project-card__kicker">Security</span><h3 class="project-card__title"><a href="https://deviceinspector.tongatron.org/">Device Inspector</a></h3><p class="project-card__desc">Mostra cosa il browser sa di te, con analisi locale e Cookie e Privacy Lab.</p><a class="project-card__link" href="https://deviceinspector.tongatron.org/">Apri ↗</a></div></article>
+          <article class="project-card"><a class="project-card__media" href="https://tongatron.org/gmail-stats/"><img src="/img/projects/gmail-stats.jpg" alt="Gmail Stats"></a><div class="project-card__body"><span class="project-card__kicker">Mail</span><h3 class="project-card__title"><a href="https://tongatron.org/gmail-stats/">Gmail Stats</a></h3><p class="project-card__desc">Dashboard locale per analizzare volumi, frequenze e pattern delle email.</p><a class="project-card__link" href="https://tongatron.org/gmail-stats/">Apri ↗</a></div></article>
+          <article class="project-card"><a class="project-card__media" href="https://tongatron.org/birth-lottery/"><span class="game-card__preview">BIRTH</span></a><div class="project-card__body"><span class="project-card__kicker">Experiment</span><h3 class="project-card__title"><a href="https://tongatron.org/birth-lottery/">Birth-Lottery</a></h3><p class="project-card__desc">Esperimento interattivo su luogo, condizioni di nascita e traiettorie di vita.</p><a class="project-card__link" href="https://tongatron.org/birth-lottery/">Apri ↗</a></div></article>
+        </div>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <section id="iot-new" class="section" aria-labelledby="iot-new-title">
+      <div class="wrap">
+        <div class="sec-head">
+          <span class="label">Hardware / fablab</span>
+          <h2 class="sec-head__title" id="iot-new-title">IoT e fabbricazione digitale</h2>
+          <p class="sec-head__desc">Prototipi fisici, installazioni e oggetti costruiti con Arduino, Raspberry Pi e strumenti di fabbricazione digitale.</p>
+        </div>
+        <div class="project-grid">
+          <article class="project-card"><a class="project-card__media" href="/projects/robottino/robottino-site/"><img src="/img/robottino.jpg" alt="Robottino"></a><div class="project-card__body"><span class="project-card__kicker">Robotics</span><h3 class="project-card__title"><a href="/projects/robottino/robottino-site/">Robottino</a></h3><p class="project-card__desc">Robot educativo STEM open source basato su Arduino, con sensori, display e testa rotante.</p><a class="project-card__link" href="/projects/robottino/robottino-site/">Apri ↗</a></div></article>
+          <article class="project-card"><a class="project-card__media" href="/projects/selfomatic/"><img src="/img/contact.jpg" alt="Selfomatic"></a><div class="project-card__body"><span class="project-card__kicker">Camera</span><h3 class="project-card__title"><a href="/projects/selfomatic/">Selfomatic</a></h3><p class="project-card__desc">Social camera per eventi con scatto automatico e pubblicazione in tempo reale.</p><a class="project-card__link" href="/projects/selfomatic/">Apri ↗</a></div></article>
+          <article class="project-card"><a class="project-card__media" href="/projects/IKEA-hack/"><img src="/projects/IKEA-hack/ikea.jpg" alt="IKEA Hack Nordli"></a><div class="project-card__body"><span class="project-card__kicker">Furniture</span><h3 class="project-card__title"><a href="/projects/IKEA-hack/">IKEA Hack Nordli</a></h3><p class="project-card__desc">Cassettiera personalizzata con tavolino estraibile realizzato tramite taglio laser.</p><a class="project-card__link" href="/projects/IKEA-hack/">Apri ↗</a></div></article>
+        </div>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <section id="games-utilities-new" class="section" aria-labelledby="games-utilities-new-title">
+      <div class="wrap">
+        <div class="sec-head">
+          <span class="label">Collection / browser</span>
+          <h2 class="sec-head__title" id="games-utilities-new-title">Giochi e utility</h2>
+          <p class="sec-head__desc">Una raccolta compatta di mini-app, giochi e piccoli esperimenti. Anteprime quadrate, un accesso rapido.</p>
+        </div>
+        <div class="games-grid">
+          <article class="game-card"><a class="game-card__preview" href="https://tongatron.org/games-utilities/anonymous-pics/">AP</a><h3 class="game-card__title"><a href="https://tongatron.org/games-utilities/anonymous-pics/">Anonymous Pics</a></h3><a class="game-card__link" href="https://tongatron.org/games-utilities/anonymous-pics/">Apri ↗</a></article>
+          <article class="game-card"><a class="game-card__preview" href="https://tongatron.org/games-utilities/anagrammatron/">Aa</a><h3 class="game-card__title"><a href="https://tongatron.org/games-utilities/anagrammatron/">Anagrammatron</a></h3><a class="game-card__link" href="https://tongatron.org/games-utilities/anagrammatron/">Apri ↗</a></article>
+          <article class="game-card"><a class="game-card__preview" href="https://tongatron.org/games-utilities/dado/"><img src="/img/games/dado.svg" alt=""></a><h3 class="game-card__title"><a href="https://tongatron.org/games-utilities/dado/">Dado</a></h3><a class="game-card__link" href="https://tongatron.org/games-utilities/dado/">Apri ↗</a></article>
+          <article class="game-card"><a class="game-card__preview" href="https://tongatron.org/games-utilities/forza4/"><img src="/img/games/forza4.svg" alt=""></a><h3 class="game-card__title"><a href="https://tongatron.org/games-utilities/forza4/">Connect Four</a></h3><a class="game-card__link" href="https://tongatron.org/games-utilities/forza4/">Apri ↗</a></article>
+          <article class="game-card"><a class="game-card__preview" href="https://tongatron.org/games-utilities/memory/"><img src="/img/games/memory.png" alt=""></a><h3 class="game-card__title"><a href="https://tongatron.org/games-utilities/memory/">Memory</a></h3><a class="game-card__link" href="https://tongatron.org/games-utilities/memory/">Apri ↗</a></article>
+          <article class="game-card"><a class="game-card__preview" href="https://tongatron.org/games-utilities/morse/">M</a><h3 class="game-card__title"><a href="https://tongatron.org/games-utilities/morse/">Simulatore Morse</a></h3><a class="game-card__link" href="https://tongatron.org/games-utilities/morse/">Apri ↗</a></article>
+          <article class="game-card"><a class="game-card__preview" href="https://tongatron.org/games-utilities/multi-simulator/">MULTI</a><h3 class="game-card__title"><a href="https://tongatron.org/games-utilities/multi-simulator/">Multi Web Simulator</a></h3><a class="game-card__link" href="https://tongatron.org/games-utilities/multi-simulator/">Apri ↗</a></article>
+          <article class="game-card"><a class="game-card__preview" href="https://tongatron.org/games-utilities/qrscanner/">QR</a><h3 class="game-card__title"><a href="https://tongatron.org/games-utilities/qrscanner/">QR Scanner Mobile</a></h3><a class="game-card__link" href="https://tongatron.org/games-utilities/qrscanner/">Apri ↗</a></article>
+          <article class="game-card"><a class="game-card__preview" href="https://tongatron.org/games-utilities/roulette/"><img src="/img/games/roulette.svg" alt=""></a><h3 class="game-card__title"><a href="https://tongatron.org/games-utilities/roulette/">Roulette</a></h3><a class="game-card__link" href="https://tongatron.org/games-utilities/roulette/">Apri ↗</a></article>
+          <article class="game-card"><a class="game-card__preview" href="https://tongatron.org/games-utilities/rumorebianco/">∿</a><h3 class="game-card__title"><a href="https://tongatron.org/games-utilities/rumorebianco/">Rumore Bianco</a></h3><a class="game-card__link" href="https://tongatron.org/games-utilities/rumorebianco/">Apri ↗</a></article>
+          <article class="game-card"><a class="game-card__preview" href="https://tongatron.org/games-utilities/simon/"><img src="/img/games/simon.svg" alt=""></a><h3 class="game-card__title"><a href="https://tongatron.org/games-utilities/simon/">Simon Simulator</a></h3><a class="game-card__link" href="https://tongatron.org/games-utilities/simon/">Apri ↗</a></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="apps" class="section legacy-section" aria-labelledby="apps-title">
       <div class="wrap">
         <div class="sec-head">
           <span class="label">Tongatron.org</span>
@@ -467,7 +721,7 @@
 
     <hr class="divider">
 
-    <section id="tongatron-projects" class="section" aria-labelledby="tongatron-projects-title">
+    <section id="tongatron-projects" class="section legacy-section" aria-labelledby="tongatron-projects-title">
       <div class="wrap">
         <div class="sec-head">
           <span class="label">Directory /projects</span>
@@ -530,7 +784,7 @@
 
     <hr class="divider">
 
-    <section id="iot" class="section" aria-labelledby="iot-title">
+    <section id="iot" class="section legacy-section" aria-labelledby="iot-title">
       <div class="wrap">
         <div class="sec-head">
           <span class="label">Hardware / installazioni</span>
@@ -572,7 +826,7 @@
 
     <hr class="divider">
 
-    <section id="games-utilities" class="section" aria-labelledby="games-utilities-title">
+    <section id="legacy-games-utilities" class="section legacy-section" aria-labelledby="games-utilities-title">
       <div class="wrap">
         <div class="sec-head">
           <span class="label">Games utilities</span>
@@ -663,7 +917,7 @@
 
     <hr class="divider">
 
-    <section id="services" class="section" aria-labelledby="services-title">
+    <section id="services" class="section legacy-section" aria-labelledby="services-title">
       <div class="wrap">
         <div class="sec-head">
           <span class="label">Sottodomini / Raspberry Pi</span>
@@ -759,5 +1013,46 @@
       <p class="site-footer__copy">&copy; <a href="/pulsanti/" target="_blank" rel="noopener">2026</a> Tongatron</p>
     </div>
   </footer>
+  <script>
+    (() => {
+      const dates = {
+        'ZOOM MultiStomp Patch Studio': '28 ottobre 26',
+        'Pattern Machine': '12 ottobre 26',
+        'Metronome': '09 novembre 26',
+        'Sampler Mobile': '09 novembre 26',
+        'Annunci Lavoro Piemonte': '19 settembre 26',
+        'Excel-LizeMe': '09 settembre 26',
+        'Punto Eclissi': '08 agosto 26',
+        'Optical Transfer': '07 agosto 26',
+        'Copy and Paste': '07 agosto 26',
+        'Raspi Chat': '02 agosto 26',
+        'Astri': '27 luglio 26',
+        'Ryanair Search': '22 maggio 26',
+        'Head Tracking': '13 luglio 26',
+        'Objects3D': '14 luglio 26',
+        'RAL lordo/netto': '17 luglio 26',
+        'Gmail Stats': '13 luglio 26',
+        'Birth-Lottery': '13 luglio 26'
+      };
+
+      document.querySelectorAll('.project-card__title').forEach((title) => {
+        const name = title.textContent.trim();
+        if (dates[name]) title.dataset.updated = dates[name];
+      });
+
+      document.querySelectorAll('[data-count]').forEach((counter) => {
+        const target = Number(counter.dataset.count);
+        const duration = 850;
+        const start = performance.now();
+        const step = (now) => {
+          const progress = Math.min((now - start) / duration, 1);
+          const eased = 1 - Math.pow(1 - progress, 3);
+          counter.textContent = String(Math.round(target * eased));
+          if (progress < 1) requestAnimationFrame(step);
+        };
+        requestAnimationFrame(step);
+      });
+    })();
+  </script>
 </body>
 </html>

@@ -312,6 +312,22 @@
       background: currentColor;
       flex: none;
     }
+    .proj-card__status {
+      display: inline-block;
+      width: fit-content;
+      margin-top: 8px;
+      padding: 3px 7px;
+      border: 1px solid #2d8b57;
+      border-radius: 999px;
+      color: #66d391;
+      background: rgba(45, 139, 87, 0.12);
+      font-family: var(--font-mono);
+      font-size: 0.625rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      line-height: 1.1;
+      text-transform: uppercase;
+    }
     /* Etichette dei gruppi di progetti (Musica / altri) */
     .proj-group__label {
       display: flex;
@@ -1693,7 +1709,7 @@
         <p class="proj-group__label proj-group__label--music" id="proj-group-music">Musica</p>
         <div class="project-grid editorial-grid" role="group" aria-labelledby="proj-group-music">
 
-          <article class="proj-card" style="order: 0" data-updated="09 novembre 26">
+          <article class="proj-card" style="order: 3" data-updated="09 novembre 26">
             <a href="https://metronome.tongatron.org/" tabindex="-1">
               <img src="img/projects/metronome.jpg" class="proj-card__cover" alt="Metronome: un metronomo meccanico scuro con pendolo giallo e luci che segnano i battiti" loading="lazy">
             </a>
@@ -1706,12 +1722,13 @@
             </div>
           </article>
 
-          <article class="proj-card" style="order: 1" data-updated="09 novembre 26">
+          <article class="proj-card" style="order: 2" data-updated="09 novembre 26">
             <a href="https://samplermobile.tongatron.org/" tabindex="-1">
               <img src="img/projects/sampler-mobile.jpg" class="proj-card__cover" alt="Sampler Mobile: un telefono con una griglia di pad colorati e la scritta Play your samples live" loading="lazy">
             </a>
             <div class="proj-card__body">
               <h3 class="proj-card__title" data-updated="09 novembre 26"><a href="https://samplermobile.tongatron.org/">Sampler Mobile</a></h3>
+              <span class="proj-card__status">In corso</span>
               <p class="proj-card__desc">Un campionatore nel browser per registrare, organizzare e suonare dal vivo i tuoi suoni: griglie da 16 pad, editor con forma d'onda, modalità Live con STOP sempre visibile, funziona offline e si installa come PWA.</p>
               <div class="proj-card__actions">
                 <a class="btn btn-primary btn-sm" href="https://samplermobile.tongatron.org/">Apri</a>
@@ -1719,13 +1736,14 @@
             </div>
           </article>
 
-          <article class="proj-card" style="order: 2" data-updated="28 ottobre 26">
+          <article class="proj-card" style="order: 0" data-updated="28 ottobre 26">
             <a href="https://zoom.tongatron.org/landing/" tabindex="-1">
               <img src="img/projects/zoom-multistomp.jpg" class="proj-card__cover" alt="ZOOM MultiStomp Patch Studio: patch builder con catena di sei effetti e carico DSP in tempo reale" loading="lazy">
             </a>
             <div class="proj-card__body">
               <h3 class="proj-card__title" data-updated="28 ottobre 26"><a href="https://zoom.tongatron.org/landing/">ZOOM MultiStomp Patch Studio</a></h3>
-              <p class="proj-card__stat">Circa 50 utenti attivi</p>
+              <p class="proj-card__stat">Oltre 100 utenti attivi</p>
+              <span class="proj-card__status">In corso</span>
               <p class="proj-card__desc">Il pedale ZOOM MS-60B+ (basso) e MS-50G+ (chitarra) su schermo grande: libreria effetti, patch builder con carico DSP in tempo reale, consigli ed export .zptc per Handy Guitar Lab.</p>
               <div class="proj-card__actions">
                 <a class="btn btn-primary btn-sm" href="https://zoom.tongatron.org/landing/">Apri</a>
@@ -1733,13 +1751,14 @@
             </div>
           </article>
 
-          <article class="proj-card" style="order: 3" data-updated="12 ottobre 26">
+          <article class="proj-card" style="order: 1" data-updated="12 ottobre 26">
             <a href="https://patternmachine.tongatron.org/" tabindex="-1">
               <img src="img/projects/pattern-machine.jpg" class="proj-card__cover" alt="Pattern Machine: drum machine a step con SP-1200, TR-808, TR-909 e altre macchine classiche" loading="lazy">
             </a>
             <div class="proj-card__body">
               <h3 class="proj-card__title" data-updated="12 ottobre 26"><a href="https://patternmachine.tongatron.org/">Pattern Machine</a></h3>
-              <p class="proj-card__stat">Circa 40 utenti attivi</p>
+              <p class="proj-card__stat">Oltre 100 utenti attivi</p>
+              <span class="proj-card__status">In corso</span>
               <p class="proj-card__desc">Groovebox a step ispirata all'SP-1200 con 14 drum machine classiche: pattern, song ed export MIDI, WAV e MP3. Nel browser, come app desktop e come plug-in per Logic Pro.</p>
               <div class="proj-card__actions">
                 <a class="btn btn-primary btn-sm" href="https://patternmachine.tongatron.org/">Apri</a>
