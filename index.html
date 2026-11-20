@@ -212,6 +212,43 @@
       gap: var(--sp-3);
       margin-bottom: var(--sp-10);
     }
+    .collapsible-section.is-collapsed > .wrap > :not(.sec-head) { display: none; }
+    .collapsible-section.is-collapsed .sec-head { margin-bottom: 0; }
+    .collapsible-section.is-collapsed .sec-head__desc { display: none; }
+    .collapsible-section .sec-head {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      align-items: center;
+      column-gap: var(--sp-4);
+    }
+    .collapsible-section .sec-head__desc { grid-column: 1 / -1; }
+    .collapsible-section .sec-head__title {
+      grid-column: 2;
+      grid-row: 1;
+      cursor: pointer;
+      transition: color 180ms ease;
+    }
+    .collapsible-section .sec-head__title:hover,
+    .collapsible-section .sec-head__title:focus-visible { color: var(--c-accent); }
+    .section-toggle {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      grid-column: 1;
+      grid-row: 1;
+      width: 42px;
+      height: 42px;
+      margin: 0;
+      border: 1px solid var(--c-border-hi);
+      border-radius: 50%;
+      color: var(--c-text-soft);
+      background: transparent;
+      font: 700 1.5rem/1 var(--font-grotesk);
+      cursor: pointer;
+    }
+    .section-toggle::after { content: "+"; color: var(--c-accent); }
+    .collapsible-section.is-open .section-toggle::after { content: "−"; }
+    .section-toggle:hover, .section-toggle:focus-visible { border-color: var(--c-accent); color: var(--c-text-1); background: var(--c-surface-1); }
     .sec-head__title {
       font-family: var(--font-display);
       font-size: clamp(2.5rem, 4.5vw, 3.4rem);
@@ -603,7 +640,60 @@
     /* ============================================================
        SECTION
        ============================================================ */
-    .section { padding: 72px 0; }
+    .section { padding: 72px 0; scroll-margin-top: 88px; }
+
+    /* ============================================================
+       CHI SONO
+       ============================================================ */
+    .about-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(260px, 0.85fr);
+      gap: clamp(32px, 6vw, 84px);
+      align-items: start;
+    }
+    .about-lead {
+      max-width: 62ch;
+      color: var(--c-text-2);
+      font-size: 1rem;
+      line-height: 1.8;
+    }
+    .about-side {
+      border-top: 1px solid var(--c-border);
+      border-bottom: 1px solid var(--c-border);
+    }
+    .about-fact {
+      display: grid;
+      grid-template-columns: minmax(150px, 0.7fr) minmax(0, 1.8fr);
+      gap: var(--sp-4);
+      padding: 22px 0;
+      border-bottom: 1px solid var(--c-border);
+    }
+    .about-fact__key {
+      color: var(--c-text-3);
+      font-family: var(--font-mono);
+      font-size: var(--t-xs);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .about-fact__value {
+      color: var(--c-text-soft);
+      font-size: clamp(1.08rem, 1.8vw, 1.4rem);
+      line-height: 1.45;
+    }
+    @media (max-width: 900px) {
+      .about-layout { grid-template-columns: 1fr; gap: var(--sp-8); }
+      .about-fact { grid-template-columns: 110px minmax(0, 1fr); padding: 18px 0; }
+      .about-fact__value { font-size: 1rem; }
+    }
+
+    .projects-more {
+      margin-top: clamp(48px, 8vw, 96px);
+      text-align: center;
+    }
+    .projects-more .btn {
+      padding: 14px 24px;
+      font-size: var(--t-base);
+    }
 
     /* ============================================================
        SERVICES
@@ -1403,8 +1493,9 @@
         </a>
 
         <nav class="site-nav" aria-label="Navigazione principale">
-          <a class="site-nav__link" href="#services">Servizi</a>
-          <a class="site-nav__link" href="#ai">AI</a>
+          <a class="site-nav__link" href="#about">Chi sono</a>
+          <a class="site-nav__link" href="#services">Cosa faccio</a>
+          <a class="site-nav__link" href="#ai">Come lavoro</a>
           <a class="site-nav__link" href="#projects">Progetti</a>
           <a class="site-nav__link" href="#iot">IoT</a>
           <a class="site-nav__link" href="#network">Network</a>
@@ -1491,18 +1582,66 @@
 
     <hr class="divider">
 
+    <!-- ============================================================
+         CHI SONO
+    ============================================================ -->
+    <section id="about" class="section collapsible-section is-collapsed" data-collapsible aria-labelledby="about-title">
+      <div class="wrap">
+        <div class="sec-head">
+          <h2 class="sec-head__title" id="about-title" tabindex="0" role="button" aria-expanded="false" aria-controls="about-content">Chi sono</h2>
+          <button class="section-toggle" type="button" aria-expanded="false" aria-label="Espandi Chi sono" aria-controls="about-content"></button>
+        </div>
+
+        <div id="about-content" class="about-layout">
+          <div class="about-lead">
+            <p>
+              Il mio percorso nasce dalla psicologia del lavoro e delle organizzazioni e si sviluppa
+              nell'incontro tra persone, processi e tecnologia. Dopo la laurea e l'abilitazione come psicologo del lavoro,
+              ho collaborato con medie e grandi aziende di diversi settori, comprese realtà multinazionali,
+              associazioni, cooperative sociali, università e startup, occupandomi di sistemi HR, consulenza applicativa,
+              gestione di progetti, formazione e trasformazione digitale.
+            </p>
+            <p>
+              Nel tempo ho imparato a muovermi tra esigenze organizzative e implementazione concreta: analizzare un problema,
+              capire chi lo vive, scegliere gli strumenti giusti e portarli fino a una soluzione utilizzabile.
+            </p>
+            <p>
+              Una parte importante del mio percorso è passata dal Fablab Torino, dove sono stato presidente
+              e coordinatore, maker e docente. Ho contribuito a iniziative di fabbricazione digitale, coding e robotica,
+              ai percorsi educativi STEAM di Fablab for Kids e alla Torino Mini Maker Faire. È lì che ho consolidato l'idea
+              che la tecnologia abbia più valore quando può essere capita, usata e trasformata attivamente.
+            </p>
+            <p>
+              Sono appassionato di innovazione digitale, intelligenza artificiale e uso creativo della tecnologia.
+              Il mio approccio è multidisciplinare: unisce analisi, gestione, progettazione, sviluppo e curiosità per ciò che
+              ancora non so fare. Fuori dallo schermo mi interessa la musica.
+            </p>
+          </div>
+
+          <div class="about-side" aria-label="Sintesi del percorso">
+            <div class="about-fact"><span class="about-fact__key">Formazione</span><span class="about-fact__value">Psicologia del lavoro e delle organizzazioni</span></div>
+            <div class="about-fact"><span class="about-fact__key">Esperienza</span><span class="about-fact__value">HR tech, sistemi informativi, project management e digitalizzazione</span></div>
+            <div class="about-fact"><span class="about-fact__key">Fablab</span><span class="about-fact__value">Presidente, coordinatore, maker e docente di coding e robotica</span></div>
+            <div class="about-fact"><span class="about-fact__key">Interessi</span><span class="about-fact__value">AI, innovazione creativa, tecnologia democratica e musica</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="divider">
+
 
     <!-- ============================================================
          SERVIZI
     ============================================================ -->
-    <section id="services" class="section" aria-labelledby="services-title">
+    <section id="services" class="section collapsible-section is-collapsed" data-collapsible aria-labelledby="services-title">
       <div class="wrap">
         <div class="sec-head">
-          <span class="label">Cosa faccio</span>
-          <h2 class="sec-head__title" id="services-title">Competenze</h2>
+          <h2 class="sec-head__title" id="services-title" tabindex="0" role="button" aria-expanded="false" aria-controls="services-content">Cosa faccio</h2>
+          <button class="section-toggle" type="button" aria-expanded="false" aria-label="Espandi Cosa faccio" aria-controls="services-content"></button>
         </div>
 
-        <div class="card-grid card-grid--4 services-grid">
+        <div id="services-content" class="card-grid card-grid--4 services-grid">
           <article class="service-card">
             <h3 class="service-card__title">ICT Project Management</h3>
             <p class="service-card__body">Guido progetti digitali dalla definizione degli obiettivi alla consegna, coordinando stakeholder, priorità, tempi e qualità del risultato.</p>
@@ -1529,17 +1668,18 @@
     <!-- ============================================================
          AI-ASSISTED
     ============================================================ -->
-    <section id="ai" class="section" aria-labelledby="ai-title">
+    <section id="ai" class="section collapsible-section is-collapsed" data-collapsible aria-labelledby="ai-title">
       <div class="wrap">
         <div class="sec-head">
-          <h2 class="sec-head__title" id="ai-title">AI applicata al lavoro reale</h2>
+          <h2 class="sec-head__title" id="ai-title" tabindex="0" role="button" aria-expanded="false" aria-controls="ai-content">Come lavoro</h2>
+          <button class="section-toggle" type="button" aria-expanded="false" aria-label="Espandi Come lavoro" aria-controls="ai-content"></button>
           <p class="sec-head__desc">
-            Uso l'AI come leva operativa per aumentare velocità, qualità esplorativa e capacità di delivery.
+            AI applicata al lavoro reale: uso l'AI come leva operativa per aumentare velocità, qualità esplorativa e capacità di delivery.
             Il valore non è nello strumento in sé, ma nel metodo con cui viene integrato nel ciclo di lavoro.
           </p>
         </div>
 
-        <div class="ai-grid">
+        <div id="ai-content" class="ai-grid">
           <article class="ai-card ai-card--wide">
             <div>
               <span class="ai-card__kicker">Metodo</span>
@@ -1583,17 +1723,18 @@
     <!-- ============================================================
          PROGETTI — griglia editoriale senza celle vuote
     ============================================================ -->
-    <section id="projects" class="section" aria-labelledby="projects-title">
+    <section id="projects" class="section collapsible-section is-collapsed" data-collapsible aria-labelledby="projects-title">
       <div class="wrap">
         <div class="sec-head">
-          <span class="label">Portfolio</span>
-          <h2 class="sec-head__title" id="projects-title">Progetti e sperimentazioni</h2>
+          <h2 class="sec-head__title" id="projects-title" tabindex="0" role="button" aria-expanded="false" aria-controls="projects-content">Progetti e sperimentazioni</h2>
+          <button class="section-toggle" type="button" aria-expanded="false" aria-label="Espandi Progetti e sperimentazioni" aria-controls="projects-content"></button>
           <p class="sec-head__desc">
             Una selezione di lavori pubblicati: web app, strumenti di analisi, prototipi interattivi e progetti editoriali.
             Insieme mostrano capacità di execution, autonomia tecnica e attenzione all'esperienza d'uso.
           </p>
         </div>
 
+        <div id="projects-content">
         <p class="proj-group__label proj-group__label--music" id="proj-group-music">Musica</p>
         <div class="project-grid editorial-grid" role="group" aria-labelledby="proj-group-music">
 
@@ -1855,9 +1996,10 @@
           </article>
 
         </div>
-        <p style="margin-top: var(--sp-6); text-align: center;">
+        <p class="projects-more">
           <a class="btn btn-secondary" href="https://tongatron.org/projects/">Altri progetti</a>
         </p>
+        </div>
       </div>
     </section>
 
@@ -1866,13 +2008,14 @@
     <!-- ============================================================
          IoT — spec in alto (2 col), progetti in riga (3 col)
     ============================================================ -->
-    <section id="iot" class="section" aria-labelledby="iot-title">
+    <section id="iot" class="section collapsible-section is-collapsed" data-collapsible aria-labelledby="iot-title">
       <div class="wrap">
         <div class="sec-head">
-          <span class="label">Hardware</span>
-          <h2 class="sec-head__title" id="iot-title">IoT e fabbricazione digitale</h2>
+          <h2 class="sec-head__title" id="iot-title" tabindex="0" role="button" aria-expanded="false" aria-controls="iot-content">IoT e Fabbricazione digitale</h2>
+          <button class="section-toggle" type="button" aria-expanded="false" aria-label="Espandi IoT e Fabbricazione digitale" aria-controls="iot-content"></button>
         </div>
 
+        <div id="iot-content">
         <div class="iot-spec">
           <div class="iot-spec__cell">
             <img src="img/fablogo-white.png" alt="Logo Fablab Torino">
@@ -1896,7 +2039,7 @@
               <div class="iot-card__media"><img src="img/robottino.jpg" alt="Robottino" loading="lazy"></div>
               <div class="iot-card__body">
                 <h3 class="iot-card__title">Robottino</h3>
-                <p class="iot-card__desc">Robot educativo STEM open source basato su Arduino, con display, sensori ambientali, LED RGB, ultrasuoni e testa rotante programmabile.</p>
+                <p class="iot-card__desc">Robot educativo STEM open source basato su Arduino, con display, sensori ambientali, LED RGB, ultrasuoni e testa rotante programmabile. In collaborazione con il Politecnico di Torino.</p>
               </div>
             </a>
           </article>
@@ -1919,6 +2062,7 @@
             </a>
           </article>
         </div>
+        </div>
       </div>
     </section>
 
@@ -1928,14 +2072,14 @@
     <!-- ============================================================
          NETWORK
     ============================================================ -->
-    <section id="network" class="section" aria-labelledby="network-title">
+    <section id="network" class="section collapsible-section is-collapsed" data-collapsible aria-labelledby="network-title">
       <div class="wrap">
         <div class="sec-head">
-          <span class="label">Network</span>
-          <h2 class="sec-head__title" id="network-title">Collaborazioni</h2>
+          <h2 class="sec-head__title" id="network-title" tabindex="0" role="button" aria-expanded="false" aria-controls="network-content">Collaborazioni</h2>
+          <button class="section-toggle" type="button" aria-expanded="false" aria-label="Espandi Collaborazioni" aria-controls="network-content"></button>
         </div>
 
-        <div class="net-grid">
+        <div id="network-content" class="net-grid">
           <a class="net-card" href="http://www.fabersum.it/" target="_blank" rel="noopener">
             <h3 class="net-card__name">FaberSum</h3>
             <p class="net-card__desc">Lavorazioni CNC e prototipazione digitale</p>
@@ -2137,6 +2281,29 @@
       root.classList.add('enhanced');
       const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+      /* --- Sezioni espandibili: chiuse di default --- */
+      document.querySelectorAll('[data-collapsible]').forEach(section => {
+        const toggle = section.querySelector('.section-toggle');
+        const titleElement = section.querySelector('.sec-head__title');
+        if (!toggle) return;
+        const title = titleElement?.textContent.trim() || 'sezione';
+        const setOpen = () => {
+          const open = section.classList.toggle('is-open');
+          section.classList.toggle('is-collapsed', !open);
+          toggle.setAttribute('aria-expanded', String(open));
+          toggle.setAttribute('aria-label', `${open ? 'Chiudi' : 'Espandi'} ${title}`);
+          titleElement?.setAttribute('aria-expanded', String(open));
+        };
+        toggle.addEventListener('click', setOpen);
+        titleElement?.addEventListener('click', setOpen);
+        titleElement?.addEventListener('keydown', event => {
+          if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            setOpen();
+          }
+        });
+      });
+
       /* --- Barra di progresso scroll --- */
       const bar = document.createElement('div');
       bar.className = 'scroll-progress';
@@ -2188,22 +2355,32 @@
         revealTargets.forEach(el => el.classList.add('is-visible'));
       }
 
-      /* --- Scrollspy nav --- */
+      /* --- Scrollspy nav: una sola sezione attiva, in ordine documentale --- */
       const navLinks = [...document.querySelectorAll('.site-nav__link[href^="#"]')];
       const sections = navLinks
         .map(a => document.getElementById(a.getAttribute('href').slice(1)))
         .filter(Boolean);
-      if (sections.length && 'IntersectionObserver' in window) {
-        const spy = new IntersectionObserver(entries => {
-          entries.forEach(entry => {
-            if (!entry.isIntersecting) return;
-            navLinks.forEach(a =>
-              a.classList.toggle('is-active', a.getAttribute('href') === '#' + entry.target.id)
-            );
-          });
-        }, { rootMargin: '-35% 0px -55% 0px' });
-        sections.forEach(s => spy.observe(s));
-      }
+      const header = document.querySelector('.site-header');
+      let activeSectionFrame = 0;
+      const updateActiveSection = () => {
+        activeSectionFrame = 0;
+        if (!sections.length) return;
+        const marker = window.scrollY + (header?.offsetHeight || 0) + 28;
+        let current = null;
+        sections.forEach(section => {
+          if (section.offsetTop <= marker) current = section;
+        });
+        navLinks.forEach(link => {
+          link.classList.toggle('is-active', Boolean(current) && link.getAttribute('href') === `#${current.id}`);
+        });
+      };
+      const requestActiveSectionUpdate = () => {
+        if (activeSectionFrame) return;
+        activeSectionFrame = window.requestAnimationFrame(updateActiveSection);
+      };
+      window.addEventListener('scroll', requestActiveSectionUpdate, { passive: true });
+      window.addEventListener('resize', requestActiveSectionUpdate, { passive: true });
+      requestActiveSectionUpdate();
 
       /* --- Tagline rotante nel prompt del terminale --- */
       const wordEl = document.getElementById('hero-build-word');
