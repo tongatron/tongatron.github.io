@@ -31,6 +31,16 @@
     ol { display:flex; flex-wrap:wrap; gap:4px 20px; margin:7px 0 0; padding-left:20px; color:var(--muted); }
     li::marker { color:var(--accent); font-weight:700; }
     code { color:var(--blue); }
+    .info-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; margin-top:12px; }
+    .info-grid .card { min-width:0; }
+    .info-grid h3 { margin:16px 0 5px; font-size:14px; color:var(--text); }
+    .info-grid h3:first-child { margin-top:0; }
+    .info-grid p { margin:0 0 8px; }
+    .info-grid ul,.info-grid ol { display:block; margin:7px 0 0; padding-left:20px; }
+    .info-grid li { margin:5px 0; }
+    .download { display:inline-block; margin-top:8px; padding:8px 12px; border-radius:6px; background:var(--accent); color:#0d1117; font-weight:700; text-decoration:none; }
+    .download:hover,.download:focus-visible { filter:brightness(1.12); color:#0d1117; }
+    .license { font-size:13px; color:var(--muted); }
     @media (max-width:700px) { main { padding:14px 10px 20px; } header { display:block; } nav { justify-content:flex-start; margin-top:12px; } iframe { height:calc(100vw * .64); max-height:500px; } .below { grid-template-columns:1fr; } }
   </style>
 </head>
@@ -67,6 +77,45 @@
       <article class="card">
         <h2>Quick start</h2>
         <p><strong>BETA:</strong> press <code>PLAY</code> to listen, pass the guided test, then practise. Use <code>SEQ</code> for the next module, <code>PRESET</code> for notation and <code>HOME</code> to reset.</p>
+      </article>
+    </section>
+
+    <section class="info-grid" aria-label="FM-1 and KEYSCHOOL information">
+      <article class="card">
+        <h2>About the M-VAVE FM-1</h2>
+        <p>The FM-1 is a compact battery-powered synthesizer and MIDI controller with a 240 × 240 display, velocity-sensitive keys, four performance knobs, USB, Bluetooth MIDI and a TRS MIDI connection.</p>
+        <p>KEYSCHOOL uses the display and keyboard as a beginner-friendly music classroom: the emulator runs the same application logic as the firmware intended for the hardware.</p>
+        <h3>Install on the FM-1</h3>
+        <ol>
+          <li>Download the current beta <code>.fwsc</code> package below.</li>
+          <li>Open the <a href="https://charlesvestal.github.io/fm1-base/install/">FM-1 web installer</a> in Chrome or Edge.</li>
+          <li>Connect the FM-1 by USB, choose the downloaded file and follow the installer prompts.</li>
+          <li>Keep the original M-VAVE firmware available for recovery and remember that KEYSCHOOL hardware support is still beta.</li>
+        </ol>
+        <a class="download" href="downloads/keyschool-0.1.0-test7.fwsc" download>Download KEYSCHOOL beta (.fwsc)</a>
+        <p class="license">The package is a test build. If the link is temporarily unavailable, use the <a href="https://github.com/tongatron/keyschool/releases">GitHub Releases</a> page.</p>
+      </article>
+      <article class="card">
+        <h2>Technology &amp; references</h2>
+        <h3>What powers it</h3>
+        <ul>
+          <li><strong>C firmware:</strong> the same lesson and audio code targets FM-1 hardware and the host emulator.</li>
+          <li><strong>WebAssembly:</strong> the browser simulator runs the firmware without an FM-1.</li>
+          <li><strong>fm1-base:</strong> platform layer, browser emulator, MIDI, packaging and installer tooling.</li>
+          <li><strong>JieLi AC79 SDK:</strong> the vendor SDK used by the hardware build through fm1-base.</li>
+          <li><strong>GitHub Actions:</strong> reproducible host tests and `.fwsc` release builds.</li>
+        </ul>
+        <h3>Useful links</h3>
+        <ul>
+          <li><a href="https://www.m-vave.com/product?id=fm-1">M-VAVE FM-1 product page</a></li>
+          <li><a href="https://github.com/tongatron/keyschool">KEYSCHOOL repository</a> (private beta)</li>
+          <li><a href="https://github.com/charlesvestal/fm1-base">fm1-base on GitHub</a></li>
+          <li><a href="https://github.com/hugelton/felucca-bsp">felucca-bsp</a>, the hardware support layer</li>
+          <li><a href="https://github.com/charlesvestal/fm1-reader">FM-1 Screen Reader</a></li>
+          <li><a href="https://github.com/cicloid/awesome-fm-1">awesome-fm-1</a>, community resources</li>
+        </ul>
+        <h3>Licences</h3>
+        <p class="license">KEYSCHOOL and the fm1-base application layer follow <a href="https://github.com/charlesvestal/fm1-base/blob/main/LICENSE">MPL-2.0</a>. The repository contains third-party notices and license files for the supporting components. M-VAVE, JieLi and the FM-1 hardware remain their respective owners’ trademarks and products.</p>
       </article>
     </section>
   </main>
