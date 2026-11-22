@@ -35,7 +35,7 @@ a { color: var(--accent); }
 .hit.knob { cursor: ns-resize; border-radius: 50%; }
 .hit:focus-visible { outline: 3px solid #ffb48a; outline-offset: 2px; box-shadow: 0 0 0 6px #1b1d20; }
 .device svg { position: absolute; inset: 0; width: 100%; height: 100%; }
-.device canvas { position: absolute; left: 28.5%; top: 5.3125%; width: 27%; height: 42.1875%; background: #000; border-radius: 2px; }
+.device canvas { position: absolute; left: 31.8%; top: 9.6875%; width: 20%; height: 31.25%; background: #000; border-radius: 2px; }
 .ctl { cursor: pointer; }
 .ctl.knob { cursor: ns-resize; }
 .held .btnface, .held .keyface { stroke: #f28a5a; stroke-width: 3; }
@@ -74,13 +74,6 @@ a { color: var(--accent); }
 .help p, .help ul { margin: 0; max-width: 60ch; }
 .help ul { padding-left: 1.1rem; }
 kbd { font: 600 .85em ui-monospace, Menlo, monospace; background: var(--card); border: 1px solid var(--rule); border-radius: 4px; padding: 0 .3em; color: var(--ink); }
-/* Compact public embed: show the complete panel without a nested scroll container. */
-body.embed { padding: 0; background: transparent; }
-body.embed > header, body.embed .turn, body.embed #panel-keys, body.embed .bar, body.embed .speak,
-body.embed .help { display: none; }
-body.embed main { max-width: 760px; margin: 0 auto; }
-body.embed .devicebox { overflow: visible; }
-body.embed .device { min-width: 0; width: 100%; }
 </style>
 </head>
 <body>
@@ -136,7 +129,6 @@ body.embed .device { min-width: 0; width: 100%; }
 
 <script>
 "use strict";
-if (new URLSearchParams(location.search).has("embed")) document.body.classList.add("embed");
 // the panel's drawing and lights: fm1-base's web/fm1panel.js (shared with the mirror page)
 // SPDX-License-Identifier: MPL-2.0
 // Copyright (C) 2026 Charles Vestal
@@ -234,7 +226,7 @@ function fm1Panel(svg) {
   }
   el("rect", { x: 58, y: 258, width: 210, height: 58, rx: 14, fill: TRAY });
   button(72, 268, 82, 38, "OCT-"); button(170, 268, 82, 38, "OCT+");
-  el("rect", { x: 280, y: 24, width: 280, height: 280, rx: 28, fill: "#111214" });
+  el("rect", { x: 300, y: 44, width: 236, height: 236, rx: 26, fill: "#111214" });
   el("rect", { x: 568, y: 160, width: 400, height: 140, rx: 18, fill: TRAY });
   for (let i = 0; i < 6; i++) button(582 + i * 63, 174, 54, 48, PANEL_ROW1[i]);          // row by row: the reading order
   for (let i = 0; i < 6; i++) button(582 + i * 63, 236, 54, 48, PANEL_ROW2[i], PANEL_ROW2[i] === "PLAY" ? "STOP" : undefined);
