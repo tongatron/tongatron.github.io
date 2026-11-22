@@ -19,10 +19,10 @@
     a { color:var(--accent); }
     .button { display:inline-block; border:1px solid var(--line); border-radius:6px; padding:7px 12px; color:var(--text); text-decoration:none; background:var(--panel); font-size:13px; }
     .button:hover,.button:focus-visible { border-color:var(--accent); color:var(--accent); }
-    .simulator { border:1px solid var(--line); border-radius:6px; overflow:hidden; background:var(--panel-2); }
-    .simulator-bar { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:10px 14px; border-bottom:1px solid var(--line); color:var(--muted); font:12px ui-monospace,SFMono-Regular,Menlo,monospace; }
+    .simulator { margin-top:8px; }
+    .simulator-bar { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:0 0 8px; color:var(--muted); font:12px ui-monospace,SFMono-Regular,Menlo,monospace; }
     .simulator-bar strong { color:var(--text); }
-    iframe { display:block; width:100%; height:470px; min-height:0; border:0; background:#34383e; }
+    iframe { display:block; width:min(760px,100%); height:500px; margin:0 auto; border:0; background:transparent; }
     .below { display:grid; grid-template-columns:1.2fr .8fr; gap:12px; margin-top:12px; }
     .card { padding:14px 16px; border:1px solid var(--line); border-radius:6px; background:var(--panel); }
     h2 { margin:0 0 5px; font-size:16px; }
@@ -30,7 +30,7 @@
     ol { display:flex; flex-wrap:wrap; gap:4px 20px; margin:7px 0 0; padding-left:20px; color:var(--muted); }
     li::marker { color:var(--accent); font-weight:700; }
     code { color:var(--blue); }
-    @media (max-width:700px) { main { padding:14px 10px 20px; } header { display:block; } nav { justify-content:flex-start; margin-top:12px; } iframe { height:430px; } .below { grid-template-columns:1fr; } }
+    @media (max-width:700px) { main { padding:14px 10px 20px; } header { display:block; } nav { justify-content:flex-start; margin-top:12px; } iframe { height:calc(100vw * .64); max-height:500px; } .below { grid-template-columns:1fr; } }
   </style>
 </head>
 <body>
@@ -49,7 +49,7 @@
 
     <section class="simulator" aria-label="KEYSCHOOL browser simulator">
       <div class="simulator-bar"><strong>KEYSCHOOL / browser emulator</strong><span>no FM-1 hardware required</span></div>
-      <iframe src="emu/index.html" title="KEYSCHOOL FM-1 browser simulator" allow="autoplay"></iframe>
+      <iframe src="emu/index.html?embed=1" title="KEYSCHOOL FM-1 browser simulator" allow="autoplay"></iframe>
     </section>
 
     <section class="below">
