@@ -83,14 +83,13 @@ nav.contents li { break-inside: avoid; }
 <body>
 <a class="skip" href="#content">Skip to content</a>
 <div class="page">
-<main id="content" tabindex="-1">
-<a class="home" href="../">KEYSCHOOL</a>
-<h1>TEMPLATE</h1>
-<p>TEMPLATE is the smallest complete firmware for the M-VAVE FM-1, and it's made to be copied. Every control shows its name on the screen as you use it. The keys play a simple voice with velocity and pressure, your settings save, MIDI goes in and out over USB and Bluetooth and comes in over TRS, and it works with a screen reader. Copy it to start your own firmware on fm1-base.</p>
-<div class="figs"><figure class="shot"><img src="manual/img/screen-playing.png" alt="TEMPLATE while a key is held: C4 in the header with V 90 P 64, FX lit among the buttons, K3 at 3, the key filled" loading="lazy"><figcaption>TEMPLATE on the FM-1's screen</figcaption></figure></div>
-<p>This is version 0.1.0-test8. You install it at your own risk, and the installer can put M-VAVE's own firmware back.</p>
-<ul><li><a href="emu/">Try it in the browser</a>. Play it right here, with sound. It runs the same code as the FM-1, so you don't need one.</li><li><a href="install/">Install</a> it from Chrome or Edge, with the FM-1 connected by USB.</li><li>The <a href="manual/">Manual</a> explains the screen, the controls, saving and MIDI.</li><li><a href="firmware/keyschool-0.1.0-test8.fwsc">Download keyschool-0.1.0-test8.fwsc</a> to use the command-line installer: <code>python3 tools/fm1_install.py keyschool-0.1.0-test8.fwsc</code>.</li><li>The <a href="https://github.com/charlesvestal/fm1-base">Source</a> is under MPL-2.0. It's built on fm1-base and felucca-bsp, which come from Felucca by Leo Kuroshita, Hügelton Instruments.</li></ul>
-<p>M-VAVE and FM-1 are trademarks of their owners. TEMPLATE is not affiliated with M-VAVE.</p>
+<header class="site"><a class="home" href="./" aria-current="page">KEYSCHOOL</a><nav><a href="emu/">Emulator</a><a href="install/">Install</a><a href="manual/">Manual</a><a href="https://github.com/tongatron/keyschool">Source</a></nav></header>
+<main id="content" tabindex="-1"><h1>KEYSCHOOL</h1>
+<p class="lede">KEYSCHOOL is a guided learning firmware for the M-VAVE FM-1. Listen to a note or chord, pass the test, then practise it on the real keyboard.</p>
+<p>This is version 0.1.0-test8. You install it at your own risk, and the installer can put M-VAVE's original firmware back.</p>
+<ul><li><a href="emu/">Try it in the browser</a>. The emulator runs the same lesson logic as the FM-1 and does not require hardware.</li><li><a href="install/">Install</a> it from Chrome or Edge with the FM-1 connected by USB.</li><li>The <a href="manual/">Manual</a> explains the controls, lessons, saving and MIDI.</li><li><a href="firmware/keyschool-0.1.0-test8.fwsc">Download keyschool-0.1.0-test8.fwsc</a> to install the firmware package.</li><li>The <a href="https://github.com/tongatron/keyschool">source repository</a> contains the KEYSCHOOL firmware and tests.</li></ul>
+<p>During lessons, the display shows the phase, target, module and score. The selected notation is shown only in the relevant feedback; the matching keys are indicated on the FM-1 keyboard rather than by a duplicate LCD keyboard.</p>
+<p>M-VAVE and FM-1 are trademarks of their respective owners.</p>
 </main>
 </div>
 </body>
