@@ -731,7 +731,7 @@ async function switchOn() {
   try {
     const ac = new AudioContext({ sampleRate: 44100, latencyHint: "interactive" });
     if (speakMode() === "voice") voiceOn();
-    const [wasm] = await Promise.all([fetch("app.wasm").then((r) => { if (!r.ok) throw new Error(`app.wasm: ${r.status}`); return r.arrayBuffer(); }),
+    const [wasm] = await Promise.all([fetch("app.wasm?v=0.1.0-test9").then((r) => { if (!r.ok) throw new Error(`app.wasm: ${r.status}`); return r.arrayBuffer(); }),
                                       ac.audioWorklet.addModule("app_worklet.js").catch(() => {})
                                         .then(() => ac.audioWorklet.addModule("worklet.js"))]);
     node = new AudioWorkletNode(ac, "fm1", { numberOfInputs: 0, numberOfOutputs: 1, outputChannelCount: [2] });
