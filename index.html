@@ -2364,12 +2364,12 @@
       const sections = navLinks
         .map(a => document.getElementById(a.getAttribute('href').slice(1)))
         .filter(Boolean);
-      const header = document.querySelector('.site-header');
+      const scrollSpyHeader = document.querySelector('.site-header');
       let activeSectionFrame = 0;
       const updateActiveSection = () => {
         activeSectionFrame = 0;
         if (!sections.length) return;
-        const marker = window.scrollY + (header?.offsetHeight || 0) + 28;
+        const marker = window.scrollY + (scrollSpyHeader?.offsetHeight || 0) + 28;
         let current = null;
         sections.forEach(section => {
           if (section.offsetTop <= marker) current = section;
