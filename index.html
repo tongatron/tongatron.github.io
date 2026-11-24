@@ -9,6 +9,8 @@
   <meta name="author" content="Giovanni Bindi">
   <meta name="theme-color" content="#000000">
   <meta name="color-scheme" content="dark">
+  <meta name="format-detection" content="telephone=no">
+  <link rel="manifest" href="site.webmanifest">
   <link rel="icon" href="favicon.ico" sizes="any">
   <link rel="icon" type="image/svg+xml" href="img/tongatron-icon.svg">
   <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32x32.png">
@@ -24,25 +26,64 @@
   <meta property="og:description" content="Giovanni Bindi progetta e realizza software, prototipi e workflow digitali con AI generativa, esperienza ICT e attenzione a delivery, qualità e impatto operativo.">
   <meta property="og:url" content="https://tongatron.org/">
   <meta property="og:image" content="https://tongatron.org/img/giovannibindi2.jpg">
-  <meta property="og:image:alt" content="Tongatron preview image">
+  <meta property="og:image:alt" content="Giovanni Bindi, Project Manager e Digital Transformation Lead">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="1200">
   <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@giobindi">
+  <meta name="twitter:creator" content="@giobindi">
   <meta name="twitter:title" content="Giovanni Bindi | Project Manager e Digital Transformation Lead">
   <meta name="twitter:description" content="Giovanni Bindi progetta e realizza software, prototipi e workflow digitali con AI generativa, esperienza ICT e attenzione a delivery, qualità e impatto operativo.">
   <meta name="twitter:image" content="https://tongatron.org/img/giovannibindi2.jpg">
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "Person",
-      "name": "Giovanni Bindi",
-      "url": "https://tongatron.org/",
-      "image": "https://tongatron.org/img/giovannibindi2.jpg",
-      "jobTitle": "Project Manager, Digital Transformation Lead, Creative Technologist, AI-assisted Developer",
-      "email": "giovanni.bindi@tongatron.org",
-      "sameAs": [
-        "https://github.com/tongatron",
-        "https://www.linkedin.com/in/giovannibindi/",
-        "https://x.com/giobindi",
-        "https://hackaday.io/tongatron"
+      "@graph": [
+        {
+          "@type": "Person",
+          "@id": "https://tongatron.org/#giovanni-bindi",
+          "name": "Giovanni Bindi",
+          "url": "https://tongatron.org/",
+          "image": "https://tongatron.org/img/giovannibindi2.jpg",
+          "jobTitle": "Project Manager, Digital Transformation Lead, Creative Technologist, AI-assisted Developer",
+          "description": "Project Manager e Digital Transformation Lead con esperienza in delivery digitale, software, prototipi IoT e AI generativa.",
+          "email": "giovanni.bindi@tongatron.org",
+          "worksFor": { "@id": "https://tongatron.org/#tongatron" },
+          "knowsAbout": ["Project management", "Digital transformation", "Software development", "Artificial intelligence", "Internet of Things"],
+          "sameAs": [
+            "https://github.com/tongatron",
+            "https://www.linkedin.com/in/giovannibindi/",
+            "https://x.com/giobindi",
+            "https://hackaday.io/tongatron"
+          ]
+        },
+        {
+          "@type": "Organization",
+          "@id": "https://tongatron.org/#tongatron",
+          "name": "Tongatron",
+          "url": "https://tongatron.org/",
+          "logo": "https://tongatron.org/img/tongatron-icon-512.png",
+          "founder": { "@id": "https://tongatron.org/#giovanni-bindi" }
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://tongatron.org/#website",
+          "url": "https://tongatron.org/",
+          "name": "Tongatron",
+          "description": "Portfolio di Giovanni Bindi: progetti digitali, software, prototipi IoT e sperimentazione con AI.",
+          "inLanguage": "it-IT",
+          "publisher": { "@id": "https://tongatron.org/#tongatron" }
+        },
+        {
+          "@type": "ProfilePage",
+          "@id": "https://tongatron.org/#profile",
+          "url": "https://tongatron.org/",
+          "name": "Giovanni Bindi | Project Manager e Digital Transformation Lead",
+          "isPartOf": { "@id": "https://tongatron.org/#website" },
+          "mainEntity": { "@id": "https://tongatron.org/#giovanni-bindi" },
+          "inLanguage": "it-IT"
+        }
       ]
     }
   </script>
